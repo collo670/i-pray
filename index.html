@@ -250,7 +250,7 @@
             
             <!-- Centered Icon Holder in Header -->
             <div class="header-icon">
-                <img id="seasonImage" src="/assets/images/bikira M.png" alt="Liturgical Season">
+                <img id="seasonImage" src="/assets/images/bikira maria.jpg" alt="Liturgical Season">
             </div>
         </header>
 
@@ -485,39 +485,39 @@
             // Determine liturgical season
             let season = 'Ordinary Time';
             let feast = null;
-            let seasonImage = '/assets/images/bikira M.png';
+            let seasonImage = '/assets/images/bikira maria.jpg';
             
             // Check for specific dates
             if (today.getMonth() === 11 && today.getDate() === 25) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
                 feast = 'Nativity of the Lord';
             } else if (today.getMonth() === 0 && today.getDate() === 1) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
                 feast = 'Mary, Mother of God';
             } else if (today.getMonth() === 0 && today.getDate() === 6) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
                 feast = 'Epiphany of the Lord';
             } else if (today >= adventStart && today < christmas) {
                 season = 'Advent';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
             } else if (today >= christmas && today < new Date(year, 0, 8)) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
             } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
                 season = 'Ordinary Time';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
             } else if (today >= ashWednesday && today < easter) {
                 season = 'Lent';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
             } else if (today >= easter && today < pentecost) {
                 season = 'Easter';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
             } else if (today >= pentecost && today < adventStart) {
                 season = 'Ordinary Time';
-                seasonImage = '/assets/images/bikira M.png';
+                seasonImage = '/assets/images/bikira maria.jpg';
             }
 
             // Add special feasts
