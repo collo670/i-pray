@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacraments - iPray</title>
+    <meta name="description" content="Learn about the seven sacraments of the Catholic Church">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light mode styles */
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        .dark-mode-toggle {
+            background-color: #333;
+            color: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: auto;
+            font-size: 0.8rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: none;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #555;
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        body.light-mode .dark-mode-toggle:hover {
+            background-color: #aaa;
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .sacrament-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+    <div id="app" class="relative z-10">
+        <!-- Header -->
+        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        iPray
+                    </h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Sacraments
+                    </p>
+                </div>
+                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
+                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-200 shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        The Seven Sacraments
+                    </h2>
+                </div>
+
+                <div class="rounded-2xl p-8 bg-white dark:bg-gray-800 shadow-xl">
+                    <div class="text-center mb-8">
+                        <div class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-pink-100 dark:bg-pink-900/30">
+                            <svg class="w-8 h-8 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">The Seven Sacraments of the Catholic Church</h3>
+                        <p class="text-gray-600 dark:text-gray-300">The sacraments are efficacious signs of grace, instituted by Christ and entrusted to the Church, by which divine life is dispensed to us.</p>
+                    </div>
+
+                    <div class="space-y-8">
+                        <!-- Baptism -->
+                        <div class="border-l-4 border-pink-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-pink-100 dark:bg-pink-900/30">
+                                    <svg class="w-10 h-10 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Baptism</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit" (Matthew 28:19)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Removes original sin and all personal sin, imparts sanctifying grace, makes us children of God, and incorporates us into the Church.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> Ordinarily a bishop, priest, or deacon. In emergency, any person with the right intention can baptize.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Confirmation -->
+                        <div class="border-l-4 border-orange-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-orange-100 dark:bg-orange-900/30">
+                                    <svg class="w-10 h-10 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Confirmation</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "And when Paul had laid his hands on them, the Holy Spirit came on them" (Acts 19:6)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Completes baptismal grace, gives special strength of the Holy Spirit, binds us more perfectly to the Church, and strengthens us to be witnesses of Christ.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> Ordinarily the bishop. In special cases, a priest may administer it.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Eucharist -->
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-yellow-100 dark:bg-yellow-900/30">
+                                    <svg class="w-10 h-10 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Eucharist</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "This is my body... This is my blood of the covenant, which will be shed for many" (Mark 14:22-24)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Increases our union with Christ and the Church, preserves and renews the life of grace, separates us from sin, and commits us to the poor.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> A validly ordained priest (bishop or presbyter).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Penance -->
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-green-100 dark:bg-green-900/30">
+                                    <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Penance (Reconciliation)</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "Receive the Holy Spirit. Whose sins you forgive are forgiven them, and whose sins you retain are retained" (John 20:22-23)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Reconciles us with God and the Church, restores sanctifying grace, remits eternal punishment, and provides peace and serenity of conscience.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> A priest with the faculty to hear confessions.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anointing of the Sick -->
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-blue-100 dark:bg-blue-900/30">
+                                    <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Anointing of the Sick</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "Is anyone among you sick? He should summon the presbyters of the church, and they should pray over him and anoint him with oil in the name of the Lord" (James 5:14)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Unites the sick person to Christ's Passion, provides strength and peace, may bring about physical healing, and prepares for passing to eternal life.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> A priest or bishop.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Holy Orders -->
+                        <div class="border-l-4 border-indigo-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-indigo-100 dark:bg-indigo-900/30">
+                                    <svg class="w-10 h-10 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Holy Orders</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "Do not neglect the gift you have, which was conferred on you through the prophetic word with the imposition of hands of the presbyterate" (1 Timothy 4:14)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Imprints an indelible spiritual character, configures the ordained to Christ, and gives grace to exercise sacred ministry.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> A bishop.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Matrimony -->
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <div class="flex items-start gap-4">
+                                <div class="sacrament-icon bg-purple-100 dark:bg-purple-900/30">
+                                    <svg class="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Matrimony</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Scripture:</strong> "For this reason a man shall leave his father and mother and be joined to his wife, and the two shall become one flesh" (Ephesians 5:31)</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3"><strong>Effect:</strong> Establishes a perpetual and exclusive bond between husband and wife, provides grace for married life, and sanctifies their love.</p>
+                                    <p class="text-gray-600 dark:text-gray-300"><strong>Minister:</strong> The spouses minister the sacrament to each other through their mutual consent.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                        <h4 class="font-semibold text-gray-800 dark:text-white mb-3">The Three Categories of Sacraments</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                                <h5 class="font-bold text-blue-600 dark:text-blue-400 mb-2">Sacraments of Initiation</h5>
+                                <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    <li>• Baptism</li>
+                                    <li>• Confirmation</li>
+                                    <li>• Eucharist</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                                <h5 class="font-bold text-green-600 dark:text-green-400 mb-2">Sacraments of Healing</h5>
+                                <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    <li>• Penance (Reconciliation)</li>
+                                    <li>• Anointing of the Sick</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                                <h5 class="font-bold text-purple-600 dark:text-purple-400 mb-2">Sacraments of Service</h5>
+                                <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    <li>• Holy Orders</li>
+                                    <li>• Matrimony</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-dashed border-gray-300 dark:border-gray-700">
+                        <p class="text-sm italic text-gray-600 dark:text-gray-300 text-center">
+                            "The sacraments are efficacious signs of grace, instituted by Christ and entrusted to the Church, by which divine life is dispensed to us. The visible rites by which the sacraments are celebrated signify and make present the graces proper to each sacrament. They bear fruit in those who receive them with the required dispositions." - Catechism of the Catholic Church, 1131
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
+            <div class="flex justify-around">
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span class="text-xs font-medium">Home</span>
+                </a>
+                <a href="prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="text-xs font-medium">Prayer</span>
+                </a>
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-xs font-medium">Calendar</span>
+                </a>
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    </svg>
+                    <span class="text-xs font-medium">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Theme Management
+        function initTheme() {
+            const savedMode = localStorage.getItem('themeMode');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+            
+            if (isDark) {
+                document.body.classList.remove('light-mode');
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `;
+            } else {
+                document.body.classList.add('light-mode');
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                `;
+            }
+        }
+
+        // Toggle theme
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const isDark = !document.body.classList.contains('light-mode');
+            
+            if (isDark) {
+                // Switch to light mode
+                document.body.classList.add('light-mode');
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                `;
+                localStorage.setItem('themeMode', 'light');
+            } else {
+                // Switch to dark mode
+                document.body.classList.remove('light-mode');
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `;
+                localStorage.setItem('themeMode', 'dark');
+            }
+        },
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+        }));
+    </script>
+</body>
+</html>

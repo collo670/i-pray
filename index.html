@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPray - Liturgical Companion</title>
+    <meta name="description" content="A Catholic liturgical companion app for daily prayer and worship">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light mode styles */
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        .dark-mode-toggle {
+            background-color: #333;
+            color: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: auto;
+            font-size: 0.8rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: none;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #555;
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        body.light-mode .dark-mode-toggle:hover {
+            background-color: #aaa;
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-highlighted {
+            background-color: #4a4a4a;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        body.light-mode .card-highlighted {
+            background-color: #e0e0e0;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        
+        .header-icon {
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 2px solid #ffc107;
+            background: white;
+        }
+        
+        .header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .bg-purple-100 {
+            background-color: #f3e8ff;
+        }
+        
+        body.light-mode .bg-purple-100 {
+            background-color: #f3e8ff;
+        }
+        
+        .dark .bg-purple-100, body:not(.light-mode) .bg-purple-100 {
+            background-color: #1e1b4b;
+        }
+        
+        .border-purple-200 {
+            border-color: #e9d5ff;
+        }
+        
+        body.light-mode .border-purple-200 {
+            border-color: #694391;
+        }
+        
+        .dark .border-purple-200, body:not(.light-mode) .border-purple-200 {
+            border-color: #3730a3;
+        }
+        
+        .text-purple-800 {
+            color: #9333ea;
+        }
+        
+        body.light-mode .text-purple-800 {
+            color: #9333ea;
+        }
+        
+        .dark .text-purple-800, body:not(.light-mode) .text-purple-800 {
+            color: #ddd6fe;
+        }
+        
+        .bg-white {
+            background-color: #ffffff;
+        }
+        
+        body.light-mode .bg-white {
+            background-color: #ffffff;
+        }
+        
+        .dark .bg-white, body:not(.light-mode) .bg-white {
+            background-color: #1f2937;
+        }
+        
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        
+        body.light-mode .text-gray-800 {
+            color: #1f2937;
+        }
+        
+        .dark .text-gray-800, body:not(.light-mode) .text-gray-800 {
+            color: #e5e7eb;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        
+        body.light-mode .text-gray-600 {
+            color: #4b5563;
+        }
+        
+        .dark .text-gray-600, body:not(.light-mode) .text-gray-600 {
+            color: #9ca3af;
+        }
+        
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            .header-icon {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+    <div id="app" class="relative z-10">
+        <!-- Header -->
+        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+            <div class="header-content">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        ipray
+                    </h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Your Prayer Companion
+                    </p>
+                </div>
+                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300 z-20">
+                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Centered Icon Holder in Header -->
+            <div class="header-icon">
+                <img id="seasonImage" src="/assets/images/bikira M.png" alt="Liturgical Season">
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-6 py-8 pb-24 pt-6">
+            <!-- Home View -->
+            <div id="homeView" class="space-y-8">
+                <!-- Liturgical Day Card -->
+                <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-purple-900/30 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-purple-800/30 season-border">
+                    <div class="text-center">
+                        <div class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-300 bg-white/60 dark:bg-black/20">
+                            <span id="season">Advent</span> <span id="liturgicalYear">2023</span>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
+                            <span id="currentDate">Loading...</span>
+                        </h2>
+                        <p id="feastDay" class="text-xl text-purple-800 dark:text-purple-300 font-medium hidden">
+                            Feast of All Saints
+                        </p>
+                        <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
+                            <p class="text-sm text-gray-600 dark:text-gray-300">
+                                May your prayers today bring you closer to God's grace and peace.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Grid -->
+                <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- Navigation items will be populated by JavaScript -->
+                </div>
+
+               
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
+            <div class="flex justify-around">
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span class="text-xs font-medium">Home</span>
+                </a>
+                <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg id="current-week" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="text-xs font-medium">Lauds</span>
+                </a>
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-xs font-medium">Calendar</span>
+                </a>
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    </svg>
+                    <span class="text-xs font-medium">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Theme Management
+        function initTheme() {
+            const savedMode = localStorage.getItem('themeMode');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+            
+            if (isDark) {
+                document.body.classList.remove('light-mode');
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `;
+            } else {
+                document.body.classList.add('light-mode');
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                `;
+            }
+        }
+
+        // Toggle theme
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const isDark = !document.body.classList.contains('light-mode');
+            
+            if (isDark) {
+                // Switch to light mode
+                document.body.classList.add('light-mode');
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                `;
+                localStorage.setItem('themeMode', 'light');
+            } else {
+                // Switch to dark mode
+                document.body.classList.remove('light-mode');
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `;
+                localStorage.setItem('themeMode', 'dark');
+            }
+        });
+
+        // Navigation
+        function initNavigation() {
+            const navItems = [
+                { icon: `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
+                { icon: `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                `, title: 'Office of Readings', color: 'text-blue-600', id: 'readings', link: 'office-readings.html' },
+                { icon: `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                `, title: 'Holy Rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
+                { icon: `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                `, title: 'Amefufuka', color: 'text-green-600', id: 'prayers', link: 'prayer-requests.html' },
+                { icon: `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                `, title: 'Scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
+
+                { icon: `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />
+                `, title: 'Sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
+            ];
+
+            const navGrid = document.getElementById('navGrid');
+            navGrid.innerHTML = '';
+
+            navItems.forEach(item => {
+                const navItem = document.createElement('a');
+                navItem.href = item.link;
+                navItem.className = 'block p-6 rounded-2xl cursor-pointer card-hover bg-white dark:bg-gray-800 transition-all duration-300';
+                navItem.innerHTML = `
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+                            <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                ${item.icon}
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-lg text-gray-800 dark:text-white">
+                            ${item.title}
+                        </h3>
+                    </div>
+                `;
+                navGrid.appendChild(navItem);
+            });
+        }
+
+        // Masifu ya Asubuhi dynamic link by day and week (WEEK 1 starts this week, week changes every Sunday)
+            const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
+            if (masifuAsubuhiLink) {
+                masifuAsubuhiLink.addEventListener('click', function() {
+                    const day = new Date().getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
+                    const dayToPrefix = [
+                        'jumapili',   // Sunday
+                        'jumatatu',   // Monday
+                        'jumanne',    // Tuesday
+                        'jumatano',   // Wednesday
+                        'alhamisi',   // Thursday
+                        'ijumaa',     // Friday
+                        'jumamosi'    // Saturday
+                    ];
+                    // Week sequence: 1 -> 2 -> 3 -> 4 -> 1 ...
+                    const weekSequence = [1, 2, 3, 4];
+                    // Find the most recent Sunday (including today if today is Sunday)
+                    const now = new Date();
+                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    const daysSinceSunday = today.getDay(); // 0 if Sunday, 1 if Monday, ..., 6 if Saturday
+                    // Reference Sunday is the most recent Sunday (this week is week 1)
+                    const referenceSunday = new Date(today);
+                    referenceSunday.setDate(today.getDate() - daysSinceSunday);
+                    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                    const weeksSinceReference = Math.floor((today - referenceSunday) / msPerWeek);
+                    const weekIndex = weeksSinceReference % weekSequence.length; // 0 is week 1
+                    const week = weekSequence[weekIndex];
+                    const fileName = `${dayToPrefix[day]}${week}.html`;
+                    window.location.href = fileName;
+                });
+            }
+
+
+        // Liturgical Calendar Logic
+        function calculateLiturgicalDay() {
+            const today = new Date();
+            const year = today.getFullYear();
+            
+            // Calculate Easter (simplified algorithm)
+            function calculateEaster(year) {
+                const a = year % 19;
+                const b = Math.floor(year / 100);
+                const c = year % 100;
+                const d = Math.floor(b / 4);
+                const e = b % 4;
+                const f = Math.floor((b + 8) / 25);
+                const g = Math.floor((b - f + 1) / 3);
+                const h = (19 * a + b - d - g + 15) % 30;
+                const i = Math.floor(c / 4);
+                const k = c % 4;
+                const l = (32 + 2 * e + 2 * i - h - k) % 7;
+                const m = Math.floor((a + 11 * h + 22 * l) / 451);
+                const month = Math.floor((h + l - 7 * m + 114) / 31);
+                const day = ((h + l - 7 * m + 114) % 31) + 1;
+                return new Date(year, month - 1, day);
+            }
+
+            const easter = calculateEaster(year);
+            const easterNextYear = calculateEaster(year + 1);
+            
+            // Calculate key dates
+            const christmas = new Date(year, 11, 25);
+            const christmasLastYear = new Date(year - 1, 11, 25);
+            const ashWednesday = new Date(easter);
+            ashWednesday.setDate(easter.getDate() - 46);
+            const pentecost = new Date(easter);
+            pentecost.setDate(easter.getDate() + 49);
+            const adventStart = new Date(year, 11, 25);
+            while (adventStart.getDay() !== 0) {
+                adventStart.setDate(adventStart.getDate() - 1);
+            }
+            adventStart.setDate(adventStart.getDate() - 21); // First Sunday of Advent
+            
+            // Determine liturgical season
+            let season = 'Ordinary Time';
+            let feast = null;
+            let seasonImage = '/assets/images/bikira M.png';
+            
+            // Check for specific dates
+            if (today.getMonth() === 11 && today.getDate() === 25) {
+                season = 'Christmas';
+                seasonImage = '/assets/images/bikira M.png';
+                feast = 'Nativity of the Lord';
+            } else if (today.getMonth() === 0 && today.getDate() === 1) {
+                season = 'Christmas';
+                seasonImage = '/assets/images/bikira M.png';
+                feast = 'Mary, Mother of God';
+            } else if (today.getMonth() === 0 && today.getDate() === 6) {
+                season = 'Christmas';
+                seasonImage = '/assets/images/bikira M.png';
+                feast = 'Epiphany of the Lord';
+            } else if (today >= adventStart && today < christmas) {
+                season = 'Advent';
+                seasonImage = '/assets/images/bikira M.png';
+            } else if (today >= christmas && today < new Date(year, 0, 8)) {
+                season = 'Christmas';
+                seasonImage = '/assets/images/bikira M.png';
+            } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
+                season = 'Ordinary Time';
+                seasonImage = '/assets/images/bikira M.png';
+            } else if (today >= ashWednesday && today < easter) {
+                season = 'Lent';
+                seasonImage = '/assets/images/bikira M.png';
+            } else if (today >= easter && today < pentecost) {
+                season = 'Easter';
+                seasonImage = '/assets/images/bikira M.png';
+            } else if (today >= pentecost && today < adventStart) {
+                season = 'Ordinary Time';
+                seasonImage = '/assets/images/bikira M.png';
+            }
+
+            // Add special feasts
+            if (today.getDate() === 2 && today.getMonth() === 2) {
+                feast = 'Presentation of the Lord';
+            } else if (today.getDate() === 25 && today.getMonth() === 3) {
+                feast = 'Annunciation of the Lord';
+            } else if (today.getDate() === 24 && today.getMonth() === 5) {
+                feast = 'Nativity of St. John the Baptist';
+            } else if (today.getDate() === 29 && today.getMonth() === 8) {
+                feast = 'Sts. Michael, Gabriel, and Raphael';
+            } else if (today.getDate() === 1 && today.getMonth() === 10) {
+                feast = 'All Saints';
+            } else if (today.getDate() === 2 && today.getMonth() === 10) {
+                feast = 'All Souls';
+            }
+
+            // Update the UI
+            document.getElementById('season').textContent = season;
+            document.getElementById('liturgicalYear').textContent = year;
+            document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Update the season image
+            document.getElementById('seasonImage').src = seasonImage;
+            document.getElementById('seasonImage').alt = season + ' Season';
+            
+            const feastElement = document.getElementById('feastDay');
+            if (feast) {
+                feastElement.textContent = feast;
+                feastElement.classList.remove('hidden');
+            } else {
+                feastElement.classList.add('hidden');
+            }
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            initNavigation();
+            calculateLiturgicalDay();
+        });
+    </script>
+</body>
+</html>
