@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPray - Liturgical Companion</title>
+    <title>ipray - Liturgical Companion</title>
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <meta name="description" content="A Catholic liturgical companion app for daily prayer and worship">
+    
+   <!-- PWA Meta Tags -->
+<link rel="manifest" href="/ipray/manifest.json">
+<meta name="theme-color" content="#7C3AED">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,6 +27,11 @@
                         'primary': '#7C3AED',   
                         'secondary': '#DB2777',
                         'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
                     },
                     backgroundImage: {
                         'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
@@ -145,76 +159,65 @@
             z-index: 10;
         }
         
+        /* Liturgical Colors */
         .bg-purple-100 {
-            background-color: #f3e8ff;
+            background-color: rgba(237, 233, 254, 0.8);
         }
         
-        body.light-mode .bg-purple-100 {
-            background-color: #f3e8ff;
+        .bg-white-100 {
+            background-color: rgba(255, 255, 255, 0.8);
         }
         
-        .dark .bg-purple-100, body:not(.light-mode) .bg-purple-100 {
-            background-color: #1e1b4b;
+        .bg-red-100 {
+            background-color: rgba(254, 226, 226, 0.8);
+        }
+        
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        
+        .bg-gold-100 {
+            background-color: rgba(254, 249, 195, 0.8);
         }
         
         .border-purple-200 {
             border-color: #e9d5ff;
         }
         
-        body.light-mode .border-purple-200 {
-            border-color: #694391;
+        .border-white-200 {
+            border-color: #e5e7eb;
         }
         
-        .dark .border-purple-200, body:not(.light-mode) .border-purple-200 {
-            border-color: #3730a3;
+        .border-red-200 {
+            border-color: #fecaca;
+        }
+        
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        
+        .border-gold-200 {
+            border-color: #fef08a;
         }
         
         .text-purple-800 {
             color: #9333ea;
         }
         
-        body.light-mode .text-purple-800 {
-            color: #9333ea;
+        .text-white-800 {
+            color: #f9fafb;
         }
         
-        .dark .text-purple-800, body:not(.light-mode) .text-purple-800 {
-            color: #ddd6fe;
+        .text-red-800 {
+            color: #991b1b;
         }
         
-        .bg-white {
-            background-color: #ffffff;
+        .text-green-800 {
+            color: #166534;
         }
         
-        body.light-mode .bg-white {
-            background-color: #ffffff;
-        }
-        
-        .dark .bg-white, body:not(.light-mode) .bg-white {
-            background-color: #1f2937;
-        }
-        
-        .text-gray-800 {
-            color: #1f2937;
-        }
-        
-        body.light-mode .text-gray-800 {
-            color: #1f2937;
-        }
-        
-        .dark .text-gray-800, body:not(.light-mode) .text-gray-800 {
-            color: #e5e7eb;
-        }
-        
-        .text-gray-600 {
-            color: #4b5563;
-        }
-        
-        body.light-mode .text-gray-600 {
-            color: #4b5563;
-        }
-        
-        .dark .text-gray-600, body:not(.light-mode) .text-gray-600 {
-            color: #9ca3af;
+        .text-gold-800 {
+            color: #854d0e;
         }
         
         @media (max-width: 640px) {
@@ -226,6 +229,15 @@
                 height: 50px;
             }
         }
+        
+        /* Accessibility */
+        .high-contrast {
+            filter: contrast(1.5);
+        }
+        
+        .text-large {
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
@@ -234,18 +246,31 @@
         <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
             <div class="header-content">
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p id="appSubtitle" class="text-sm text-gray-600 dark:text-gray-400">
                         Your Prayer Companion
                     </p>
                 </div>
-                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300 z-20">
-                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
+                <div class="flex items-center">
+                    <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300 z-20">
+                        <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    <!-- Language Switcher -->
+                    <button id="languageToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 ml-4 text-sm font-medium">
+                        EN
+                    </button>
+                    <!-- Accessibility Options -->
+                    <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 ml-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
             
             <!-- Centered Icon Holder in Header -->
@@ -261,7 +286,7 @@
                 <!-- Liturgical Day Card -->
                 <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-purple-900/30 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-purple-800/30 season-border">
                     <div class="text-center">
-                        <div class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-300 bg-white/60 dark:bg-black/20">
+                        <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-300 bg-white/60 dark:bg-black/20">
                             <span id="season">Advent</span> <span id="liturgicalYear">2023</span>
                         </div>
                         <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
@@ -271,53 +296,127 @@
                             Feast of All Saints
                         </p>
                         <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
-                            <p class="text-sm text-gray-600 dark:text-gray-300">
+                            <p id="liturgicalQuote" class="text-sm text-gray-600 dark:text-gray-300">
                                 May your prayers today bring you closer to God's grace and peace.
                             </p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Mass Readings Card (Dynamically Added) -->
+                
                 <!-- Navigation Grid -->
                 <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <!-- Navigation items will be populated by JavaScript -->
                 </div>
 
-               
+                <!-- Saint of the Day Card -->
+                <div id="saintCard" class="hidden rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-purple-600 dark:text-purple-400" data-translate="saint">Saint of the Day</h3>
+                    <div id="saintContent" class="flex items-center">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <img id="saintImage" src="" alt="Saint" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 id="saintName" class="font-semibold text-gray-800 dark:text-gray-200">Loading...</h4>
+                            <p id="saintFeast" class="text-sm text-gray-600 dark:text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Bottom Navigation -->
         <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
             <div class="flex justify-around">
-                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400" data-translate="home">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
-                    <span class="text-xs font-medium">Home</span>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
                 </a>
-                <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-translate="lauds">
                     <svg id="current-week" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
-                    <span class="text-xs font-medium">Lauds</span>
+                    <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
                 </a>
-                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-translate="calendar">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span class="text-xs font-medium">Calendar</span>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
                 </a>
-                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-translate="settings">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     </svg>
-                    <span class="text-xs font-medium">Settings</span>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
                 </a>
             </div>
         </nav>
+        
+        <!-- Accessibility Menu (Hidden by Default) -->
+        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 z-50 hidden">
+            <h4 class="font-bold mb-2 text-gray-800 dark:text-white">Accessibility</h4>
+            <div class="space-y-2">
+                <button id="highContrastToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                    <span>High Contrast</span>
+                </button>
+                <button id="textSizeToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>Large Text</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Translations
+        const translations = {
+            en: {
+                home: "Home",
+                lauds: "Lauds",
+                calendar: "Calendar",
+                settings: "Settings",
+                prayers: "Prayers",
+                readings: "Office of Readings",
+                rosary: "Holy Rosary",
+                requests: "Prayer Requests",
+                scripture: "Scripture",
+                sacraments: "Sacraments",
+                saint: "Saint of the Day",
+                quoteAdvent: "Prepare the way of the Lord!",
+                quoteChristmas: "Glory to God in the highest!",
+                quoteLent: "Repent and believe in the Gospel!",
+                quoteEaster: "Christ is risen! Alleluia!",
+                quoteOrdinary: "May your prayers today bring you closer to God's grace and peace."
+            },
+            sw: {
+                home: "Nyumbani",
+                lauds: "Sala ya Asubuhi",
+                calendar: "Kalenda",
+                settings: "Mipangilio",
+                prayers: "Sala",
+                readings: "Masomo",
+                rosary: "Rozari Takatifu",
+                requests: "Maombi",
+                scripture: "Maandiko",
+                sacraments: "Sakramenti",
+                saint: "Mtakatifu wa Leo",
+                quoteAdvent: "Tayarishieni njia ya Bwana!",
+                quoteChristmas: "Utukufu kwa Mungu mbinguni!",
+                quoteLent: "Tubuni na muamini Injili!",
+                quoteEaster: "Kristo amefufuka! Aleluya!",
+                quoteOrdinary: "Naomba maombi yako leo yakuweze karibu na neema na amani ya Mungu."
+            }
+        };
+
         // Theme Management
         function initTheme() {
             const savedMode = localStorage.getItem('themeMode');
@@ -362,6 +461,93 @@
             }
         });
 
+        // Language Management
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update UI elements
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update button text
+            document.getElementById('languageToggle').textContent = lang === 'en' ? 'SW' : 'EN';
+            
+            // Update app title/subtitle
+            document.getElementById('appTitle').textContent = lang === 'sw' ? "iSala" : "iPray";
+            document.getElementById('appSubtitle').textContent = lang === 'sw' ? "Msaidizi wa Kiliturujia" : "Liturgical Companion";
+            
+            // Update liturgical quote if season is already set
+            const season = document.getElementById('season').textContent;
+            updateLiturgicalQuote(season, lang);
+        }
+
+        // Toggle language
+        document.getElementById('languageToggle').addEventListener('click', function() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(currentLang === 'en' ? 'sw' : 'en');
+        });
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update UI elements
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update button text (remove title change)
+            document.getElementById('languageToggle').textContent = lang === 'en' ? 'SW' : 'EN';
+            
+            // Only update subtitle (keep "iPray" constant)
+            document.getElementById('appSubtitle').textContent = lang === 'sw' ? "Msaidizi wako Wa Sala" : "Your Prayer Companion";
+            
+            // Update liturgical quote if season is already set
+            const season = document.getElementById('season').textContent;
+            updateLiturgicalQuote(season, lang);
+        }
+
+        // Accessibility Features
+        function initAccessibility() {
+            // Toggle menu
+            document.getElementById('accessibilityToggle').addEventListener('click', function(e) {
+                e.stopPropagation();
+                const menu = document.getElementById('accessibilityMenu');
+                menu.classList.toggle('hidden');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('accessibilityMenu').classList.add('hidden');
+            });
+            
+            // High contrast toggle
+            document.getElementById('highContrastToggle').addEventListener('click', function() {
+                document.body.classList.toggle('high-contrast');
+                localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
+            });
+            
+            // Large text toggle
+            document.getElementById('textSizeToggle').addEventListener('click', function() {
+                document.body.classList.toggle('text-large');
+                localStorage.setItem('largeText', document.body.classList.contains('text-large'));
+            });
+            
+            // Load saved preferences
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+            if (localStorage.getItem('largeText') === 'true') {
+                document.body.classList.add('text-large');
+            }
+        }
+
         // Navigation
         function initNavigation() {
             const navItems = [
@@ -370,20 +556,19 @@
                 `, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                `, title: 'Office of Readings', color: 'text-blue-600', id: 'readings', link: 'office-readings.html' },
+                `, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'office-readings.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                `, title: 'Holy Rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
+                `, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                `, title: 'Amefufuka', color: 'text-green-600', id: 'prayers', link: 'prayer-requests.html' },
+                `, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'prayer-requests.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                `, title: 'Scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
-
+                `, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />
-                `, title: 'Sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
+                `, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
             ];
 
             const navGrid = document.getElementById('navGrid');
@@ -400,8 +585,8 @@
                                 ${item.icon}
                             </svg>
                         </div>
-                        <h3 class="font-semibold text-lg text-gray-800 dark:text-white">
-                            ${item.title}
+                        <h3 class="font-semibold text-lg text-gray-800 dark:text-white" data-translate="${item.title}">
+                            ${translations['en'][item.title]}
                         </h3>
                     </div>
                 `;
@@ -409,38 +594,50 @@
             });
         }
 
-        // Masifu ya Asubuhi dynamic link by day and week (WEEK 1 starts this week, week changes every Sunday)
-            const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
-            if (masifuAsubuhiLink) {
-                masifuAsubuhiLink.addEventListener('click', function() {
-                    const day = new Date().getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-                    const dayToPrefix = [
-                        'jumapili',   // Sunday
-                        'jumatatu',   // Monday
-                        'jumanne',    // Tuesday
-                        'jumatano',   // Wednesday
-                        'alhamisi',   // Thursday
-                        'ijumaa',     // Friday
-                        'jumamosi'    // Saturday
-                    ];
-                    // Week sequence: 1 -> 2 -> 3 -> 4 -> 1 ...
-                    const weekSequence = [1, 2, 3, 4];
-                    // Find the most recent Sunday (including today if today is Sunday)
-                    const now = new Date();
-                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                    const daysSinceSunday = today.getDay(); // 0 if Sunday, 1 if Monday, ..., 6 if Saturday
-                    // Reference Sunday is the most recent Sunday (this week is week 1)
-                    const referenceSunday = new Date(today);
-                    referenceSunday.setDate(today.getDate() - daysSinceSunday);
-                    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-                    const weeksSinceReference = Math.floor((today - referenceSunday) / msPerWeek);
-                    const weekIndex = weeksSinceReference % weekSequence.length; // 0 is week 1
-                    const week = weekSequence[weekIndex];
-                    const fileName = `${dayToPrefix[day]}${week}.html`;
-                    window.location.href = fileName;
-                });
-            }
+        // Masifu ya Asubuhi dynamic link by day and week
+        const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
+        if (masifuAsubuhiLink) {
+            masifuAsubuhiLink.addEventListener('click', function() {
+                const day = new Date().getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
+                const dayToPrefix = [
+                    'jumapili',   // Sunday
+                    'jumatatu',   // Monday
+                    'jumanne',    // Tuesday
+                    'jumatano',   // Wednesday
+                    'alhamisi',   // Thursday
+                    'ijumaa',     // Friday
+                    'jumamosi'    // Saturday
+                ];
+                // Week sequence: 1 -> 2 -> 3 -> 4 -> 1 ...
+                const weekSequence = [1, 2, 3, 4];
+                // Find the most recent Sunday (including today if today is Sunday)
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const daysSinceSunday = today.getDay(); // 0 if Sunday, 1 if Monday, ..., 6 if Saturday
+                // Reference Sunday is the most recent Sunday (this week is week 1)
+                const referenceSunday = new Date(today);
+                referenceSunday.setDate(today.getDate() - daysSinceSunday);
+                const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                const weeksSinceReference = Math.floor((today - referenceSunday) / msPerWeek);
+                const weekIndex = weeksSinceReference % weekSequence.length; // 0 is week 1
+                const week = weekSequence[weekIndex];
+                const fileName = `${dayToPrefix[day]}${week}.html`;
+                window.location.href = fileName;
+            });
+        }
 
+        // Update liturgical quote based on season and language
+        function updateLiturgicalQuote(season, lang) {
+            const quoteElement = document.getElementById('liturgicalQuote');
+            let quoteKey = 'quoteOrdinary';
+            
+            if (season === 'Advent') quoteKey = 'quoteAdvent';
+            else if (season === 'Christmas') quoteKey = 'quoteChristmas';
+            else if (season === 'Lent') quoteKey = 'quoteLent';
+            else if (season === 'Easter') quoteKey = 'quoteEaster';
+            
+            quoteElement.textContent = translations[lang || 'en'][quoteKey];
+        }
 
         // Liturgical Calendar Logic
         function calculateLiturgicalDay() {
@@ -486,53 +683,69 @@
             let season = 'Ordinary Time';
             let feast = null;
             let seasonImage = '/assets/images/bikira maria.jpg';
+            let liturgicalColor = 'green';
             
             // Check for specific dates
             if (today.getMonth() === 11 && today.getDate() === 25) {
                 season = 'Christmas';
                 seasonImage = '/assets/images/bikira maria.jpg';
                 feast = 'Nativity of the Lord';
+                liturgicalColor = 'white';
             } else if (today.getMonth() === 0 && today.getDate() === 1) {
                 season = 'Christmas';
                 seasonImage = '/assets/images/bikira maria.jpg';
                 feast = 'Mary, Mother of God';
+                liturgicalColor = 'white';
             } else if (today.getMonth() === 0 && today.getDate() === 6) {
                 season = 'Christmas';
                 seasonImage = '/assets/images/bikira maria.jpg';
                 feast = 'Epiphany of the Lord';
+                liturgicalColor = 'white';
             } else if (today >= adventStart && today < christmas) {
                 season = 'Advent';
                 seasonImage = '/assets/images/bikira maria.jpg';
+                liturgicalColor = 'purple';
             } else if (today >= christmas && today < new Date(year, 0, 8)) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/christmas.jpg';
+                liturgicalColor = 'white';
             } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
                 season = 'Ordinary Time';
                 seasonImage = '/assets/images/bikira maria.jpg';
+                liturgicalColor = 'green';
             } else if (today >= ashWednesday && today < easter) {
                 season = 'Lent';
                 seasonImage = '/assets/images/bikira maria.jpg';
+                liturgicalColor = 'purple';
             } else if (today >= easter && today < pentecost) {
                 season = 'Easter';
                 seasonImage = '/assets/images/bikira maria.jpg';
+                liturgicalColor = 'white';
             } else if (today >= pentecost && today < adventStart) {
                 season = 'Ordinary Time';
                 seasonImage = '/assets/images/bikira maria.jpg';
+                liturgicalColor = 'green';
             }
 
             // Add special feasts
             if (today.getDate() === 2 && today.getMonth() === 2) {
                 feast = 'Presentation of the Lord';
+                liturgicalColor = 'white';
             } else if (today.getDate() === 25 && today.getMonth() === 3) {
                 feast = 'Annunciation of the Lord';
+                liturgicalColor = 'white';
             } else if (today.getDate() === 24 && today.getMonth() === 5) {
                 feast = 'Nativity of St. John the Baptist';
+                liturgicalColor = 'white';
             } else if (today.getDate() === 29 && today.getMonth() === 8) {
                 feast = 'Sts. Michael, Gabriel, and Raphael';
+                liturgicalColor = 'white';
             } else if (today.getDate() === 1 && today.getMonth() === 10) {
                 feast = 'All Saints';
+                liturgicalColor = 'white';
             } else if (today.getDate() === 2 && today.getMonth() === 10) {
                 feast = 'All Souls';
+                liturgicalColor = 'purple';
             }
 
             // Update the UI
@@ -549,12 +762,150 @@
             document.getElementById('seasonImage').src = seasonImage;
             document.getElementById('seasonImage').alt = season + ' Season';
             
+            // Update liturgical color
+            const card = document.getElementById('liturgicalCard');
+            card.classList.remove('bg-purple-100', 'bg-white-100', 'bg-red-100', 'bg-green-100', 'bg-gold-100',
+                                'border-purple-200', 'border-white-200', 'border-red-200', 'border-green-200', 'border-gold-200');
+            card.classList.add(`bg-${liturgicalColor}-100`, `border-${liturgicalColor}-200`);
+            
+            // Update season badge color
+            const seasonBadge = document.getElementById('seasonBadge');
+            seasonBadge.classList.remove('text-purple-800', 'text-white-800', 'text-red-800', 'text-green-800', 'text-gold-800');
+            seasonBadge.classList.add(`text-${liturgicalColor}-800`);
+            
             const feastElement = document.getElementById('feastDay');
             if (feast) {
                 feastElement.textContent = feast;
                 feastElement.classList.remove('hidden');
+                feastElement.classList.remove('text-purple-800', 'text-white-800', 'text-red-800', 'text-green-800', 'text-gold-800');
+                feastElement.classList.add(`text-${liturgicalColor}-800`);
             } else {
                 feastElement.classList.add('hidden');
+            }
+            
+            // Update quote based on season and current language
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            updateLiturgicalQuote(season, lang);
+        }
+
+        // Fetch Saint of the Day
+        async function fetchSaintOfTheDay() {
+            try {
+                // This is a mock - in production you'd use a real API
+                const saints = [
+                    {
+                        name: "St. Teresa of Calcutta",
+                        feast: "September 5",
+                        image: "/assets/images/teresa.jpg",
+                        bio: "Founder of the Missionaries of Charity, served the poorest of the poor in Kolkata."
+                    },
+                    {
+                        name: "St. Augustine",
+                        feast: "August 28",
+                        image: "/assets/images/augustine.jpg",
+                        bio: "Bishop of Hippo and Doctor of the Church, author of 'Confessions' and 'City of God'."
+                    }
+                ];
+                
+                const today = new Date();
+                const saint = saints[today.getDate() % saints.length];
+                
+                document.getElementById('saintCard').classList.remove('hidden');
+                document.getElementById('saintName').textContent = saint.name;
+                document.getElementById('saintFeast').textContent = `Feast Day: ${saint.feast}`;
+                document.getElementById('saintImage').src = saint.image;
+                document.getElementById('saintImage').alt = saint.name;
+                
+            } catch (error) {
+                console.error('Failed to fetch saint:', error);
+            }
+        }
+
+        // Fetch Daily Mass Readings
+        async function fetchDailyReadings() {
+            try {
+                // Mock data - replace with actual API call
+                const readings = {
+                    firstReading: "The word of the Lord came to me saying: 'Before I formed you in the womb I knew you, before you were born I dedicated you, a prophet to the nations I appointed you.'",
+                    firstReadingSource: "Jeremiah 1:4-5",
+                    responsorialPsalm: "R. I will sing of your salvation.",
+                    psalmResponse: "Psalm 71:1-6, 15, 17",
+                    gospel: "Jesus came to Nazareth and proclaimed: 'The Spirit of the Lord is upon me, because he has anointed me to bring glad tidings to the poor.'",
+                    gospelSource: "Luke 4:16-21"
+                };
+                
+                const readingsCard = document.createElement('div');
+                readingsCard.id = 'readingsCard';
+                readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg mb-6';
+                readingsCard.innerHTML = `
+                    <h3 class="text-xl font-bold mb-4 text-purple-600 dark:text-purple-400" data-translate="readings">Mass Readings</h3>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">First Reading</h4>
+                        <p class="text-gray-600 dark:text-gray-300">${readings.firstReading}</p>
+                        <p class="text-sm text-gray-500 mt-1">${readings.firstReadingSource}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Responsorial Psalm</h4>
+                        <p class="text-gray-600 dark:text-gray-300">${readings.responsorialPsalm}</p>
+                        <p class="text-sm text-gray-500 mt-1">${readings.psalmResponse}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Gospel</h4>
+                        <p class="text-gray-600 dark:text-gray-300">${readings.gospel}</p>
+                        <p class="text-sm text-gray-500 mt-1">${readings.gospelSource}</p>
+                    </div>
+                `;
+                
+                // Insert after liturgical card
+                document.getElementById('liturgicalCard').insertAdjacentElement('afterend', readingsCard);
+                
+            } catch (error) {
+                console.error('Failed to fetch readings:', error);
+            }
+        }
+
+        // Prayer Reminders
+        function setupPrayerReminders() {
+            if (!('Notification' in window)) return;
+
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    // Schedule reminders
+                    scheduleDailyReminder(6, 0, 'Morning Prayer: Start your day with God');
+                    scheduleDailyReminder(12, 0, 'Angelus: Let us pray the Angelus together');
+                    scheduleDailyReminder(15, 0, 'Divine Mercy Hour: Remember God\'s mercy at 3 PM');
+                }
+            });
+        }
+
+        function scheduleDailyReminder(hour, minute, message) {
+            const now = new Date();
+            const reminderTime = new Date();
+            
+            reminderTime.setHours(hour, minute, 0, 0);
+            
+            // If time already passed today, set for tomorrow
+            if (now > reminderTime) {
+                reminderTime.setDate(reminderTime.getDate() + 1);
+            }
+            
+            const timeout = reminderTime - now;
+            
+            setTimeout(() => {
+                new Notification('iPray Reminder', { body: message });
+                // Reschedule for next day
+                scheduleDailyReminder(hour, minute, message);
+            }, timeout);
+        }
+
+        // PWA Service Worker Registration
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js')
+                        .then(registration => console.log('SW registered: ', registration.scope))
+                        .catch(err => console.log('SW registration failed: ', err));
+                });
             }
         }
 
@@ -562,8 +913,47 @@
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
             initNavigation();
+            initAccessibility();
             calculateLiturgicalDay();
+            fetchSaintOfTheDay();
+            fetchDailyReadings();
+            setupPrayerReminders();
+            registerServiceWorker();
+            
+            // Set initial language
+            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(preferredLang);
         });
+        
+        // Register Service Worker for GitHub Pages
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/ipray/service-worker.js', { scope: '/ipray/' })
+            .then(reg => console.log('Service Worker registered for scope:', reg.scope))
+            .catch(err => console.log('Service Worker registration failed:', err));
+        });
+        }
+
+        // Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Show install button (add this button to your UI)
+        document.getElementById('installBtn').style.display = 'block';
+        });
+
+        document.getElementById('installBtn').addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choiceResult => {
+            if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted install');
+            }
+            deferredPrompt = null;
+        });
+        });
+
     </script>
 </body>
 </html>
