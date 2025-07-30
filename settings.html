@@ -6,163 +6,72 @@
     <title>Settings - iPray</title>
     <meta name="description" content="iPray app settings and preferences">
     
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for social media icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,it,pt,sw',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Light mode styles */
-        body.light-mode {
-            background-color: #f5f5f5;
-            color: #1a1a1a;
-        }
-
-        .dark-mode-toggle {
-            background-color: #333;
-            color: #e0e0e0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: auto;
-            font-size: 0.8rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border: none;
-        }
-
-        .dark-mode-toggle:hover {
-            background-color: #555;
-        }
-
-        body.light-mode .dark-mode-toggle {
-            background-color: #ccc;
-            color: #333;
-        }
-
-        body.light-mode .dark-mode-toggle:hover {
-            background-color: #aaa;
-        }
-
-        .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        body.light-mode .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
-        
-        .social-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            color: white;
-        }
-
-        .social-icon:hover {
-            transform: translateY(-3px);
-        }
-        
-        .fa-facebook { background-color: #1877f2; color: white; }
-        .fa-twitter { background-color: #1da1f2; color: white; }
-        .fa-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc277f, #c13584, #515bd4); color: white; }
-        .fa-youtube { background-color: #ff0000; color: white; }
-        .fa-telegram { background-color: #0088cc; color: white; }
-        .fa-whatsapp { background-color: #25d366; color: white; }
-        .fa-envelope { background-color: #ea4335; color: white; }
-        
-        /* Hide Google Translate default UI */
-        .goog-te-gadget {
-            display: none !important;
-        }
-        
-        .goog-logo-link {
-            display: none !important;
-        }
-        
-        .goog-te-combo {
-            display: none !important;
-        }
-        
-        /* Custom language selector */
-        .language-option {
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .language-option:hover {
-            background-color: #f0f0f0 !important;
-            dark:hover:bg-gray-700;
-        }
-        
-        @media (max-width: 640px) {
-            .bottom-nav {
-                padding-bottom: env(safe-area-inset-bottom);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                    }
+                }
             }
         }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        /* Dynamic Theme Classes */
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        
+        /* Accessibility */
+        .text-xxs { font-size: 0.7rem; }
+        .high-contrast { filter: contrast(1.8); }
+        .text-large { font-size: 1.1rem; }
+        .text-xlarge { font-size: 1.25rem; }
+        
+        /* GitHub Pages Fixes */
+        .gh-pages-link { color: var(--primary-color); }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
-    <!-- Google Translate Element (hidden) -->
-    <div id="google_translate_element" style="position: absolute; top: -100px;"></div>
-    
-    <div id="app" class="relative z-10">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div id="app">
         <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-            <div class="flex items-center justify-between">
+        <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         iPray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-gray-600 dark:text-gray-400" id="pageSubtitle">
                         Settings
                     </p>
                 </div>
-                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
-                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+                    <svg id="themeIcon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
@@ -170,307 +79,467 @@
         </header>
 
         <!-- Main Content -->
-        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
-            <div class="space-y-6">
-                <div class="flex items-center justify-between">
-                    <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-200 shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Back to Home
-                    </a>
-                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                        Settings
+        <main class="container mx-auto px-4 py-6 pb-24">
+            <!-- Back Button -->
+            <a href="/ipray/" class="inline-flex items-center mb-6 text-purple-600 dark:text-purple-400">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Home
+            </a>
+            
+            <!-- Settings Sections -->
+            <div class="space-y-8">
+                <!-- App Theme -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-palette mr-2 text-purple-500"></i>
+                        <span>App Theme</span>
                     </h2>
-                </div>
-
-                <div class="rounded-2xl p-8 bg-white dark:bg-gray-800 shadow-xl">
-                    <!-- Social Media Links -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">Connect With Us</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <a href="https://facebook.com" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-facebook"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Facebook</span>
-                            </a>
-                            
-                            <a href="https://twitter.com" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-twitter"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Twitter</span>
-                            </a>
-                            
-                            <a href="https://instagram.com" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-instagram"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Instagram</span>
-                            </a>
-                            
-                            <a href="https://youtube.com" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">YouTube</span>
-                            </a>
-                            
-                            <a href="https://t.me" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-telegram"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Telegram</span>
-                            </a>
-                            
-                            <a href="https://wa.me" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-whatsapp"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">WhatsApp</span>
-                            </a>
-                            
-                            <a href="https://m.me" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fab fa-facebook-messenger"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Messenger</span>
-                            </a>
-                            
-                            <a href="mailto:otienocollo95@gmail.com" target="_blank" class="flex flex-col items-center p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                                <div class="social-icon mb-2">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Email</span>
-                            </a>
-                        </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="default">
+                            <div class="w-full h-12 rounded mb-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
+                            <span>Default</span>
+                        </button>
+                        
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="purple">
+                            <div class="w-full h-12 rounded mb-2 bg-liturgical-purple"></div>
+                            <span>Advent/Lent</span>
+                        </button>
+                        
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="white">
+                            <div class="w-full h-12 rounded mb-2 bg-liturgical-white border border-gray-300"></div>
+                            <span>Christmas/Easter</span>
+                        </button>
+                        
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="green">
+                            <div class="w-full h-12 rounded mb-2 bg-liturgical-green"></div>
+                            <span>Ordinary Time</span>
+                        </button>
                     </div>
-
-                    <!-- Language Selection -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Language</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            <div class="language-option p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" data-lang="en|US">
-                                <div class="flex items-center">
-                                    <span class="flag-icon mr-2">🇺🇸</span>
-                                    <span>American English</span>
-                                </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="darkModeToggle" class="rounded text-purple-600">
+                                <span class="ml-2">Dark Mode</span>
+                            </label>
+                        </div>
+                        <button id="resetTheme" class="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600">
+                            Reset to Default
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Language Settings -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-language mr-2 text-purple-500"></i>
+                        <span>Language Settings</span>
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="en">
+                            <span class="mr-2">🇺🇸</span>
+                            <span>English</span>
+                        </button>
+                        
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="sw">
+                            <span class="mr-2">🇹🇿</span>
+                            <span>Swahili</span>
+                        </button>
+                        
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="es">
+                            <span class="mr-2">🇪🇸</span>
+                            <span>Spanish</span>
+                        </button>
+                        
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="fr">
+                            <span class="mr-2">🇫🇷</span>
+                            <span>French</span>
+                        </button>
+                        
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="pt">
+                            <span class="mr-2">🇵🇹</span>
+                            <span>Portuguese</span>
+                        </button>
+                        
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="it">
+                            <span class="mr-2">🇮🇹</span>
+                            <span>Italian</span>
+                        </button>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Changing language will refresh the app. Your preferences will be saved.
+                    </p>
+                </section>
+                
+                <!-- Prayer Reminders -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-bell mr-2 text-purple-500"></i>
+                        <span>Prayer Reminders</span>
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium">Morning Prayer (Lauds)</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Start your day with prayer</p>
                             </div>
-                            
-                            <div class="language-option p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" data-lang="en|GB">
-                                <div class="flex items-center">
-                                    <span class="flag-icon mr-2">🇬🇧</span>
-                                    <span>UK English</span>
-                                </div>
-                            </div>
-                            
-                            <div class="language-option p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" data-lang="es">
-                                <div class="flex items-center">
-                                    <span class="flag-icon mr-2">🇪🇸</span>
-                                    <span>Spanish</span>
-                                </div>
-                            </div>
-                            
-                            <div class="language-option p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" data-lang="it">
-                                <div class="flex items-center">
-                                    <span class="flag-icon mr-2">🇮🇹</span>
-                                    <span>Italian</span>
-                                </div>
-                            </div>
-                            
-                            <div class="language-option p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" data-lang="pt">
-                                <div class="flex items-center">
-                                    <span class="flag-icon mr-2">🇵🇹</span>
-                                    <span>Portuguese</span>
-                                </div>
-                            </div>
-                            
-                            <div class="language-option p-3 rounded-lg border border-gray-300 dark:border-gray-600 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" data-lang="sw">
-                                <div class="flex items-center">
-                                    <span class="flag-icon mr-2">🇰🇪</span>
-                                    <span>Swahili</span>
-                                </div>
+                            <div class="flex items-center">
+                                <input type="time" value="06:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                </label>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Select your preferred language for the app interface.</p>
-                    </div>
-
-                    <!-- App Information -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">App Information</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <span class="font-medium text-gray-700 dark:text-gray-300">App Version</span>
-                                <span class="text-gray-600 dark:text-gray-400">1.0.0</span>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium">Angelus</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Noon prayer tradition</p>
                             </div>
-                            
-                            <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <span class="font-medium text-gray-700 dark:text-gray-300">Storage Usage</span>
-                                <span class="text-gray-600 dark:text-gray-400">15.2 MB</span>
-                            </div>
-                            
-                            <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <span class="font-medium text-gray-700 dark:text-gray-300">Last Updated</span>
-                                <span class="text-gray-600 dark:text-gray-400">June 2025</span>
+                            <div class="flex items-center">
+                                <input type="time" value="12:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                </label>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Copyright Section -->
-                    <div class="border-t border-gray-300 dark:border-gray-700 pt-6 mt-8">
-                        <div class="text-center">
-                            <p class="text-gray-600 dark:text-gray-300">
-                                <i class="far fa-copyright mr-1"></i>
-                                <span id="copyrightText">iPray 2025. All rights reserved.</span>
-                            </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                A Catholic liturgical companion app
-                            </p>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium">Divine Mercy (3 PM)</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Hour of Great Mercy</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
                         </div>
                     </div>
-                </div>
+                </section>
+                
+                <!-- Accessibility -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-universal-access mr-2 text-purple-500"></i>
+                        <span>Accessibility</span>
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium">High Contrast Mode</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Improved visibility</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="highContrastToggle" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium">Text Size</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Adjust to your preference</p>
+                            </div>
+                            <select id="textSizeSelect" class="bg-white dark:bg-gray-600 rounded px-2 py-1">
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
+                                <option value="xlarge">Extra Large</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- App Management -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-cog mr-2 text-purple-500"></i>
+                        <span>App Management</span>
+                    </h2>
+                    
+                    <div class="space-y-3">
+                        <button id="clearCacheBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-medium">Clear Cache</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Free up storage space</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </button>
+                        
+                        <button id="exportDataBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-medium">Export Prayer Data</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Backup your prayer history</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </button>
+                        
+                        <button id="checkUpdatesBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-medium">Check for Updates</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Current version: 1.2.0</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Social & Support -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-hands-helping mr-2 text-purple-500"></i>
+                        <span>Connect & Support</span>
+                    </h2>
+                    
+                    <div class="grid grid-cols-4 gap-3 mb-4">
+                        <a href="https://facebook.com" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <span class="text-xxs">Facebook</span>
+                        </a>
+                        
+                        <a href="https://wa.me/254123456789" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <span class="text-xxs">WhatsApp</span>
+                        </a>
+                        
+                        <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span class="text-xxs">Email</span>
+                        </a>
+                        
+                        <a href="https://donate.ipray.app" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <span class="text-xxs">Donate</span>
+                        </a>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <i class="far fa-copyright mr-1"></i>
+                            <span id="copyrightYear">2025</span> iPray App. All rights reserved.
+                        </p>
+                    </div>
+                </section>
             </div>
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-3 shadow-lg">
             <div class="flex justify-around">
-                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="index.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
-                    <span class="text-xs font-medium">Home</span>
+                    <span class="text-xs">Home</span>
                 </a>
-                <a href="prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="prayer.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
-                    <span class="text-xs font-medium">Prayer</span>
+                    <span class="text-xs">Prayer</span>
                 </a>
-                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="calendar.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span class="text-xs font-medium">Calendar</span>
+                    <span class="text-xs">Calendar</span>
                 </a>
-                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <a href="settings.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-purple-600 dark:text-purple-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     </svg>
-                    <span class="text-xs font-medium">Settings</span>
+                    <span class="text-xs">Settings</span>
                 </a>
             </div>
         </nav>
     </div>
 
+    <!-- Settings JavaScript -->
     <script>
-        // Theme Management
-        function initTheme() {
-            const savedMode = localStorage.getItem('themeMode');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set copyright year
+            document.getElementById('copyrightYear').textContent = new Date().getFullYear();
             
-            if (isDark) {
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-            } else {
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
+            // Load saved preferences
+            loadPreferences();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Check if installed
+            checkPWAInstallation();
+        });
+
+        // Load saved preferences from localStorage
+        function loadPreferences() {
+            // Theme
+            const savedTheme = localStorage.getItem('appTheme') || 'default';
+            setTheme(savedTheme);
+            
+            // Dark mode
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            document.getElementById('darkModeToggle').checked = darkMode;
+            document.body.classList.toggle('dark', darkMode);
+            
+            // High contrast
+            const highContrast = localStorage.getItem('highContrast') === 'true';
+            document.getElementById('highContrastToggle').checked = highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            
+            // Text size
+            const textSize = localStorage.getItem('textSize') || 'normal';
+            document.getElementById('textSizeSelect').value = textSize;
+            document.body.classList.remove('text-large', 'text-xlarge');
+            if (textSize !== 'normal') {
+                document.body.classList.add(`text-${textSize}`);
             }
+            
+            // Language
+            const language = localStorage.getItem('language') || 'en';
+            highlightSelectedLanguage(language);
         }
 
-        // Toggle theme
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            const isDark = !document.body.classList.contains('light-mode');
-            
-            if (isDark) {
-                // Switch to light mode
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-                localStorage.setItem('themeMode', 'light');
-            } else {
-                // Switch to dark mode
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-                localStorage.setItem('themeMode', 'dark');
-            }
-        },
-
-        // Language selection with Google Translate
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            
-            // Set current year in copyright
-            const currentYear = new Date().getFullYear();
-            document.getElementById('copyrightText').textContent = `iPray ${currentYear}. All rights reserved.`;
-            
-            // Add event listeners to language options
-            document.querySelectorAll('.language-option').forEach(option => {
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Theme selection
+            document.querySelectorAll('.theme-option').forEach(option => {
                 option.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    
-                    // Remove active class from all buttons
-                    document.querySelectorAll('.language-option').forEach(btn => {
-                        btn.classList.remove('border-purple-500', 'dark:border-purple-400');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('border-purple-500', 'dark:border-purple-400');
-                    
-                    // Trigger Google Translate
-                    translatePage(lang);
+                    const theme = this.dataset.theme;
+                    setTheme(theme);
+                    localStorage.setItem('appTheme', theme);
                 });
             });
-        }));
-
-        // Function to trigger Google Translate
-        function translatePage(lang) {
-            // Wait for Google Translate to load
-            setTimeout(function() {
-                const selectField = document.querySelector('select.goog-te-combo');
-                if (selectField) {
-                    // Split the language code (e.g., "en|US" -> "en")
-                    const langCode = lang.split('|')[0];
-                    
-                    for (let i = 0; i < selectField.options.length; i++) {
-                        if (selectField.options[i].value === langCode) {
-                            selectField.selectedIndex = i;
-                            selectField.dispatchEvent(new Event('change'));
-                            break;
-                        }
-                    }
-                } else {
-                    // If the select element isn't ready yet, try again
-                    setTimeout(function() {
-                        translatePage(lang);
-                    }, 500);
+            
+            // Dark mode toggle
+            document.getElementById('darkModeToggle').addEventListener('change', function() {
+                const isDark = this.checked;
+                document.body.classList.toggle('dark', isDark);
+                localStorage.setItem('darkMode', isDark);
+            });
+            
+            // Reset theme
+            document.getElementById('resetTheme').addEventListener('click', function() {
+                setTheme('default');
+                localStorage.setItem('appTheme', 'default');
+            });
+            
+            // Language selection
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    localStorage.setItem('language', lang);
+                    highlightSelectedLanguage(lang);
+                    alert('Language changed to ' + lang + '. App will refresh.');
+                    window.location.reload();
+                });
+            });
+            
+            // Accessibility toggles
+            document.getElementById('highContrastToggle').addEventListener('change', function() {
+                const highContrast = this.checked;
+                document.body.classList.toggle('high-contrast', highContrast);
+                localStorage.setItem('highContrast', highContrast);
+            });
+            
+            document.getElementById('textSizeSelect').addEventListener('change', function() {
+                const size = this.value;
+                document.body.classList.remove('text-large', 'text-xlarge');
+                if (size !== 'normal') {
+                    document.body.classList.add(`text-${size}`);
                 }
-            }, 100);
+                localStorage.setItem('textSize', size);
+            });
+            
+            // App management buttons
+            document.getElementById('clearCacheBtn').addEventListener('click', clearCache);
+            document.getElementById('exportDataBtn').addEventListener('click', exportData);
+            document.getElementById('checkUpdatesBtn').addEventListener('click', checkForUpdates);
         }
 
-        // Initialize Google Translate
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,it,pt,sw',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
+        // Apply theme colors
+        function setTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
+            
+            // Add selected theme class
+            if (theme !== 'default') {
+                document.body.classList.add(`theme-${theme}`);
+            }
+            
+            // Update UI
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.toggle('border-purple-500', option.dataset.theme === theme);
+            });
+        }
+
+        // Highlight selected language
+        function highlightSelectedLanguage(lang) {
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.toggle('border-purple-500', option.dataset.lang === lang);
+            });
+        }
+
+        // Clear app cache
+        function clearCache() {
+            if (confirm('Clear all cached data? This will free up storage but require re-downloading content.')) {
+                if ('caches' in window) {
+                    caches.keys().then(cacheNames => {
+                        cacheNames.forEach(cacheName => {
+                            caches.delete(cacheName);
+                        });
+                    });
+                }
+                localStorage.clear();
+                alert('Cache cleared. The app will reload.');
+                window.location.reload();
+            }
+        }
+
+        // Export prayer data
+        function exportData() {
+            // In a real app, this would export prayer history
+            alert('Export functionality would save your prayer history as a file.');
+        }
+
+        // Check for app updates
+        function checkForUpdates() {
+            // In a real PWA, this would check the service worker for updates
+            alert('Your app is up to date!');
+        }
+
+        // Check if installed as PWA
+        function checkPWAInstallation() {
+            window.addEventListener('appinstalled', () => {
+                console.log('iPray was installed as PWA');
+            });
+            
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('Running as PWA');
+            }
         }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

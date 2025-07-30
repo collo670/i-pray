@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sacraments - iPray</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <meta name="description" content="Learn about the seven sacraments of the Catholic Church">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -18,9 +21,10 @@
                         'primary': '#7C3AED',
                         'secondary': '#DB2777',
                         'accent': '#F59E0B',
-                    },
-                    backgroundImage: {
-                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
                     }
                 }
             }
@@ -31,74 +35,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+
+        
+        :root {
+            --primary-color: #7C3AED;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Light mode styles */
-        body.light-mode {
             background-color: #f5f5f5;
             color: #1a1a1a;
-        }
-
-        .dark-mode-toggle {
-            background-color: #333;
-            color: #e0e0e0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: auto;
-            font-size: 0.8rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border: none;
-        }
-
-        .dark-mode-toggle:hover {
-            background-color: #555;
-        }
-
-        body.light-mode .dark-mode-toggle {
-            background-color: #ccc;
-            color: #333;
-        }
-
-        body.light-mode .dark-mode-toggle:hover {
-            background-color: #aaa;
-        }
-
-        .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        body.light-mode .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
-        
-        .card-hover {
             transition: all 0.3s ease;
         }
         
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        body.dark {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
         }
         
         .sacrament-icon {
@@ -109,7 +61,12 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem auto;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* GitHub Pages specific adjustments */
+        .gh-pages-link {
+            color: var(--primary-color);
         }
         
         @media (max-width: 640px) {
@@ -119,8 +76,8 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
-    <div id="app" class="relative z-10">
+<body class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div id="app">
         <!-- Header -->
         <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
             <div class="flex items-center justify-between">
@@ -139,6 +96,7 @@
                 </button>
             </div>
         </header>
+
 
         <!-- Main Content -->
         <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
@@ -356,55 +314,124 @@
         </nav>
     </div>
 
-    <script>
-        // Theme Management
-        function initTheme() {
-            const savedMode = localStorage.getItem('themeMode');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
-            
-            if (isDark) {
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-            } else {
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-            }
-        }
+    <!-- PWA Installation Prompt -->
+    <div id="installPrompt" class="fixed bottom-20 left-0 right-0 bg-white dark:bg-gray-800 shadow-xl mx-4 p-4 rounded-lg hidden">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-medium">Install iPray App?</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Access sacraments offline</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="dismissInstall" class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600">Later</button>
+                <button id="installBtn" class="px-3 py-1 rounded-lg bg-purple-600 text-white">Install</button>
+            </div>
+        </div>
+    </div>
 
-        // Toggle theme
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            const isDark = !document.body.classList.contains('light-mode');
-            
-            if (isDark) {
-                // Switch to light mode
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-                localStorage.setItem('themeMode', 'light');
-            } else {
-                // Switch to dark mode
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-                localStorage.setItem('themeMode', 'dark');
+    <script>
+        // Check for theme changes from other tabs/windows
+window.addEventListener('storage', (event) => {
+    if (event.key === 'themeMode') {
+        const isDark = event.newValue === 'dark';
+        setTheme(isDark);
+    }
+});
+
+
+        // Theme Management
+            function initTheme() {
+                const savedMode = localStorage.getItem('themeMode');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+                
+                if (isDark) {
+                    document.body.classList.add('dark');
+                    document.documentElement.classList.add('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    `;
+                } else {
+                    document.body.classList.remove('dark');
+                    document.documentElement.classList.remove('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    `;
+                }
             }
-        },
+
+            // Toggle theme
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                const isDark = document.body.classList.contains('dark');
+                
+                if (isDark) {
+                    // Switch to light mode
+                    document.body.classList.remove('dark');
+                    document.documentElement.classList.remove('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    `;
+                    localStorage.setItem('themeMode', 'light');
+                } else {
+                    // Switch to dark mode
+                    document.body.classList.add('dark');
+                    document.documentElement.classList.add('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    `;
+                    localStorage.setItem('themeMode', 'dark');
+                }
+            });
+
+        // Check for saved theme mode
+        if (localStorage.getItem('themeMode')) {
+            initTheme();
+        } else {
+            // If no saved mode, check system preference
+            initTheme();
+        }   
+
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.remove('hidden');
+        });
+        
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted install');
+                }
+                deferredPrompt = null;
+                document.getElementById('installPrompt').classList.add('hidden');
+            }
+        });
+        
+        document.getElementById('dismissInstall').addEventListener('click', () => {
+            document.getElementById('installPrompt').classList.add('hidden');
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/ipray/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
-        }));
+        });
     </script>
 </body>
 </html>

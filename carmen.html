@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacraments - iPray</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta name="description" content="Learn about the seven sacraments of the Catholic Church">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+
+        
+        :root {
+            --primary-color: #7C3AED;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+            text-align: justify;
+            margin: auto;
+            max-width: 800px;
+        }
+
+        p{
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: black;
+            margin: auto;
+            text-align: justify;
+        }
+        
+        body.dark {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .sacrament-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* GitHub Pages specific adjustments */
+        .gh-pages-link {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div id="app">
+        <!-- Header -->
+        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        iPray
+                    </h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Sacraments
+                    </p>
+                </div>
+                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
+                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+         <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-200 shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        Hisroria ya Carmen Hernandez
+                    </h2>
+                </div>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                <img src="/assets/images/carmen.jpg" class="mx-auto my-4 rounded-lg shadow-md" alt="Carmen Hernández, mwanzilishi mwenza wa Njia ya Neokatekumenato" width="500" height="500">
+            </div>
+            
+             <div class="space-y-6">
+                <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Carmen Hernández</h1>
+                <p class="text-lg text-gray-600 dark:text-gray-300 text-center">
+                    Carmen Hernández alikuwa mwanzilishi mwenza wa Njia ya Neokatekumenato, 
+                    pamoja na Kiko Argüello. Alizaliwa Novemba 24, 1930, na alifariki Julai 19, 2016.
+                </p>
+            
+            
+            <hr class="my-5 border-gray-300 dark:border-gray-600"> 
+            
+            <article class="container-sm mx-auto text-center">
+
+                <p>Carmen alikuwa, pamoja na Kiko, mwanzilishi wa Njia. 
+                    Alizaliwa <strong>Ólvega (Soria, España) mnamo Novemba 24, 1930</strong>. 
+                    Alikuwa mtoto wa tano kati ya watoto tisa, wanaume wanne na wanawake watano; 
+                    aliishi miaka yake ya utotoni huko Tudela (Navarra, Uhispania).</p>
+                <p>Huko Tudela, alisoma katika shule ya Compañía de María na aliwasiliana 
+                    na Compañía de Jesús (Wajesuti). Kwa kusukumwa na roho ya kimisionari ya <strong>Mtakatifu
+                    Francisco Xavier</strong> tangu umri mdogo, alihisi kwamba wito wake ulikuwa kwenda umisheni India. 
+                    Kufuatia matakwa ya baba yake, alianza kusoma kemia mnamo 1948 huko Madrid, ambapo 
+                    alihitimu na alama za juu zaidi mnamo 1954.</p>
+            </article>
+
+            <article class="container-md mx-auto text-center mt-6">
+                <p>Kwa muda, alifanya kazi pamoja na baba yake katika tasnia ya chakula, 
+                    katika kiwanda ambacho familia hiyo ilikuwa nayo huko Andújar (Jaén) lakini aliamua 
+                    kuacha kazi hiyo na kuhamia Javier, ambako aliingia katika taasisi mpya ya wamishonari, 
+                    Wamishonari wa Kristo Yesu. Baada ya muda wake katika uhitimu, alisoma theolojia katika 
+                    nyumba ya malezi ya kidini huko Valencia. Mnamo 1960, alitumwa India. 
+                    Ili kujiandaa kwa ajili ya misheni hiyo ilimbidi kwenda London, (India ni nchi mwanachama 
+                    wa Jumuiya ya Madola ya Uingereza), ambako alikaa kwa mwaka mmoja.</p> 
+                <p>Wakati huo, kulikuwa na badiliko la mwelekeo kwa Wamisionari wa Kristo Yesu ambalo 
+                    lilipunguza uwazi wa utume wa utaratibu, hivyo Carmen alirejea kutoka London hadi Barcelona.
+                    Huko alikutana na Padre <strong>Pedro Farnés Scherer</strong>, ambaye alikuwa amemaliza masomo yake katika 
+                    Taasisi ya Liturujia ya Paris, muda mfupi kabla ya Mtaguso Mkuu wa Pili wa Vatikani na 
+                    ambaye baada ya hayo alishiriki kikamilifu katika Mtaguso huo kwa ajili ya kutekelezwa.</p>
+            </article>
+
+            <div class="container-fluid text-center my-6">
+                <img src="/assets/images/carmen-hernandez-camino.jpg" class="mx-auto rounded-lg shadow-md" alt="Carmen Hernández akihubiri" width="800" height="400">
+            </div>
+
+            <article class="container-lg mx-auto text-center">
+                <p>Katika madarasa yake, <strong>Fr. Farnés</strong> aliwasilisha vyanzo vya pasaka vya Ekaristi na eklesia 
+                    iliyofanywa upya iliyoonyesha Kanisa kama nuru ya mataifa. Mawasiliano ya moja kwa moja ya 
+                    Carmen na waandishi wa usasisho huu wa upatanishi baadaye ulikuwa na ushawishi mkubwa katika 
+                    uundaji wa katekesi ya Njia ya Neokatekumenato. Carmen alitumia miaka miwili, kuanzia 
+                    katikati ya 1963 hadi katikati ya 1964, katika Nchi Takatifu akiwa na Biblia yake, 
+                    akitembelea Mahali Patakatifu. Aliporudi Madrid, alianza kufanya kazi katika miji ya 
+                    vitongoji ya vitongoji, akifikiria kwenda Bolivia kama mmishonari pamoja na watu wengine 
+                    waseja. Hata hivyo, huko alikutana na <strong>Kiko Argüello</strong>, aliyeishi katika mji wa mabanda wa 
+                    <strong>Palomeras Altas</strong>, na akaamua kukaa katika eneo hilohilo. Katikati ya maskini, wote wawili 
+                    waligundua nguvu ya Fumbo la Pasaka na kuhubiriwa kwa <strong>Kerygma</strong> (Habari Njema ya Kristo 
+                    aliyekufa na mfufuka) na waliona kuzaliwa kwa jumuiya ya kwanza. Shukrani kwa uthibitisho
+                    wa ukweli huu mpya na Askofu Mkuu wa Madrid wakati huo, Neema yake <strong>Casimiro Morcillo</strong>, 
+                    Carmen alianza kufanya kazi na Kiko, kuleta kazi hii ya upya katika Kanisa kwa parokia, 
+                    kwanza huko Madrid, kisha Roma na baadaye katika miji na mataifa mengine.</p>
+            </article>
+
+            <div class="container-fluid text-center my-6">
+                <img src="/assets/images/Carmen_Casimiro_Morcillo_Barracas_Madrid.jpg" class="mx-auto rounded-lg shadow-md" alt="Carmen Hernández na Kiko Argüello kwenye Njia" width="800" height="400">
+            </div>
+
+            <article class="container-xl mx-auto text-center mb-8">
+                <p>Carmen Hernández alifariki tarehe 19 Julai 2016 huko Madrid, Uhispania. Katika mazishi yake, 
+                    yaliyoongozwa na Kardinali Askofu Mkuu wa Madrid, Carlos Osoro Sierra, na kuhudhuriwa na 
+                    maelfu ya watu, Fr. Mario Pezzi alikazia kwamba pamoja na Njia hiyo,<strong> " ni mara ya kwanza 
+                    katika historia kwamba ukweli wa kikanisa umeanzishwa na mwanamume na mwanamke ambao 
+                    wameshirikiana sikuzote kwa zaidi ya miaka 50."</strong> Kando na hayo, Papa alituma ujumbe ambamo 
+                    alisema amepokea "kwa hisia" habari za kifo cha Carmen na kukazia maisha yake marefu <strong>
+                    "yaliyotiwa alama kwa upendo wake kwa Yesu na shauku kubwa ya kimishonari." "Natoa shukrani
+                    kwa Bwana kwa ushuhuda wa mwanamke huyu ambaye, akitiwa moyo na upendo wa dhati kwa Kanisa,
+                    ametumia maisha yake kutangaza Habari Njema kila mahali, hata sehemu za mbali zaidi, bila 
+                    kusahau watu waliotengwa zaidi,"</strong> aliandika Papa Francis.</p>
+            </article>
+
+            <div class="container-fluid text-center my-6">
+                <img src="/assets/images/carmen-hernandez- grave.jpg" class="mx-auto rounded-lg shadow-md" alt="Carmen Hernández na Kiko Argüello kwenye Njia" width="800" height="400">
+            </div>
+
+            <div class="flex-1">
+                <h1 class="text-xl font-bold text-gray-800 dark:text-white mb-2"><strong>Kuomba Neema Kwa Maombezi Ya Carmen Hernandez</strong></h1>
+                    <p ><strong>Ee Mungu</strong>, kwamba kwa kumchagua mtumishi wako Carmen Hernández
+                            kama mwanzilishi mwenza wa Njia ya Neokatekumenato,
+                            ulimpa upendo mkuu kwa Yesu Kristo na Kanisa,
+                            kwa Maandiko Matakatifu na kwa sala ya kiliturujia,
+                            ari kubwa kwa ajili ya tangazo la msafiri wa Injili
+                            na uaminifu katika majaribu ya msalaba;
+                            nijalie kwa maombezi yake,
+                            na ikiwa ni mapenzi yako, nijalie pia neema ninayokuomba (taja neema unayoiomba).
+                            Kwa njia ya Yesu Kristo, Bwana wetu. Amina.</p>
+                    <p><strong>Mwisho: </strong>Baba yetu. Salamu Maria. Atukuzwe Baba...</p>
+                
+                </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
+            <div class="flex justify-around">
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span class="text-xs font-medium">Home</span>
+                </a>
+                <a href="prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="text-xs font-medium">Prayer</span>
+                </a>
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-xs font-medium">Calendar</span>
+                </a>
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    </svg>
+                    <span class="text-xs font-medium">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- PWA Installation Prompt -->
+    <div id="installPrompt" class="fixed bottom-20 left-0 right-0 bg-white dark:bg-gray-800 shadow-xl mx-4 p-4 rounded-lg hidden">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-medium">Install iPray App?</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Access sacraments offline</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="dismissInstall" class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600">Later</button>
+                <button id="installBtn" class="px-3 py-1 rounded-lg bg-purple-600 text-white">Install</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check for theme changes from other tabs/windows
+window.addEventListener('storage', (event) => {
+    if (event.key === 'themeMode') {
+        const isDark = event.newValue === 'dark';
+        setTheme(isDark);
+    }
+});
+
+
+        // Theme Management
+            function initTheme() {
+                const savedMode = localStorage.getItem('themeMode');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+                
+                if (isDark) {
+                    document.body.classList.add('dark');
+                    document.documentElement.classList.add('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    `;
+                } else {
+                    document.body.classList.remove('dark');
+                    document.documentElement.classList.remove('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    `;
+                }
+            }
+
+            // Toggle theme
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                const isDark = document.body.classList.contains('dark');
+                
+                if (isDark) {
+                    // Switch to light mode
+                    document.body.classList.remove('dark');
+                    document.documentElement.classList.remove('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    `;
+                    localStorage.setItem('themeMode', 'light');
+                } else {
+                    // Switch to dark mode
+                    document.body.classList.add('dark');
+                    document.documentElement.classList.add('dark');
+                    document.getElementById('themeIcon').innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    `;
+                    localStorage.setItem('themeMode', 'dark');
+                }
+            });
+
+        // Check for saved theme mode
+        if (localStorage.getItem('themeMode')) {
+            initTheme();
+        } else {
+            // If no saved mode, check system preference
+            initTheme();
+        }   
+
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.remove('hidden');
+        });
+        
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted install');
+                }
+                deferredPrompt = null;
+                document.getElementById('installPrompt').classList.add('hidden');
+            }
+        });
+        
+        document.getElementById('dismissInstall').addEventListener('click', () => {
+            document.getElementById('installPrompt').classList.add('hidden');
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/ipray/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+        });
+    </script>
+</body>
+</html>

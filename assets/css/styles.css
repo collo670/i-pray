@@ -1,4 +1,39 @@
-/* src/input.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Theme Variables */
+:root {
+  --primary-color: #7C3AED;
+  --primary-text: #FFFFFF;
+}
+
+.theme-purple {
+  --primary-color: #4A1E8A;
+  --primary-text: #FFFFFF;
+}
+
+.theme-white {
+  --primary-color: #F8F9FA;
+  --primary-text: #000000;
+}
+
+.theme-green {
+  --primary-color: #2E7D32;
+  --primary-text: #FFFFFF;
+}
+
+.theme-red {
+  --primary-color: #C41E3A;
+  --primary-text: #FFFFFF;
+}
+
+/* Apply theme colors to common elements */
+[data-theme-primary] {
+  background-color: var(--primary-color);
+  color: var(--primary-text);
+}
+
+.themed-text {
+  color: var(--primary-color);
+}
+
+.themed-bg {
+  background-color: var(--primary-color);
+}

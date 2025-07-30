@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer - iPray</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <meta name="description" content="Daily prayers and devotions for Catholic faithful">
     
     <!-- Tailwind CSS via CDN -->
@@ -325,174 +326,181 @@
     </div>
 
     <script>
-        // Theme Management
-        function initTheme() {
-            const savedMode = localStorage.getItem('themeMode');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
-            
-            if (isDark) {
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-            } else {
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-            }
+
+        // Check for theme changes from other tabs/windows
+window.addEventListener('storage', (event) => {
+    if (event.key === 'themeMode') {
+        const isDark = event.newValue === 'dark';
+        setTheme(isDark);
+    }
+});
+    // Theme Management
+    function initTheme() {
+        const savedMode = localStorage.getItem('themeMode');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+        
+        if (isDark) {
+            document.body.classList.remove('light-mode');
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            `;
+        } else {
+            document.body.classList.add('light-mode');
+            document.documentElement.classList.remove('dark');
+            document.getElementById('themeIcon').innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            `;
         }
+    }
 
-        // Toggle theme
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            const isDark = !document.body.classList.contains('light-mode');
+    // Toggle theme
+    document.getElementById('themeToggle').addEventListener('click', function() {
+        const isDark = !document.body.classList.contains('light-mode');
+        
+        if (isDark) {
+            // Switch to light mode
+            document.body.classList.add('light-mode');
+            document.documentElement.classList.remove('dark');
+            document.getElementById('themeIcon').innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            `;
+            localStorage.setItem('themeMode', 'light');
+        } else {
+            // Switch to dark mode
+            document.body.classList.remove('light-mode');
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            `;
+            localStorage.setItem('themeMode', 'dark');
+        }
+    });
+
+    // Favorite prayers functionality
+    function initFavorites() {
+        // Get favorites from localStorage
+        const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
+        
+        // Set up favorite buttons
+        document.querySelectorAll('.favorite-btn').forEach(button => {
+            const prayerId = button.getAttribute('data-prayer');
             
-            if (isDark) {
-                // Switch to light mode
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-                localStorage.setItem('themeMode', 'light');
-            } else {
-                // Switch to dark mode
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-                localStorage.setItem('themeMode', 'dark');
+            // Check if this prayer is favorited
+            if (favorites.includes(prayerId)) {
+                button.innerHTML = '<i class="fas fa-star"></i>';
+                button.classList.add('active');
             }
-        },
-
-        // Favorite prayers functionality
-        function initFavorites() {
-            // Get favorites from localStorage
-            const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
             
-            // Set up favorite buttons
-            document.querySelectorAll('.favorite-btn').forEach(button => {
-                const prayerId = button.getAttribute('data-prayer');
+            button.addEventListener('click', function() {
+                const prayerId = this.getAttribute('data-prayer');
+                const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
+                const index = favorites.indexOf(prayerId);
                 
-                // Check if this prayer is favorited
-                if (favorites.includes(prayerId)) {
-                    button.innerHTML = '<i class="fas fa-star"></i>';
-                    button.classList.add('active');
-                }
-                
-                button.addEventListener('click', function() {
-                    const prayerId = this.getAttribute('data-prayer');
-                    const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
-                    const index = favorites.indexOf(prayerId);
-                    
-                    if (index === -1) {
-                        // Add to favorites
-                        favorites.push(prayerId);
-                        this.innerHTML = '<i class="fas fa-star"></i>';
-                        this.classList.add('active');
-                    } else {
-                        // Remove from favorites
-                        favorites.splice(index, 1);
-                        this.innerHTML = '<i class="far fa-star"></i>';
-                        this.classList.remove('active');
-                    }
-                    
-                    // Save to localStorage
-                    localStorage.setItem('favoritePrayers', JSON.stringify(favorites));
-                });
-            });
-        },
-
-        // Prayer category filtering
-        function initCategories() {
-            document.querySelectorAll('.category-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    document.querySelectorAll('.category-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                        btn.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
-                        btn.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-                    });
-                    
-                    // Add active class to clicked button
+                if (index === -1) {
+                    // Add to favorites
+                    favorites.push(prayerId);
+                    this.innerHTML = '<i class="fas fa-star"></i>';
                     this.classList.add('active');
-                    this.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-                    this.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
-                    
-                    // Filter prayers based on category
-                    const category = this.textContent.trim().toLowerCase();
-                    filterPrayers(category);
-                });
-            });
-        },
-
-        // Filter prayers by category
-        function filterPrayers(category) {
-            const prayerCards = document.querySelectorAll('.prayer-card');
-            
-            prayerCards.forEach(card => {
-                const prayerTitle = card.querySelector('h3').textContent.toLowerCase();
-                const isMorning = ['morning offering'].some(term => prayerTitle.includes(term));
-                const isEvening = false; // No specific evening prayers in this list
-                const isRosary = ['hail mary', 'rosary'].some(term => prayerTitle.includes(term));
-                const isIntercession = ['act of contrition', 'prayer to st. michael'].some(term => prayerTitle.includes(term));
-                const isSacrament = ['apostles\' creed', 'lord\'s prayer', 'hail mary', 'glory be', 'hail holy queen'].some(term => prayerTitle.includes(term));
-                
-                let show = true;
-                
-                if (category !== 'all prayers') {
-                    if (category === 'morning' && !isMorning) show = false;
-                    if (category === 'evening' && !isEvening) show = false;
-                    if (category === 'rosary' && !isRosary) show = false;
-                    if (category === 'intercessions' && !isIntercession) show = false;
-                    if (category === 'sacraments' && !isSacrament) show = false;
+                } else {
+                    // Remove from favorites
+                    favorites.splice(index, 1);
+                    this.innerHTML = '<i class="far fa-star"></i>';
+                    this.classList.remove('active');
                 }
                 
-                card.style.display = show ? 'block' : 'none';
+                // Save to localStorage
+                localStorage.setItem('favoritePrayers', JSON.stringify(favorites));
+                displayFavorites();
             });
-        },
+        });
+    }
 
-        // Display favorite prayers
-        function displayFavorites() {
-            const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
-            const favoritesList = document.getElementById('favoritesList');
-            const favoritesSection = document.getElementById('favoritesSection');
+    // Prayer category filtering
+    function initCategories() {
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
+                    btn.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                this.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
+                
+                // Filter prayers based on category
+                const category = this.textContent.trim().toLowerCase();
+                filterPrayers(category);
+            });
+        });
+    }
+
+    // Filter prayers by category
+    function filterPrayers(category) {
+        const prayerCards = document.querySelectorAll('.prayer-card');
+        
+        prayerCards.forEach(card => {
+            const prayerTitle = card.querySelector('h3').textContent.toLowerCase();
+            const isMorning = ['morning offering'].some(term => prayerTitle.includes(term));
+            const isEvening = false; // No specific evening prayers in this list
+            const isRosary = ['hail mary', 'rosary'].some(term => prayerTitle.includes(term));
+            const isIntercession = ['act of contrition', 'prayer to st. michael'].some(term => prayerTitle.includes(term));
+            const isSacrament = ['apostles\' creed', 'lord\'s prayer', 'hail mary', 'glory be', 'hail holy queen'].some(term => prayerTitle.includes(term));
             
-            if (favorites.length === 0) {
-                favoritesSection.classList.add('hidden');
-                return;
+            let show = true;
+            
+            if (category !== 'all prayers') {
+                if (category === 'morning' && !isMorning) show = false;
+                if (category === 'evening' && !isEvening) show = false;
+                if (category === 'rosary' && !isRosary) show = false;
+                if (category === 'intercessions' && !isIntercession) show = false;
+                if (category === 'sacraments' && !isSacrament) show = false;
             }
             
-            favoritesSection.classList.remove('hidden');
-            favoritesList.innerHTML = '';
-            
-            // Get all prayer cards
-            document.querySelectorAll('.prayer-card').forEach(card => {
-                const prayerId = card.querySelector('.favorite-btn').getAttribute('data-prayer');
-                if (favorites.includes(prayerId)) {
-                    const clone = card.cloneNode(true);
-                    // Remove the event listener and make it non-functional in favorites
-                    const favBtn = clone.querySelector('.favorite-btn');
-                    favBtn.outerHTML = '<button class="text-yellow-500"><i class="fas fa-star"></i></button>';
-                    favoritesList.appendChild(clone);
-                }
-            });
-        },
+            card.style.display = show ? 'block' : 'none';
+        });
+    }
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            initFavorites();
-            initCategories();
-            displayFavorites();
-            
-            // Set initial filter to show all prayers
-            filterPrayers('all prayers');
-        }));
-    </script>
-</body>
-</html>
+    // Display favorite prayers
+    function displayFavorites() {
+        const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
+        const favoritesList = document.getElementById('favoritesList');
+        const favoritesSection = document.getElementById('favoritesSection');
+        
+        if (favorites.length === 0) {
+            favoritesSection.classList.add('hidden');
+            return;
+        }
+        
+        favoritesSection.classList.remove('hidden');
+        favoritesList.innerHTML = '';
+        
+        // Get all prayer cards
+        document.querySelectorAll('.prayer-card').forEach(card => {
+            const prayerId = card.querySelector('.favorite-btn').getAttribute('data-prayer');
+            if (favorites.includes(prayerId)) {
+                const clone = card.cloneNode(true);
+                // Remove the event listener and make it non-functional in favorites
+                const favBtn = clone.querySelector('.favorite-btn');
+                favBtn.outerHTML = '<button class="text-yellow-500"><i class="fas fa-star"></i></button>';
+                favoritesList.appendChild(clone);
+            }
+        });
+    }
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', function() {
+        initTheme();
+        initFavorites();
+        initCategories();
+        displayFavorites();
+        
+        // Set initial filter to show all prayers
+        filterPrayers('all prayers');
+    });
+</script>

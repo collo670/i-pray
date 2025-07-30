@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ipray - Liturgical Companion</title>
-    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <meta name="description" content="A Catholic liturgical companion app for daily prayer and worship">
     
@@ -312,13 +312,13 @@
 
                 <!-- Saint of the Day Card -->
                 <div id="saintCard" class="hidden rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg">
-                    <h3 class="text-xl font-bold mb-4 text-purple-600 dark:text-purple-400" data-translate="saint">Saint of the Day</h3>
+                    <h3 class="text-xl font-bold mb-4 text-purple-600 dark:text-purple-400" data-translate="saint">Prayer and Devotion</h3>
                     <div id="saintContent" class="flex items-center">
                         <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
-                            <img id="saintImage" src="" alt="Saint" class="w-full h-full object-cover">
+                            <img id="saintImage" src="/assets/images/carmen.jpg" alt="Saint" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h4 id="saintName" class="font-semibold text-gray-800 dark:text-gray-200">Loading...</h4>
+                            <h4 id="saintName" class="font-semibold text-gray-800 dark:text-gray-200"></h4>
                             <p id="saintFeast" class="text-sm text-gray-600 dark:text-gray-400"></p>
                         </div>
                     </div>
@@ -562,7 +562,7 @@
                 `, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                `, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'prayer-requests.html' },
+                `, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'carmen.html' },
                 { icon: `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 `, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
@@ -794,17 +794,12 @@
                 // This is a mock - in production you'd use a real API
                 const saints = [
                     {
-                        name: "St. Teresa of Calcutta",
-                        feast: "September 5",
-                        image: "/assets/images/teresa.jpg",
-                        bio: "Founder of the Missionaries of Charity, served the poorest of the poor in Kolkata."
+                        name: "Carmen Hernandez",
+                        prayer: "",
+                        image: "/assets/images/carmen.jpg",
+                        bio: ""
                     },
-                    {
-                        name: "St. Augustine",
-                        feast: "August 28",
-                        image: "/assets/images/augustine.jpg",
-                        bio: "Bishop of Hippo and Doctor of the Church, author of 'Confessions' and 'City of God'."
-                    }
+                    
                 ];
                 
                 const today = new Date();
@@ -821,49 +816,7 @@
             }
         }
 
-        // Fetch Daily Mass Readings
-        async function fetchDailyReadings() {
-            try {
-                // Mock data - replace with actual API call
-                const readings = {
-                    firstReading: "The word of the Lord came to me saying: 'Before I formed you in the womb I knew you, before you were born I dedicated you, a prophet to the nations I appointed you.'",
-                    firstReadingSource: "Jeremiah 1:4-5",
-                    responsorialPsalm: "R. I will sing of your salvation.",
-                    psalmResponse: "Psalm 71:1-6, 15, 17",
-                    gospel: "Jesus came to Nazareth and proclaimed: 'The Spirit of the Lord is upon me, because he has anointed me to bring glad tidings to the poor.'",
-                    gospelSource: "Luke 4:16-21"
-                };
-                
-                const readingsCard = document.createElement('div');
-                readingsCard.id = 'readingsCard';
-                readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg mb-6';
-                readingsCard.innerHTML = `
-                    <h3 class="text-xl font-bold mb-4 text-purple-600 dark:text-purple-400" data-translate="readings">Mass Readings</h3>
-                    <div class="mb-4">
-                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">First Reading</h4>
-                        <p class="text-gray-600 dark:text-gray-300">${readings.firstReading}</p>
-                        <p class="text-sm text-gray-500 mt-1">${readings.firstReadingSource}</p>
-                    </div>
-                    <div class="mb-4">
-                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Responsorial Psalm</h4>
-                        <p class="text-gray-600 dark:text-gray-300">${readings.responsorialPsalm}</p>
-                        <p class="text-sm text-gray-500 mt-1">${readings.psalmResponse}</p>
-                    </div>
-                    <div class="mb-4">
-                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Gospel</h4>
-                        <p class="text-gray-600 dark:text-gray-300">${readings.gospel}</p>
-                        <p class="text-sm text-gray-500 mt-1">${readings.gospelSource}</p>
-                    </div>
-                `;
-                
-                // Insert after liturgical card
-                document.getElementById('liturgicalCard').insertAdjacentElement('afterend', readingsCard);
-                
-            } catch (error) {
-                console.error('Failed to fetch readings:', error);
-            }
-        }
-
+        
         // Prayer Reminders
         function setupPrayerReminders() {
             if (!('Notification' in window)) return;
