@@ -621,9 +621,9 @@
     try {
         const today = new Date();
         const day = today.getDate(); // 1, 2, ..., 31
-        const monthIndex = today.getMonth(); // 0 = Jan, ..., 6 = Jul, 7 = Aug, ..., 11 = Dec
+        const monthIndex = today.getMonth(); // 0 = Jan, 6 = Jul, 7 = Aug, ..., 11 = Dec
 
-        // Only show from July to December
+        // Only July to December
         if (monthIndex < 6) {
             console.warn("Readings only available from July onward.");
             return;
@@ -635,7 +635,7 @@
         const shortMonth = shortMonths[monthIndex]; // e.g., 'aug'
         const longMonth = longMonths[monthIndex];   // e.g., 'august'
         const fileName = `${day}${shortMonth}.html`; // e.g., 4aug.html
-        const filePath = `/ipray/assets/${longMonth}/${fileName}`; // ✅ Correct path for GitHub Pages
+        const filePath = `/i-pray/assets/${longMonth}/${fileName}`; // ✅ Correct path
 
         const readingsCard = document.createElement('div');
         readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
@@ -644,59 +644,18 @@
             <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">Tap to View</p>
         `;
 
-        // Click: Open reading in same tab
+        // Click: Open in same tab
         readingsCard.addEventListener('click', () => {
             fetch(filePath)
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = filePath; // ✅ Goes to /ipray/assets/august/4aug.html
+                        window.location.href = filePath; // Open in same tab
                     } else {
                         alert("Today's reading is not available yet.");
                     }
                 })
-                .catch(err => {
-                    console.error('Fetch error:', err);
-                    alert("Could not load today's reading. Please try again.");
-                });async function fetchDailyReadings() {
-    try {
-        const today = new Date();
-        const day = today.getDate(); // 1, 2, ..., 31
-        const monthIndex = today.getMonth(); // 0 = Jan, ..., 6 = Jul, 7 = Aug, ..., 11 = Dec
-
-        // Only show from July to December
-        if (monthIndex < 6) {
-            console.warn("Readings only available from July onward.");
-            return;
-        }
-
-        const shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-        const longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-
-        const shortMonth = shortMonths[monthIndex]; // e.g., 'aug'
-        const longMonth = longMonths[monthIndex];   // e.g., 'august'
-        const fileName = `${day}${shortMonth}.html`; // e.g., 4aug.html
-        const filePath = `/ipray/assets/${longMonth}/${fileName}`; // ✅ Correct path for GitHub Pages
-
-        const readingsCard = document.createElement('div');
-        readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
-        readingsCard.innerHTML = `
-            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h3>
-            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">Tap to View</p>
-        `;
-
-        // Click: Open reading in same tab
-        readingsCard.addEventListener('click', () => {
-            fetch(filePath)
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = filePath; // ✅ Goes to /ipray/assets/august/4aug.html
-                    } else {
-                        alert("Today's reading is not available yet.");
-                    }
-                })
-                .catch(err => {
-                    console.error('Fetch error:', err);
-                    alert("Could not load today's reading. Please try again.");
+                .catch(() => {
+                    alert("Could not load today's reading.");
                 });
         });
 
@@ -705,25 +664,7 @@
         const navGrid = document.getElementById('navGrid');
         if (homeView && navGrid) {
             homeView.insertBefore(readingsCard, navGrid);
-        } else {
-            console.error('Required elements not found: homeView or navGrid');
         }
-
-    } catch (error) {
-        console.error('Failed to fetch readings:', error);
-    }
-}
-        });
-
-        // Insert before navGrid
-        const homeView = document.getElementById('homeView');
-        const navGrid = document.getElementById('navGrid');
-        if (homeView && navGrid) {
-            homeView.insertBefore(readingsCard, navGrid);
-        } else {
-            console.error('Required elements not found: homeView or navGrid');
-        }
-
     } catch (error) {
         console.error('Failed to fetch readings:', error);
     }
