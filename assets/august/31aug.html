@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings: Sirach, Psalm, Hebrews, and Gospel of Luke on humility and charity">
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <!-- Header (Scrolls with page) -->
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Thursday, April 5, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <!-- Reading Card -->
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+
+            <!-- First Reading -->
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Sirach 3:17–18, 20, 28–29</strong><br><br>
+
+                    My son, do thy works in meekness, and thou shalt be beloved above the glory of men.<br><br>
+
+                    The greater thou art, the more humble thyself in all things, and thou shalt find grace before God.<br><br>
+
+                    Seek not the things that are too high for thee, and search not into things above thy ability: but the things that God hath commanded thee, think on them always, and in many of his works be not curious.<br><br>
+
+                    The heart of the wise is understood in wisdom, and a good ear will hear wisdom with all desire. A wise heart, and which hath understanding, will abstain from sins, and in the works of justice shall have success.<br><br>
+
+                    Water quencheth a flaming fire, and alms resisteth sins.
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <!-- Responsorial Psalm -->
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Psalms 68:4–5, 6–7, 10–11</strong><br><br>
+
+                    <em>R. God, in your goodness, you have made a home for the poor.</em><br><br>
+
+                    Let the just feast, and rejoice before God: and be delighted with gladness.<br><br>
+
+                    Sing ye to God, sing a psalm to his name, make a way for him who ascendeth upon the west: the Lord is his name. Rejoice ye before him: but the wicked shall be troubled at his presence.<br><br>
+
+                    Who is the father of orphans, and the judge of widows. God in his holy place:<br><br>
+
+                    God who maketh men of one manner to dwell in a house: Who bringeth out them that were bound in strength; in like manner them that provoke, that dwell in sepulchres.<br><br>
+
+                    Thou shalt set aside for thy inheritance a free rain, O God: and it was weakened, but thou hast made it perfect.<br><br>
+
+                    In it shall thy animals dwell; in thy sweetness, O God, thou hast provided for the poor.<br><br>
+
+                    <em>R. God, in your goodness, you have made a home for the poor.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <!-- Second Reading -->
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Hebrews 12:18–19, 22–24</strong><br><br>
+
+                    For you are not come to a mountain that might be touched, and a burning fire, and a whirlwind, and darkness, and storm,<br><br>
+
+                    And the sound of a trumpet, and the voice of words, which they that heard excused themselves, that the word might not be spoken to them:<br><br>
+
+                    But you are come to mount Sion, and to the city of the living God, the heavenly Jerusalem, and to the company of many thousands of angels,<br><br>
+
+                    And to the church of the firstborn, who are written in the heavens, and to God the judge of all, and to the spirits of the just made perfect,<br><br>
+
+                    And to Jesus the mediator of the new testament, and to the sprinkling of blood which speaketh better than that of Abel.
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <!-- Alleluia -->
+            <section class="text-center py-4 bg-white/50 dark:bg-black/30 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Alleluia</h2>
+                <p class="text-gray-700 dark:text-gray-300 italic">
+                    <strong>Matthew 11:29ab</strong><br><br>
+                    <em>R. Alleluia, alleluia.</em><br>
+                    Take my yoke upon you, says the Lord, and learn from me, for I am meek and humble of heart.<br>
+                    <em>R. Alleluia, alleluia.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <!-- Gospel -->
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Luke 14:1, 7–14</strong><br><br>
+
+                    And it came to pass, when Jesus went into the house of one of the chief of the Pharisees, on the sabbath day, to eat bread, that they watched him.<br><br>
+
+                    And he spoke a parable also to them that were invited, marking how they chose the first seats at the table, saying to them:<br><br>
+
+                    “When thou art invited to a wedding, sit not down in the first place, lest perhaps one more honourable than thou be invited by him:<br><br>
+
+                    And he that invited thee and him, come and say to thee, ‘Give this man place’; and then thou begin with shame to take the lowest place.<br><br>
+
+                    But when thou art invited, go, sit down in the lowest place; that when he who invited thee cometh, he may say to thee: ‘Friend, go up higher.’ Then shalt thou have glory before them that sit at table with thee.<br><br>
+
+                    Because every one that exalteth himself, shall be humbled; and he that humbleth himself, shall be exalted.”<br><br>
+
+                    And he said to him also that had invited him: “When thou makest a dinner or a supper, call not thy friends, nor thy brethren, nor thy kinsmen, nor thy neighbours who are rich; lest perhaps they also invite thee again, and a recompense be made to thee.<br><br>
+
+                    But when thou makest a feast, call the poor, the maimed, the lame, and the blind;<br><br>
+
+                    And thou shalt be blessed, because they have not wherewith to make thee recompense: for recompense shall be made thee at the resurrection of the just.”
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Bottom Navigation (Fixed) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <!-- Home -->
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <!-- Lauds -->
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <!-- Calendar -->
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <!-- Settings -->
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Optional: Add simple script for dark mode if needed -->
+    <script>
+        // Sync with main app's dark mode
+        const savedMode = localStorage.getItem('themeMode') || 'light';
+        document.body.classList.toggle('dark', savedMode === 'dark');
+        document.documentElement.classList.toggle('dark', savedMode === 'dark');
+    </script>
+</body>
+</html>

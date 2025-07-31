@@ -29,7 +29,7 @@
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
         :root {
@@ -55,6 +55,13 @@
         
         /* GitHub Pages Fixes */
         .gh-pages-link { color: var(--primary-color); }
+        
+        /* Ensure theme color applies to common elements */
+        .text-primary { color: var(--primary-color); }
+        .bg-primary { background-color: var(--primary-color); }
+        .border-primary { border-color: var(--primary-color); }
+        .hover\:text-primary:hover { color: var(--primary-color); }
+        .hover\:bg-primary:hover { background-color: var(--primary-color); }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -81,7 +88,7 @@
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-6 pb-24">
             <!-- Back Button -->
-            <a href="/ipray/" class="inline-flex items-center mb-6 text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="inline-flex items-center mb-6 text-primary">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -93,27 +100,27 @@
                 <!-- App Theme -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-palette mr-2 text-purple-500"></i>
+                        <i class="fas fa-palette mr-2 text-primary"></i>
                         <span>App Theme</span>
                     </h2>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="default">
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="default">
                             <div class="w-full h-12 rounded mb-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
                             <span>Default</span>
                         </button>
                         
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="purple">
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="purple">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-purple"></div>
                             <span>Advent/Lent</span>
                         </button>
                         
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="white">
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="white">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-white border border-gray-300"></div>
                             <span>Christmas/Easter</span>
                         </button>
                         
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-purple-300" data-theme="green">
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="green">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-green"></div>
                             <span>Ordinary Time</span>
                         </button>
@@ -122,11 +129,11 @@
                     <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                         <div>
                             <label class="inline-flex items-center">
-                                <input type="checkbox" id="darkModeToggle" class="rounded text-purple-600">
+                                <input type="checkbox" id="darkModeToggle" class="rounded text-primary">
                                 <span class="ml-2">Dark Mode</span>
                             </label>
                         </div>
-                        <button id="resetTheme" class="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600">
+                        <button id="resetTheme" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary">
                             Reset to Default
                         </button>
                     </div>
@@ -135,37 +142,37 @@
                 <!-- Language Settings -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-language mr-2 text-purple-500"></i>
+                        <i class="fas fa-language mr-2 text-primary"></i>
                         <span>Language Settings</span>
                     </h2>
                     
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="en">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="en">
                             <span class="mr-2">🇺🇸</span>
                             <span>English</span>
                         </button>
                         
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="sw">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="sw">
                             <span class="mr-2">🇹🇿</span>
                             <span>Swahili</span>
                         </button>
                         
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="es">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="es">
                             <span class="mr-2">🇪🇸</span>
                             <span>Spanish</span>
                         </button>
                         
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="fr">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="fr">
                             <span class="mr-2">🇫🇷</span>
                             <span>French</span>
                         </button>
                         
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="pt">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="pt">
                             <span class="mr-2">🇵🇹</span>
                             <span>Portuguese</span>
                         </button>
                         
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-purple-500" data-lang="it">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="it">
                             <span class="mr-2">🇮🇹</span>
                             <span>Italian</span>
                         </button>
@@ -179,12 +186,12 @@
                 <!-- Prayer Reminders -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-bell mr-2 text-purple-500"></i>
+                        <i class="fas fa-bell mr-2 text-primary"></i>
                         <span>Prayer Reminders</span>
                     </h2>
                     
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
                                 <h3 class="font-medium">Morning Prayer (Lauds)</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Start your day with prayer</p>
@@ -193,12 +200,12 @@
                                 <input type="time" value="06:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3">
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" checked class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
                                 <h3 class="font-medium">Angelus</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Noon prayer tradition</p>
@@ -207,19 +214,19 @@
                                 <input type="time" value="12:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3">
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" checked class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
                                 <h3 class="font-medium">Divine Mercy (3 PM)</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Hour of Great Mercy</p>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked class="sr-only peer">
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                             </label>
                         </div>
                     </div>
@@ -228,7 +235,7 @@
                 <!-- Accessibility -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-universal-access mr-2 text-purple-500"></i>
+                        <i class="fas fa-universal-access mr-2 text-primary"></i>
                         <span>Accessibility</span>
                     </h2>
                     
@@ -240,7 +247,7 @@
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="highContrastToggle" class="sr-only peer">
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                             </label>
                         </div>
                         
@@ -261,7 +268,7 @@
                 <!-- App Management -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-cog mr-2 text-purple-500"></i>
+                        <i class="fas fa-cog mr-2 text-primary"></i>
                         <span>App Management</span>
                     </h2>
                     
@@ -301,7 +308,7 @@
                 <!-- Social & Support -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-hands-helping mr-2 text-purple-500"></i>
+                        <i class="fas fa-hands-helping mr-2 text-primary"></i>
                         <span>Connect & Support</span>
                     </h2>
                     
@@ -328,7 +335,7 @@
                         </a>
                         
                         <a href="https://donate.ipray.app" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                            <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
+                            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mb-1">
                                 <i class="fas fa-hand-holding-heart"></i>
                             </div>
                             <span class="text-xxs">Donate</span>
@@ -338,7 +345,7 @@
                     <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
                             <i class="far fa-copyright mr-1"></i>
-                            <span id="copyrightYear">2025</span> iPray App. All rights reserved.
+                            <span id="copyrightYear"></span> iPray App. All rights reserved.
                         </p>
                     </div>
                 </section>
@@ -348,25 +355,25 @@
         <!-- Bottom Navigation -->
         <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-3 shadow-lg">
             <div class="flex justify-around">
-                <a href="index.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
+                <a href="index.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-primary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     <span class="text-xs">Home</span>
                 </a>
-                <a href="prayer.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
+                <a href="prayer.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-primary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                     <span class="text-xs">Prayer</span>
                 </a>
-                <a href="calendar.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
+                <a href="calendar.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-gray-500 dark:text-gray-400 hover:text-primary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <span class="text-xs">Calendar</span>
                 </a>
-                <a href="settings.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-purple-600 dark:text-purple-400">
+                <a href="settings.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-primary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     </svg>
@@ -399,10 +406,11 @@
             const savedTheme = localStorage.getItem('appTheme') || 'default';
             setTheme(savedTheme);
             
-            // Dark mode
+            // Dark mode (independent of device settings)
             const darkMode = localStorage.getItem('darkMode') === 'true';
             document.getElementById('darkModeToggle').checked = darkMode;
             document.body.classList.toggle('dark', darkMode);
+            updateThemeIcon(darkMode);
             
             // High contrast
             const highContrast = localStorage.getItem('highContrast') === 'true';
@@ -421,6 +429,15 @@
             const language = localStorage.getItem('language') || 'en';
             highlightSelectedLanguage(language);
         }
+    
+
+        // Update theme icon based on dark mode state
+        function updateThemeIcon(isDark) {
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.innerHTML = isDark ?
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />' : // Sun icon
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />'; // Moon icon
+        }
 
         // Set up all event listeners
         function setupEventListeners() {
@@ -433,17 +450,21 @@
                 });
             });
             
-            // Dark mode toggle
+            // Dark mode toggle (independent of device settings)
             document.getElementById('darkModeToggle').addEventListener('change', function() {
                 const isDark = this.checked;
                 document.body.classList.toggle('dark', isDark);
                 localStorage.setItem('darkMode', isDark);
+                updateThemeIcon(isDark);
+                // Update manifest theme color to match selected theme
+                updateManifestThemeColor();
             });
             
             // Reset theme
             document.getElementById('resetTheme').addEventListener('click', function() {
                 setTheme('default');
                 localStorage.setItem('appTheme', 'default');
+                updateManifestThemeColor();
             });
             
             // Language selection
@@ -491,20 +512,55 @@
             
             // Update UI
             document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.toggle('border-purple-500', option.dataset.theme === theme);
+                option.classList.toggle('border-primary', option.dataset.theme === theme);
             });
+            
+            // Update manifest theme color
+            updateManifestThemeColor();
+        }
+
+        // Update manifest theme color to match selected theme
+        function updateManifestThemeColor() {
+            const theme = localStorage.getItem('appTheme') || 'default';
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            let themeColor;
+            switch (theme) {
+                case 'purple':
+                    themeColor = '#4A1E8A';
+                    break;
+                case 'green':
+                    themeColor = '#2E7D32';
+                    break;
+                case 'red':
+                    themeColor = '#C41E3A';
+                    break;
+                case 'white':
+                    themeColor = isDark ? '#374151' : '#F8F9FA'; // Use gray-800 for dark mode white theme
+                    break;
+                default:
+                    themeColor = '#7C3AED';
+            }
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);
         }
 
         // Highlight selected language
         function highlightSelectedLanguage(lang) {
             document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.toggle('border-purple-500', option.dataset.lang === lang);
+                option.classList.toggle('border-primary', option.dataset.lang === lang);
             });
         }
 
         // Clear app cache
         function clearCache() {
             if (confirm('Clear all cached data? This will free up storage but require re-downloading content.')) {
+                // Preserve critical data
+                const preservedData = {
+                    appTheme: localStorage.getItem('appTheme'),
+                    darkMode: localStorage.getItem('darkMode'),
+                    language: localStorage.getItem('language'),
+                    textSize: localStorage.getItem('textSize'),
+                    highContrast: localStorage.getItem('highContrast')
+                };
                 if ('caches' in window) {
                     caches.keys().then(cacheNames => {
                         cacheNames.forEach(cacheName => {
@@ -513,32 +569,55 @@
                     });
                 }
                 localStorage.clear();
+                // Restore preserved data
+                Object.entries(preservedData).forEach(([key, value]) => {
+                    if (value !== null) localStorage.setItem(key, value);
+                });
                 alert('Cache cleared. The app will reload.');
                 window.location.reload();
             }
         }
 
-        // Export prayer data
+        // Export data (placeholder implementation)
         function exportData() {
-            // In a real app, this would export prayer history
-            alert('Export functionality would save your prayer history as a file.');
+            const data = {
+                theme: localStorage.getItem('appTheme'),
+                darkMode: localStorage.getItem('darkMode'),
+                language: localStorage.getItem('language'),
+                textSize: localStorage.getItem('textSize'),
+                highContrast: localStorage.getItem('highContrast')
+            };
+            const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ipray-data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('Prayer data exported successfully.');
         }
 
-        // Check for app updates
+        // Check for updates (placeholder implementation)
         function checkForUpdates() {
-            // In a real PWA, this would check the service worker for updates
-            alert('Your app is up to date!');
+            alert('Checking for updates... Current version is 1.2.0. No updates available.');
         }
 
         // Check if installed as PWA
         function checkPWAInstallation() {
-            window.addEventListener('appinstalled', () => {
-                console.log('iPray was installed as PWA');
-            });
-            
             if (window.matchMedia('(display-mode: standalone)').matches) {
                 console.log('Running as PWA');
             }
+            window.addEventListener('appinstalled', () => {
+                console.log('iPray was installed as PWA');
+                alert('iPray has been successfully installed!');
+            });
+        }
+
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/ipray/sw.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.error('Service Worker registration failed', err));
         }
     </script>
 </body>

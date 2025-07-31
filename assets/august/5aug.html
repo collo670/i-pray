@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings: Numbers 12, Psalm 51, and Gospel of Matthew 14 or 15 on Miriam and Aaron's challenge to Moses, seeking God's mercy, and Jesus walking on water or purity of heart.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Friday, August 1, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Numbers 12: 1-13</strong><br><br>
+
+                    1 And Mary and Aaron spoke against Moses, because of his wife the Ethiopian,<br>
+                    2 And they said: Hath the Lord spoken by Moses only? hath he not also spoken to us in like manner? And when the Lord heard this,<br><br>
+
+                    3 (For Moses was a man exceeding meek above all men that dwelt upon earth)<br>
+                    4 Immediately he spoke to him, and to Aaron and Mary: Come out you three only to the tabernacle of the covenant. And when they were come out,<br>
+                    5 The Lord came down in a pillar of the cloud, and stood in the entry of the tabernacle calling to Aaron and Mary. And when they were come,<br>
+                    6 He said to them: Hear my words: if there be among you a prophet of the Lord, I will appear to him in a vision, or I will speak to him in a dream.<br>
+                    7 But it is not so with my servant Moses a who is most faithful in all my house:<br>
+                    8 For I speak to him mouth to mouth: and plainly, and not by riddles and figures doth he see the Lord. Why then were you not afraid to speak ill of my servant Moses?<br>
+                    9 And being angry with them he went away:<br>
+                    10 The cloud also that was over the tabernacle departed: and behold Mary appeared white as snow with a leprosy. And when Aaron had looked on her, and saw her all covered with leprosy,<br>
+                    11 He said to Moses: I beseech thee, my lord, lay not upon us this sin, which we have foolishly committed:<br>
+                    12 Let her not be as one dead, and as an abortive that is cast forth from the mother’s womb. Lo, now one half of her flesh is consumed with the leprosy.<br>
+                    13 And Moses cried to the Lord, saying: O God, I beseech thee heal her.
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Psalms 51: 3-4, 5-6ab, 6cd-7, 12-13</strong><br><br>
+
+                    <em>R. Be merciful, O Lord, for we have sinned.</em><br><br>
+
+                    3 Have mercy on me, O God, according to thy great mercy. And according to the multitude of thy tender mercies blot out my iniquity.<br>
+                    4 Wash me yet more from my iniquity, and cleanse me from my sin.<br>
+                    <em>R. Be merciful, O Lord, for we have sinned.</em><br><br>
+
+                    5 For I know my iniquity, and my sin is always before me.<br>
+                    6ab To thee only have I sinned, and have done evil before thee.<br>
+                    <em>R. Be merciful, O Lord, for we have sinned.</em><br><br>
+
+                    6cd That thou mayst be justified in thy words and mayst overcome when thou art judged.<br>
+                    7 For behold I was conceived in iniquities; and in sins did my mother conceive me.<br>
+                    <em>R. Be merciful, O Lord, for we have sinned.</em><br><br>
+
+                    12 Create a clean heart in me, O God: and renew a right spirit within my bowels.<br>
+                    13 Cast me not away from thy face; and take not thy holy spirit from me.<br><br>
+
+                    <em>R. Be merciful, O Lord, for we have sinned.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section class="text-center py-4 bg-white/50 dark:bg-black/30 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Alleluia</h2>
+                <p class="text-gray-700 dark:text-gray-300 italic">
+                    <strong>John 1: 49b</strong><br><br>
+                    <em>R. Alleluia, alleluia.</em><br>
+                    49b Rabbi, you are the Son of God; you are the King of Israel.<br>
+                    <em>R. Alleluia, alleluia.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Matthew 14: 22-36 or Matthew 15: 1-2, 10-14</strong><br><br>
+
+                    22 And forthwith Jesus obliged his disciples to go up into the boat, and to go before him over the water, till he dismissed the people.<br>
+                    23 And having dismissed the multitude, he went into a mountain alone to pray. And when it was evening, he was there alone.<br>
+                    24 But the boat in the midst of the sea was tossed with the waves: for the wind was contrary.<br>
+                    25 And in the fourth watch of the night, he came to them walking upon the sea.<br>
+                    26 And they seeing him walk upon the sea, were troubled, saying: It is an apparition. And they cried out for fear.<br>
+                    27 And immediately Jesus spoke to them, saying: Be of good heart: it is I, fear ye not.<br>
+                    28 And Peter making answer, said: Lord, if it be thou, bid me come to thee upon the waters.<br>
+                    29 And he said: Come. And Peter going down out of the boat, walked upon the water to come to Jesus.<br>
+                    30 But seeing the wind strong, he was afraid: and when he began to sink, he cried out, saying: Lord, save me.<br>
+                    31 And immediately Jesus stretching forth his hand took hold of him, and said to him: O thou of little faith, why didst thou doubt?<br>
+                    32 And when they were come up into the boat, the wind ceased.<br>
+                    33 And they that were in the boat came and adored him, saying: Indeed thou art the Son of God.<br>
+                    34 And having passed the water, they came into the country of Genesar.<br>
+                    35 And when the men of that place had knowledge of him, they sent into all that country, and brought to him all that were diseased.<br><br>
+
+                    36 And they besought him that they might touch but the hem of his garment. And as many as touched, were made whole.<br>
+                    Or<br>
+                    1 Then came to him from Jerusalem scribes and Pharisees, saying:<br>
+                    2 Why do thy disciples transgress the tradition of the ancients? For they wash not their hands when they eat bread.<br>
+                    10 And having called together the multitudes unto him, he said to them: Hear ye and understand.<br>
+                    11 Not that which goeth into the mouth defileth a man: but what cometh out of the mouth, this defileth a man.<br>
+                    12 Then came his disciples, and said to him: Dost thou know that the Pharisees, when they heard this word, were scandalized?<br>
+                    13 But he answering them, said: Every plant which my heavenly Father hath not planted, shall be rooted up.<br>
+                    14 Let them alone: they are blind, and leaders of the blind. And if the blind lead the blind, both will fall into the pit.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 0 001 1h3m10-11l2 2m-2-2v10a1 0 01-1 1h-3m-6 0a1 0 001-1v-4a1 0 011-1h2a1 0 011 1v4a1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 0 002-2V7a2 0 00-2-2H5a2 0 00-2 2v12a2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Sync with main app's dark mode
+        const savedMode = localStorage.getItem('themeMode') || 'light';
+        document.body.classList.toggle('dark', savedMode === 'dark');
+        document.documentElement.classList.toggle('dark', savedMode === 'dark');
+    </script>
+</body>
+</html>
