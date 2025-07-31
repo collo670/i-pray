@@ -621,41 +621,45 @@
     try {
         const today = new Date();
         const day = today.getDate(); // 1, 2, ..., 31
-        const monthIndex = today.getMonth();
+        const monthIndex = today.getMonth(); // 0 = Jan, 6 = Jul, 7 = Aug, ..., 11 = Dec
 
-        // Only July to December (6 = July, 11 = December)
-        if (monthIndex < 6) return;
+        // Only allow July to December (index 6 to 11)
+        if (monthIndex < 6) {
+            console.warn("Readings only available from July onward.");
+            return; // Hide card if before July
+        }
 
         const shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         const longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
-        const shortMonth = shortMonths[monthIndex];
-        const longMonth = longMonths[monthIndex];
-        const fileName = `${day}${shortMonth}.html`;
-        const filePath = `/ipray/assets/${longMonth}/${fileName}`;
+        const shortMonth = shortMonths[monthIndex]; // e.g., 'aug'
+        const longMonth = longMonths[monthIndex];   // e.g., 'august'
+        const fileName = `${day}${shortMonth}.html`; // e.g., 4aug.html
+        const filePath = `/assets/${longMonth}/${fileName}`; // e.g., /assets/august/4aug.html
 
         const readingsCard = document.createElement('div');
-        readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer text-center transition-all duration-300 flex flex-col items-center justify-center h-32';
+        readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
         readingsCard.innerHTML = `
             <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h3>
             <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">Tap to View</p>
         `;
 
-        // Open in same tab
+        // Click handler: Open file in the same tab
         readingsCard.addEventListener('click', () => {
             fetch(filePath)
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = filePath;
+                        window.location.href = filePath; // Open in same tab
                     } else {
-                        alert("Today's reading is not available yet.");
+                        alert("Today's readings are not available yet.");
                     }
                 })
                 .catch(() => {
-                    alert("Could not load today's reading.");
+                    alert("Could not load today's readings.");
                 });
         });
 
+        // Insert card before the navigation grid
         document.getElementById('homeView').insertBefore(readingsCard, document.getElementById('navGrid'));
     } catch (error) {
         console.error('Failed to fetch readings:', error);
