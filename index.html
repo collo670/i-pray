@@ -228,7 +228,7 @@
         </main>
 
         
-       <!-- Bottom Navigation -->
+       
 <!-- Bottom Navigation -->
 <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;">
     <div class="flex justify-around h-full items-center">
@@ -330,32 +330,48 @@
             }
         };
 
-        // Theme and Dark Mode Management
-        function applyThemeAndDarkMode() {
-            // Apply saved theme
-            const savedTheme = localStorage.getItem('appTheme') || 'default';
-            document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
-            if (savedTheme !== 'default') {
-                document.body.classList.add(`theme-${savedTheme}`);
-            }
+        // Theme and Dark Mode Management - Improved
+                function applyThemeAndDarkMode() {
+                    // Apply saved theme
+                    const savedTheme = localStorage.getItem('appTheme') || 'default';
+                    document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
+                    if (savedTheme !== 'default') {
+                        document.body.classList.add(`theme-${savedTheme}`);
+                    }
 
-            // Apply saved dark mode
-            const savedMode = localStorage.getItem('themeMode') || 'light';
-            applyDarkMode(savedMode === 'dark');
-        }
+                    // Check for system preference only if no mode was explicitly set
+                    const savedMode = localStorage.getItem('themeMode');
+                    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        function applyDarkMode(isDark) {
-            document.body.classList.toggle('dark', isDark);
-            document.documentElement.classList.toggle('dark', isDark);
-            document.body.classList.toggle('light-mode', !isDark);
-            localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
-            const themeIcon = document.getElementById('themeIcon');
-            if (themeIcon) {
-                themeIcon.innerHTML = isDark ?
-                    `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />` : // Sun
-                    `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`; // Moon
-            }
-        }
+                    // If user never chose a mode, follow system preference
+                    if (!savedMode) {
+                        applyDarkMode(systemPrefersDark);
+                    } else {
+                        // Otherwise, use the user's saved choice
+                        applyDarkMode(savedMode === 'dark');
+                    }
+                }
+
+                // Update applyDarkMode to sync UI
+                function applyDarkMode(isDark) {
+                    document.body.classList.toggle('dark', isDark);
+                    document.documentElement.classList.toggle('dark', isDark);
+                    document.body.classList.toggle('light-mode', !isDark);
+
+                    // Update icon
+                    const themeIcon = document.getElementById('themeIcon');
+                    if (themeIcon) {
+                        themeIcon.innerHTML = isDark ?
+                            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />` : // Sun
+                            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`; // Moon
+                    }
+
+                    // Save only if user manually toggled
+                    if (localStorage.getItem('themeMode')) {
+                        localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
+                    }
+                }
+
 
         
             function togglePrayer() {

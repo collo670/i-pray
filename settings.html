@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - iPray</title>
     <meta name="description" content="iPray app settings and preferences">
-    
     <!-- PWA Configuration -->
     <link rel="manifest" href="/ipray/manifest.json">
     <meta name="theme-color" content="#7C3AED">
-    
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
             theme: {
                 extend: {
                     colors: {
@@ -26,45 +25,64 @@
             }
         }
     </script>
-    
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
     <style>
         :root {
             --primary-color: #7C3AED;
-            --current-theme: 'light';
         }
-        
         body {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
         }
-        
         /* Dynamic Theme Classes */
         .theme-purple { --primary-color: #4A1E8A; }
         .theme-red { --primary-color: #C41E3A; }
         .theme-green { --primary-color: #2E7D32; }
-        
         /* Accessibility */
         .text-xxs { font-size: 0.7rem; }
         .high-contrast { filter: contrast(1.8); }
         .text-large { font-size: 1.1rem; }
         .text-xlarge { font-size: 1.25rem; }
-        
-        /* GitHub Pages Fixes */
-        .gh-pages-link { color: var(--primary-color); }
-        
         /* Ensure theme color applies to common elements */
         .text-primary { color: var(--primary-color); }
         .bg-primary { background-color: var(--primary-color); }
         .border-primary { border-color: var(--primary-color); }
         .hover\:text-primary:hover { color: var(--primary-color); }
         .hover\:bg-primary:hover { background-color: var(--primary-color); }
+
+        /* Force all text to white in dark mode */
+.dark .dark\:text-white {
+    color: #FFFFFF !important;
+}
+
+/* Apply white text to common text elements in dark mode */
+.dark p, 
+.dark span, 
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark h5, 
+.dark h6, 
+.dark a, 
+.dark button, 
+.dark div, 
+.dark label, 
+.dark input, 
+.dark small {
+    color: #FFFFFF !important;
+}
+
+/* Keep form inputs readable */
+.dark input, .dark select, .dark textarea {
+    color: #FFFFFF !important;
+    caret-color: #FFFFFF !important;
+}   
     </style>
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-900">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-white">
     <div id="app">
         <!-- Header -->
         <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
@@ -84,7 +102,6 @@
                 </button>
             </div>
         </header>
-
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-6 pb-24">
             <!-- Back Button -->
@@ -94,7 +111,6 @@
                 </svg>
                 Back to Home
             </a>
-            
             <!-- Settings Sections -->
             <div class="space-y-8">
                 <!-- App Theme -->
@@ -103,29 +119,24 @@
                         <i class="fas fa-palette mr-2 text-primary"></i>
                         <span>App Theme</span>
                     </h2>
-                    
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="default">
                             <div class="w-full h-12 rounded mb-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
                             <span>Default</span>
                         </button>
-                        
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="purple">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-purple"></div>
                             <span>Advent/Lent</span>
                         </button>
-                        
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="white">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-white border border-gray-300"></div>
                             <span>Christmas/Easter</span>
                         </button>
-                        
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="green">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-green"></div>
                             <span>Ordinary Time</span>
                         </button>
                     </div>
-                    
                     <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                         <div>
                             <label class="inline-flex items-center">
@@ -138,58 +149,48 @@
                         </button>
                     </div>
                 </section>
-                
                 <!-- Language Settings -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-language mr-2 text-primary"></i>
                         <span>Language Settings</span>
                     </h2>
-                    
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="en">
                             <span class="mr-2">🇺🇸</span>
                             <span>English</span>
                         </button>
-                        
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="sw">
                             <span class="mr-2">🇹🇿</span>
                             <span>Swahili</span>
                         </button>
-                        
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="es">
                             <span class="mr-2">🇪🇸</span>
                             <span>Spanish</span>
                         </button>
-                        
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="fr">
                             <span class="mr-2">🇫🇷</span>
                             <span>French</span>
                         </button>
-                        
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="pt">
                             <span class="mr-2">🇵🇹</span>
                             <span>Portuguese</span>
                         </button>
-                        
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="it">
                             <span class="mr-2">🇮🇹</span>
                             <span>Italian</span>
                         </button>
                     </div>
-                    
                     <p class="text-sm text-gray-600 dark:text-gray-400">
                         Changing language will refresh the app. Your preferences will be saved.
                     </p>
                 </section>
-                
                 <!-- Prayer Reminders -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-bell mr-2 text-primary"></i>
                         <span>Prayer Reminders</span>
                     </h2>
-                    
                     <div class="space-y-4">
                         <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
@@ -204,7 +205,6 @@
                                 </label>
                             </div>
                         </div>
-                        
                         <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
                                 <h3 class="font-medium">Angelus</h3>
@@ -218,7 +218,6 @@
                                 </label>
                             </div>
                         </div>
-                        
                         <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
                                 <h3 class="font-medium">Divine Mercy (3 PM)</h3>
@@ -231,14 +230,12 @@
                         </div>
                     </div>
                 </section>
-                
                 <!-- Accessibility -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-universal-access mr-2 text-primary"></i>
                         <span>Accessibility</span>
                     </h2>
-                    
                     <div class="space-y-4">
                         <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
@@ -250,7 +247,6 @@
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                             </label>
                         </div>
-                        
                         <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
                                 <h3 class="font-medium">Text Size</h3>
@@ -264,14 +260,12 @@
                         </div>
                     </div>
                 </section>
-                
                 <!-- App Management -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-cog mr-2 text-primary"></i>
                         <span>App Management</span>
                     </h2>
-                    
                     <div class="space-y-3">
                         <button id="clearCacheBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <div class="flex justify-between items-center">
@@ -282,7 +276,6 @@
                                 <i class="fas fa-chevron-right text-gray-400"></i>
                             </div>
                         </button>
-                        
                         <button id="exportDataBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <div class="flex justify-between items-center">
                                 <div>
@@ -292,7 +285,6 @@
                                 <i class="fas fa-chevron-right text-gray-400"></i>
                             </div>
                         </button>
-                        
                         <button id="checkUpdatesBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <div class="flex justify-between items-center">
                                 <div>
@@ -304,14 +296,12 @@
                         </button>
                     </div>
                 </section>
-                
                 <!-- Social & Support -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-hands-helping mr-2 text-primary"></i>
                         <span>Connect & Support</span>
                     </h2>
-                    
                     <div class="grid grid-cols-4 gap-3 mb-4">
                         <a href="https://facebook.com" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                             <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
@@ -319,21 +309,18 @@
                             </div>
                             <span class="text-xxs">Facebook</span>
                         </a>
-                        
                         <a href="https://wa.me/254123456789" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                             <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
                                 <i class="fab fa-whatsapp"></i>
                             </div>
                             <span class="text-xxs">WhatsApp</span>
                         </a>
-                        
                         <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                             <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <span class="text-xxs">Email</span>
                         </a>
-                        
                         <a href="https://donate.ipray.app" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                             <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mb-1">
                                 <i class="fas fa-hand-holding-heart"></i>
@@ -341,7 +328,6 @@
                             <span class="text-xxs">Donate</span>
                         </a>
                     </div>
-                    
                     <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
                             <i class="far fa-copyright mr-1"></i>
@@ -351,7 +337,6 @@
                 </section>
             </div>
         </main>
-
         <!-- Bottom Navigation -->
         <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-3 shadow-lg">
             <div class="flex justify-around">
@@ -385,63 +370,49 @@
 
     <!-- Settings JavaScript -->
     <script>
-        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Set copyright year
             document.getElementById('copyrightYear').textContent = new Date().getFullYear();
-            
-            // Load saved preferences
             loadPreferences();
-            
-            // Setup event listeners
             setupEventListeners();
-            
-            // Check if installed
             checkPWAInstallation();
         });
 
-        // Load saved preferences from localStorage
         function loadPreferences() {
-            // Theme
             const savedTheme = localStorage.getItem('appTheme') || 'default';
             setTheme(savedTheme);
-            
-            // Dark mode (independent of device settings)
+
             const darkMode = localStorage.getItem('darkMode') === 'true';
             document.getElementById('darkModeToggle').checked = darkMode;
-            document.body.classList.toggle('dark', darkMode);
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
             updateThemeIcon(darkMode);
-            
-            // High contrast
+
             const highContrast = localStorage.getItem('highContrast') === 'true';
             document.getElementById('highContrastToggle').checked = highContrast;
             document.body.classList.toggle('high-contrast', highContrast);
-            
-            // Text size
+
             const textSize = localStorage.getItem('textSize') || 'normal';
             document.getElementById('textSizeSelect').value = textSize;
             document.body.classList.remove('text-large', 'text-xlarge');
             if (textSize !== 'normal') {
                 document.body.classList.add(`text-${textSize}`);
             }
-            
-            // Language
+
             const language = localStorage.getItem('language') || 'en';
             highlightSelectedLanguage(language);
         }
-    
 
-        // Update theme icon based on dark mode state
         function updateThemeIcon(isDark) {
             const themeIcon = document.getElementById('themeIcon');
             themeIcon.innerHTML = isDark ?
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />' : // Sun icon
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />'; // Moon icon
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />' :
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
         }
 
-        // Set up all event listeners
         function setupEventListeners() {
-            // Theme selection
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const theme = this.dataset.theme;
@@ -449,25 +420,25 @@
                     localStorage.setItem('appTheme', theme);
                 });
             });
-            
-            // Dark mode toggle (independent of device settings)
+
             document.getElementById('darkModeToggle').addEventListener('change', function() {
-                const isDark = this.checked;
-                document.body.classList.toggle('dark', isDark);
-                localStorage.setItem('darkMode', isDark);
-                updateThemeIcon(isDark);
-                // Update manifest theme color to match selected theme
-                updateManifestThemeColor();
-            });
-            
-            // Reset theme
+                    const isDark = this.checked;
+                    if (isDark) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                    localStorage.setItem('darkMode', isDark);
+                    updateThemeIcon(isDark);
+                    updateManifestThemeColor();
+                });
+
             document.getElementById('resetTheme').addEventListener('click', function() {
                 setTheme('default');
                 localStorage.setItem('appTheme', 'default');
                 updateManifestThemeColor();
             });
-            
-            // Language selection
+
             document.querySelectorAll('.language-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const lang = this.dataset.lang;
@@ -477,14 +448,13 @@
                     window.location.reload();
                 });
             });
-            
-            // Accessibility toggles
+
             document.getElementById('highContrastToggle').addEventListener('change', function() {
                 const highContrast = this.checked;
                 document.body.classList.toggle('high-contrast', highContrast);
                 localStorage.setItem('highContrast', highContrast);
             });
-            
+
             document.getElementById('textSizeSelect').addEventListener('change', function() {
                 const size = this.value;
                 document.body.classList.remove('text-large', 'text-xlarge');
@@ -493,37 +463,28 @@
                 }
                 localStorage.setItem('textSize', size);
             });
-            
-            // App management buttons
+
             document.getElementById('clearCacheBtn').addEventListener('click', clearCache);
             document.getElementById('exportDataBtn').addEventListener('click', exportData);
             document.getElementById('checkUpdatesBtn').addEventListener('click', checkForUpdates);
         }
 
-        // Apply theme colors
         function setTheme(theme) {
-            // Remove all theme classes
             document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
-            
-            // Add selected theme class
             if (theme !== 'default') {
                 document.body.classList.add(`theme-${theme}`);
             }
-            
-            // Update UI
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.classList.toggle('border-primary', option.dataset.theme === theme);
             });
-            
-            // Update manifest theme color
             updateManifestThemeColor();
         }
 
-        // Update manifest theme color to match selected theme
         function updateManifestThemeColor() {
             const theme = localStorage.getItem('appTheme') || 'default';
             const isDark = localStorage.getItem('darkMode') === 'true';
             let themeColor;
+
             switch (theme) {
                 case 'purple':
                     themeColor = '#4A1E8A';
@@ -535,25 +496,23 @@
                     themeColor = '#C41E3A';
                     break;
                 case 'white':
-                    themeColor = isDark ? '#374151' : '#F8F9FA'; // Use gray-800 for dark mode white theme
+                    themeColor = isDark ? '#374151' : '#F8F9FA';
                     break;
                 default:
                     themeColor = '#7C3AED';
             }
+
             document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);
         }
 
-        // Highlight selected language
         function highlightSelectedLanguage(lang) {
             document.querySelectorAll('.language-option').forEach(option => {
                 option.classList.toggle('border-primary', option.dataset.lang === lang);
             });
         }
 
-        // Clear app cache
         function clearCache() {
             if (confirm('Clear all cached data? This will free up storage but require re-downloading content.')) {
-                // Preserve critical data
                 const preservedData = {
                     appTheme: localStorage.getItem('appTheme'),
                     darkMode: localStorage.getItem('darkMode'),
@@ -561,24 +520,23 @@
                     textSize: localStorage.getItem('textSize'),
                     highContrast: localStorage.getItem('highContrast')
                 };
+
                 if ('caches' in window) {
                     caches.keys().then(cacheNames => {
-                        cacheNames.forEach(cacheName => {
-                            caches.delete(cacheName);
-                        });
+                        cacheNames.forEach(cacheName => caches.delete(cacheName));
                     });
                 }
+
                 localStorage.clear();
-                // Restore preserved data
                 Object.entries(preservedData).forEach(([key, value]) => {
                     if (value !== null) localStorage.setItem(key, value);
                 });
+
                 alert('Cache cleared. The app will reload.');
                 window.location.reload();
             }
         }
 
-        // Export data (placeholder implementation)
         function exportData() {
             const data = {
                 theme: localStorage.getItem('appTheme'),
@@ -597,12 +555,10 @@
             alert('Prayer data exported successfully.');
         }
 
-        // Check for updates (placeholder implementation)
         function checkForUpdates() {
             alert('Checking for updates... Current version is 1.2.0. No updates available.');
         }
 
-        // Check if installed as PWA
         function checkPWAInstallation() {
             if (window.matchMedia('(display-mode: standalone)').matches) {
                 console.log('Running as PWA');
@@ -613,7 +569,6 @@
             });
         }
 
-        // Register service worker for PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/ipray/sw.js')
                 .then(reg => console.log('Service Worker registered', reg))

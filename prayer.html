@@ -1,112 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prayer - iPray</title>
+    <title>prayer - iPray</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
     <meta name="description" content="Daily prayers and devotions for Catholic faithful">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED" id="theme-meta-color">
+
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // ✅ Required for dark: utility classes
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                    },
+                    // Gradient for vintage background
+                    backgroundImage: {
+                        'bg-gradient-vintage': 'linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%)',
+                        'dark-gradient-vintage': 'linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        :root {
+            --primary-color: #7C3AED;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
-        /* Light mode styles */
-        body.light-mode {
-            background-color: #f5f5f5;
-            color: #1a1a1a;
-        }
-
-        .dark-mode-toggle {
-            background-color: #333;
-            color: #e0e0e0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: auto;
-            font-size: 0.8rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border: none;
-        }
-
-        .dark-mode-toggle:hover {
-            background-color: #555;
-        }
-
-        body.light-mode .dark-mode-toggle {
-            background-color: #ccc;
-            color: #333;
-        }
-
-        body.light-mode .dark-mode-toggle:hover {
-            background-color: #aaa;
-        }
-
-        .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        body.light-mode .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .bg-gradient-vintage {
+        /* Apply gradient based on mode */
+        body {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        
-        .dark .bg-gradient-vintage {
+
+        body.dark {
             background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
         }
-        
+
         .prayer-card {
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
         }
-        
+
         .prayer-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        
-        .prayer-card.purple-border { border-left-color: #7C3AED; }
-        .prayer-card.red-border { border-left-color: #DC2626; }
-        .prayer-card.green-border { border-left-color: #16A34A; }
-        .prayer-card.blue-border { border-left-color: #3B82F6; }
-        .prayer-card.yellow-border { border-left-color: #F59E0B; }
-        .prayer-card.pink-border { border-left-color: #DB2777; }
-        
+
+        /* Border colors */
+        .purple-border { border-left-color: #7C3AED; }
+        .red-border { border-left-color: #DC2626; }
+        .green-border { border-left-color: #16A34A; }
+        .blue-border { border-left-color: #3B82F6; }
+        .yellow-border { border-left-color: #F59E0B; }
+        .pink-border { border-left-color: #DB2777; }
+
         .favorite-btn {
             transition: all 0.2s ease;
         }
-        
+
         .favorite-btn:hover {
             transform: scale(1.1);
         }
-        
+
         .favorite-btn.active {
             color: #DC2626;
         }
-        
+
         @media (max-width: 640px) {
             .bottom-nav {
                 padding-bottom: env(safe-area-inset-bottom);
@@ -114,21 +96,22 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+<body class="min-h-screen bg-gradient-vintage dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
     <div id="app" class="relative z-10">
         <!-- Header -->
         <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                        iPray
+                        ipray
                     </h1>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                        Daily Prayers
+                        daily prayers
                     </p>
                 </div>
                 <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
                     <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <!-- Sun Icon (Light Mode) -->
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
@@ -138,6 +121,7 @@
         <!-- Main Content -->
         <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
             <div class="space-y-6">
+                <!-- Back Button & Title -->
                 <div class="flex items-center justify-between">
                     <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-200 shadow-sm">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,20 +136,20 @@
 
                 <!-- Prayer Categories -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                    
-                    <button onclick="location.href='lauds.html'"
-                     class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                    <button id="masifuAsubuhiLink"
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
                         Lauds
                     </button>
-                    <button class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                    <button onclick="location.href='#'"
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
                         Evening
                     </button>
-                    <button href="holy-rosary.html"
-                     class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                    <button onclick="location.href='holy-rosary.html'"
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
                         Rosary
                     </button>
-                    <button href="sacraments.html"
-                     class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                    <button onclick="location.href='sacraments.html'"
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
                         Sacraments
                     </button>
                 </div>
@@ -325,182 +309,205 @@
         </nav>
     </div>
 
+    <!-- PWA Installation Prompt -->
+    <div id="installPrompt" class="fixed bottom-20 left-0 right-0 bg-white dark:bg-gray-800 shadow-xl mx-4 p-4 rounded-lg hidden">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-medium">Install iPray App?</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Access prayers offline</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="dismissInstall" class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600">Later</button>
+                <button id="installBtn" class="px-3 py-1 rounded-lg bg-purple-600 text-white">Install</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-
-        // Check for theme changes from other tabs/windows
-window.addEventListener('storage', (event) => {
-    if (event.key === 'themeMode') {
-        const isDark = event.newValue === 'dark';
-        setTheme(isDark);
-    }
-});
-    // Theme Management
-    function initTheme() {
-        const savedMode = localStorage.getItem('themeMode');
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = savedMode ? savedMode === 'dark' : prefersDark;
-        
-        if (isDark) {
-            document.body.classList.remove('light-mode');
-            document.documentElement.classList.add('dark');
-            document.getElementById('themeIcon').innerHTML = `
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            `;
-        } else {
-            document.body.classList.add('light-mode');
-            document.documentElement.classList.remove('dark');
-            document.getElementById('themeIcon').innerHTML = `
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            `;
+        // Masifu ya Asubuhi dynamic link
+        const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
+        if (masifuAsubuhiLink) {
+            masifuAsubuhiLink.addEventListener('click', function() {
+                const day = new Date().getDay();
+                const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+                const weekSequence = [1, 2, 3, 4];
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const daysSinceSunday = today.getDay();
+                const referenceSunday = new Date(today);
+                referenceSunday.setDate(today.getDate() - daysSinceSunday);
+                const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                const weeksSinceReference = Math.floor((today - referenceSunday) / msPerWeek);
+                const weekIndex = weeksSinceReference % weekSequence.length;
+                const week = weekSequence[weekIndex];
+                const fileName = `${dayToPrefix[day]}${week}.html`;
+                window.location.href = fileName;
+            });
         }
-    }
-
-    // Toggle theme
-    document.getElementById('themeToggle').addEventListener('click', function() {
-        const isDark = !document.body.classList.contains('light-mode');
         
-        if (isDark) {
-            // Switch to light mode
-            document.body.classList.add('light-mode');
-            document.documentElement.classList.remove('dark');
-            document.getElementById('themeIcon').innerHTML = `
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            `;
-            localStorage.setItem('themeMode', 'light');
-        } else {
-            // Switch to dark mode
-            document.body.classList.remove('light-mode');
-            document.documentElement.classList.add('dark');
-            document.getElementById('themeIcon').innerHTML = `
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            `;
-            localStorage.setItem('themeMode', 'dark');
-        }
-    });
-
-    // Favorite prayers functionality
-    function initFavorites() {
-        // Get favorites from localStorage
-        const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
-        
-        // Set up favorite buttons
-        document.querySelectorAll('.favorite-btn').forEach(button => {
-            const prayerId = button.getAttribute('data-prayer');
-            
-            // Check if this prayer is favorited
-            if (favorites.includes(prayerId)) {
-                button.innerHTML = '<i class="fas fa-star"></i>';
-                button.classList.add('active');
+        // Update theme color meta tag
+        function updateThemeMetaColor() {
+            const meta = document.getElementById('theme-meta-color');
+            if (document.body.classList.contains('dark')) {
+                meta.setAttribute('content', '#1a1a1a');
+            } else {
+                meta.setAttribute('content', '#7C3AED');
             }
-            
-            button.addEventListener('click', function() {
-                const prayerId = this.getAttribute('data-prayer');
-                const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
-                const index = favorites.indexOf(prayerId);
-                
-                if (index === -1) {
-                    // Add to favorites
-                    favorites.push(prayerId);
-                    this.innerHTML = '<i class="fas fa-star"></i>';
-                    this.classList.add('active');
-                } else {
-                    // Remove from favorites
-                    favorites.splice(index, 1);
-                    this.innerHTML = '<i class="far fa-star"></i>';
-                    this.classList.remove('active');
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const savedMode = localStorage.getItem('themeMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                // Sun icon
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `;
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                // Moon icon
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                `;
+            }
+            updateThemeMetaColor();
+        }
+
+        // Toggle theme
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                // Switch to light
+                document.body.classList.remove('dark');
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('themeMode', 'light');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                `;
+            } else {
+                // Switch to dark
+                document.body.classList.add('dark');
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('themeMode', 'dark');
+                document.getElementById('themeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                `;
+            }
+            updateThemeMetaColor();
+        });
+
+        // Listen for theme changes in other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'themeMode') {
+                initTheme();
+            }
+        });
+
+        // Favorite prayers functionality
+        function initFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const id = btn.getAttribute('data-prayer');
+                if (favorites.includes(id)) {
+                    btn.innerHTML = '<i class="fas fa-star"></i>';
+                    btn.classList.add('active');
                 }
-                
-                // Save to localStorage
-                localStorage.setItem('favoritePrayers', JSON.stringify(favorites));
-                displayFavorites();
-            });
-        });
-    }
-
-    // Prayer category filtering
-    function initCategories() {
-        document.querySelectorAll('.category-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                document.querySelectorAll('.category-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    btn.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
-                    btn.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-prayer');
+                    const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
+                    const index = favorites.indexOf(id);
+                    if (index === -1) {
+                        favorites.push(id);
+                        this.innerHTML = '<i class="fas fa-star"></i>';
+                        this.classList.add('active');
+                    } else {
+                        favorites.splice(index, 1);
+                        this.innerHTML = '<i class="far fa-star"></i>';
+                        this.classList.remove('active');
+                    }
+                    localStorage.setItem('favoritePrayers', JSON.stringify(favorites));
+                    displayFavorites();
                 });
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-                this.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-                this.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
-                
-                // Filter prayers based on category
-                const category = this.textContent.trim().toLowerCase();
-                filterPrayers(category);
             });
-        });
-    }
-
-    // Filter prayers by category
-    function filterPrayers(category) {
-        const prayerCards = document.querySelectorAll('.prayer-card');
-        
-        prayerCards.forEach(card => {
-            const prayerTitle = card.querySelector('h3').textContent.toLowerCase();
-            const isMorning = ['morning offering'].some(term => prayerTitle.includes(term));
-            const isEvening = false; // No specific evening prayers in this list
-            const isRosary = ['hail mary', 'rosary'].some(term => prayerTitle.includes(term));
-            const isIntercession = ['act of contrition', 'prayer to st. michael'].some(term => prayerTitle.includes(term));
-            const isSacrament = ['apostles\' creed', 'lord\'s prayer', 'hail mary', 'glory be', 'hail holy queen'].some(term => prayerTitle.includes(term));
-            
-            let show = true;
-            
-            if (category !== 'all prayers') {
-                if (category === 'morning' && !isMorning) show = false;
-                if (category === 'evening' && !isEvening) show = false;
-                if (category === 'rosary' && !isRosary) show = false;
-                if (category === 'intercessions' && !isIntercession) show = false;
-                if (category === 'sacraments' && !isSacrament) show = false;
-            }
-            
-            card.style.display = show ? 'block' : 'none';
-        });
-    }
-
-    // Display favorite prayers
-    function displayFavorites() {
-        const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
-        const favoritesList = document.getElementById('favoritesList');
-        const favoritesSection = document.getElementById('favoritesSection');
-        
-        if (favorites.length === 0) {
-            favoritesSection.classList.add('hidden');
-            return;
         }
-        
-        favoritesSection.classList.remove('hidden');
-        favoritesList.innerHTML = '';
-        
-        // Get all prayer cards
-        document.querySelectorAll('.prayer-card').forEach(card => {
-            const prayerId = card.querySelector('.favorite-btn').getAttribute('data-prayer');
-            if (favorites.includes(prayerId)) {
-                const clone = card.cloneNode(true);
-                // Remove the event listener and make it non-functional in favorites
-                const favBtn = clone.querySelector('.favorite-btn');
-                favBtn.outerHTML = '<button class="text-yellow-500"><i class="fas fa-star"></i></button>';
-                favoritesList.appendChild(clone);
+
+        function displayFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favoritePrayers') || '[]');
+            const list = document.getElementById('favoritesList');
+            const section = document.getElementById('favoritesSection');
+            if (favorites.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            list.innerHTML = '';
+            document.querySelectorAll('.prayer-card').forEach(card => {
+                const id = card.querySelector('.favorite-btn').getAttribute('data-prayer');
+                if (favorites.includes(id)) {
+                    const clone = card.cloneNode(true);
+                    const favBtn = clone.querySelector('.favorite-btn');
+                    favBtn.outerHTML = '<button class="text-yellow-500"><i class="fas fa-star"></i></button>';
+                    list.appendChild(clone);
+                }
+            });
+        }
+
+        // Category filtering
+        function initCategories() {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.category-btn').forEach(b => {
+                        b.classList.remove('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
+                        b.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    });
+                    this.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    this.classList.add('bg-purple-100', 'dark:bg-purple-900/30', 'text-purple-800', 'dark:text-purple-300');
+                });
+            });
+        }
+
+        // PWA Installation
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.remove('hidden');
+        });
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') console.log('User accepted install');
+                deferredPrompt = null;
+                document.getElementById('installPrompt').classList.add('hidden');
             }
         });
-    }
 
-    // Initialize the app
-    document.addEventListener('DOMContentLoaded', function() {
-        initTheme();
-        initFavorites();
-        initCategories();
-        displayFavorites();
-        
-        // Set initial filter to show all prayers
-        filterPrayers('all prayers');
-    });
-</script>
+        document.getElementById('dismissInstall').addEventListener('click', () => {
+            document.getElementById('installPrompt').classList.add('hidden');
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/ipray/service-worker.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW registration failed:', err));
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initFavorites();
+            initCategories();
+            displayFavorites();
+        });
+    </script>
+</body>
+</html>
