@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Wednesday, October 1, 2025, for the memorial of Saint Thérèse of the Child Jesus. Readings include a passage from Nehemiah about rebuilding Jerusalem, a psalm of longing for the city of God, and the Gospel of Luke 9, where Jesus speaks about the cost of discipleship to those who wish to follow him.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Wednesday, October 1, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Memorial of Saint Thérèse of the Child Jesus, Virgin and Doctor of the Church</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Feast readings may replace the weekday readings.</p>
+                </div>
+            </div>
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Nehemiah 2: 1-8</strong><br><br>
+
+                    1 And it came to pass in the month of Nisan, in the twentieth year of Artaxerxes the king: that wine was before him, and I took up the wine, and gave it to the king: and I was as one languishing away before his face.<br>
+                    2 And the king said to me: Why is thy countenance sad, seeing thou dost not appear to be sick? this is not without cause, but some evil, I know not what, is in thy heart. And I was seized with an exceeding great fear:<br>
+                    3 And I said to the king: O king, live for ever: why should not my countenance be sorrowful, seeing the city of the place of the sepulchres of my fathers is desolate, and the gates thereof are burnt with fire?<br>
+                    4 Then the king said to me: For what dost thou make request? And I prayed to the God of heaven,<br>
+                    5 And I said to the king: If it seem good to the king, and if thy servant hath found favour in thy sight, that thou wouldst send me into Judea to the city of the sepulchre of my father, and I will build it.<br>
+                    6 And the king said to me, and the queen that sat by him: For how long shall thy journey be, and when wilt thou return? And it pleased the king, and he sent me: and I fixed him a time.<br>
+                    7 And I said to the king: If it seem good to the king, let him give me letters to the governors of the country beyond the river, that they convey me over, till I come into Judea:<br>
+                    8 And a letter to Asaph the keeper of the king’s forest, to give me timber that I may cover the gates of the tower of the house, and the walls of the city, and the house that I shall enter into. And the king gave me according to the good hand of my God with me.
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
+                <p class="text-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Psalms 137: 1-2, 3, 4-5, 6</strong><br><br>
+
+                    <em>R. Let my tongue be silenced if I ever forget you!</em><br><br>
+
+                    1 Upon the rivers of Babylon, there we sat and wept: when we remembered Sion:<br>
+                    2 On the willows in the midst thereof we hung up our instruments.<br>
+                    <em>R. Let my tongue be silenced if I ever forget you!</em><br><br>
+
+                    3 For there they that led us into captivity required of us the words of songs. And they that carried us away, said: Sing ye to us a hymn of the songs of Sion.<br>
+                    <em>R. Let my tongue be silenced if I ever forget you!</em><br><br>
+
+                    4 How shall we sing the song of the Lord in a strange land?<br>
+                    5 If I forget thee, O Jerusalem, let my right hand be forgotten.<br>
+                    <em>R. Let my tongue be silenced if I ever forget you!</em><br><br>
+
+                    6 Let my tongue cleave to my jaws, if I do not remember thee: If I make not Jerusalem the beginning of my joy.<br>
+                    <em>R. Let my tongue be silenced if I ever forget you!</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section class="text-center py-4 bg-white/50 dark:bg-black/30 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Alleluia</h2>
+                <p class="text-gray-700 dark:text-gray-300 italic">
+                    <strong>Philippians 3: 8-9</strong><br><br>
+                    <em>R. Alleluia, alleluia.</em><br>
+                    8-9 I consider all things so much rubbish that I may gain Christ and be found in him.<br>
+                    <em>R. Alleluia, alleluia.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Luke 9: 57-62</strong><br><br>
+
+                    57 And it came to pass, as they walked in the way, that a certain man said to him: I will follow thee whithersoever thou goest.<br>
+                    58 Jesus said to him: The foxes have holes, and the birds of the air nests; but the Son of man hath not where to lay his head.<br>
+                    59 But he said to another: Follow me. And he said: Lord, suffer me first to go, and to bury my father.<br>
+                    60 And Jesus said to him: Let the dead bury their dead: but go thou, and preach the kingdom of God.<br>
+                    61 And another said: I will follow thee, Lord; but let me first take my leave of them that are at my house.<br>
+                    62 Jesus said to him: No man putting his hand to the plough, and looking back, is fit for the kingdom of God.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Sync with main app's dark mode
+        const savedMode = localStorage.getItem('themeMode') || 'light';
+        document.body.classList.toggle('dark', savedMode === 'dark');
+        document.documentElement.classList.toggle('dark', savedMode === 'dark');
+    </script>
+</body>
+</html>
