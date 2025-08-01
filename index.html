@@ -198,27 +198,35 @@
                 </div>
 
                         <!-- Prayer content -->
-                        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4 cursor-pointer" onclick="togglePrayer()">
-                        <!-- Header with image and title -->
-                        <div class="flex items-center space-x-4">
-                            <img src="/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
-                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Kuomba Neema Kwa Carmen Hernandez</h2>
-                        </div>
+                        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4">
+                            <!-- Header with image and title -->
+                            <div class="flex items-center space-x-4">
+                                <img src="/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Pray To Carmen Hernandez</h2>
+                            </div>
 
-                        <!-- Collapsible prayer section -->
-                        <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <p ><strong>Ee Mungu</strong>, kwamba kwa kumchagua mtumishi wako Carmen Hernández
-                            kama mwanzilishi mwenza wa Njia ya Neokatekumenato,
-                            ulimpa upendo mkuu kwa Yesu Kristo na Kanisa,
-                            kwa Maandiko Matakatifu na kwa sala ya kiliturujia,
-                            ari kubwa kwa ajili ya tangazo la msafiri wa Injili
-                            na uaminifu katika majaribu ya msalaba;
-                            nijalie kwa maombezi yake,
-                            na ikiwa ni mapenzi yako, nijalie pia neema ninayokuomba (taja neema unayoiomba).
-                            Kwa njia ya Yesu Kristo, Bwana wetu. Amina.</p>
-                            <p><strong>Mwisho: </strong>Baba yetu. Salamu Maria. Atukuzwe Baba...</p>
-                        </div>
-                        </div>
+                                <!-- "Tap to view" button -->
+                                <div class="mt-3 text-center">
+                                    <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
+                                        Tap to view
+                                    </button>
+                                </div>
+
+                                <!-- Collapsible prayer section -->
+                                <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    <p><strong>Oh Lord</strong>,
+                                    that by electing the servant of God Carmen Hernández
+                                    as co-initiator of the Neocatechumenal Way,
+                                    granted her a great love for Jesus Christ and the Church,
+                                    for Holy Scripture and for liturgical prayer,
+                                    a burning zeal for the itinerant announcement of the Gospel
+                                    and fidelity to you in the trials of the cross;
+                                    grant that I, through her intercession,
+                                    may be faithful to the baptism I have received
+                                    and, if it is your will, also grant the grace I ask of you. Through Jesus Christ, our Lord. Amen</p>
+                                    <p><strong>Final:</strong> Our Father. Hail Mary. Glory be. ...</p>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -375,9 +383,13 @@
 
         
             function togglePrayer() {
-                const prayer = document.getElementById('prayerText');
-                prayer.classList.toggle('hidden');
-            }
+                    const prayerText = document.getElementById('prayerText');
+                    const toggleBtn = document.getElementById('togglePrayerBtn');
+                    prayerText.classList.toggle('hidden');
+                    if (!prayerText.classList.contains('hidden')) {
+                        toggleBtn.classList.add('hidden'); // Hide "Tap to view" after expanding
+                    }
+                }
 
 
 
@@ -723,12 +735,16 @@
         }
 
         // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            applyThemeAndDarkMode();
-            document.getElementById('themeToggle').addEventListener('click', () => {
-                const isDark = !document.body.classList.contains('dark');
-                applyDarkMode(isDark);
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    applyThemeAndDarkMode();
+    
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        const isDark = !document.body.classList.contains('dark');
+        applyDarkMode(isDark);
+    });
+
+            // Initialize navigation and features
             initNavigation();
             initAccessibility();
             calculateLiturgicalDay();
@@ -736,8 +752,16 @@
             fetchDailyReadings();
             setupPrayerReminders();
             registerServiceWorker();
+
+            // Set language
             const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
             setLanguage(preferredLang);
+
+            //  Add event listener for "Tap to view" on Carmen's prayer card
+            const toggleBtn = document.getElementById('togglePrayerBtn');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', togglePrayer);
+            }
         });
     </script>
 </body>
