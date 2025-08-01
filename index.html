@@ -19,26 +19,27 @@
     
     <!-- Custom Tailwind Config -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#7C3AED',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-purple': '#4A1E8A',
-                        'liturgical-white': '#F8F9FA',
-                        'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
-                        'liturgical-gold': '#FFD700',
-                    },
-                    backgroundImage: {
-                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+            tailwind.config = {
+                darkMode: 'class', // 👈 This is key
+                theme: {
+                    extend: {
+                        colors: {
+                            'primary': '#7C3AED',
+                            'secondary': '#DB2777',
+                            'accent': '#F59E0B',
+                            'liturgical-purple': '#4A1E8A',
+                            'liturgical-white': '#F8F9FA',
+                            'liturgical-red': '#C41E3A',
+                            'liturgical-green': '#2E7D32',
+                            'liturgical-gold': '#FFD700',
+                        },
+                        backgroundImage: {
+                            'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                        }
                     }
                 }
             }
-        }
-    </script>
+        </script>
     
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -62,21 +63,7 @@
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
-        .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+       
         .card-highlighted {
             background-color: #4a4a4a;
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
@@ -134,12 +121,19 @@
             .bottom-nav {
         padding-bottom: max(env(safe-area-inset-bottom), 1rem);
     }
+
+    /* Preemptively set dark mode if system prefers it */
+    @media (prefers-color-scheme: dark) {
+        html:not(.dark) {
+            color-scheme: dark;
+        }
+    }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+<body class="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
     <div id="app" class="relative z-10">
         <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm transition-colors duration-300">
     <div class="header-content">
         <div>
             <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
@@ -340,44 +334,40 @@
 
         // Theme and Dark Mode Management - Improved
                 function applyThemeAndDarkMode() {
-                    // Apply saved theme
-                    const savedTheme = localStorage.getItem('appTheme') || 'default';
-                    document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
-                    if (savedTheme !== 'default') {
-                        document.body.classList.add(`theme-${savedTheme}`);
-                    }
+                        // Apply saved theme
+                        const savedTheme = localStorage.getItem('appTheme') || 'default';
+                        document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
+                        if (savedTheme !== 'default') {
+                            document.body.classList.add(`theme-${savedTheme}`);
+                        }
 
-                    // Check for system preference only if no mode was explicitly set
-                    const savedMode = localStorage.getItem('themeMode');
-                    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                        // Check system preference only if no mode was set
+                        const savedMode = localStorage.getItem('themeMode');
+                        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-                    // If user never chose a mode, follow system preference
-                    if (!savedMode) {
-                        applyDarkMode(systemPrefersDark);
-                    } else {
-                        // Otherwise, use the user's saved choice
-                        applyDarkMode(savedMode === 'dark');
+                        const isDark = savedMode ? savedMode === 'dark' : systemPrefersDark;
+                        applyDarkMode(isDark); // This will set `html.dark`
                     }
-                }
 
                 // Update applyDarkMode to sync UI
                 function applyDarkMode(isDark) {
-                    document.body.classList.toggle('dark', isDark);
-                    document.documentElement.classList.toggle('dark', isDark);
-                    document.body.classList.toggle('light-mode', !isDark);
+                    const html = document.documentElement;
+                    if (isDark) {
+                        html.classList.add('dark');
+                    } else {
+                        html.classList.remove('dark');
+                    }
 
-                    // Update icon
+                    // Update theme icon
                     const themeIcon = document.getElementById('themeIcon');
                     if (themeIcon) {
                         themeIcon.innerHTML = isDark ?
-                            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />` : // Sun
+                            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 2a14 14 0 010 28 14 14 0 010-28z" fill="currentColor"/>` : // Sun
                             `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`; // Moon
                     }
 
-                    // Save only if user manually toggled
-                    if (localStorage.getItem('themeMode')) {
-                        localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
-                    }
+                    // Save user preference only if manually set
+                    localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
                 }
 
 
@@ -740,9 +730,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Theme toggle
     document.getElementById('themeToggle').addEventListener('click', () => {
-        const isDark = !document.body.classList.contains('dark');
-        applyDarkMode(isDark);
-    });
+    const isDark = document.documentElement.classList.contains('dark');
+    applyDarkMode(!isDark); // Toggle
+});
 
             // Initialize navigation and features
             initNavigation();
