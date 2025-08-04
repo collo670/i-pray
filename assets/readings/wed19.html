@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Wednesday, August 13, 2025. Readings include the miracles of Elisha, the promise of salvation for Sion, and the Gospel of Matthew.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Wednesday, August 13, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Wednesday of Week 19</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kings 6: 24 – 25, 32 – 7:16</strong><br>
+                        <em>Samaria is miraculously liberated from the siege.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        Afterward Ben-ha'dad king of Syria mustered his entire army, and went up, and besieged Samaria. And there was a great famine in Sama'ria, as they besieged it, until an ass's head was sold for eighty shekels of silver, and the fourth part of a kab of dove's dung for five shekels of silver. Eli'sha was sitting in his house, and the elders were sitting with him. Now the king had dispatched a man from his presence; but before the messenger arrived Eli'sha said to the elders, "Do you see how this murderer has sent to take off my head? Look, when the messenger comes, shut the door, and hold the door fast against him. Is not the sound of his master's feet behind him?" And while he was still speaking with them, the king came down to him and said, "This trouble is from the LORD! Why should I wait for the LORD any longer?" But Eli'sha said, "Hear the word of the LORD: thus says the LORD, ‘Tomorrow about this time a measure of fine meal shall be sold for a shekel, and two measures of barley for a shekel, at the gate of Samaria’" Then the captain on whose hand the king leaned said to the man of God, "If the LORD himself should make windows in heaven, could this thing be?" But he said, "You shall see it with your own eyes, but you shall not eat of it." Now there were four men who were lepers at the entrance to the gate; and they said to one another, "Why do we sit here till we die? If we say, `Let us enter the city,' the famine is in the city, and we shall die there; and if we sit here, we die also. So now come, let us go over to the camp of the Syrians; if they spare our lives we shall live, and if they kill us we shall but die." So they arose at twilight to go to the camp of the Syrians; but when they came to the edge of the camp of the Syrians, behold, there was no one there. For the Lord had made the army of the Syrians hear the sound of chariots, and of horses, the sound of a great army, so that they said to one another, "Behold, the king of Israel has hired against us the kings of the Hittites and the kings of Egypt to come upon us." So they fled away in the twilight and forsook their tents, their horses, and their asses, leaving the camp as it was, and fled for their lives. And when these lepers came to the edge of the camp, they went into a tent, and ate and drank, and they carried off silver and gold and clothing, and went and hid them; then they came back, and entered another tent, and carried off things from it, and went and hid them. Then they said to one another, "We are not doing right. This day is a day of good news; if we are silent and wait until the morning light, punishment will overtake us; now therefore come, let us go and tell the king’s household." So they came and called to the gatekeepers of the city, and told them, "We came to the camp of the Syrians, and behold, there was no one to be seen or heard there, nothing but the horses tied, and the asses tied, and the tents as they were." Then the gatekeepers called out, and it was told within the king's household. And the king rose in the night, and said to his servants, "I will tell you what the Syrians have prepared against us. They know that we are hungry; therefore they have gone out of the camp to hide themselves in the open country, thinking, ‘When they come out of the city, we shall take them alive and get into the city.'" And one of his servants said, "Let some men take five of the remaining horses, seeing that those who are left here will fare like the whole multitude of Israel that have already perished; let us send and see." So they took two mounted men, and the king sent them after the army of the Syrians, saying, "Go and see." So they went after them as far as the Jordan; and, lo, all the way was littered with garments and equipment which the Syrians had thrown away in their haste. And the messengers returned, and told the king. Then the people went out, and plundered the camp of the Syrians. So a measure of fine meal was sold for a shekel, and two measures of barley for a shekel, according to the word of the LORD.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kg. 7, 2; Mk. 11, 23</strong><br><br>
+                        <em>R. The equerry of the king answered Elisha: Could a similar thing be true? He answered him: * You will see it with your own eyes.</em><br>
+                        V: He who does not doubt in his heart, believing that what he asks will happen, it will be done for him.<br>
+                        <em>R. You will see it with your own eyes.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Disc. 2 for the dedication 1, 2, 3</strong><br>
+                        <em>Decorate your talamum, Sion, because the Lord has put in you His pleasure.</em><br><br>
+                        A reading from the “Discourses” of St. Bernard, Abbot.<br>
+                        Once the glorious king and prophet of the Lord, the holy David, started to be moved by a religious solicitation, considering it as unworthy that the Lord of hosts did not as yet have a dwelling on earth, while he lived in a house worthy of a king. Even we, brothers, have to seriously think of this and take decisively a resolution. In fact, even though the Lord was pleased with the decision of the prophet, yet the realisation was reserved for Solomon. Even you, O soul, live in a sublime dwelling that has been prepared for you by the Lord. Blessed, highly blessed, the soul that can say: “ We know that when this body, our dwelling on the earth, will be destroyed, we will receive a dwelling from God, an eternal dwelling, not constructed by man’s hands, in heaven” (2 Cor. 5,1). Therefore do not concede sleep to your eyes, O soul, or rest to your eyelids, until you find a seat for the Lord, a dwelling for the Powerful one of Jacob. (cfr. Ps. 131, 4-5). What do you think, brothers? Where can we find the place of this dwelling, and who can be the architect? The visible temple has been made to receive us; but the Most High does not live in a dwelling constructed by the hands of man. What temple can we therefore construct for him who said: “Do I not fill the heavens and the earth? Word of the Lord” (Jer. 23, 24). I would be in deep anguish and my spirit would languish if I did not hear the Lord Himself affirm: My Father and I “will come to him and take up a dwelling in him” (Jn. 14, 23). Now finally I know where I can prepare a dwelling for Him, because only he who is His image can contain Him. Capable of Him is the soul, really created in his image. For this hurry, adorn your talamum, O Sion, “Because the Lord is pleased with you and your land will have a bridegroom” (Is. 62, 4). “Exult greatly, daughter of Sion” (Zec. 9, 9); your God is coming to dwell in you. For this, my brothers, with all the desire of the heart and with a worthy thanksgiving, let us dedicate ourselves to building in us a temple for the Lord. Request urgently above all that He lives in us and then in all together, so that he may not repel from Himself neither the single nor the multitudes. Each one above all should be careful not to be divided inside, because “every kingdom divided in itself will fall into ruin” (Lk. 11, 17), nor will the Christ enter where there are falling walls and enclosures that are falling.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Lev. 26, 11. 12; 2 Cor. 6, 16</strong><br><br>
+                        <em>R. I will establish my dwelling in the midst of you and I will not repel you. * I will walk in the midst of you, I will be your God and you will be my people.</em><br>
+                        V: We are the temple of the living God, as God Himself has said:<br>
+                        <em>R. I will walk in the midst of you, I will be your God and you will be my people</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Zc. 10: 3 – 11:3</strong><br>
+                        <em>Liberation and return of Israel.</em><br><br>
+                        A reading from the prophet Zechariah.<br>
+                        Thus says the Lord: "My anger is hot against the shepherds, and I will punish the leaders; for the LORD of hosts cares for his flock, the house of Judah, and will make them like his proud steed in battle. Out of them shall come the cornerstone, out of them the tent peg, out of them the battle bow, out of them every ruler. Together they shall be like mighty men in battle, trampling the foe in the mud of the streets; they shall fight because the LORD is with them, and they shall confound the riders on horses. "I will strengthen the house of Judah, and I will save the house of Joseph. I will bring them back because I have compassion on them, and they shall be as though I had not rejected them; for I am the LORD their God and I will answer them. Then E'phraim shall become like a mighty warrior, and their hearts shall be glad as with wine. Their children shall see it and rejoice, their hearts shall exult in the LORD. "I will signal for them and gather them in, for I have redeemed them, and they shall be as many as of old. Though I scattered them among the nations, yet in far countries they shall remember me, and with their children they shall live and return. I will bring them home from the land of Egypt, and gather them from Assyria; and I will bring them to the land of Gilead and to Lebanon, till there is no room for them. They shall pass through the sea of Egypt, and the waves of the sea shall be smitten, and all the depths of the Nile dried up. The pride of Assyria shall be laid low, and the sceptre of Egypt shall depart. I will make them strong in the LORD and they shall glory in his name," says the LORD. Open your doors, O Lebanon, that the fire may devour your cedars! Wail, O cypress, for the cedar has fallen, for the glorious trees are ruined! Wail, oaks of Bashan, for the thick forest has been felled! Hark, the wail of the shepherds, for their glory is despoiled! Hark, the roar of the lions, for the jungle of the Jordan is laid waste!
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Zec. 10, 6; Is. 28, 5</strong><br><br>
+                        <em>R. I will render them victorious and I will lead them back to their country, because I have had mercy on them, I the Lord their God: * and their hearts will exult in the Lord.</em><br>
+                        V: In that day the Lord of the universe will be a crown of glory and a splendid diadem for the remnant of His people;<br>
+                        <em>R. and their hearts will exult in the Lord.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Disc. 21: 1 – 4</strong><br>
+                        <em>The heart of the just will exult in the Lord.</em><br><br>
+                        A reading from the “Discourses” of St. Augustine, bishop.<br>
+                        “The just will rejoice in the Lord and he will place all his hope in Him, and the upright of heart will draw glory from Him” (Ps. 63, 11). This we have sung not only with the voice but also with the heart. These words have been addressed to God by the Christian conscience and tongue. “The just will rejoice” not in the world, but “in the Lord”. “A light has been raised for the just” it says elsewhere, “joy for the upright of heart” (Ps 96, 11). Perhaps you want to ask from where this joy comes. Listen: “the just will rejoice in the Lord” and elsewhere “Search for the joy in the Lord, He will fulfil the desires of your hearts” (Ps. 36, 4). What are we ordered and what is given to us? What are we commanded and what is lavished upon us? That we may rejoice in the Lord! But who rejoices in what he does not see? Or perhaps we see the Lord? This is only the object of the promise. Now instead “we walk in faith and until we live in the body we are in exile, far away from the Lord” ( 2 Cor. 5, 7. 6). In faith and not in vision. When in vision? When what John himself says will be fulfilled: “Dearest, until now we are children of God, but what we will be has not yet been revealed. We know however that when He will be manifested, we will be similar to Him, because we will see Him as He is.” (1 Jn. 3,2). Then there will follow great and perfect happiness, then there will be complete joy, where there will no longer be the hope to sustain us, but the reality itself to satisfy us. Yet even now, before this reality arrives to us, before we reach the reality itself, let us rejoice in the Lord. In fact it does not bear little joy that hope to which follows the reality. Now therefore let us live in hope. It is for this that the Scripture says: “The just will rejoice in the Lord” and immediately afterwards, because they do not yet see the reality, it adds: “and places all his hope in Him”. We have above all the first fruits of the Spirit and perhaps already something more. In fact already now we are near to the one whom we love. Already now we are given a taste and a foretaste of that food and that drink, of which one day we will be avidly satisfied. But how can we rejoice in the Lord, if He is so far away from us? Far away? No. he is not far away that is if you yourself do not force Him to go far away from you. Love Him and you will feel Him close. Love Him and He will come to live in you. “The Lord is close: do not distress yourself for nothing” (Ph. 4, 5-6). Do you want to see how He is near to you, if you love Him? “God is love” (1 Jn. 4,8) But you want to ask me: What is love? Love is the virtue by which we love. What do we love? An ineffable good, a beneficial good, a good that creates all goods. He himself will be your delight, because from Him you will receive all that causes your delight. He is certainly not speaking of sin. In fact only sin you do not receive from Him. Except for sin, you have from Him all the other things that you possess.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        R. Before contemplating that which you cannot see, believe that which you do not see. * Walk in faith, and you will reach the vision.<br>
+                        V: You will not be blessed in the homeland because of the vision, if on the way the faith has not comforted you.<br>
+                        <em>R. Walk in faith, and you will reach the vision.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 18: 15 – 20</strong><br>
+                    <em>If he listens to you, you will have gained a brother.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    “If your brother sins against you, go and tell him his fault, between you and him alone. If he listens to you, you have gained your brother. But if he does not listen, take one or two others along with you, that every word may be confirmed by the evidence of two or three witnesses. If he refuses to listen to them, tell it to the church; and if he refuses to listen even to the church, let him be to you as a Gentile and a tax collector. Truly, I say to you, whatever you bind on earth shall be bound in heaven, and whatever you loose on earth shall be loosed in heaven. Again I say to you, if two of you agree on earth about anything they ask, it will be done for them by my Father in heaven. For where two or three are gathered in my name, there am I in the midst of them."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

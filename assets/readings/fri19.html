@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Friday, August 15, 2025. Readings include the story of Athaliah and Joash, a treatise on the mysteries of Christ, and the Gospel of Matthew on marriage.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Friday, August 15, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Friday of Week 19</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kings 11: 1 –21</strong><br>
+                        <em>Athaliah and king Joash.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        Now when Athali'ah the mother of Ahazi'ah saw that her son was dead, she arose and destroyed all the royal family. Jehosh'eba, the daughter of King Joram, sister of Ahazi'ah, took Jo'ash the son of Ahazi'ah, and stole him away from among the king's sons who were about to be slain, and she put him and his nurse in a bedchamber. Thus she hid him from Athali'ah, so that he was not slain; and he remained with her six years, hid in the house of the LORD, while Athali'ah reigned over the land. But in the seventh year Jehoi'ada sent and brought the captains of the Carites and of the guards, and had them come to him in the house of the LORD; and he made a covenant with them and put them under oath in the house of the LORD, and he showed them the king's son. And he commanded them, "This is the thing that you shall do: one third of you, those who come off duty on the Sabbath and guard the king’s house (another third being at the gate Sur and a third at the gate behind the guards), shall guard the palace; and the two divisions of you, which come on duty in force on the Sabbath and guard the house of the LORD, shall surround the king, each with his weapons in his hand; and whoever approaches the ranks is to be slain. Be with the king when he goes out and when he comes in." The captains did according to all that Jehoi'ada the priest commanded, and each brought his men who were to go off duty on the Sabbath, with those who were to come on duty on the Sabbath, and came to Jehoi'ada the priest. And the priest delivered to the captains the spears and shields that had been King David's, which were in the house of the LORD; and the guards stood, every man with his weapons in his hand, from the south side of the house to the north side of the house, around the altar and the house. Then he brought out the king's son, and put the crown upon him, and gave him the testimony; and they proclaimed him king, and anointed him; and they clapped their hands, and said, "Long live the king!" When Athali'ah heard the noise of the guard and of the people, she went into the house of the LORD to the people; and when she looked, there was the king standing by the pillar, according to the custom, and the captains and the trumpeters beside the king, and all the people of the land rejoicing and blowing trumpets. And Athali'ah rent her clothes, and cried, "Treason! Treason!" Then Jehoi'ada the priest commanded the captains who were set over the army, "Bring her out between the ranks; and slay with the sword any one who follows her." For the priest said, "Let her not be slain in the house of the LORD." So they laid hands on her; and she went through the horses' entrance to the king's house, and there she was slain. And Jehoi'ada made a covenant between the LORD and the king and people, that they should be the Lord’s people; and also between the king and the people. Then all the people of the land went to the house of Ba'al, and tore it down; his altars and his images they broke in pieces, and they slew Mattan the priest of Ba'al before the altars. And the priest posted watchmen over the house of the LORD. And he took the captains, the Carites, the guards, and all the people of the land; and they brought the king down from the house of the LORD, marching through the gate of the guards to the king's house. And he took his seat on the throne of the kings. So all the people of the land rejoiced; and the city was quiet after Athali'ah had been slain with the sword at the king's house. Jeho'ash was seven years old when he began to reign.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Chr. 23, 3; Jer. 23, 5</strong><br><br>
+                        <em>R. All the assembly concluded a covenant with the king in the temple of God, Jeho’iada said to them: Behold the son of the king. He has to rule, * as the Lord has promised to the sons of David.</em><br>
+                        V: Look the days will come in which I will raise up for David a just shoot, who will reign as true king and he will be wise,<br>
+                        <em>R. as the Lord has promised to the sons of David.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Book 1</strong><br>
+                        <em>I have come so that they may have life.</em><br><br>
+                        A reading from the treatise “The life in Christ” of Nicholas Cabasilas.<br>
+                        If the types and figures bring us the happiness that is searched for, the truth and the reality itself are vain. The fact that through the death of Christ the enmity has been eradicated, and the dividing wall has been demolished, and the peace and justice have arisen in the times of the Saviour, in short all these facts of this type, what sense would they still have, if before this sacrifice men had been just and friends of God? There are other arguments with regard to this. Then there was the law to unite them to God: now instead it is the faith, grace, and all that refers to it. It appears evident that at that time the communion of men with God consisted above all in a relationship of slavery, now instead it consists of an adoption as sons and of friendship. To the servants in fact a law is given, while grace, faith and trust belongs to the friends and children. From all this it is evident that the Saviour is the “first born from the dead”(Ap. 1,5), and that none of the dead could rise to immortal life before the Christ started to live as resurrected. In the same way, even with regard to holiness and justice, He alone preceded all men; Paul attests this when he says that the Christ entered into the Holy of Holies as our precursor (cfr. He.6, 20). In fact, He entered after He had offered Himself to the Father, and introduced those whom He wanted, that is all those whom He had rendered participants of His burial; the ones who certainly do not have to die like Him, but who participate spiritually in that death in the bath of baptism and, after having been anointed, announce Him in the sacred table, eating in an ineffable way of Him who died and was raised to life. And so, through this door, He introduces them into the kingdom in order to crown them. These doors then are much more useful and worthy of veneration than those of the earthly paradise. Those in fact did not open to anyone who already had not entered before and could also throw out those who already found themselves inside; this instead, even though the first are closed receives only, without letting anyone go out again. Those could be closed, and so they remained; above these the veil has been completely torn and the wall of separation knocked down: it is not possible to rebuild the ruin or to reconstruct those doors, nor to divide again with a wall of separation the two worlds, the superior one and the inferior one. In fact the heavens have not been simply opened, but enlarged and almost torn, as Mark says. It is therefore evident that neither doors, nor doorposts, nor any veils have remained. He in fact who has reconciled and united the heavenly world with that of the earth, and has made peace destroying the wall of separation, cannot repudiate Himself, as the blessed Paul affirms. It was natural that those doors, opened for Adam so that he could remain, were closed as a consequence of his unfaithfulness. Christ Himself opened them, He who had not committed sin, nor would have committed it. “His justice, says David, lasts forever” (Ps. 110,3). For this it is necessary that it remains always open, in order to introduce to life, without letting anyone come out of the life. “I have come so that they may have life” (Jn. 10, 10), said the Saviour. This is the life that the Lord has brought with Himself; that appropriating ourselves of these mysteries, we may become participants and associates of the death and passion of the One without whom we cannot flee death. And as it is not possible to enter into life without baptism in the water and in the Holy Spirit, so also it is not possible for those who do not eat the flesh of the Son of man and drink His blood to have life in themselves.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Gal. 2, 19. 20</strong><br><br>
+                        <em>R. By means of the law I am dead to the law in order to live for God. * This life that I live in the flesh, I live in the faith of the Son of God, who has loved me and has given Himself for me.</em><br>
+                        V: I have been crucified with Christ and it is not anymore I who live, but Christ who lives in me.<br>
+                        <em>R. This life that I live in the flesh, I live in the faith of the Son, who has loved me and has given Himself for me.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Zec. 12: 9 – 12a; 13: 1 – 9</strong><br>
+                        <em>The salvation of Jerusalem.</em><br><br>
+                        A reading from the prophet Zechariah.<br>
+                        And on that day I will seek to destroy all the nations that come against Jerusalem. "And I will pour out on the house of David and the inhabitants of Jerusalem a spirit of compassion and supplication, so that, when they look on him whom they have pierced, they shall mourn for him, as one mourns for an only child, and weep bitterly over him, as one weeps over a first-born. On that day the mourning in Jerusalem will be as great as the mourning for Hadadrim'mon in the plain of Megid'do. The land shall mourn, each family by itself; the family of the house of David by itself, and their wives by themselves; the family of the house of Nathan by itself, and their wives by themselves; "On that day there shall be a fountain opened for the house of David and the inhabitants of Jerusalem to cleanse them from sin and uncleanness." And on that day, says the LORD of hosts, I will cut off the names of the idols from the land, so that they shall be remembered no more; and also I will remove from the land the prophets and the unclean spirit. And if any one again appears as a prophet, his father and mother who bore him will say to him, `You shall not live, for you speak lies in the name of the LORD'; and his father and mother who bore him shall pierce him through when he prophesies. On that day every prophet will be ashamed of his vision when he prophesies; he will not put on a hairy mantle in order to deceive, but he will say, `I am no prophet, I am a tiller of the soil; for the land has been my possession since my youth.' And if one asks him, `What are these wounds on your back?' he will say, `The wounds I received in the house of my friends.'" "Awake, O sword, against my shepherd, against the man who stands next to me," says the LORD of hosts. "Strike the shepherd, that the sheep may be scattered; I will turn my hand against the little ones. In the whole land, says the LORD, two thirds shall be cut off and perish, and one third shall be left alive. And I will put this third into the fire, and refine them as one refines silver, and test them as gold is tested. They will call on my name, and I will answer them. I will say, `They are my people'; and they will say, `The LORD is my God.'"
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>26, 31; Zec. 13, 7</strong><br><br>
+                        <em>R. All of you will be scandalised of me on this night. It is written in fact: * I will strike the shepherd and the sheep of the flock will be scattered.</em><br>
+                        V: Awake, O sword, against my shepherd, against him who is my companion. Oracle of the Lord.<br>
+                        <em>R. I will strike the shepherd and the sheep of the flock will be scattered.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Part 3, 4</strong><br>
+                        <em>The mysteries of Christ and the life of the Church.</em><br><br>
+                        A reading from the treatise “The kingdom of Jesus” of St. John Eudes, presbyter.<br>
+                        We ought to imitate and complete in ourselves the various states and mysteries of Christ. We should frequently beseech him to bring them to perfection in us and in the whole Church. For, though in his person they are perfected, the mysteries of Jesus have not yet reached completion in us, his members, nor in the Church, which is his mystical body. The Son of God plans to make us sharers in his mysteries, and, in a certain manner, continue them in us and in the Church by the graces which he has decided to communicate to us, and the effects which he wishes to bring about in us through these mysteries. This is how he wishes to complete his mysteries in us. For this reason the apostle Paul can say that the whole Church, and that all of us are contributing to his being built up and arriving at full maturity. This refers to his mystical age in his mystical body, and this age will complete its full span only on the day of judgement. In another text the same apostle says that by his physical sufferings he is completing what still remains of Christ’s sufferings. So the Son of God decided to complete and fill up all his mysteries in us. When he is born again in our soul by the holy sacraments of baptism and the blessed Eucharist, and conforms to his likeness, he wishes to complete in us the mysteries of his incarnation, birth and hidden life. He makes it possible for us to live an interior spiritual life hidden with him in God. He intends to bring to perfection in us the mysteries of his passion, death and resurrection by causing us to suffer, die and to rise with him and in him. Finally, he plans to complete his state of glorious immortality in us by bringing it about that we shall lead a glorious everlasting life with him and in him in heaven. It is his will that his other states and mysteries are brought to perfection in us and in the Church; he wishes to make us sharers in them, and to continue them in us. They will not reach their completion until the end of the time that he has decreed, that is, until the end of the world.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Col. 1, 24. 29</strong><br><br>
+                        <em>R. I am happy with my sufferings, * I complete in my flesh that which is lacking in the sufferings of Christ, in favour of His body which is the Church.</em><br>
+                        V: I strive and fight, with the strength that comes from Him and which acts in me with power;<br>
+                        <em>R. I complete in my flesh that which is lacking in the sufferings of Christ, in favour of His body which is the Church.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 19: 3 – 12</strong><br>
+                    <em>Because of the hardness of your hearts Moses permitted you to repudiate your wives, but in the beginning it was not like this.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    And Pharisees came up to him and tested him by asking, "Is it lawful to divorce one's wife for any cause?" He answered, "Have you not read that he who made them from the beginning made them male and female, and said, `For this reason a man shall leave his father and mother and be joined to his wife, and the two shall become one flesh'? So they are no longer two but one flesh. What therefore God has joined together, let not man put asunder." They said to him, "Why then did Moses command one to give a certificate of divorce, and to put her away? He said to them, "For your hardness of heart Moses allowed you to divorce your wives, but from the beginning it was not so. And I say to you: whoever divorces his wife, except for fornication, and marries another, commits adultery." The disciples said to him, "If such is the case of a man with his wife, it is not expedient to marry." But he said to them, "Not all men can receive this saying, but only those to whom it is given. For there are eunuchs who have been so from birth, and there are eunuchs who have been made eunuchs by men, and there are eunuchs who have made themselves eunuchs for the sake of the kingdom of heaven. He who is able to receive this, let him receive it."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

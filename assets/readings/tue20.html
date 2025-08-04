@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Tuesday, August 19, 2025. Readings include a prayer from Ephesians, the vanity of pleasures from Ecclesiastes, and the Gospel of Matthew on the rich young man.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Tuesday, August 19, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Tuesday of Week 20</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph. 2: 1 – 10</strong><br>
+                        <em>Sinners saved in Christ Jesus.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
+                        And you he made alive, when you were dead through the trespasses and sins in which you once walked, following the course of this world, following the prince of the power of the air, the spirit that is now at work in the sons of disobedience. Among these we all once lived in the passions of our flesh, following the desires of body and mind, and so we were by nature children of wrath, like the rest of mankind. But God, who is rich in mercy, out of the great love with which he loved us, even when we were dead through our trespasses, made us alive together with Christ (by grace you have been saved), and raised us up with him, and made us sit with him in the heavenly places in Christ Jesus, that in the coming ages he might show the immeasurable riches of his grace in kindness toward us in Christ Jesus. For by grace you have been saved through faith; and this is not your own doing, it is the gift of God -- not because of works, lest any man should boast. For we are his workmanship, created in Christ Jesus for good works, which God prepared beforehand, that we should walk in them.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ep. 2, 5. 6; Jn. 3, 16</strong><br><br>
+                        <em>R: From dead that we were because of sin, God has made us revive with Christ. * With Him He has also resurrected us and has made us sit in heaven with Christ Jesus.</em><br>
+                        V: God so loved the world that He gave His only Son.<br>
+                        <em>R: With Him He has also resurrected us and has made us sit in heaven with Christ Jesus.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Book 2</strong><br>
+                        <em>For everyone there is only one identical grace of forgiveness.</em><br><br>
+                        A reading from the “Commentary on the Gospel of John” of Rupert of Deutz, abbot.<br>
+                        The baptism of Christ is the regal and priestly anointing, through which the anointed one, in preference of his equals is called Christ, a Greek name that in Hebrew means Messiah and in Latin signifies anointed. He is the only one to be consecrated fully in this way in order that He may consecrate the others one by one. And it is from His fullness, being the consecrated par excellence, He consecrates the adopted children who receive His same name of Christ, as the expression indicates: “He is the One who will baptise in the Holy Spirit” (Jn. 1, 33). The power of this baptism then does not have only one effect, but a double operation. In the first place Christ baptises in the Holy Spirit operating the forgiveness of sins. Other than this He baptises conferring also the ornaments of different graces. He Himself speaks about the forgiveness of sins on the day of the resurrection when, breathing on His disciples whom He had already purified from sins, washing them in His blood, He says: “Receive the Holy Spirit” (Jn. 20, 22). That the Holy Spirit was given to them for the forgiveness of sins He Himself attests when He immediately adds: “He whose sins you remit they will be remitted and He who sins you do not remit will remain not remitted. (Jn 20, 23). Of this donation of gifts with which He confers the ornaments of grace, Luke instead speaks of in the Acts of the Apostles saying: “John baptised with water, you instead not many days from now will be baptised with the Holy Spirit” (Act. 1, 5). He baptises us in the Holy Spirit when, descending into the baptismal font, the invisible grace of the Spirit remits all the sins of those who are being baptised. In the forgiveness of sins there is no difference, but a unique and identical grace is given in an equal and uniform way to every one, that cancels all our iniquities and throws into the depths of the sea all our sins. Instead with regard to the gifts of grace, the same measure is not given to all, but to some the faith is conceded, to others the language of science, or of wisdom, to others the variety of tongues, and to other the interpretation of tongues. “All these things are worked by the same and unique Spirit, distributing gifts to each one as He wants” (1 Cor. 12, 11). In the saints of the New Testament we recognise, in these gifts, He who baptises, the luminous signs of this glorious baptism that, as we read, no one of them could receive before being baptised for the forgiveness of sins, except Cornelius and those of his household on whom, while Peter was still speaking, the Holy Spirit descended and they spoke in tongues magnifying God. Of the fathers then of the Old Testament then, some received the gift of miracles, many the gift of prophecy, even though not having been baptised in the forgiveness of sins. But it is a certain thing that all were baptised when Christ died on the cross, and from his opened side gushed out a river of blood and water for the purification of the whole Church: that which had begun to exist from the origins of the world up to the hour of His death; that is from the first just man, Abel, up to the thief who on the cross, while from the side of Christ had not yet gushed out the river of that so abundant and wholesome flood, confessed that Christ is the Lord and, believing in His future kingdom, was ransomed by this immediate confession.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Heb. 10, 22. 23; Mk. 16, 16</strong><br><br>
+                        <em>R: With the heart purified from the wicked conscience and the body washed with pure water, let us maintain without wavering the profession of our hope, * because He who has promised it is faithful.</em><br>
+                        V: He who believes and is baptised, will be saved;<br>
+                        <em>R: because He who has promised it is faithful.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eccl. 3: 1 – 22</strong><br>
+                        <em>There is a time for every thing.</em><br><br>
+                        A reading from the book of Ecclesiastes.<br>
+                        For everything there is a season, and a time for every matter under heaven: a time to be born, and a time to die; a time to plant, and a time to pluck up what is planted; a time to kill, and a time to heal; a time to break down, and a time to build up; a time to weep, and a time to laugh; a time to mourn, and a time to dance; a time to cast away stones, and a time to gather stones together; a time to embrace, and a time to refrain from embracing; a time to seek, and a time to lose; a time to keep, and a time to cast away; a time to rend, and a time to sew; a time to keep silence, and a time to speak; a time to love, and a time to hate; a time for war, and a time for peace. What gain has the worker from his toil? I have seen the business that God has given to the sons of men to be busy with. He has made everything beautiful in its time; also he has put eternity into man's mind, yet so that he cannot find out what God has done from the beginning to the end. I know that there is nothing better for them than to be happy and enjoy themselves as long as they live; also that it is God's gift to man that every one should eat and drink and take pleasure in all his toil. I know that whatever God does endures for ever; nothing can be added to it, nor anything taken from it; God has made it so, in order that men should fear before him. That which is, already has been; that which is to be, already has been; and God seeks what has been driven away. Moreover I saw under the sun that in the place of justice, even there was wickedness, and in the place of righteousness, even there was wickedness. I said in my heart, God will judge the righteous and the wicked, for he has appointed a time for every matter, and for every work. I said in my heart with regard to the sons of men that God is testing them to show them that they are but beasts. For the fate of the sons of men and the fate of beasts is the same; as one dies, so dies the other. They all have the same breath, and man has no advantage over the beasts; for all is vanity. All go to one place; all are from the dust, and all turn to dust again. Who knows whether the spirit of man goes upward and the spirit of the beast goes down to the earth? So I saw that there is nothing better than that a man should enjoy his work, for that is his lot; who can bring him to see what will be after him?
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>cfr. 1 Cor. 7, 29. 31; Qo. 3, 1</strong><br><br>
+                        <em>R: The time is brief; from now onwards, he who lives in this world, make use of it with discretion, * because the scene of this world will pass away.</em><br>
+                        V: Every thing has its moment, every undertaking under the heavens has its time;<br>
+                        <em>R: because the scene of this world will pass away.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Hom. 6</strong><br>
+                        <em>Time to be born and time to die.</em><br><br>
+                        A reading from the “Homilies on Ecclesiastes” of St. Gregory of Nyssa, bishop.<br>
+                        ‘There is a time to be born and a time to die’ says the author. He has put down well at the beginning of his words these two related necessities, joining death with birth. For death follows inevitably on birth and every birth is brought to the dissolution of death. ‘There is a time to be born and a time to die’ he says. O that it may be granted to me to have a timely birth and an opportune death. No one can say that the Preacher shows this birth which is involuntary or this death which comes of its own accord as though there is therein the good action of virtue. For birth does not happen because of a woman’s act of will, nor does the event of death lie within the free will of the dying. No one can define as virtue or vice that which does not lie within our own power. We must therefore consider what is seasonable birth and what is timely death. I think that a birth is full-termed and not premature, when, as Isaiah says, a man brings to birth by the birth pangs of his soul his own salvation after he has conceived it by the fear of God. We are ourselves in a certain sense fathers of ourselves when by our good intention and our own free choice we conceive and give birth to ourselves and bring ourselves to the light. This we do as a result of receiving God into ourselves, when we have been made children of God, children of the power, children of the Most High. On the other hand we also turn ourselves into an abortion and make ourselves imperfect and sickly when there has not been produced in us, in the Apostle’s words, ‘the form of Christ’. For the man of God must be whole and perfect. If then it is clear how we are born in timely fashion, so also it is clear how we die in timely fashion, as every time was for St. Paul the right time for a good death. He proclaims this in his own writings, confirming it as it were by an oath, when he says, ‘I die daily, by your boasting’, and elsewhere, ‘ On your behalf we are afflicted by death everyday’. And we ourselves have the sentence of death in ourselves. Indeed it is not in anyway obscure how Paul dies every day, who never lives to sin, who mortifies continually the limbs of his flesh, and bears about in his body the dying of the body of Christ, who is always being crucified with Christ, who never lives to himself, but has Christ living within himself – that in my judgement would be a timely death which has produced true life. ‘For’, God says, ‘I shall kill and I shall make alive’, which proves that to die to sin and to be made alive to the spirit is truly the gift of God.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Deut. 32, 39; Ap. 1, 18</strong><br><br>
+                        <em>R: It is I who give life and death, I who strike and heal, * and no one can liberate from my hand.</em><br>
+                        V: I have power over death and over hell.<br>
+                        <em>R: and no one can liberate from my hand.</em>
+                    </p>
+                </section>
+            </div>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 19: 23 – 30</strong><br>
+                    <em>It is easier for a camel to pass through the eye of a needle, than for a rich man to enter into the kingdom of heaven.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    And Jesus said to his disciples, "Truly, I say to you, it will be hard for a rich man to enter the kingdom of heaven. Again I tell you, it is easier for a camel to go through the eye of a needle than for a rich man to enter the kingdom of God." When the disciples heard this they were greatly astonished, saying, "Who then can be saved?" But Jesus looked at them and said to them, "With men this is impossible, but with God all things are possible." Then Peter said in reply, "Lo, we have left everything and followed you. What then shall we have?" Jesus said to them, "Truly, I say to you, in the new world, when the Son of man shall sit on his glorious throne, you who have followed me will also sit on twelve thrones, judging the twelve tribes of Israel. And every one who has left houses or brothers or sisters or father or mother or children or lands, for my name's sake, will receive a hundredfold, and inherit eternal life. But many that are first will be last, and the last first.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

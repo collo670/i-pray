@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
     "accepts": "^2.0.0",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
@@ -217,5 +218,6 @@
     "url": "https://github.com/collo670/i-pray/issues"
   },
   "homepage": "https://github.com/collo670/i-pray#readme",
-  "description": ""
+  "description": "",
+  "type": "commonjs"
 }

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Sunday, August 17, 2025. Readings include the mystery of God's will from Ephesians, the vanity of all things from Ecclesiastes, and the Gospel of Matthew on the Canaanite woman.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Sunday, August 17, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Sunday of Week 20</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                    <option value="A">Year A</option>
+                    <option value="B">Year B</option>
+                    <option value="C">Year C</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph 1:1–14</strong><br>
+                        <em>The mystery of the will of God</em><br><br>
+                        Paul, an apostle of Christ Jesus by the will of God, to the saints who are also faithful in Christ Jesus: Grace to you and peace from God our Father and the Lord Jesus Christ. Blessed be the God and Father of our Lord Jesus Christ, who has blessed us in Christ with every spiritual blessing in the heavenly places, even as he chose us in him before the foundation of the world, that we should be holy and blameless before him. He destined us in love to be his sons through Jesus Christ, according to the purpose of his will, to the praise of his glorious grace that he freely bestowed on us in the Beloved. In him we have redemption through his blood, the forgiveness of our trespasses, according to the riches of his grace which he lavished upon us. For he has made known to us in all wisdom and insight the mystery of his will, according to his purpose which he set forth in Christ as a plan for the fullness of time, to unite all things in him, things in heaven and things on earth. In him, according to the purpose of him who accomplishes all things according to the counsel of his will, we who first hoped in Christ have been destined and appointed to live for the praise of his glory. In him you also, who have heard the word of truth, the gospel of your salvation, and have believed in him, were sealed with the promised Holy Spirit, which is the guarantee of our inheritance until we acquire possession of it, to the praise of his glory.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph 1:5.6; Rom 5:2</strong><br><br>
+                        <em>R: God has predestined us to be His adoptive children through the work of Jesus Christ, according to the consent of His will, to the praise of His grace, * that God has given us in His beloved Son.</em><br>
+                        V: By means of our Lord Jesus Christ we have obtained the possibility to approach this grace in which we find ourselves.<br>
+                        <em>R: that God has given us in His beloved Son.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Hom. 1:3</strong><br>
+                        <em>Great thing is the forgiveness of sins, but greater still is that it has been given through the blood of the Lord.</em><br><br>
+                        A reading from the “Commentary on the Letter to the Ephesians” of St. John Chrysostom, bishop<br>
+                        “He has predestined us to be His adopted sons”, wanting to fully manifest in this way the glory of His grace. "“According to the consent of His will, he says, to the praise and glory of His grace that He has given us in His beloved Son” (Ep. 1, 5-6). If therefore He has gratified us in this way to the praise and glory of His grace so that it may be manifested, let us remain firm in it. Why then does He want to be praised and glorified by us? Because in this way our love towards Him will be more fervent. From us in fact He does not desire anything else other than our salvation, not the glory, or anything else, and everything is fulfilled with this scope. In fact he who praises and admires the grace that has been given to him, will be more solicitous and attentive. The Lord has done like one who reinstates immediately to flourishing youth a being marked by scabies, by the pestilence, from every type of sickness and discrepancy, already reduced to the extremity by poverty and hunger, rendering him more beautiful then all men, with a radiant face as if he was hiding the rays of the sun in the blaze of sparkling eyes. And after having brought him back into the flower of age, he would re-vest him in purple imposing on him the diadem and adorning him completely with the regal apparatus. In the same way the Lord has transformed our soul and has made it beautiful, desirable and loveable, to the point that the angels themselves desire contemplating it. In this way he has rendered us so pleasant as to become the object of His desire. He says in fact: “To the king your beauty will be pleasing” (Ps. 44, 12). Consider how many wicked things we were saying before, and how many words pregnant with grace our mouths prophecy now. We do not love riches anymore, nor desire anymore the present goods but the heavenly ones and the things of heaven. We do not consider perhaps well educated and loveable that young man who to the elegance and harmony of the body unites the grace of eloquence? Thus are the faithful. Do you see of what things those who have been initiated to the divine mysteries speak! What is more pleasing than that mouth that prophesies words worthy of admiration and, with pure heart and mouth, participates of the mystical table, with great splendour and faith? What is more sublime than those words with which we have renounced to the devil and have been numbered among the soldiers of Christ? And what is greater than that confession that preceded the bath and of that which followed? How many of us in fact have profaned the baptism, and groan so that it may be possible for us to recover it! “Grace that He has given us in His beloved Son, in whom we have redemption through His blood"”(Ep. 1, 6-7). And in what way? It is marvellous not only that He has given us His Son, but also the way in which He has given Him to us, that is letting Him be killed for us. It is an incredible paradox: He handed over His beloved for those who hated Him. Do you see therefore at what price He estimated us. If when we were closed in hate and were enemies he gave us His beloved, what will He not do now that we have been reconciled by His grace? From the most elevated reality He descended to that most contemptible reality; while before He had spoken of adoption as sons, of sanctification and of the call to be immaculate, now He speaks also of sin; but he does not lower the discourse of the highest things to the lowest, rather from these he elevates the discourse to those. Nothing in fact is so great as the fact that for us the blood of the same God has been poured out; and it is greater than the adoption as sons and of the other gifts, given that He has not spared even His own Son. A great thing is the forgiveness of sins, but even greater is that it has been given thanks to the blood of the Lord.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Col 1:21.22; Rom 3:25</strong><br><br>
+                        <em>R: Even you once were strangers and enemies with the mind intent on the wicked deeds that you were doing, but now He has reconciled you by means of the death of His body of flesh, * in order to present you holy, immaculate and irreprehensible before Him.</em><br>
+                        V: God has pre-established Him to serve as an instrument of expiation by means of the faith, in His blood.<br>
+                        <em>R: In order to present you holy, immaculate and irreprehensible before Him.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eccl. 1: 1 – 18</strong><br>
+                        <em>The Vanity of all things.</em><br><br>
+                        A reading from the book of Ecclesiastes.<br>
+                        The words of the Preacher, the son of David, king in Jerusalem. Vanity of vanities, says the Preacher, vanity of vanities! All is vanity. What does man gain by all the toil at which he toils under the sun? A generation goes, and a generation comes, but the earth remains forever. The sun rises and the sun goes down, and hastens to the place where it rises. The wind blows to the south, and goes round to the north; round and round goes the wind, and on its circuits the wind returns. All streams run to the sea, but the sea is not full; to the place where the streams flow, there they flow again. All things are full of weariness; a man cannot utter it; the eye is not satisfied with seeing, nor the ear filled with hearing. What has been is what will be, and what has been done is what will be done; and there is nothing new under the sun. Is there a thing of which it is said, "See, this is new"? It has been already, in the ages before us. There is no remembrance of former things, nor will there be any remembrance of later things yet to happen among those who come after. I, the Preacher have been king over Israel in Jerusalem. And I applied my mind to seek and to search out by wisdom all that is done under heaven; it is an unhappy business that God has given to the sons of men to be busy with. I have seen everything that is done under the sun; and behold, all is vanity and a striving after wind. What is crooked cannot be made straight, and what is lacking cannot be numbered. I said to myself, "I have acquired great wisdom, surpassing all who were over Jerusalem before me; and my mind has had great experience of wisdom and knowledge." And I applied my mind to know wisdom and to know madness and folly. I perceived that this also is but a striving after wind. For in much wisdom is much vexation, and he who increases knowledge increases sorrow.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Qo 5, 14; 1, 14; 1 Tm. 6, 7</strong><br><br>
+                        <em>R: Man having come out naked from the womb of his mother, naked will go back and he will not be able to take anything with him: * all is vanity and a chasing of the wind.</em><br>
+                        V: We have not brought anything into this world and nothing can we take away:<br>
+                        <em>R: all is vanity and a chasing of the wind.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cent 1. C. 1, 4 – 5, 16 – 17. 23 – 24. 26 – 28. 30 – 40</strong><br>
+                        <em>Without charity everything is vanity of vanities.</em><br><br>
+                        A reading from the “Chapters on charity” of St. Maximus the Confessor, abbot.<br>
+                        Charity is a good disposition of the soul, according to which one prefers no creature to the knowledge of God. It is impossible to attain a lasting possession of this charity if one has any attachment to earthly things. He who loves God prefers knowledge of him to all things made by him; and by desire ceaselessly devotes himself to it. If all things have been made by God and for God, he is nobler than all the things made by him; he who deserts God, the incomparably nobler, and devotes himself to inferior things shows that he prefers before God the things made by him. He that loves me, says the Lord, will keep my commandments; and this is my commandment that you love one another. He therefore who does not love his neighbour does not keep the commandment. Nor is he that does not keep the commandment able to love the Lord. Happy the man who is able to love all men equally. He that loves God most certainly also loves his neighbour. Such a man cannot keep money, but, God-like, distributes it, giving to each one in need. He that in imitation of God does deeds of almsgiving knows no difference between evil and good, just and unjust, in regard to the needs of the body, but distributes equally to all according to their need, even though for his good intention he prefers the virtuous to the bad. Not only by the distribution of money is a charitable intention made manifest; no, far rather by the distribution of the word of God and physical service of others. He that genuinely renounces worldly affairs and in an unfeigned way serves his neighbour out of charity, quickly is freed from every passion and is made partaker of divine charity and knowledge. He that has made divine charity his possession has no labour in following after the Lord his God, as Jeremiah says; rather, he bears nobly every hardship, every rebuke and insult, thinking no evil at all of anyone. Do not say- exclaims Jeremiah-that you are the Lord’s temple. Nor say: Mere faith in our Lord Jesus Christ can save me. For this is ineffective unless you also possess charity for him through good works. As to mere believing: “the devils also believe and tremble.” The work of love is the intentional doing of good to one’s neighbour and long suffering and patience; also the use of things in due measure.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>John 13:34; 1 John 2:10, 3</strong><br><br>
+                        <em>R: I give you a new commandment: that you love one another, as I have loved you. * He who loves his brother, lives in the light.</em><br>
+                        V: From this we know if we have known Christ: if we observe his commandments.<br>
+                        <em>R: He who loves his brother, lives in the light</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <div id="year-A-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mt. 15:21-28</strong><br>
+                        <em>And Jesus went away from there and withdrew to the district of Tyre and Sidon. And behold, a Canaanite woman from that region came out and cried, "Have mercy on me, O Lord, Son of David; my daughter is severely possessed by a demon." But he did not answer her even a word. And his disciples came and begged him, saying, "Send her away, for she is crying after us." He answered, "I was sent only to the lost sheep of the house of Israel." But she came and knelt before him, saying, "Lord, help me." And he answered, "It is not fair to take the children's bread and throw it to the dogs." She said, "Yes, Lord, yet even the dogs eat the crumbs that fall from their masters' table." Then Jesus answered her, "O woman, great is your faith! Be it done for you as you desire." And her daughter was healed instantly.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Lett. 7: 6-8</strong><br>
+                        <em>The Lord gave the woman a reward for her faith</em><br><br>
+                        A reading from the “festive letters” of St. Athanasius, bishop<br>
+                        “Blessed are those who are hunger and thirst for justice, because they will be satisfied” (Mt. 5: 6). The saints and those who love to live in Christ must lift themselves up to the desire of this food and pray saying: “Like the deer yearns for running water, so my soul is thirsting for you, O God” (Ps. 41: 2). We also, my brothers, must mortify our members on the earth and feed ourselves of the living bread with faith and love towards God; without faith, in fact, it is impossible to participate of this bread. The Saviour himself, calling all to himself says: “If any man is thirsty let him come to me and drink” (Jn. 7: 37) and immediately he began to speak of the faith, without which no one can draw near to that food: “He who believes in me, as Scripture says, from his breast shall flow fountains of living water” (Jn. 7: 37-38). For this he always nourished his disciples who had faith, with his words, and with the presence of his divinity he communicated life to them. To that Canaanite woman instead, who still had not come to the faith, he did not deign to answer, even though she had a great need of his help. The Lord behaved in this manner certainly not out of contempt, otherwise he would not have gone near Tyre and Sidon, but rather because the woman did not as yet believe and being a foreigner could not boast of any right. Justly he acted in this way, brothers; it was of no use in fact to pray before having received the faith, because her prayers had to be inspired by faith. He who turns to God needs above all to have faith in him; he then will grant that which has been asked for. The Apostle teaches us that “Without faith it is impossible to be pleasing to him” (Heb. 11: 6). To that woman therefore who is still without faith and all the more a foreigner, the Christ expresses himself with that proverb: “It is not good to take the bread of the children and to throw it to the house dogs” (Mt. 15: 26). But immediately, addressing himself to her who he had humiliated with such strong words and who, freeing herself from her paganism had reached the faith, does not treat her anymore like a dog but as a human being and says to her: “Truly great is the faith” (Mt. 15: 28). And as soon as she had believed, he gave her the reward of her faith, adding: “Let it be done as you desire. And from that instant her daughter was healed” (Mt. 15: 28).
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Wisdom 1:1-2; Is 55:6</strong><br><br>
+                        <em>R: Let honesty prompt your thinking of the Lord; seek him in simplicity of heart. * Since he is to be found by those who do not put him to the test, he shows himself to those who do not distrust him.</em><br>
+                        V: Seek the Lord while he is still to be found, invoke him while he is near.<br>
+                        <em>R: Since he is to be found by those who do not put him to the test, he shows himself to those who do not distrust him.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="year-B-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jn. 6: 51-58</strong><br>
+                        A reading from the Gospel of St. John.<br>
+                        I am the living bread which came down from heaven; if any one eats of this bread, he will live for ever; and the bread which I shall give for the life of the world is my flesh." The Jews then disputed among themselves, saying, "How can this man give us his flesh to eat?" So Jesus said to them, "Truly, truly, I say to you, unless you eat the flesh of the Son of man and drink his blood, you have no life in you; he who eats my flesh and drinks my blood has eternal life, and I will raise him up at the last day. For my flesh is food indeed, and my blood is drink indeed. He who eats my flesh and drinks my blood abides in me, and I in him. As the living Father sent me, and I live because of the Father, so he who eats me will live because of me. This is the bread which came down from heaven, not such as the fathers ate and died; he who eats this bread will live for ever."
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Book. 2, 3</strong><br>
+                        <em>The Lord our God nourishes us for eternal life.</em><br><br>
+                        A reading from the “Commentary on Exodus” of St. Cyril of Alexandria, bishop.<br>
+                        “As I, who am sent by the living Father, myself draw life from the Father, so whoever eats me will draw life from me. This is the bread come down from heaven; not like the bread our ancestors ate: they are dead, but anyone who eats this bread will live forever” (Jn. 6: 57-58). I think that the manna is a veil and figure of the doctrine and of the gifts of Christ, that comes from above and has nothing that is earthly, but rather it is in complete contrast with the wicked desecration down here and it is a true food not only of men but also of the angels. In fact the Son, manifesting himself has manifested the Father to us, and through him we have known the relation that exists in the womb of the holy and consubstantial Trinity; we are thus guided through all the ways of virtue. The upright and sincere knowledge of these things is nourishment of the spirit. And in truth the teaching has been given to us abundantly by Christ in full day. The manna also has been given to the fathers in the splendour of the day and in the full brightness of light. In fact as it has been written, the day has already risen on us believers and the morning star has risen in all the hearts (cfr. 2 Pet. 1: 19). Christ, the sun of justice, offers us the spiritual manna and that which the material manna was a figure of, this is in reality. Christ himself confirms this in a sure way when he says to the Jews: “Your fathers ate the manna in the desert and they are dead” (Jn. 6: 49). He is the bread that has come down from heaven so that he who eats it does not die: “I am the living bread that has come down from heaven. If anyone eats of this bread he will live forever and the bread that I will give is my flesh for the life of the world” (Jn. 6: 51). Our Lord Jesus Christ nourishes us for eternal life with his commandments of love and with his mystical gifts. He therefore is the true divine and life giving manna. He who has eaten of this bread will not be subjected to the future corruption, and he will flee death. Not so those who eat the material manna: that in fact was not the bread of salvation, but only a figure of the reality. God then, making the manna rain down from heaven, commanded that each one was to gather as much as was enough for his hunger: if he wanted he could gather also for those who lived in his own tent. “Everyone must gather enough of it for his own needs. Each of you will gather for those who share his tent. No one must keep any of it for tomorrow” (Ex. 16: 16, 19). We need to be soaked in the divine and evangelical doctrine. Christ therefore distributed his grace equally to the small and to the great, and he nourishes everyone equally for life; and he wants to unite even the weaker to the others, desiring that the one and the other work for the brothers, in a way that they mutually help each other to become participants of the heavenly graces. It is what he himself says to the holy apostles: “Freely you have received, freely give” (Mt. 10: 8). Therefore those who had gathered more for themselves took care to distribute it to those who lived in the same tent, that is in the Church. In fact the disciples exhorted the weaker and incited them to the nobler things, communicating to everyone abundantly the grace received from Christ.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jn. 6: 49, 58, 51</strong><br><br>
+                        <em>R: Your fathers ate the manna in the desert and they are dead. * He who eats this bread will live forever.</em><br>
+                        V: The bread that I will give is my flesh for the life of the world.<br>
+                        <em>R: He who eats this bread will live forever.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="year-C-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Lk. 12: 49-57</strong><br>
+                        A reading from the Gospel of St. Luke.<br>
+                        "I came to cast fire upon the earth; and would that it were already kindled! I have a baptism to be baptised with; and how I am constrained until it is accomplished! Do you think that I have come to give peace on earth? No, I tell you, but rather division; for henceforth in one house there will be five divided, three against two and two against three; they will be divided, father against son and son against father, mother against daughter and daughter against her mother, mother-in-law against her daughter-in-law and daughter-in-law against her mother-in-law." He also said to the multitudes, "When you see a cloud rising in the west, you say at once, `A shower is coming'; and so it happens. And when you see the south wind blowing, you say, `There will be scorching heat'; and it happens. You hypocrites! You know how to interpret the appearance of earth and sky; but why do you not know how to interpret the present time? "And why do you not judge for yourselves what is right?
+                    </p>
+                </section>
+                
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Disc. 25</strong><br>
+                        <em>I have come to bring fire to the earth.</em><br><br>
+                        A reading from the “Discourses” of Peter of Blois, presbyter.<br>
+                        The Christ, who has received the Spirit without measure, pours out his gifts on men, and does not cease to give: “From his fullness we have all received” (Jn. 1: 16) and “ nothing will take us away from his heat” (Ps. 18: 7). He “has a fire in Sion and a furnace in Jerusalem” (Is. 31: 9). This is the fire that Christ has come to bring on the earth, and that appears above the apostles in tongues of fire, so that tongues of fire could preach a law of fire. Of this fire Jeremiah says: “There seemed to be a fire burning in my heart, imprisoned in my bones” (Jer. 20: 9). In Christ the Spirit lived fully and sensibly; he then poured out on everyone a part of his Spirit, for which “to each one is given a particular manifestation of the Spirit for the common utility” (1 Cor. 12: 7). And he adds: there is a diversity of charisms and a diversity of ministries and operations, but one only is the Spirit (cfr. 1 Cor. 12: 4-6). Because of these different effusions of charisms, the Holy Spirit is called now fire, now oil, now wine, and now water. Fire because it always enflames with love, once lit does not stop burning, that is of loving ardently: “I have come to bring fire to the earth; and how I wish it were already burning!” (Lk. 12: 49). The Holy Spirit is oil because of the different properties. It forms part of the nature of the oil, in fact, it remains floating over all other liquids; so also the grace of the Holy Spirit, which with the abundance of its goodness surpasses the merits and the desires of those who pray, is more precious than all the gifts and of all the goods. The oil is also a medicine because it calms pains; so also the Holy Spirit is truly oil because it is the comforter. Besides, by its nature, the oil does not mix with anything; so also the Holy Spirit is the pure source which cannot be united to anything extraneous. Let us understand therefore why the Holy Spirit is named now as fire, now as oil. Twice it was given to the apostles: before the passion and after the resurrection. Observe how great in it is the source of ardour: it is not enough to pour out oil if it is not heated up, and it is not enough to draw near to the fire if it is not fed with oil. Burning with this fire, the apostles “went out of the Sanhedrin happy to have been insulted” (Acts 5: 41). This then is the language of the prince of the apostles: If even you have to suffer for Christ, blessed are you (cfr 1 Pet. 3: 14). “To you has been granted the grace not only to believe in Christ, but also to suffer for him” (Phil. 1: 29). The Holy Spirit is “the wine that gladdens the heart of man” (Ps. 103: 15) and is not poured into old wineskins. The Holy Spirit is water: “He who is thirsty – exclaims the Lord – let him come to me and drink” (Jn. 7: 37). The Holy Spirit is sweeter than honey: let us pray to him therefore in a spirit of humility, so that he may pour forth into our hearts a dew of blessing, an endless string of spiritual gifts, and an abundant rain of grace to purify our consciences. It infuses the oil of gladness and the fire of its love in our hearts, that is Jesus Christ, whom the Father consecrated and in whom he infused the fullness of the consecration and blessing, so that we could draw from this fullness. To him be honour and glory forever and ever. Amen.
+                    </p>
+                </section>
+                
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        R: The divine fire which does not burn but illuminates, which does not consume but shines, arrived unexpectedly: it found the hearts of the disciples like pure vases * and infused in them the gifts of the charisms.
+                        V: It found them harmonious in charity and it illuminated them flooding them with divine grace.
+                        R: and infused in them the gifts of the charisms.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+            const yearAContent = document.getElementById('year-A-content');
+            const yearBContent = document.getElementById('year-B-content');
+            const yearCContent = document.getElementById('year-C-content');
+            
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+            
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                yearAContent.classList.add('hidden');
+                yearBContent.classList.add('hidden');
+                yearCContent.classList.add('hidden');
+            
+                // Show the selected cycle and year content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                } else if (selectedCycle === 'A') {
+                    yearAContent.classList.remove('hidden');
+                } else if (selectedCycle === 'B') {
+                    yearBContent.classList.remove('hidden');
+                } else if (selectedCycle === 'C') {
+                    yearCContent.classList.remove('hidden');
+                }
+            }
+            
+            cycleSelector.addEventListener('change', showContent);
+            
+            // Set the initial state based on the default selected options
+            showContent();
+            
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

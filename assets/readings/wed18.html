@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>office of readings - ipray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Wednesday, August 6, 2025, for the feast of The Transfiguration of the Lord. Readings include the triumph of Jehoshaphat, catechesis on the Eucharist, and the Gospel of Matthew with the Canaanite woman.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Wednesday, August 6, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Feast of The Transfiguration of the Lord</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Chor. 20: 1 – 9, 13 – 24</strong><br>
+                        <em>The great help offered by God to Jehosapaht, the faithful king.</em><br><br>
+                        A reading from the second book of Chronicles.<br>
+                        After this the Moabites and Ammonites, and with them some of the Me-u'nites, came against Jehosh'aphat for battle. Some men came and told Jehosh'aphat, "A great multitude is coming against you from Edom, from beyond the sea; and, behold, they are in Haz'azon-ta'mar" (that is, En-ge'di). Then Jehosh'aphat feared, and set himself to seek the LORD, and proclaimed a fast throughout all Judah. And Judah assembled to seek help from the LORD; from all the cities of Judah they came to seek the LORD. And Jehosh'aphat stood in the assembly of Judah and Jerusalem, in the house of the LORD, before the new court, and said, "O LORD, God of our fathers, are you not God in heaven? Do you not rule over all the kingdoms of the nations? In your hand is power and might, so that none is able to withstand you. Did you not, O our God, drive out the inhabitants of this land before your people Israel, and give it for ever to the descendants of Abraham your friend? And they have dwelt in it, and have built you in it a sanctuary for your name, saying, `If evil comes upon us, the sword, judgment, or pestilence, or famine, we will stand before this house, and before you, for your name is in this house, and cry to you in our affliction, and you will hear and save.' Meanwhile all the men of Judah stood before the LORD, with their little ones, their wives, and their children. And the Spirit of the LORD came upon Jaha'ziel the son of Zechari'ah, son of Benai'ah, son of Je-i'el, son of Mattani'ah, a Levite of the sons of Asaph, in the midst of the assembly. And he said, "Hearken, all Judah and inhabitants of Jerusalem, and King Jehosh'aphat: Thus says the LORD to you, `Fear not, and be not dismayed at this great multitude; for the battle is not yours but God's. Tomorrow go down against them; behold, they will come up by the ascent of Ziz; you will find them at the end of the valley, east of the wilderness of Jeru'el. You will not need to fight in this battle; take your position, stand still, and see the victory of the LORD on your behalf, O Judah and Jerusalem.' Fear not, and be not dismayed; tomorrow go out against them, and the LORD will be with you." Then Jehosh'aphat bowed his head with his face to the ground, and all Judah and the inhabitants of Jerusalem fell down before the LORD, worshiping the LORD. And the Levites, of the Ko'hathites and the Kor'ahites, stood up to praise the LORD, the God of Israel, with a very loud voice. And they rose early in the morning and went out into the wilderness of Teko'a; and as they went out, Jehosh'aphat stood and said, "Hear me, Judah and inhabitants of Jerusalem! Believe in the LORD your God, and you will be established; believe his prophets, and you will succeed." And when he had taken counsel with the people, he appointed those who were to sing to the LORD and praise him in holy array, as they went before the army, and say, "Give thanks to the LORD, for his steadfast love endures for ever." And when they began to sing and praise, the LORD set an ambush against the men of Ammon, Moab, and Mount Se'ir, who had come against Judah, so that they were routed. For the men of Ammon and Moab rose against the inhabitants of Mount Se'ir, destroying them utterly, and when they had made an end of the inhabitants of Se'ir, they all helped to destroy one another. When Judah came to the watchtower of the wilderness, they looked toward the multitude; and behold, they were dead bodies lying on the ground; none had escaped.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Eph. 6, 12. 14; 2 Chr. 20, 17</strong><br><br>
+                        <em>R. Our battle is not against creatures of flesh and blood, but against the powers and the spirit of evil. * Be therefore unwavering, armed with the truth.</em><br>
+                        V: Resist with courage, and you will see the salvation that the Lord will accomplish for you.<br>
+                        <em>R. Be therefore unwavering, armed with the truth.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Nm. 43, 47 – 49</strong><br>
+                        <em>On the Eucharist to the neophytes.</em><br><br>
+                        A reading from the “treatise on the mysteries” of St. Ambrose, bishop.<br>
+                        The cleansed people, rich with these adornments, hastens to the altar of Christ, saying: “I will go to the altar of God, to God Who makes glad my youth;” for having laid aside the slough of ancient error, renewed with an eagle’s youth, it hastens to approach that heavenly feast. It comes, and seeing the holy altar arranged, cries out: “You have prepared a table in my sight.” David introduces the people as speaking, where he says: “The Lord feeds me, and nothing shall be wanting to me, in a place of good pasture has He placed me. He has led me forth by the water of refreshment.” And later: “For though I walk in the midst of the shadow of death, I will fear no evils, for You are with me. Your rod and Your staff have comforted me. You have prepared in my sight a table against them that trouble me. You have anointed my head with oil, and Your inebriating cup, how excellent it is!” We have proved the sacraments of the Church to be the more ancient, now recognise that they are superior. In very truth it is a marvellous thing that God rained manna on the fathers, and fed them with daily food from heaven; so that it is said, “So man did eat angels’ food.” But yet all those who ate that food died in the wilderness, but that food which you receive, that living Bread which came down from heaven, furnishes the substance of eternal life; and whosoever shall eat of this Bread shall never die, and it is the Body of Christ. Now consider whether the bread of angels be more excellent or the Flesh of Christ, which is indeed the body of life. That manna came from heaven, this is above the heavens; that was of heaven, this is of the Lord of the heavens; that was liable to corruption, if kept a second day, this is far from all corruption, for whosoever shall taste it with holy reverence shall not be able to feel corruption. For them water flowed from the rock, for you blood flowed from Christ; water satisfied them for a time, the Blood satiates you for eternity. The Jew drinks and thirsts again, you after drinking will be beyond the power of thirsting; that was in a shadow, this is in truth. If that which you so wonder at is but shadow, how great must that be whose very shadow you wonder at. See now what happened in the case of the fathers was shadow: “They drank, it is said, of that Rock that followed them, and that Rock was Christ. But with many of them God was not well pleased, for they were overthrown in the wilderness. Now these things were done in a figure concerning us.” You recognise now which are the more excellent, for light is better than shadow, truth than a figure, the Body of its Giver than the manna from heaven.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. 1 Cor. 10, 1 – 2. 11. 3 – 4</strong><br><br>
+                        <em>R. Our fathers crossed the sea, all were baptised in Moses in the cloud and in the sea. * These things happened to them as a sign and example.</em><br>
+                        V: All ate the same spiritual food, all drank the same spiritual drink.<br>
+                        <em>R. These things happened to them as a sign and example.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jl. 3:1 – 4, 8 (Vulg. 2: 28 – 3:8)</strong><br>
+                        <em>The final judgement.</em><br><br>
+                        A reading from the prophet Joel.<br>
+                        "And it shall come to pass afterward, that I will pour out my spirit on all flesh; your sons and your daughters shall prophesy, your old men shall dream dreams, and your young men shall see visions. Even upon the menservants and maidservants in those days, I will pour out my spirit. "And I will give portents in the heavens and on the earth, blood and fire and columns of smoke. The sun shall be turned to darkness, and the moon to blood, before the great and terrible day of the LORD comes. And it shall come to pass that all who call upon the name of the LORD shall be delivered; for in Mount Zion and in Jerusalem there shall be those who escape, as the LORD has said, and among the survivors shall be those whom the LORD calls. "For behold, in those days and at that time, when I restore the fortunes of Judah and Jerusalem, I will gather all the nations and bring them down to the valley of Jehosh'aphat, and I will enter into judgment with them there, on account of my people and my heritage Israel, because they have scattered them among the nations, and have divided up my land. And have cast lots for my people, and have given a boy for a harlot, and have sold a girl for wine, and have drunk it. "What are you to me, O Tyre and Sidon, and all the regions of Philistia? Are you paying me back for something? If you are paying me back, I will requite your deed upon your own head swiftly and speedily. For you have taken my silver and my gold, and have carried my rich treasures into your temples. You have sold the people of Judah and Jerusalem to the Greeks, removing them far from their own border. But now I will stir them up from the place to which you have sold them, and I will requite your deed upon your own head. I will sell your sons and your daughters into the hand of the sons of Judah, and they will sell them to the Sabe'ans, to a nation far off; for the LORD has spoken."
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jl. 3, 2 – 3. 5 (Vulg. 2,29. 30. 32)</strong><br><br>
+                        <em>R. In those days I will effuse my spirit above the men slaves and the woman slaves, I will do prodigies in heaven and on earth. * Whoever will invoke the name of the Lord will be saved.</em><br>
+                        V: On mount Sion and in Jerusalem there will be salvation, and also for the survivors whom the Lord has called.<br>
+                        <em>R. Whoever will invoke the name of the Lord will be saved.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <em>“Come, blessed of my Father, receive in inheritance the kingdom prepared for you from the foundation of the world.</em><br><br>
+                        A reading from the “Discourse on baptism”, of St. Gregory of Nyssa, bishop.<br>
+                        He who has received the bath of regeneration, is like a recruit who has just been enrolled in the army, who has not yet accomplished brave or heroic gestures, worthy of a true soldier. It is in the same way therefore that one does not consider himself a strong man because he has put on the belt and cloak, nor does he present himself confidentially to the king to speak to him as if he was one of the family, nor does he ask the recompense that is given to those who have toiled and behaved bravely. So also you having received the grace, do not believe that you can live with the just and receive their inheritance if you do not first face up to many dangers for the faith, if you have not declared war on the flesh and with it you have not resisted the devil and to all the seductions of the wicked spirits. In fact, if it seems better to you, let us take the same words of the Lord, that are pronounced in the common judgement, and teach exactly that which they propose: “Come, blessed of my Father, receive in inheritance the kingdom prepared for you from the foundation of the world” (Mt. 25, 34). For what reason? Neither because you have been re-clothed with incorruptibility nor because you have washed your sins, but because you have worked correctly in charity. And immediately the list of those who have been nourished, whose thirst has been quenched, who have been re-clothed follows. For this reason the judge, who cannot be deceived, judges in this way. The grace in fact is a gift of God. Now, he is justly honoured for the behaviour of his own life, but for the grace received no one asks for a reward, instead he feels a debtor. For this, illuminated by baptism, we have to be grateful to Him who has benefited us. And our gratitude towards God is demonstrated with the goodness that we have with those who are similar to us, by looking after our salvation and virtue. Abandon therefore your stupid opinion, you who appeal to baptism in the last moments of life; and know that the faith requires hope as a sister, which is born from a life lived in charity. Through it we become worthy, through the will and work of God: to Him the adoration now and always, forever and ever. Amen.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mt. 16, 27; 2 Th. 1: 10</strong><br><br>
+                        <em>R. The Son of Man will come in the glory of His Father, with His angels, * and He will render to each one according to his actions.</em><br>
+                        V: He will come to be glorified in His saints and to be recognised marvellous in all those who have believed in Him;<br>
+                        <em>R. and He will render to each one according to his actions.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 15: 21 – 28</strong><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    And Jesus went away from there and withdrew to the district of Tyre and Sidon. And behold, a Canaanite woman from that region came out and cried, "Have mercy on me, O Lord, Son of David; my daughter is severely possessed by a demon." But he did not answer her a word. And his disciples came and begged him, saying, "Send her away, for she is crying after us." He answered, "I was sent only to the lost sheep of the house of Israel." But she came and knelt before him, saying, "Lord, help me." And he answered, "It is not fair to take the children's bread and throw it to the dogs." She said, "Yes, Lord, yet even the dogs eat the crumbs that fall from their masters' table." Then Jesus answered her, "O woman, great is your faith! Be it done for you as you desire." And her daughter was healed instantly.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContentForCycle(cycle) {
+                // Hide all content blocks
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle's content
+                if (cycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (cycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', (event) => {
+                showContentForCycle(event.target.value);
+            });
+
+            // Set the initial state based on the selected option
+            showContentForCycle(cycleSelector.value);
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

@@ -4,129 +4,214 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>kawaida</title>
+
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- Custom Tailwind Config (from uploaded file) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#7C3AED',
+            'secondary': '#DB2777',
+            'accent': '#F59E0B',
+            'liturgical-purple': '#4A1E8A',
+            'liturgical-white': '#F8F9FA',
+            'liturgical-red': '#C41E3A',
+            'liturgical-green': '#2E7D32',
+            'liturgical-gold': '#FFD700',
+          },
+          backgroundImage: {
+            'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Reuse styles from the uploaded file -->
   <style>
-    body{
-        background-color: #1f2937;
-        
+    :root {
+      --primary-color: #7C3AED;
+      --current-theme: 'light';
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+    .bg-gradient-vintage {
+      background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+    }
+    .dark .bg-gradient-vintage {
+      background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+    }
+    .canvas-container {
+      max-width: 1024px;
+      margin: 0 auto;
     }
     canvas {
       width: 100% !important;
       height: auto !important;
       display: block;
       margin: 0 auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
-    h1{
+    @media (prefers-color-scheme: dark) {
+      body {
         color: white;
-        font-size: xx-large;
+      }
+    }
+    @media (max-width: 640px) {
+      .bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
     }
   </style>
 </head>
-    <body data-src="PDFS/MwakaSehemu3.pdf">
-        <nav class="fixed top-0 left-0 right-0 bg-[#202847] shadow z-50">
-            <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-                <div class="text-lg font-semibold text-white">KIPINDI CHA KAWAIDA 21-34</div>
-                <div class="space-x-4">
-                <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
-                <a href="#" class="text-gray-300 hover:text-white"></a>
-              <a href="#" class="text-gray-300 hover:text-white"></a>
-            </div>
-        </div>
-        </nav>
+<body class="min-h-screen bg-gradient-vintage dark:text-white transition-colors duration-300" data-src="PDFS/MwakaSehemu3.pdf">
 
-    <br><br><br>
-            <div class="mb-4 text-center">
-             <div class="inline-flex flex-wrap justify-center gap-2">
-                <button id="prevPage" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Previous</button>
-                <button id="nextPage" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Next</button>
-                <button id="zoomIn" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Zoom In</button>
-                <button id="zoomOut" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Zoom Out</button>
-            </div>
-            </div>
+  <!-- Dark Mode Sync -->
+  <script>
+    const savedMode = localStorage.getItem('themeMode') || 'light';
+    document.body.classList.toggle('dark', savedMode === 'dark');
+    document.documentElement.classList.toggle('dark', savedMode === 'dark');
+  </script>
 
-            <canvas id="pdfCanvas" class="border rounded shadow w-full max-w-4xl"></canvas>
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 right-0 bg-[#202847] shadow z-50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="text-lg font-semibold text-white">KIPINDI CHA KAWAIDA 21-34</div>
+      <div class="space-x-4">
+        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+        <a href="#" class="text-gray-300 hover:text-white"></a>
+        <a href="#" class="text-gray-300 hover:text-white"></a>
+      </div>
+    </div>
+  </nav>
 
-            <div class="text-sm mt-2 text-center">
-                Page <span id="pageNum">1</span> of <span id="pageCount">--</span>
-            </div>
+  <!-- Spacing for fixed nav -->
+  <div class="pt-20"></div>
 
-   <script>
-                        // BUG: viewer was undefined, url should be from body[data-src]
-                        const url = document.body.getAttribute('data-src');
+  <!-- Controls -->
+  <div class="mb-4 text-center">
+    <div class="inline-flex flex-wrap justify-center gap-2 px-4">
+      <button id="prevPage" class="px-3 py-1 bg-primary text-white rounded hover:bg-purple-700 transition">Previous</button>
+      <button id="nextPage" class="px-3 py-1 bg-primary text-white rounded hover:bg-purple-700 transition">Next</button>
+      <button id="zoomIn" class="px-3 py-1 bg-secondary text-white rounded hover:bg-pink-600 transition">Zoom In</button>
+      <button id="zoomOut" class="px-3 py-1 bg-secondary text-white rounded hover:bg-pink-600 transition">Zoom Out</button>
+    </div>
+  </div>
 
-                        let pdfDoc = null;
-                        let pageNum = 1;
-                        let currentScale = 1.5;
+  <!-- PDF Canvas -->
+  <div class="canvas-container px-4">
+    <canvas id="pdfCanvas" class="border border-gray-300 dark:border-gray-600 rounded shadow"></canvas>
+  </div>
 
-                        const canvas = document.getElementById('pdfCanvas');
-                        const ctx = canvas.getContext('2d');
+  <!-- Page Info -->
+  <div class="text-sm mt-2 text-center text-gray-700 dark:text-gray-300">
+    Page <span id="pageNum">1</span> of <span id="pageCount">--</span>
+  </div>
 
-                        function renderPage(num) {
-                            pdfDoc.getPage(num).then((page) => {
-                                const viewport = page.getViewport({ scale: currentScale });
-                                canvas.height = viewport.height;
-                                canvas.width = viewport.width;
+  <!-- PDF.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
-                                page.render({ canvasContext: ctx, viewport });
-                                document.getElementById('pageNum').textContent = num;
+  <!-- Main Script -->
+  <script>
+    const url = document.body.getAttribute('data-src');
 
-                                // Save last viewed page
-                                localStorage.setItem(`lastPage_${url}`, num);
-                            });
-                        }
+    let pdfDoc = null;
+    let pageNum = 1;
+    let currentScale = 1.5;
 
-                        document.getElementById('prevPage').addEventListener('click', () => {
-                            if (pageNum <= 1) return;
-                            pageNum--;
-                            renderPage(pageNum);
-                        });
+    const canvas = document.getElementById('pdfCanvas');
+    const ctx = canvas.getContext('2d');
 
-                        document.getElementById('nextPage').addEventListener('click', () => {
-                            if (pageNum >= pdfDoc.numPages) return;
-                            pageNum++;
-                            renderPage(pageNum);
-                        });
+    function renderPage(num) {
+      pdfDoc.getPage(num).then((page) => {
+        const containerWidth = Math.min(window.innerWidth, 1024);
+        const unscaledViewport = page.getViewport({ scale: 1 });
+        let fitScale = containerWidth / unscaledViewport.width;
+        let scale = window.innerWidth < 640 ? fitScale : currentScale;
+        const viewport = page.getViewport({ scale });
+        const dpr = window.devicePixelRatio || 1;
 
-                        document.getElementById('zoomIn').addEventListener('click', () => {
-                            currentScale *= 1.2;
-                            renderPage(pageNum);
-                        });
+        canvas.width = viewport.width * dpr;
+        canvas.height = viewport.height * dpr;
+        canvas.style.width = viewport.width + 'px';
+        canvas.style.height = viewport.height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-                        document.getElementById('zoomOut').addEventListener('click', () => {
-                            currentScale /= 1.2;
-                            renderPage(pageNum);
-                        });
+        page.render({ canvasContext: ctx, viewport });
+        document.getElementById('pageNum').textContent = num;
 
-                        document.addEventListener('keydown', (e) => {
-                            if (e.key === 'ArrowRight') document.getElementById('nextPage').click();
-                            if (e.key === 'ArrowLeft') document.getElementById('prevPage').click();
-                        });
+        localStorage.setItem(`lastPage_${url}`, num);
+      });
+    }
 
-                        canvas.addEventListener('click', (e) => {
-                            const rect = canvas.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            // Use canvas.style.width for correct click region
-                            const displayWidth = canvas.offsetWidth;
-                            const clickX = e.clientX - rect.left;
-                            if (clickX < displayWidth / 2 && pageNum > 1) {
-                                pageNum--;
-                                renderPage(pageNum);
-                            } else if (clickX >= displayWidth / 2 && pageNum < pdfDoc.numPages) {
-                                pageNum++;
-                                renderPage(pageNum);
-                            }
-                        });
+    document.getElementById('prevPage').addEventListener('click', () => {
+      if (pageNum <= 1) return;
+      pageNum--;
+      renderPage(pageNum);
+    });
 
-                        pdfjsLib.getDocument(url).promise.then((pdf) => {
-                            pdfDoc = pdf;
-                            document.getElementById('pageCount').textContent = pdf.numPages;
+    document.getElementById('nextPage').addEventListener('click', () => {
+      if (pageNum >= pdfDoc.numPages) return;
+      pageNum++;
+      renderPage(pageNum);
+    });
 
-                            // Restore last page if available
-                            const savedPage = parseInt(localStorage.getItem(`lastPage_${url}`), 10);
-                            pageNum = savedPage && savedPage >= 1 && savedPage <= pdf.numPages ? savedPage : 1;
-                            renderPage(pageNum);
-                        });
-                    </script>
-                </body>
-            </html>
+    document.getElementById('zoomIn').addEventListener('click', () => {
+      currentScale *= 1.2;
+      renderPage(pageNum);
+    });
+
+    document.getElementById('zoomOut').addEventListener('click', () => {
+      currentScale /= 1.2;
+      renderPage(pageNum);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') document.getElementById('nextPage').click();
+      if (e.key === 'ArrowLeft') document.getElementById('prevPage').click();
+    });
+
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const displayWidth = canvas.offsetWidth;
+      if (clickX < displayWidth / 2 && pageNum > 1) {
+        pageNum--;
+        renderPage(pageNum);
+      } else if (clickX >= displayWidth / 2 && pageNum < pdfDoc.numPages) {
+        pageNum++;
+        renderPage(pageNum);
+      }
+    });
+
+    // Load PDF
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window['pdfjsLib']) {
+        alert('PDF.js library failed to load.');
+        return;
+      }
+      window['pdfjsLib'].getDocument(url).promise.then((pdf) => {
+        pdfDoc = pdf;
+        document.getElementById('pageCount').textContent = pdf.numPages;
+
+        const savedPage = parseInt(localStorage.getItem(`lastPage_${url}`), 10);
+        pageNum = savedPage && savedPage >= 1 && savedPage <= pdf.numPages ? savedPage : 1;
+        renderPage(pageNum);
+      }).catch(function (error) {
+        alert('Failed to load PDF: ' + error.message);
+      });
+    });
+  </script>
+</body>
+</html>

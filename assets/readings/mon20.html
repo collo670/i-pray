@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Monday, August 18, 2025. Readings include a prayer from Ephesians, the vanity of pleasures from Ecclesiastes, and the Gospel of Matthew on the rich young man.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Monday, August 18, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Monday of Week 20</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph. 1: 15 – 23</strong><br>
+                        <em>The prayer of Paul so that the faithful may be illuminated.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
+                        For this reason, because I have heard of your faith in the Lord Jesus and your love toward all the saints, I do not cease to give thanks for you, remembering you in my prayers, that the God of our Lord Jesus Christ, the Father of glory, may give you a spirit of wisdom and of revelation in the knowledge of him, having the eyes of your hearts enlightened, that you may know what is the hope to which he has called you, what are the riches of his glorious inheritance in the saints, and what is the immeasurable greatness of his power in us who believe, according to the working of his great might which he accomplished in Christ when he raised him from the dead and made him sit at his right hand in the heavenly places, far above all rule and authority and power and dominion, and above every name that is named, not only in this age but also in that which is to come; and he has put all things under his feet and has made him the head over all things for the church, which is his body, the fullness of him who fills all in all.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ep. 1, 17. 18; 1 Cor. 2, 12.</strong><br><br>
+                        <em>R: God will give you a spirit of wisdom and of revelation in order to make you understand the hope to which He has called you. * And to which treasure of glory His inheritance among the saints encloses.</em><br>
+                        V: We have not received the spirit of the world, but the Spirit of God, so that we may know all that God has given us.<br>
+                        <em>R: and to which treasure of glory His inheritance among the saints encloses.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Hom. 2, 6</strong><br>
+                        <em>We have Christ who is our peace and our light.</em><br><br>
+                        A reading from the treatise “On Christian Perfection” of St. Gregory of Nyssa, bishop.<br>
+                        “He is our peace, who has made both one” (Ep. 2, 14). Since Christ is our peace, we shall be living up to the name of Christians if we let Christ be seen in our lives by letting peace reign in our hearts. “He has brought hostility to an end” (cfr, Ep. 2, 16), as the apostle said. Therefore we must not let it come back to life in us in any way at all but must proclaim clearly that it is dead indeed. God has destroyed it in a wonderful way for our salvation. We must not, then, allow ourselves to give way to anger or bear grudges, for this would endanger our souls. We must not stir up the very thing that is well and truly dead, calling it back to life by our wickedness. But as we bear the name of Christ, who is peace, we too must put an end to all hostility, so that we may profess in our lives what we believe to be true of Him. He broke down the dividing wall and brought the two sides together in Himself, thus making peace. We too, then, should not only be reconciled with those who attack us from without, we should also bring together the warring factions within us, so that the flesh may no longer be opposed to the spirit and the spirit to the flesh. Then when the mind that is set on the flesh is subject to the divine law, we may be refashioned into one new creature, into a man of peace. When the two have been made one we shall then have peace within ourselves. The definition of peace is that there should be harmony between two opposed factions. And so, when the civil war in our nature has been brought to an end and we are at peace within ourselves, we may become peace. Then we shall really be true to the name of Christ that we bear. When we consider that Christ is the true light far removed from all falsehood, we realise that our lives too should be lit by the rays of the sun of justice, which shine for our enlightenment. These rays are the virtues by which we cast off the works of darkness and conduct ourselves becomingly as in the light of day. Then, when we refuse to have anything to do with the darkness of wickedness and do everything in the light, we ourselves shall also become light and our works will give light to the others, for it is in the nature of light to shine out. But if we look up on Christ as our sanctification, then we should keep ourselves free from all that is wicked and impure both in thought and in deed and so prove ourselves worthy to bear His name, for we shall be demonstrating the effect of sanctification not in words but in our actions and in our lives.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Lk. 1, 78. 79</strong><br><br>
+                        <em>R: He will come to visit us like the sun that rises on high: * He will guide our steps on the way of peace.</em><br>
+                        V: He will give light to those in darkness and those who live in the shadow of death.<br>
+                        <em>R: He will guide our steps on the way of peace.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eccl. 2: 1 – 3, 12 – 26</strong><br>
+                        <em>The vanity of pleasures and of human wisdom.</em><br><br>
+                        A reading from the book of Ecclesiastes.<br>
+                        I said to myself, "Come now, I will make a test of pleasure; enjoy yourself." But behold, this also was vanity. I said of laughter, "It is mad," and of pleasure, "What use is it?" I searched with my mind how to cheer my body with wine -- my mind still guiding me with wisdom -- and how to lay hold on folly, till I might see what was good for the sons of men to do under heaven during the few days of their life. So I turned to consider wisdom and madness and folly; for what can the man do who comes after the king? Only what he has already done. Then I saw that wisdom excels folly as light excels darkness. The wise man has his eyes in his head, but the fool walks in darkness; and yet I perceived that one fate comes to all of them. Then I said to myself, "What befalls the fool will befall me also; why then have I been so very wise?" And I said to myself that this also is vanity. For of the wise man as of the fool there is no enduring remembrance, seeing that in the days to come all will have been long forgotten. How the wise man dies just like the fool! So I hated life, because what is done under the sun was grievous to me; for all is vanity and a striving after wind. I hated all my toil in which I had toiled under the sun, seeing that I must leave it to the man who will come after me; And who knows whether he will be a wise man or a fool? Yet he will be master of all for which I toiled and used my wisdom under the sun. This also is vanity. So I turned about and gave my heart up to despair over all the toil of my labours under the sun, because sometimes a man who has toiled with wisdom and knowledge and skill must leave all to be enjoyed by a man who did not toil for it. This also is vanity and a great evil. What has a man from all the toil and strain with which he toils beneath the sun? For all his days are full of pain, and his work is a vexation; even in the night his mind does not rest. This also is vanity. There is nothing better for a man than that he should eat and drink, and find enjoyment in his toil. This also, I saw, is from the hand of God; for apart from him who can eat or who can have enjoyment? For to the man who pleases him God gives wisdom and knowledge and joy; but to the sinner he gives the work of gathering and heaping, only to give to one who pleases God. This also is vanity and a striving after wind.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>cfr. Qo. 2, 26; 1, 14; 1 Tm. 6, 10</strong><br><br>
+                        <em>R: To the one who is pleasing to Him God concedes wisdom, science and joy; to the sinner He leaves the punishment of gathering and amassing. * All is vanity and a chasing of the wind.</em><br>
+                        V: To attach oneself to riches is the root of all evils; because of the unrestrained desire of it, some are tormented with many sorrows.<br>
+                        <em>R: All is vanity and a chasing of the wind.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Hom 5</strong><br>
+                        <em>The wise man has his eyes in front.</em><br><br>
+                        A reading from the “Homilies on Ecclesiastes” of St. Gregory of Nyssa, bishop.<br>
+                        If the soul should raise its eyes towards its Head, which is Christ, as Paul says, then it would be counted among the blessed as being sharp sighted, having its eyes where there is no shadow of evil. That same great Paul and any others as great as he fixed their eyes on that Head, as do all who live and move and have their being in Christ. As it is impossible for anyone who lives in light to see the darkness, so it is not possible that he who fixes his eyes on Christ should lower them to dwell on vanities. For he who has his eyes on the Head – by Head we mean the origin of all things – has them fixed on all virtue – for Christ is the all complete virtue – on truth, on justice, on incorruptibility and on all that is good. ‘So the eyes of the wise man are on his Head, but the fool walks in darkness.’ For he who does not put his lamp on the lamp stand but hides it under the base of his bed, turns that light into darkness for himself. How many there are on the other hand who are engaged in lofty contests and are occupied in contemplation of things which really exist and yet are considered blind and useless in material things, as Paul boasted that he was, saying that he was a fool for Christ’s sake. He did not exercise his prudence and knowledge on those things which enthral us here below, for, as he said, ‘We are fools for Christ’s sake’, as though to say we are blind to the life here below because we lift up our eyes and fix them on our Head. For this reason he lived without stool or table, poor, wandering, naked, suffering hunger and thirst. And who would not have thought him pitiful seeing him in fetters, insulted with blows, plunged into the waves of the sea by shipwreck and led round in chains? But even whilst he suffered all this among men, he did not turn away his eyes, but always kept them steadfastly towards the Head saying, ‘ Who will separate us from the love of Christ, which is in Christ Jesus? Affliction? Distress? Persecution? Hunger, nakedness, danger or the sword? Which is as though to say, ‘Who shall tear my eyes out from my head and bring them to what should be trodden underfoot? And he calls upon us to do the same when he gives the command, ‘Occupy your minds with things that are above, in other words, have your eyes fixed on the Head.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>cfr. Ps. 122, 2; Jn. 8, 12</strong><br><br>
+                        <em>R: See how the eyes of the servants are fixed on the hands of their masters. * Our eyes, too, are fixed on the Lord our God, waiting for His mercy.</em><br>
+                        V: I am the light of the world; he who follows me, will not walk in the dark, but will have the light of life.<br>
+                        <em>R: Our eyes are fixed on the Lord our God, waiting for His mercy.</em>
+                    </p>
+                </section>
+            </div>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 19: 16 – 22</strong><br>
+                    <em>If you want to be perfect sell all that you possess and you will have a treasure in heaven.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    And behold, one came up to him, saying, "Teacher, what good deed must I do, to have eternal life?" And he said to him, "Why do you ask me about what is good? One there is who is good. If you would enter life, keep the commandments." He said to him, "Which?" And Jesus said, "You shall not kill, You shall not commit adultery, You shall not steal, You shall not bear false witness, Honour your father and mother, and, You shall love your neighbour as yourself." The young man said to him, "All these I have observed; what do I still lack?" Jesus said to him, "If you would be perfect, go, sell what you possess and give to the poor, and you will have treasure in heaven; and come, follow me." When the young man heard this he went away sorrowful; for he had great possessions.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

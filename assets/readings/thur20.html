@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Thursday, August 21, 2025. Readings include a prayer from Ephesians, the vanity of pleasures from Ecclesiastes, and the Gospel of Matthew on the rich young man.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Thursday, August 21, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Thursday of Week 20</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph. 3:1 – 13</strong><br>
+                        <em>Paul herald of the mystery of God.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
+                        For this reason I, Paul, a prisoner for Christ Jesus on behalf of you Gentiles -- assuming that you have heard of the stewardship of God's grace that was given to me for you, how the mystery was made known to me by revelation, as I have written briefly. When you read this you can perceive my insight into the mystery of Christ, which was not made known to the sons of men in other generations as it has now been revealed to his holy apostles and prophets by the Spirit; that is, how the Gentiles are fellow heirs, members of the same body, and partakers of the promise in Christ Jesus through the gospel. Of this gospel I was made a minister according to the gift of God's grace which was given me by the working of his power. To me, though I am the very least of all the saints, this grace was given, to preach to the Gentiles the unsearchable riches of Christ, and to make all men see what is the plan of the mystery hidden for ages in God who created all things; that through the church the manifold wisdom of God might now be made known to the principalities and powers in the heavenly places. This was according to the eternal purpose that he has realized in Christ Jesus our Lord, in whom we have boldness and confidence of access through our faith in him. So I ask you not to lose heart over what I am suffering for you, which is your glory.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ep. 3, 8. 12; Rm. 1,5</strong><br><br>
+                        <em>R: To me who am the least known among all the saints, has been granted this grace of announcing to the Gentiles the special richness of Christ, * who gives us the courage to draw near in complete trust to God by the faith in Him.</em><br>
+                        V: We have received the grace of the apostolate to obtain the obedience to the faith on the part of all peoples, for the glory of his name.<br>
+                        <em>R: who gives us the courage to draw near in complete trust to God by the faith in Him.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Hom. 8</strong><br>
+                        <em>The mystery of the Church.</em><br><br>
+                        A reading from the “Homilies on the Song of Songs” of St. Gregory of Nyssa, bishop.<br>
+                        Let us base ourselves on the Apostle in order to interpret these mysteries. In his letter to the Ephesians, when he presents us with that great appearance of God that comes about in the flesh, he says that not only to the human nature, but also to the principalities and to the powers that are in the heavens has been revealed the multiform and unfathomable wisdom of God, manifested with the coming of Christ in the midst of men. Thus says the text: “so that it may be manifested now in heaven, through the Church, to the Principalities and to the Powers, the multiform wisdom of God, according to the eternal design that He has actualised in our Lord Jesus Christ.” (Ep. 3, 10) He “gives us the courage to draw near in complete faith to God through faith in Him” (Ep. 3, 12). Therefore it is exactly through the Church that the multiform and profound wisdom of God is manifested to the heavenly powers, which make us on the contrary to fulfil great and marvellous things. In what way in fact does life spring forth from death, justice from sin, blessing from cursing, glory from humiliation, power from weakness? In the beginning the heavenly powers had known a simple and uniform wisdom of God, which operated miracles according to its nature. Nor among the realities that could be seen was there anything different, because the divine nature, being power and strength, freely formed every creature with a simple act of will, imprinting the generative impulse to the nature of the things, and creating very beautifully all the things that sprung up from the same font of beauty. Now instead, through the Church, the different and multiple nature of the divine wisdom appears clearly to them, as a result of the connection of the opposites, and precisely: the Word that is made flesh, the Life united to death, his wounds and bruises that heal our wounds. And again: how the power of the adversary is defeated by the weakness of the cross, how he who is invisible by nature is manifested in the flesh; how he being the redeemer and the price of ransom itself frees the prisoners. He in fact hands over himself to death for us, without separating himself from life; he made himself servant, though remaining sovereign. The friends of the Bridegroom, knowing through the Church all these and other similar realities, so different and multiform, were enriched in intelligence in order to discover in the mystery a new aspect of the divine wisdom: and if it is not too audacious to affirm, contemplating through the Bride the beauty of the Bridegroom, they remained greatly wondering, as if in front of an unexpected and incomprehensible reality. God, in fact, who “no man has ever seen” as John says “nor can see” as Paul also affirms (1 Tm. 1, 16; cfr. Jn. 1, 18), has made the Church his body and, adding you to those who are called to salvation, builds it in charity, “so that we may all reach the state of the perfect man, in the measure of the full maturity of Christ himself” (Ep. 4, 13). If therefore the Church is the body of Christ, and Christ is the head of the body, which outlines the face of the Church with its character, the friends of the Bridegroom, fixing their gaze on this reality, are rendered more capable of understanding: in fact through the Church they can see with more transparency the Bridegroom himself, who by his very nature is invisible to their sight. Like those who are not capable of looking directly at the sun, can above all see it reflected in water: in the same way they see in a clear mirror, that is in the face of the Church, the sun of justice, who is understood by the mind at least in the measure in which it appears.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ep. 4, 4- 5; 1Cor. 8, 6</strong><br><br>
+                        <em>R: Only one body, only one Spirit, as only one is the hope to which you have been called, that of your vocation; * only one Lord, only one faith, only one baptism.</em><br>
+                        V: For us there is only one God, the Father, and only one Lord Jesus Christ;<br>
+                        <em>R: only one Lord, only one faith, and only one baptism.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eccl. 7: 1 – 29</strong><br>
+                        <em>Do not know more than what is necessary.</em><br><br>
+                        A reading from the book of Ecclesiastes.<br>
+                        A good name is better than precious ointment; and the day of death, than the day of birth. It is better to go to the house of mourning than to go to the house of feasting; for this is the end of all men, and the living will lay it to heart. Sorrow is better than laughter, for by sadness of countenance the heart is made glad. The heart of the wise is in the house of mourning; but the heart of fools is in the house of mirth. It is better for a man to hear the rebuke of the wise than to hear the song of fools. For as the crackling of thorns under a pot, so is the laughter of the fools; this also is vanity. Surely oppression makes the wise man foolish, and a bribe corrupts the mind. Better is the end of a thing than it’s beginning; and the patient in spirit is better than the proud in spirit. Be not quick to anger, for anger lodges in the bosom of fools. Say not, "Why were the former days better than these?" For it is not from wisdom that you ask this. Wisdom is good with an inheritance, an advantage to those who see the sun. For the protection of wisdom is like the protection of money; and the advantage of knowledge is that wisdom preserves the life of him who has it. Consider the work of God; who can make straight what he has made crooked? In the day of prosperity be joyful, and in the day of adversity consider; God has made the one as well as the other, so that man may not find out anything that will be after him. In my vain life I have seen everything; there is a righteous man who perishes in his righteousness, and there is a wicked man who prolongs his life in his evil doing. Be not righteous overmuch, and do not make yourself over wise; why should you destroy yourself? Be not wicked overmuch, neither be a fool; why should you die before your time? It is good that you should take hold of this, and from that withhold not your hand; for he who fears God shall come forth from them all. Wisdom gives strength to the wise man more than ten rulers that are in a city. Surely there is not a righteous man on earth who does good and never sins. Do not give heed to all the things that men say, lest you hear your servant cursing you; your heart knows that many times you have yourself cursed others. All this I have tested by wisdom; I said, "I will be wise"; but it was far from me. That which is, is far off, and deep, very deep; who can find it out? I turned my mind to know and to search out and to seek wisdom and the sum of things, and to know the wickedness of folly and the foolishness that is madness. And I found bitterer than death the woman whose heart is snares and nets, and whose hands are fetters; he who pleases God escapes her, but the sinner is taken by her. Behold, this is what I found, says the Preacher, adding one thing to another to find the sum, which my mind has sought repeatedly, but I have not found. One man among a thousand I found, but a woman among all these I have not found. Behold, this alone I found, that God made man upright, but they have sought out many devices.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Prov. 20, 9; cfr. Qo. 7, 20; 1 Jn. 1, 8. 9.</strong><br><br>
+                        <em>R: Who can say: I have purified my heart, I am cleansed of my sin? * There does not exist a man so just, who does only good and never evil.</em><br>
+                        V: If we say that we are without sin, we deceive ourselves. If we recognise our sins, God is faithful and will forgive us.<br>
+                        <em>R: there does not exist a man so just, who does only good and never evil.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Istr. 1 on the faith, 3 – 5</strong><br>
+                        <em>The immense depth of God.</em><br><br>
+                        A reading from the “Instructions” of St. Columbanus, abbot.<br>
+                        God is everywhere, utterly vast, and everywhere near at hand, according to his own witness of himself; I am, he says, a God at hand and not a God afar off. The God we are seeking is not one who dwells far away from us; we have him within us, if we are worthy. For he resides in us like soul in body, if only we are sound members of him, if we are not dead in sins, if we are uninfected by the taint of a corrupt will; then truly does he reside in us who said, And I will live in them and move among them. Yet if we are worthy that he should be in us, then in truth we are vivified by him as his living members; for in him, as the Apostle says, we live and move and have our being. Who, I say, shall explore his highest summit to the measure of this unutterable and inconceivable being? Who shall dare to treat of the eternal source of the universe? Who shall boast of knowing the infinite God, who fills all and surrounds all, who enters into all and passes beyond all, who occupies all, who escapes all? Whom no man has ever seen as he is? There let no man venture to seek the unsearchable things of God, the nature, mode and cause of his existence. These are unspeakable, undiscoverable, unsearchable; only believe in simplicity and yet with firmness, that God is and shall be seen as he has been, since God is immutable. Who then, is God? He is the father, Son and Holy Spirit, one God. Seek no farther concerning God; for those who wish to know the great deep must first view the natural world. For knowledge of the Trinity is properly likened to the depths of the sea, according to that saying of the Sage, and the great deep, who shall fathom it? Since, just as the depth of the sea is invisible to human sight, even so the Godhead of the Trinity is found to be unknowable by human senses. And thus if, I say, a man wishes to know what he ought to believe, let him not think that he understands better by speech than by believing; because when he seeks it, knowledge of the godhead will recede farther than it was. Therefore seek the supreme wisdom, not in verbal debate, but by the perfection of a good life, not with the tongue but with the faith that issues from singleness of heart, not with that which is gathered from the guests of a learned irreligion. If then you seek the unutterable by discussion, he will fly farther from you than he was before. If you seek by faith, wisdom shall stand in her accustomed station at the gate, and where she dwells she shall at least in part be seen. But then is she also truly in some measure attained, when the invisible is believed in a manner that passes understanding; for God must be believed invisible as he is, though he be partly seen by the pure heart.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ps. 35, 6 – 7; Rm. 11, 33</strong><br><br>
+                        <em>R: Lord, your grace is in heaven, you faithfulness till the clouds; * your justice is like the highest mountains, your judgement like the great abyss.</em><br>
+                        V: O profoundness of riches, wisdom and the science of God! How inscrutable are your judgements!<br>
+                        <em>R: your justice is like the highest mountains, your judgement like the great abyss.</em>
+                    </p>
+                </section>
+            </div>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mt. 22: 1 – 14</strong><br>
+                        <em>Call all those whom you find to the wedding.</em><br><br>
+                        A reading from the Gospel of St. Matthew.<br>
+                        And again Jesus spoke to them in parables, saying, "The kingdom of heaven may be compared to a king who gave a marriage feast for his son, and sent his servants to call those who were invited to the marriage feast; but they would not come. Again he sent other servants, saying, `Tell those who are invited, Behold, I have made ready my dinner, my oxen and my fat calves are killed, and everything is ready; come to the marriage feast.' But they made light of it and went off, one to his farm, another to his business, while the rest seized his servants, treated them shamefully, and killed them. The king was angry, and he sent his troops and destroyed those murderers and burned their city. Then he said to his servants, `The wedding is ready, but those invited were not worthy. Go therefore to the thoroughfares, and invite to the marriage feast as many as you find.' And those servants went out into the streets and gathered all whom they found, both bad and good; so the wedding hall was filled with guests. "But when the king came in to look at the guests, he saw there a man who had no wedding garment; and he said to him, `Friend, how did you get in here without a wedding garment?' And he was speechless. Then the king said to the attendants, `Bind him hand and foot, and cast him into the outer darkness; there men will weep and gnash their teeth.' For many are called, but few are chosen."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

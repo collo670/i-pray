@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Friday, August 22, 2025. Readings include a prayer from Ephesians, the vanity of pleasures from Ecclesiastes, and the Gospel of Matthew on the rich young man.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Friday, August 22, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Friday of Week 20</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph. 3: 14 – 21</strong><br>
+                        <em>Prayer of Paul so that the faithful may know the love of Christ.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
+                        For this reason I bow my knees before the Father, from whom every family in heaven and on earth is named: That according to the riches of his glory he may grant you to be strengthened with might through his Spirit in the inner man, and that Christ may dwell in your hearts through faith; that you, being rooted and grounded in love, may have power to comprehend with all the saints what is the breadth and length and height and depth, and to know the love of Christ which surpasses knowledge, that you may be filled with all the fullness of God. Now to him who by the power at work within us is able to do far more abundantly than all that we ask or think, to him be glory in the church and in Christ Jesus to all generations, forever and ever. Amen.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ep. 3, 20. 21; Gal. 1, 4</strong><br><br>
+                        <em>R: To him who has the power to do much more than we can ask him to do, * to him glory in the Church and in Christ Jesus for all generations, forever and ever!</em><br>
+                        V: Christ has given himself for our sins, according to the will of our God and Father.<br>
+                        <em>R: to him glory in the Church and in Christ Jesus for all generations, forever and ever!</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Disc. 21 on the Last Supper.</strong><br>
+                        <em>In his last discourse Christ consolidates more strongly the love in the heart of his disciples with word and with example.</em><br><br>
+                        A reading from the “Discourses” of the blessed Martin of Lione, monk.<br>
+                        The oblation of the body of Christ is renewed everyday, even though Christ has died only once, because every day we fall into sins, without which we cannot live because of the weakness of our flesh. In the species of the bread Christ wants to indicate his body, because he is “the living bread come down from heaven” (Jn. 6, 51), and in the species of the bread he also wants to show us the union of the body with the head, as the Apostle says: “Because there is only one bread, we, though being many, are only one body: all of us in fact participate of the unique bread” (1 Cor. 10, 17). As in fact from many grains of wheat are formed only one bread, in the same way through the unity of the faith, hope and charity, from different members we become only one body of Christ. Therefore he who desires to be united to the body of Christ as a living member, participates with the others of the unique heavenly bread that the Lord has broken and distributed. He, in fact wants that which constitutes them only one thing should be shared by all, when he says: Take it, to become one, eat all of you the same sacrament; “do this in memory of me” (Lk. 22, 19); so that receiving his body and his blood we will make a memory of his passion in such a way that, as he died for us, so also we, if it is necessary, will die for him. The same happens for the chalice, that is called the new covenant, that is new promise, because through that blood he did not promise temporal but eternal goods; therefore this commemoration has to be renewed until he returns, that is to say until the end of times, when he will come for the judgement. Therefore, my dear brothers, because the Lord wants us to receive his body and become participants of it in order to keep the unity, if someone separates himself from it by falling into anger, hate or discord, he does not receive worthily the body of Christ, nor can his participation unite him to Christ. In fact the bond of charity unites the many, while discord and hate divide that which is one. Keep vigil attentively therefore, brothers, so that the poison of discord may not generate hate in the midst of you, and in this way corrupt and destroy in you the weakness of charity. Turn your gaze to your head, and have present always the price of your redemption. Christ has saved us only because of love, as the Apostle says: “ God, rich in mercy, because of the great love with which he has loved us, from dead that we were because of sin, has made us revive with Christ: through grace in fact you have been saved” (Ep. 2, 4 5). Thus, “when we were enemies, we have been reconciled with God through the death of his Son. 5, 10). “No one has a greater love than this: to give his life for his own friends” (Jn. 15, 13). Above all Christ had an even greater love, because he did not die for his friends, but for his enemies; in fact, while we were still enemies, we were reconciled with God through his death: “He died, just for the unjust” (1 Pt. 3, 18). Now who is disposed to die for an unjust? (cfr. Rm. 5, 7) No one. For this, before teaching us about love with words, Christ shows it to us, and after having exhorted us many times to love, in the final discourse he consolidates more strongly love in the hearts of the disciples with word and example.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jn. 17, 20 – 21; Jer. 32, 38. 39</strong><br><br>
+                        <em>R: I pray for those who because of your word will believe in me; * so that all will be only one thing. As you, Father, are in me and I in you, may they also be only one thing in us.</em><br>
+                        V: They will be my people and I will be their God. I will give them only one heart and only one way of behaving.<br>
+                        <em>R: so that all will be only one thing. As you, Father, are in me and I in you, may they also be only one thing in us.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eccl. 8: 5 – 9: 10</strong><br>
+                        <em>Consolation of the wise man.</em><br><br>
+                        A reading from the book of Ecclesiastes.<br>
+                        He who obeys a command will meet no harm, and the mind of a wise man will know the time and way. For every matter has its time and way, although man's trouble lies heavy upon him. For he does not know what is to be, for who can tell him how it will be? No man has power to retain the spirit, or authority over the day of death; there is no discharge from war, nor will wickedness deliver those who are given to it. All this I observed while applying my mind to all that is done under the sun, while man lords it over man to his hurt. Then I saw the wicked buried; they used to go in and out of the holy place, and were praised in the city where they had done such things. This also is vanity. Because sentence against an evil deed is not executed speedily, the heart of the sons of men is fully set to do evil. Though a sinner does evil a hundred times and prolongs his life, yet I know that it will be well with those who fear God, because they fear before him; but it will not be well with the wicked, neither will he prolong his days like a shadow, because he does not fear before God. There is a vanity which takes place on earth, that there are righteous men to whom it happens according to the deeds of the wicked, and there are wicked men to whom it happens according to the deeds of the righteous. I said that this also is vanity. And I commend enjoyment, for man has no good thing under the sun but to eat and drink, and enjoy himself, for this will go with him in his toil through the days of life which God gives him under the sun. When I applied my mind to know wisdom, and to see the business that is done on earth, how neither day nor night one's eyes see sleep; then I saw all the work of God, that man cannot find out the work that is done under the sun. However much man may toil in seeking, he will not find it out; even though a wise man claims to know, he cannot find it out. But all this I laid to heart, examining it all, how the righteous and the wise and their deeds are in the hand of God; whether it is love or hate man does not know. Everything before them is vanity, Since one fate comes to all, to the righteous and the wicked, to the good and the evil, to the clean and the unclean, to him who sacrifices and him who does not sacrifice. As is the good man, so is the sinner; and he who swears is as he who shuns an oath. This is an evil in all that is done under the sun, that one fate comes to all; also the hearts of men are full of evil, and madness is in their hearts while they live, and after that they go to the dead. But he who is joined with all the living has hope, for a living dog is better than a dead lion. For the living know that they will die, but the dead know nothing, and they have no more reward; but the memory of them is lost. Their love and their hate and their envy have already perished, and they have no more forever any share in all that is done under the sun. Go, eat your bread with enjoyment, and drink your wine with a merry heart; for God has already approved what you do. Let your garments be always white; let not oil be lacking on your head. Enjoy life with the wife whom you love, all the days of your vain life which he has given you under the sun, because that is your portion in life and in your toil at which you toil under the sun. Whatever your hand finds to do, do it with your might; for there is no work or thought or knowledge or wisdom in Sheol, to which you are going.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>cfr. 1 Cor. 2, 9 – 10; Qo. 8, 17</strong><br><br>
+                        <em>R: What the eye has not seen, nor the ear heard, nor has ever entered into the human mind that is what God has prepared for those whom he loves. * To us God has revealed it through the Holy Spirit, who scrutinises the mysteries of God.</em><br>
+                        V: Of all the work of God man cannot discover the reasons.<br>
+                        <em>R: To us God has revealed it through the Holy Spirit, who scrutinises the mysteries of God.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Book 8, 6</strong><br>
+                        <em>My soul exults in the Lord.</em><br><br>
+                        A reading from the “Explanations on Ecclesiastes” of St. Gregory of Agrigento, bishop.<br>
+                        “Come, eat your bread with enjoyment, and drink your wine with a merry heart; for God has already approved of what you do. Let your garments all be white; let not oil be lacking on your head. If we wished to explain the meaning of this saying in the obvious and literal sense, we could say, appropriately enough, that it seems to be a righteous counsel whereby the Preacher urges us to adopt a simple style of living and adhere to the teachings of a sincere faith in God so that we may eat our bread with enjoyment and drink wine with a merry heart. He wants us not to fall into evil talk or to have anything to do with crooked ways of speech. Instead, our thoughts should be of the things that are right, and, in so far as it is proper we should, with compassion and generosity, help beggars and the needy. In short, we should give ourselves to the duties and deeds that give pleasure to God himself. However, the spiritual meaning carries our thoughts up to higher things and teaches us to consider the heavenly and mystical bread that came down from heaven and brought life to the world; and to drink the spiritual wine with a merry heart, that wine which flowed from the side of the true vine at the time of his sufferings that saved us. Of these, the gospel of our salvation says. “And when Jesus had taken bread and had blessed it, he said, to his disciples and apostles, “take and eat; this is my body that is broken for you so that sins may be forgiven”; and in the same way with the cup saying, “Drink from this all of you, this is the blood of the new covenant that is shed for you and for many so that sins may be forgiven.” They who eat this bread and drink this mystical wine are indeed gladdened and exult and can cry out, “You have given joy to our hearts.” Moreover, it seems to me that Christ our Saviour, the subsistent Wisdom of God, gave another meaning to this same bread and same wine in the book of Proverbs as well, when he said, “Come, eat of my bread and drink of the wine I have mixed for you,” referring to our mystical sharing in the Word. It is the glory of those who do so share that at all times their clothing, that is the works of light, shine brightly as the light, in accordance with what the Lord said in the gospels, “Let your light so shine before men, that they may see your good works, and give glory to your Father who is in heaven.” Their heads too, will be seen to overflow perpetually with oil, that is, with the Spirit of truth who protects and defends from all the harm of sin.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ps. 15, 8 – 9. 5</strong><br><br>
+                        <em>R: The Lord is at my right hand, I cannot waver; * for this my heart rejoices, my soul exults.</em><br>
+                        V: The Lord is my inheritance and chalice:<br>
+                        <em>R: for this my heart rejoices, my soul exults.</em>
+                    </p>
+                </section>
+            </div>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 22: 34 – 40</strong><br>
+                    <em>Love the Lord your God, and your neighbour as yourself.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    When the Pharisees heard that he had silenced the Sad'ducees, they came together. And one of them, a lawyer, asked him a question, to test him. "Teacher, which is the great commandment in the law?" And he said to him, "You shall love the Lord your God with all your heart, and with all your soul, and with all your mind. This is the great and first commandment. And a second is like it; you shall love your neighbour as yourself. On these two commandments depend all the law and the prophets."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

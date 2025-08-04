@@ -168,70 +168,69 @@
     </div>
 </header>
 
-        <!-- Main Content -->
-        <main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6"> <!-- pb-32 adds extra padding for nav -->
-    
-            <div id="homeView" class="space-y-8">
+<main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6">
+    <div id="homeView" class="space-y-8">
 
-                <div class="flex justify-center mb-4">
-                    <img class="season-img" src="/assets/images/bikira maria.jpg" alt="Liturgical Season"></div>
-                <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-purple-900/30 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-purple-800/30 season-border">
-                    <div class="text-center">
-                        <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-300 bg-white/60 dark:bg-black/20">
-                            <span id="season">ordinary</span> <span id="liturgicalYear">2023</span>
+        <!-- Liturgical Season Image (static, styled by CSS) -->
+        <div class="flex justify-center mb-4">
+            <img class="season-img" src="/assets/images/maria mdogo.png" alt="Liturgical Season">
+        </div>
+
+        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-purple-900/30 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-purple-800/30 season-border">
+            <div class="text-center">
+                <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-300 bg-white/60 dark:bg-black/20">
+                    <span id="season">ordinary</span> <span id="liturgicalYear">2023</span>
+                </div>
+                <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
+                    <span id="currentDate">Loading...</span>
+                </h2>
+                <p id="feastDay" class="text-xl text-purple-800 dark:text-purple-300 font-medium hidden">
+                    Feast of All Saints
+                </p>
+                <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
+                    <p id="liturgicalQuote" class="text-sm text-gray-600 dark:text-gray-300">
+                        May your prayers today bring you closer to God's grace and peace.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Navigation items populated by JavaScript -->
+        </div>
+
+                <!-- Prayer content -->
+                <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4">
+                    <!-- Header with image and title -->
+                    <div class="flex items-center space-x-4">
+                        <img src="/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Pray To Carmen Hernandez</h2>
+                    </div>
+
+                        <!-- "Tap to view" button -->
+                        <div class="mt-3 text-center">
+                            <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
+                                Tap to view
+                            </button>
                         </div>
-                        <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
-                            <span id="currentDate">Loading...</span>
-                        </h2>
-                        <p id="feastDay" class="text-xl text-purple-800 dark:text-purple-300 font-medium hidden">
-                            Feast of All Saints
-                        </p>
-                        <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
-                            <p id="liturgicalQuote" class="text-sm text-gray-600 dark:text-gray-300">
-                                May your prayers today bring you closer to God's grace and peace.
-                            </p>
+
+                        <!-- Collapsible prayer section -->
+                        <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <p><strong>Oh Lord</strong>,
+                            that by electing the servant of God Carmen Hernández
+                            as co-initiator of the Neocatechumenal Way,
+                            granted her a great love for Jesus Christ and the Church,
+                            for Holy Scripture and for liturgical prayer,
+                            a burning zeal for the itinerant announcement of the Gospel
+                            and fidelity to you in the trials of the cross;
+                            grant that I, through her intercession,
+                            may be faithful to the baptism I have received
+                            and, if it is your will, also grant the grace I ask of you. Through Jesus Christ, our Lord. Amen</p>
+                            <p><strong>Final:</strong> Our Father. Hail Mary. Glory be. ...</p>
                         </div>
                     </div>
-                </div>
-                <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <!-- Navigation items populated by JavaScript -->
+
                 </div>
 
-                        <!-- Prayer content -->
-                        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4">
-                            <!-- Header with image and title -->
-                            <div class="flex items-center space-x-4">
-                                <img src="/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
-                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Pray To Carmen Hernandez</h2>
-                            </div>
-
-                                <!-- "Tap to view" button -->
-                                <div class="mt-3 text-center">
-                                    <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
-                                        Tap to view
-                                    </button>
-                                </div>
-
-                                <!-- Collapsible prayer section -->
-                                <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed">
-                                    <p><strong>Oh Lord</strong>,
-                                    that by electing the servant of God Carmen Hernández
-                                    as co-initiator of the Neocatechumenal Way,
-                                    granted her a great love for Jesus Christ and the Church,
-                                    for Holy Scripture and for liturgical prayer,
-                                    a burning zeal for the itinerant announcement of the Gospel
-                                    and fidelity to you in the trials of the cross;
-                                    grant that I, through her intercession,
-                                    may be faithful to the baptism I have received
-                                    and, if it is your will, also grant the grace I ask of you. Through Jesus Christ, our Lord. Amen</p>
-                                    <p><strong>Final:</strong> Our Father. Hail Mary. Glory be. ...</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </main>
 
@@ -417,37 +416,91 @@ function applyDarkMode(isDark) {
         }
 
         // Navigation
-        function initNavigation() {
-            const navItems = [
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'office-readings.html' },
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />`, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'carmen.html' },
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 002 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
-            ];
+        function getCurrentWeekNumber() {
+            const today = new Date();
+            const currentSunday = new Date(today);
+            currentSunday.setDate(today.getDate() - today.getDay());
+            currentSunday.setHours(0, 0, 0, 0);
 
-            const navGrid = document.getElementById('navGrid');
-            navGrid.innerHTML = '';
-            navItems.forEach(item => {
-                const navItem = document.createElement('a');
-                navItem.href = item.link;
-                navItem.className = 'block p-6 rounded-2xl cursor-pointer card-hover bg-white dark:bg-gray-800 transition-all duration-300';
-                navItem.innerHTML = `
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-                            <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                ${item.icon}
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold text-lg text-gray-800 dark:text-white" data-translate="${item.title}">
-                            ${translations['en'][item.title]}
-                        </h3>
-                    </div>
-                `;
-                navGrid.appendChild(navItem);
-            });
+            // Week 18 starts on Sunday, August 3, 2025
+            const referenceSunday = new Date(2025, 7, 3); // August = 7 (0-based)
+            referenceSunday.setHours(0, 0, 0, 0);
+
+            const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+            const weeksSinceRef = Math.round((currentSunday - referenceSunday) / msPerWeek);
+
+            return 18 + weeksSinceRef;
         }
+
+        function initNavigation() {
+                const navItems = [
+                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
+                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'mwaka2.html' },
+                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />`, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
+                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'carmen.html' },
+                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 002 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
+                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
+                ];
+
+                const navGrid = document.getElementById('navGrid');
+                navGrid.innerHTML = '';
+
+                navItems.forEach(item => {
+                    const navItem = document.createElement('a');
+
+                    // Only prevent default for Scripture
+                    if (item.title === 'scripture') {
+                        navItem.href = '#'; // Prevent default navigation
+                    } else {
+                        navItem.href = item.link;
+                    }
+
+                    navItem.className = 'block p-6 rounded-2xl cursor-pointer card-hover bg-white dark:bg-gray-800 transition-all duration-300';
+                    navItem.innerHTML = `
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+                                <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    ${item.icon}
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-lg text-gray-800 dark:text-white" data-translate="${item.title}">
+                                ${translations['en'][item.title]}
+                            </h3>
+                        </div>
+                    `;
+
+                    // Special handling for Scripture card
+                    if (item.title === 'scripture') {
+                        navItem.addEventListener('click', async function (e) {
+                            e.preventDefault();
+
+                            const today = new Date();
+                            const day = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+
+                            const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+                            const dayName = dayNames[day];
+
+                            // Calculate week number (Week 18 starts on August 3, 2025)
+                            const weekNumber = getCurrentWeekNumber();
+                            const filename = `${dayName}${weekNumber}.html`;
+                            const filePath = `assets/readings/${filename}`; // ✅ Relative path
+
+                            try {
+                                const response = await fetch(filePath, { method: 'HEAD' });
+                                if (response.ok) {
+                                    window.location.href = filePath; // Go to reading
+                                } else {
+                                    alert(`Scripture for ${dayName}, Week ${weekNumber} is not available yet.`);
+                                }
+                            } catch (err) {
+                                alert("Failed to load today's scripture.");
+                            }
+                        });
+                    }
+
+                    navGrid.appendChild(navItem);
+                });
+            }
 
         // Masifu ya Asubuhi dynamic link
         const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
@@ -750,25 +803,41 @@ document.addEventListener('DOMContentLoaded', function() {
         applyDarkMode(isDark);
     });
 
-            // Initialize navigation and features
-            initNavigation();
-            initAccessibility();
-            calculateLiturgicalDay();
-            fetchSaintOfTheDay();
-            fetchDailyReadings();
-            setupPrayerReminders();
-            registerServiceWorker();
+    // Initialize navigation and features
+    initNavigation();
+    initAccessibility();
+    calculateLiturgicalDay();
+    fetchSaintOfTheDay();
+    fetchDailyReadings();
+    setupPrayerReminders();
+    registerServiceWorker();
 
-            // Set language
-            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
-            setLanguage(preferredLang);
+    // Set language
+    const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+    setLanguage(preferredLang);
 
-            //  Add event listener for "Tap to view" on Carmen's prayer card
-            const toggleBtn = document.getElementById('togglePrayerBtn');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', togglePrayer);
-            }
-        });
+    //  Add event listener for "Tap to view" on Carmen's prayer card
+    const toggleBtn = document.getElementById('togglePrayerBtn');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', togglePrayer);
+    }
+
+    // Add event listener for Office of the Readings Mwaka 2
+    const officeReadingsMwaka2Btn = document.getElementById('officeReadingsMwaka2Btn');
+    if (officeReadingsMwaka2Btn) {
+        officeReadingsMwaka2Btn.addEventListener('click', openOfficeReadingsMwaka2);
+    }
+});
+
+// Function to open Office of the Readings for Mwaka 2
+    function openOfficeReadingsMwaka2() {
+        window.location.href = "mwaka2.html";
+    }
+        // Function to open Office of the Readings for Mwaka 3
+    function openOfficeReadingsMwaka3() {
+        window.location.href = "mwaka3.html";
+    }
     </script>
 </body>
 </html>
+

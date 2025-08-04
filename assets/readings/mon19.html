@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Monday, August 11, 2025. Readings include the miracles of Elisha on Naaman and the conversion of Nineveh, and the Gospel of Matthew.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Monday, August 11, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Monday of Week 19</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kings 5: 1 – 19</strong><br>
+                        <em>Elisha reveals the power of God on Naaman the Syrian.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        Naaman, commander of the army of the king of Syria, was a great man with his master and in high favour, because by him the LORD had given victory to Syria. He was a mighty man of valour, but he was a leper. Now the Syrians on one of their raids had carried off a little maid from the land of Israel, and she waited on Naaman's wife. She said to her mistress, "Would that my lord were with the prophet who is in Samaria! He would cure him of his leprosy." So Na'aman went in and told his lord, "Thus and so spoke the maiden from the land of Israel." And the king of Syria said, "Go now, and I will send a letter to the king of Israel." So he went, taking with him ten talents of silver, six thousand shekels of gold, and ten festal garments. And he brought the letter to the king of Israel, which read, "When this letter reaches you, know that I have sent to you Na'aman my servant, that you may cure him of his leprosy." And when the king of Israel read the letter, he rent his clothes and said, "Am I God, to kill and to make alive, that this man sends word to me to cure a man of his leprosy? Only consider, and see how he is seeking a quarrel with me." But when Eli'sha the man of God heard that the king of Israel had rent his clothes, he sent to the king, saying, "Why have you rent your clothes? Let him come now to me, that he may know that there is a prophet in Israel." So Na'aman came with his horses and chariots, and halted at the door of Eli'sha's house. And Eli'sha sent a messenger to him, saying, "Go and wash in the Jordan seven times, and your flesh shall be restored, and you shall be clean." But Na'aman was angry, and went away, saying, "Behold, I thought that he would surely come out to me, and stand, and call on the name of the LORD his God, and wave his hand over the place, and cure the leper. Are not Aba'na and Pharpar, the rivers of Damascus, better than all the waters of Israel? Could I not wash in them, and be clean?" So he turned and went away in a rage. But his servants came near and said to him, "My father, if the prophet had commanded you to do some great thing, would you not have done it? How much rather, then, when he says to you, `Wash, and be clean'?" So he went down and dipped himself seven times in the Jordan, according to the word of the man of God; and his flesh was restored like the flesh of a little child, and he was clean. Then he returned to the man of God, he and all his company, and he came and stood before him; and he said, "Behold, I know that there is no God in all the earth but in Israel; so accept now a present from your servant." But he said, "As the LORD lives, whom I serve, I will receive none." And he urged him to take it, but he refused. Then Na'aman said, "If not, I pray you, let there be given to your servant two mules' burden of earth; for henceforth your servant will not offer burnt offering or sacrifice to any god but the LORD. In this matter may the LORD pardon your servant: when my master goes into the house of Rimmon to worship there, leaning on my arm, and I bow myself in the house of Rimmon, when I bow myself in the house of Rimmon, the LORD pardon your servant in this matter." He said to him, "Go in peace."
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kg. 5, 14. 15; Lk. 4, 27</strong><br><br>
+                        <em>R. The flesh of the leper became like the flesh of a young boy; he was cured. * And Naaman said: “There is no other God in all the earth but in Israel”.</em><br>
+                        V: there were many lepers in Israel at the time of the prophet Elisha, but none of them were cured but Naaman, the Syrian.<br>
+                        <em>R. And Naaman said: “There is no other God in all the earth but in Israel.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Disc. 13:1 – 4</strong><br>
+                        <em>We have drawn from the same spring from which Christ drew, in order to be that which Christ is.</em><br><br>
+                        A reading from the “Discourses” of St. Maximus of Turin, bishop.<br>
+                        It is evident that the baptism of Jesus Christ did not happen for him but for us. Thus my dear brothers we have to hurry to receive the grace of his baptism, drawing from the source of the Jordan, made sacred by Him, the grace of that same consecration, so that in that wave in which His holiness was immersed our sins too may be immersed. The same water that touched and surrounded the Lord, purifies also the servants; that holy wave that flows from the venerable bath of Christ is useful to us, and through the effect of that sacred presence with which the Saviour enriched it with grace, it purifies us with the saving action, pouring out on the Christians the grace received from Christ. For this, brothers, we have to draw from that same source from which Christ drew, in order to be that which Christ is. In fact, remaining strong in faith, I would say, even though both being the baptisms of the Lord, yet I consider richer in grace this baptism in which we are purified, than that which the Saviour received. This is administered by Christ Himself, that by John; in that the Master justifies Himself, in this the Saviour calls all of us to salvation; in that justice has not yet been brought to its fulfilment, in this the Trinity is complete; and in that one who is already holy draws near and comes out holy, to this instead there comes one who is a sinner in order to come out holy; in that the mysteries of redemption itself are blessed, in this by means of the sacrament sins are forgiven. Therefore, brothers, we have to be baptised in the same water in which the Saviour was baptised. But in order to immerse ourselves in this font, it is not necessary to go in search of the oriental land and the river Jordan; in fact now Christ is in every place, therefore even the Jordan is everywhere, the same grace that consecrated the rivers of the East sanctifies the rivers of the West. Therefore, even though the names of the rivers are different in time, yet in them the mystery that flows out from the Jordan is present in them. Let us fulfil therefore in ourselves that which the Lord wanted to do for us! Let us draw near to receive that which John desired so much for himself! If he who was prophet, master and saint desired intensely the baptism of the Lord, how much more we, poor and ignorant sinners, should desire this grace? Consider the mercy of the Saviour: to us is offered spontaneously that which the prophet, who asked for it, could not receive! But we have to ask ourselves what was the reason for which John could not receive the baptism of Christ, which he had asked for. To his question the Lord answers: “Let it be for now, because it is necessary that in this way every justice is fulfilled” (Mt. 3, 15). We know that John the Baptist was the bearer of the type of the Law. It was therefore just, that it was he who baptised the Lord, because, as the Saviour was born of the Jews according to the flesh, so also from the law the Gospel according to the Spirit had to be born; so that also the consecration could be transmitted from where the human origin drew itself. This is what he means when he says: “It is better that in this way we fulfil all justice” (Mt. 3, 15). He Himself, in fact had to fulfil the precepts of the law that He had established, as it says elsewhere: “I have not come to abolish, but to fulfil.” (Mt. 5, 17).
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Gal. 3, 26 – 27; 1 Cor. 6, 15</strong><br><br>
+                        <em>R. All of you are sons of God by the faith in Christ Jesus; * because all those of you who have been baptised in Christ, have been re-vested with Christ.</em><br>
+                        V: Your bodies are members of Christ;<br>
+                        <em>R. because all those of you who have been baptised in Christ, have been re-vested with Christ.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jon. 3: 1 – 4:11</strong><br>
+                        <em>Conversion of Nineveh and the lament of Jonah against God.</em><br><br>
+                        A reading from the prophet Jonah.<br>
+                        Then the word of the LORD came to Jonah the second time, saying, "Arise, go to Nin'eveh, that great city, and proclaim to it the message that I tell you." So Jonah arose and went to Nin'eveh, according to the word of the LORD. Now Nin'eveh was an exceedingly great city, three days' journey in breadth. Jonah began to go into the city, going a day's journey. And he cried, "Yet forty days, and Nin'eveh shall be overthrown!" And the people of Nin'eveh believed God; they proclaimed a fast, and put on sackcloth, from the greatest of them to the least of them. Then tidings reached the king of Nin'eveh, and he arose from his throne, removed his robe, and covered himself with sackcloth, and sat in ashes. And he made proclamation and published through Nin'eveh, "By the decree of the king and his nobles: Let neither man nor beast, herd nor flock, taste anything; let them not feed, or drink water. Let man and beast be covered with sackcloth, and let them cry mightily to God; yea, let every one turn from his evil way and from the violence which is in his hands. Who knows, God may yet repent and turn from his fierce anger, so that we perish not?" When God saw what they did, how they turned from their evil way, God repented of the evil that he had said he would do to them; and he did not do it. But it displeased Jonah exceedingly, and he was angry. And he prayed to the LORD and said, "I pray you, LORD, is not this what I said when I was yet in my country? That is why I made haste to flee to Tarshish; for I knew that you are a gracious God and merciful, slow to anger, and abounding in steadfast love, and repenting of evil. Therefore now, O LORD, take my life from me, I beseech you, for it is better for me to die than to live." And the LORD said, "Do you do well to be angry?" Then Jonah went out of the city and sat to the east of the city, and made a booth for himself there. He sat under it in the shade, till he should see what would become of the city. And the LORD God appointed a plant, and made it come up over Jonah, that it might be a shade over his head, to save him from his discomfort. So Jonah was exceedingly glad because of the plant. But when dawn came up the next day, God appointed a worm that attacked the plant, so that it withered. When the sun rose, God appointed a sultry east wind, and the sun beat upon the head of Jonah so that he was faint; and he asked that he might die, and said, "It is better for me to die than to live." But God said to Jonah, "Do you do well to be angry for the plant?" And he said, "I do well to be angry, angry enough to die." And the LORD said, "You pity the plant, for which you did not labour, nor did you make it grow, which came into being in a night, and perished in a night. And should not I pity Nin'eveh, that great city, in which there are more than a hundred and twenty thousand persons who do not know their right hand from their left, and also much cattle?"
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mt. 12, 41; Jn. 3, 5. 10</strong><br><br>
+                        <em>R. Those of Nineveh will arise to judge this generation and will condemn it, *because they converted at the preaching of Jonah.</em><br>
+                        V: They believed God, vested in sack - cloth and converted from their wicked conduct. R: because they converted at the preaching of Jonah.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cc. 3:23 – 4:29</strong><br>
+                        <em>The Lord is ready to be merciful and saves those who do penance.</em><br><br>
+                        A reading from the “Commentary on the prophet Jonah” of St. Cyril of Alexandria, bishop.<br>
+                        “God saw their works, that is that they had converted from their wicked conduct” (Jon. 3, 10). The Lord is merciful and saves the one who does penance, forgives immediately the ancient sins and, when men stop sinning, He stops getting angry and provides better things. And since He sees the soul dedicated to good resolutions, He reveals Himself as gentle, removes the damnation and concedes forgiveness. In fact the Truth says: “Why do you want to die, O Israelites? I do not take pleasure in the death of him who dies, but that the wicked desists from his conduct and lives” (Ez. 18, 31; 33, 11). When He speaks instead of the evil that He has threatened (cfr. Jon. 3, 10), be careful not to think of wickedness, but rather of anger, from which the promised suffering proceeds. In fact our God, the lover of virtue, does not commit evil. O marvellous clemency that is not comprehended! Which words would be enough to praise you? Which songs of thanksgiving could we sing to the mercy and goodness of God? He “removes from us our faults” (Ps. 102, 12) with that which follows. Look how Jonah, out of place and without reason, shows himself sad, while, as is fitting to a holy person, should have approved the action of God and exulted with joy. “You give yourself suffering” he says, on the contrary you show yourself indignant “for that castor oil plant that grew in a night and in a night perished, and I should not have pity on that great city, in which there are more than a hundred and twenty thousand people, who do not know how to distinguish between the right and the left hand?” (Jon. 4, 9. 10 – 11). Children in fact do not know how to discern these things, for this it is right to be more benevolent with them who do not have faults: which sins can be attributed to the one who still does not know how to distinguish his own hands? Then when he speaks of beasts of burden and says that you need to spare them, he shows also in this great goodness. The just one has compassion on the life of the animals themselves, and this is a merit to him: what marvel is it, then, if the God of the universe forgives and has mercy on the just? In this way Christ has saved everyone giving himself as the price of redemption: for the humble and the great, for the wise and for the ignorant, for the rich and the poor, for the Jew and the Greek. It is right therefore that we proclaim: “Men and beasts you save, Lord. How precious is your grace, O God! Men take refuge in the shadow of your wings” (Ps. 35, 7. 8).
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        R: Lord, I would be in anguish if I did not know your mercy; you have said: I do not take pleasure in the death of the wicked, but that he stops from his evil conduct and lives. * You who have called the Canaanite and the publican to conversion.<br>
+                        V: and you welcomed Peter in tears, O merciful Lord!<br>
+                        <em>R. You who have called the Canaanite and the publican to conversion.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 17: 22 – 27</strong><br>
+                    <em>They will kill him and he will rise again.</em><br>
+                    <em>The sons are exempted from paying tribute.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    As they were gathering in Galilee, Jesus said to them, "The Son of man is to be delivered into the hands of men, and they will kill him, and he will be raised on the third day." And they were greatly distressed. When they came to Caper'na-um, the collectors of the half-shekel tax went up to Peter and said, "Does not your teacher pay the tax?" He said, "Yes." And when he came home, Jesus spoke to him first, saying, "What do you think, Simon? From whom do kings of the earth take toll or tribute? From their sons or from others?" And when he said, "From others," Jesus said to him, "Then the sons are free. However, not to give offence to them, go to the sea and cast a hook, and take the first fish that comes up, and when you open its mouth you will find a shekel; take that and give it to them for me and for yourself."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

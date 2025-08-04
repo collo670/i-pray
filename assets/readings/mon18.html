@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>office of  readings - ipray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Monday, August 4, 2025, for the memorial of Saint John Vianney, Priest. Readings include Elijah's confrontation with Ahab, reflections on baptismal grace, and the Gospel of Matthew with the miracle of the loaves and fishes.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Monday, August 4, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Memorial of Saint John Vianney, Priest</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>1 Kings 21: 1- 21, 27 – 29</strong><br>
+                        <em>Elijah, the defender of justice towards the poor.</em><br><br>
+                        A reading from the first book of Kings.<br>
+                        Now Naboth the Jezreelite had a vineyard in Jezreel, beside the palace of Ahab king of Sama'ria. And after this Ahab said to Naboth, "Give me your vineyard, that I may have it for a vegetable garden, because it is near my house; and I will give you a better vineyard for it; or, if it seems good to you, I will give you its value in money." But Naboth said to Ahab, "The LORD forbid that I should give you the inheritance of my fathers." And Ahab went into his house vexed and sullen because of what Naboth the Jezreelite had said to him; for he had said, "I will not give you the inheritance of my fathers." And he lay down on his bed, and turned away his face, and would eat no food. But Jez'ebel his wife came to him, and said to him, "Why is your spirit so vexed that you eat no food?" And he said to her, "Because I spoke to Naboth the Jezreelite, and said to him, `Give me your vineyard for money; or else, if it please you, I will give you another vineyard for it'; and he answered, `I will not give you my vineyard.'" And Jez'ebel his wife said to him, "Do you now govern Israel? Arise, and eat bread, and let your heart be cheerful; I will give you the vineyard of Naboth the Jezreelite."
+                        So she wrote letters in Ahab's name and sealed them with his seal, and she sent the letters to the elders and the nobles who dwelt with Naboth in his city. And she wrote in the letters, "Proclaim a fast, and set Naboth on high among the people; and set two base fellows opposite him, and let them bring a charge against him, saying, `You have cursed God and the king.' Then take him out, and stone him to death." And the men of his city, the elders and the nobles who dwelt in his city, did as Jez'ebel had sent word to them. As it was written in the letters that she had sent to them, they proclaimed a fast, and set Naboth on high among the people. And the two base fellows came in and sat opposite him; and the base fellows brought a charge against Naboth, in the presence of the people, saying, "Naboth cursed God and the king." So they took him outside the city, and stoned him to death with stones. Then they sent to Jez'ebel, saying, "Naboth has been stoned; he is dead." As soon as Jez'ebel heard that Naboth had been stoned and was dead, Jez'ebel said to Ahab, "Arise, take possession of the vineyard of Naboth the Jezreelite, which he refused to give you for money; for Naboth is not alive, but dead." And as soon as Ahab heard that Naboth was dead, Ahab arose to go down to the vineyard of Naboth the Jezreelite, to take possession of it.
+                        Then the word of the LORD came to Eli'jah the Tishbite, saying, "Arise, go down to meet Ahab king of Israel, who is in Sama'ria; behold, he is in the vineyard of Naboth, where he has gone to take possession. And you shall say to him, `Thus says the LORD, "Have you killed, and also taken possession?"' And you shall say to him, `Thus says the LORD: "In the place where dogs licked up the blood of Naboth shall dogs lick your own blood."'" Ahab said to Eli'jah, "Have you found me, O my enemy?" He answered, "I have found you, because you have sold yourself to do what is evil in the sight of the LORD. Behold, I will bring evil upon you; I will utterly sweep you away, and will cut off from Ahab every male, bond or free, in Israel;
+                        And when Ahab heard those words, he rent his clothes, and put sackcloth upon his flesh, and fasted and lay in sackcloth, and went about dejectedly. And the word of the LORD came to Eli'jah the Tishbite, saying, Have you seen how Ahab has humbled himself before me? Because he has humbled himself before me, I will not bring the evil in his days; but in his son's days I will bring the evil upon his house."
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Jm. 4;8. 9. 10; 5, 6</strong><br><br>
+                        <em>R. Wash your hands, you sinners, purify your hearts, you irresolute men. * Mourn and cry, humble yourselves before the Lord.</em><br>
+                        V: You have condemned and killed the just one, and he could not offer resistance.<br>
+                        <em>R. Mourn and cry, humble yourselves before the Lord.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Nm. 19 – 21, 24, 26 – 38</strong><br>
+                        <em>Water does not purify without the Spirit.</em><br><br>
+                        A reading from the “Treatise on the mysteries” of St. Ambrose, bishop.<br>
+                        The reason why you were told before not to believe only what you saw was that you might not say perchance, This is that great mystery “which eye has not seen, nor ear heard, neither has it entered into the heart of man.” I see water, which I have been used to see every day. Is that water to cleanse me now in which I have so often bathed without ever being cleansed? By this you may recognise that water does not cleanse without the Spirit. Therefore read that the three witnesses in baptism, the water, the blood, and the Spirit, are one, for if you take away one of these, the Sacrament of Baptism does not exist. For what is water without the cross of Christ? A common element, without any sacramental effect. Nor, again, is there the Sacrament of Regeneration without water: “For except a man be born again of water and of the Spirit, he cannot enter into the kingdom of God.” Now, even the catechumen believes in the cross of the Lord Jesus, wherewith he too is signed; but unless he be baptised in the Name of the Father, and of the Son, and of the Holy Spirit, he cannot receive remission of sins nor gain the gift of spiritual grace. So that Syrian dipped himself seven times under the law, but you were baptised in the Name of the Trinity, you confessed the Father. Call to mind what you did: you confessed the Son, you confessed the Holy Spirit. Mark well the order of things in this faith: you died to the world, and rose again to God. And as though buried to the world in that element, being dead to sin, you rose again to eternal life. Believe, therefore, that these waters are not void of power. Lastly, that paralytic was waiting for a man. And what man save the Lord Jesus, born of the Virgin, at whose coming no longer the shadow should heal men one by one, but the truth should heal the whole. He it is, then, Whose coming down was being waited for, of Whom the Father said to John the Baptist: “Upon Whom you shall see the Spirit descending and abiding upon Him, this is He Who baptises with the Holy Spirit.” And John bore witness of Him, and said: “I saw the Spirit descending from heaven like a dove and abiding upon Him.” And why did the Spirit descend like a dove, but in order that you might see, that you might acknowledge, that that dove also which just Noah sent forth from the ark was a likeness of this dove, that you might recognise the type of the sacrament? Is there, then, here any room left for doubt, when the Father clearly calls from heaven in the Gospel narrative, and says: “This is My beloved Son, in Whom I am well pleased”? When the Son also speaks, upon Whom the Holy Spirit showed Himself in the likeness of a dove? When the Holy Spirit also speaks, Who came down in the likeness of a dove? When David, too, speaks: “The voice of the Lord is above the waters, the God of glory thundered, the Lord above many waters”? When Scripture testifies that at the prayer of Jerubbaal, fire came down from heaven, and again, when Elijah prayed, fire was sent forth and consecrated the sacrifice. Do not consider the merits of individuals, but the office of the priests. Or, if you look at ‘the merits, consider the priest as Elijah. Look upon the merits of Peter also, or of Paul, who handed down to us this mystery which they had received of the Lord Jesus. To those [of old] a visible fire was sent that they might believe; for us who believe, the Lord works invisibly; for them that happened for a figure, for us for warning. Believe, then, that the Lord Jesus is present at the invocation of the priest, Who said: “Where two or three are, there am I also.” How much where the Church is, and where His Mysteries are, does He vouchsafe to impart His presence! You went down, then (into the water), remember what you replied to the questions, that you believe in the Father, that you believe in the Son, that you believe in the Holy Spirit. The statement there is not: I believe in a greater and in a less and in a lowest person, but you are bound by the same guarantee of your own voice, to believe in the Son in like manner as you believe in the Father; and to believe in the Holy Spirit in like manner as you believe in the Son, with this one exception, that you confess that you must believe in the cross of the Lord Jesus alone.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mt. 3, 11; Is. 1, 16 – 17</strong><br><br>
+                        <em>R. He who comes after me is more powerful than me: I am not worthy even to undo his sandals; * He will baptise you with the Holy Spirit and fire.</em><br>
+                        V: Cease to do evil, learn to do good.<br>
+                        <em>R. He will baptise you with the Holy Spirit and fire.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Jl. 1: 1, 13 – 2:11</strong><br>
+                        <em>The day of the Lord is about to come.</em><br><br>
+                        A reading from the prophet Joel.<br>
+                        The word of the LORD that came to Joel, the son of Pethu'el: Gird on sackcloth and lament, 
+                        O priests, wail, O ministers of the altar. Go in, pass the night in sackcloth, 
+                        O ministers of my God! Because cereal offering and drink offering are withheld from 
+                        the house of your God. Sanctify a fast, call a solemn assembly. Gather the elders and all 
+                        the inhabitants of the land to the house of the LORD your God; and cry to the LORD. 
+                        Alas for the day! For the day of the LORD is near, and as destruction from the Almighty 
+                        it comes. Is not the food cut off before our eyes, joy and gladness from the house of our 
+                        God? The seed shrivels under the clods, the storehouses are desolate; the granaries are 
+                        ruined because the grain has failed. How the beasts groan! The herds of cattle are 
+                        perplexed because there is no pasture for them; even the flocks of sheep are dismayed. 
+                        Unto you, O LORD, I cry. For fire has devoured the pastures of the wilderness, and flame 
+                        has burned all the trees of the field. Even the wild beasts cry to thee because the water
+                         brooks are dried up, and fire has devoured the pastures of the wilderness. Blow the 
+                         trumpet in Zion; sound the alarm on my holy mountain! Let all the inhabitants of the land 
+                         tremble, for the day of the LORD is coming, it is near, a day of darkness and gloom, a 
+                         day of clouds and thick darkness! Like blackness there is spread upon the mountains a 
+                         great and powerful people; their like has never been from of old, nor will be again after 
+                         them through the years of all generations. Fire devours before them, and behind them a 
+                         flame burns. The land is like the Garden of Eden before them, but after them a desolate 
+                         wilderness, and nothing escapes them. Their appearance is like the appearance of horses, 
+                         and like warhorses they run. As with the rumbling of chariots, they leap on the tops of 
+                         the mountains, like the crackling of a flame of fire devouring the stubble, like a 
+                         powerful army drawn up for battle. Before them peoples are in anguish, all faces grow 
+                         pale. Like warriors they charge, like soldiers they scale the wall. They march each on 
+                         his way, they do not swerve from their paths. They do not jostle one another, each march 
+                         in his path; they burst through the weapons and are not halted. They leap upon the city, 
+                         they run upon the walls; they climb up into the houses, they enter through the windows 
+                         like a thief. The earth quakes before them, the heavens tremble. The sun and the moon are 
+                         darkened, and the stars withdraw their shining. The LORD utters his voice before his army, 
+                         for his host is exceedingly great; he that executes his word is powerful. For the day of 
+                         the LORD is great and very terrible; who can endure it?
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Jl. 2, 11. 12. 13; Ap. 6: 16. 17</strong><br><br>
+                        <em>R. Great and terrible is the day of the Lord: Who can sustain it? * So then, return to the Lord your God, because He is merciful and kind.</em><br>
+                        V: The great day of He who sits on the throne and of the Lamb has come, and who can resist it?<br>
+                        <em>R. so then, return to the Lord your God, because He is merciful and kind.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <em>Open your soul to the perfect discipline.</em><br><br>
+                        A reading from the “Discourse on baptism” of St. Gregory of Nyssa, bishop.<br>
+                        Imitate Joshua, son of Nun: carry the Gospel as he carried the ark; abandon the desert that is the sin, cross the Jordan, hurry to the fountain of life that is Christ, to the land that produces joyful fruits, that according to the promise makes milk and honey flow. Knock down Jericho, that is the old style of life, in order not to leave it full of strength. Chase far away from you the ravenous crow. Offer to the dove the occasion to fly in you: Jesus was the first to make it descend from heaven as an allegorical image; it does not know deceit, it is gentle and fertile; if it finds man purified and tested like silver, it lives voluntarily in him, and inflaming the soul with its fire, as it sits on the eggs, it generates and gives many children. These are the good actions: the honest discourses, faith, religiosity, justice, temperance, chastity, purity. These are the children of the Spirit, and also our goods. Open your soul like a book, and allow us to write the perfect discipline in order not to stammer always like a child and reason like a baby. I am ashamed of you because you do not become an adult person, and you still have to go out with the catechumens like a child who does not know how to conceal the secrets, while it is time that you take conscience of the mystery. Unite yourself to the mystic people and learn the mysterious discourses. Sing with us those praises that the cherubim of the six wings sing with the perfect Christians. Desire the food that strengthens the soul; taste the drink that makes the heart exult; love the mystery that the elders transmit to the young in a hidden way. Imitate the ardent desire of the Ethiopian eunuch. He, after he had welcomed Philip, who was sent by the Holy Spirit, and made him sit besides him on the chariot, continuing on his way did not realise that he was not only reading, but understanding the wisdom of Isaiah. He took pleasure in the interpretation, like a puppy takes pleasure in the blood of the slain lamb. With insistence he questioned Philip, until he was lead to the perfect understanding of the prophecy that he held in his hands; and not at all tired he received the baptism that he had asked, without waiting for either a place, nor city or village, nor the baptismal font, because he had understood that the Lord is everywhere and that all water was good for baptism provided that there was the faith of him who received it and the blessing of the priest that sanctified. Welcome therefore the gift of Christ, because he who receives this sublime and incomparable benefit, with joy is numbered among those who receive the adoption as sons; and by that change for the better all his friends and relations enjoy and rejoice immensely.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Pr. 3, 11 – 12; 1, 8</strong><br><br>
+                        <em>R. My son, do not despise the instructions of the Lord * and do not be bored with his exhortations: because the Lord corrects the one He loves, as the father his beloved son.</em><br>
+                        V: listen to the instructions of your father and do not despise the teachings of your mother.<br>
+                        <em>R. and do not be bored with his exhortations: because the Lord corrects the one He loves, as the father his beloved son.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 14: 13 – 21</strong><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    Now when Jesus heard this, he withdrew from there in a boat to a lonely place apart. But when the crowds heard it, they followed him on foot from the towns. As he went ashore he saw a great throng; and he had compassion on them, and healed their sick. When it was evening, the disciples came to him and said, "This is a lonely place, and the day is now over; send the crowds away to go into the villages and buy food for themselves." Jesus said, "They need not go away; you give them something to eat." They said to him, "We have only five loaves here and two fish." And He said, "Bring them here to me." Then he ordered the crowds to sit down on the grass; and taking the five loaves and the two fish he looked up to heaven, and blessed, and broke and gave the loaves to the disciples, and the disciples gave them to the crowds. And they all ate and were satisfied. And they took up twelve baskets full of the broken pieces left over. And those who ate were about five thousand men, besides women and children.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContentForCycle(cycle) {
+                // Hide all content blocks
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle's content
+                if (cycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (cycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', (event) => {
+                showContentForCycle(event.target.value);
+            });
+
+            // Set the initial state based on the selected option
+            showContentForCycle(cycleSelector.value);
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Tuesday, August 5, 2025. Readings include the miracles of Elisha on Naaman and the conversion of Nineveh, and the Gospel of Matthew.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Tuesday, August 12, 2025 • Ordinary Time</p>
+            </div>
+            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Tuesday of Week 19</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kings 6: 8 – 23</strong><br>
+                        <em>Elisha captures his enemies in a miraculous way and mercifully frees them.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        Once when the king of Syria was warring against Israel, he took counsel with his servants, saying, "At such and such a place shall be my camp. But the man of God sent word to the king of Israel, "Beware that you do not pass this place, for the Syrians are going down there." And the king of Israel sent to the place of which the man of God told him. Thus he used to warn him, so that he saved himself there more than once or twice. And the mind of the king of Syria was greatly troubled because of this thing; and he called his servants and said to them, "Will you not show me who of us is for the king of Israel?" And one of his servants said, "None, my lord, O king; but Eli'sha, the prophet who is in Israel, tells the king of Israel the words that you speak in your bedchamber." And he said, "Go and see where he is, that I may send and seize him." It was told him, "Behold, he is in Dothan." So he sent there horses and chariots and a great army; and they came by night, and surrounded the city. When the servant of the man of God rose early in the morning and went out, behold, an army with horses and chariots was round about the city. And the servant said, "Alas, my master! What shall we do?" He said, "Fear not, for those who are with us are more than those who are with them." Then Eli'sha prayed, and said, "O LORD, I pray you, open his eyes that he may see." So the LORD opened the eyes of the young man, and he saw; and behold, the mountain was full of horses and chariots of fire round about Eli'sha. And when the Syrians came down against him, Eli'sha prayed to the LORD, and said, "Strike this people, I pray you, with blindness." So he struck them with blindness in accordance with the prayer of Eli'sha. And Eli'sha said to them, "This is not the way, and this is not the city; follow me, and I will bring you to the man whom you seek." And he led them to Sama'ria. As soon as they entered Sama'ria, Eli'sha said, "O LORD, open the eyes of these men, that they may see." So the LORD opened their eyes, and they saw; and lo, they were in the midst of Sama'ria. When the king of Israel saw them he said to Eli'sha, "My father, shall I slay them? Shall I slay them?" He answered, "You shall not slay them. Would you slay those whom you have taken captive with your sword and with your bow? Set bread and water before them that they may eat and drink and go to their master." So he prepared for them a great feast; and when they had eaten and drunk, he sent them away, and they went to their master. And the Syrians came no more on raids into the land of Israel.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Lk. 6, 35. 36; 2 Kg. 6,22</strong><br><br>
+                        <em>R. Love your enemies, do good without hoping for anything, * be merciful as your Father is merciful.</em><br>
+                        V: Do not kill. Instead place before them bread and water, so that they can eat and drink.<br>
+                        <em>R. be merciful as your Father is merciful.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Lett. 32, 23, 24, 25</strong><br>
+                        <em>Let us purify our senses from all types of impurity, and the Lord Jesus Christ will voluntarily live in us.</em><br><br>
+                        A reading from the “Letters” of St. Paulinus of Nola, bishop.<br>
+                        Let us pray to the Lord because, while we build externally for him the visible temple, He constructs in us that invisible “dwelling that is not constructed by men’s hands”(2 Cor. 5,1), in which we know that we will enter at the end of time, when we will see face to face that which we now see as in a mirror and know in an imperfect way (cfr. 1 Cor. 13, 12). But now, while we find ourselves in the tabernacle of this body almost under the skins of that ancient tabernacle, in the desert and under the tents, that is in the vast loneliness of this world, the Word of God shadowed in the column of cloud precedes us, in order to protect our head on the day of struggle; or in the column of fire, so that we may come to know on earth his way that leads to heaven (Cfr. Ex. 13, 22; Ps. 139, 8; Ps. 66, 3). Let us pray therefore that through these tabernacles of the Church we may arrive to the house of God, where the same Lord resides as the elevated stone, detached from the mountain and contemporarily grown on the mountain: “a marvellous work of the Lord in our eyes” (Ps. 117, 23). He Himself now offers himself for our construction as the foundation and culmination, because He is the beginning and the end. And in constructing we see what things of our fragile and earthly substance is worthy of being placed on the divine foundation, so that, vivified by the same corner stone, we may become useful stones in the construction of the heavenly temple. Let us melt in Christ the gold of our sentiments and the silver of our word. He who scrutinises the souls that are pleasing to Him, after having purified us in the furnace of this world, will render us into enflamed gold and coins that are worthy of bearing the impression of His image. On our part let us offer to Him those stones, rendered precious by the works of light. Let us not be hard of heart like wood, or sterile in works like dry hay, or unstable in faith and in charity, weak and inconsistent like chaff. On the contrary, so that the commitment of our will does itself with firmness in peace. We invoke for our edification that profound peace in which the temple is built, so that “no noise of hammer or pickaxe or of any other implement of iron is heard” (1 Kg. 6, 7). Nor does the intervention of the enemy impede or interrupt the new construction, as it happened during the reparation of the temple itself, because of the envious hostility of the Persians. We will become in fact a house of prayer and peace, on the condition that no worries of carnal thoughts surprises us, and that no agitation of the world disturbs our interior calm. It is therefore a good thing that the Lord visits the temple of our heart often, once it is built, bringing the whip of fear, through which he throws out of us the tables of the money-changers and the sellers of bulls and doves, so that our souls would not exercise the commerce of avarice and in our senses we would not penetrate the laziness of the bulls; and neither would it come to us to sell our innocence or the same grace of God, or to make of the house of prayer a den of thieves. Then when we have purified our senses of every ferment of iniquity, our Lord Jesus Christ will walk voluntarily.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>1 Pt. 2, 4. 5; Act 4, 11</strong><br><br>
+                        <em>R. Setting yourselves close to Him, the living stone, * you also will be used as a living stone for the construction of a spiritual building, for a holy priesthood, to offer spiritual sacrifices pleasing to God, through Jesus Christ.</em><br>
+                        V: This is the stone that has become the corner stone.<br>
+                        <em>R. You also will be used as a living stone for the construction of a spiritual building, for a holy priesthood, to offer spiritual sacrifices pleasing to God through Jesus Christ.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Zc. 9: 1 – 10:2</strong><br>
+                        <em>Promise of salvation for Sion.</em><br><br>
+                        A reading from the prophet Zechariah.<br>
+                        An Oracle The word of the LORD is against the land of Hadrach and will rest upon Damascus. For to the LORD belong the cities of Aram, even as all the tribes of Israel; Hamath also, which borders thereon, Tyre and Sidon, though they are very wise. Tyre has built herself a rampart, and heaped up silver like dust, and gold like the dirt of the streets. But lo, the Lord will strip her of her possessions and hurl her wealth into the sea, and she shall be devoured by fire. Ash'kelon shall see it, and be afraid; Gaza too, and shall writhe in anguish; Ekron also, because its hopes are confounded. The king shall perish from Gaza; Ash'kelon shall be uninhabited; a mongrel people shall dwell in Ashdod; and I will make an end of the pride of Philistia. I will take away its blood from its mouth, and its abominations from between its teeth; it too shall be a remnant for our God; it shall be like a clan in Judah, and Ekron shall be like the Jeb'usites. Then I will encamp at my house as a guard, so that none shall march to and fro; no oppressor shall again overrun them, for now I see with my own eyes. Rejoice greatly, O daughter of Zion! Shout aloud, O daughter of Jerusalem! Lo, your king comes to you; triumphant and victorious is he, humble and riding on an ass, on a colt the foal of an ass. I will cut off the chariot from E'phraim and the war horse from Jerusalem; and the battle bow shall be cut off, and he shall command peace to the nations; his dominion shall be from sea to sea, and from the River to the ends of the earth. As for you also, because of the blood of my covenant with you, I will set your captives free from the waterless pit. Return to your stronghold, O prisoners of hope; today I declare that I will restore to you double. For I have bent Judah as my bow; I have made E'phraim its arrow. I will brandish your sons, O Zion, over your sons, O Greece, and wield you like a warrior's sword. Then the LORD will appear over them, and his arrow go forth like lightning; the Lord GOD will sound the trumpet, and march forth in the whirlwinds of the south. The LORD of hosts will protect them, and they shall devour and tread down the slingers; and they shall drink their blood like wine, and be full like a bowl, drenched like the corners of the altar. On that day the LORD their God will save them for they are the flock of his people; for like the jewels of a crown they shall shine on his land. Yes, how good and how fair it shall be! Grain shall make the young men flourish, and new wine the maidens. Ask rain from the LORD in the season of the spring rain, from the LORD who makes the storm clouds, who gives men showers of rain, to every one the vegetation in the field. For the teraphim utter nonsense and the diviners see lies; the dreamers tell false dreams, and give empty consolation. Therefore the people wander like sheep; they are afflicted for want of a shepherd.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Zec. 9, 9; Jn. 12, 14</strong><br><br>
+                        <em>R. Behold, your king comes to you, just and victorious; humble, he rides on a donkey, a colt the foal of a donkey. * Exult greatly, daughter of Sion; rejoice, daughter of Jerusalem.</em><br>
+                        V: Jesus found a young donkey and mounted it, as it is written:<br>
+                        <em>R. exult greatly, daughter of Sion; rejoice, daughter of Jerusalem.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Disc. 9 on the Palms.</strong><br>
+                        <em>Behold to you comes your king, just and saviour.</em><br><br>
+                        A reading from the “Discourses” of St. Andrew of Crete, bishop.<br>
+                        Let us join in the words of the gospel and say to Christ: “Blessed is he who comes in the name of the Lord, the King of Israel.” Let us wave before him like palm branches his dying words on the cross. Let us greet him, not with olive branches, but with the good deeds of mercy shown to one another. Let us strew beneath his feet like garments the desires of our hearts, that he may walk in us and dwell wholly in us, that he may reveal us whole in himself and himself whole in us. Let us greet Sion with the words of the prophet: “Rejoice, O daughter of Sion, do not fear; Lo, your king comes to you, gentle, and riding on an ass, the foal of an ass.” He is coming, he who is present in every place and fills all things, that in you he may bring about the salvation of all men. He is coming, who came not to call the righteous but sinners to repentance, that he may recall those wandering in sin. Therefore do not be afraid: “God is in the midst of you, you will not be moved.” Receive in your upturned hands the God who adorned your walls and set them in his own hands. Receive him who laid your foundations in the palm of his hands. Receive him who took upon himself all our nature apart from sin to pay all our debts from his treasures. Rejoice, city of Sion, our mother, do not be afraid. Keep your feasts. Glorify for his mercy him who has come to us in you. Rejoice very greatly, daughter of Jerusalem and dance. “Arise, shine”—we greet you with the sound of the sacred trumpet, as Isaiah said—“for your light has come, and the glory of the Lord has risen upon you.” What is that light? Was it not the light which enlightens every man who comes into the world, the eternal light, I mean, the timeless light revealed in time, the light revealed in the flesh and hidden by nature, the light which shone around the shepherds and led the Wise Men on their way? It was the light that was in the world from the beginning, through which the world was made, and yet the world knew it not. It was the light that came to its own home and its own people received it not. What does “the glory of the Lord” mean? For sure it is the cross on which Christ was glorified, Christ the brightness of the Fathers glory, as he himself said when he came to his passion: “Now is the Son of man glorified, and in him God is glorified, and God will glorify him at once”, meaning here by “glory” his being lifted up on the cross. The glory of Christ is the cross and his being lifted up, for he says: “And I, when I am lifted up, will draw all men to myself.”
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ps. 117, 26. 27. 23</strong><br><br>
+                        <em>R. Blessed is He who comes in the name of the Lord; * God, the Lord, is our light.</em><br>
+                        V: Behold the work of the Lord: a marvel in our eyes.<br>
+                        <em>R. God, the Lord, is our light.</em>
+                    </p>
+                </section>
+            </div>
+
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 18: 1 – 5, 10, 12 – 14</strong><br>
+                    <em>Take care not to despise even one of these little ones.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    At that time the disciples came to Jesus, saying, "Who is the greatest in the kingdom of heaven?" And calling to him a child, he put him in the midst of them, and said, "Truly, I say to you, unless you turn and become like children, you will never enter the kingdom of heaven. Whoever humbles himself like this child, he is the greatest in the kingdom of heaven. "Whoever receives one such child in my name receives me; "See that you do not despise one of these little ones; for I tell you that in heaven their angels always behold the face of my Father who is in heaven.” What do you think? If a man has a hundred sheep, and one of them has gone astray, does he not leave the ninety-nine on the mountains and go in search of the one that went astray? And if he finds it, truly, I say to you, he rejoices over it more than over the ninety-nine that never went astray. So it is not the will of my Father who is in heaven that one of these little ones should perish.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', showContent);
+
+            // Set the initial state based on the default selected options
+            showContent();
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>office of readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Friday, August 8, 2025, for the memorial of Saint Dominic, priest. Readings include Elisha's prophecy, the vocation of Christians, and the Gospel of Matthew on taking up one's cross.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Friday, August 8, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Memorial of Saint Dominic, priest</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kings 3: 5 – 27</strong><br>
+                        <em>Elisha prophet of the kings of Judah and Israel. In the war against the Moabites.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        But when Ahab died, the king of Moab rebelled against the king of Israel. So King Jeho'ram marched out of Sama'ria at that time and mustered all Israel. And he went and sent word to Jehosh'aphat king of Judah, "The king of Moab has rebelled against me; will you go with me to battle against Moab?" And he said, "I will go; I am as you are, my people as your people, my horses as your horses." Then he said, "By which way shall we march?" Jeho'ram answered, "By the way of the wilderness of Edom." So the king of Israel went with the king of Judah and the king of Edom. And when they had made a circuitous march of seven days, there was no water for the army or for the beasts which followed them. Then the king of Israel said, "Alas! The LORD has called these three kings to give them into the hand of Moab." And Jehosh'aphat said, "Is there no prophet of the LORD here, through whom we may inquire of the LORD?" Then one of the king of Israel's servants answered, "Eli'sha the son of Shaphat is here, who poured water on the hands of Eli'jah." And Jehosh'aphat said, "The word of the LORD is with him." So the king of Israel and Jehosh'aphat and the king of Edom went down to him. And Eli'sha said to the king of Israel, "What have I to do with you? Go to the prophets of your father and the prophets of your mother." But the king of Israel said to him, "No; it is the LORD who has called these three kings to give them into the hand of Moab." And Eli'sha said, "As the LORD of hosts lives, whom I serve, were it not that I have regard for Jehosh'aphat the king of Judah, I would neither look at you, nor see you. But now bring me a minstrel." And when the minstrel played, the power of the LORD came upon him. And he said, "Thus says the LORD, `I will make this dry stream-bed full of pools.' For thus says the LORD, `You shall not see wind or rain, but that stream-bed shall be filled with water, so that you shall drink, you, your cattle, and your beasts.' This is a light thing in the sight of the LORD; he will also give the Moabites into your hand, and you shall conquer every fortified city, and every choice city, and shall fell every good tree, and stop up all springs of water, and ruin every good piece of land with stones." The next morning, about the time of offering the sacrifice, behold, water came from the direction of Edom, till the country was filled with water. When all the Moabites heard that the kings had come up to fight against them, all who were able to put on armour, from the youngest to the oldest, were called out, and were drawn up at the frontier. And when they rose early in the morning, and the sun shone upon the water, the Moabites saw the water opposite them as red as blood. And they said, "This is blood; the kings have surely fought together, and slain one another. Now then, Moab, to the spoil!" But when they came to the camp of Israel, the Israelites rose and attacked the Moabites, till they fled before them; and they went forward, slaughtering the Moabites as they went. And they overthrew the cities, and on every good piece of land every man threw a stone, until it was covered; they stopped every spring of water, and felled all the good trees; till only its stones were left in Kir-har'eseth, and the slingers surrounded and conquered it. When the king of Moab saw that the battle was going against him, he took with him seven hundred swordsmen to break through, opposite the king of Edom; but they could not. Then he took his eldest son who was to reign in his stead, and offered him for a burnt offering upon the wall. And there came great wrath upon Israel; and they withdrew from him and returned to their own land.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Jb. 22, 27; Ps. 80, 8</strong><br><br>
+                        <em>R. The Lord will be your help against all your enemies and He will purify you as silver is purified with fire; then you will acquire faith and courage in front of the Lord. * You will beseech Him and He will answer you.</em><br>
+                        V: You have cried to me in anguish and I have freed you.<br>
+                        <em>R. You will beseech Him and He will answer you.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <em>Consider, brothers, your vocation.</em><br><br>
+                        A reading from the “Discourses” of St. Aelred, abbot.<br>
+                        Let us take into consideration these four realities: the earthly life of Christ, His passion, His resurrection, and His ascension. He showed Himself on the earth and lived with men in order to call His own. He suffered the passion in order to redeem them, He was resurrected in order to justify them. He called His own in three ways: with the doctrine, by example, with the miracles. That is He taught them with the word, He fulfilled with facts and confirmed with miracles. And in these three ways the world came to be turned completely towards God. In fact the apostles, sent by Christ, carry everywhere the announcement of the Gospel, “while the Lord worked together with them and confirmed the word with the prodigies that accompanied it” (Mk. 16, 20). The passion follows. And this is enough. At this point in fact the doctrine of Christ has to be loved, at this point the obedience of His commandments has to be embraced, so sapid does the love of Christ be for us, that neither death nor life not trials nor tribulations can ever separate us from the love of God that is in Christ. Many, animated by the example of our Saviour, faithful to the doctrine received from the faith to which they have been initiated, fight happily unto the effusion of blood. The passion is followed by the resurrection. He who is dead with Christ, has to also rise with Him. But there is a first resurrection, that consists in the justification of the soul; it is followed by a second one, that is the glorification of the body, so that with a complete salvation, we become participants of that great ascension in which the total Christ, that is the head with the body, is welcomed into the heavenly Jerusalem. Consider, brothers, your vocation, and meditate on the fruits. Think of the way in which you have been called, to what, and for what end. You have been called by Christ, called to suffer with Him, with the scope of reigning with Him in eternity. We then have been called in three ways: with an external call, with the emulation of the good and with an interior inspiration. The external call regards the doctrine; the emulation of the good examples, the intimate inspiration the miracle. And which miracle is greater than that marvellous transformation of our being, thanks to which man, from impure has become pure, from proud he has become humble, from quick tempered he has become patient, from evil he has become a saint? He who instructs with the preaching does not ascribe to himself such a great miracle, nor he who conducts in the eyes of men a life worthy of praise; but above all let Him who blows where He wants, when He wants, and inspires good in the measure that He wants, be exalted. To this have we been called so that we can follow the footprints of “He who when insulted did not answer with insults and suffering did not threaten vengeance” (1 Pt. 2, 23). Let us therefore imitate His passion; because “ He who says that he lives in Christ, has to behave has He behaved” (1 Jn. 2, 6).
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Eph. 1, 4. 11; Rm. 1, 4</strong><br><br>
+                        <em>R. God has chosen us in Christ before the creation of the world, in order to be holy. * In Him in fact we have also been made heirs, having been predestined according to the plan of Him who works everything efficaciously, in conformation to His will.</em><br>
+                        V: Christ was constituted Son of God with power according to the Spirit of sanctification.<br>
+                        <em>R. In Him in fact we have also been made heirs, having been pre-destined according to the plan of Him who works everything efficaciously, in conformation to His will.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mal. 1:1 – 14; 2: 13 – 16</strong><br>
+                        <em>Oracle against the negligent and the wicked priests.</em><br><br>
+                        A reading from the prophet Malachi.<br>
+                        The oracle of the word of the LORD to Israel by Mal'achi. "I have loved you," says the LORD. But you say, "How have you loved us?" "Is not Esau Jacob's brother?" says the LORD. "Yet I have loved Jacob but I have hated Esau; I have laid waste his hill country and left his heritage to jackals of the desert." If Edom says, "We are shattered but we will rebuild the ruins," the LORD of hosts says, "They may build, but I will tear down, till they are called the wicked country, the people with whom the LORD is angry for ever." Your own eyes shall see this, and you shall say, "Great is the LORD, beyond the border of Israel!" "A son honours his father, and a servant his master. If then I am a father, where is my honour? And if I am a master, where is my fear? Says the LORD of hosts to you, O priests, who despise my name. You say, `How have we despised your name?' By offering polluted food upon my altar. And you say, `How have we polluted it?' By thinking that the Lord’s table may be despised. When you offer blind animals in sacrifice, is that no evil? And when you offer those that are lame or sick, is that no evil? Present that to your governor; will he be pleased with you or show you favour? Says the LORD of hosts. And now entreat the favour of God, that he may be gracious to us. With such a gift from your hand, will he show favour to any of you? Says the LORD of hosts. Oh, that there were one among you who would shut the doors, that you might not kindle fire upon my altar in vain! I have no pleasure in you, says the LORD of hosts, and I will not accept an offering from your hand. For from the rising of the sun to its setting my name is great among the nations, and in every place incense is offered to my name, and a pure offering; for my name is great among the nations, says the LORD of hosts. But you profane it when you say that the Lord’s table is polluted, and the food for it may be despised. `What a weariness this is,' you say, and you sniff at me, says the LORD of hosts. You bring what has been taken by violence or is lame or sick, and this you bring as your offering! Shall I accept that from your hand? Says the LORD. Cursed be the cheat who has a male in his flock, and vows it, and yet sacrifices to the Lord what is blemished; for I am a great King, says the LORD of hosts, and my name is feared among the nations. And this again you do. You cover the Lord’s altar with tears, with weeping and groaning because he no longer regards the offering or accepts it with favour at your hand. You ask, "Why does he not?" Because the LORD was witness to the covenant between you and the wife of your youth, to whom you have been faithless, though she is your companion and your wife by covenant. Has not the one God made and sustained for us the spirit of life? And what does he desire? Godly offspring. So take heed to yourselves, and let none be faithless to the wife of his youth. "For I hate divorce, says the LORD the God of Israel, and covering one's garment with violence, says the LORD of hosts. So take heed to yourselves and do not be faithless."
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Mal. 2, 5. 6; Ps. 109, 4</strong><br><br>
+                        <em>R. The covenant with my priest was of life and peace; a covenant of fear, and he feared me. * A faithful teaching was on his mouth, there was no falsehood on his lips.</em><br>
+                        V: The Lord has sworn an oath and He will not repent: You are a priest forever like Melchisedek.<br>
+                        <em>R. A faithful teaching was on his mouth, there was no falsehood on his lips.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Book 10:6</strong><br>
+                        <em>In every place sacrifice and a pure victim is offered to my name.</em><br><br>
+                        A reading from the “City of God” of St. Augustine, bishop.<br>
+                        Thus a true sacrifice is every work which is done that we may be united to God in holy fellowship, and which has a reference to that supreme good and end in which alone we can be truly blessed. And therefore even the mercy we show to men, if it is not shown for God’s sake, is not a sacrifice. For, though made or offered by man, sacrifice is a divine thing, as those who called it sacrifice meant to indicate. Thus man himself, consecrated in the name of God, and vowed to God, is a sacrifice in so far as he dies to the world that he may live to God. For this is a part of that mercy which each man shows to himself; as it is written, “Have mercy on your soul by pleasing God.” Our body, too, as a sacrifice when we chasten it by temperance, if we do so as we ought, for God’s sake, that we may not yield our members as instruments of unrighteousness unto sin, but as instruments of righteousness unto God. Exhorting us to this sacrifice, the apostle says, “I beseech you, therefore, brethren, by the mercy of God, that you present your bodies as a living sacrifice, holy, acceptable to God, which is your reasonable service.” If, then, the body, which, being inferior, the soul uses as a servant or instrument, is a sacrifice when it is used rightly, and with reference to God, how much more does the soul itself become a sacrifice when it offers itself to God, in order that, being inflamed by the fire of His love, it may receive of His beauty and become pleasing to Him, losing the shape of earthly desire, and being remoulded in the image of permanent loveliness? And this, indeed, the apostle subjoins, saying, “And be not conformed to this world; but be you transformed in the renewing of your mind, that you may prove what is that good, and acceptable, and perfect will of God.” Since, therefore, true sacrifices are works of mercy to ourselves or others, done with a reference to God, and since works of mercy have no other object than the relief of distress or the conferring of happiness, and since there is no happiness apart from that good of which it is said, “It is good for me to be very near to God,” it follows that the whole redeemed city, that is to say, the congregation or community of the saints, is offered to God as our sacrifice through the great High Priest, who offered Himself to God in His passion for us, that we might be members of this glorious head, according to the form of a servant. For it was this form He offered, in this He was offered, because it is according to it He is Mediator, in this He is our Priest, in this the Sacrifice. Accordingly, when the apostle had exhorted us to present our bodies as a living sacrifice, holy, acceptable to God, our reasonable service, and not to be conformed to the world, but to be transformed in the renewing of our mind, that we might prove what is that good, and acceptable, and perfect will of God, that is to say, the true sacrifice of ourselves, he says, “For I say, through the grace of God which is given unto me, to every man that is among you, not to think of himself more highly than he ought to think, but to think soberly, according as God has dealt to every man the measure of faith. For, as we have many members in one body, and all members have not the same office, so we, being many, are one body in Christ, and every one members one of another, having gifts differing according to the grace that is given to us.” This is the sacrifice of Christians: we, being many, are one body in Christ. And this also is the sacrifice which the Church continually celebrates in the sacrament of the altar, known to the faithful, in which she teaches that she herself is offered in the offering she makes to God.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Mi. 6, 6. 8; Dt. 10, 14. 12</strong><br><br>
+                        <em>R. What will I offer to the Lord? Man, you have been taught that which is good and which the Lord asks of you: * practice justice, love mercy, walk humbly with your God.</em><br>
+                        V: To the Lord your God belongs the heavens and the earth. Now what does the Lord your God ask you? To do good:<br>
+                        <em>R. practice justice, love mercy, walk humbly with your God.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 16: 24 – 28</strong><br>
+                    <em>What can man give in exchange for his own soul?</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    Then Jesus told his disciples, "If any man would come after me, let him deny himself and take up his cross and follow me. For whoever would save his life will lose it, and whoever loses his life for my sake will find it. For what will it profit a man, if he gains the whole world and forfeits his life? Or what shall a man give in return for his life? For the Son of man is to come with his angels in the glory of his Father, and then he will repay every man for what he has done. Truly, I say to you, there are some standing here who will not taste death before they see the Son of man coming in his kingdom."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContentForCycle(cycle) {
+                // Hide all content blocks
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle's content
+                if (cycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (cycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', (event) => {
+                showContentForCycle(event.target.value);
+            });
+
+            // Set the initial state based on the selected option
+            showContentForCycle(cycleSelector.value);
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>

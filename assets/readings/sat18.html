@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>office of readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Saturday, August 9, 2025, for the feast of Saint Teresa Benedicta of the Cross (Edith Stein), virgin and martyr. Readings include the story of the Shunammite woman's son, the prophecy of John the Baptist, and the Gospel of Matthew on faith as a mustard seed.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-red-100 { background-color: rgba(254, 226, 226, 0.8); }
+        .border-red-200 { border-color: #fca5a5; }
+        .text-red-800 { color: #991b1b; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Saturday, August 9, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-red-100 dark:bg-red-900/30 backdrop-blur-sm shadow-xl border border-dashed border-red-200 dark:border-red-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Feast of Saint Teresa Benedicta of the Cross (Edith Stein), virgin and martyr</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-red-300 dark:border-red-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Kings 4: 8 – 37</strong><br>
+                        <em>The son of the Shunammite.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        One day Eli'sha went on to Shunem, where a wealthy woman lived, who urged him to eat some food. So whenever he passed that way, he would turn in there to eat food. And she said to her husband, "Behold now, I perceive that this is a holy man of God, who is continually passing our way. Let us make a small roof chamber with walls, and put there for him a bed, a table, a chair, and a lamp, so that whenever he comes to us, he can go in there." One day he came there, and he turned into the chamber and rested there. And he said to Geha'zi his servant, "Call this Shu'nammite." When he had called her, she stood before him. And he said to him, "Say now to her, See, you have taken all this trouble for us; what is to be done for you? Would you have a word spoken on your behalf to the king or to the commander of the army?" She answered, "I dwell among my own people." And he said, "What then is to be done for her?" Geha'zi answered, "Well, she has no son, and her husband is old." He said, "Call her." And when he had called her, she stood in the doorway. And he said, "At this season, when the time comes round, you shall embrace a son." And she said, No, my lord, O man of God; do not lie to your maidservant." But the woman conceived, and she bore a son about that time the following spring, as Eli'sha had said to her. When the child had grown, he went out one day to his father among the reapers. And he said to his father, "Oh, my head, my head!" The father said to his servant, "Carry him to his mother." And when he had lifted him, and brought him to his mother, the child sat on her lap till noon, and then he died. And she went up and laid him on the bed of the man of God, and shut the door upon him, and went out. Then she called to her husband, and said, "Send me one of the servants and one of the asses, that I may quickly go to the man of God, and come back again." And he said, "Why will you go to him today? It is neither new moon nor Sabbath." She said, "It will be well." Then she saddled the ass, and she said to her servant, "Urge the beast on; do not slacken the pace for me unless I tell you." So she set out, and came to the man of God at Mount Carmel. When the man of God saw her coming, he said to Geha'zi his servant, "Look, yonder is the Shu'nammite; run at once to meet her, and say to her, Is it well with you? Is it well with your husband? Is it well with the child?" And she answered, "It is well." And when she came to the mountain to the man of God, she caught hold of his feet. And Geha'zi came to thrust her away. But the man of God said, "Let her alone, for she is in bitter distress; and the LORD has hidden it from me, and has not told me." Then she said, "Did I ask my lord for a son? Did I not say, Do not deceive me?" He said to Geha'zi, "Gird up your loins, and take my staff in your hand, and go. If you meet any one, do not salute him; and if any one salutes you, do not reply; and lay my staff upon the face of the child." Then the mother of the child said, "As the LORD lives, and as you yourself live, I will not leave you." So he arose and followed her. Geha'zi went on ahead and laid the staff upon the face of the child, but there was no sound or sign of life. Therefore he returned to meet him, and told him, "The child has not awaked." When Eli'sha came into the house, he saw the child lying dead on his bed. So he went in and shut the door upon the two of them, and prayed to the LORD. Then he went up and lay upon the child, putting his mouth upon his mouth, his eyes upon his eyes, and his hands upon his hands; and as he stretched himself upon him, the flesh of the child became warm. Then he got up again, and walked once to and fro in the house, and went up, and stretched himself upon him; the child sneezed seven times, and the child opened his eyes. Then he summoned Geha'zi and said, "Call this Shu'nammite." So he called her. And when she came to him, he said, "Take up your son." She came and fell at his feet, bowing to the ground; then she took up her son and went out.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Chr. 20, 20; cfr. 2 Cor. 1, 9</strong><br><br>
+                        <em>R. Believe in the Lord your God and you will be strong; * believe in his prophets and you will be successful.</em><br>
+                        V: do not put your faith in yourselves, but in God who raises the dead.<br>
+                        <em>R. believe in his prophets and you will be successful.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <em>He will walk before the Lord with the spirit and strength of Elijah.</em><br><br>
+                        A reading from the “Discourses” of St. Aelred, abbot.<br>
+                        “He will walk in front of Him with the spirit and strength of Elijah, to prepare for the Lord a people that is well disposed” (Lk. 1,17). This people is the primitive Church formed by the Jews; to them, in order to call them and prepare them, the prophet Elijah was sent to exhort them: “Do penance because the kingdom of heaven is near at hand” (Mt. 4, 17). He is called through the gift of mercy and he prepares us with penance. Therefore he is justly called “Tishbite”, which means to turn himself to penance. He is the luminous and shining lamp lit by that woman of God, the wisdom, who had lost the drachma, which is the human race; she lit it so that the house, that is the world, could be brought to penance and in this way that drachma, in which we recognise the shadow of the Church of the pre-destined, could be recovered. “I am not the Christ” he said (Jn. 1, 20), but I have been sent before Him. Where and why? As to a widow in order to present her to the bridegroom like a shining Church, without wrinkle or stain. the people of Israel were like a widow in that time, because already the sceptre and the commander’s staff had been removed from among the feet of Judah, and there was no legitimate king, nor a holy priest. They were waiting for Him who was to come, the legitimate bridegroom for whom this bride was reserved. She possessed a minimum amount of flour and a minimum quantity of oil. And behold the grain, separated from the chaff and ground in the grinding wheel, is transformed into flour. By chaff I mean the letter, by grain the spiritual science. Beginning from the days of John the grain is separated from the chaff, the letter from the spirit; and, ground in the grinding wheel of the gospel, becomes flour. Then the Holy Spirit, the oil of grace is added, and it is transformed into the bread with which Elijah nourishes himself. But certainly, in that time in which the hunger for the word of God was growing, the widow, that is the Jewish people, possessed very little flour and very little oil. Yet with these few ingredients a small bread cooked under ashes, that is an initial announcement of Christ, is kneaded, thanks to which the people are nourished; until when, all the prophets of Baal having been killed, having been eliminated that is all the errors of the past from their hearts, there begins to appear from afar a small cloud, like the hand of a man, that rises from the sea. (cfr. 1 Kg. 18, 44). Remember, brothers, how immediately the beating of an abundant rain gives back to the earth its fertility of the past? Let us contemplate now near the Jordan this our Elijah, who, preaching, reproaching, admonishing and baptising, almost killed the unclean spirits that acted in the sons of the incredulous, chasing them out with the baptism from those who confessed their sins and made a sacred and joyful fear for the coming of the divine Saviour rise up in himself and in the people. “Behold, a small cloud, like a man’s hand, rises from the sea” (1 Kg.18, 44). In the sea recognise the crowd of sinners and publicans, to whom the holy John says: “Brood of vipers! Who warned you to flee from the retribution that is coming?” (Mt. 3, 7) Among these, as from the depths of the sea, there appears that small cloud of which the prophet Isaiah says: “Behold, the Lord rides on a swift cloud” (Is. 19, 1). And this is our flesh, that the divine wisdom has wanted to assume from us and for us; light, that is, immune from every sin, in which without doubt, hiding itself like the sun in the clouds, he makes Himself known first of all by the blessed John, who while he preached pointed Him out exclaiming: “Behold the Lamb of God” (Jn. 1, 29); this is that bread cooked under the ashes, of which Elijah nourished himself.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Lk. 1, 13. 15. 76; Jn. 1, 6</strong><br><br>
+                        <em>R. Elizabeth the wife of Zechariah generated a great man, John the Baptist, the forerunner of the Lord: * He prepared the way for the Lord in the desert.</em><br>
+                        V: A man came sent by God and his name was John.<br>
+                        <em>R. He prepared the way for the Lord in the desert.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Mal. 3: 1 – 24 (Vulg.. 3: 1 – 4: 6)</strong><br>
+                        <em>The day of the Lord.</em><br><br>
+                        A reading from the prophet Malachi.<br>
+                        “Behold, I send my messenger to prepare the way before me, and the Lord whom you seek will suddenly come to his temple; the messenger of the covenant in whom you delight, behold, he is coming, says the LORD of hosts. But who can endure the day of his coming, and who can stand when he appears? "For he is like a refiner's fire and like fullers' soap; he will sit as a refiner and purifier of silver, and he will purify the sons of Levi and refine them like gold and silver, till they present right offerings to the LORD. Then the offering of Judah and Jerusalem will be pleasing to the LORD as in the days of old and as in former years. "Then I will draw near to you for judgment; I will be a swift witness against the sorcerers, against the adulterers, against those who swear falsely, against those who oppress the hireling in his wages, the widow and the orphan, against those who thrust aside the sojourner, and do not fear me, says the LORD of hosts. "For I the LORD do not change; therefore you, O sons of Jacob, are not consumed. From the days of your fathers you have turned aside from my statutes and have not kept them. Return to me, and I will return to you, says the LORD of hosts. But you say, `How shall we return?' Will man rob God? Yet you are robbing me. But you say, `How are we robbing you?' In your tithes and offerings. You are cursed with a curse, for you are robbing me; the whole nation of you. Bring the full tithes into the storehouse, that there may be food in my house; and thereby put me to the test, says the LORD of hosts, if I will not open the windows of heaven for you and pour down for you an overflowing blessing. I will rebuke the devourer for you, so that it will not destroy the fruits of your soil; and your vine in the field shall not fail to bear, says the LORD of hosts. Then all nations will call you blessed, for you will be a land of delight, says the LORD of hosts. "Your words have been stout against me, says the LORD. Yet you say, ‘How have we spoken against you?’ You have said, ‘It is vain to serve God. What is the good of our keeping his charge or of walking as in mourning before the LORD of hosts? Henceforth we deem the arrogant blessed; evildoers not only prosper but when they put God to the test they escape.’" Then those who feared the LORD spoke with one another; the LORD heeded and heard them, and a book of remembrance was written before him of those who feared the LORD and thought on his name. "They shall be mine, says the LORD of hosts, my special possession on the day when I act, and I will spare them as a man spares his son who serves him. Then once more you shall distinguish between the righteous and the wicked, between one who serves God and one who does not serve him. "For behold, the day comes, burning like an oven, when all the arrogant and all evildoers will be stubble; the day that comes shall burn them up, says the LORD of hosts, so that it will leave them neither root nor branch. But for you who fear my name the sun of righteousness shall rise, with healing in its wings. You shall go forth leaping like calves from the stall. And you shall tread down the wicked, for they will be ashes under the soles of your feet, on the day when I act, says the LORD of hosts. "Remember the law of my servant Moses, the statutes and ordinances that I commanded him at Horeb for all Israel." Behold, I will send you Eli'jah the prophet before the great and terrible day of the LORD comes. And he will turn the hearts of fathers to their children and the hearts of children to their fathers, lest I come and smite the land with a curse."
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Ml. 3, 1; Lk. 1, 76</strong><br><br>
+                        <em>R. Behold, I will send my messenger to prepare the way before me. * And the Lord, whom you are seeking, will enter immediately into His temple, and the angel of the covenant, whom you are longing for.</em><br>
+                        V: You, child, will be called the prophet of the Most High; you will go before the Lord to prepare the way for Him.<br>
+                        <em>R. And the Lord, whom you are seeking, will enter immediately into His temple, and the angel of the covenant, whom you are longing for.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Nm. 40.45</strong><br>
+                        <em>I am the alpha and the omega, the first and the last.</em><br><br>
+                        A reading from the Pastoral Constitution “Gaudium et Spes” of the second Vatican Council on the Church in the contemporary world.<br>
+                        That the earthly and the heavenly city exist simultaneously and intermingle is a fact recognisable only by faith. It will remain a mystery of human history- a history that will be constantly disturbed by sinfulness until the splendour of the sons of God is fully revealed. Pursuing the purpose that is proper to her – that of saving mankind – the Church communicates the divine life to men. But not only that; in some way she casts the reflected light of that life over the entire earth. She does this most of all by the healing and uplifting influence she has on the dignity of the person, by the way she strengthens the bonds which bind human society and imbues the everyday activity of man with a deeper meaning and importance. Thus the Church believes that, through her individual members and her whole community, she can contribute a great deal towards making the family of man and its history more human. While helping the world and receiving many benefits from it, the Church has a single intention: that God’s kingdom may come, and that the salvation of the whole of mankind may be achieved. For every benefit which the pilgrim people of God on earth can offer to the human family stems from the fact that the Church is the universal sacrament of salvation: at one and the same time she both demonstrates the mystery of God’s love for man and makes it present among men. The Word of God, through whom all things were made, was Himself made flesh, so that as a perfect man He could save all men and sum up all things in Himself. The Lord is the goal of human history, the point at which the expectations of history and civilisation converge, the centre of the human race, the joy of every heart, and the answer to all its aspirations. He it is whom the Father has raised from the dead, has lifted on high, and has placed at His right hand, making Him judge of the living and the dead. Enlivened and united in His Spirit, we press onwards on our journey towards that consummation of human history that fully accords with the counsel of God’s love: ‘To unite all things in Him, things in heaven and things on earth.’ (Ep. 1, 10) The Lord Himself says: “Behold, I am coming soon, bringing my recompense, to repay everyone for what he has done. I am the alpha and the omega, the beginning and the end.” (Ap. 22, 12 – 13)
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cfr. Act. 10, 36; 4, 12; 10, 42</strong><br><br>
+                        <em>R. This is the word that God has sent, bringing the good news of peace, through Jesus Christ: * He is the Lord of all, in no one else is there salvation.</em><br>
+                        V: He has been constituted by God judge of the living and the dead;<br>
+                        <em>R. He is the Lord of all, in no one else is there salvation.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 17: 14 – 20</strong><br>
+                    <em>If you have faith nothing will be impossible for you.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    And when they came to the crowd, a man came up to him and kneeling before him said, "Lord, have mercy on my son, for he is an epileptic and he suffers terribly; for often he falls into the fire, and often into the water. I brought him to your disciples, and they could not heal him." And Jesus answered, "O faithless and perverse generation, how long am I to be with you? How long am I to bear with you? Bring him here to me." And Jesus rebuked him, and the demon came out of him, and the boy was cured instantly. Then the disciples came to Jesus privately and said, "Why could we not cast it out?" He said to them, "Because of your little faith. For truly, I say to you, if you have faith as a grain of mustard seed, you will say to this mountain, `Move from here to there,' and it will move; and nothing will be impossible to you."
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContentForCycle(cycle) {
+                // Hide all content blocks
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle's content
+                if (cycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (cycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', (event) => {
+                showContentForCycle(event.target.value);
+            });
+
+            // Set the initial state based on the selected option
+            showContentForCycle(cycleSelector.value);
+
+            // Dark Mode Sync
+            const savedMode = localStorage.getItem('themeMode') || 'light';
+            document.body.classList.toggle('dark', savedMode === 'dark');
+            document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        });
+    </script>
+</body>
+</html>
