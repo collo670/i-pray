@@ -591,46 +591,46 @@ function applyDarkMode(isDark) {
             adventStart.setDate(adventStart.getDate() - 21);
             let season = 'Ordinary Time';
             let feast = null;
-            let seasonImage = '/assets/images/bikira maria.jpg';
+            let seasonImage = '/assets/images/maria mdogo.png';
             let liturgicalColor = 'green';
             if (today.getMonth() === 11 && today.getDate() === 25) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 feast = 'Nativity of the Lord';
                 liturgicalColor = 'white';
             } else if (today.getMonth() === 0 && today.getDate() === 1) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 feast = 'Mary, Mother of God';
                 liturgicalColor = 'white';
             } else if (today.getMonth() === 0 && today.getDate() === 6) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 feast = 'Epiphany of the Lord';
                 liturgicalColor = 'white';
             } else if (today >= adventStart && today < christmas) {
                 season = 'Advent';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 liturgicalColor = 'purple';
             } else if (today >= christmas && today < new Date(year, 0, 8)) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/christmas.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 liturgicalColor = 'white';
             } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
                 season = 'Ordinary Time';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 liturgicalColor = 'green';
             } else if (today >= ashWednesday && today < easter) {
                 season = 'Lent';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 liturgicalColor = 'purple';
             } else if (today >= easter && today < pentecost) {
                 season = 'Easter';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/images/maria mdogo.png';
                 liturgicalColor = 'white';
             } else if (today >= pentecost && today < adventStart) {
                 season = 'Ordinary Time';
-                seasonImage = '/assets/images/bikira maria.jpg';
+                seasonImage = '/assets/maria mdogo.png';
                 liturgicalColor = 'green';
             }
             if (today.getDate() === 2 && today.getMonth() === 2) {
