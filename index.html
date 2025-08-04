@@ -19,27 +19,26 @@
     
     <!-- Custom Tailwind Config -->
     <script>
-            tailwind.config = {
-                darkMode: 'class', // 👈 This is key
-                theme: {
-                    extend: {
-                        colors: {
-                            'primary': '#7C3AED',
-                            'secondary': '#DB2777',
-                            'accent': '#F59E0B',
-                            'liturgical-purple': '#4A1E8A',
-                            'liturgical-white': '#F8F9FA',
-                            'liturgical-red': '#C41E3A',
-                            'liturgical-green': '#2E7D32',
-                            'liturgical-gold': '#FFD700',
-                        },
-                        backgroundImage: {
-                            'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-                        }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
                     }
                 }
             }
-        </script>
+        }
+    </script>
     
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -63,7 +62,21 @@
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-       
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
         .card-highlighted {
             background-color: #4a4a4a;
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
@@ -121,19 +134,12 @@
             .bottom-nav {
         padding-bottom: max(env(safe-area-inset-bottom), 1rem);
     }
-
-    /* Preemptively set dark mode if system prefers it */
-    @media (prefers-color-scheme: dark) {
-        html:not(.dark) {
-            color-scheme: dark;
-        }
-    }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <div id="app" class="relative z-10">
         <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm transition-colors duration-300">
+<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
     <div class="header-content">
         <div>
             <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
@@ -332,45 +338,32 @@
             }
         };
 
-        // Theme and Dark Mode Management - Improved
-                function applyThemeAndDarkMode() {
-                        // Apply saved theme
-                        const savedTheme = localStorage.getItem('appTheme') || 'default';
-                        document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
-                        if (savedTheme !== 'default') {
-                            document.body.classList.add(`theme-${savedTheme}`);
-                        }
+        // Theme and Dark Mode Management - Only use app's own setting, ignore device preference
+function applyThemeAndDarkMode() {
+    // Only use saved mode, default to light if not set
+    const savedMode = localStorage.getItem('themeMode');
+    let isDark = false;
+    if (savedMode === 'dark') isDark = true;
+    if (savedMode === 'light' || !savedMode) isDark = false;
+    applyDarkMode(isDark);
+}
 
-                        // Check system preference only if no mode was set
-                        const savedMode = localStorage.getItem('themeMode');
-                        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+function applyDarkMode(isDark) {
+    document.body.classList.toggle('dark', isDark);
+    document.documentElement.classList.toggle('dark', isDark);
+    document.body.classList.toggle('light-mode', !isDark);
 
-                        const isDark = savedMode ? savedMode === 'dark' : systemPrefersDark;
-                        applyDarkMode(isDark); // This will set `html.dark`
-                    }
+    // Update icon
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeIcon) {
+        themeIcon.innerHTML = isDark ?
+            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />` : // Sun
+            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`; // Moon
+    }
 
-                // Update applyDarkMode to sync UI
-                function applyDarkMode(isDark) {
-                    const html = document.documentElement;
-                    if (isDark) {
-                        html.classList.add('dark');
-                    } else {
-                        html.classList.remove('dark');
-                    }
-
-                    // Update theme icon
-                    const themeIcon = document.getElementById('themeIcon');
-                    if (themeIcon) {
-                        themeIcon.innerHTML = isDark ?
-                            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 2a14 14 0 010 28 14 14 0 010-28z" fill="currentColor"/>` : // Sun
-                            `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`; // Moon
-                    }
-
-                    // Save user preference only if manually set
-                    localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
-                }
-
-
+    // Always save user choice
+    localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
+}
         
             function togglePrayer() {
                     const prayerText = document.getElementById('prayerText');
@@ -430,7 +423,7 @@
                 { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'office-readings.html' },
                 { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />`, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
                 { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'carmen.html' },
-                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
+                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 002 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
                 { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
             ];
 
@@ -462,16 +455,39 @@
             masifuAsubuhiLink.addEventListener('click', function() {
                 const day = new Date().getDay();
                 const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-                const weekSequence = [1, 2, 3, 4];
+                const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
+
+                // Find the most recent Sunday (start of the current liturgical week)
                 const now = new Date();
                 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const daysSinceSunday = today.getDay();
-                const referenceSunday = new Date(today);
-                referenceSunday.setDate(today.getDate() - daysSinceSunday);
+                const daysSinceSunday = today.getDay(); // 0=Sunday, 6=Saturday
+                const currentSunday = new Date(today);
+                currentSunday.setDate(today.getDate() - daysSinceSunday);
+
+                // Reference Sunday for week 2 (the start of the current cycle)
+                // You can set this to the most recent Sunday that started a week 2
+                // For this logic, let's assume the current week (today) is week 2
+                // So, weekIndex = 0 for this week, 1 for next, etc.
+                // To keep the cycle, count how many Sundays since today (week 2)
+                // So, weekIndex = number of Sundays since today (week 2) modulo 4
+
+                // We'll use today as the reference for week 2
                 const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-                const weeksSinceReference = Math.floor((today - referenceSunday) / msPerWeek);
-                const weekIndex = weeksSinceReference % weekSequence.length;
+                // Find how many weeks since this "week 2" Sunday
+                const weeksSinceReference = Math.floor((currentSunday - currentSunday) / msPerWeek); // always 0
+                // But as days pass, we want week 2 until Saturday, then week 3 on Sunday, etc.
+                // So, let's use the number of weeks since this Sunday (today is week 2)
+                // If today is Sunday, weekIndex = 0 (week 2), next Sunday weekIndex = 1 (week 3), etc.
+                // But if today is not Sunday, we still want this week to be week 2
+
+                // To persist the cycle, we need a fixed reference Sunday for week 2.
+                // Let's use a known Sunday date for week 2, e.g., August 3, 2025 (which is a Sunday)
+                const referenceWeek2Sunday = new Date(2025, 7, 3); // August is month 7 (0-based)
+                referenceWeek2Sunday.setHours(0,0,0,0);
+                const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+                const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
                 const week = weekSequence[weekIndex];
+
                 const fileName = `${dayToPrefix[day]}${week}.html`;
                 window.location.href = fileName;
             });
@@ -730,9 +746,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Theme toggle
     document.getElementById('themeToggle').addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    applyDarkMode(!isDark); // Toggle
-});
+        const isDark = !document.body.classList.contains('dark');
+        applyDarkMode(isDark);
+    });
 
             // Initialize navigation and features
             initNavigation();
