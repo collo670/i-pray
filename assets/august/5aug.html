@@ -55,9 +55,7 @@
         body.light-mode .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
+        
         .card {
             background-color: #2a2a2a;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -243,12 +241,8 @@
             </a>
         </div>
     </nav>
+    
 
-    <script>
-        // Sync with main app's dark mode
-        const savedMode = localStorage.getItem('themeMode') || 'light';
-        document.body.classList.toggle('dark', savedMode === 'dark');
-        document.documentElement.classList.toggle('dark', savedMode === 'dark');
-    </script>
+    
 </body>
 </html>
