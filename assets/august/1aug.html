@@ -42,35 +42,23 @@
     <style>
         :root {
             --primary-color: #7C3AED;
-            --current-theme: 'light';
         }
         body {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            color: #333;
         }
-        .theme-purple { --primary-color: #4A1E8A; }
-        .theme-red { --primary-color: #C41E3A; }
-        .theme-green { --primary-color: #2E7D32; }
         .high-contrast { filter: contrast(1.5); }
         .text-large { font-size: 1.25rem; }
         .text-xxs { font-size: 0.7rem; }
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -90,22 +78,39 @@
             position: relative;
             z-index: 10;
         }
-        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-        .border-green-200 { border-color: #bbf7d0; }
-        .text-green-800 { color: #166534; }
+        .bg-green-100 { 
+            background-color: rgba(220, 252, 231, 0.8); 
+        }
+        .border-green-200 { 
+            border-color: #bbf7d0; 
+        }
+        .text-green-800 { 
+            color: #166534; 
+        }
+        .text-purple-600 {
+            color: #7c3aed;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
         @media (max-width: 640px) {
             .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
-
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <!-- Header (Scrolls with page) -->
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Friday, August 1, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Daily Readings</h1>
+                <p class="text-sm text-gray-600">Friday, August 1, 2025 • Ordinary Time</p>
             </div>
             <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,130 +119,94 @@
             </a>
         </div>
     </header>
-
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
-
         <!-- Reading Card -->
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
-
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <!-- First Reading -->
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Leviticus 23:1, 4–11, 15–16, 27, 34b–37</strong><br><br>
-
                     The Lord spoke to Moses, saying:<br><br>
-
-                    “These are the appointed feasts of the Lord, which you shall proclaim as holy convocations.<br><br>
-
+                    "These are the appointed feasts of the Lord, which you shall proclaim as holy convocations.<br><br>
                     On the fourteenth day of the first month at twilight is the Passover of the Lord. And on the fifteenth day of the same month is the Feast of Unleavened Bread to the Lord; for seven days you shall eat unleavened bread.<br><br>
-
                     The first day shall be a holy convocation; you shall do no ordinary work. For seven days you shall present food offerings to the Lord. The seventh day will be a holy convocation; you shall do no ordinary work.<br><br>
-
                     The Lord said to Moses: Speak to the people of Israel and say to them: When you enter the land I will give you and reap its harvest, you shall bring the first sheaf of your harvest to the priest. And he shall wave the sheaf before the Lord, that you may be accepted. On the day after the Sabbath the priest shall wave it.<br><br>
-
                     You shall count from the day after the Sabbath, from the day you brought the sheaf of the wave offering: seven full weeks shall you count, even to the day after the seventh week—fifty days. Then you shall offer a new grain offering to the Lord.<br><br>
-
                     On the tenth day of this seventh month is the Day of Atonement. It shall be a holy convocation for you; you shall afflict yourselves and present a food offering to the Lord.<br><br>
-
                     From the fifteenth day of the seventh month, you shall keep the Feast of Booths for seven days to the Lord. The first day shall be a holy convocation; you shall do no ordinary work. For seven days you shall present food offerings to the Lord. The eighth day also shall be a holy convocation; you shall offer a food offering. It is a solemn assembly; you shall do no ordinary work.<br><br>
-
-                    These are the appointed feasts of the Lord, which you shall proclaim as holy convocations, to offer food offerings to the Lord.”
+                    These are the appointed feasts of the Lord, which you shall proclaim as holy convocations, to offer food offerings to the Lord."
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+            <hr class="border-dashed border-gray-300 my-6">
             <!-- Responsorial Psalm -->
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial Psalm</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Psalm 81:3–4, 5–6, 10–11ab</strong><br><br>
-
                     <em>R. Sing with joy to God our help.</em><br><br>
-
                     Take up a psalm, strike the timbrel, the sweet lyre with the harp.<br><br>
-
                     Blow the trumpet at the new moon, at the full moon for our feast day.<br><br>
-
                     For this is a statute for Israel, a law of the God of Jacob.<br><br>
-
                     He established it as a decree for Joseph when he went forth from the land of Egypt.<br><br>
-
-                    “There shall be no strange god among you; no foreign god shall you worship.<br><br>
-
-                    I am the Lord, your God, who brought you out of the land of Egypt.”<br><br>
-
+                    "There shall be no strange god among you; no foreign god shall you worship.<br><br>
+                    I am the Lord, your God, who brought you out of the land of Egypt."<br><br>
                     <em>R. Sing with joy to God our help.</em>
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+            <hr class="border-dashed border-gray-300 my-6">
             <!-- Alleluia -->
-            <section class="text-center py-4 bg-white/50 dark:bg-black/30 rounded-xl">
-                <h2 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Alleluia</h2>
-                <p class="text-gray-700 dark:text-gray-300 italic">
+            <section class="text-center py-4 bg-white/50 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 mb-3">Alleluia</h2>
+                <p class="text-gray-700 italic">
                     <strong>1 Peter 1:25</strong><br><br>
                     <em>R. Alleluia, alleluia.</em><br>
                     The word of the Lord remains forever; this is the word that has been proclaimed to you.<br>
                     <em>R. Alleluia, alleluia.</em>
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+            <hr class="border-dashed border-gray-300 my-6">
             <!-- Gospel -->
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Matthew 13:54–58</strong><br><br>
-
                     Coming to his native place, Jesus taught the people in their synagogue. They were astonished and said:<br><br>
-
-                    “Where did this man get such wisdom and mighty deeds? Is he not the carpenter’s son? Is not his mother named Mary and his brothers James, Joseph, Simon, and Judas? Are not his sisters all with us? Where did this man get all this?”<br><br>
-
+                    "Where did this man get such wisdom and mighty deeds? Is he not the carpenter's son? Is not his mother named Mary and his brothers James, Joseph, Simon, and Judas? Are not his sisters all with us? Where did this man get all this?"<br><br>
                     And they took offense at him.<br><br>
-
-                    But Jesus said to them, “A prophet is not without honor except in his native place and in his own house.”<br><br>
-
+                    But Jesus said to them, "A prophet is not without honor except in his native place and in his own house."<br><br>
                     And he did not work many mighty deeds there because of their lack of faith.
                 </p>
             </section>
-
         </div>
     </main>
-
     <!-- Bottom Navigation (Fixed) -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
             <!-- Home -->
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
-
             <!-- Lauds -->
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
-
             <!-- Calendar -->
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
-
             <!-- Settings -->
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
@@ -245,13 +214,13 @@
             </a>
         </div>
     </nav>
-
-    <!-- Dark Mode Sync -->
     <script>
-        // Sync with main app's dark mode
-        const savedMode = localStorage.getItem('themeMode') || 'light';
-        document.body.classList.toggle('dark', savedMode === 'dark');
-        document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        // All dark mode functionality has been removed
+        // Light colors are now the permanent, default theme
+        document.addEventListener('DOMContentLoaded', function() {
+            // No dark mode functionality needed
+            // The light theme is now the default and only theme
+        });
     </script>
 </body>
 </html>

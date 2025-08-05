@@ -41,35 +41,23 @@
     <style>
         :root {
             --primary-color: #7C3AED;
-            --current-theme: 'light';
         }
         body {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            color: #333;
         }
-        .theme-purple { --primary-color: #4A1E8A; }
-        .theme-red { --primary-color: #C41E3A; }
-        .theme-green { --primary-color: #2E7D32; }
         .high-contrast { filter: contrast(1.5); }
         .text-large { font-size: 1.25rem; }
         .text-xxs { font-size: 0.7rem; }
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -89,22 +77,36 @@
             position: relative;
             z-index: 10;
         }
-        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-        .border-green-200 { border-color: #bbf7d0; }
-        .text-green-800 { color: #166534; }
+        .bg-green-100 { 
+            background-color: rgba(220, 252, 231, 0.8); 
+        }
+        .border-green-200 { 
+            border-color: #bbf7d0; 
+        }
+        .text-green-800 { 
+            color: #166534; 
+        }
+        .text-purple-600 {
+            color: #7c3aed;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
         @media (max-width: 640px) {
             .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
-
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <!-- Header (Scrolls with page) -->
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Saturday, August 2, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Daily Readings</h1>
+                <p class="text-sm text-gray-600">Saturday, August 2, 2025 • Ordinary Time</p>
             </div>
             <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,140 +115,99 @@
             </a>
         </div>
     </header>
-
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
-
         <!-- Reading Card -->
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
-
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <!-- First Reading -->
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Leviticus 25:1, 8–17</strong><br><br>
-
                     The Lord spoke to Moses on Mount Sinai:<br><br>
-
-                    “You shall count seven weeks of years—seven times seven years—so that the period of seven weeks of years gives forty-nine years.<br><br>
-
+                    "You shall count seven weeks of years—seven times seven years—so that the period of seven weeks of years gives forty-nine years.<br><br>
                     Then you shall sound the trumpet on the tenth day of the seventh month; on the Day of Atonement you shall sound the trumpet throughout all your land.<br><br>
-
                     And you shall sanctify the fiftieth year, and proclaim liberty throughout the land to all its inhabitants. It shall be a jubilee for you: each of you shall return to his property, and each of you shall return to his clan.<br><br>
-
                     For it is a jubilee; it shall be holy to you. You shall eat what the field yields of itself; you shall not sow, nor reap what grows of itself, nor gather the grapes from the undressed vines.<br><br>
-
                     For the jubilee is holy; you may eat only the produce of the field.<br><br>
-
                     In this year of jubilee, every man shall return to his possession.<br><br>
-
                     When you make a sale to your neighbor or buy from your neighbor, you shall not wrong one another. You shall buy from your neighbor according to the number of years since the last jubilee; and he shall sell to you according to the number of years for crops.<br><br>
-
                     The more years, the higher the price; the fewer years, the lower the price. For it is the number of harvests that he sells to you.<br><br>
-
-                    Do not oppress one another, but fear your God; for I am the Lord your God.”
+                    Do not oppress one another, but fear your God; for I am the Lord your God."
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+            <hr class="border-dashed border-gray-300 my-6">
             <!-- Responsorial Psalm -->
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial Psalm</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Psalm 67:2–3, 5, 7–8</strong><br><br>
-
                     <em>R. O God, let all the nations praise you!</em><br><br>
-
                     May God have mercy on us and bless us; may he let his face shine upon us, that your way may be known upon earth, your saving power among all nations.<br><br>
-
                     Let the peoples praise you, O God; let all the peoples praise you!<br><br>
-
                     Let the nations be glad and exult; for you rule the peoples with justice and guide the nations upon earth.<br><br>
-
                     <em>R. O God, let all the nations praise you!</em><br><br>
-
                     The earth has yielded its fruit; may God, our God, bless us. May God bless us, and may all the ends of the earth fear him!<br><br>
-
                     <em>R. O God, let all the nations praise you!</em>
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+            <hr class="border-dashed border-gray-300 my-6">
             <!-- Alleluia -->
-            <section class="text-center py-4 bg-white/50 dark:bg-black/30 rounded-xl">
-                <h2 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Alleluia</h2>
-                <p class="text-gray-700 dark:text-gray-300 italic">
+            <section class="text-center py-4 bg-white/50 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 mb-3">Alleluia</h2>
+                <p class="text-gray-700 italic">
                     <strong>Matthew 5:10</strong><br><br>
                     <em>R. Alleluia, alleluia.</em><br>
-                    Blessed are they who are persecuted for righteousness’ sake; for theirs is the kingdom of heaven.<br>
+                    Blessed are they who are persecuted for righteousness' sake; for theirs is the kingdom of heaven.<br>
                     <em>R. Alleluia, alleluia.</em>
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+            <hr class="border-dashed border-gray-300 my-6">
             <!-- Gospel -->
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Matthew 14:1–12</strong><br><br>
-
                     At that time, Herod the tetrarch heard about the fame of Jesus.<br><br>
-
-                    And he said to his servants, “This is John the Baptist. He has been raised from the dead; that is why mighty powers are at work in him.”<br><br>
-
+                    And he said to his servants, "This is John the Baptist. He has been raised from the dead; that is why mighty powers are at work in him."<br><br>
                     Now Herod had arrested John, bound him, and put him in prison because of Herodias, the wife of his brother Philip.<br><br>
-
-                    For John had been telling him, “It is not lawful for you to have her.”<br><br>
-
+                    For John had been telling him, "It is not lawful for you to have her."<br><br>
                     Although Herod wanted to put him to death, he feared the crowd, because they regarded John as a prophet.<br><br>
-
-                    But on Herod’s birthday, the daughter of Herodias danced before the company and pleased Herod so much that he promised with an oath to give her whatever she might ask.<br><br>
-
-                    Prompted by her mother, she said, “Give me here on a platter the head of John the Baptist.”<br><br>
-
+                    But on Herod's birthday, the daughter of Herodias danced before the company and pleased Herod so much that he promised with an oath to give her whatever she might ask.<br><br>
+                    Prompted by her mother, she said, "Give me here on a platter the head of John the Baptist."<br><br>
                     The king was distressed, but because of his oaths and the guests, he ordered it to be given.<br><br>
-
                     He had John beheaded in the prison, and his head was brought on a platter and given to the girl, who took it to her mother.<br><br>
-
-                    John’s disciples came and took the body and buried it; then they went and told Jesus.
+                    John's disciples came and took the body and buried it; then they went and told Jesus.
                 </p>
             </section>
-
         </div>
     </main>
-
     <!-- Bottom Navigation (Fixed) -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
             <!-- Home -->
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
-
             <!-- Lauds -->
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
-
             <!-- Calendar -->
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
-
             <!-- Settings -->
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
@@ -254,13 +215,13 @@
             </a>
         </div>
     </nav>
-
-    <!-- Dark Mode Sync -->
     <script>
-        // Sync with main app's dark mode
-        const savedMode = localStorage.getItem('themeMode') || 'light';
-        document.body.classList.toggle('dark', savedMode === 'dark');
-        document.documentElement.classList.toggle('dark', savedMode === 'dark');
+        // All dark mode functionality has been removed
+        // Light colors are now the permanent, default theme
+        document.addEventListener('DOMContentLoaded', function() {
+            // No dark mode functionality needed
+            // The light theme is now the default and only theme
+        });
     </script>
 </body>
 </html>
