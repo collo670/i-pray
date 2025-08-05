@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Readings - iPray</title>
+    <title>Office of Readings - iPray</title>
     <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="description" content="Daily Catholic Readings for Sunday, August 3, 2025, for the Eighteenth Sunday in Ordinary Time (Year C). Readings include Elijah's encounter with God, the parable of the rich fool, and a reflection on seeking heavenly goods over earthly riches.">
+    <meta name="description" content="Daily Catholic Readings for Sunday, August 10, 2025, for the 19th Sunday in Ordinary Time. Readings include the miracles of Elisha, the story of Jonah, and the Gospels of Matthew, John, and Luke.">
     <link rel="manifest" href="/ipray/manifest.json">
     <meta name="theme-color" content="#7C3AED">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,40 +35,17 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #7C3AED;
-            --current-theme: 'light';
-        }
         body {
             font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
             transition: all 0.3s ease;
-        }
-        .theme-purple { --primary-color: #4A1E8A; }
-        .theme-red { --primary-color: #C41E3A; }
-        .theme-green { --primary-color: #2E7D32; }
-        .high-contrast { filter: contrast(1.5); }
-        .text-large { font-size: 1.25rem; }
-        .text-xxs { font-size: 0.7rem; }
-        .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
         }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .card-hover {
-            transition: all 0.3s ease;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
         }
         .card-hover:hover {
             transform: translateY(-4px);
@@ -77,6 +54,28 @@
         .season-border {
             border-style: dashed;
             border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
         }
         .header-content {
             display: flex;
@@ -85,21 +84,25 @@
             position: relative;
             z-index: 10;
         }
-        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-        .border-green-200 { border-color: #bbf7d0; }
-        .text-green-800 { color: #166534; }
+        .bg-white-50 {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        .text-purple-600 {
+            color: #7C3AED;
+        }
         @media (max-width: 640px) {
-            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
-
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Sunday, August 3, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Sunday, August 10, 2025 • Ordinary Time</p>
             </div>
             <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,273 +111,182 @@
             </a>
         </div>
     </header>
-
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
-
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <div class="flex items-center space-x-4 mb-6">
-                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Eighteenth Sunday in Ordinary Time</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">19th Sunday in Ordinary Time</h3>
                 </div>
             </div>
-
             <div class="flex flex-col items-center mb-6">
-                <label for="liturgical-year" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Year</label>
-                <select id="liturgical-year" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
-                    <option value="A">Year A</option>
+                <label for="liturgical-year" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Year</label>
+                <select id="liturgical-year" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="A" selected>Year A</option>
                     <option value="B">Year B</option>
-                    <option value="C" selected>Year C</option>
+                    <option value="C">Year C</option>
                 </select>
             </div>
 
-            <div id="cycle-1-readings" class="liturgical-cycle">
+            <!-- Year A Content -->
+            <div id="year-a-content" class="liturgical-year-content">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>1 Kings 19: 1 – 9a, 11 – 21</strong><br>
-                        <em>The Lord manifests Himself to Elijah.</em><br><br>
-                        A reading from the first book of Kings.<br>
-                        Ahab told Jez'ebel all that Eli'jah had done, and how he had slain all the prophets with the sword. Then Jez'ebel sent a messenger to Eli'jah, saying, "So may the gods do to me, and more also, if I do not make your life as the life of one of them by this time tomorrow." Then he was afraid, and he arose and went for his life, and came to Beer-sheba, which belongs to Judah, and left his servant there. But he himself went a day's journey into the wilderness, and came and sat down under a broom tree; and he asked that he might die, saying, "It is enough; now, O LORD, take away my life; for I am no better than my fathers." And he lay down and slept under a broom tree; and behold, an angel touched him, and said to him, "Arise and eat." And he looked, and behold, there was at his head a cake baked on hot stones and a jar of water. And he ate and drank, and lay down again. And the angel of the LORD came again a second time, and touched him, and said, "Arise and eat, else the journey will be too great for you." And he arose, and ate and drank, and went in the strength of that food forty days and forty nights to Horeb the mount of God. And there he came to a cave, and lodged there; and behold, the word of the LORD came to him, and he said to him, "What are you doing here, Eli'jah?" And he said, "Go forth, and stand upon the mount before the LORD." And behold, the LORD passed by, and a great and strong wind rent the mountains, and broke in pieces the rocks before the LORD, but the LORD was not in the wind; and after the wind an earthquake, but the LORD was not in the earthquake; and after the earthquake a fire, but the LORD was not in the fire; and after the fire a still small voice. And when Eli'jah heard it, he wrapped his face in his mantle and went out and stood at the entrance of the cave. And behold, there came a voice to him, and said, "What are you doing here, Eli'jah?" He said, "I have been very jealous for the LORD, the God of hosts; for the people of Israel have forsaken thy covenant, thrown down thy altars, and slain thy prophets with the sword; and I, even I only, am left; and they seek my life, to take it away." And the LORD said to him, "Go, return on your way to the wilderness of Damascus; and when you arrive, you shall anoint Haz'ael to be king over Syria; and Jehu the son of Nimshi you shall anoint to be king over Israel; and Eli'sha the son of Shaphat of A'bel-meho'lah you shall anoint to be prophet in your place. And him who escapes from the sword of Haz'ael shall Jehu slay; and him who escapes from the sword of Jehu shall Eli'sha slay. I will leave seven thousand in Israel, all the knees that have not bowed to Ba'al, and every mouth that has not kissed him." So he departed from there, and found Eli'sha the son of Shaphat, who was ploughing, with twelve yoke of oxen before him, and he was with the twelfth. Eli'jah passed by him and cast his mantle upon him. And he left the oxen, and ran after Eli'jah, and said, "Let me kiss my father and my mother, and then I will follow you." And he said to him, "Go back again; for what have I done to you?" And he returned from following him, and took the yoke of oxen, and slew them, and boiled their flesh with the yokes of the oxen, and gave it to the people, and they ate. Then he arose and went after Eli'jah, and ministered to him.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>3 Kings 19: 4-8</strong><br>
+                        <em>Elijah flees from Jezebel and is fed by an angel.</em><br><br>
+                        A reading from the third book of Kings.<br>
+                        But he himself went a day's journey into the wilderness, and came and sat down under a broom tree; and he asked that he might die, saying, "It is enough; now, O LORD, take away my life; for I am no better than my fathers." And he lay down and slept under a broom tree; and behold, an angel touched him, and said to him, "Arise and eat." And he looked, and behold, at his head there was a cake baked on hot stones and a jar of water. And he ate and drank, and lay down again. And the angel of the LORD came again a second time, and touched him, and said, "Arise and eat, else the journey will be too great for you." And he arose, and ate and drank, and went in the strength of that food forty days and forty nights to Horeb, the mount of God.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Cfr. Ex. 33: 22, 20; Jn. 1: 18</strong><br><br>
-                        <em>R. the Lord said to Moses: when my glory will pass by, I will put you in the cleft of the rock and I will cover you with my hand until I have passed by, * because no one can see God and remain alive.</em><br><br>
-                        V: No one has seen God: the unique Son, who is in the bosom of the Father, has revealed Him.<br>
-                        <em>R. because no one can see God and remain alive.</em>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 33: 5, 6</strong><br><br>
+                        <em>R. Taste and see that the Lord is good. * Happy is the man who takes refuge in him.</em><br>
+                        V: Fear the Lord, you his saints, for those who fear him lack nothing.<br>
+                        <em>R. Happy is the man who takes refuge in him.</em>
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Nm. 12 – 16, 19</strong><br>
-                        <em>All these things happened to them as a figure.</em><br><br>
-                        A reading from “the Treatise on the mysteries” of St. Ambrose, bishop.<br>
-                        There is also a third testimony, as the Apostle teaches us: “For all our fathers were under the cloud, and all passed through the sea, and were all baptised in relation to Moses in the cloud and in the sea.” And further, Moses himself says in his song: “You sent Your Spirit, and the sea covered them.” You observe that even then holy baptism was prefigured in that passage of the Hebrews, wherein the Egyptian perished, the Hebrew escaped. For what else are we daily taught in this sacrament but that guilt is swallowed up and error done away, but that virtue and innocence remain unharmed? You hear that our fathers were under the cloud, and that a kindly cloud, which cooled the heat of carnal passions. That kindly cloud overshadows those whom the Holy Spirit visits. At last it came upon the Virgin Mary, and the Power of the Highest overshadowed her, when she conceived Redemption for the race of men. And that miracle was wrought in a figure through Moses. If, then, the Spirit was in the figure, is He not present in the reality, since Scripture says to us: “For the law was given by Moses, but grace and truth came by Jesus Christ.” Marah was a fountain of most bitter water: Moses cast wood into it and it became sweet. For water without the preaching of the Cross of the Lord is of no avail for future salvation, but, after it has been consecrated by the mystery of the saving cross, it is made suitable for the use of the spiritual laver and of the cup of salvation. As, then, Moses, that is, the prophet, cast wood into that fountain, so, too, the priest utters over this font the proclamation of the Lord’s cross, and the water is made sweet for the purpose of grace. You must not trust, then, wholly to your bodily eyes; that which is not seen is more really seen, for the object of sight is temporal, but that other eternal, which is not apprehended by the eye, but is discerned by the mind and spirit. Lastly, let the lessons lately gone through from the Kings teach you. Naaman was a Syrian, and suffered from leprosy, nor could he be cleansed by any. Then a maiden from among the captives said that there was a prophet in Israel, who could cleanse him from the defilement of the leprosy. And it is said that, having taken silver and gold, he went to the king of Israel. And he, when he heard the cause of his coming, rent his clothes, saying, that occasion was rather being sought against him, since things were asked of him which pertained not to the power of kings. Elisha, however, sent word to the king, that he should send the Syrian to him, that he might know there was a God in Israel. And when he had come, he bade him dip himself seven times in the river Jordan. Then he began to reason with himself that he had better waters in his own country, in which he had often bathed and never been cleansed of his leprosy; and so remembering this, he did not obey the command of the prophet, yet on the advice and persuasion of his servants he yielded and dipped himself. And being forthwith cleansed, he understood that it is not of the waters but of grace that a man is cleansed. And he indeed doubted before he was healed; you are already healed, and therefore ought not to doubt.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>St. Augustine, Serm. 227, 1-2</strong><br>
+                        <em>Christ is the bread of life.</em><br><br>
+                        A reading from the "Sermons" of St. Augustine, bishop.<br>
+                        “They who eat me will hunger for more, they who drink me will thirst for more” (Sir. 24: 20). In the present time we cannot nourish ourselves with Christ, wisdom of God, up to the point of satisfying our desire, but remaining with the desire of satisfying ourselves; and all the more we taste his sweetness, the more our desire is heightened. Therefore those who eat will hunger for more, until they reach satiety. When the desire of the good will be satisfied they will not have either hunger or thirst anymore. What has been said can also be applied to the future life: “They who eat me will hunger for more, they who drink me will thirst for more”. There is in fact in that eternal satiety, as a longing, coming not from destitution but from beatitudes: in heaven those who do not need anymore to eat desire always to eat, they are never nauseated by their satiety. There is in fact satiety without nuisance and a desire without agony. Christ, who is always marvellous in his majesty, constitutes unceasingly the object of our desire, he in whom “even the angels long to catch a glimpse” (1 Pet. 1: 12). This is why though possessing him, we desire him and also when we have reached him we continue to search for him, as it is written: “Search for his face always” (Ps. 104: 4). We search continuously for he whom we love in order to be possessed by him eternally. Therefore those who find him continue to search for him, those who eat of him are still hungry, and those who drink of him are still thirsty; but this hunger takes away all other hungers and this thirst extinguishes all other thirsts. It does not torment, it delights.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Cfr. Ps. 77: 52, 53; 1 Cor. 10: 2</strong><br><br>
-                        <em>R. The Lord made His people depart like a flock, He led them securely and without fear; * and the waters submerged their enemies.</em><br>
-                        V: Every one in Moses was baptised in the cloud and in the sea;<br>
-                        <em>R. and the waters submerged their enemies.</em>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 104: 3, 4; Phil. 4: 19</strong><br><br>
+                        <em>R. The heart of him who searches for the Lord rejoices, * search for the Lord and his power, search always for his face.</em><br>
+                        V: In return my God will fulfil all your needs, in Christ Jesus, as lavishly as only God can.<br>
+                        <em>R. search for the Lord and his power, search always for his face.</em>
                     </p>
                 </section>
             </div>
 
-            <div id="cycle-2-readings" class="liturgical-cycle hidden">
+            <!-- Year B Content -->
+            <div id="year-b-content" class="liturgical-year-content hidden">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Obadiah 1 – 21</strong><br>
-                        <em>Prediction against Edom.</em><br><br>
-                        A reading from the prophet Obadiah.<br>
-                        The vision of Obadi'ah. Thus says the Lord GOD concerning Edom: We have heard tidings from the LORD, and a messenger has been sent among the nations: "Rise up! Let us rise against her for battle!" Behold, I will make you small among the nations, you shall be utterly despised. The pride of your heart has deceived you, you who live in the clefts of the rock, whose dwelling is high, who say in your heart, "Who will bring me down to the ground?" Though you soar aloft like the eagle, though your nest is set among the stars, thence I will bring you down, says the LORD. If thieves came to you, if plunderers by night -- how you have been destroyed! -- Would they not steal only enough for themselves? If grape gatherers came to you, would they not leave gleanings? How Esau has been pillaged, his treasures sought out! All your allies have deceived you, they have driven you to the border; your confederates have prevailed against you; your trusted friends have set a trap under you -- there is no understanding of it. Will I not on that day, says the LORD, destroy the wise men out of Edom, and understanding out of Mount Esau? And your mighty men shall be dismayed, O Teman, so that every man from Mount Esau will be cut off by slaughter. For the violence done to your brother Jacob, shame shall cover you, and you shall be cut off forever. On the day that you stood aloof, on the day that strangers carried off his wealth, and foreigners entered his gates and cast lots for Jerusalem, you were like one of them. But you should not have gloated over the day of your brother in the day of his misfortune; you should not have rejoiced over the people of Judah in the day of their ruin; you should not have boasted in the day of distress. You should not have entered the gate of my people in the day of his calamity; you should not have gloated over his disaster in the day of his calamity; you should not have looted his goods in the day of his calamity. You should not have stood at the parting of the ways to cut off his fugitives; you should not have delivered up his survivors in the day of distress. For the day of the LORD is near upon all the nations. As you have done, it shall be done to you, your deeds shall return on your own head. For as you have drunk upon my holy mountain, all the nations round about shall drink; they shall drink, and stagger, and shall be as though they had not been. But in Mount Zion there shall be those that escape, and it shall be holy; and the house of Jacob shall possess their own possessions. The house of Jacob shall be a fire, and the house of Joseph a flame, and the house of Esau stubble; they shall burn them and consume them, and there shall be no survivor to the house of Esau; for the LORD has spoken. Those of the Negeb shall possess Mount Esau, and those of the Shephe'lah the land of the Philistines; they shall possess the land of E'phraim and the land of Sama'ria and Benjamin shall possess Gilead. The exiles in Halah who are of the people of Israel shall possess Phoenicia as far as Zar'ephath; and the exiles of Jerusalem who are in Sephar'ad shall possess the cities of the Negeb. Saviours shall go up to Mount Zion to rule Mount Esau; and the kingdom shall be the Lord’s.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jn. 6: 41-51</strong><br>
+                        A reading from the Gospel of St. John.<br>
+                        The Jews then murmured at him, because he said, "I am the bread that came down from heaven." They said, "Is not this Jesus, the son of Joseph, whose father and mother we know? How does he now say, `I have come down from heaven'?" Jesus answered them, "Do not murmur among yourselves. No one can come to me unless the Father who sent me draws him; and I will raise him up at the last day. It is written in the prophets, `And they shall all be taught by God.' Every one who has heard and learned from the Father comes to me. Not that any one has seen the Father except him who is from God; he has seen the Father. Truly, truly, I say to you, he who believes has eternal life. I am the bread of life. Your fathers ate the manna in the wilderness, and they died. This is the bread that comes down from heaven, that a man may eat of it and not die. I am the living bread which came down from heaven; if any one eats of this bread, he will live for ever; and the bread which I shall give for the life of the world is my flesh."
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial Psalm</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Obd.3 – 4, 15</strong><br><br>
-                        <em>R. The pride of your heart has exalted you; you make your home in the heights and saying your heart: Who can throw me to the earth? * Even if you raise yourself like an eagle and place your nest among the stars, from up there I will make you fall down, says the Lord.</em><br>
-                        V: The day of the Lord against the peoples is near. As you have done, in the same way will be done to you; that which you have done to the others will fall back on your head.<br>
-                        <em>R. even if you raise yourself like an eagle and place your nest among the stars, from up there I will make you fall down, says the Lord.</em>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>St. Cyril of Alexandria, In Ioannem, 4, 2</strong><br>
+                        <em>Christ, the living bread.</em><br><br>
+                        A reading from the "Commentary on the Gospel of John" of St. Cyril of Alexandria.<br>
+                        “I am the living bread which came down from heaven” (Jn. 6: 51). Since the guests of my Father were destroyed by death because of the prohibited food that their parents had eaten, and their souls are in hell, the bodies instead in the tombs, I also who am the bread of angels will be destroyed. And with that substance of which the angels are nourished I will descend into the underworld, where the souls are hungry, while with the body I will rest hidden for three days and three nights in the same womb of the earth in which their bodies are buried, as Jonah remained three days and three nights in the belly of the sea mammal. In this way their souls will be recreated in the sight of God and many bodies will rise now; all the others certainly in the future. Finally, to those who are still in the body down here, this same bread will be offered in a way that is suitable to the living, that is in the true sacrifice of the bread and wine according to the order of Melchizedek. “And the bread that I will give is my flesh for the life of the world” (Jn. 6: 51). This is the greatest consolation for the poor, that the Holy Spirit descending on me sends me to evangelise; this will be the greatest and incomparable motive of joy for all the nations spread over the earth, who will ask and will receive from the Father in possession and inheritance.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <em>You who are sick, come and get yourself cured.</em><br><br>
-                        Beginning of the “Discourse on baptism” of St. Gregory of Nyssa, bishop.<br>
-                        Behold: the dispenser of every good, he who has estimated the years and holds the dominion of time, he has brought us to the day of salvation, in which it is normal for us to render the guests into adoptive sons, the poor participants of grace, those who were polluted, purified of the sins. This is the old proclamation that was present a little before the Lord could appear: “Voice of one who cries in the desert: Prepare the way of the Lord, make his paths straight” (Mt. 3:3; cf: Is. 40: 3). I am neither John nor David, but my smallness does not bear any prejudice to the law of the Lord. We do not obey because of reverence towards those who have written the laws, but we submit with fear to the power and the orders of He who makes the laws. The grace of the King has arrived, which has conceded remission to two classes of tortured people: he has freed the prisoners and has remitted the debts of the debtors. For this, I also can offer a suitable medicine to these two categories of people, and with great faith I promise that, if they commit themselves, they will receive help. And so that no one thinks that this medicine costs a lot, I announce clearly what medication the sick have to use: to the first I promise health through the waters of baptism, to the others I destroy the evil by means of a few tears. This simple medication and the grace of God is enough for such a great result: to be freed from the wounds inflicted on us by the bite of the serpent, without having to burn and to cut in order to be healed. Come therefore, you who suffer, to get yourselves cured and may you not be neglected. When a sickness is continuous and old, the medical skill and care can do nothing. Poor and needy, hurry: come and receive the gifts of the King; and you, sheep, welcome the character and the sign of the cross, help and remedy against evils. Give me your names: I will write them with ink on corruptible books, but God will engrave them on tablets that do not perish, because He writes with His own finger as He wrote once the law for the Hebrews. Come to him and you will be resplendent and your faces will not be confused (Cfr. Ps. 33:6). Wash yourselves, remove from my sight the evil of your actions” (Is. 1:16). These words were written a long time ago, but their importance has not weakened, on the contrary day by day it is in full vigour. Come out from prison, I implore you. Hate the dark places of vice. Flee from the devil, cruel guardian of the one who is in chains, he who feeds of the misfortunes of the sinners and those who go in search of him. As God rejoices in our just works, so also the author of sin is delighted for the crimes. Abandon the old man like dirty clothes, full of filth and undignified because it is stained by thousands of sins and made with the cloth of iniquity. Receive the vestment of incorruptibility, that Christ Himself offers you already ready to be put on, and do not refuse the gift in order not to offend the one who offers it to you. You have rolled in the mud a long time: hurry to the Jordan: John calls you, but it is Christ who entreats you. The river of grace runs everywhere: it does not have its sources in Palestine nor does it empty itself in the sea nearby, but it irrigates the whole world, it enters into paradise, and making an inverted course to the four rivers that flow out of it, it brings you much more precious things than those that have come out of it. Its rich source is Christ: flowing from Him, it floods the whole world. It has sweet and drinkable waters, without irritating salt. It is rendered sweet by the presence of the Spirit, like the fountain of Marah because of its contact with wood.
-                    </p>
-                </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-                <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Ex. 36: 26, 27; Rm. 9: 15</strong><br><br>
-                        <em>R. I will give you a new heart. * I will make you live according to my precepts and observe and put into practise my laws.</em><br>
-                        V: I will use mercy with whom I want; and I will have mercy with whom I want.<br>
-                        <em>R. I will make you live according to my precepts and observe and put into practise my laws.</em>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jn. 6: 48-51</strong><br><br>
+                        <em>R. I am the bread of life. Your fathers ate the manna in the desert and they are dead; * this is the bread that comes down from heaven, so that a man may eat it and not die.</em><br>
+                        V: I am the living bread that comes down from heaven; if anyone eats of this bread he will live forever.<br>
+                        <em>R. This is the bread that comes down from heaven, so that a man may eat it and not die.</em>
                     </p>
                 </section>
             </div>
 
-            <section class="text-center py-4 bg-white/50 dark:bg-black/30 rounded-xl">
-                <h2 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Alleluia</h2>
-                <p class="text-gray-700 dark:text-gray-300 italic">
+            <!-- Year C Content -->
+            <div id="year-c-content" class="liturgical-year-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Obad. 1-21</strong><br>
+                        <em>The pride of Edom will be brought low.</em><br><br>
+                        A reading from the book of the prophet Obadiah.<br>
+                        The vision of Obadiah. Thus says the Lord GOD concerning Edom: We have heard a report from the LORD, and a messenger has been sent among the nations: "Rise up! Let us rise against her for battle!" Behold, I will make you small among the nations; you shall be utterly despised. The pride of your heart has deceived you, you who live in the clefts of the rock, whose habitation is high; who say in your heart, "Who will bring me down to the ground?" Though you soar aloft like the eagle, though your nest is set among the stars, thence I will bring you down, says the LORD.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 33: 5, 6</strong><br><br>
+                        <em>R. Taste and see that the Lord is good. * Happy is the man who takes refuge in him.</em><br>
+                        V: Fear the Lord, you his saints, for those who fear him lack nothing.<br>
+                        <em>R. Happy is the man who takes refuge in him.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>St. John Chrysostom, In Matth. hom. 76, 1-2</strong><br>
+                        <em>Christ, the new manna.</em><br><br>
+                        A reading from the "Homilies on the Gospel of Matthew" of St. John Chrysostom.<br>
+                        “I am the bread that has come down from heaven. If anyone eats of this bread he will live forever” (Jn. 6: 51). Since the guests of my Father were destroyed by death because of the prohibited food that their parents had eaten, and their souls are in hell, the bodies instead in the tombs, I also who am the bread of angels will be destroyed. And with that substance of which the angels are nourished I will descend into the underworld, where the souls are hungry, while with the body I will rest hidden for three days and three nights in the same womb of the earth in which their bodies are buried, as Jonah remained three days and three nights in the belly of the sea mammal. In this way their souls will be recreated in the sight of God and many bodies will rise now; all the others certainly in the future. Finally, to those who are still in the body down here, this same bread will be offered in a way that is suitable to the living, that is in the true sacrifice of the bread and wine according to the order of Melchizedek. “And the bread that I will give is my flesh for the life of the world” (Jn. 6: 51). This is the greatest consolation for the poor, that the Holy Spirit descending on me sends me to evangelise; this will be the greatest and incomparable motive of joy for all the nations spread over the earth, who will ask and will receive from the Father in possession and inheritance.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Tt. 2: 12, 13; Ps. 2: 12</strong><br><br>
+                        <em>R. Let us live in soberness, justice and piety in this world, * while we are waiting in hope for the blessing which will come with the Appearing of the glory of our great God and Saviour Jesus Christ.</em><br>
+                        V: His anger is very quick to blaze. Happy all who take shelter in him.<br>
+                        <em>R. While we are waiting in hope for the blessing that will come with the Appearing of the glory of our great God and Saviour Jesus Christ.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- Alleluia Section -->
+            <section class="text-center py-4 bg-white-50 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 mb-3">Alleluia</h2>
+                <p class="text-gray-700 italic">
                     <strong>Matthew 5: 3</strong><br><br>
                     <em>R. Alleluia, alleluia.</em><br>
                     3 Blessed are the poor in spirit; for theirs is the Kingdom of heaven.<br>
                     <em>R. Alleluia, alleluia.</em>
                 </p>
             </section>
-
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-            <div id="year-specific-content">
-                <div id="year-a-content" class="liturgical-year-content hidden">
-                    <section>
-                        <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Mt 14: 13-21</strong><br><br>
-                            A reading from the Gospel of St. Matthew.<br>
-                            Now when Jesus heard this, he withdrew from there in a boat to a lonely place apart. But when the crowds heard it, they followed him on foot from the towns. As he went ashore he saw a great throng; and he had compassion on them, and healed their sick. When it was evening, the disciples came to him and said, "This is a lonely place, and the day is now over; send the crowds away to go into the villages and buy food for themselves." Jesus said, "They need not go away; you give them something to eat." They said to him, "We have only five loaves here and two fish." And he said, "Bring them here to me." Then he ordered the crowds to sit down on the grass; and taking the five loaves and the two fish he looked up to heaven, and blessed, and broke and gave the loaves to the disciples, and the disciples gave them to the crowds. And they all ate and were satisfied. And they took up twelve baskets full of the broken pieces left over. And those who ate were about five thousand men, besides women and children.
-                        </p>
-                    </section>
-                    
-                    <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-                    <section>
-                        <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Third Reading</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>P. II. C.3</strong><br>
-                            <em>Christ in his majesty is always desirable.</em><br><br>
-                            A reading from the work “The sacrament of the Altar” of Baldwin of Canterbury, bishop<br>
-                            “They who eat me will hunger for more, they who drink me will thirst for more” (Sir. 24: 20). In the present time we cannot nourish ourselves with Christ, wisdom of God, up to the point of satisfying our desire, but remaining with the desire of satisfying ourselves; and all the more we taste his sweetness, the more our desire is heightened. Therefore those who eat will hunger for more, until they reach satiety. When the desire of the good will be satisfied they will not have either hunger or thirst anymore. What has been said can also be applied to the future life: “They who eat me will hunger for more, they who drink me will thirst for more”. There is in fact in that eternal satiety, as a longing, coming not from destitution but from beatitudes: in heaven those who do not need anymore to eat desire always to eat, they are never nauseated by their satiety. There is in fact satiety without nuisance and a desire without agony. Christ, who is always marvellous in his majesty, constitutes unceasingly the object of our desire, he in whom “even the angels long to catch a glimpse” (1 Pet. 1: 12). This is why though possessing him, we desire him and also when we have reached him we continue to search for him, as it is written: “Search for his face always” (Ps. 104: 4). We search continuously for he whom we love in order to be possessed by him eternally. Therefore those who find him continue to search for him, those who eat of him are still hungry, and those who drink of him are still thirsty; but this hunger takes away all other hungers and this thirst extinguishes all other thirsts. It does not come from privation, but from happiness that is accomplished. Of that hunger which is caused by privation it is said in fact: “He who comes to me will never be hungry again and he who believes in me will not be thirsty again” (Jn. 6: 35). Of the hunger that comes from the beatitudes instead it is said: “They who eat me will hunger for more, they who drink of me will thirst for more”. For those who believe in him, Christ is food and drink, bread and wine: he is bread and wine because he strengthens and consolidates, drink and wine because he makes happy. All that in us which is strong, valid and constant, the cheerful happiness with which we observe the commandments of God, bear the suffering, obey and fight for justice: so much strength and so much courage comes to us from that bread, the joy from that drink. Blessed are those who act with strength and joy. And since no one can do this with his own strength, blessed are those who desire ardently for that which is just and honest, being in everything comforted and cheered by he who says: “Blessed are those who hunger and thirst for justice” (Mt. 5: 6). Then if Christ is the bread and drink that strengthens and gladdens the just in the present life, the greater will he be in the future the fount of their eternal beatitude!
-                        </p>
-                    </section>
-
-                    <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-                    <section>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Ps. 104: 3, 4; Phil. 4: 19</strong><br><br>
-                            <em>R. The heart of him who searches for the Lord rejoices, * search for the Lord and his power, search always for his face.</em><br>
-                            V: In return my God will fulfil all your needs, in Christ Jesus, as lavishly as only God can.<br>
-                            <em>R. search for the Lord and his power, search always for his face.</em>
-                        </p>
-                    </section>
-                </div>
-
-                <div id="year-b-content" class="liturgical-year-content hidden">
-                    <section>
-                        <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Jn. 6: 24-35</strong><br><br>
-                            A reading from the Gospel of St. John.<br>
-                            So when the people saw that Jesus was not there, nor his disciples, they themselves got into the boats and went to Caper'na-um, seeking Jesus. When they found him on the other side of the sea, they said to him, "Rabbi, when did you come here?" Jesus answered them, "Truly, truly, I say to you, you seek me, not because you saw signs, but because you ate your fill of the loaves. Do not labour for the food which perishes, but for the food which endures to eternal life, which the Son of man will give to you; for on him has God the Father set his seal." Then they said to him, "What must we do, to be doing the works of God?" Jesus answered them, "This is the work of God, that you believe in him whom he has sent." So they said to him, "Then what sign do you do, that we may see, and believe you? What work do you perform? Our fathers ate the manna in the wilderness; as it is written, `He gave them bread from heaven to eat.'" Jesus then said to them, "Truly, truly, I say to you, it was not Moses who gave you the bread from heaven; my Father gives you the true bread from heaven. For the bread of God is that which comes down from heaven, and gives life to the world." They said to him, "Lord, give us this bread always." Jesus said to them, "I am the bread of life; he who comes to me shall not hunger, and he who believes in me shall never thirst.
-                        </p>
-                    </section>
-                    
-                    <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-                    <section>
-                        <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Third Reading</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Disc. 18: 26-29</strong><br>
-                            <em>Christ drinks my bitterness in order to give me the sweetness of his grace.</em><br><br>
-                            A reading from the “Commentary on Psalm 118” of St. Ambrose, bishop.<br>
-                            “I am small and despised, but I do not neglect your precepts” (Ps. 118: 141). I have the stately participation in the heavenly goods. Already I am welcomed to the honour of the heavenly table: for my banquets there is no need of rainwater, or of the products of the earth or the fruits of the trees. In order to take away the thirst there is no need to search for rivers or springs: Christ is my food, Christ is my drink, the flesh of a God sustains me, the blood of a God quenches my thirst. In order to satisfy myself I certainly do not have to wait for the annual harvest, since Christ offers himself everyday to me. I will not have a reason to fear that some tempest from heaven or the sterility of the fields will compromise him, provided I persist in a loving and pious devotion. I do not desire that a rain of quails descends on me, that before I admired, and neither the manna, that before I preferred to all the other types of food; because the fathers ate it, and still were hungry. Mine is such a food that if someone eats of it they will not be hungry again; it is a food that does not fatten the body, but strengthens the heart of man. Before I admired the bread from heaven; in fact it is written: “he gave them bread from heaven to eat” (Jn. 6: 31); but it was not that. The true bread, was only a figure of that future one: the Father has put aside the bread from heaven for me, that true one. That bread of God that gives life to the world has descended from heaven for me. This is the bread of life: therefore, he who eats life cannot die. In fact, how can he who nourishes himself of life die? How can he who possesses in himself a vital substance fail? Come to him and satisfy yourself, because he is bread; draw near to him and drink, because he is the source; draw near to him and you will be radiant (cfr. Ps. 33: 6) because he is light; come to him and you will be freed, because “there where the Spirit of the Lord is, there is freedom” (2 Cor. 3: 17); draw near to him and you will be absolved, because he is the remission of sins. Ask who he is? Listen to what he says: “I am the bread of life: he who comes to me will not hunger anymore and he who believes in me will not be thirsty again” (Jn. 6: 35). You have heard, you have seen, and you have not believed in him: for this you are dead; but now believe, in order to be able to live. From the body of God gushes out for me an eternal spring: Christ drinks my bitterness in order to give me the sweetness of his grace.
-                        </p>
-                    </section>
-
-                    <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-                    
-                    <section>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Jn. 6: 48-51</strong><br><br>
-                            <em>R. I am the bread of life. Your fathers ate the manna in the desert and they are dead; * this is the bread that comes down from heaven, so that a man may eat it and not die.</em><br>
-                            V: I am the living bread that comes down from heaven; if anyone eats of this bread he will live forever.<br>
-                            <em>R. This is the bread that comes down from heaven, so that a man may eat it and not die.</em>
-                        </p>
-                    </section>
-                </div>
-
-                <div id="year-c-content" class="liturgical-year-content">
-                    <section>
-                        <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Lk. 12: 13-21</strong><br><br>
-                            A reading from the Gospel of St. Luke.<br>
-                            One of the multitude said to him, "Teacher, bid my brother divide the inheritance with me." But he said to him, "Man, who made me a judge or divider over you?" And he said to them, "Take heed, and beware of all covetousness; for a man's life does not consist in the abundance of his possessions." And he told them a parable, saying, "The land of a rich man brought forth plentifully; and he thought to himself, `What shall I do, for I have nowhere to store my crops?' And he said, `I will do this: I will pull down my barns, and build larger ones; and there I will store all my grain and my goods. And I will say to my soul, Soul, you have ample goods laid up for many years; take your ease, eat, drink, be merry.' But God said to him, `Fool! This night your soul is required of you; and the things you have prepared, whose will they be?' So is he who lays up treasure for himself, and is not rich toward God."
-                        </p>
-                    </section>
-
-                    <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-                    <section>
-                        <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Third Reading</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Disc. 14: 20-22</strong><br>
-                            <em>Let us follow the Word, let us search for that rest.</em><br><br>
-                            A reading from the “Discourses” of St. Gregory Nazianzen, bishop.<br>
-                            “Let the sage boast no more of his wisdom, nor the valiant of his valour, nor the rich man of his riches” (Jer. 9: 23), even if he has reached the highest level of wisdom, of riches or of power. I then will add similar things to this: let the one who is famous or renowned not be proud of his glory; nor he who enjoys excellent health for his health; nor he who is beautiful for his attractiveness; nor he who is young for his young age; in a word, let there not be any proud or conceited man who glories in those things that are praised in this world; instead let the one who wants to boast, boast in only one thing: to know and to search for God; and sympathising in the fate of the unfortunate, let him put aside a little good for the future life. All the other things are transient and fragile, and, as in a game of stones, the stones are thrown and transferred from one to the other; so nothing belongs to the one who possesses it, which will not be consumed with the passing of time or transferred to others with displeasure. Those instead are sure and stable realities, which will not lack, or dissolve; the hope of him who puts his own faith in it, will not be frustrated. It seems to me moreover that exactly because no good on this earth is stable and lasting, and whatever other thing made wisely by the creating Word and by that Wisdom which surpasses every mind leaves us deluded, and we see the things changing now in one sense now in another, now transported on high now low or even overturned, and before we can take them in our hands they have already gone far away and escaped from us: exactly for this, I say, seeing their instability and variability, we are pushed and direct ourselves towards the port of the future life. What would we have done if our well-being was secure, while, although fluctuating and fragile, we are attached as though by chains and we are reduced by its deceptive greed and great slavery, that we are not able to think that there is anything better and more precious than the present things? And all this while we are listening and are convinced that we have been created in the image of that God who is in heaven and who attracts us to himself, and of this we are convinced? “Let he who is wise observe these things and he will understand” (Ps. 106: 43). Who will disregard the transient things? Who will await the things that do not change? Who will consider the present things as if they were not existing? Truly blessed is he who, separating with the Word that which is better from the wicked, putting aside and dividing “decides in his heart the holy journey” (Ps. 83: 6), as the blessed David says. And fleeing with all his strength from this valley of tears, he searches for the supreme goods; crucified with Christ to the world, with Christ he rises and together with him he ascends, heir of a new life that is not transitory or false, where the serpent does not bite anymore during the journey, nor lays snares for the heel, having had its head crushed. The same blessed Michael, observing this fact and mocking the reptiles and those who have only the appearance of good, exclaimed: “Come, let us go up to the mountain of the Lord. Get up! Be off! There is no resting here. (Mic. 4: 2; 2: 10). These are almost the same words with which our Lord and Saviour exhorts us: “Get up, let us go away from here” (Jn. 14: 31). Saying this, he moved not only his disciples of that time from that place, as someone could perhaps think, but he detached his disciples forever from the earth and from the earthly goods in order to take them towards heaven and the heavenly things. Let us therefore follow the Word, let us search for that rest; let us despise the riches and the comforts of this life, enriching ourselves only with that which in it is good; that is let us save our souls with almsgiving, distributing our riches to the poor in order to enrich ourselves with the heavenly goods.
-                        </p>
-                    </section>
-                    
-                    <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
-                    <section>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <strong>Tt. 2: 12, 13; Ps. 2: 12</strong><br><br>
-                            <em>R. Let us live in soberness, justice and piety in this world, * while we are waiting in hope for the blessing which will come with the Appearing of the glory of our great God and Saviour Jesus Christ.</em><br>
-                            V: His anger is very quick to blaze. Happy all who take shelter in him.<br>
-                            <em>R. While we are waiting in hope for the blessing that will come with the Appearing of the glory of our great God and Saviour Jesus Christ.</em>
-                        </p>
-                    </section>
-                </div>
-            </div>
         </div>
     </main>
-
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
-
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
-
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
-
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
                 <span class="text-xs font-medium">Settings</span>
             </a>
         </div>
     </nav>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const yearSelector = document.getElementById('liturgical-year');
@@ -383,12 +295,12 @@
             const yearCContent = document.getElementById('year-c-content');
 
             function showContentForYear(year) {
-                // Hide all content blocks
+                // Hide all
                 yearAContent.classList.add('hidden');
                 yearBContent.classList.add('hidden');
                 yearCContent.classList.add('hidden');
 
-                // Show the selected year's content
+                // Show selected
                 if (year === 'A') {
                     yearAContent.classList.remove('hidden');
                 } else if (year === 'B') {
@@ -402,10 +314,9 @@
                 showContentForYear(event.target.value);
             });
 
-            // Set the initial state based on the selected option
+            // Set initial state
             showContentForYear(yearSelector.value);
-
-                   });
+        });
     </script>
 </body>
 </html>

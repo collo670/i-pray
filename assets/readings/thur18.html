@@ -37,47 +37,40 @@
     <style>
         :root {
             --primary-color: #7C3AED;
-            --current-theme: 'light';
         }
+
         body {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            color: #111827;
         }
-        .theme-purple { --primary-color: #4A1E8A; }
-        .theme-red { --primary-color: #C41E3A; }
-        .theme-green { --primary-color: #2E7D32; }
-        .high-contrast { filter: contrast(1.5); }
-        .text-large { font-size: 1.25rem; }
-        .text-xxs { font-size: 0.7rem; }
+
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
+
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
         }
+
         .card-hover {
             transition: all 0.3s ease;
         }
+
         .card-hover:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+
         .season-border {
             border-style: dashed;
             border-width: 1px;
+            border-color: #bbf7d0;
         }
+
         .header-content {
             display: flex;
             align-items: center;
@@ -85,21 +78,32 @@
             position: relative;
             z-index: 10;
         }
-        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-        .border-green-200 { border-color: #bbf7d0; }
-        .text-green-800 { color: #166534; }
+
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+
+        .text-green-800 {
+            color: #166534;
+        }
+
         @media (max-width: 640px) {
-            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
-
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Thursday, August 7, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Thursday, August 7, 2025 • Ordinary Time</p>
             </div>
             <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,22 +114,21 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
-
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <div class="flex items-center space-x-4 mb-6">
-                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Memorial of Saint Sixtus II, pope, and his companions, martyrs, or Saint Cajetan, priest</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Memorial of Saint Sixtus II, pope, and his companions, martyrs, or Saint Cajetan, priest</h3>
                 </div>
             </div>
 
             <div class="flex flex-col items-center mb-6">
-                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
-                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
                     <option value="1" selected>Cycle 1</option>
                     <option value="2">Cycle 2</option>
                 </select>
@@ -133,43 +136,37 @@
 
             <div id="cycle-1-content" class="liturgical-cycle-content">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>2 Kings 2: 1 – 15</strong><br>
                         <em>Elijah is taken up into heaven.</em><br><br>
                         A reading from the second book of Kings.<br>
                         Now when the LORD was about to take Eli'jah up to heaven by a whirlwind, Eli'jah and Eli'sha were on their way from Gilgal. And Eli'jah said to Eli'sha, "Tarry here, I pray you; for the LORD has sent me as far as Bethel." But Eli'sha said, "As the LORD lives, and as you yourself live, I will not leave you." So they went down to Bethel. And the sons of the prophets who were in Bethel came out to Eli'sha, and said to him, "Do you know that today the LORD will take away your master from over you?" And he said, "Yes, I know it; hold your peace." Eli'jah said to him, "Eli'sha, tarry here, I pray you; for the LORD has sent me to Jericho." But he said, "As the LORD lives, and as you yourself live, I will not leave you." So they came to Jericho. The sons of the prophets who were at Jericho drew near to Eli'sha, and said to him, "Do you know that today the LORD will take away your master from over you?" And he answered, "Yes, I know it; hold your peace." Then Eli'jah said to him, "Tarry here, I pray you; for the LORD has sent me to the Jordan." But he said, "As the LORD lives, and as you yourself live, I will not leave you." So the two of them went on. Fifty men of the sons of the prophets also went, and stood at some distance from them, as they both were standing by the Jordan. Then Eli'jah took his mantle, and rolled it up, and struck the water, and the water was parted to the one side and to the other, till the two of them could go over on dry ground. When they had crossed, Eli'jah said to Eli'sha, "Ask what I shall do for you, before I am taken from you." And Eli'sha said, "I pray you, let me inherit a double share of your spirit." And he said, "You have asked a hard thing; yet, if you see me as I am being taken from you, it shall be so for you; but if you do not see me, it shall not be so." And as they still went on and talked, behold, a chariot of fire and horses of fire separated the two of them. And Eli'jah went up by a whirlwind into heaven. And Eli'sha saw it and he cried, "My father, my father! The chariots of Israel and its horsemen!" And he saw him no more. Then he took hold of his own clothes and rent them in two pieces. And he took up the mantle of Eli'jah that had fallen from him, and went back and stood on the bank of the Jordan. Then he took the mantle of Eli'jah that had fallen from him, and struck the water, saying, "Where is the LORD, the God of Eli'jah?" And when he had struck the water, the water was parted to the one side and to the other; and Eli'sha went over. Now when the sons of the prophets who were at Jericho saw him over against them, they said, "The spirit of Eli'jah rests on Eli'sha." And they came to meet him, and bowed to the ground before him.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Mt. 3, 23 – 24; cfr. Lk. 1, 15, 17</strong><br><br>
                         <em>R. Behold, I will send the prophet Elijah before the great and terrible day of the Lord arrives, * to convert the hearts of the fathers towards the children, and the hearts of the children towards the fathers.</em><br>
                         V: John will be great before of the Lord: he will walk before Him with the Spirit and strength of Elijah.<br>
                         <em>R. to convert the hearts of the fathers towards the children, and the hearts of the children towards the fathers.</em>
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Nm. 52 – 54, 58</strong><br>
                         <em>This sacrament that you receive is fulfilled with the word of Christ.</em><br><br>
                         A reading from the “Treatise on the mysteries” of St. Ambrose, bishop.<br>
                         We observe, then, that grace has more power than nature, and yet so far we have only spoken of the grace of a prophet’s blessing. But if the blessing of man had such power as to bring forth a change of nature, what are we to say of that divine consecration where the very words of the Lord and Saviour operate? For that sacrament which you receive is made what it is by the word of Christ. But if the word of Elijah had such power as to bring down fire from heaven, shall not the word of Christ have power to change the nature of the elements? You read concerning the making of the whole world: “He spoke and they were made, He commanded and they were created.” Shall not the word of Christ, which was able to make out of nothing that which was not, be able to change things which already are into what they were not? For it is not less to give a new nature to things than to change them. But why make use of arguments? Let us use the examples He gives, and by the example of the Incarnation prove the truth of the mystery. Did the course of nature proceed as usual when the Lord Jesus was born of Mary? If we look to the usual course, a woman ordinarily conceives after union with a man. And this body which we make is that which was born of the Virgin. Why do you seek the order of nature in the Body of Christ, seeing that the Lord Jesus Himself was born of a Virgin, not according to nature? It is the true Flesh of Christ which is crucified and buried, which is then truly the Sacrament of His Body. The Lord Jesus Himself proclaims: “This is My Body.” Before the blessing of the heavenly words another nature is spoken of, after the consecration the Body is signified. He Himself speaks of His Blood. Before the consecration it has another name, after it is called Blood. And you say, Amen, that is, It is true. Let the heart within confess what the mouth utters, let the soul feel what the voice speaks. For this reason, too, the Church, beholding so great grace, exhorts her sons and her friends to come together to the sacraments, saying: “Eat, my friends, and drink and be inebriated, my brother.” What we eat and what we drink the Holy Spirit has elsewhere made plain by the prophet, saying, “Taste and see that the Lord is good, blessed is the man that hopes in Him.” In that sacrament is Christ, because it is the Body of Christ, it is therefore not bodily food but spiritual. Whence the Apostle says of its type: “Our fathers ate spiritual food and drank spiritual drink,” for the Body of God is a spiritual body; the Body of Christ is the Body of the Divine Spirit, for the Spirit is Christ, as we read: “The Spirit before our face is Christ the Lord.” And in the Epistle of Peter we read: “Christ died for us.” Lastly, that food strengthens our heart, and that drink “makes glad the heart of man,” as the prophet has recorded.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Mt. 26, 26; Jb. 31, 31</strong><br><br>
                         <em>R. While they were eating Jesus took the bread and, pronouncing the blessing, he broke it and gave it to His disciples saying: * Take this and eat it, this is my body.</em><br>
                         V: My people said: To whom has He not given His meat to eat?<br>
@@ -180,43 +177,37 @@
 
             <div id="cycle-2-content" class="liturgical-cycle-content hidden">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Jl. 4:9 – 21 (Vulg. 3: 9 –21)</strong><br>
                         <em>After judgement the eternal happiness.</em><br><br>
                         A reading from the prophet Joel.<br>
                         Proclaim this among the nations: Prepare war, stir up the mighty men. Let all the men of war draw near, let them come up. Beat your ploughshares into swords, and your pruning hooks into spears; let the weak say, "I am a warrior." Hasten and come, all you nations round about, gather yourselves there. Bring down your warriors, O LORD. Let the nations bestir themselves, and come up to the valley of Jehosh'aphat; for there I will sit to judge all the nations round about. Put in the sickle, for the harvest is ripe. Go in, tread, for the winepress is full. The vats overflow, for their wickedness is great. Multitudes, multitudes, in the valley of decision! For the day of the LORD is near in the valley of decision. The sun and the moon are darkened, and the stars withdraw their shining. And the LORD roars from Zion, and utters his voice from Jerusalem, and the heavens and the earth shake. But the LORD is a refuge to his people, a stronghold to the people of Israel. "So you shall know that I am the LORD your God, who dwell in Zion, my holy mountain. And Jerusalem shall be holy and strangers shall never again pass through it. "And in that day the mountains shall drip sweet wine, and the hills shall flow with milk, and all the stream beds of Judah shall flow with water; and a fountain shall come forth from the house of the LORD and water the valley of Shittim. "Egypt shall become a desolation and Edom a desolate wilderness, for the violence done to the people of Judah, because they have shed innocent blood in their land. But Judah shall be inhabited forever, and Jerusalem to all generations. I will avenge their blood, and I will not clear the guilty, for the LORD dwells in Zion."
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Jl. 4, 18 (cfr. Vulg. 3, 18); Ap. 22, 17.1</strong><br><br>
                         <em>R. New wine flows out of the mountains and in all the streams of Judah water flows. A fountain will spring up from the house of the Lord. * He who is thirsty let him come, he who wants to draw freely the waters of life.</em><br>
                         V: The angel showed me a river of living water, clear as crystal, that gushed out from the throne of God and of the Lamb.<br>
                         <em>R. He who is thirsty let him come, he who wants to draw freely the waters of life.</em>
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Disc. 7,1.3.5.6.12</strong><br>
                         <em>We live in hope.</em><br><br>
                         A reading from the “Discourses on psalm 90” of St. Bernard, abbot.<br>
                         We live in hope, brothers, and we do not get discouraged in the present trials, because we live in the expectation of joy that will never be lacking. This expectation is not vain for us, nor does the hope give place to doubt, being founded on the promises of the eternal Truth. And then, also from the knowledge of the present gifts the certainty of the future reality can be deduced, and the power of the existing grace gives witness to us with great credibility the joy of the promised glory and what will undoubtedly follow it. In fact “ The Lord strong and powerful is the king of glory” (Ps. 23,8). Our loving faith sustains therefore the battle of this life with virile strength, and suffers serenely every type of persecution. Why not tolerate everything, from the moment that we possess that which is more important than every other thing: the promise for this present life and for the future one? We repel with strength the assailant, because the protector sustains uninterruptedly he who resists, and will not lack in rewarding the victorious with abundance. “ His faithfulness- he says – will be your shield and armour. (Ps. 90, 5). In the mean time therefore, dearest, glorify and carry Christ in your bodies (Cfr. 1 Cor. 6, 20): burden of love, sweet weight, baggage that saves even if some times it seems to oppress, even if some times it beats and scourges the sides of he who resists, even if at times it forces with bit and bridle (cfr. Ps. 31, 9), but always to bring us to happiness. Pay attention with a joyful heart to that which regards the promise of the future life and which is the object of our hope. “Where your treasure is, there will your heart be also” (Lk.12, 34). Listen to Him who, with the thought and desire, already draws near to the port of salvation, he who has almost thrown the anchor of his hope, seems to already tranquilly possess that desirable land, awaiting all the days of his military life until the hour of change arrives for him (cfr. Jb. 14, 14). It truly deals with a continuous and certain drawing near to that port; this life itself is a preparation for that departure, which is to the divine call. Finally “Grace and mercy” of God “are reserved for His elected ones” (Ws. 3, 9) and His gaze is on his servants in such a way, that they almost do not pay attention to their left, nor do they hold on tightly with loving protection to the right. It is what the prophet testifies of himself: “ I contemplated the Lord always before me; because He is at my right hand, so that I will not waver” (Acts 2, 25; cfr. Ps. 15, 8). That you may always be at my right hand, O good Jesus! That you may always hold on tight to my right hand! I know in fact with certainty that no adversary can hurt me, that no wickedness will be able to take possession of me.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Ps. 32; 18. 19; Ps. 33, 8</strong><br><br>
                         <em>R. Behold, the eye of the Lord looks on him who fears Him, on him who hopes in His grace: * to free him from death.</em><br>
                         V: The angel of the Lord encamps around those who fear Him.<br>
@@ -224,12 +215,11 @@
                     </p>
                 </section>
             </div>
-            
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
 
+            <hr class="border-dashed border-gray-300 my-6">
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Mt. 16: 13 – 23</strong><br><br>
                     A reading from the Gospel of St. Matthew.<br>
                     Now when Jesus came into the district of Caesare'a Philip'pi, he asked his disciples, "Who do men say that the Son of man is?" And they said, "Some say John the Baptist, others say Eli'jah, and others Jeremiah or one of the prophets." He said to them, "But who do you say that I am?" Simon Peter replied, "You are the Christ, the Son of the living God." And Jesus answered him, "Blessed are you, Simon Bar-Jona! For flesh and blood has not revealed this to you, but my Father who is in heaven. And I tell you, you are Peter, and on this rock I will build my church, and the powers of death shall not prevail against it. I will give you the keys of the kingdom of heaven, and whatever you bind on earth shall be bound in heaven, and whatever you loose on earth shall be loosed in heaven." Then he strictly charged the disciples to tell no one that he was the Christ. From that time Jesus began to show his disciples that he must go to Jerusalem and suffer many things from the elders and chief priests and scribes, and be killed, and on the third day be raised. And Peter took him and began to rebuke him, saying, "God forbid, Lord! This shall never happen to you." But he turned and said to Peter, "Get behind me, Satan! You are a hindrance to me; for you are not on the side of God, but of men."
@@ -238,30 +228,27 @@
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
-
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
-
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
-
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
@@ -277,11 +264,8 @@
             const cycle2Content = document.getElementById('cycle-2-content');
 
             function showContentForCycle(cycle) {
-                // Hide all content blocks
                 cycle1Content.classList.add('hidden');
                 cycle2Content.classList.add('hidden');
-
-                // Show the selected cycle's content
                 if (cycle === '1') {
                     cycle1Content.classList.remove('hidden');
                 } else if (cycle === '2') {
@@ -293,9 +277,8 @@
                 showContentForCycle(event.target.value);
             });
 
-            // Set the initial state based on the selected option
             showContentForCycle(cycleSelector.value);
-      });
+        });
     </script>
 </body>
 </html>

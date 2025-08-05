@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Office of Readings - iPray</title>
     <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="description" content="Daily Catholic Readings for Thursday, August 21, 2025. Readings include a prayer from Ephesians, the vanity of pleasures from Ecclesiastes, and the Gospel of Matthew on the rich young man.">
+    <meta name="description" content="Daily Catholic Readings for Thursday, August 14, 2025. Readings include the anointing of Jehu as king, a homily on boasting in the Lord, and the parable of the unforgiving servant.">
     <link rel="manifest" href="/ipray/manifest.json">
     <meta name="theme-color" content="#7C3AED">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,7 +37,6 @@
     <style>
         :root {
             --primary-color: #7C3AED;
-            --current-theme: 'light';
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -52,20 +51,10 @@
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -93,13 +82,13 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+<body class="min-h-screen bg-gradient-vintage text-gray-800">
 
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Thursday, August 21, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Thursday, August 14, 2025 • Ordinary Time</p>
             </div>
             <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,21 +100,21 @@
 
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
 
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <div class="flex items-center space-x-4 mb-6">
-                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Thursday of Week 20</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Thursday of Week 19</h3>
                 </div>
             </div>
 
             <div class="flex flex-col items-center mb-6">
-                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
-                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
                     <option value="1" selected>Cycle 1</option>
                     <option value="2">Cycle 2</option>
                 </select>
@@ -133,135 +122,136 @@
 
             <div id="cycle-1-content" class="liturgical-cycle-content">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Eph. 3:1 – 13</strong><br>
-                        <em>Paul herald of the mystery of God.</em><br><br>
-                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
-                        For this reason I, Paul, a prisoner for Christ Jesus on behalf of you Gentiles -- assuming that you have heard of the stewardship of God's grace that was given to me for you, how the mystery was made known to me by revelation, as I have written briefly. When you read this you can perceive my insight into the mystery of Christ, which was not made known to the sons of men in other generations as it has now been revealed to his holy apostles and prophets by the Spirit; that is, how the Gentiles are fellow heirs, members of the same body, and partakers of the promise in Christ Jesus through the gospel. Of this gospel I was made a minister according to the gift of God's grace which was given me by the working of his power. To me, though I am the very least of all the saints, this grace was given, to preach to the Gentiles the unsearchable riches of Christ, and to make all men see what is the plan of the mystery hidden for ages in God who created all things; that through the church the manifold wisdom of God might now be made known to the principalities and powers in the heavenly places. This was according to the eternal purpose that he has realized in Christ Jesus our Lord, in whom we have boldness and confidence of access through our faith in him. So I ask you not to lose heart over what I am suffering for you, which is your glory.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Kings 9: 1 – 16, 22 – 27</strong><br>
+                        <em>Jehu is made king of Israel by a disciple of Elisha.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        Then Eli'sha the prophet called one of the sons of the prophets and said to him, "Gird up your loins, and take this flask of oil in your hand, and go to Ramoth-gilead. And when you arrive, look there for Jehu the son of Jehosh'aphat, son of Nimshi; and go in and bid him rise from among his fellows, and lead him to an inner chamber. Then take the flask of oil, and pour it on his head, and say, ‘Thus says the LORD, I anoint you king over Israel.' Then open the door and flee; do not tarry." So the young man, the prophet, went to Ramoth-gilead. And when he came, behold, the commanders of the army were in council; and he said, "I have an errand to you, O commander." And Jehu said, "To which of us all?" And he said, "To you, O commander." So he arose, and went into the house; and the young man poured the oil on his head, saying to him, "Thus says the LORD the God of Israel, I anoint you king over the people of the LORD, over Israel. And you shall strike down the house of Ahab your master that I may avenge on Jez'ebel the blood of my servants the prophets, and the blood of all the servants of the LORD. For the whole house of Ahab shall perish; and I will cut off from Ahab every male, bond or free, in Israel. And I will make the house of Ahab like the house of Jerobo'am the son of Nebat, and like the house of Ba'asha the son of Ahi'jah. And the dogs shall eat Jez'ebel in the territory of Jezreel, and none shall bury her." Then he opened the door, and fled. When Jehu came out to the servants of his master, they said to him, "Is all well? Why did this mad fellow come to you?" And he said to them, "You know the fellow and his talk." And they said, "That is not true; tell us now." And he said, "Thus and so he spoke to me, saying, `Thus says the LORD, I anoint you king over Israel.'" Then in haste every man of them took his garment, and put it under him on the bare steps, and they blew the trumpet, and proclaimed, "Jehu is king." Thus Jehu the son of Jehosh'aphat the son of Nimshi conspired against Joram. (Now Joram with all Israel had been on guard at Ramoth-gilead against Haz'ael king of Syria; but King Joram had returned to be healed in Jezreel of the wounds which the Syrians had given him, when he fought with Haz'ael king of Syria.) So Jehu said, "If this is your mind, then let no one slip out of the city to go and tell the news in Jezreel." Then Jehu mounted his chariot, and went to Jezreel, for Joram lay there. And Ahazi'ah king of Judah had come down to visit Joram. And when Joram saw Jehu, he said, "Is it peace, Jehu?" He answered, "What peace can there be, so long as the harlotries and the sorceries of your mother Jez'ebel are so many?" Then Joram reined about and fled, saying to Ahazi'ah, "Treachery, O Ahazi'ah!" And Jehu drew his bow with his full strength, and shot Joram between the shoulders, so that the arrow pierced his heart, and he sank in his chariot. Jehu said to Bidkar his aide, "Take him up, and cast him on the plot of ground belonging to Naboth the Jezreelite; for remember, when you and I rode side by side behind Ahab his father, how the LORD uttered this oracle against him: `As surely as I saw yesterday the blood of Naboth and the blood of his sons -- says the LORD -- I will requite you on this plot of ground.' Now therefore take him up and cast him on the plot of ground, in accordance with the word of the LORD." When Ahazi'ah the king of Judah saw this, he fled in the direction of Bethhaggan. And Jehu pursued him, and said, "Shoot him also"; and they shot him in the chariot at the ascent of Gur, which is by Ibleam. And he fled to Megid'do, and died there.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Ep. 3, 8. 12; Rm. 1,5</strong><br><br>
-                        <em>R: To me who am the least known among all the saints, has been granted this grace of announcing to the Gentiles the special richness of Christ, * who gives us the courage to draw near in complete trust to God by the faith in Him.</em><br>
-                        V: We have received the grace of the apostolate to obtain the obedience to the faith on the part of all peoples, for the glory of his name.<br>
-                        <em>R: who gives us the courage to draw near in complete trust to God by the faith in Him.</em>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Kg. 9, 13. 12; Lk. 19, 36. 38</strong><br><br>
+                        <em>R. All of them hurriedly took their garments and laid it out under him, they sounded the trumpets and cried out: Jehu is king! * The Lord said: I anoint you king over Israel.</em><br>
+                        V: And as He advanced, they lay their cloaks on the road saying: Blessed is He who comes, the king, in the name of the Lord.<br>
+                        <em>R. The Lord said: I anoint you king over Israel.</em>
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Hom. 8</strong><br>
-                        <em>The mystery of the Church.</em><br><br>
-                        A reading from the “Homilies on the Song of Songs” of St. Gregory of Nyssa, bishop.<br>
-                        Let us base ourselves on the Apostle in order to interpret these mysteries. In his letter to the Ephesians, when he presents us with that great appearance of God that comes about in the flesh, he says that not only to the human nature, but also to the principalities and to the powers that are in the heavens has been revealed the multiform and unfathomable wisdom of God, manifested with the coming of Christ in the midst of men. Thus says the text: “so that it may be manifested now in heaven, through the Church, to the Principalities and to the Powers, the multiform wisdom of God, according to the eternal design that He has actualised in our Lord Jesus Christ.” (Ep. 3, 10) He “gives us the courage to draw near in complete faith to God through faith in Him” (Ep. 3, 12). Therefore it is exactly through the Church that the multiform and profound wisdom of God is manifested to the heavenly powers, which make us on the contrary to fulfil great and marvellous things. In what way in fact does life spring forth from death, justice from sin, blessing from cursing, glory from humiliation, power from weakness? In the beginning the heavenly powers had known a simple and uniform wisdom of God, which operated miracles according to its nature. Nor among the realities that could be seen was there anything different, because the divine nature, being power and strength, freely formed every creature with a simple act of will, imprinting the generative impulse to the nature of the things, and creating very beautifully all the things that sprung up from the same font of beauty. Now instead, through the Church, the different and multiple nature of the divine wisdom appears clearly to them, as a result of the connection of the opposites, and precisely: the Word that is made flesh, the Life united to death, his wounds and bruises that heal our wounds. And again: how the power of the adversary is defeated by the weakness of the cross, how he who is invisible by nature is manifested in the flesh; how he being the redeemer and the price of ransom itself frees the prisoners. He in fact hands over himself to death for us, without separating himself from life; he made himself servant, though remaining sovereign. The friends of the Bridegroom, knowing through the Church all these and other similar realities, so different and multiform, were enriched in intelligence in order to discover in the mystery a new aspect of the divine wisdom: and if it is not too audacious to affirm, contemplating through the Bride the beauty of the Bridegroom, they remained greatly wondering, as if in front of an unexpected and incomprehensible reality. God, in fact, who “no man has ever seen” as John says “nor can see” as Paul also affirms (1 Tm. 1, 16; cfr. Jn. 1, 18), has made the Church his body and, adding you to those who are called to salvation, builds it in charity, “so that we may all reach the state of the perfect man, in the measure of the full maturity of Christ himself” (Ep. 4, 13). If therefore the Church is the body of Christ, and Christ is the head of the body, which outlines the face of the Church with its character, the friends of the Bridegroom, fixing their gaze on this reality, are rendered more capable of understanding: in fact through the Church they can see with more transparency the Bridegroom himself, who by his very nature is invisible to their sight. Like those who are not capable of looking directly at the sun, can above all see it reflected in water: in the same way they see in a clear mirror, that is in the face of the Church, the sun of justice, who is understood by the mind at least in the measure in which it appears.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Hom. 20</strong><br>
+                        <em>He who glories, should glory in the Lord.</em><br><br>
+                        A reading from the “Homilies” of St. Basil the Great, bishop.<br>
+                        Let the wise man not glory in his wisdom, let not the mighty man glory in his might, let not the rich man glory in his riches. But what constitutes true boasting, and wherein is a man great? ‘Let him who glories glory in this’, it is written, ‘that he understands and knows me, that I am the Lord’. Herein lies the greatness of man, his glory and his majesty, truly to know what is great, to cling to it, and to seek glory from the Lord of glory. For the Apostle says, ‘Let him who boasts, boast of the Lord’, in the passage where he writes, ‘God made Christ our wisdom, our righteousness and sanctification and redemption; therefore, as it is written, let him who boasts, boast of the Lord’. A man glories fully and perfectly in God when he does not extol himself on account of his own righteousness, but knows that he is lacking in true righteousness, and that he is really justified by faith alone in Christ. Paul boasts of the fact that he despises his own righteousness, but seeks that righteousness by faith which comes through Christ, which comes from God, so that he may know him and the power of his resurrection, and may share his sufferings, becoming like him in his death, that if possible he may somehow attain the resurrection from the dead. Here all loftiness of pride has fallen. Nothing of which you may boast is left you, O man, so let your boast and your hope be founded on him, so that you mortify all that is yours, and seek your future life in Christ. Since we have the first fruits of this, we are already enjoying it, living totally in the grace and free gift of God. It is God who is at work with you both to will and to work for his good pleasure. What is more, through his Spirit, God reveals his wisdom, which he predestined for our glorification. God gives us strength and energy in our toils. ‘I worked harder than any of them’, says St. Paul, ‘though it was not I, but the grace of God which is with me’. God has freed us from dangers beyond all human hope. ‘We felt’, he says again, ‘that we had received the sentence of death, but that was to make us rely not on ourselves, but on God who raises the dead; he delivered us from so deadly a peril and he delivers us now. On him we have set our hope that he will deliver us again.’
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Ep. 4, 4- 5; 1Cor. 8, 6</strong><br><br>
-                        <em>R: Only one body, only one Spirit, as only one is the hope to which you have been called, that of your vocation; * only one Lord, only one faith, only one baptism.</em><br>
-                        V: For us there is only one God, the Father, and only one Lord Jesus Christ;<br>
-                        <em>R: only one Lord, only one faith, and only one baptism.</em>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Ws. 15, 3; Jn. 17, 3</strong><br><br>
+                        <em>R. To know you, O God, is perfect justice, * to know your power is the root of immortal life.</em><br>
+                        V: This is eternal life: that we know you, the only true God and he whom you have sent, Jesus Christ.<br>
+                        <em>R. to know your power is the root of immortal life.</em>
                     </p>
                 </section>
             </div>
 
             <div id="cycle-2-content" class="liturgical-cycle-content hidden">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Eccl. 7: 1 – 29</strong><br>
-                        <em>Do not know more than what is necessary.</em><br><br>
-                        A reading from the book of Ecclesiastes.<br>
-                        A good name is better than precious ointment; and the day of death, than the day of birth. It is better to go to the house of mourning than to go to the house of feasting; for this is the end of all men, and the living will lay it to heart. Sorrow is better than laughter, for by sadness of countenance the heart is made glad. The heart of the wise is in the house of mourning; but the heart of fools is in the house of mirth. It is better for a man to hear the rebuke of the wise than to hear the song of fools. For as the crackling of thorns under a pot, so is the laughter of the fools; this also is vanity. Surely oppression makes the wise man foolish, and a bribe corrupts the mind. Better is the end of a thing than it’s beginning; and the patient in spirit is better than the proud in spirit. Be not quick to anger, for anger lodges in the bosom of fools. Say not, "Why were the former days better than these?" For it is not from wisdom that you ask this. Wisdom is good with an inheritance, an advantage to those who see the sun. For the protection of wisdom is like the protection of money; and the advantage of knowledge is that wisdom preserves the life of him who has it. Consider the work of God; who can make straight what he has made crooked? In the day of prosperity be joyful, and in the day of adversity consider; God has made the one as well as the other, so that man may not find out anything that will be after him. In my vain life I have seen everything; there is a righteous man who perishes in his righteousness, and there is a wicked man who prolongs his life in his evil doing. Be not righteous overmuch, and do not make yourself over wise; why should you destroy yourself? Be not wicked overmuch, neither be a fool; why should you die before your time? It is good that you should take hold of this, and from that withhold not your hand; for he who fears God shall come forth from them all. Wisdom gives strength to the wise man more than ten rulers that are in a city. Surely there is not a righteous man on earth who does good and never sins. Do not give heed to all the things that men say, lest you hear your servant cursing you; your heart knows that many times you have yourself cursed others. All this I have tested by wisdom; I said, "I will be wise"; but it was far from me. That which is, is far off, and deep, very deep; who can find it out? I turned my mind to know and to search out and to seek wisdom and the sum of things, and to know the wickedness of folly and the foolishness that is madness. And I found bitterer than death the woman whose heart is snares and nets, and whose hands are fetters; he who pleases God escapes her, but the sinner is taken by her. Behold, this is what I found, says the Preacher, adding one thing to another to find the sum, which my mind has sought repeatedly, but I have not found. One man among a thousand I found, but a woman among all these I have not found. Behold, this alone I found, that God made man upright, but they have sought out many devices.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Zec. 11: 4- 12:8</strong><br>
+                        <em>Parable of the shepherds.</em><br><br>
+                        A reading from the prophet Zechariah.<br>
+                        Thus said the LORD my God: "Become shepherd of the flock doomed to slaughter. Those who buy them slay them and go unpunished; and those who sell them say, `Blessed be the LORD, I have become rich'; and their own shepherds have no pity on them. For I will no longer have pity on the inhabitants of this land, says the LORD. Lo, I will cause men to fall each into the hand of his shepherd, and each into the hand of his king; and they shall crush the earth, and I will deliver none from their hand. "So I became the shepherd of the flock doomed to be slain for those who trafficked in the sheep. And I took two staffs; one I named Grace, the other I named Union. And I tended the sheep. In one month I destroyed the three shepherds. But I became impatient with them, and they also detested me. So I said, "I will not be your shepherd. What is to die, let it die; what is to be destroyed, let it be destroyed; and let those that are left devour the flesh of one another." And I took my staff Grace, and I broke it, annulling the covenant that I had made with all the peoples. So it was annulled on that day, and the traffickers in the sheep, who were watching me, knew that it was the word of the LORD. Then I said to them, "If it seems right to you, give me my wages; but if not, keep them." And they weighed out as my wages thirty shekels of silver. Then the LORD said to me, "Cast it into the treasury" -- the lordly price at which I was paid off by them. So I took the thirty shekels of silver and cast them into the treasury in the house of the LORD. Then I broke my second staff Union, annulling the brotherhood between Judah and Israel. Then the LORD said to me, "Take once more the implements of a worthless shepherd. For lo, I am raising up in the land a shepherd who does not care for the perishing, or seek the wandering, or heal the maimed, or nourish the sound, but devours the flesh of the fat ones, tearing off even their hoofs. Woe to my worthless shepherd, who deserts the flock! May the sword smite his arm and his right eye! Let his arm be wholly withered, his right eye utterly blinded!" An Oracle, the word of the LORD concerning Israel: Thus says the LORD, who stretched out the heavens and founded the earth and formed the spirit of man within him: "Lo, I am about to make Jerusalem a cup of reeling to all the peoples round about; it will be against Judah also in the siege against Jerusalem. On that day I will make Jerusalem a heavy stone for all the peoples; all who lift it shall grievously hurt themselves. And all the nations of the earth will come together against it. On that day, says the LORD, I will strike every horse with panic, and its rider with madness. But upon the house of Judah I will open my eyes, when I strike every horse of the peoples with blindness. Then the clans of Judah shall say to themselves, `The inhabitants of Jerusalem have strength through the LORD of hosts, their God.' "On that day I will make the clans of Judah like a blazing pot in the midst of wood, like a flaming torch among sheaves; and they shall devour to the right and to the left all the peoples round about, while Jerusalem shall still be inhabited in its place, in Jerusalem. "And the LORD will give victory to the tents of Judah first, that the glory of the house of David and the glory of the inhabitants of Jerusalem may not be exalted over that of Judah. On that day the LORD will put a shield about the inhabitants of Jerusalem so that the feeblest among them on that day shall be like David, and the house of David shall be like God, like the angel of the LORD, at their head.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Prov. 20, 9; cfr. Qo. 7, 20; 1 Jn. 1, 8. 9.</strong><br><br>
-                        <em>R: Who can say: I have purified my heart, I am cleansed of my sin? * There does not exist a man so just, who does only good and never evil.</em><br>
-                        V: If we say that we are without sin, we deceive ourselves. If we recognise our sins, God is faithful and will forgive us.<br>
-                        <em>R: there does not exist a man so just, who does only good and never evil.</em>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Zec. 11, 12. 13; Mt. 26, 15</strong><br><br>
+                        <em>R. They weighed out thirty shekels of silver as my wages: * a good sum, with which I have been valued by them.</em><br>
+                        V: Judas said: How much do you want to give me for handing him over to you? And they fixed thirty silver coins.<br>
+                        <em>R. a good sum, with which I have been valued by them.</em>
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Istr. 1 on the faith, 3 – 5</strong><br>
-                        <em>The immense depth of God.</em><br><br>
-                        A reading from the “Instructions” of St. Columbanus, abbot.<br>
-                        God is everywhere, utterly vast, and everywhere near at hand, according to his own witness of himself; I am, he says, a God at hand and not a God afar off. The God we are seeking is not one who dwells far away from us; we have him within us, if we are worthy. For he resides in us like soul in body, if only we are sound members of him, if we are not dead in sins, if we are uninfected by the taint of a corrupt will; then truly does he reside in us who said, And I will live in them and move among them. Yet if we are worthy that he should be in us, then in truth we are vivified by him as his living members; for in him, as the Apostle says, we live and move and have our being. Who, I say, shall explore his highest summit to the measure of this unutterable and inconceivable being? Who shall dare to treat of the eternal source of the universe? Who shall boast of knowing the infinite God, who fills all and surrounds all, who enters into all and passes beyond all, who occupies all, who escapes all? Whom no man has ever seen as he is? There let no man venture to seek the unsearchable things of God, the nature, mode and cause of his existence. These are unspeakable, undiscoverable, unsearchable; only believe in simplicity and yet with firmness, that God is and shall be seen as he has been, since God is immutable. Who then, is God? He is the father, Son and Holy Spirit, one God. Seek no farther concerning God; for those who wish to know the great deep must first view the natural world. For knowledge of the Trinity is properly likened to the depths of the sea, according to that saying of the Sage, and the great deep, who shall fathom it? Since, just as the depth of the sea is invisible to human sight, even so the Godhead of the Trinity is found to be unknowable by human senses. And thus if, I say, a man wishes to know what he ought to believe, let him not think that he understands better by speech than by believing; because when he seeks it, knowledge of the godhead will recede farther than it was. Therefore seek the supreme wisdom, not in verbal debate, but by the perfection of a good life, not with the tongue but with the faith that issues from singleness of heart, not with that which is gathered from the guests of a learned irreligion. If then you seek the unutterable by discussion, he will fly farther from you than he was before. If you seek by faith, wisdom shall stand in her accustomed station at the gate, and where she dwells she shall at least in part be seen. But then is she also truly in some measure attained, when the invisible is believed in a manner that passes understanding; for God must be believed invisible as he is, though he be partly seen by the pure heart.
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>C. 2</strong><br>
+                        <em>Prayer to the good Shepherd.</em><br><br>
+                        A reading from the “Song of Songs” of St. Gregory of Nyssa, bishop.<br>
+                        Where do you pasture your flock, O good shepherd, you who take on your shoulders the whole flock, for the whole of human nature that you take on your shoulders forms one sheep? Show me the place of green pastures and the restful waters, lead me to the grass that nourishes, call me by name, so that I who am your sheep may hear your voice. Give me by your voice eternal life. Speak to me, you whom my soul loves. This is how I name you, for your name is above every name and cannot be uttered or comprehended by any rational nature. Your name that reveals your goodness is the love my soul has for you. How can I not love you who loved me, even though I was black, so much that you laid down your life for the sheep whose shepherd you are? Greater love than this cannot be conceived, that you should purchase my salvation with your life. Show me then, she says, where you pasture your flock that I may find the pasture of salvation and be satisfied with heavenly food, that food which a man must eat to enter into eternal life. I shall run to you, the fountain, I shall drink the heavenly draught which you pour forth for those who thirst, pouring water out of your side like a fountain when the veins were opened with the spear. If any man tastes of this he becomes a spring of water welling up to eternal life. If you feed me with these things you will make me lie down at noon, when, sleeping in peace, I shall rest in light that knows no shade. For everywhere at noon there is no shade when the sun shines over the peak upon which you make to lie down those whom you pasture, when you take your children with you into bed. None is thought worthy of this noonday rest unless he has become the son of light and of the day. He who has placed himself at an equal distance from the shadows of the dawn and of nightfall, that is from the beginning and the conclusion of evil, that man is made to lie down to rest at midday by the sun of righteousness. Show me then, she says, how I must sleep and what is the way to the noontide rest, that I may not lose your good and guiding hand and be brought by ignorance of truth to join the flock of sheep who are strangers to your flock. This she said when she was anxious about the beauty which she had been given by God, when she wished to learn how her loveliness might remain forever.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Ps. 35, 6 – 7; Rm. 11, 33</strong><br><br>
-                        <em>R: Lord, your grace is in heaven, you faithfulness till the clouds; * your justice is like the highest mountains, your judgement like the great abyss.</em><br>
-                        V: O profoundness of riches, wisdom and the science of God! How inscrutable are your judgements!<br>
-                        <em>R: your justice is like the highest mountains, your judgement like the great abyss.</em>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 26, 4. 13; Phil. 1, 21</strong><br><br>
+                        <em>R. One thing I asked of the Lord, this only I seek: to live in the house of the Lord all the days of my life. * I am sure of contemplating the goodness of the Lord in the land of the living.</em><br>
+                        V: For me to live is Christ and to die a gain.<br>
+                        <em>R. I am sure of contemplating the goodness of the Lord in the land of the living.</em>
                     </p>
                 </section>
             </div>
+            
+            <hr class="border-dashed border-gray-300 my-6">
 
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>Mt. 22: 1 – 14</strong><br>
-                        <em>Call all those whom you find to the wedding.</em><br><br>
-                        A reading from the Gospel of St. Matthew.<br>
-                        And again Jesus spoke to them in parables, saying, "The kingdom of heaven may be compared to a king who gave a marriage feast for his son, and sent his servants to call those who were invited to the marriage feast; but they would not come. Again he sent other servants, saying, `Tell those who are invited, Behold, I have made ready my dinner, my oxen and my fat calves are killed, and everything is ready; come to the marriage feast.' But they made light of it and went off, one to his farm, another to his business, while the rest seized his servants, treated them shamefully, and killed them. The king was angry, and he sent his troops and destroyed those murderers and burned their city. Then he said to his servants, `The wedding is ready, but those invited were not worthy. Go therefore to the thoroughfares, and invite to the marriage feast as many as you find.' And those servants went out into the streets and gathered all whom they found, both bad and good; so the wedding hall was filled with guests. "But when the king came in to look at the guests, he saw there a man who had no wedding garment; and he said to him, `Friend, how did you get in here without a wedding garment?' And he was speechless. Then the king said to the attendants, `Bind him hand and foot, and cast him into the outer darkness; there men will weep and gnash their teeth.' For many are called, but few are chosen."
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>Mt. 18: 21 – 19:1</strong><br>
+                    <em>I do not tell you to forgive seven times, but up to seventy times seven.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    Then Peter came up and said to him, "Lord, how often shall my brother sin against me, and I forgive him? As many as seven times?" Jesus said to him, "I do not say to you seven times, but seventy times seven." Therefore the kingdom of heaven may be compared to a king who wished to settle accounts with his servants. When he began the reckoning, one was brought to him who owed him ten thousand talents; and as he could not pay, his lord ordered him to be sold, with his wife and children and all that he had, and payment to be made. So the servant fell on his knees, imploring him, `Lord, have patience with me, and I will pay you everything.' And out of pity for him the lord of that servant released him and forgave him the debt. But that same servant, as he went out, came upon one of his fellow servants who owed him a hundred denarii; and seizing him by the throat he said, `Pay what you owe.' So his fellow servant fell down and besought him, `Have patience with me, and I will pay you.' He refused and went and put him in prison till he should pay the debt. When his fellow servants saw what had taken place, they were greatly distressed, and they went and reported to their lord all that had taken place. Then his lord summoned him and said to him, `You wicked servant! I forgave you all that debt because you besought me; and should not you have had mercy on your fellow servant, as I had mercy on you?' And in anger his lord delivered him to the jailers, till he should pay all his debt. So also my heavenly Father will do to every one of you, if you do not forgive your brother from your heart." Now when Jesus had finished these sayings, he went away from Galilee and entered the region of Judea beyond the Jordan.
                 </p>
             </section>
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
 
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
 
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
 
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>

@@ -7,9 +7,9 @@
     <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
     <meta name="description" content="Daily Catholic Readings for Saturday, August 16, 2025. Readings include the reign of Joash, the death of Elisha, the coming of John the Baptist, the last days of Jerusalem, and the Gospel of Matthew on letting the children come to Jesus.">
     <link rel="manifest" href="/ipray/manifest.json">
-    <meta name="theme-color" content="#7C3AED">
+    <meta name="theme-color" content="#2E7D32">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -17,13 +17,13 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#7C3AED',
+                        'primary': '#2E7D32',
                         'secondary': '#DB2777',
                         'accent': '#F59E0B',
                         'liturgical-purple': '#4A1E8A',
                         'liturgical-white': '#F8F9FA',
                         'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
+                        'liturgical-green': '#D1FAE5',
                         'liturgical-gold': '#FFD700',
                     },
                     backgroundImage: {
@@ -35,48 +35,25 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #7C3AED;
-            --current-theme: 'light';
-        }
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f8f4;
+            color: #1f2937;
             transition: all 0.3s ease;
         }
-        .theme-purple { --primary-color: #4A1E8A; }
-        .theme-red { --primary-color: #C41E3A; }
-        .theme-green { --primary-color: #2E7D32; }
-        .high-contrast { filter: contrast(1.5); }
-        .text-large { font-size: 1.25rem; }
-        .text-xxs { font-size: 0.7rem; }
         .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+            background: linear-gradient(135deg, #f3f8f4 0%, #e6f7e9 50%, #f0fdfa 100%);
         }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
+            border: 1px dashed #a7f3d0;
+            border-radius: 1rem;
+            padding: 2rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .card-hover {
-            transition: all 0.3s ease;
         }
         .card-hover:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .season-border {
-            border-style: dashed;
-            border-width: 1px;
         }
         .header-content {
             display: flex;
@@ -85,23 +62,49 @@
             position: relative;
             z-index: 10;
         }
-        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-        .border-green-200 { border-color: #bbf7d0; }
-        .text-green-800 { color: #166534; }
+        .bg-green-liturgical {
+            background-color: #d1fae5;
+            border-color: #a7f3d0;
+        }
+        .text-green-800 { color: #065f46; }
+        .border-green-200 { border-color: #a7f3d0; }
+        .text-gray-700 { color: #374151; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-800 { color: #1f2937; }
+        .text-gray-400 { color: #9ca3af; }
+        .font-bold { font-weight: 700; }
+        .text-2xl { font-size: 1.5rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .space-x-4 { gap: 1rem; }
+        .rounded-full { border-radius: 9999px; }
+        .shadow-sm { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+        .bg-white { background-color: #ffffff; }
+        .text-green-700 { color: #059669; }
+        .hover\:bg-green-700:hover { background-color: #047857; }
+        .text-sm { font-size: 0.875rem; }
+        .leading-relaxed { line-height: 1.625; }
+        .border-dashed { border-style: dashed; }
+        .my-6 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .hidden { display: none; }
+
         @media (max-width: 640px) {
             .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+<body class="min-h-screen bg-gradient-vintage">
 
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Saturday, August 16, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-green-700">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Saturday, August 16, 2025 • Ordinary Time</p>
             </div>
-            <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+            <a href="index.html" class="p-3 rounded-full bg-green-600 text-white hover:bg-green-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -110,22 +113,21 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
-
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+        <div class="rounded-3xl p-8 bg-green-liturgical backdrop-blur-sm shadow-xl border border-dashed border-green-200 space-y-8">
             <div class="flex items-center space-x-4 mb-6">
-                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Saturday of Week 19</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Saturday of Week 19</h3>
                 </div>
             </div>
 
             <div class="flex flex-col items-center mb-6">
-                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
-                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
                     <option value="1" selected>Cycle 1</option>
                     <option value="2">Cycle 2</option>
                 </select>
@@ -133,19 +135,19 @@
 
             <div id="cycle-1-content" class="liturgical-cycle-content">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        <strong>2 Kings 13:10 – 25</strong><br>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Kings 13:10–25</strong><br>
                         <em>The reign of Joash in Israel. Death of the prophet Elisha</em><br><br>
                         In the thirty-seventh year of Jo'ash king of Judah Jeho'ash the son of Jeho'ahaz began to reign over Israel in Sama'ria, and he reigned sixteen years. He also did what was evil in the sight of the LORD; he did not depart from all the sins of Jerobo'am the son of Nebat, which he made Israel to sin, but he walked in them. Now the rest of the acts of Jo'ash, and all that he did, and the might with which he fought against Amazi'ah king of Judah, are they not written in the Book of the Chronicles of the Kings of Israel? So Jo'ash slept with his fathers, and Jerobo'am sat upon his throne; and Jo'ash was buried in Sama'ria with the kings of Israel. Now when Eli'sha had fallen sick with the illness of which he was to die, Jo'ash king of Israel went down to him, and wept before him, crying, "My father, my father! The chariots of Israel and its horsemen!" And Eli'sha said to him, "Take a bow and arrows"; so he took a bow and arrows. Then he said to the king of Israel, "Draw the bow"; and he drew it. And Eli'sha laid his hands upon the king's hands. And he said, "Open the window eastward"; and he opened it. Then Eli'sha said, "Shoot"; and he shot. And he said, "The Lord’s arrow of victory, the arrow of victory over Syria! For you shall fight the Syrians in Aphek until you have made an end of them." And he said, "Take the arrows"; and he took them. And he said to the king of Israel, "Strike the ground with them"; and he struck three times, and stopped. Then the man of God was angry with him, and said, "You should have struck five or six times; then you would have struck down Syria until you had made an end of it, but now you will strike down Syria only three times." So Eli'sha died, and they buried him. Now bands of Moabites used to invade the land in the spring of the year. And as a man was being buried, lo, a marauding band was seen and the man was cast into the grave of Eli'sha; and as soon as the man touched the bones of Eli'sha, he revived, and stood on his feet. Now Haz'ael king of Syria oppressed Israel all the days of Jeho'ahaz. But the LORD was gracious to them and had compassion on them, and he turned toward them, because of his covenant with Abraham, Isaac, and Jacob, and would not destroy them; nor has he cast them from his presence until now. When Haz'ael king of Syria died, Ben-ha'dad his son became king in his stead. Then Jeho'ash the son of Jeho'ahaz took again from Ben-ha'dad the son of Haz'ael the cities which he had taken from Jeho'ahaz his father in war. Three times Jo'ash defeated him and recovered the cities of Israel.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-green-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>2 Kings 13:14; Mt 23:34</strong><br><br>
                         <em>R. Elisha became sick with the sickness of which he died; Jo’ash king of Israel, came down to visit him, he burst into tears in front of him and said: * My father, my father, chariot of Israel and his cavalry!</em><br>
                         V: Look, I will send prophets, wise men and scribes, and of these some they will kill and crucify.<br>
@@ -153,21 +155,21 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-green-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>There was a man sent by God</strong><br><br>
                         A reading from the “Discourses” of St. Aelred, Abbot<br>
-                        Elijah was the model of hermetic life in the Old Testament, in the new instead it is St. John the Baptist, he who comes with the strength and spirit of Elijah. It seems to me then that, as John came with the strength and the spirit of Elijah, so also Elijah preceded John in spirit and in virtue. That is that Elijah is referred to according to the letter, and John is referred to according to the spirit. Know well, brothers, as Elijah, while the time of the famine had already arrived, began his ministry in the act of speaking to Ahab, as the scripture says: “Elijah the Tishbite, one of the inhabitants of Galaad, said to Ahab” (1 Kg. 17, 1). Without putting before hand anything about his genealogy, about his type of life, about his religion, the Scripture introduces him in an unforeseen and inspired way, almost as if it did not come from a man or by means of a man, but as it is written also of our Elijah: “A man came sent by God and his name was John” (Jn. 1, 6). And when did this happen? While Ahab and the evil Jezabel, his wife, reigned. It is for this reason that during their reign the famine dominated over the earth, the rain ceased to fall, the frost did not fall anymore and everything was dried up. For this Elijah could say: By the life of the Lord, in whose presence I am standing, in these years there will be neither dew nor rain, until I will say so” (1 Kg. 17, 1). Do not ignore, my dearest, how pride and lust were reigning in the world when the coming of the Saviour was already near, to the point that no one seemed to be free from the passion of the domination, almost no one alien from the corruption of lust. Justly therefore did the hunger spread, bread was lacking and water could not be found anymore. When did all this happen? Precisely with the appearance of our Elijah. The law and the prophets in fact arrived up to John. The law, the bread, the prophetical doctrine, the water. Up to the coming of John in fact the law maintains all its vigour and the doctrine of the prophets was listened to. But look the hunger and thirsts breaks in: “not hunger for bread nor thirst for water, but of listening to the word of God” (Am. 8, 11). Elijah flees far away from Ahab. John also flees far away and remains in the desert, as the evangelist says of him: “He lived in deserted regions until the day of his manifestation to Israel” (Lk. 1, 80). And it was necessary that it came about like this. Justly he who would have been constituted above peoples and kingdoms to tear up and to disperse, to destroy and to plant and to build, to reproach kings and to kill the prophets of the Baals, to obtain yet again the rain and dew for the earth, had to be first of all hidden in the most hidden recesses in order to be thus instructed in the reality of the spirit.
+                        Elijah was the model of hermetic life in the Old Testament, in the new instead it is St. John the Baptist, he who comes with the strength and the spirit of Elijah. It seems to me then that, as John came with the strength and the spirit of Elijah, so also Elijah preceded John in spirit and in virtue. That is that Elijah is referred to according to the letter, and John is referred to according to the spirit. Know well, brothers, as Elijah, while the time of the famine had already arrived, began his ministry in the act of speaking to Ahab, as the scripture says: “Elijah the Tishbite, one of the inhabitants of Galaad, said to Ahab” (1 Kg. 17, 1). Without putting before hand anything about his genealogy, about his type of life, about his religion, the Scripture introduces him in an unforeseen and inspired way, almost as if it did not come from a man or by means of a man, but as it is written also of our Elijah: “A man came sent by God and his name was John” (Jn. 1, 6). And when did this happen? While Ahab and the evil Jezabel, his wife, reigned. It is for this reason that during their reign the famine dominated over the earth, the rain ceased to fall, the frost did not fall anymore and everything was dried up. For this Elijah could say: By the life of the Lord, in whose presence I am standing, in these years there will be neither dew nor rain, until I will say so” (1 Kg. 17, 1). Do not ignore, my dearest, how pride and lust were reigning in the world when the coming of the Saviour was already near, to the point that no one seemed to be free from the passion of the domination, almost no one alien from the corruption of lust. Justly therefore did the hunger spread, bread was lacking and water could not be found anymore. When did all this happen? Precisely with the appearance of our Elijah. The law and the prophets in fact arrived up to John. The law, the bread, the prophetical doctrine, the water. Up to the coming of John in fact the law maintains all its vigour and the doctrine of the prophets was listened to. But look the hunger and thirsts breaks in: “not hunger for bread nor thirst for water, but of listening to the word of God” (Am. 8, 11). Elijah flees far away from Ahab. John also flees far away and remains in the desert, as the evangelist says of him: “He lived in deserted regions until the day of his manifestation to Israel” (Lk. 1, 80). And it was necessary that it came about like this. Justly he who would have been constituted above peoples and kingdoms to tear up and to disperse, to destroy and to plant and to build, to reproach kings and to kill the prophets of the Baals, to obtain yet again the rain and dew for the earth, had to be first of all hidden in the most hidden recesses in order to be thus instructed in the reality of the spirit.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-green-300 my-6">
 
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Mt 17:11-12; 11:13-14</strong><br><br>
                         <em>R. Elijah will come to re-establish everything. But I tell you: Elijah has already come * and they have not recognised him; on the contrary they have treated him as they wanted.</em><br>
                         V: The Law and all the Prophets have prophesised up to John. And if you want to accept it, he is that Elijah who is to come.<br>
@@ -178,19 +180,19 @@
 
             <div id="cycle-2-content" class="liturgical-cycle-content hidden">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Zech 14:1–21</strong><br>
                         <em>Tribulations and glory of Jerusalem in the last times</em><br><br>
                         Behold, a day of the LORD is coming, when the spoil taken from you will be divided in the midst of you. For I will gather all the nations against Jerusalem to battle, and the city shall be taken and the houses plundered and the women ravished; half of the city shall go into exile, but the rest of the people shall not be cut off from the city. Then the LORD will go forth and fight against those nations as when he fights on a day of battle. On that day his feet shall stand on the Mount of Olives which lies before Jerusalem on the east; and the Mount of Olives shall be split in two from east to west by a very wide valley; so that one half of the Mount shall withdraw northward, and the other half southward. And the valley of my mountains shall be stopped up, for the valley of the mountains shall touch the side of it; and you shall flee as you fled from the earthquake in the days of Uzzi'ah king of Judah. Then the LORD your God will come, and all the holy ones with him. On that day there shall be neither cold nor frost. And there shall be continuous day (it is known to the LORD), not day and not night, for at evening time there shall be light. On that day living waters shall flow out from Jerusalem, half of them to the eastern sea and half of them to the western sea; it shall continue in summer as in winter. And the LORD will become king over all the earth; on that day the LORD will be one and his name one. The whole land shall be turned into a plain from Geba to Rimmon south of Jerusalem. But Jerusalem shall remain aloft upon its site from the Gate of Benjamin to the place of the former gate, to the Corner Gate, and from the Tower of Han'anel to the king's wine presses. And it shall be inhabited, for there shall be no more curse; Jerusalem shall dwell in security. And this shall be the plague with which the LORD will smite all the peoples that wage war against Jerusalem: their flesh shall rot while they are still on their feet, their eyes shall rot in their sockets, and their tongues shall rot in their mouths. And on that day a great panic from the LORD shall fall on them, so that each will lay hold on the hand of his fellow, and the hand of the one will be raised against the hand of the other; even Judah will fight against Jerusalem. And the wealth of all the nations round about shall be collected, gold, silver, and garments in great abundance. And a plague like this plague shall fall on the horses, the mules, the camels, the asses, and whatever beasts may be in those camps. Then every one that survives of all the nations that have come against Jerusalem shall go up year after year to worship the King, the LORD of hosts, and to keep the feast of booths. And if any of the families of the earth do not go up to Jerusalem to worship the King, the LORD of hosts, there will be no rain upon them. And if the family of Egypt do not go up and present themselves, then upon them shall come the plague with which the LORD afflicts the nations that do not go up to keep the feast of booths. This shall be the punishment to Egypt and the punishment to all the nations that do not go up to keep the feast of booths. And on that day there shall be inscribed on the bells of the horses, "Holy to the LORD." And the pots in the house of the LORD shall be as the bowls before the altar; and every pot in Jerusalem and Judah shall be sacred to the LORD of hosts, so that all who sacrifice may come and take of them and boil the flesh of the sacrifice in them. And there shall no longer be a trader in the house of the LORD of hosts on that day.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-green-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Zech 13:1; Jn. 19:34</strong><br><br>
                         <em>R. In that day there will be for the house of David and for the inhabitants of Jerusalem * a gushing stream to wash away sin.</em><br>
                         V: One of the soldiers pierced the side of Jesus with a lance and immediately there came out blood and water,<br>
@@ -198,22 +200,22 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-green-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Op. Theo. 2</strong><br>
                         <em>I will be satisfied when your glory will appear</em><br><br>
                         A reading from the “Conferences” of St. Thomas Aquinas, presbyter<br>
-                        It is fitting that the last article of faith in the creed should give expression to that which is the end of all our desires, namely eternal life, in the words, “Life everlasting, Amen.” The first thing to be noted is that in eternal life man is united to God, since God himself is our reward and the end of all our labours: “I am your shield and your very great reward.” This union with God consists in seeing him perfectly: “Now we see in a mirror dimly, but then face to face:” It consists in perfect praise. In the words of the prophet: “Joy and gladness will be found in her, thanksgiving and the voice of praise.” Eternal life is the perfect fulfilment of desire; inasmuch as each of the blessed will have more than he desired or hoped for. The reason for this is that in this life no man can fulfil his desires, nor can any creature satisfy a man s craving; for God alone satisfies and infinitely surpasses man’s desire, which for that reason is never at rest save in God. In the words of Augustine, “You have made us, O Lord, for yourself and our heart is restless until it rests in you.” And since in heaven the saints will possess God perfectly, it is evident that their desire will be satisfied and that their glory will surpass their expectation, hence our Lord said: “Enter into the joy of your Lord,” which Augustine explains by saying: “Their whole joy will not enter into the joyful, but the joyful will enter wholly into joy.”-“I shall be satisfied when your glory shall appear.” And again: “Who satisfies your desire with good,” because whatever is delightful will all be there superabundantly. Thus if we desire pleasure, there will be supreme and most perfect delight, in that its object will be God the sovereign good: “In your right hand is pleasure for evermore.” Finally, eternal life consists in the joyful companionship of all the blessed, a companionship which is full of delight; since each one will possess all good things together with all the blessed, for they will all love one another as themselves, and therefore, will rejoice in one another’s happiness as if it were their own, and consequently the joy and gladness of one will be as great as the joy of all.
+                        It is fitting that the last article of faith in the creed should give expression to that which is the end of all our desires, namely eternal life, in the words, “Life everlasting, Amen.” The first thing to be noted is that in eternal life man is united to God, since God himself is our reward and the end of all our labours: “I am your shield and your very great reward.” The union with God consists in seeing him perfectly: “Now we see in a mirror dimly, but then face to face:” It consists in perfect praise. In the words of the prophet: “Joy and gladness will be found in her, thanksgiving and the voice of praise.” Eternal life is the perfect fulfilment of desire; inasmuch as each of the blessed will have more than he desired or hoped for. The reason for this is that in this life no man can fulfil his desires, nor can any creature satisfy a man s craving; for God alone satisfies and infinitely surpasses man’s desire, which for that reason is never at rest save in God. In the words of Augustine, “You have made us, O Lord, for yourself and our heart is restless until it rests in you.” And since in heaven the saints will possess God perfectly, it is evident that their desire will be satisfied and that their glory will surpass their expectation, hence our Lord said: “Enter into the joy of your Lord,” which Augustine explains by saying: “Their whole joy will not enter into the joyful, but the joyful will enter wholly into joy.”—“I shall be satisfied when your glory shall appear.” And again: “Who satisfies your desire with good,” because whatever is delightful will all be there superabundantly. Thus if we desire pleasure, there will be supreme and most perfect delight, in that its object will be God the sovereign good: “In your right hand is pleasure for evermore.” Finally, eternal life consists in the joyful companionship of all the blessed, a companionship which is full of delight; since each one will possess all good things together with all the blessed, for they will all love one another as themselves, and therefore, will rejoice in one another’s happiness as if it were their own, and consequently the joy and gladness of one will be as great as the joy of all.
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-green-300 my-6">
 
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>cf. Ps 16:15; 1 Cor 13:12</strong><br><br>
                         <em>R. In my justice I will contemplate your face, Lord; * as I wake up I will be filled with your presence.</em><br>
                         V: Now I know in an imperfect way, but then I will know perfectly, as also I have been known;<br>
@@ -221,14 +223,14 @@
                     </p>
                 </section>
             </div>
-            
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <hr class="border-dashed border-green-300 my-6">
 
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    <strong>Mt 19:13 – 15</strong><br>
-                    <em>Let the children come to me Because it is to them that the kingdom of heaven belongs</em><br><br>
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>Mt 19:13–15</strong><br>
+                    <em>Let the children come to me. Because it is to them that the kingdom of heaven belongs.</em><br><br>
                     A reading from the Gospel of St. Matthew.<br>
                     Then children were brought to Jesus that he might lay his hands on them and pray. The disciples rebuked the people; but Jesus said, "Let the children come to me, and do not hinder them; for to such belongs the kingdom of heaven." And he laid his hands on them and went away.
                 </p>
@@ -236,30 +238,27 @@
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-green-600 hover:text-green-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
-
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
-
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
-
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
@@ -274,26 +273,22 @@
             const cycle1Content = document.getElementById('cycle-1-content');
             const cycle2Content = document.getElementById('cycle-2-content');
 
-            function showContent() {
-                const selectedCycle = cycleSelector.value;
-
-                // Hide all cycle content
+            function showContentForCycle(cycle) {
                 cycle1Content.classList.add('hidden');
                 cycle2Content.classList.add('hidden');
-
-                // Show the selected cycle content
-                if (selectedCycle === '1') {
+                if (cycle === '1') {
                     cycle1Content.classList.remove('hidden');
-                } else if (selectedCycle === '2') {
+                } else if (cycle === '2') {
                     cycle2Content.classList.remove('hidden');
                 }
             }
 
-            cycleSelector.addEventListener('change', showContent);
+            cycleSelector.addEventListener('change', (event) => {
+                showContentForCycle(event.target.value);
+            });
 
-            // Set the initial state based on the default selected options
-            showContent();
-       });
+            showContentForCycle(cycleSelector.value);
+        });
     </script>
 </body>
 </html>

@@ -52,20 +52,10 @@
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -93,13 +83,13 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 text-black">
 
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Monday, August 18, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Monday, August 18, 2025 • Ordinary Time</p>
             </div>
             <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,21 +101,21 @@
 
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
 
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <div class="flex items-center space-x-4 mb-6">
-                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Monday of Week 20</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Monday of Week 20</h3>
                 </div>
             </div>
 
             <div class="flex flex-col items-center mb-6">
-                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
-                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
                     <option value="1" selected>Cycle 1</option>
                     <option value="2">Cycle 2</option>
                 </select>
@@ -133,8 +123,8 @@
 
             <div id="cycle-1-content" class="liturgical-cycle-content">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Eph. 1: 15 – 23</strong><br>
                         <em>The prayer of Paul so that the faithful may be illuminated.</em><br><br>
                         A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
@@ -142,11 +132,11 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Ep. 1, 17. 18; 1 Cor. 2, 12.</strong><br><br>
                         <em>R: God will give you a spirit of wisdom and of revelation in order to make you understand the hope to which He has called you. * And to which treasure of glory His inheritance among the saints encloses.</em><br>
                         V: We have not received the spirit of the world, but the Spirit of God, so that we may know all that God has given us.<br>
@@ -154,11 +144,11 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Hom. 2, 6</strong><br>
                         <em>We have Christ who is our peace and our light.</em><br><br>
                         A reading from the treatise “On Christian Perfection” of St. Gregory of Nyssa, bishop.<br>
@@ -166,10 +156,10 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Cfr. Lk. 1, 78. 79</strong><br><br>
                         <em>R: He will come to visit us like the sun that rises on high: * He will guide our steps on the way of peace.</em><br>
                         V: He will give light to those in darkness and those who live in the shadow of death.<br>
@@ -180,8 +170,8 @@
 
             <div id="cycle-2-content" class="liturgical-cycle-content hidden">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Eccl. 2: 1 – 3, 12 – 26</strong><br>
                         <em>The vanity of pleasures and of human wisdom.</em><br><br>
                         A reading from the book of Ecclesiastes.<br>
@@ -189,11 +179,11 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>cfr. Qo. 2, 26; 1, 14; 1 Tm. 6, 10</strong><br><br>
                         <em>R: To the one who is pleasing to Him God concedes wisdom, science and joy; to the sinner He leaves the punishment of gathering and amassing. * All is vanity and a chasing of the wind.</em><br>
                         V: To attach oneself to riches is the root of all evils; because of the unrestrained desire of it, some are tormented with many sorrows.<br>
@@ -201,11 +191,11 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Hom 5</strong><br>
                         <em>The wise man has his eyes in front.</em><br><br>
                         A reading from the “Homilies on Ecclesiastes” of St. Gregory of Nyssa, bishop.<br>
@@ -213,10 +203,10 @@
                     </p>
                 </section>
 
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+                <hr class="border-dashed border-gray-300 my-6">
 
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>cfr. Ps. 122, 2; Jn. 8, 12</strong><br><br>
                         <em>R: See how the eyes of the servants are fixed on the hands of their masters. * Our eyes, too, are fixed on the Lord our God, waiting for His mercy.</em><br>
                         V: I am the light of the world; he who follows me, will not walk in the dark, but will have the light of life.<br>
@@ -225,10 +215,10 @@
                 </section>
             </div>
 
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+            <hr class="border-dashed border-gray-300 my-6">
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Mt. 19: 16 – 22</strong><br>
                     <em>If you want to be perfect sell all that you possess and you will have a treasure in heaven.</em><br><br>
                     A reading from the Gospel of St. Matthew.<br>
@@ -238,30 +228,30 @@
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
 
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
 
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
 
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
@@ -295,7 +285,7 @@
 
             // Set the initial state based on the default selected options
             showContent();
-       });
+        });
     </script>
 </body>
 </html>

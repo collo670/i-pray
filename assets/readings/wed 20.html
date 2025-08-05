@@ -37,7 +37,6 @@
     <style>
         :root {
             --primary-color: #7C3AED;
-            --current-theme: 'light';
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -52,20 +51,10 @@
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -93,13 +82,13 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+<body class="min-h-screen bg-gradient-vintage">
 
-    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="header-content">
             <div>
-                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Wednesday, August 20, 2025 • Ordinary Time</p>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Wednesday, August 20, 2025 • Ordinary Time</p>
             </div>
             <a href="index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,22 +99,21 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
-
-        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
             <div class="flex items-center space-x-4 mb-6">
-                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Wednesday of Week 20</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Wednesday of Week 20</h3>
                 </div>
             </div>
 
             <div class="flex flex-col items-center mb-6">
-                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
-                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
                     <option value="1" selected>Cycle 1</option>
                     <option value="2">Cycle 2</option>
                 </select>
@@ -133,43 +121,37 @@
 
             <div id="cycle-1-content" class="liturgical-cycle-content">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Eph. 2:11- 22</strong><br>
                         <em>The pagans reconciled with the Jews and with God.</em><br><br>
                         A reading from the Letter of St. Paul, apostle, to the Ephesians.<br>
                         Therefore remember that at one time you Gentiles in the flesh, called the uncircumcision by what is called the circumcision, which is made in the flesh by hands -- remember that you were at that time separated from Christ, alienated from the commonwealth of Israel, and strangers to the covenants of promise, having no hope and without God in the world. But now in Christ Jesus you who once were far off have been brought near in the blood of Christ. For he is our peace, who has made us both one, and has broken down the dividing wall of hostility, by abolishing in his flesh the law of commandments and ordinances, that he might create in himself one new man in place of the two, so making peace, and might reconcile us both to God in one body through the cross, thereby bringing the hostility to an end. And he came and preached peace to you who were far off and peace to those who were near; for through him we both have access in one Spirit to the Father. So then you are no longer strangers and sojourners, but you are fellow citizens with the saints and members of the household of God, built upon the foundation of the apostles and prophets, Christ Jesus himself being the cornerstone, in whom the whole structure is joined together and grows into a holy temple in the Lord; in whom you also are built into it for a dwelling place of God in the Spirit.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Ep. 2, 14. 16. 17 – 18. 13</strong><br><br>
                         <em>R: Christ is our peace, He who has made of the two only one people, destroying in Himself the enmity. He has come to announce peace to you who were far away and peace to those who were close. * Through Him we can present ourselves, one and the other, to the Father in only one Spirit.</em><br>
                         V: Now in Christ Jesus we have become close thanks to the blood of Christ.<br>
                         <em>R: Through Him we can present ourselves, one and the other, to the Father in only one Spirit.</em>
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Book 10</strong><br>
                         <em>Participating at the Eucharistic table, Christ in us and we in Him become only one thing.</em><br><br>
                         A reading from the “Commentary on the Gospel of John” of St. Cyril of Alexandria, bishop.<br>
                         That it may be possible to unite ourselves spiritually to Christ with an interior disposition of perfect charity, with an upright and firm faith, with a sincere soul that desires virtue, is not at all denied by the doctrine of our dogmas: on the contrary we affirm that it teaches us exactly this. Who in fact can doubt, by the strength of that doctrine, that Christ is the vine and we the branches, that from him and for him we have life, from the moment that Paul affirms: “Because there is only one bread, so we even though there are many, we are only one body” in Christ; “all of us in fact participate in only one bread” (1 Cor. 10, 17)? Someone will tell us therefore the cause of the Eucharist and will explain the strength of it. For what reason does it enter into us? Is it not perhaps because Christ lives in us also bodily, through the participation and the communion with his holy body? It is evident: Paul in fact writes that “the Gentiles are called, in Christ Jesus, to participate in the same inheritance, to form the same body and to be participants of the promise by means of the Gospel” (Ep. 3, 6). And in what way have they become the same body? It is through the participation in the sacred Eucharistic table that they are made one body with him, as it happened for each of the apostles. Otherwise for what reason would he call members of Christ his members, that is those of everyone, like his own? He writes in fact: “ Do you not know that your bodies are the members of Christ? Will you therefore take the members of Christ and make them members of a prostitute? May it never be!” (1 Cor. 6, 15). The Saviour himself says: “He who eats my flesh and drinks my blood lives in me and I in him” (Jn. 6, 56). Worthy of attention is the significance of this work: Christ does not say that he will come in us only through a certain affective relationship, but also through a participation of nature. As in fact if one dissolves on the fire two pieces of wax, of the two he will make one only, in the same way, communicating with the body of Christ and with his precious blood, we become only one thing, he in us and we in him. That which is corruptible by nature cannot be vivified in another way, if it is not united bodily to the body of him who by his very nature is the Life, that is the Only Begotten Son. But if you will not let yourself be persuaded by my words adhere with faith to Christ in person who says: “Truly, truly I say to you: if you do not eat the flesh of the Son of Man and do not drink his blood, you will not have life in you. He who eats my flesh and drinks my blood has eternal life and I will raise him up on the last day” (Jn. 6, 53-54).
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>1 Cor. 10, 16; Ps. 22, 5</strong><br><br>
                         <em>R: Is not perhaps the chalice of the blessing that we bless, a communion with the blood of Christ? *</em><br>
                         V: Before me you prepare a table: my chalice brims over.<br>
@@ -180,43 +162,37 @@
 
             <div id="cycle-2-content" class="liturgical-cycle-content hidden">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Eccl. 5: 9 – 6:8</strong><br>
                         <em>The vanity of riches.</em><br><br>
                         A reading from the book of Ecclesiastes.<br>
                         But in all, a king is an advantage to a land with cultivated fields. He who loves money will not be satisfied with money; nor he who loves wealth, with gain: this also is vanity. When goods increase, they increase who eat them; and what gain has their owner but to see them with his eyes? Sweet is the sleep of a labourer, whether he eats little or much; but the surfeit of the rich will not let him sleep. There is a grievous evil that I have seen under the sun: riches were kept by their owner to his hurt, and those riches were lost in a bad venture; and he is father of a son, but he has nothing in his hand. As he came from his mother's womb he shall go again, naked as he came, and shall take nothing for his toil, which he may carry away in his hand. This also is a grievous evil: just as he came, so shall he go; and what gain has he that he toiled for the wind, and spent all his days in darkness and grief, in much vexation and sickness and resentment? Behold, what I have seen to be good and to be fitting is to eat and drink and find enjoyment in all the toil with which one toils under the sun the few days of his life which God has given him, for this is his lot. Every man also to whom God has given wealth and possessions and power to enjoy them, and to accept his lot and find enjoyment in his toil -- this is the gift of God. For he will not much remember the days of his life because God keeps him occupied with joy in his heart. There is an evil which I have seen under the sun, and it lies heavy upon men: a man to whom God gives wealth, possessions, and honour, so that he lacks nothing of all that he desires, yet God does not give him power to enjoy them, but a stranger enjoys them; this is vanity; it is a sore affliction. If a man begets a hundred children, and lives many years, so that the days of his years are many, but he does not enjoy life's good things, and also has no burial, I say that an untimely birth is better off than he. For it comes into vanity and goes into darkness, and in darkness its name is covered; moreover it has not seen the sun or known anything; yet it finds rest rather than he. Even though he should live a thousand years twice told, yet enjoy no good -- do not all go to the one place? All the toil of man is for his mouth, yet his appetite is not satisfied. For what advantage has the wise man over the fool? And what does the poor man have who knows how to conduct himself before the living?
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Responsorial</h2>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>cfr. Prov. 30, 8; Ps. 30, 15. 16</strong><br><br>
                         <em>R: Keep falsehood and lies far away from me, O Lord. * Do not give me either poverty or riches, but only the food that is necessary.</em><br>
                         V: I trust in you, Lord; in your hands are my days.<br>
                         <em>R: Do not give me either poverty or riches, but only the food that is necessary.</em>
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
-                    <p class="text-700 dark:text-gray-300 leading-relaxed">
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Commentary on Ecclesiastes by St. Jerome</strong><br>
                         <em>Search for the things of above.</em><br><br>
                         A reading from the “Commentary on Ecclesiastes” of St. Jerome, presbyter.<br>
                         ‘Every man to whom God has given wealth and possessions and power to enjoy them, and to accept his lot and find enjoyment in his toil – this is the gift of God. For he will not much remember the days of his life because God keeps him occupied with joy in his heart.’ In comparison with the man who feeds upon wealth in the gloom of cares and hoards up perishable things with great heaviness of life, he says that man is better who enjoys his present joys. For in one case there is perhaps little pleasure in enjoyment; but in the other there is only a multitude of cares. And he gives the reasons why it is a gift of God to enjoy wealth. Because ‘he will not much remember the days of his life’. If God calls him away in the happiness of his heart, it will not be in sadness, he will not be troubled by anxiety, taken away in happiness and present pleasure. But it is better that spiritual food and spiritual drink should be understood, according to the words of St. Paul, and to see goodness in all one’s labour, for with great labour and zeal we can behold true goods. And this is our task, that we should rejoice in our zeal and our labour. Even though that is good, until Christ is manifest in our life it is not yet fully good. ‘All the toil of a man is for his mouth, yet his spirit is not filled. For what advantage has the wise man over the fool? And what does the poor man have who knows how to conduct himself before the living.’ All, over which men labour in the world, is consumed in the mouth, and munched by the teeth, it passes down to the stomach to be digested. For the little while that it delights the appetite, it seems to give pleasure while it is held in the mouth. When it has passed to the belly, there ceases to be any difference between sorts of food. After all this, the soul of the eater is not satisfied; either because it again longs for what it has eaten, and both the wise man and the fool cannot live without food, and the poor man seeks for nothing except how he can keep the organism of his pitiful body alive and not die of hunger, or because the soul gains no advantage from the refreshment of the body and food is the same to the wise man and the fool alike and the poor man goes where he can see wealth. It is better however that we should understand this about the writer of Ecclesiastes who, being learned in the heavenly scriptures, has his labour in his mouth and yet his soul is not satisfied since he always longs to learn. In this matter the wise man has the advantage over the fool, that, when he feels that he is poor (by ‘poor’ we mean the man who is called blessed in the gospel), he hurries to find out those things which pertain to life, and he travels along that narrow, confined path which leads to life, and is poor in evil works, and knows where Christ dwells, who is life.
                     </p>
                 </section>
-
-                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
-
+                <hr class="border-dashed border-gray-300 my-6">
                 <section>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed">
                         <strong>Cfr. Sir. 23, 4. 5. 6. 1</strong><br><br>
                         <em>R: Lord, father and God of my life, do not put me at the mercy of impudent looks, drive concupiscence away from me. May sensuality and lustfulness not take control over me; * that I may not serve embarrassing desires.</em><br>
                         V: Lord do not abandon me to their will, do not let me fall because of them:<br>
@@ -225,10 +201,10 @@
                 </section>
             </div>
 
-            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+            <hr class="border-dashed border-gray-300 my-6">
             <section>
-                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
                     <strong>Mt. 20. 1 – 16</strong><br>
                     <em>You are envious because I am good.</em><br><br>
                     A reading from the Gospel of St. Matthew.<br>
@@ -238,30 +214,27 @@
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
-            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
-
-            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 <span class="text-xs font-medium">Lauds</span>
             </a>
-
-            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs font-medium">Calendar</span>
             </a>
-
-            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
@@ -278,12 +251,8 @@
 
             function showContent() {
                 const selectedCycle = cycleSelector.value;
-
-                // Hide all cycle content
                 cycle1Content.classList.add('hidden');
                 cycle2Content.classList.add('hidden');
-
-                // Show the selected cycle content
                 if (selectedCycle === '1') {
                     cycle1Content.classList.remove('hidden');
                 } else if (selectedCycle === '2') {
@@ -292,11 +261,8 @@
             }
 
             cycleSelector.addEventListener('change', showContent);
-
-            // Set the initial state based on the default selected options
             showContent();
-
-                });
+        });
     </script>
 </body>
 </html>
