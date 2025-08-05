@@ -6,14 +6,17 @@
     <title>ipray - Your prayer Companion</title>
     <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
     <meta name="description" content="A Catholic liturgical companion app for daily prayer and worship">
+    
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/ipray/manifest.json">
     <meta name="theme-color" content="#7C3AED">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
@@ -36,28 +39,49 @@
             }
         }
     </script>
+    
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <style>
         :root {
             --primary-color: #7C3AED;
+            --current-theme: 'light';
         }
         body {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
         }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
         .text-large { font-size: 1.25rem; }
         .text-xxs { font-size: 0.7rem; }
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
         .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
         .card-highlighted {
+            background-color: #4a4a4a;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+        body.light-mode .card-highlighted {
             background-color: #e0e0e0;
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
@@ -106,6 +130,7 @@
                 box-shadow: 0 4px 6px rgba(0,0,0,0.3);
                 transition: transform 0.3s ease;
             }
+
             .bottom-nav {
         padding-bottom: max(env(safe-area-inset-bottom), 1rem);
     }
@@ -114,26 +139,26 @@
 <body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <div id="app" class="relative z-10">
         <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
     <div class="header-content">
         <div>
-            <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                 ipray
             </h1>
-            <p id="appSubtitle" class="text-sm text-gray-600">
+            <p id="appSubtitle" class="text-sm text-gray-600 dark:text-gray-400">
                 Your Prayer Companion
             </p>
         </div>
         <div class="flex items-center">
-            <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-all duration-300 z-20 hidden">
+            <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300 z-20">
                 <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
             </button>
-            <button id="languageToggle" class="p-2 rounded-full bg-gray-200 ml-4 text-sm font-medium">
+            <button id="languageToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 ml-4 text-sm font-medium">
                 EN
             </button>
-            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2">
+            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 ml-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -142,25 +167,28 @@
         </div>
     </div>
 </header>
+
 <main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6">
     <div id="homeView" class="space-y-8">
+
         <!-- Liturgical Season Image (static, styled by CSS) -->
         <div class="flex justify-center mb-4">
             <img class="season-img" src="/assets/images/bikira maria.jpg" alt="Liturgical Season">
         </div>
-        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 season-border">
+
+        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-purple-900/30 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-purple-800/30 season-border">
             <div class="text-center">
-                <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 bg-white/60">
+                <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-300 bg-white/60 dark:bg-black/20">
                     <span id="season">ordinary</span> <span id="liturgicalYear">2023</span>
                 </div>
-                <h2 class="text-3xl font-bold mb-2 text-gray-800">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
                     <span id="currentDate">Loading...</span>
                 </h2>
-                <p id="feastDay" class="text-xl text-purple-800 font-medium hidden">
+                <p id="feastDay" class="text-xl text-purple-800 dark:text-purple-300 font-medium hidden">
                     Feast of All Saints
                 </p>
                 <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
-                    <p id="liturgicalQuote" class="text-sm text-gray-600">
+                    <p id="liturgicalQuote" class="text-sm text-gray-600 dark:text-gray-300">
                         May your prayers today bring you closer to God's grace and peace.
                     </p>
                 </div>
@@ -169,21 +197,24 @@
         <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <!-- Navigation items populated by JavaScript -->
         </div>
+
                 <!-- Prayer content -->
-                <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+                <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4">
                     <!-- Header with image and title -->
                     <div class="flex items-center space-x-4">
                         <img src="/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
-                        <h2 class="text-xl font-semibold text-gray-800">Pray To Carmen Hernandez</h2>
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Pray To Carmen Hernandez</h2>
                     </div>
+
                         <!-- "Tap to view" button -->
                         <div class="mt-3 text-center">
-                            <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none">
+                            <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
                                 Tap to view
                             </button>
                         </div>
+
                         <!-- Collapsible prayer section -->
-                        <div id="prayerText" class="mt-4 hidden text-gray-700 leading-relaxed">
+                        <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed">
                             <p><strong>Oh Lord</strong>,
                             that by electing the servant of God Carmen Hernández
                             as co-initiator of the Neocatechumenal Way,
@@ -197,21 +228,27 @@
                             <p><strong>Final:</strong> Our Father. Hail Mary. Glory be. ...</p>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </main>
+
+        
+       
 <!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;">
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;">
     <div class="flex justify-around h-full items-center">
         <!-- Home -->
-        <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
+        <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400" data-translate="home">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             <span class="text-xs font-medium" data-translate="home">Home</span>
         </a>
+
         <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
+        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-translate="lauds">
             <!-- Sunrise Icon -->
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -220,15 +257,17 @@
             </svg>
             <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
         </a>
+
         <!-- Calendar -->
-        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
+        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-translate="calendar">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
         </a>
+
         <!-- Settings -->
-        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
+        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-translate="settings">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             </svg>
@@ -236,17 +275,18 @@
         </a>
     </div>
 </nav>
+        
         <!-- Accessibility Menu -->
-        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white shadow-lg rounded-lg p-4 z-50 hidden">
-            <h4 class="font-bold mb-2 text-gray-800">Accessibility</h4>
+        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 z-50 hidden">
+            <h4 class="font-bold mb-2 text-gray-800 dark:text-white">Accessibility</h4>
             <div class="space-y-2">
-                <button id="highContrastToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                <button id="highContrastToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                     </svg>
                     <span>High Contrast</span>
                 </button>
-                <button id="textSizeToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                <button id="textSizeToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
@@ -255,6 +295,7 @@
             </div>
         </div>
     </div>
+
     <script>
         // Translations
         const translations = {
@@ -295,16 +336,45 @@
                 quoteOrdinary: "Naomba maombi yako leo yakuweze karibu na neema na amani ya Mungu."
             }
         };
+
+        // Theme and Dark Mode Management - Only use app's own setting, ignore device preference//
+                    function applyThemeAndDarkMode() {
+                        // Only use saved mode, default to light if not set
+                        const savedMode = localStorage.getItem('themeMode');
+                        let isDark = false;
+                        if (savedMode === 'dark') isDark = true;
+                        if (savedMode === 'light' || !savedMode) isDark = false;
+                        applyDarkMode(isDark);
+                    }
+
+                    function applyDarkMode(isDark) {
+                        document.body.classList.toggle('dark', isDark);
+                        document.documentElement.classList.toggle('dark', isDark);
+                        document.body.classList.toggle('light-mode', !isDark);
+
+                        // Update icon
+                        const themeIcon = document.getElementById('themeIcon');
+                        if (themeIcon) {
+                            themeIcon.innerHTML = isDark ?
+                                `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />` : // Sun
+                                `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`; // Moon
+                        }
+
+                        // Always save user choice
+                        localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
+                    }
         
-        function togglePrayer() {
-            const prayerText = document.getElementById('prayerText');
-            const toggleBtn = document.getElementById('togglePrayerBtn');
-            prayerText.classList.toggle('hidden');
-            if (!prayerText.classList.contains('hidden')) {
-                toggleBtn.classList.add('hidden'); // Hide "Tap to view" after expanding
-            }
-        }
-        
+            function togglePrayer() {
+                    const prayerText = document.getElementById('prayerText');
+                    const toggleBtn = document.getElementById('togglePrayerBtn');
+                    prayerText.classList.toggle('hidden');
+                    if (!prayerText.classList.contains('hidden')) {
+                        toggleBtn.classList.add('hidden'); // Hide "Tap to view" after expanding
+                    }
+                }
+
+
+
         // Language Management
         function setLanguage(lang) {
             localStorage.setItem('preferredLanguage', lang);
@@ -319,7 +389,7 @@
             const season = document.getElementById('season').textContent;
             updateLiturgicalQuote(season, lang);
         }
-        
+
         // Accessibility Features
         function initAccessibility() {
             document.getElementById('accessibilityToggle').addEventListener('click', function(e) {
@@ -344,21 +414,24 @@
                 document.body.classList.add('text-large');
             }
         }
-        
+
         // Navigation
         function getCurrentWeekNumber() {
             const today = new Date();
             const currentSunday = new Date(today);
             currentSunday.setDate(today.getDate() - today.getDay());
             currentSunday.setHours(0, 0, 0, 0);
+
             // Week 18 starts on Sunday, August 3, 2025
             const referenceSunday = new Date(2025, 7, 3); // August = 7 (0-based)
             referenceSunday.setHours(0, 0, 0, 0);
+
             const msPerWeek = 7 * 24 * 60 * 60 * 1000;
             const weeksSinceRef = Math.round((currentSunday - referenceSunday) / msPerWeek);
+
             return 18 + weeksSinceRef;
         }
-        
+
         function initNavigation() {
                 const navItems = [
                     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 002 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
@@ -368,41 +441,50 @@
                     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
                     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 009 9" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'sacraments.html' }
                 ];
+
                 const navGrid = document.getElementById('navGrid');
                 navGrid.innerHTML = '';
+
                 navItems.forEach(item => {
                     const navItem = document.createElement('a');
+
                     // Only prevent default for Scripture
                     if (item.title === 'scripture') {
                         navItem.href = '#'; // Prevent default navigation
                     } else {
                         navItem.href = item.link;
                     }
-                    navItem.className = 'block p-6 rounded-2xl cursor-pointer card-hover bg-white transition-all duration-300';
+
+                    navItem.className = 'block p-6 rounded-2xl cursor-pointer card-hover bg-white dark:bg-gray-800 transition-all duration-300';
                     navItem.innerHTML = `
                         <div class="flex flex-col items-center text-center">
-                            <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100">
+                            <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
                                 <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     ${item.icon}
                                 </svg>
                             </div>
-                            <h3 class="font-semibold text-lg text-gray-800" data-translate="${item.title}">
+                            <h3 class="font-semibold text-lg text-gray-800 dark:text-white" data-translate="${item.title}">
                                 ${translations['en'][item.title]}
                             </h3>
                         </div>
                     `;
+
                     // Special handling for Scripture card
                     if (item.title === 'scripture') {
                         navItem.addEventListener('click', async function (e) {
                             e.preventDefault();
+
                             const today = new Date();
                             const day = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+
                             const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
                             const dayName = dayNames[day];
+
                             // Calculate week number (Week 18 starts on August 3, 2025)
                             const weekNumber = getCurrentWeekNumber();
                             const filename = `${dayName}${weekNumber}.html`;
                             const filePath = `assets/readings/${filename}`; // ✅ Relative path
+
                             try {
                                 const response = await fetch(filePath, { method: 'HEAD' });
                                 if (response.ok) {
@@ -415,10 +497,11 @@
                             }
                         });
                     }
+
                     navGrid.appendChild(navItem);
                 });
             }
-            
+
         // Masifu ya Asubuhi dynamic link
         const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
         if (masifuAsubuhiLink) {
@@ -426,25 +509,43 @@
                 const day = new Date().getDay();
                 const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
                 const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
+
                 // Find the most recent Sunday (start of the current liturgical week)
                 const now = new Date();
                 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
                 const daysSinceSunday = today.getDay(); // 0=Sunday, 6=Saturday
                 const currentSunday = new Date(today);
                 currentSunday.setDate(today.getDate() - daysSinceSunday);
+
                 // Reference Sunday for week 2 (the start of the current cycle)
+                // You can set this to the most recent Sunday that started a week 2
+                // For this logic, let's assume the current week (today) is week 2
+                // So, weekIndex = 0 for this week, 1 for next, etc.
+                // To keep the cycle, count how many Sundays since today (week 2)
+                // So, weekIndex = number of Sundays since today (week 2) modulo 4
+
+                // We'll use today as the reference for week 2
+                const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                // Find how many weeks since this "week 2" Sunday
+                const weeksSinceReference = Math.floor((currentSunday - currentSunday) / msPerWeek); // always 0
+                // But as days pass, we want week 2 until Saturday, then week 3 on Sunday, etc.
+                // So, let's use the number of weeks since this Sunday (today is week 2)
+                // If today is Sunday, weekIndex = 0 (week 2), next Sunday weekIndex = 1 (week 3), etc.
+                // But if today is not Sunday, we still want this week to be week 2
+
+                // To persist the cycle, we need a fixed reference Sunday for week 2.
                 // Let's use a known Sunday date for week 2, e.g., August 3, 2025 (which is a Sunday)
                 const referenceWeek2Sunday = new Date(2025, 7, 3); // August is month 7 (0-based)
                 referenceWeek2Sunday.setHours(0,0,0,0);
-                const msPerWeek = 7 * 24 * 60 * 60 * 1000;
                 const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
                 const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
                 const week = weekSequence[weekIndex];
+
                 const fileName = `${dayToPrefix[day]}${week}.html`;
                 window.location.href = fileName;
             });
         }
-        
+
         // Update liturgical quote
         function updateLiturgicalQuote(season, lang) {
             const quoteElement = document.getElementById('liturgicalQuote');
@@ -455,7 +556,7 @@
             else if (season === 'Easter') quoteKey = 'quoteEaster';
             quoteElement.textContent = translations[lang || 'en'][quoteKey];
         }
-        
+
         // Liturgical Calendar Logic
         function calculateLiturgicalDay() {
             const today = new Date();
@@ -578,7 +679,7 @@
             const lang = localStorage.getItem('preferredLanguage') || 'en';
             updateLiturgicalQuote(season, lang);
         }
-        
+
         // Fetch Saint of the Day
         async function fetchSaintOfTheDay() {
             try {
@@ -601,30 +702,35 @@
                 console.error('Failed to fetch saint:', error);
             }
         }
-        
+
         // Fetch Daily Readings
        async function fetchDailyReadings() {
     try {
         const today = new Date();
         const day = today.getDate(); // 1, 2, ..., 31
         const monthIndex = today.getMonth(); // 0 = Jan, 6 = Jul, 7 = Aug, ..., 11 = Dec
+
         // Only July to December
         if (monthIndex < 6) {
             console.warn("Readings only available from July onward.");
             return;
         }
+
         const shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         const longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+
         const shortMonth = shortMonths[monthIndex]; // e.g., 'aug'
         const longMonth = longMonths[monthIndex];   // e.g., 'august'
         const fileName = `${day}${shortMonth}.html`; // e.g., 4aug.html
         const filePath = `/i-pray/assets/${longMonth}/${fileName}`; // ✅ Correct path
+
         const readingsCard = document.createElement('div');
-        readingsCard.className = 'rounded-2xl p-6 bg-white shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
+        readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
         readingsCard.innerHTML = `
-            <h3 class="text-xl font-bold text-purple-600">Daily Readings</h3>
-            <p class="text-xs font-medium text-gray-500 mt-2">Tap to View</p>
+            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">Daily Readings</h3>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">Tap to View</p>
         `;
+
         // Click: Open in same tab
         readingsCard.addEventListener('click', () => {
             fetch(filePath)
@@ -639,6 +745,7 @@
                     alert("Could not load today's reading.");
                 });
         });
+
         // Insert before navGrid
         const homeView = document.getElementById('homeView');
         const navGrid = document.getElementById('navGrid');
@@ -649,7 +756,6 @@
                 console.error('Failed to fetch readings:', error);
             }
         }
-        
         // Prayer Reminders
         function setupPrayerReminders() {
             if (!('Notification' in window)) return;
@@ -661,7 +767,7 @@
                 }
             });
         }
-        
+
         function scheduleDailyReminder(hour, minute, message) {
             const now = new Date();
             const reminderTime = new Date();
@@ -675,7 +781,7 @@
                 scheduleDailyReminder(hour, minute, message);
             }, timeout);
         }
-        
+
         // PWA Service Worker Registration
         function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
@@ -686,15 +792,17 @@
                 });
             }
         }
-        
+
         // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
-    // Remove theme toggle functionality and hide the button
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.remove();
-    }
+    applyThemeAndDarkMode();
     
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        const isDark = !document.body.classList.contains('dark');
+        applyDarkMode(isDark);
+    });
+
     // Initialize navigation and features
     initNavigation();
     initAccessibility();
@@ -703,32 +811,33 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchDailyReadings();
     setupPrayerReminders();
     registerServiceWorker();
-    
+
     // Set language
     const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
     setLanguage(preferredLang);
-    
-    // Add event listener for "Tap to view" on Carmen's prayer card
+
+    //  Add event listener for "Tap to view" on Carmen's prayer card
     const toggleBtn = document.getElementById('togglePrayerBtn');
     if (toggleBtn) {
         toggleBtn.addEventListener('click', togglePrayer);
     }
-    
+
     // Add event listener for Office of the Readings Mwaka 2
     const officeReadingsMwaka2Btn = document.getElementById('officeReadingsMwaka2Btn');
     if (officeReadingsMwaka2Btn) {
         officeReadingsMwaka2Btn.addEventListener('click', openOfficeReadingsMwaka2);
     }
 });
-// Function to open Office of the Readings for Mwaka 2
-function openOfficeReadingsMwaka2() {
-    window.location.href = "mwaka2.html";
-}
 
-// Function to open Office of the Readings for Mwaka 3
-function openOfficeReadingsMwaka3() {
-    window.location.href = "mwaka3.html";
-}
+// Function to open Office of the Readings for Mwaka 2
+    function openOfficeReadingsMwaka2() {
+        window.location.href = "mwaka2.html";
+    }
+        // Function to open Office of the Readings for Mwaka 3
+    function openOfficeReadingsMwaka3() {
+        window.location.href = "mwaka3.html";
+    }
     </script>
 </body>
 </html>
+
