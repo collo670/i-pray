@@ -1,0 +1,376 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Sunday, August 17, 2025, for the 20th Sunday in Ordinary Time. Readings include the vision of the true light, the mystery of faith, and Jesus speaking about the true bread from heaven.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Sunday, August 17, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">20th Sunday in Ordinary Time</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-year" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Year</label>
+                <select id="liturgical-year" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="A" selected>Year A</option>
+                    <option value="B">Year B</option>
+                    <option value="C">Year C</option>
+                </select>
+            </div>
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Is. 56: 1, 6-7</strong><br>
+                        <em>My house shall be called a house of prayer for all peoples.</em><br><br>
+                        A reading from the book of the prophet Isaiah.<br>
+                        Thus says the LORD: "Keep justice, and do righteousness, for soon my salvation will come, and my deliverance be revealed. And the foreigners who join themselves to the LORD, to minister to him, to love the name of the LORD, and to be his servants, every one who keeps the sabbath, and does not profane it, and holds fast my covenant-- these I will bring to my holy mountain, and make them joyful in my house of prayer; their burnt offerings and their sacrifices will be accepted on my altar; for my house shall be called a house of prayer for all peoples."
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Is. 56: 7; Ps. 66: 2</strong><br><br>
+                        <em>R: My house shall be called a house of prayer for all peoples. * May God have pity on us and bless us; may he let his face shine upon us.</em><br>
+                        V: So that your way may be known upon earth, among all nations your salvation;<br>
+                        <em>R: May God have pity on us and bless us; may he let his face shine upon us.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Rm. 11: 13-15, 29-32</strong><br>
+                        <em>The mystery of the cross.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Romans.<br>
+                        I am speaking to you Gentiles. Inasmuch then as I am an apostle to the Gentiles, I magnify my ministry in order to make my fellow Jews jealous, and thus save some of them. For if their rejection means the reconciliation of the world, what will their acceptance mean but life from the dead? For the gifts and the call of God are irrevocable. Just as you were once disobedient to God but now have received mercy because of their disobedience, so they have now been disobedient in order that by the mercy shown to you they also may now receive mercy. For God has consigned all to disobedience, that he may have mercy upon all.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Rm. 11: 33; Ps. 144: 9</strong><br><br>
+                        <em>R: Oh, the depth of the riches and wisdom and knowledge of God! How unsearchable are his judgments and how inscrutable his ways! * I will sing a new song to you, O God; upon a ten-stringed lyre I will play to you.</em><br>
+                        V: You have given victory to your kings; you have delivered David your servant;<br>
+                        <em>R: I will sing a new song to you, O God; upon a ten-stringed lyre I will play to you.</em>
+                    </p>
+                </section>
+            </div>
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jer. 1: 4-10</strong><br>
+                        <em>The vocation of Jeremiah.</em><br><br>
+                        A reading from the book of the prophet Jeremiah.<br>
+                        Now the word of the LORD came to me, saying, "Before I formed you in the womb I knew you, and before you were born I consecrated you; I appointed you a prophet to the nations." Then I said, "Ah, Lord GOD! Behold, I do not know how to speak, for I am only a youth." But the LORD said to me, "Do not say, 'I am only a youth'; for to all to whom I send you, you shall go, and whatever I command you, you shall speak. Be not afraid of them, for I am with you to deliver you, says the LORD." Then the LORD put forth his hand and touched my mouth; and the LORD said to me, "Behold, I have put my words in your mouth. See, I have set you this day over nations and over kingdoms, to pluck up and to break down, to destroy and to overthrow, to build and to plant."
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jer. 1: 5, 9; Ps. 70: 5</strong><br><br>
+                        <em>R: Before I formed you in the womb I knew you, and before you were born I consecrated you. * But I am poor and needy; hasten to me, O God.</em><br>
+                        V: Then the Lord put forth his hand and touched my mouth and said: Behold, I have put my words in your mouth;<br>
+                        <em>R: But I am poor and needy; hasten to me, O God.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 6</strong><br>
+                        <em>Adore God through the true holiness of works and of the conscience.</em><br><br>
+                        From the “Books of the Stromata” of Clement of Alexandria.<br>
+                        He who journeys towards the Lord in love, even if his dwelling is still visible here on earth, does not remove himself from the earthly life, but detaches his soul from the passions. He lives, but he has crucified his greed and does not dispose anymore of his body to which he permits only the strict necessities, in order not to allow it the occasion for its ruin. How can he who does not lie in evil still have need of strength, since he already possesses the strength of not doing evil? How can he who does not desire earthly things still need to be taught to desire them? How can he who is already detached from the world still need to be taught to detach himself? The true holiness is not in the external works, but in the conscience. For God looks not on the appearance, but on the heart. Therefore, let us adore God not with our lips only, but with our whole heart, with our whole soul, with our whole mind. For the Lord says: "God is spirit, and those who worship him must worship in spirit and truth." Let us not be like the hypocrites, who appear righteous before men, but are full of iniquity within. For the Lord says: "This people honors me with their lips, but their heart is far from me." Let us purify our conscience, let us cleanse our heart, let us sanctify our soul, that we may be worthy to enter the holy of holies, where God dwells in the midst of his people.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jn. 4: 23-24; Ps. 50: 16-17</strong><br><br>
+                        <em>R: The true worshippers will worship the Father in spirit and truth, for the Father seeks such to worship him. * God is spirit, and those who worship him must worship in spirit and truth.</em><br>
+                        V: I say to the wicked: "Why do you recite my commandments and take my covenant on your lips, seeing you hate discipline and cast my words behind you?"<br>
+                        <em>R: God is spirit, and those who worship him must worship in spirit and truth.</em>
+                    </p>
+                </section>
+            </div>
+            <hr class="border-dashed border-gray-300 my-6">
+            <div id="gospel-content">
+                <div id="gospel-year-A" class="hidden">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Mt. 16: 13-20</strong><br>
+                            A reading from the Gospel of St. Matthew.<br>
+                            Now when Jesus came into the district of Caesare'a Philip'pi, he asked his disciples, "Who do men say that the Son of man is?" And they said, "Some say John the Baptist, others say Eli'jah, and others Jeremiah or one of the prophets." He said to them, "But who do you say that I am?" Simon Peter replied, "You are the Christ, the Son of the living God." And Jesus answered him, "Blessed are you, Simon Bar-Jona! For flesh and blood has not revealed this to you, but my Father who is in heaven. And I tell you, you are Peter, and on this rock I will build my church, and the powers of death shall not prevail against it. I will give you the keys of the kingdom of heaven, and whatever you bind on earth shall be bound in heaven, and whatever you loose on earth shall be loosed in heaven." Then he strictly charged the disciples to tell no one that he was the Christ.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Disc. 129</strong><br>
+                            <em>The determined number does not limit forgiveness, on the contrary it extends it.</em><br><br>
+                            From the “Discourses” of St. Peter Chrysologus, bishop.<br>
+                            "Lord, how often shall my brother sin against me, and I forgive him? As many as seven times?" Peter asked, not to limit forgiveness, but to learn its measure. For if he had wished to set a limit, he would not have said "seven times," but "once" or "twice." But by saying "seven times," he showed that he knew forgiveness should be frequent. And the Lord answered, "I do not say to you seven times, but seventy times seven." This number is not meant to be counted, but to signify infinity. For as the heavens are high above the earth, so high is the mercy of God above the earth. And as the east is far from the west, so far has he removed our transgressions from us. The Lord does not wish us to keep count of sins, but to keep open the door of mercy. For if you forgive men their trespasses, your heavenly Father also will forgive you; but if you do not forgive men their trespasses, neither will your Father forgive your trespasses. Therefore, as the Lord has forgiven you, so you also must forgive. For we are all debtors to God, and if God has forgiven us the great debt, how can we refuse to forgive the small debts of our brothers? The mercy we show to others is the measure of the mercy we shall receive from God. Let us not be like the servant who, having been forgiven a great debt by his master, went out and seized his fellow servant who owed him a little, and cast him into prison until he should pay. When the master heard of it, he was angry and delivered him to the tormentors until he should pay all his debt. So also my heavenly Father will do to every one of you, if you do not forgive your brother from your heart.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Mt. 18: 21-22; Col. 3: 13</strong><br><br>
+                            <em>R: Lord, how often shall my brother sin against me, and I forgive him? As many as seven times? I do not say to you seven times, but seventy times seven. * Forgive one another, if any has a complaint against another; even as the Lord has forgiven you, so you also must forgive.</em><br>
+                            V: Bear with one another and, if one has a grievance against another, forgive each other;<br>
+                            <em>* Forgive one another, if any has a complaint against another; even as the Lord has forgiven you, so you also must forgive.</em>
+                        </p>
+                    </section>
+                </div>
+                <div id="gospel-year-B" class="hidden">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Mk. 7: 31-37</strong><br>
+                            A reading from the Gospel of St. Mark.<br>
+                            Then he returned from the region of Tyre, and went through Sidon to the Sea of Galilee, through the region of the Decap'olis. And they brought to him a man who was deaf and had an impediment in his speech; and they besought him to lay his hand upon him. And taking him aside from the multitude privately, he put his fingers into his ears, and he spat and touched his tongue; and looking up to heaven, he sighed, and said to him, "E'ph'phatha," that is, "Be opened." And his ears were opened, his tongue was released, and he spoke plainly. And he charged them to tell no one; but the more he charged them, the more zealously they proclaimed it. And they were astonished beyond measure, saying, "He has done all things well; he even makes the deaf hear and the dumb speak."
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Hom. 18: 1-2</strong><br>
+                            <em>The healing of the deaf and mute man.</em><br><br>
+                            From the “Homilies on the Gospels” of St. Bede the Venerable, priest.<br>
+                            The man who was brought to the Lord was deaf and had an impediment in his speech. This signifies the human race, which, from the time of the first sin, has become deaf to the voice of God and unable to speak the praises of God properly. For sin has closed the ears of our heart, so that we cannot hear the words of eternal life, and has tied the tongue of our soul, so that we cannot utter the confession of faith. But the Lord, taking him aside from the multitude, signifies that he draws the sinner away from the crowd of worldly affairs and the company of bad companions, and leads him into solitude, that he may speak to his heart. He puts his fingers into his ears, which signifies the gift of the Holy Spirit, who opens the ears of our heart to hear the divine mysteries. He spits and touches his tongue, which signifies the word of God, which, coming from the mouth of Christ, the Word of God, heals the tongue of our soul, so that we can speak the truth and praise God. Looking up to heaven, he sighs, showing that the healing of the soul is not by human power, but by the grace of God. And he says, "E'ph'phatha," "Be opened," and immediately the ears are opened and the tongue is loosed. So also, when we are converted to God, our ears are opened to hear his commandments, and our tongue is loosed to confess his name and praise him. And the Lord charges them to tell no one, but they proclaim it all the more, because the work of grace cannot be hidden. For the good that is done in the soul overflows and must be manifested in good works.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Is. 35: 5-6; Ps. 115: 3-4</strong><br><br>
+                            <em>R: Then the eyes of the blind shall be opened, and the ears of the deaf unstopped; then shall the lame man leap like a hart, and the tongue of the dumb sing for joy. * The Lord opens the eyes of the blind; the Lord raises up those who are bowed down.</em><br>
+                            V: Our God is in the heavens; he does whatever he pleases. Their idols are silver and gold, the work of men's hands;<br>
+                            <em>R: The Lord raises up those who are bowed down.</em>
+                        </p>
+                    </section>
+                </div>
+                <div id="gospel-year-C">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Jn. 6: 37-40</strong><br>
+                            A reading from the Gospel of St. John.<br>
+                            "All that the Father gives me will come to me; and him who comes to me I will not cast out. For I have come down from heaven, not to do my own will, but the will of him who sent me; and this is the will of him who sent me, that I should lose nothing of all that he has given me, but raise it up at the last day. For this is the will of my Father, that every one who sees the Son and believes in him should have eternal life; and I will raise him up at the last day."
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Disc. 11: 1-3</strong><br>
+                            <em>The vision of the true light.</em><br><br>
+                            From the “Discourses” of St. Augustine, bishop.<br>
+                            "I beseech you, love with me, by believing run with me: let us long for our home above, let us stretch out our hearts toward heaven. What shall we see there? What shall we see after these earthly aids have been removed? When the sun, the moon, and the stars cease to shine, when all created light is taken away, what shall feed our mind and delight our gaze? Whence shall arise that joy which neither eye has seen, nor ear heard, nor has gone up into the heart of man? We shall see God. We shall see him not with these bodily eyes, but with the eyes of the heart, purified by faith. This is the true light that enlightens every man coming into the world. This is the bread of life that came down from heaven. This is the water of life that springs up to eternal life. We shall see God face to face, and we shall be like him, for we shall see him as he is. This is the end of our journey, the fulfillment of our desires, the perfection of our happiness. Here we walk by faith, there we shall walk by sight. Here we know in part, there we shall know fully, even as we are fully known. Let us then press on toward the goal, to win the prize of the upward call of God in Christ Jesus.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>1 Cor. 13: 12; 1 Jn. 3: 2</strong><br><br>
+                            <em>R: Now we see in a mirror dimly, but then face to face. Now I know in part; then I shall understand fully, even as I have been fully understood. * Beloved, we are God's children now; it does not yet appear what we shall be, but we know that when he appears we shall be like him, for we shall see him as he is.</em><br>
+                            V: We know that when he appears we shall be like him, for we shall see him as he is;<br>
+                            <em>R: but we know that when he appears we shall be like him, for we shall see him as he is.</em>
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const yearSelector = document.getElementById('liturgical-year');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+            const gospelYears = {
+                A: document.getElementById('gospel-year-A'),
+                B: document.getElementById('gospel-year-B'),
+                C: document.getElementById('gospel-year-C')
+            };
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                const selectedYear = yearSelector.value;
+                
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+                
+                // Hide all gospel content
+                Object.values(gospelYears).forEach(yearDiv => yearDiv.classList.add('hidden'));
+                
+                // Show the selected gospel content
+                gospelYears[selectedYear].classList.remove('hidden');
+            }
+            
+            cycleSelector.addEventListener('change', showContent);
+            yearSelector.addEventListener('change', showContent);
+            showContent();
+        });
+    </script>
+</body>
+</html>
+```

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Sunday, August 10, 2025, for the 19th Sunday in Ordinary Time. Readings include the miracles of Elisha, the story of Jonah, and the Gospels of Matthew, John, and Luke.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Sunday, August 10, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">19th Sunday in Ordinary Time</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-year" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Year</label>
+                <select id="liturgical-year" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="A" selected>Year A</option>
+                    <option value="B">Year B</option>
+                    <option value="C">Year C</option>
+                </select>
+            </div>
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Kings 4: 38 – 44; 6: 1 – 7</strong><br>
+                        <em>The miracles of Elisha for the sons of the prophets.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        And Eli'sha came again to Gilgal when there was a famine in the land. And as the sons of the prophets were sitting before him, he said to his servant, "Set on the great pot, and boil pottage for the sons of the prophets." One of them went out into the field to gather herbs, and found a wild vine and gathered from it his lap full of wild gourds, and came and cut them up into the pot of pottage, not knowing what they were. And they poured out for the men to eat. But while they were eating of the pottage, they cried out, "O man of God, there is death in the pot!" And they could not eat it. He said, "Then bring meal." And he threw it into the pot, and said, "Pour out for the men, that they may eat." And there was no harm in the pot. A man came from Ba'al-shal'ishah, bringing the man of God bread of the first fruits, twenty loaves of barley, and fresh ears of grain in his sack. And Eli'sha said, "Give to the men, that they may eat." But his servant said, "How am I to set this before a hundred men?" So he repeated, "Give them to the men, that they may eat, for thus says the LORD, `They shall eat and have some left.'" So he set it before them. And they ate, and had some left, according to the word of the LORD. Now the sons of the prophets said to Eli'sha, "See, the place where we dwell under your charge is too small for us. Let us go to the Jordan and each of us get there a log, and let us make a place for us to dwell there." And he answered, "Go." Then one of them said, "Be pleased to go with your servants." And he answered, "I will go." So he went with them. And when they came to the Jordan, they cut down trees. But as one was felling a log, his axe head fell into the water; and he cried out, "Alas, my master! It was borrowed." Then the man of God said, "Where did it fall?" When he showed him the place, he cut off a stick, and threw it in there, and made the iron float. And he said, "Take it up." So he reached out his hand and took it.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Sir. 2, 13. 15; Jn. 4, 48</strong><br><br>
+                        <em>R. Woe to the lazy heart because it does not have faith; for this it will not be protected; * those who fear the Lord do not disobey His words.</em><br>
+                        V: If you do not see signs and prodigies, you do not believe.<br>
+                        <em>R. those who fear the Lord do not disobey His words.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 5: 17, 3 – 4</strong><br>
+                        <em>The economy of the cross has revealed to us the hidden Word.</em><br><br>
+                        A reading from the treatise “Against the heresies” of St. Irenaeus, bishop.<br>
+                        “Blessed is the man to whom the Lord imputes no evil” (Ps. 31, 21) showing in precedence that remission that is realised with His coming, remission thanks to which is annulled “the written document of our debt, nailing it to the cross” (Col. 2, 14); in a way that, as through a piece of wood we had become debtors of God, so also by means of a piece of wood we have received the remission of our debt. This is shown in a significant way also by means of many others, as already also through the prophet Elisha. While in fact the prophets who were with him cut the wood to construct the tabernacle, the blade of the axe detached itself and fell into the Jordan, and they were unable to find it again, Elisha having arrived and having heard of what had happened, threw a piece of wood into the water; as soon as he had done this, the iron of the axe floated up to the surface and from there those who had lost it were able to recover it. In this way the prophet showed that the solid Word of God, lost by us through negligence because of a piece of wood, and which we were not capable of finding anymore, we would newly receive by means of a piece of wood. The Word of God is truly similar to an axe, and of it John the Baptist says: “Already the axe has been placed to the roots of the trees” (Mt. 3, 10). Similarly Jeremiah says: The word of God is “ like a hammer that breaks the rock” (Jer. 23, 29). Therefore as we have said, it was actually a piece of wood that revealed to us again the Word that was hidden to us. As in fact we had lost him because of a piece of wood, so also through a piece of wood He was revealed to all, showing in himself the height, the length and the breadth; as one of the apostles says, he reconciled to only one God the two peoples by stretching His arms (cfr. Ep. 2, 16); two were the hands, and two were the people who were dispersed up to the extreme boundaries of the earth; But one only was the head that reunited them, because “ there is only one God, who is above all, who acts through all and is present in all” (Ep. 4, 6).
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Ws. 14, 5. 7; 1 Pt. 2, 24</strong><br><br>
+                        <em>R. Men trust their life even to a small piece of wood. * Blessed is the wood that produces justice.</em><br>
+                        V: He carried our sins in His body on the wood of the cross.<br>
+                        <em>R. Blessed is the wood that produces justice.</em>
+                    </p>
+                </section>
+            </div>
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jon. 1: 1 – 2:1,11</strong><br>
+                        <em>Vocation, flight and shipwreck of Jonah.</em><br><br>
+                        A reading from the prophet Jonah.<br>
+                        Now the word of the LORD came to Jonah the son of Amit'tai, saying, "Arise, go to Nin'eveh, that great city, and cry against it; for their wickedness has come up before me." But Jonah rose to flee to Tarshish from the presence of the LORD. He went down to Joppa and found a ship going to Tarshish; so he paid the fare, and went on board, to go with them to Tarshish, away from the presence of the LORD. But the LORD hurled a great wind upon the sea, and there was a mighty tempest on the sea, so that the ship threatened to break up. Then the mariners were afraid, and each cried to his god; and they threw the wares that were in the ship into the sea, to lighten it for them. But Jonah had gone down into the inner part of the ship and had lain down, and was fast asleep. So the captain came and said to him, "What do you mean, you sleeper? Arise, call upon your god! Perhaps the god will give a thought to us, that we do not perish." And they said to one another, "Come, let us cast lots, that we may know on whose account this evil has come upon us." So they cast lots, and the lot fell upon Jonah. Then they said to him, "Tell us, on whose account this evil has come upon us? What is your occupation? And whence do you come? What is your country? And of what people are you?" And he said to them, "I am a Hebrew; and I fear the LORD, the God of heaven, who made the sea and the dry land." Then the men were exceedingly afraid, and said to him, "What is this that you have done!" For the men knew that he was fleeing from the presence of the LORD, because he had told them. Then they said to him, "What shall we do to you, that the sea may quiet down for us?" For the sea grew more and more tempestuous. He said to them, "Take me up and throw me into the sea; then the sea will quiet down for you; for I know it is because of me that this great tempest has come upon you." Nevertheless the men rowed hard to bring the ship back to land, but they could not, for the sea grew more and more tempestuous against them. Therefore they cried to the LORD, "We beseech you, O LORD, let us not perish for this man's life, and lay not on us innocent blood; for you, O LORD, have done as it pleased you." So they took up Jonah and threw him into the sea; and the sea ceased from its raging. Then the men feared the LORD exceedingly, and they offered a sacrifice to the LORD and made vows. And the LORD appointed a great fish to swallow up Jonah; and Jonah was in the belly of the fish three days and three nights. Then Jonah prayed to the LORD his God from the belly of the fish, and the LORD spoke to the fish, and it vomited out Jonah upon the dry land.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jon. 1, 1- 3; Mt. 12, 39</strong><br><br>
+                        <em>R. This word of the Lord was addressed to Jonah: “Get up, go to Nineveh the great city and proclaim in it: * their wickedness has risen up to me”.</em><br>
+                        V: A perverse and adulterous generation asks for a sign! But no sign will be given to it, if not the sign of the prophet Jonah:<br>
+                        <em>R. their wickedness has risen up to me.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 43, 83 – 85</strong><br>
+                        <em>The sign of Jonah.</em><br><br>
+                        A reading from the “Commentary on the Psalms” of St. Ambrose, bishop.<br>
+                        Let us examine if what we read in Jonah is far away from the Gospel; that is that he was sleeping profoundly in the bottom of the boat: a prefiguration of the holy passion. As in fact Jonah was sleeping in the boat and snoring tranquilly, without fear of being captured, so also Our Lord Jesus Christ, who fulfils that pre-figuration with the mystery of His death, at the time of the preaching of the Gospel slept in the boat; and as Jonah had “remained three days and three nights in the belly of the fish, so also the Son of man remained three days and three nights in the heart of the earth” (Mt, 12, 40) during His passion. When He awoke from death, reawakening His body from sleep, He arose for the universal salvation and visited his disciples. He, therefore is the true Jonah, who gives His life to redeem us. He had been taken and thrown into the sea because, captured and devoured by the whale, He could purify her living inside her. Of which whale are we referring to, listen to Job: “Am I perhaps a sea monster, so that you have to capture me?” (Jb. 7, 12) Who is this one? You know Him when you read that our Lord Jesus Christ “ascending into heaven took with Him prisoners” (Ep. 4, 8). The enemy in fact having been defeated, we who were slaves have started to possess through Christ, freedom. Besides this the same plea of the holy Jonah teaches us that it is dealing with the mysteries of the passion of the Lord; in fact he says “In my anguish I invoked the Lord and He listened to me; from the depths of hell I cried” (Joh. 2, 3). Do you see that he speaks of the depths of hell, not of the whale? The Lord in fact descended not into the whale, but into hell in order to liberate from prison also those who were found there. Who is it who fulfils the sacrifice praising and confessing the Lord, if not the first of all the priests, who prayed and implored for everyone? He alone could obtain a similar result. When Jonah was thrown into the sea, the sea became calm; so also our Lord Jesus Christ came into this world in order to save it, reconciling every thing with His blood, both in heaven and on earth (Cfr. Col. 1, 20). With His coming He redeemed all of humanity and with His works, raising the dead, curing the sick, infusing into the hearts of men the fear of God, He brought them to adore Him. He is the one who offers for us to God a sacrifice of salvation, offering a victim that is worthy for our conversion; He is the one who after having slept has awakened forever.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 12, 40; 20, 19; Joh. 2, 2. 11</strong><br><br>
+                        <em>R. As Jonah remained three days and three nights in the belly of the fish, * so also the Son of man will remain three days and three nights in the heart of the earth, but the third day He will rise again.</em><br>
+                        V: From the belly of the fish Jonah prayed to the Lord his God; and the Lord commanded the fish and it vomited Jonah onto the dry ground.<br>
+                        <em>R. So also the Son of man will remain three days and three nights in the heart of the earth, but the third day He will rise again.</em>
+                    </p>
+                </section>
+            </div>
+            <hr class="border-dashed border-gray-300 my-6">
+            <div id="gospel-content">
+                <div id="gospel-year-A">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Mt. 14: 22-33</strong><br>
+                            A reading from the Gospel of St. Matthew.<br>
+                            Then he made the disciples get into the boat and go before him to the other side, while he dismissed the crowds. And after he had dismissed the crowds, he went up on the mountain by himself to pray. When evening came, he was there alone, but the boat by this time was many furlongs distant from the land, beaten by the waves; for the wind was against them. And in the fourth watch of the night he came to them, walking on the sea. But when the disciples saw him walking on the sea, they were terrified, saying, "It is a ghost!" And they cried out for fear. But immediately he spoke to them, saying, "Take heart, it is I; have no fear." And Peter answered him, "Lord, if it is you, bid me come to you on the water." He said, "Come." So Peter got out of the boat and walked on the water and came to Jesus; but when he saw the wind, he was afraid, and beginning to sink he cried out, "Lord, save me." Jesus immediately reached out his hand and caught him, saying to him, "O man of little faith, why did you doubt?" And when they got into the boat, the wind ceased. And those in the boat worshiped him, saying, "Truly you are the Son of God."
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Disc. 76: 1, 4, 5, 6, 8, 9</strong><br>
+                            <em>Lord, I am lost: save me!</em><br><br>
+                            A reading from the “Discourses” of St. Augustine, bishop.<br>
+                            The gospel that has been read speaks of Christ the Lord who walked on the water of the sea and of the apostle Peter who while walking on the water hesitated because of fear; and mistrusting sank, but when he had found trust again he re-emerged. This reminds us that the sea is the world and Peter is the symbol of the only Church. The same Peter in fact, first in the order of the apostles, very generous in love towards Christ, often answered, he alone, in the name of everyone. When the Lord Jesus Christ asked them who men said he was, while the disciples put forward the various opinions of the people, to the repeated question of the Lord “And you, who do you say I am?” (Mk. 8: 29), it was Peter who answered: “You are the Christ, the Son of the living God” (Mt. 16: 16). He alone answers in the name of the others, expressing in this way the unity. Contemplating this member of the Church, we distinguish in him that which is of God from that which is ours. In this way we learn not to be doubtful, but we base ourselves on the rock, unmoveable and constant against the winds, rain and rivers, that is against the temptations of this world. Observe therefore Peter, who then was the figure of all of us: now he trusts, now doubts, now he considers himself immortal, now he is afraid of dying. Since the Church of Christ is formed by the strong and by the weak, it is inevitable that there is one and the other. That which Peter proclaimed: “You are the Christ of God”, shows the behaviour of the strong; when instead he is afraid and hesitates, fears death not recognising the life, and desiring that the Christ should not suffer, he symbolises the weak who form a part of the Church. This is the meaning of what has been read until now: “Lord, if it is you, command that I come to you over the water” (Mt 14: 28). Peter walked over the water at the command of the Lord, knowing well that he would not have been able to do so with his own strength. Through faith he fulfilled that which human weakness could not do. These are the strong ones of the Church. The Man-God commanded and the man was able to fulfil the impossible. “Come!” (Mt. 14: 29) he said and “getting out of the boat, he began to walk over the water”. Peter could do it, because he who is the Rock had commanded it. This is what Peter became in the Lord; and what is he in himself? “But because of the violence of the wind he became afraid and, beginning to sink, he cried out: Lord, save me!” (Mt. 14: 30). When he trusted in the Lord, he had strength from him. When as a man he became anxious, he turned again to the Lord, and he, offering immediately the help of his right hand, caught him while he was sinking, rebuking him for his diffidence: “Man of little faith!” (Mt. 14: 31). Let us conclude, brothers. Consider that the world is like the sea: violent wind, furious tempest. For each one his passions are a tempest. If you love God, you walk on the water and the fury of the world is under your feet. If you love the world, it will overwhelm you: it in fact knows how to devour those who love it, not to sustain them. But when your heart is agitated by the passions, invoke the divinity of Christ in order to overcome them. And if your foot wavers, if you doubt, if you are not able to overcome something, if you begin to sink, exclaim: “Lord, save me!” (Mt. 14: 30). Only he in fact frees you from the death of the flesh, he who in his flesh has died for you.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Ps. 15: 8, 9, 1-2</strong><br><br>
+                            <em>R. The Lord is at my right hand, I cannot waver. * For this my heart rejoices, my soul exults.</em><br>
+                            V: Protect me, O God: in you I take refuge. I have said to God: “You are my Lord”.<br>
+                            <em>R. For this my heart rejoices, my soul exults.</em>
+                        </p>
+                    </section>
+                </div>
+                <div id="gospel-year-B" class="hidden">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Jn. 6: 41-51</strong><br>
+                            A reading from the Gospel of St. John.<br>
+                            The Jews then murmured at him, because he said, "I am the bread that came down from heaven." They said, "Is not this Jesus, the son of Joseph, whose father and mother we know? How does he now say, `I have come down from heaven'?" Jesus answered them, "Do not murmur among yourselves. No one can come to me unless the Father who sent me draws him; and I will raise him up at the last day. It is written in the prophets, `And they shall all be taught by God.' Every one who has heard and learned from the Father comes to me. Not that any one has seen the Father except him who is from God; he has seen the Father. Truly, truly, I say to you, he who believes has eternal life. I am the bread of life. Your fathers ate the manna in the wilderness, and they died. This is the bread that comes down from heaven, that a man may eat of it and not die. I am the living bread which came down from heaven; if any one eats of this bread, he will live for ever; and the bread which I shall give for the life of the world is my flesh."
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Book. 6: 51-52</strong><br>
+                            <em>The bread that I will give is my flesh for the life of the world.</em><br><br>
+                            A reading from the “Commentary on the Gospel of John” of Rupert of Deutz, abbot.<br>
+                            “I am the bread that has come down from heaven. If anyone eats of this bread he will live forever” (Jn. 6: 51). Since the guests of my Father were destroyed by death because of the prohibited food that their parents had eaten, and their souls are in hell, the bodies instead in the tombs, I also who am the bread of angels will be destroyed. And with that substance of which the angels are nourished I will descend into the underworld, where the souls are hungry, while with the body I will rest hidden for three days and three nights in the same womb of the earth in which their bodies are buried, as Jonah remained three days and three nights in the belly of the sea mammal. In this way their souls will be recreated in the sight of God and many bodies will rise now; all the others certainly in the future. Finally, to those who are still in the body down here, this same bread will be offered in a way that is suitable to the living, that is in the true sacrifice of the bread and wine according to the order of Melchizedek. “And the bread that I will give is my flesh for the life of the world” (Jn. 6: 51). This is the greatest consolation for the poor, that the Holy Spirit descending on me sends me to evangelise; this will be the greatest and incomparable motive of joy for all the nations spread over the earth, who will ask and will receive from the Father in possession and inheritance. And those to whom the Father has sent me will not have less than the ancient fathers of this bread of life that he has given and on whom “he has put his seal” (Jn. 6: 44, 27). In fact, when I will have descended to them to fill them with myself, after hell had stung me and I had become its sting and the death of death which it enclosed in its bowels, and I had reached the starving saints and just men in order to give life back to them: then I will give to those who have remained that bread, in which the reality of my own flesh is present, that is that body which, having come out of the belly of the sea mammal, healthy and complete will reside eternally at the right hand of the Father. The man who is still living will feed in a way that is to him in keeping with the same bread of angels which I will give to him, and which the Father gives to those who are not anymore of this earth so that they may eat it and rise, now with the soul, and on the last day also with the body. “And the bread that I will give is my flesh for the life of the world” (Jn. 6: 51), and truly the Father gives the bread of angels so that he could take a body and he could die in order to give life to the dead. This same heavenly bread gives us an earthly bread that transforms into his flesh, in order to give eternal life to the living who can eat it. And so the Word, who is the bread of angels, became flesh, not changing himself into flesh, but assuming a body; so also the same Word already made flesh becomes visible bread, not because he is changed into bread but because he assumes and transfers the bread into the unity of his person. As a consequence, as through the unity of the person we recognise the true God in our flesh generated by the Virgin Mary, so also we confess with full and catholic faith that this visible bread, assumed and transformed by the invisible divinity of the Word in his flesh, is truly the Body of Christ. In fact he says: “The bread that I will give is my flesh for the life of the world” (Jn. 6: 51), that is because the redeemed world eats and lives, after having washed in baptism that original sin committed with the ancient food that the serpent gave and induced to eat.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Jn. 6: 56; Deut. 4: 7</strong><br><br>
+                            <em>R. He who eats my flesh and drinks my blood, * lives in me and I in him.</em><br>
+                            V: What great nation has its divinity so close to itself, as the Lord your God is close to you? R: Lives in me and I in him.
+                        </p>
+                    </section>
+                </div>
+                <div id="gospel-year-C" class="hidden">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Lk. 12: 32-48</strong><br>
+                            A reading from the Gospel of St. Luke.<br>
+                            "Fear not, little flock, for it is your Father's good pleasure to give you the kingdom. Sell your possessions, and give alms; provide yourselves with purses that do not grow old, with a treasure in the heavens that does not fail, where no thief approaches and no moth destroys. For where your treasure is, there will your heart be also. "Let your loins be girded and your lamps burning, and be like men who are waiting for their master to come home from the marriage feast, so that they may open to him at once when he comes and knocks. Blessed are those servants whom the master finds awake when he comes; truly, I say to you, he will gird himself and have them sit at table, and he will come and serve them. If he comes in the second watch, or in the third, and finds them so, blessed are those servants! But know this, that if the householder had known at what hour the thief was coming, he would not have left his house to be broken into. You also must be ready; for the Son of man is coming at an unexpected hour." Peter said, "Lord, are you telling this parable for us or for all?" And the Lord said, "Who then is the faithful and wise steward, whom his master will set over his household, to give them their portion of food at the proper time? Blessed is that servant whom his master when he comes will find so doing. Truly, I say to you, he will set him over all his possessions. But if that servant says to himself, `My master is delayed in coming,' and begins to beat the menservants and the maidservants, and to eat and drink and get drunk, the master of that servant will come on a day when he does not expect him and at an hour he does not know, and will punish him, and put him with the unfaithful. And that servant who knew his master's will, but did not make ready or act according to his will, shall receive a severe beating. But he who did not know, and did what deserved a beating, shall receive a light beating. Every one to whom much is given, of him will much be required; and of him to whom men commit much they will demand the more.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Disc. 15: 11-13</strong><br>
+                            <em>The word of God is the light for my steps.</em><br><br>
+                            A reading from the “Commentary on Psalm 118” of St. Ambrose, bishop<br>
+                            The faith will accompany you on the way, the divine Scripture will be your road. The Word of God is a good guide. Light up your light to this lamp, so that your interior eye, which is the lamp of your body, will be illuminated. You have many lamps: light them all up because it has been said to you: “See that you are dressed for action and have your lamps lit” (Lk. 12: 35). Where the darkness is great, many lamps are necessary and in much darkness the light of our merits must shine forth. These are the lamps that the law has established to shine continuously in the tabernacle of the testimony. It represents our body, in which Christ came, who “through a greater and more perfect tent, entered once and for all into the sanctuary with his own blood” (Heb. 9: 11, 12) in order to purify our soul from all works of death and from every stain. Now in our bodies, which with the quality of their actions manifest our hidden thoughts, must always shine the clear light of our virtues like as many lamps. These are the burning lamps that shine day and night in the temple of God. If you keep your body as the temple of God, if your members are the members of Christ, your virtues shine with the clear light and no one, other than your sin, can put it off. Of this light of pure minds and sincere affections shines our solemnities. Therefore let your lamp always shine. The Christ rebukes also those who, though possessing the lamp, do not keep it always lit, saying: “See that you are dressed for action and have your lamps lit” (Lk. 12: 35). We must not enjoy only for a short time of this light. He enjoys only for a short time the one who, after having listened to the word in the Church and having rejoiced, as soon as he goes out forgets everything and does not care. This one walks in his house without light, since he is in the darkness and does works of darkness, clothed with the clothes of the devil, not of Christ. This is what happens when the lamp of the world is not lit. Let us never neglect the word of the Lord, which is for us the source of every virtue and progress of all our works. If the members of the body cannot work well without the light- the feet in fact are uncertain and the hands make mistakes-, how much more must the steps of the soul and the operations of our mind be illuminated by the light of the Word. As Thomas touched the signs of the resurrection of the Lord, so also in the light of the word the hands of the soul do not err. This lamp remains lit in every word and in every work. All our interior and external steps are directed towards it.
+                        </p>
+                    </section>
+                    <hr class="border-dashed border-gray-300 my-6">
+                    <section>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Ps. 118: 104, 105; Jn. 6: 68</strong><br><br>
+                            <em>R. I hate all deceptive paths. * Your word is a lamp to my feet, a light on my path.</em><br>
+                            V: Lord, to whom shall we go? You have words of eternal life.<br>
+                            <em>R. Your word is a lamp to my feet, a light on my path.</em>
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const yearSelector = document.getElementById('liturgical-year');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+            const gospelYears = {
+                A: document.getElementById('gospel-year-A'),
+                B: document.getElementById('gospel-year-B'),
+                C: document.getElementById('gospel-year-C')
+            };
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                const selectedYear = yearSelector.value;
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+                // Hide all gospel content
+                Object.values(gospelYears).forEach(yearDiv => yearDiv.classList.add('hidden'));
+                // Show the selected gospel content
+                gospelYears[selectedYear].classList.remove('hidden');
+            }
+            cycleSelector.addEventListener('change', showContent);
+            yearSelector.addEventListener('change', showContent);
+            showContent();
+        });
+    </script>
+</body>
+</html>

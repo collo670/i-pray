@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Monday, August 11, 2025, for the 22nd Week in Ordinary Time. Readings include the judgment of God on the nations, the hope of life, and Jesus' rejection in his hometown.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Monday, August 11, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">22nd Week in Ordinary Time</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Amos 1:1-2:3</strong><br>
+                        <em>The judgement of God on the nations.</em><br><br>
+                        A reading from the prophet Amos.<br>
+                        The words of Amos, who was among the shepherds of Teko'a, which he saw concerning Israel in the days of Uzzi'ah king of Judah and in the days of Jerobo'am the son of Jo'ash, king of Israel, two years before the earthquake. And he said: "The LORD roars from Zion, and utters his voice from Jerusalem; the pastures of the shepherds mourn, and the top of Carmel withers." Thus says the LORD: "For three transgressions of Damascus, and for four, I will not revoke the punishment; because they have threshed Gilead with threshing sledges of iron. So I will send a fire upon the house of Haz'ael, and it shall devour the strongholds of Ben-ha'dad. I will break the bar of Damascus, and cut off the inhabitants from the Valley of Aven, and him that holds the sceptre from Beth-eden; and the people of Syria shall go into exile to Kir," says the LORD. Thus says the LORD: "For three transgressions of Gaza, and for four, I will not revoke the punishment; because they carried into exile a whole people to deliver them up to Edom. So I will send a fire upon the wall of Gaza, and it shall devour her strongholds. I will cut off the inhabitants from Ashdod, and him that holds the sceptre from Ash'kelon; I will turn my hand against Ekron; and the remnant of the Philistines shall perish," says the Lord GOD. Thus says the LORD: "For three transgressions of Tyre, and for four, I will not revoke the punishment; because they delivered up a whole people to Edom, and did not remember the covenant of brotherhood. So I will send a fire upon the wall of Tyre, and it shall devour her strongholds." Thus says the LORD: "For three transgressions of Edom, and for four, I will not revoke the punishment; because he pursued his brother with the sword, and cast off all pity, and his anger tore perpetually, and he kept his wrath for ever. So I will send a fire upon Teman, and it shall devour the strongholds of Bozrah." Thus says the LORD: "For three transgressions of the Ammonites, and for four, I will not revoke the punishment; because they have ripped up women with child in Gilead, that they might enlarge their border. So I will kindle a fire in the wall of Rabbah, and it shall devour her strongholds, with shouting in the day of battle, with a tempest in the day of the whirlwind; and their king shall go into exile, he and his princes together," says the LORD. Thus says the LORD: "For three transgressions of Moab, and for four, I will not revoke the punishment; because he burned to lime the bones of the king of Edom. So I will send a fire upon Moab, and it shall devour the strongholds of Ker'ioth, and Moab shall die amid uproar, amid shouting and the sound of the trumpet; I will cut off the ruler from its midst, and will slay all its princes with him," says the LORD.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Ps. 9: 8, 9; Am. 1: 2</strong><br><br>
+                        <em>R: The Lord has established his throne for the judgement: he will judge the world with justice, * he will decide with uprightness the cause of the nations.</em><br>
+                        V: The Lord roars from Zion, from Jerusalem he makes his voice heard:<br>
+                        <em>R: he will decide with uprightness the cause of the nations.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>C. 1: 1</strong><br>
+                        <em>The hope of life is the beginning and the end of our faith.</em><br><br>
+                        A reading from the “Letter”, attributed to Barnabas.<br>
+                        All hail, you sons and daughters, in the name of our Lord Jesus Christ who loved us in peace. Seeing the divine fruits of righteousness abound among you, I rejoice exceedingly and above measure in your happy and honoured spirits because you have with such effect received the engrafted spiritual gift. Wherefore also I inwardly rejoice the more, hoping to be saved, because I truly perceive in you the Spirit poured forth from the rich Lord of love. Your greatly desired appearance has thus filled me with astonishment over you. I am therefore persuaded of this, and fully convinced in my own mind, that since I began to speak among you I understand many things, because the Lord has accompanied me in the way of righteousness. I am also on this account bound by the strictest obligation to love you above my own soul, because great are the faith and love dwelling in you, while you hope for the life which He has promised. Considering this, therefore, that if I should take the trouble to communicate to you some portion of what I have myself received, it will prove to me a sufficient reward that I minister to such spirits, I have hastened briefly to write to you, in order that, along with your faith, you might have things as we see accomplished, one by one, we may put you in complete possession of perfect knowledge. The doctrines of the Lord then are three: the hope of life, the beginning and the completion of it. For the Lord has made known to us by the prophets both the things of the past and present, giving us also the first fruits of the knowledge of things to come which ought with the greater richness of faith and elevation of spirit to draw near to Him with reverence. I then, not as your teacher, but as one of yourselves, will set forth a few things by which in present circumstances you may be rendered the more joyful. Since, therefore, the days are evil, and Satan possesses the power of this world, we ought to give heed to ourselves, and diligently inquire into the ordinances of the Lord. Fear and patience, then, are helpers of our faith; and long-suffering and continence are things that fight on our side. While these remain pure in what respects the Lord, Wisdom, Understanding, Science, and Knowledge rejoice along with them. For He has revealed to us by all the prophets that He needs neither sacrifices, nor burnt offerings, nor oblations, saying thus, “What is the multitude of your sacrifices unto Me, says the Lord? I am full of burnt offerings, and desire not the fat of lambs, and the blood of bulls and goats, not when you come to appear before Me: for who has required these things at your hands? Tread no more my courts, not though you bring with you fine flour. Incense is a vain abomination unto me, and your new moons and Sabbaths I cannot endure.”
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Gal. 2: 16; Gen. 15: 6</strong><br><br>
+                        <em>R: We know that man is justified only through faith: * we have believed, in order to be justified by faith in Christ.</em><br>
+                        V: Abraham believed in the Lord, and this was accredited to him as justice;<br>
+                        <em>R: we have believed in order to be justified by faith in Christ.</em>
+                    </p>
+                </section>
+            </div>
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 6: 1 – 10</strong><br>
+                        <em>The servants. The false doctors.</em><br><br>
+                        A reading from the First Letter of St. Paul, apostle, to Timothy.<br>
+                        Let all who are under the yoke of slavery regard their masters as worthy of all honour, so that the name of God and the teaching may not be defamed. Those who have believing masters must not be disrespectful on the ground that they are brethren; rather they must serve all the better since those who benefit by their service are believers and beloved. Teach and urge these duties. If any one teaches otherwise and does not agree with the sound words of our Lord Jesus Christ and the teaching which accords with godliness, he is puffed up with conceit, he knows nothing; he has a morbid craving for controversy and for disputes about words, which produce envy, dissension, slander, base suspicions, and wrangling among men who are depraved in mind and bereft of the truth, imagining that godliness is a means of gain. There is great gain in godliness with contentment; for we brought nothing into the world, and we cannot take anything out of the world; but if we have food and clothing, with these we shall be content. But those who desire to be rich fall into temptation, into a snare, into many senseless and hurtful desires that plunge men into ruin and destruction. For the love of money is the root of all evils; it is through this craving that some have wandered away from the faith and pierced their hearts with many pangs.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 6: 25; 1 Tm. 6: 8</strong><br><br>
+                        <em>R: Do not worry about what you are to eat, and neither about what you are to wear: * is not life worth more than food and the body more than clothing?</em><br>
+                        V: As long as we have food and clothing, let us be content with that:<br>
+                        <em>R: is not life worth more than food and the body more than clothing?</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 4 – 6</strong><br>
+                        <em>Remain in an irreproachable unity, make yourselves only one thing with God.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br>
+                        Wherefore it is fitting that you should run together in accordance with the will of your bishop, which thing also you do. For your justly renowned presbytery, worthy of God, is fitted as exactly to the bishop as the strings are to the harp. Therefore in your concord and harmonious love, Jesus Christ is sung. And do you, man by man, become a choir, that being harmonious in love, and taking up the song of God in unison, you may with one voice sing to the Father through Jesus Christ, so that He may both hear you, and perceive by your works that you are indeed the members of His Son. It is profitable, therefore, that you should live in an un-blameable unity, that thus you may always enjoy communion with God. For if I in this brief space of time, have enjoyed such fellowship with your bishop — I mean not of a mere human, but of a spiritual nature — how much more do I reckon you happy who are so joined to him as the Church is to Jesus Christ, and as Jesus Christ is to the Father, that so all things may agree in unity! Let no man deceive himself: if any one be not within the sanctuary, he is deprived of the bread of God. For if the prayer of one or two possesses such power, how much more that of the bishop and the whole Church! He therefore, that does not assemble with the Church, has even by this manifested his pride, and condemned himself. For it is written, “God resists the proud.” Let us be careful, then, not to set ourselves in opposition to the bishop, in order that we may be subject to God. The more therefore, you see the bishop silent, the more do you revere him. For we ought to receive every one whom the Master of the house sends to be over His household, as we would do Him that sent him. It is manifest, therefore, that we should look upon the bishop even as we would look upon the Lord Himself, standing, as he does, before the Lord. And indeed Onesimus himself greatly commends your good order in God, that you all live according to the truth, and that no sect has any dwelling-place among you. Nor indeed do you listen to any one rather than to Jesus Christ, the true Shepherd and Teacher. And you are, as Paul wrote to you, “one body and one spirit, because you have also been called in one hope of the faith. Since also “there is one Lord, one faith, one baptism, one God and Father of all, who is over all, and through all, and in all.” Such, then, are you, having been taught by such instructors, Paul the Christ-bearer, and Timothy the most faithful.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 4: 1, 3-4</strong><br><br>
+                        <em>R: I exhort you in the Lord to behave in a manner that is worthy of the vocation that you have received: * Preserve the unity of the Spirit in the bond of peace.</em><br>
+                        V: Only one body, only one Spirit, as only one is the hope to which you have been called.<br>
+                        <em>R: Preserve the unity of the Spirit in the bond of peace.</em>
+                    </p>
+                </section>
+            </div>
+            <hr class="border-dashed border-gray-300 my-6">
+            <div id="gospel-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 4:16 – 30</strong><br>
+                        <em>He has sent me to announce the good news to the poor. No prophet is welcome in his own country.</em><br><br>
+                        A reading from the Gospel of St. Luke.<br>
+                        And he came to Nazareth, where he had been brought up; and he went to the synagogue, as his custom was, on the Sabbath day. And he stood up to read; and there was given to him the book of the prophet Isaiah. He opened the book and found the place where it was written, "The Spirit of the Lord is upon me, because he has anointed me to preach good news to the poor. He has sent me to proclaim release to the captives and recovering of sight to the blind, to set at liberty those who are oppressed, to proclaim the acceptable year of the Lord." And he closed the book, and gave it back to the attendant, and sat down; and the eyes of all in the synagogue were fixed on him. And he began to say to them, "Today this scripture has been fulfilled in your hearing." And all spoke well of him, and wondered at the gracious words that proceeded out of his mouth; and they said, "Is not this Joseph's son?" And he said to them, "Doubtless you will quote to me this proverb, ‘Physician, heal yourself; what we have heard you did at Caper'na-um, do here also in your own country.’" And he said, "Truly, I say to you, no prophet is acceptable in his own country. But in truth, I tell you, there were many widows in Israel in the days of Eli'jah, when the heaven was shut up three years and six months, when there came a great famine over all the land; and Eli'jah was sent to none of them but only to Zar'ephath, in the land of Sidon, to a woman who was a widow. And there were many lepers in Israel in the time of the prophet Eli'sha; and none of them was cleansed, but only Na'aman the Syrian." When they heard this, all in the synagogue were filled with wrath. And they rose up and put him out of the city, and led him to the brow of the hill on which their city was built, that they might throw him down headlong. But passing through the midst of them he went away.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+            
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            
+            cycleSelector.addEventListener('change', showContent);
+            showContent();
+        });
+    </script>
+</body>
+</html>

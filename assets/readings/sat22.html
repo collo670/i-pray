@@ -1,0 +1,276 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Saturday, August 16, 2025, for the 22nd Week in Ordinary Time. Readings include the final exhortation of Paul, the desire for love over sacrifice, and Jesus speaking about the Sabbath.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Saturday, August 16, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">22nd Week in Ordinary Time</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Cor. 11: 23-26</strong><br>
+                        <em>The mystery of the Eucharist.</em><br><br>
+                        A reading from the First Letter of St. Paul, apostle, to the Corinthians.<br>
+                        For I received from the Lord what I also delivered to you, that the Lord Jesus on the night when he was betrayed took bread, and when he had given thanks, he broke it, and said, "This is my body which is for you. Do this in remembrance of me." In the same way also the cup, after supper, saying, "This cup is the new covenant in my blood. Do this, as often as you drink it, in remembrance of me." For as often as you eat this bread and drink the cup, you proclaim the Lord's death until he comes. For as often as you eat this bread and drink the cup, you proclaim the Lord's death until he comes. Therefore whoever eats the bread or drinks the cup of the Lord in an unworthy manner will be guilty of profaning the body and blood of the Lord. Let a man examine himself, and so eat of the bread and drink of the cup. For any one who eats and drinks without discerning the body eats and drinks judgment upon himself. That is why many of you are weak and ill, and some have died. But if we judged ourselves truly, we should not be judged. But when we are judged by the Lord, we are disciplined so that we may not be condemned along with the world. So then, my brethren, when you come together to eat, wait for one another. If any one is hungry, let him eat at home—lest you come together to be condemned. About the other things I will give directions when I come.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Lk 22:19, 20; Pr 9:6</strong><br><br>
+                        <em>R: This is my body, given for you; this is my blood of the new covenant, poured out for you, says the Lord. * Do this in memory of me.</em><br>
+                        V: Come, eat my bread, drink the wine that I have prepared for you;<br>
+                        <em>R: Do this in memory of me.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 17:4 – 6</strong><br>
+                        <em>I want love more than sacrifice.</em><br><br>
+                        A reading from the treatise “Against the heresies” of St. Irenaeus, bishop.<br>
+                        God did not demand sacrifices and holocausts from the Hebrews, but faith, obedience and justice for their salvation. Through the prophet Hosea, He said: “For I desire steadfast love and not sacrifice, the knowledge of God rather than burnt offerings” (Hos 6:6). For the law is a shadow of the good things to come, not the true form of these realities. It is impossible that the blood of bulls and goats should take away sins. When Christ came into the world, he said: “Sacrifice and offering you did not desire, but a body have you prepared for me; in burnt offerings and sin offerings you have taken no pleasure. Then I said, ‘Behold, I have come to do your will, O God, as it is written of me in the scroll of the book.’” When he said above, “You have neither desired nor taken pleasure in sacrifices and offerings and burnt offerings and sin offerings” (these are offered according to the law), then he added, “Behold, I have come to do your will.” He abolishes the first in order to establish the second. And by that will we have been sanctified through the offering of the body of Jesus Christ once for all. And every priest stands daily at his service, offering repeatedly the same sacrifices, which can never take away sins. But when Christ had offered for all time a single sacrifice for sins, he sat down at the right hand of God, waiting from that time until his enemies should be made a footstool for his feet. For by a single offering he has perfected for all time those who are sanctified. The Holy Spirit also bears witness to us; for after saying, “This is the covenant that I will make with them after those days, declares the Lord: I will put my laws on their hearts, and write them on their minds,” then he adds, “I will remember their sins and their lawless deeds no more.” Where there is forgiveness of these, there is no longer any offering for sin. Therefore, brethren, since we have confidence to enter the sanctuary by the blood of Jesus, by the new and living way which he opened for us through the curtain, that is, through his flesh, and since we have a great priest over the house of God, let us draw near with a true heart in full assurance of faith, with our hearts sprinkled clean from an evil conscience and our bodies washed with pure water. Let us hold fast the confession of our hope without wavering, for he who promised is faithful. And let us consider how to stir up one another to love and good works, not neglecting to meet together, as is the habit of some, but encouraging one another, and all the more as you see the Day drawing near.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Am. 5: 21, 22, 24</strong><br><br>
+                        <em>R: I detest and repulse your feasts and am not pleased with your gatherings. * Search for the Lord, he who turns darkness into the first light of the morning.</em><br>
+                        V: Is not the day of the Lord darkness and not light, and gloom with no brightness in it?<br>
+                        <em>R: Search for the Lord, he who turns darkness into the first light of the morning.</em>
+                    </p>
+                </section>
+            </div>
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Tm. 4: 1 – 22</strong><br>
+                        <em>Final exhortation of Paul.</em><br><br>
+                        A reading from the Second Letter of St. Paul, apostle, to Timothy.<br>
+                        I charge you in the presence of God and of Christ Jesus who is to judge the living and the dead, and by his appearing and his kingdom: preach the word, be urgent in season and out of season, convince, rebuke, and exhort, be unfailing in patience and teaching. For the time is coming when people will not endure sound teaching, but having itching ears they will accumulate for themselves teachers to suit their own likings, and will turn away from listening to the truth and wander into myths. As for you, always be steady, endure suffering, do the work of an evangelist, fulfil your ministry. For I am already on the point of being sacrificed; the time of my departure has come. I have fought the good fight, I have finished the race, I have kept the faith. Henceforth there is laid up for me the crown of righteousness, which the Lord, the righteous judge, will award to me on that Day, and not only to me but also to all who have loved his appearing. Do your best to come to me soon. For Demas, in love with this present world, has deserted me and gone to Thessalonica; Crescens has gone to Galatia, Titus to Dalmatia. Luke alone is with me. Get Mark and bring him with you; for he is very useful in serving me. Tychicus I have sent to Ephesus. When you come, bring the cloak that I left at Troas with Carpus, and the books, especially the parchments. Alexander the coppersmith did me great harm; the Lord will requite him for his deeds. Beware of him yourself, for he strongly opposed our message. At my first defence no one took my part; all deserted me. May it not be charged against them! But the Lord stood by me and gave me strength to proclaim the message fully, that all the Gentiles might hear it. So I was rescued from the lion's mouth. The Lord will rescue me from every evil and save me for his heavenly kingdom. To him be the glory forever and ever. Amen. Greet Prisca and Aquila, and the household of Onesiphorus. Erastus remained at Corinth, and I left Trophimus, who was ill, at Miletus. Do your best to come before winter. Eubulus sends greetings to you, as well as Pudens and Linus and Claudia and all the brethren. The Lord be with your spirit. Grace be with you.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Cor. 12: 14- 15; Phil. 2: 17</strong><br><br>
+                        <em>R: I do not want your goods, but you. In fact children are not expected to save up for their parents, but parents for children. I am perfectly willing to spend what I have, * on the contrary I will be expended, in the interests of your souls.</em><br>
+                        V: And even if my blood has to be poured out in libation as part of your own sacrifice and offering- which is your faith- I shall still be happy;<br>
+                        <em>R: on the contrary I will be expended, in the interests of your souls.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 19 – 21</strong><br>
+                        <em>Nothing is better than having peace in Christ.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br>
+                        Nothing is better than having peace in Christ. For this reason, my beloved, do not be led astray by strange doctrines. For it is good that the heart be strengthened by grace, not by foods, which have not benefited those who were occupied with them. We have an altar from which those who serve the tent have no right to eat. For the bodies of those animals whose blood is brought into the sanctuary by the high priest as a sacrifice for sin are burned outside the camp. Therefore Jesus also suffered outside the gate in order to sanctify the people through his own blood. Let us then go to him outside the camp, bearing his reproach. For here we have no lasting city, but we seek the city which is to come. Through him then let us continually offer up a sacrifice of praise to God, that is, the fruit of lips that acknowledge his name. Do not neglect to do good and to share what you have, for such sacrifices are pleasing to God. Obey your leaders and submit to them; for they are keeping watch over your souls, as men who will have to give account. Let them do this joyfully, and not sadly, for that would be of no advantage to you. Pray for us, for we are sure that we have a clear conscience, desiring to act honorably in all things. I urge you the more earnestly to do this in order that I may be restored to you the sooner. Now may the God of peace who brought again from the dead our Lord Jesus, the great shepherd of the sheep, by the blood of the eternal covenant, equip you with everything good that you may do his will, working in you that which is pleasing in his sight, through Jesus Christ; to whom be glory for ever and ever. Amen.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Heb. 13: 9-10, 15-16</strong><br><br>
+                        <em>R: Through Christ let us offer God a continual sacrifice of praise, that is, the fruit of lips that confess his name. * Do not neglect to do good and to share what you have, for such sacrifices are pleasing to God.</em><br>
+                        V: The Lord is my chosen portion and my cup; you hold my lot;<br>
+                        <em>R: Do not neglect to do good and to share what you have, for such sacrifices are pleasing to God.</em>
+                    </p>
+                </section>
+            </div>
+            <hr class="border-dashed border-gray-300 my-6">
+            <div id="gospel-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 6: 1 – 5</strong><br>
+                        <em>The Lord of the Sabbath.</em><br><br>
+                        A reading from the Gospel of St. Luke.<br>
+                        Now on the Sabbath he was going through the grainfields; and as they made their way his disciples began to pluck heads of grain. And the Pharisees said to him, "Look, why are they doing what is not lawful on the Sabbath?" And he said to them, "Have you never read what David did, when he was in need and was hungry, he and those who were with him: how he entered the house of God, when Abi'athar was high priest, and ate the bread of the Presence, which it is not lawful for any but the priests to eat, and also gave it to those who were with him?" And he said to them, "The Sabbath was made for man, not man for the Sabbath; so the Son of man is lord even of the Sabbath."
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+            
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            
+            cycleSelector.addEventListener('change', showContent);
+            showContent();
+        });
+    </script>
+</body>
+</html>
