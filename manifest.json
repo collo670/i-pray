@@ -8,12 +8,12 @@
   "description": "A Catholic liturgical companion for daily prayer and worship.",
   "icons": [
     {
-      "src": "/i-pray/assets/images/icon-192.png",
+      "src": "/i-pray/assets/images/icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/i-pray/assets/images/icon-512.png",
+      "src": "/i-pray/assets/images/icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
