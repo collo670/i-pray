@@ -1,0 +1,277 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Monday, August 18, 2025, for the 23rd Week in Ordinary Time. Readings include God's judgment on the nations, false teachers, and Jesus sending out the seventy-two disciples.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Monday, August 18, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">23rd Week in Ordinary Time</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Amos 9: 1-4, 11-12</strong><br>
+                        <em>The judgment of God on the nations.</em><br><br>
+                        A reading from the prophet Amos.<br>
+                        I saw the Lord standing beside the altar, and he said: "Smite the capitals until the thresholds shake, and shatter them on the heads of all the people; and those who are left I will slay with the sword; not one of them shall flee away, not one of them shall escape. Though they dig into Sheol, from there shall my hand take them; though they climb up to heaven, from there I will bring them down. Though they hide themselves on the top of Carmel, from there I will search them out and take them; and though they hide from my sight at the bottom of the sea, there I will command the serpent, and it shall bite them. And though they go into captivity before their enemies, there I will command the sword, and it shall slay them; and I will set my eyes upon them for evil and not for good." In that day I will raise up the booth of David that is fallen, and repair its breaches, and raise up its ruins, and rebuild it as in the days of old; that they may possess the remnant of Edom and all the nations who are called by my name, says the LORD who does this.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jn. 10: 14; Ez. 34: 11, 13</strong><br><br>
+                        <em>R: I am the good shepherd, * I know my sheep and my sheep know me.</em><br>
+                        V: Behold, I myself will go in search of my sheep and I will take care of them. I will take them back from the nations and I will pasture them;<br>
+                        <em>R: I know my sheep and my sheep know me.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 1</strong><br>
+                        <em>The Church is the vineyard of the Lord.</em><br><br>
+                        A reading from the “Discourses” of the blessed Oglerio, abbot.<br>
+                        The universal Church is the vineyard of the Lord, consort and bride of Christ, of whom God the Father says to the Son: “Your bride like a fruitful vine in the intimacy of your house” (Ps. 127: 3). The vinedresser loves the vineyard which in its turn produces fruit, so at the time of the pruning he does not leave in it any part that is dry and withered. Then he digs around it up to the deepest roots, he uncovers the roots around the tree with a pointed hoe, and if it puts forth other small roots, he cuts it off with the pruning knife. He does this so that the strength of the plant is not dispersed, but is gathered in the main root. In the same way, the heavenly vinedresser, the Lord Jesus Christ, takes care of his Church. He prunes it with the word of God, he digs around it with tribulations and afflictions, he cuts off the useless shoots with the sword of the Spirit. He does this so that the Church may produce abundant fruit of good works. Let us therefore be always adhering to the bulwark of this rock we will not be shaken from the firmness of the faith either by the dismay for the aversion of the things that pass away, or from the allurement of the sweetness. At the present, ignoring the temporal delights, only the heavenly gifts of our Redeemer entice us; among the adversities of this life the hope of his vision consoles us uniquely. Let us meditate attentively on the great example of the king and prophet David, who in the riches and in the many honours of the kingdom could not find any comfort for his soul until he, lifting the eyes of his mind, fixed them on the eternal Jerusalem, where the true peace and the eternal joy are found.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Is. 5: 7; Jn. 15: 1</strong><br><br>
+                        <em>R: The vineyard of the Lord of hosts is the house of Israel, and the men of Judah are his pleasant planting. * I am the true vine, and my Father is the vinedresser.</em><br>
+                        V: He will break down the wall of the daughter of Zion and lay it low to the ground;<br>
+                        <em>R: I am the true vine, and my Father is the vinedresser.</em>
+                    </p>
+                </section>
+            </div>
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Pt. 2: 1 – 9</strong><br>
+                        <em>False teachers.</em><br><br>
+                        A reading from the Second Letter of St. Peter, apostle.<br>
+                        But false prophets also arose among the people, just as there will be false teachers among you, who will secretly bring in destructive heresies, even denying the Master who bought them, bringing upon themselves swift destruction. And many will follow their licentiousness, and because of them the way of truth will be reviled. And in their greed they will exploit you with false words; from of old their condemnation has not been idle, and their destruction has not been asleep. For if God did not spare the angels when they sinned, but cast them into hell and committed them to pits of nether gloom to be kept until the judgment; if he did not spare the ancient world, but preserved Noah, a herald of righteousness, with seven other persons, when he brought a flood upon the world of the ungodly; if by turning the cities of Sodom and Gomor'rah to ashes he condemned them to extinction, making them an example of what is going to happen to the ungodly; and if he rescued righteous Lot, greatly distressed by the licentiousness of the wicked (for by what that righteous man saw and heard as he lived among them, his righteous soul was vexed day after day with their lawless deeds)— then the Lord knows how to rescue the godly from trial, and to keep the unrighteous under punishment until the day of judgment.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Pt. 2: 9; Ps. 33: 19</strong><br><br>
+                        <em>R: The Lord knows how to rescue the godly from trial, * and to keep the unrighteous under punishment until the day of judgment.</em><br>
+                        V: That he may deliver their soul from death, and keep them alive in famine;<br>
+                        <em>R: and to keep the unrighteous under punishment until the day of judgment.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 22 – 24</strong><br>
+                        <em>Nothing is better than having peace in Christ.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br>
+                        Nothing is better than having peace in Christ. For this reason, my beloved, do not be led astray by strange doctrines. For it is good that the heart be strengthened by grace, not by foods, which have not benefited those who were occupied with them. We have an altar from which those who serve the tent have no right to eat. For the bodies of those animals whose blood is brought into the sanctuary by the high priest as a sacrifice for sin are burned outside the camp. Therefore Jesus also suffered outside the gate in order to sanctify the people through his own blood. Let us then go to him outside the camp, bearing his reproach. For here we have no lasting city, but we seek the city which is to come. Through him then let us continually offer up a sacrifice of praise to God, that is, the fruit of lips that acknowledge his name. Do not neglect to do good and to share what you have, for such sacrifices are pleasing to God. Obey your leaders and submit to them; for they are keeping watch over your souls, as men who will have to give account. Let them do this joyfully, and not sadly, for that would be of no advantage to you. Pray for us, for we are sure that we have a clear conscience, desiring to act honorably in all things. I urge you the more earnestly to do this in order that I may be restored to you the sooner. Now may the God of peace who brought again from the dead our Lord Jesus, the great shepherd of the sheep, by the blood of the eternal covenant, equip you with everything good that you may do his will, working in you that which is pleasing in his sight, through Jesus Christ; to whom be glory for ever and ever. Amen.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Heb. 13: 9-10, 15-16</strong><br><br>
+                        <em>R: Through Christ let us offer God a continual sacrifice of praise, that is, the fruit of lips that confess his name. * Do not neglect to do good and to share what you have, for such sacrifices are pleasing to God.</em><br>
+                        V: The Lord is my chosen portion and my cup; you hold my lot;<br>
+                        <em>R: Do not neglect to do good and to share what you have, for such sacrifices are pleasing to God.</em>
+                    </p>
+                </section>
+            </div>
+            <hr class="border-dashed border-gray-300 my-6">
+            <div id="gospel-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 10: 1-12</strong><br>
+                        <em>Go your way; behold, I send you out as lambs in the midst of wolves.</em><br><br>
+                        A reading from the Gospel of St. Luke.<br>
+                        After this the Lord appointed seventy others, and sent them on ahead of him, two by two, into every town and place where he himself was about to come. And he said to them, "The harvest is plentiful, but the laborers are few; pray therefore the Lord of the harvest to send out laborers into his harvest. Go your way; behold, I send you out as lambs in the midst of wolves. Carry no purse, no bag, no sandals; and salute no one on the way. Whatever house you enter, first say, 'Peace be to this house!' And if a son of peace is there, your peace shall rest upon him; but if not, it shall return to you. And remain in the same house, eating and drinking what they provide, for the laborer deserves his wages. Do not go from house to house. And whatever town you enter and they receive you, eat what is set before you; heal the sick in it and say to them, 'The kingdom of God has come near to you.' But whatever town you enter and they do not receive you, go into its streets and say, 'Even the dust of your town that clings to our feet, we wipe off against you. Nevertheless know this, that the kingdom of God has come near.' I tell you, it shall be more tolerable on that day for Sodom than for that town."
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+            
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                
+                // Hide all cycle content
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                
+                // Show the selected cycle content
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            
+            cycleSelector.addEventListener('change', showContent);
+            showContent();
+        });
+    </script>
+</body>
+</html>
+```

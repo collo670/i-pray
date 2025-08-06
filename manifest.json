@@ -4,7 +4,7 @@
   "start_url": "/i-pray/",
   "display": "standalone",
   "background_color": "#7C3AED",
-  "theme_color": "#7C3AED",
+  "theme_color": "rgb(155, 152, 152)",
   "description": "A Catholic liturgical companion for daily prayer and worship.",
   "icons": [
     {
