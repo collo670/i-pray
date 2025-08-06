@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holy Rosary - iPray</title>
+    <title>Holy Rosary - ipray</title>
     <meta name="description" content="Pray the Holy Rosary with guided meditation and prayers">
     
     <!-- Tailwind CSS via CDN -->
@@ -115,7 +115,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                        iPray
+                        ipray
                     </h1>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
                         Holy Rosary
@@ -137,7 +137,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        Back to Home
+                        Home
                     </a>
                     <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                         Holy Rosary
@@ -176,11 +176,171 @@
                             <p class="text-gray-600 dark:text-gray-300 text-sm">Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
                         </div>
                     </div>
+                    
 
                     <div class="mt-8 p-6 bg-red-50 dark:bg-red-900/20 rounded-xl">
                         <h4 class="font-semibold text-red-800 dark:text-red-300 mb-3">Today's Mysteries</h4>
-                        <div id="mysteriesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Mysteries will be populated by JavaScript -->
+                       <!-- Static Mystery Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Joyful Mysteries -->
+                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-2xl"></span>
+                                    <h5 class="font-bold text-gray-800 dark:text-white">The Joyful Mysteries</h5>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Monday & Saturday</p>
+                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('joyful')">Tap to View</button>
+                                <div id="joyful" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                    <ol class="list-decimal list-inside">
+                                        <li>The Annunciation</li>
+                                        <li>The Visitation</li>
+                                        <li>The Nativity</li>
+                                        <li>The Presentation in the Temple</li>
+                                        <li>The Finding of Jesus in the Temple</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <!-- Sorrowful Mysteries -->
+                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-2xl"></span>
+                                    <h5 class="font-bold text-gray-800 dark:text-white">The Sorrowful Mysteries</h5>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Tuesday & Friday</p>
+                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('sorrowful')">Tap to View</button>
+                                <div id="sorrowful" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                    <ol class="list-decimal list-inside">
+                                        <li>The Agony in the Garden</li>
+                                        <li>The Scourging at the Pillar</li>
+                                        <li>The Crowning with Thorns</li>
+                                        <li>The Carrying of the Cross</li>
+                                        <li>The Crucifixion</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <!-- Glorious Mysteries -->
+                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-2xl"></span>
+                                    <h5 class="font-bold text-gray-800 dark:text-white">The Glorious Mysteries</h5>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Sunday & Wednesday</p>
+                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('glorious')">Tap to View</button>
+                                <div id="glorious" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                    <ol class="list-decimal list-inside">
+                                        <li>The Resurrection</li>
+                                        <li>The Ascension</li>
+                                        <li>The Descent of the Holy Spirit</li>
+                                        <li>The Assumption of Mary</li>
+                                        <li>The Coronation of Mary</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <!-- Luminous Mysteries -->
+                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-2xl"></span>
+                                    <h5 class="font-bold text-gray-800 dark:text-white">The Luminous Mysteries</h5>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Thursday</p>
+                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('luminous')">Tap to View</button>
+                                <div id="luminous" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                    <ol class="list-decimal list-inside">
+                                        <li>The Baptism of Jesus</li>
+                                        <li>The Wedding at Cana</li>
+                                        <li>The Proclamation of the Kingdom</li>
+                                        <li>The Transfiguration</li>
+                                        <li>The Institution of the Eucharist</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Divine Mercy Chaplet -->
+                    <div class="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                        <h4 class="font-semibold text-blue-800 dark:text-blue-300 flex items-center gap-2 mb-3">
+                            <span class="text-xl">💧</span>
+                            Divine Mercy Chaplet
+                        </h4>
+                        <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none mb-3" onclick="toggleSection('divineMercy')">Tap to View</button>
+                        <div id="divineMercy" class="space-y-3 text-sm text-gray-700 dark:text-gray-300 hidden">
+                            <p><strong>Time:</strong> Traditionally prayed at 3:00 PM (the Hour of Mercy).</p>
+                            <p><strong>On the Crucifix:</strong> "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</p>
+                            <p><strong>On the First Small Beads (3x):</strong> "For the sake of His sorrowful Passion, have mercy on us and on the whole world."</p>
+                            <p><strong>On the Large Bead:</strong> "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</p>
+                            <p><strong>On the Ten Small Beads:</strong> "For the sake of His sorrowful Passion, have mercy on us and on the whole world."</p>
+                            <p>Repeat for all five decades. After the Chaplet:</p>
+                            <p><strong>Concluding Prayer:</strong> "Eternal God, in whom mercy is endless and the treasury of mercy inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence surrender ourselves to Your holy will, which is Love and Mercy itself. Amen."</p>
+                        </div>
+                    </div>
+
+                    <!-- Litany to the Blessed Virgin Mary -->
+                    <div class="mt-8 p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
+                        <h4 class="font-semibold text-purple-800 dark:text-purple-300 flex items-center gap-2 mb-3">
+                            <span class="text-xl">👑</span>
+                            Litany of the Blessed Virgin Mary
+                        </h4>
+                        <button class="text-sm text-purple-600 dark:text-purple-400 focus:outline-none mb-3" onclick="toggleSection('litany')">Tap to View</button>
+                        <div id="litany" class="space-y-2 text-sm text-gray-700 dark:text-gray-300 hidden max-h-96 overflow-y-auto">
+                            <p>Lord, have mercy. Lord, have mercy.</p>
+                            <p>Christ, have mercy. Christ, have mercy.</p>
+                            <p>Lord, have mercy. Lord, have mercy.</p>
+                            <p>Christ, hear us. Christ, graciously hear us.</p>
+                            <p>God the Father of Heaven, have mercy on us.</p>
+                            <p>God the Son, Redeemer of the world, have mercy on us.</p>
+                            <p>God the Holy Spirit, have mercy on us.</p>
+                            <p>Holy Trinity, one God, have mercy on us.</p>
+                            <p>Holy Mary, pray for us.</p>
+                            <p>Holy Mother of God, pray for us.</p>
+                            <p>Holy Virgin of virgins, pray for us.</p>
+                            <p>Mother of Christ, pray for us.</p>
+                            <p>Mother of divine grace, pray for us.</p>
+                            <p>Mother of divine love, pray for us.</p>
+                            <p>Mother of purity, pray for us.</p>
+                            <p>Mother of hope, pray for us.</p>
+                            <p>Mother of mercy, pray for us.</p>
+                            <p>Mother of fair love, pray for us.</p>
+                            <p>Mother of our Redeemer, pray for us.</p>
+                            <p>Virgin most prudent, pray for us.</p>
+                            <p>Virgin most venerable, pray for us.</p>
+                            <p>Virgin most renowned, pray for us.</p>
+                            <p>Virgin most powerful, pray for us.</p>
+                            <p>Virgin most merciful, pray for us.</p>
+                            <p>Virgin most faithful, pray for us.</p>
+                            <p>Mystical rose, pray for us.</p>
+                            <p>Tower of David, pray for us.</p>
+                            <p>Tower of ivory, pray for us.</p>
+                            <p>House of gold, pray for us.</p>
+                            <p>Ark of the covenant, pray for us.</p>
+                            <p>Gate of Heaven, pray for us.</p>
+                            <p>Morning star, pray for us.</p>
+                            <p>Health of the sick, pray for us.</p>
+                            <p>Refuge of sinners, pray for us.</p>
+                            <p>Solace of migrants, pray for us.</p>
+                            <p>Comfort of the afflicted, pray for us.</p>
+                            <p>Help of Christians, pray for us.</p>
+                            <p>Queen of Angels, pray for us.</p>
+                            <p>Queen of Patriarchs, pray for us.</p>
+                            <p>Queen of Prophets, pray for us.</p>
+                            <p>Queen of Apostles, pray for us.</p>
+                            <p>Queen of Martyrs, pray for us.</p>
+                            <p>Queen of Confessors, pray for us.</p>
+                            <p>Queen of Virgins, pray for us.</p>
+                            <p>Queen of all Saints, pray for us.</p>
+                            <p>Queen conceived without original sin, pray for us.</p>
+                            <p>Queen assumed into Heaven, pray for us.</p>
+                            <p>Queen of the most holy Rosary, pray for us.</p>
+                            <p>Queen of peace, pray for us.</p>
+                            <p>Lamb of God, You take away the sins of the world, spare us, O Lord.</p>
+                            <p>Lamb of God, You take away the sins of the world, graciously hear us, O Lord.</p>
+                            <p>Lamb of God, You take away the sins of the world, have mercy on us.</p>
+                            <p>Christ, hear us. Christ, graciously hear us.</p>
+                            <p>Pray for us, O holy Mother of God, that we may be made worthy of the promises of Christ.</p>
+                            <p><strong>Let us pray:</strong> Grant, we beseech Thee, O Lord God, that we may ever be defended by the intercession of the blessed Virgin Mary, to whom we have recourse in all dangers. Through Christ our Lord. Amen.</p>
                         </div>
                     </div>
 
@@ -224,173 +384,76 @@
         </nav>
     </div>
 
-    <script>
-        // Theme Management
-        function initTheme() {
-            const savedMode = localStorage.getItem('themeMode');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = savedMode ? savedMode === 'dark' : prefersDark;
-            
-            if (isDark) {
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-            } else {
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-            }
-        }
 
-        // Toggle theme
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            const isDark = !document.body.classList.contains('light-mode');
-            
-            if (isDark) {
-                // Switch to light mode
-                document.body.classList.add('light-mode');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                `;
-                localStorage.setItem('themeMode', 'light');
-            } else {
-                // Switch to dark mode
-                document.body.classList.remove('light-mode');
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                `;
-                localStorage.setItem('themeMode', 'dark');
-            }
-        },
-
-        // Determine today's mysteries based on day of week
-        function getTodaysMysteries() {
-            const today = new Date();
-            const day = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
-            
-            const mysteries = [
-                {
-                    day: 'Sunday',
-                    title: 'The Glorious Mysteries',
-                    icon: '⭐',
-                    prayers: [
-                        'The Resurrection',
-                        'The Ascension',
-                        'The Descent of the Holy Spirit',
-                        'The Assumption of Mary',
-                        'The Coronation of Mary'
-                    ]
-                },
-                {
-                    day: 'Monday',
-                    title: 'The Joyful Mysteries',
-                    icon: '🎉',
-                    prayers: [
-                        'The Annunciation',
-                        'The Visitation',
-                        'The Nativity',
-                        'The Presentation in the Temple',
-                        'The Finding of Jesus in the Temple'
-                    ]
-                },
-                {
-                    day: 'Tuesday',
-                    title: 'The Sorrowful Mysteries',
-                    icon: '😢',
-                    prayers: [
-                        'The Agony in the Garden',
-                        'The Scourging at the Pillar',
-                        'The Crowning with Thorns',
-                        'The Carrying of the Cross',
-                        'The Crucifixion'
-                    ]
-                },
-                {
-                    day: 'Wednesday',
-                    title: 'The Glorious Mysteries',
-                    icon: '⭐',
-                    prayers: [
-                        'The Resurrection',
-                        'The Ascension',
-                        'The Descent of the Holy Spirit',
-                        'The Assumption of Mary',
-                        'The Coronation of Mary'
-                    ]
-                },
-                {
-                    day: 'Thursday',
-                    title: 'The Luminous Mysteries',
-                    icon: '💡',
-                    prayers: [
-                        'The Baptism of Jesus',
-                        'The Wedding at Cana',
-                        'The Proclamation of the Kingdom',
-                        'The Transfiguration',
-                        'The Institution of the Eucharist'
-                    ]
-                },
-                {
-                    day: 'Friday',
-                    title: 'The Sorrowful Mysteries',
-                    icon: '😢',
-                    prayers: [
-                        'The Agony in the Garden',
-                        'The Scourging at the Pillar',
-                        'The Crowning with Thorns',
-                        'The Carrying of the Cross',
-                        'The Crucifixion'
-                    ]
-                },
-                {
-                    day: 'Saturday',
-                    title: 'The Joyful Mysteries',
-                    icon: '🎉',
-                    prayers: [
-                        'The Annunciation',
-                        'The Visitation',
-                        'The Nativity',
-                        'The Presentation in the Temple',
-                        'The Finding of Jesus in the Temple'
-                    ]
+   <script>
+    // Theme Management
+                function initTheme() {
+                    const savedMode = localStorage.getItem('themeMode');
+                    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    const isDark = savedMode ? savedMode === 'dark' : prefersDark;
+                    if (isDark) {
+                        document.body.classList.remove('light-mode');
+                        document.documentElement.classList.add('dark');
+                        document.getElementById('themeIcon').innerHTML = `
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        `;
+                    } else {
+                        document.body.classList.add('light-mode');
+                        document.documentElement.classList.remove('dark');
+                        document.getElementById('themeIcon').innerHTML = `
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        `;
+                    }
                 }
-            ];
-            
-            return mysteries[day];
-        },
 
-        // Populate mysteries
-        function populateMysteries() {
-            const container = document.getElementById('mysteriesContainer');
-            if (!container) return;
-            
-            const mysteries = getTodaysMysteries();
-            
-            const mysteryCard = document.createElement('div');
-            mysteryCard.className = 'p-4 rounded-lg bg-white dark:bg-gray-700 shadow';
-            mysteryCard.innerHTML = `
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="text-2xl">${mysteries.icon}</span>
-                    <h5 class="font-bold text-gray-800 dark:text-white">${mysteries.title}</h5>
-                </div>
-                <ol class="list-decimal list-inside space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    ${mysteries.prayers.map(prayer => `<li class="leading-relaxed">${prayer}</li>`).join('')}
-                </ol>
-            `;
-            
-            container.appendChild(mysteryCard);
-        },
+                // Toggle Mystery Visibility
+                function toggleMystery(id) {
+                    const element = document.getElementById(id);
+                    if (element.classList.contains('hidden')) {
+                        element.classList.remove('hidden');
+                    } else {
+                        element.classList.add('hidden');
+                    }
+                }
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            populateMysteries();
-        }));
-    </script>
-</body>
+                // Auto-expand today's mystery
+                function autoExpandTodaysMystery() {
+                    const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+                    let mysteryId = '';
+
+                    if (today === 0 || today === 3) { // Sunday & Wednesday → Glorious
+                        mysteryId = 'glorious';
+                    } else if (today === 1 || today === 6) { // Monday & Saturday → Joyful
+                        mysteryId = 'joyful';
+                    } else if (today === 2 || today === 5) { // Tuesday & Friday → Sorrowful
+                        mysteryId = 'sorrowful';
+                    } else if (today === 4) { // Thursday → Luminous
+                        mysteryId = 'luminous';
+                    }
+
+                    // Auto-expand if a matching mystery exists
+                    const element = document.getElementById(mysteryId);
+                    if (element && mysteryId) {
+                        element.classList.remove('hidden');
+                    }
+                }
+
+                    // Toggle expandable sections
+                function toggleSection(id) {
+                    const element = document.getElementById(id);
+                    if (element.classList.contains('hidden')) {
+                        element.classList.remove('hidden');
+                    } else {
+                        element.classList.add('hidden');
+                    }
+                }
+
+                // Initialize on DOM load
+                document.addEventListener('DOMContentLoaded', function() {
+                    initTheme();
+                    autoExpandTodaysMystery(); // Auto-expand today's mystery
+                });
+        </script>
+
+    </body>
 </html>
