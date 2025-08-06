@@ -9,6 +9,14 @@
     <!-- Web App Manifest -->
     <link rel="manifest" href="/i-pray/manifest.json">
 
+    <!-- iOS PWA Settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ipray">
+    <link rel="apple-touch-icon" href="/i-pray/assets/images/icon-192x192.png">
+    <!-- Fullscreen on iPhone X and later -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
     <link href="./output.css" rel="stylesheet">
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -723,12 +731,38 @@
             });
             });
 
-            // Optionally: Hide install button if already installed
-            window.addEventListener('appinstalled', () => {
-            const installContainer = document.getElementById('installContainer');
-            installContainer.classList.add('hidden');
-            console.log('App installed successfully');
-            });
+            // Detect iOS and show manual install instructions
+                function showInstallPrompt() {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+                // Don't show if already installed
+                if (isStandalone) return;
+
+                if (isIOS) {
+                    // Show install instruction modal/banner
+                    const installContainer = document.getElementById('installContainer');
+                    const installButton = document.getElementById('installButton');
+                    
+                    installContainer.classList.remove('hidden');
+                    installButton.classList.remove('hidden');
+                    installButton.textContent = "Tap Share → 'Add to Home Screen'";
+                    installButton.onclick = () => {
+                    // Optional: show a modal with image instructions
+                    alert("To install: Tap the SHARE button below, then select 'Add to Home Screen'");
+                    };
+                }
+                }
+
+                // Call after DOM loads
+                document.addEventListener('DOMContentLoaded', showInstallPrompt);
+
+                            // Optionally: Hide install button if already installed
+                            window.addEventListener('appinstalled', () => {
+                            const installContainer = document.getElementById('installContainer');
+                            installContainer.classList.add('hidden');
+                            console.log('App installed successfully');
+                            });
                     
                     // Initialize the app
             document.addEventListener('DOMContentLoaded', function() {

@@ -18,5 +18,6 @@
       "sizes": "512x512"
     }
   ],
-  "scope": "/i-pray/"
+  "scope": "/i-pray/",
+  "orientation": "portrait"
 }
