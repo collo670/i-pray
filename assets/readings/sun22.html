@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for the 22nd Sunday in Ordinary Time. Includes readings from 2 Kings, St. Pacian, St. Paul, and Gospel reflections from Matthew, Mark, and Luke.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-white-50 {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        .text-purple-600 {
+            color: #7C3AED;
+        }
+        .hidden {
+            display: none;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">22nd Sunday in Ordinary Time • </p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">22nd Sunday in Ordinary Time</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-year" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Year</label>
+                <select id="liturgical-year" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="A" selected>Year A</option>
+                    <option value="B">Year B</option>
+                    <option value="C">Year C</option>
+                </select>
+            </div>
+
+            <!-- Year A Content -->
+            <div id="year-a-content" class="liturgical-year-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Kings 14:1–27</strong><br>
+                        <em>The kingdoms of Amaziah in Judah and Jeroboam II in Israel.</em><br><br>
+                        A reading from the second book of Kings.<br>
+                        In the second year of Jo'ash the son of Jo'ahaz, king of Israel, Amazi'ah the son of Jo'ash, king of Judah, began to reign. He was twenty-five years old when he began to reign, and he reigned twenty-nine years in Jerusalem. His mother's name was Jeho-ad'din of Jerusalem. And he did what was right in the eyes of the LORD, yet not like David his father; he did in all things as Jo'ash his father had done. But the high places were not removed; the people still sacrificed and burned incense on the high places. And as soon as the royal power was firmly in his hand he killed his servants who had slain the king his father. But he did not put to death the children of the murderers; according to what is written in the book of the law of Moses, where the LORD commanded, "The fathers shall not be put to death for the children, or the children be put to death for the fathers; but every man shall die for his own sin."
+                        <br><br>
+                        He killed ten thousand E'domites in the Valley of Salt and took Sela by storm, and called it Jok'the-el, which is its name to this day. Then Amazi'ah sent messengers to Jeho'ash the son of Jeho'ahaz, son of Jehu, king of Israel, saying, "Come, let us look one another in the face." And Jeho'ash king of Israel sent word to Amazi'ah king of Judah, "A thistle on Lebanon sent to a cedar on Lebanon, saying, `Give your daughter to my son for a wife'; and a wild beast of Lebanon passed by and trampled down the thistle. You have indeed smitten Edom, and your heart has lifted you up. Be content with your glory, and stay at home; for why should you provoke trouble so that you fall, you and Judah with you?" But Amazi'ah would not listen. So Jeho'ash king of Israel went up, and he and Amazi'ah king of Judah faced one another in battle at Beth-she'mesh, which belongs to Judah. And Judah was defeated by Israel, and every man fled to his home. And Jeho'ash king of Israel captured Amazi'ah king of Judah... [text continues as in source].
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Amos 9:7, 8; 5:14</strong><br><br>
+                        <em>R. Was it not I who brought you out of the land of Egypt? Word of the Lord. Behold the eyes of the Lord are turned towards the sinful kingdom. * Yet I am not going to destroy the house of Jacob completely.</em><br>
+                        V: Seek good and not evil, so that you may live, and that the Lord God may really be with you.<br>
+                        <em>R. Yet I am not going to destroy the house of Jacob completely.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>St. Pacian, Discourses on Baptism</strong><br>
+                        <em>Pure and immaculate for the day of the Lord.</em><br><br>
+                        A reading from the “Discourses on baptism” of St. Pacian, bishop.<br>
+                        “Even as we have borne the likeness of the earthly, let us bear also the likeness of the heavenly….The first man was of the earth, earthly; the second man is from heaven, heavenly.” If we act in this manner, dearly beloved brethren, we shall die no more. For even if we are dissolved in this bodily life, we will live in Christ, as he himself has assured us: “He who believes in me, even if he die, shall live.” In a word, we are assured, on God’s word, that Abraham, Isaac, Jacob and all the saints of God live. For God says concerning them: “Now he is not the God of the dead, but of the living, for all live by him.” And the apostle says of himself: “For me to live is Christ and to die is gain. I desire to depart and to be with Christ.” And elsewhere he says: “While we are in the body we are exiled from the Lord for we walk by faith and not by sight.”
+                        <br><br>
+                        This, dearly beloved, is our faith: “If with this life only in view we have had hope in Christ, we are of all men the most to be pitied.” Earthly life, as you yourselves see, for beasts, domestic animals, and the birds of the air is of the same span or longer than ours. What is special to man is what Christ has given him through his Spirit – that is, life everlasting, on condition, however, that we sin no more. For just as death is a penalty of sin and virtue the way to avoid it, so life is conserved by virtue and lost by vice. The wages of sin is death, but the gift of God is life everlasting in Christ Jesus our Lord.
+                        <br><br>
+                        Therefore, my dearly beloved brethren, we are washed but once; we are only liberated once; we are only received once into the immortal kingdom. It is only once that “Happy is he whose fault is taken away, whose sin is covered.” Hold firm, then, to the gift received, safeguard your joy, and do not commit further sin. Preserve yourselves pure and innocent for the day of the Lord.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Cor. 15:47, 49; Col. 3:9–10</strong><br><br>
+                        <em>R. The first man was taken from the earth, the second comes from heaven. * As we have borne the image of the earthly man, so also will we bear the image of the heavenly man.</em><br>
+                        V: You have undressed yourselves of the old man with his actions and you have clothed yourselves with the new one, who is renewed in the image of his creator.<br>
+                        <em>R. As we have borne the image of the earthly man, so also will we bear the image of the heavenly man.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- Year B Content -->
+            <div id="year-b-content" class="liturgical-year-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Timothy 5:3–25</strong><br>
+                        <em>The widows. The presbyters.</em><br><br>
+                        A reading from the First Letter to Timothy of St. Paul, apostle.<br>
+                        Honour widows who are real widows. If a widow has children or grandchildren, let them first learn their religious duty to their own family and make some return to their parents; for this is acceptable in the sight of God. She who is a real widow, and is left all alone, has set her hope on God and continues in supplications and prayers night and day; whereas she who is self-indulgent is dead even while she lives. Command this, so that they may be without reproach. If any one does not provide for his relatives, and especially for his own family, he has disowned the faith and is worse than an unbeliever.
+                        <br><br>
+                        Let a widow be enrolled if she is not less than sixty years of age, having been the wife of one husband; and she must be well attested for her good deeds, as one who has brought up children, shown hospitality, washed the feet of the saints, relieved the afflicted, and devoted herself to doing good in every way. But refuse to enrol younger widows; for when they grow wanton against Christ they desire to marry, and so they incur condemnation for having violated their first pledge...
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Response</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Phil. 1:27; 2:4–5</strong><br><br>
+                        <em>R. Behave in a way that is worthy of the gospel, fight unanimously for the faith, * without searching for your own interests, but that of the others.</em><br>
+                        V: Have in yourselves the same sentiments that were in Christ Jesus,<br>
+                        <em>R. without searching for your own interests, but that of the others.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>St. Ignatius of Antioch, Letter to the Ephesians</strong><br>
+                        <em>In obedience to the bishop and to the college of presbyters.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br>
+                        Ignatius, who is also called Theophorus, to the Church which is at Ephesus, in Asia, deservedly most happy, being blessed in the greatness and fullness of God the Father, and predestined before the beginning of time, that it should be always for an enduring and unchangeable glory, being united and elected through the true passion by the will of the Father, and Jesus Christ, our God: Abundant happiness through Jesus Christ, and His undefiled grace...
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 15:2; 1 Cor. 1:10</strong><br><br>
+                        <em>R. Walk in love, in the way that Christ himself has loved you and has given himself for you, * offering himself as a sweet smelling sacrifice to God.</em><br>
+                        V: All of you unanimous in speaking and in perfect union of thought and intent, glorify Jesus Christ who has glorified you,<br>
+                        <em>R. offering himself as a sweet smelling sacrifice to God.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- Year C Content -->
+            <div id="year-c-content" class="liturgical-year-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Luke 14:1, 7–14</strong><br>
+                        <em>Everyone who exalts himself will be humbled, and the man who humbles himself will be exalted.</em><br><br>
+                        A reading from the Gospel of St. Luke.<br>
+                        One Sabbath when he went to dine at the house of a ruler who belonged to the Pharisees, they were watching him. Now he told a parable to those who were invited, when he marked how they chose the places of honour, saying to them, "When you are invited by any one to a marriage feast, do not sit down in a place of honour, lest a more eminent man than you be invited by him; and he who invited you both will come and say to you, `Give place to this man,' and then you will begin with shame to take the lowest place..."
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>St. Aelred of Rievaulx, Discourse on the Annunciation</strong><br>
+                        <em>True humility.</em><br><br>
+                        A reading from the “Discourse on the Annunciation of the Lord” of St. Aelred, abbot.<br>
+                        In truth, brothers, there cannot be true humility in us if it is not nourished by a healthy fear, nor obedience if it is not rendered sweet by the spirit of piety, nor justice if it is not supported by the science of the Spirit, nor patience if it is not sustained by the spirit of strength, nor mercy if it is not illuminated by counsel, nor pureness of heart if it is not preserved by the heavenly things, nor charity if it is not vivified by the wisdom which is the taste for the things of God.
+                        <br><br>
+                        All this is found in its fullness only in Christ... He manifested humility in his birth because “he undressed himself, assuming the condition of a servant and becoming similar to men he appeared in human form” (Phil 2:7). In the submission to the parents he showed obedience when, abandoning that which was dear to his heart, “he returned to Nazareth and was subjected to them” (Lk. 2:51)...
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Pet. 5:5; Mt. 11:29</strong><br><br>
+                        <em>R: All of you wrap yourselves in humility to be servants of each other * because God refuses the proud and will always favour the humble.</em><br>
+                        V: Learn from me for I am gentle and humble of heart and you will find rest for your souls;<br>
+                        <em>R: because God refuses the proud and will always favour the humble.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- Alleluia Section -->
+            <section class="text-center py-4 bg-white-50 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 mb-3">Alleluia</h2>
+                <p class="text-gray-700 italic">
+                    <strong>Matthew 5:3</strong><br><br>
+                    <em>R. Alleluia, alleluia.</em><br>
+                    3 Blessed are the poor in spirit; for theirs is the Kingdom of heaven.<br>
+                    <em>R. Alleluia, alleluia.</em>
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSelector = document.getElementById('liturgical-year');
+            const yearAContent = document.getElementById('year-a-content');
+            const yearBContent = document.getElementById('year-b-content');
+            const yearCContent = document.getElementById('year-c-content');
+
+            function showContentForYear(year) {
+                yearAContent.classList.add('hidden');
+                yearBContent.classList.add('hidden');
+                yearCContent.classList.add('hidden');
+                if (year === 'A') yearAContent.classList.remove('hidden');
+                else if (year === 'B') yearBContent.classList.remove('hidden');
+                else if (year === 'C') yearCContent.classList.remove('hidden');
+            }
+
+            yearSelector.addEventListener('change', (event) => {
+                showContentForYear(event.target.value);
+            });
+
+            showContentForYear(yearSelector.value);
+        });
+    </script>
+</body>
+</html>

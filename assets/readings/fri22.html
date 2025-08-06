@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Friday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Friday, September 5, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Friday of Week 22</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Am. 5: 1 – 17</strong><br>
+                        <em>Lamentations and admonishments.</em><br><br>
+                        A reading from the book of Amos.<br><br>
+                        Hear this word which I take up over you in lamentation, O house of Israel: "Fallen, no more to rise, is the virgin Israel; forsaken on her land, with none to raise her up." For thus says the Lord GOD: "The city that went forth a thousand shall have a hundred left, and that which went forth a hundred shall have ten left to the house of Israel."<br><br>
+                        For thus says the LORD to the house of Israel: "Seek me and live; but do not seek Bethel, and do not enter into Gilgal or cross over to Beer-sheba; for Gilgal shall surely go into exile, and Bethel shall come to nought." Seek the LORD and live, lest he break out like fire in the house of Joseph, and it devour, with none to quench it for Bethel,<br><br>
+                        O you who turn justice to wormwood, and cast down righteousness to the earth! He who made the Plei'ades and Orion, and turns deep darkness into the morning, and darkens the day into night, who calls for the waters of the sea, and pours them out upon the surface of the earth, the LORD is his name, who makes destruction flash forth against the strong, so that destruction comes upon the fortress.<br><br>
+                        They hate him who reproves in the gate, and they abhor him who speaks the truth. Therefore because you trample upon the poor and take from him exactions of wheat, you have built houses of hewn stone, but you shall not dwell in them; you have planted pleasant vineyards, but you shall not drink their wine. For I know how many are your transgressions, and how great are your sins -- you who afflict the righteous, who take a bribe, and turn aside the needy in the gate. Therefore he who is prudent will keep silent in such a time; for it is an evil time.<br><br>
+                        Seek good, and not evil, that you may live; and so the LORD, the God of hosts, will be with you, as you have said. Hate evil, and love good, and establish justice in the gate; it may be that the LORD, the God of hosts, will be gracious to the remnant of Joseph.<br><br>
+                        Therefore thus says the LORD, the God of hosts, the Lord: "In all the squares there shall be wailing; and in all the streets they shall say, 'Alas! Alas!' They shall call the farmers to mourning and to wailing those who are skilled in lamentation, and in all vineyards there shall be wailing, for I will pass through the midst of you," says the LORD.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Am. 5: 1, 12, 15, 14</strong><br><br>
+                        <em>R: Listen to the word of the Lord: I know that your misdeeds are countless, that you are blackmailers, turning away the poor at the city gate. * Hate evil and love good; perhaps the Lord of hosts, will have pity.</em><br>
+                        V: Search for good and not evil, if you want to live, and thus the Lord, God of hosts, will be with you.<br>
+                        <em>R: Hate evil and love good; perhaps the Lord of hosts, will have pity.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Disc. 10: 13 – 14</strong><br>
+                        <em>God the Father whips the Church so that it may grow more vigorous and fruitful.</em><br><br>
+                        A reading from the “Discourses” of the blessed Oglerio, abbot.<br><br>
+                        The universal Church is the vineyard of the Lord, consort and bride of Christ, of whom God the Father says to the Son: “Your bride like a fruitful vine in the intimacy of your house” (Ps. 127: 3). The vinedresser loves the vineyard which in its turn produces fruit, so at the time of the pruning he does not leave in it any part that is dry and withered. Then he digs around it up to the deepest roots, he uncovers the roots around the tree with a pointed hoe, and if it puts forth other small roots, he cuts it off with the pruning knife; and the more the vine loses in this way the parts that are less useful, or better still useless, the more it grows and produces blooming and abundant fruits.<br><br>
+                        In this way God strikes and beats those whom he loves: in fact he whips whoever he recognises as his son (cfr. Heb. 12: 6). To welcome correction here on earth is characteristic of those to whom it is given to enjoy eternity; but he who grumbles because of the correction does not draw near to him up there. On the contrary, if he does not welcome patiently and with love the punishment of God the Father, he loses the inheritance of the heavenly happiness. And if he has grumbled because of the correction of the Lord, he may be certain that he will incur the punishment of the grumblers.<br><br>
+                        You therefore, dearest brothers, should not grumble if you run into the correction of our Lord, and do not lose heart when you are rebuked by him. Off course “any correction is painful at the time and far from pleasant; but later, on those on whom it has been used, it bears fruit in peace and justice” (Heb.12: 11). With the punishments of the Lord the ardour of the pleasures of the flesh become weak, while the vigour of the soul is renewed. The flesh loses that which it has in excess; and the spirit acquires the strength that it did not have. Thus through the punishments of the Lord, the strength increases and the vices are uprooted; the earthly things are despised and the heavenly things are loved.<br><br>
+                        We who await with impatience the eternal goods, when we are struck by some serious infirmity or by a strong temptation, or even by a loss of the temporal things, must draw strength from all these things, so that with the growing of the battle, we may not hesitate to believe that a more glorious victory awaits us. In fact in similar conditions we show with what ardour we bind ourselves to God, if we go to him not only in tranquillity and in prosperity, but also in the adverse and hard events.<br><br>
+                        We cannot reach to the eternal joys without losing the temporal goods; and therefore in the hope of the joy that does not pass, we must consider all the adverse conditions as not unfortunate.<br><br>
+                        The divine severity does not ever permit that our sins remain unpunished; but the anger of his judgement begins in the present with our correction, in order to find itself already satisfied in the moment of the condemnation of the reprobates. In fact the doctor is in our heart, and he cuts out the infection of sin in us: he takes out the poison of corruption with the knife of the tribulations. And this is what the Truth says: “Every branch in me which bears fruit”, my Father “prunes to make it bear even more fruit” (Jn. 15: 2): in fact the soul that finds itself in temptation, considers that which has driven it away from its preceding solidity in virtue, and worries anxiously about not losing all that which it had commenced to be.<br><br>
+                        So grasp the sword of prayer, and the tears of compunction; and so weaken the temptations and you will triumph gloriously: not you, but the grace of Christ in you. And so it happens that the soul, which in prosperity lies down lazy and sterile, will rise up stronger and vigorous to bear fruits.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Tm. 3: 11, 12; cfr. Jdt. 8: 26 (Vulg. 8: 23)</strong><br><br>
+                        <em>R: You know well of what persecutions I have suffered. Yet the Lord has liberated me from everything. * All those who want to live piously in Christ Jesus will be persecuted.</em><br>
+                        V: All those who are pleasing to God, will pass through many tribulations, and will remain faithful to him.<br>
+                        <em>R: All those who want to live piously in Christ Jesus will be persecuted.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Tm. 2: 22 – 3:17</strong><br>
+                        <em>Dangerous times are drawing near.</em><br><br>
+                        A reading from the Second Letter to Timothy of St. Paul, apostle.<br><br>
+                        So shun youthful passions and aim at righteousness, faith, love, and peace, along with those who call upon the Lord from a pure heart. Have nothing to do with stupid, senseless controversies; you know that they breed quarrels. And the Lord's servant must not be quarrelsome but kindly to every one, an apt teacher, forbearing, correcting his opponents with gentleness. God may perhaps grant that they will repent and come to know the truth, and they may escape from the snare of the devil, after being captured by him to do his will.<br><br>
+                        But understand this, that in the last days there will come times of stress. For men will be lovers of self, lovers of money, proud, arrogant, abusive, disobedient to their parents, ungrateful, unholy, inhuman, implacable, slanderers, profligates, fierce, haters of good, treacherous, reckless, swollen with conceit, lovers of pleasure rather than lovers of God, holding the form of religion but denying the power of it. Avoid such people.<br><br>
+                        For among them are those who make their way into households and capture weak women, burdened with sins and swayed by various impulses, who will listen to anybody and can never arrive at a knowledge of the truth. As Jannes and Jambres opposed Moses, so these men also oppose the truth, men of corrupt mind and counterfeit faith; but they will not get very far, for their folly will be plain to all, as was that of those two men.<br><br>
+                        Now you have observed my teaching, my conduct, my aim in life, my faith, my patience, my love, my steadfastness, my persecutions, my sufferings, what befell me at Antioch, at Ico'nium, and at Lystra, what persecutions I endured; yet from them all the Lord rescued me. Indeed all who desire to live a godly life in Christ Jesus will be persecuted, while evil men and impostors will go on from bad to worse, deceivers and deceived.<br><br>
+                        But as for you, continue in what you have learned and have firmly believed, knowing from whom you learned it and how from childhood you have been acquainted with the sacred writings which are able to instruct you for salvation through faith in Christ Jesus. All scripture is inspired by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Tm. 2: 24, 25; Ez. 33: 11</strong><br><br>
+                        <em>R: A servant of the Lord must be meek with everyone. He has to be gentle when he corrects people who dispute what he says, * God will grant them conversion, so that they may recognise the truth.</em><br>
+                        V: God does not take pleasure in the death of the wicked, but that the wicked desists from his conduct and lives.<br>
+                        <em>R: God will grant them conversion, so that they may recognise the truth.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 16 – 19</strong><br>
+                        <em>The cross is salvation and eternal life for us.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br><br>
+                        Do not err, my brethren. Those that corrupt families shall not inherit the kingdom of God. And if those that corrupt mere human families are condemned to death, how much more shall those suffer everlasting punishment who endeavour to corrupt the Church of Christ, for which the Lord Jesus, the only-begotten Son of God, endured the cross, and submitted to death! Whosoever, “being waxen fat,” and “become gross,” sets at nought His doctrine, shall go into hell. In like manner, every one that has received from God the power of discerning, and yet follows an unskilful shepherd, and receives a false opinion for the truth, shall be punished.<br><br>
+                        “What communion has light with darkness? Or Christ with Belial? Or what portion has he that believes with an infidel? Or the temple of God with idols?” And in like manner say I, what communion has truth with falsehood? Or righteousness with unrighteousness? Or true doctrine with that which is false? For this end did the Lord suffer the ointment to be poured upon His head, that His Church might breathe forth immortality. For says [the Scripture], “Your name is as ointment poured forth; therefore have the virgins loved You; they have drawn after You; at the odour of Your ointments we will run after You.” Let no one be anointed with the bad odour of the doctrine of [the prince of] this world; let not the holy Church of God be led captive by his subtlety, as was the first woman. Why do we not, as gifted with reason, act wisely? When we had received from Christ, and had grafted in us the faculty of judging concerning God, why do we fall headlong into ignorance? And why, through a careless neglect of acknowledging the gift that we have received, do we foolishly perish?<br><br>
+                        The cross of Christ is indeed a stumbling block to those that do not believe, but to the believing it is salvation and life eternal. “Where is the wise man? Where the disputer?” Where is the boasting of those who are called mighty? For the Son of God, who was begotten before time began, and established all things according to the will of the Father, He was conceived in the womb of Mary, according to the appointment of God, of the seed of David, and by the Holy Spirit. For says [the Scripture], “Behold, a virgin shall be with child, and shall bring forth a son, and He shall be called Immanuel.” He was born and was baptized by John, that He might ratify the institution committed to that prophet. Now the virginity of Mary was hidden from the prince of this world, as was also her offspring, and the death of the Lord; three mysteries of renown, which were wrought in silence, but have been revealed to us.<br><br>
+                        A star shone forth in heavens above all that were before it, and its light was inexpressible, while its novelty struck men with astonishment. And all the rest of the stars, with the sun and moon, formed a chorus to this star. It far exceeded them all in brightness, and agitation was felt as to whence this new spectacle [proceeded]. Hence worldly wisdom became folly; conjuration was seen to be mere trifling; and magic became utterly ridiculous. Every law of wickedness vanished away; the darkness of ignorance was dispersed; and tyrannical authority was destroyed, God being manifested as a man, and man displaying power as God. But neither was the former a mere imagination, nor did the second imply a bare humanity; but the one was absolutely true, and the other an economical arrangement. Now that received a beginning that was perfected by God.<br><br>
+                        Henceforth all things were in a state of tumult, because He meditated the abolition of death.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jn. 13: 16, 17, 15</strong><br><br>
+                        <em>R: A servant is not greater than his master. * Knowing these things, you will be blessed if you put them into practice.</em><br>
+                        V: I have given you in fact an example, because as I have done you too may do.<br>
+                        <em>R: Knowing these things, you will be blessed if you put them into practice.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 5: 33 – 39</strong><br>
+                        <em>When the bridegroom will be taken away from them, then they will fast.</em><br><br>
+                        A reading from the Gospel of St. Luke.<br><br>
+                        And they said to him, “The disciples of John fast often and offer prayers, and so do the disciples of the Pharisees, but yours eat and drink.” And Jesus said to them, "Can you make wedding guests fast while the bridegroom is with them? The days will come, when the bridegroom is taken away from them, and then they will fast in those days.”<br><br>
+                        He told them a parable also: “No one tears a piece from a new garment and puts it upon an old garment; if he does, he will tear the new, and the piece from the new will not match the old.<br><br>
+                        And no one puts new wine into old wineskins; if he does, the new wine will burst the skins and it will be spilled, and the skins will be destroyed. But new wine must be put into fresh wineskins. And no one after drinking old wine desires new; for he says, ‘The old is good.’”
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent();
+        });
+    </script>
+</body>
+</html>

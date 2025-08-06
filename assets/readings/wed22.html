@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Wednesday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Wednesday, September 3, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Wednesday of Week 22</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Am. 3: 1 – 15</strong><br>
+                        <em>The visit of the Lord in Samaria and Bethel.</em><br><br>
+                        A reading from the prophet Amos.<br><br>
+                        Hear this word that the LORD has spoken against you, O people of Israel, against the whole family which I brought up out of the land of Egypt: "You only have I known of all the families of the earth; therefore I will punish you for all your iniquities. Do two walk together, unless they have made an appointment? Does a lion roar in the forest, when he has no prey? Does a young lion cry out from his den, if he has taken nothing? Does a bird fall in a snare on the earth, when there is no trap for it? Does a snare spring up from the ground, when it has taken nothing? Is a trumpet blown in a city, and the people are not afraid? Does evil befall a city, unless the LORD has done it? Surely the Lord GOD does nothing, without revealing his secret to his servants the prophets. The lion has roared; who will not fear? The Lord GOD has spoken; who can but prophesy?"<br><br>
+                        Proclaim to the strongholds in Assyria, and to the strongholds in the land of Egypt, and say, "Assemble yourselves upon the mountains of Sama'ria, and see the great tumults within her, and the oppressions in her midst." "They do not know how to do right," says the LORD, "those who store up violence and robbery in their strongholds." Therefore thus says the Lord GOD: "An adversary shall surround the land, and bring down your defences from you, and your strongholds shall be plundered." Thus says the LORD: "As the shepherd rescues from the mouth of the lion two legs, or a piece of an ear, so shall the people of Israel who dwell in Sama'ria be rescued, with the corner of a couch and part of a bed."<br><br>
+                        "Hear, and testify against the house of Jacob," says the Lord GOD, the God of hosts, "that on the day I punish Israel for his transgressions, I will punish the altars of Bethel, and the horns of the altar shall be cut off and fall to the ground. I will smite the winter house with the summer house; and the houses of ivory shall perish, and the great houses shall come to an end," says the LORD.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Am. 3: 8, 1, 2</strong><br><br>
+                        <em>R: The lion roars, who can help feeling afraid? * The Lord God has spoken: who can refuse to prophesy?</em><br>
+                        V: Listen to these words that the Lord has said regarding you, Israelites: I will make you pay for all your iniquities.<br>
+                        <em>R: The Lord God has spoken: who can refuse to prophesy?</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>C. 5: 1 – 8; 6: 11 – 16</strong><br>
+                        <em>A new creation.</em><br><br>
+                        A reading from the “Letter” attributed to Barnabas.<br><br>
+                        For to this end the Lord endured to deliver up His flesh to death, that we might be sanctified through the remission of sins, which is effected by His blood of sprinkling. For it is written concerning Him, partly with reference to Israel, and partly to us; and [the Scripture] says thus: “He was wounded for our transgressions, and bruised for our iniquities: with His stripes we are healed. He was brought as a sheep to the slaughter, and as a lamb which is dumb before its shearer.”<br><br>
+                        Therefore we ought to be deeply grateful to the Lord, because He has both made known to us things that are past, and has given us wisdom concerning things present, and has not left us without understanding in regard to things which are to come. Now, the Scripture says, “Not unjustly are nets spread out for birds.” This means that the man perishes justly, who, having a knowledge of the way of righteousness, rushes off into the way of darkness. And further, my brethren: if the Lord endured to suffer for our soul, He being Lord of all the world, to whom God said at the foundation of the world, “Let us make man after our image, and after our likeness,” understand how it was that He endured to suffer at the hand of men. The prophets, having obtained grace from Him, prophesied concerning Him.<br><br>
+                        And He (since he had to appear in flesh), that He might abolish death, and reveal the resurrection from the dead, endured [what and as He did], in order that He might fulfil the promise made unto the fathers, and by preparing a new people for Himself, might show, while he dwelt on earth, that He, when He has raised mankind, will also judge them.<br><br>
+                        Since, therefore, having renewed us by the remission of our sins, He has made us after another pattern, [it is His purpose] that we should possess the soul of children, inasmuch as He has created us anew by His Spirit. For the Scripture says concerning us, while He speaks to the Son, “Let Us make man after our image, and after our likeness; and let them have dominion over the beasts of the earth, and the fowls of heaven, and the fishes of the sea.” And the Lord said, on beholding the fair creature man, “Increase, and multiply, and replenish the earth.” These things [were spoken] to the Son.<br><br>
+                        Again, I will show you how, in respect to us, He has accomplished a second fashioning in these last days. The Lord says, “Behold, I will make the last like the first.” In reference to this then, the prophet proclaimed, “Enter into the land flowing with milk and honey, and have dominion over it.” Behold, therefore, we have been refashioned, as again He says in another prophet, “Behold, says the Lord, I will take away from these, that is, from those whom the Spirit of the Lord foresaw, their stony hearts, and I will put hearts of flesh within them,” because He was to be manifested in flesh, and to sojourn among us. For, my brethren, the habitation of our heart is a holy temple to the Lord. For again says the Lord, “And wherewith shall I appear before the Lord my God, and be glorified?” He says, “I will confess to you in the Church in the midst of my brethren; and I will praise you in the midst of the assembly of the saints.” We, then, are they whom He has led into the good land.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Act. 3: 25; Gal. 3: 8</strong><br><br>
+                        <em>R: You are the children of the prophets and of the covenant that God established with your fathers, when he said to Abraham: * In your descendants all the families of the earth will be blessed.</em><br>
+                        V: The Scriptures, foreseeing that God would justify the pagans through faith, pre-announced to Abraham:<br>
+                        <em>R: In your descendants all the families of the earth will be blessed.</em>
+                    </p>
+                </section>
+            </div>
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Tm. 1: 1 – 18</strong><br>
+                        <em>Paul exhorts Timothy to be strong in his duties.</em><br><br>
+                        A reading from the Second Letter of St. Paul, apostle, to Timothy.<br><br>
+                        Paul, an apostle of Christ Jesus by the will of God according to the promise of the life which is in Christ Jesus, To Timothy, my beloved child: Grace, mercy, and peace from God the Father and Christ Jesus our Lord. I thank God whom I serve with a clear conscience, as did my fathers, when I remember you constantly in my prayers. As I remember your tears, I long night and day to see you, that I may be filled with joy. I am reminded of your sincere faith, a faith that dwelt first in your grandmother Lo'is and your mother Eunice and now, I am sure, dwells in you.<br><br>
+                        Hence I remind you to rekindle the gift of God that is within you through the laying on of my hands; for God did not give us a spirit of timidity but a spirit of power and love and self-control. Do not be ashamed then of testifying to our Lord, nor of me his prisoner, but share in suffering for the gospel in the power of God, who saved us and called us with a holy calling, not in virtue of our works but in virtue of his own purpose and the grace which he gave us in Christ Jesus ages ago, and now has manifested through the appearing of our Saviour Christ Jesus, who abolished death and brought life and immortality to light through the gospel.<br><br>
+                        For this gospel I was appointed a preacher and apostle and teacher, and therefore I suffer as I do. But I am not ashamed, for I know whom I have believed, and I am sure that he is able to guard until that Day what has been entrusted to me.<br><br>
+                        Follow the pattern of the sound words that you have heard from me, in the faith and love which are in Christ Jesus; guard the truth that has been entrusted to you by the Holy Spirit who dwells within us.<br><br>
+                        You are aware that all who are in Asia turned away from me, and among them Phy'gelus and Hermog'enes. May the Lord grant mercy to the household of Onesiph'orus, for he often refreshed me; he was not ashamed of my chains, but when he arrived in Rome he searched for me eagerly and found me -- may the Lord grant him to find mercy from the Lord on that Day -- and you well know all the service he rendered at Ephesus.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Rm. 8: 15-16; 2 Tm. 1: 7</strong><br><br>
+                        <em>R: You have not received a spirit of slavery to fall back into fear, but you have received a spirit of adopted sons through which we cry: Abba, Father! * The Spirit himself bears witness to our spirit that we are children of God.</em><br>
+                        V: God in fact has not given us a spirit of timidity, but of strength, of love and of wisdom.<br>
+                        <em>R: The Spirit himself bears witness to our spirit that we are children of God.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 10 – 12</strong><br>
+                        <em>You are ministers of God and the mouth of Christ.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br><br>
+                        And pray without ceasing on behalf of other men; for there is hope of the repentance, that they may attain to God. For “cannot he that falls arise again, and he that goes astray return?” Permit them, then, to be instructed by you. Be therefore the ministers of God, and the mouth of Christ. For thus says the Lord, “If you take forth the precious from the vile, you shall be as my mouth.” Be humble in response to their wrath; oppose their blasphemies your earnest prayers; while they go astray, stand steadfast in the faith.<br><br>
+                        Conquer their harsh temper by gentleness, their passion by meekness. For “blessed are the meek;” and Moses was meek above all men; and David was exceeding meek. Wherefore Paul exhorts as follows: “The servant of the Lord must not strive, but be gentle towards all men, apt to teach, patient, in meekness instructing those that oppose.” Do not seek to avenge yourselves on those that injure you, for says [the Scripture], “If I have returned evil to those who returned evil to me.” Let us make them brethren by our kindness. For say to those that hate you; You are our brethren, that the name of the Lord may be glorified.<br><br>
+                        And let us imitate the Lord, “who, when He was reviled, suffered, He threatened not;” but prayed for His enemies, “Father, forgive them; they know not what they do.” If any one, the more he is injured, displays the more patience, blessed is he. If any one is defrauded, if any one is despised, for the name of the Lord, he truly is the servant of Christ. Take heed that no plant of the devil is found among you, for such a plant is bitter and sour. “Watch, and be sober,” in Christ Jesus.<br><br>
+                        The last times are come upon us. Let us therefore be of a reverent spirit, and fear the long-suffering of God, lest we despise the riches of His goodness and forbearance. For let us either fear the wrath to come, or let us love the present joy in the life that now is; and let our present and true joy be only this, to be found in Christ Jesus, that we may truly live. Do not at any time desire so much as even to breathe apart from Him. For He is my hope; He is my boast; He is my never-failing riches, on whose account I bear about with me these bonds from Syria to Rome, these spiritual jewels, in which may I be perfected through your prayers, and become a partaker of the sufferings of Christ, and have fellowship with Him in His death, His resurrection from the dead, and His everlasting life. May I attain to this, so that I may be found in the lot of the Christians of Ephesus, who have by the virtue of Jesus Christ been always obedient to the apostles, to Paul, to John and to the most faithful Timothy.<br><br>
+                        I know both who I am, and to whom I write. I am the very insignificant Ignatius, who have my lot with those who are exposed to danger and condemnation. But you have been the objects of mercy, and are established in Christ. I am one delivered over [to death], but the least of all those that have been cut off for the sake of Christ, “from the blood of righteous Abel” to the blood of Ignatius. You are initiated into the mysteries of the Gospel with Paul, the holy, the martyred, inasmuch as he was “a chosen vessel;” at whose feet may I be found, and at the feet of the rest of the saints, when I shall attain to Jesus Christ, who is always mindful of you in His prayers.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Cor. 3: 4, 6, 5</strong><br><br>
+                        <em>R: This is the faith that we have through Christ, in front of God, * that he has made us suitable ministers of a New Covenant, not of letters, but of the Spirit.</em><br>
+                        V: Not however that we ourselves are capable of thinking something as coming from ourselves, but our capacity comes from God.<br>
+                        <em>R: That he has made us suitable ministers of a New Covenant, not of letters, but of the Spirit.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 4: 38 – 44</strong><br>
+                        A reading from the Gospel of St. Luke.<br><br>
+                        And he arose and left the synagogue, and entered Simon's house. Now Simon's mother-in-law was ill with a high fever, and they besought him for her. And he stood over her and rebuked the fever, and it left her; and immediately she rose and served them.<br><br>
+                        Now when the sun was setting, all those who had any that were sick with various diseases brought them to him; and he laid his hands on every one of them and healed them. And demons also came out of many, crying, "You are the Son of God!" But he rebuked them, and would not allow them to speak, because they knew that he was the Christ.<br><br>
+                        And when it was day he departed and went into a lonely place. And the people sought him and came to him, and would have kept him from leaving them; but he said to them, "I must preach the good news of the kingdom of God to the other cities also; for I was sent for this purpose." And he was preaching in the synagogues of Judea.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

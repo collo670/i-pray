@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Tuesday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Tuesday, September 2, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Tuesday of Week 22</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Am. 2:4 – 16</strong><br>
+                        <em>The judgement of God on Judah and Israel.</em><br><br>
+                        A reading from the prophet Amos.<br><br>
+                        Thus says the LORD: "For three transgressions of Judah, and for four,
+                        I will not revoke the punishment; because they have rejected the law of the
+                        LORD, and have not kept his statutes, but their lies have led them astray,
+                        after which their fathers walked. So I will send a fire upon Judah, and it
+                        shall devour the strongholds of Jerusalem."<br><br>
+                        Thus says the LORD: "For three transgressions of Israel, and for four,
+                        I will not revoke the punishment; because they sell the righteous for silver,
+                        and the needy for a pair of shoes -- they that trample the head of the poor
+                        into the dust of the earth, and turn aside the way of the afflicted; a man and
+                        his father go in to the same maiden, so that my holy name is profaned; they
+                        lay themselves down beside every altar upon garments taken in pledge; and
+                        in the house of their God they drink the wine of those who have been fined.<br><br>
+                        "Yet I destroyed the Amorite before them, whose height was like the height
+                        of the cedars, and who was as strong as the oaks; I destroyed his fruit
+                        above, and his roots beneath. Also I brought you up out of the land of
+                        Egypt, and led you forty years in the wilderness, to possess the land of the
+                        Amorite. And I raised up some of your sons for prophets, and some of your
+                        young men for Nazirites. Is it not indeed so, O people of Israel?" says the
+                        LORD. "But you made the Nazirites drink wine, and commanded the
+                        prophets, saying, `You shall not prophesy.' "Behold, I will press you down
+                        in your place, as a cart full of sheaves presses down. Flight shall perish
+                        from the swift, and the strong shall not retain his strength, nor shall the
+                        mighty save his life; he who handles the bow shall not stand, and he who is
+                        swift of foot shall not save himself, nor shall he who rides the horse save his
+                        life; and he who is stout of heart among the mighty shall flee away naked in
+                        that day," says the LORD.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Am. 2: 10, 11, 12; Ps. 94: 10</strong><br><br>
+                        <em>R: I am the one who has made you come out of the land of Egypt and who
+                        has led you for forty years in the desert. And I said: * they are a people with
+                        a crooked heart, they do not know my ways.</em><br>
+                        V: I raised up prophets among your children, and to the prophets I had
+                        ordered: do not prophesy!<br>
+                        <em>R: They are a people with a crooked heart, they do not know my ways.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cc. 2: 6 – 10; 3: 1, 3, 4, 10 – 16</strong><br>
+                        <em>The new law of our Lord.</em><br><br>
+                        A reading from the “Letter” attributed to Barnabas.<br><br>
+                        He has therefore abolished the old sacrifices, so that the new law of our
+                        Lord Jesus Christ, which is without the yoke of constriction, might have an
+                        offering that is not work of men. And again He says to them, “Did I
+                        command your fathers, when they went out from the land of Egypt, to offer
+                        unto me burnt-offerings and sacrifices? But this rather I commanded them,
+                        Let no one of you cherish any evil in his heart against his neighbour, and
+                        love not an oath of falsehood.” We ought therefore, being possessed of
+                        understanding, to perceive the gracious intention of our Father; for He
+                        speaks to us, desirous that we, not going astray like them, should ask how
+                        we may approach Him. To us, then, He declares, “A sacrifice [pleasing] to
+                        God is a broken spirit; a smell of sweet savour to the Lord is a heart that
+                        glorifies Him that made it.” We ought therefore, brethren, carefully to
+                        inquire concerning our salvation, lest the Wicked one, having made his
+                        entrance by deceit, should hurl us forth from our [true] life. He says then to
+                        them again concerning these things, “Why do you fast to me as on this day,
+                        says the Lord, that your voice should be heard with a cry? I have not chosen
+                        this fast, says the Lord, that a man should humble his soul? Is it to bend
+                        your neck like a reed, and put upon you sackcloth and ashes? Will you call
+                        it an acceptable fast.” To us He says,
+                        “Behold, this is the fast that I have chosen, says the Lord, not that a
+                        man should humble his soul, but that he should loose every band of iniquity,
+                        untie the fastenings of harsh agreements, restore to liberty them that are
+                        bruised, tear in pieces every unjust engagement, feed the hungry with your
+                        bread, clothe the naked when you see him, bring the homeless into your
+                        house, let us utterly hate the works of the way of wickedness. Do not, by
+                        retiring apart, live a solitary life, as if you were already [fully] justified; but
+                        coming together in one place, make common inquiry concerning what tends
+                        to your general welfare. For the Scripture says, “Woe to them who are wise
+                        to themselves, and prudent in their own sight!” Let us be spiritually minded:
+                        let us be a perfect temple to God. As much as in us lies, let us meditate upon
+                        the fear of God, and let us keep His commandments, that we may
+                        rejoice in His ordinances. The Lord will judge the world without respect of
+                        persons. Each will receive as he has done: if he is righteous, his
+                        righteousness will precede him; if he is wicked, the reward of wickedness is
+                        before him. Take heed, lest resting at our ease, as those who are the called
+                        [of God], we should fall asleep in our sins, and the wicked prince, acquiring
+                        power over us, should thrust us away from the kingdom of the Lord. And all
+                        the more attend to this, my brethren, when you reflect and behold, that after
+                        so great signs and wonders were wrought in Israel, they were thus [at length]
+                        abandoned. Let us beware lest we be found [fulfilling that saying], as it is
+                        written, “Many are called, but few are chosen.”
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Gal. 3: 24, 25, 23</strong><br><br>
+                        <em>R: The Law was to be our guardian until the Christ came and we could be
+                        justified by faith. * Now that the faith has come we are no longer under the
+                        law.</em><br>
+                        V: Before faith came, we were allowed no freedom by the Law; we were
+                        being looked after till faith was revealed.<br>
+                        <em>R: Now that the faith has come we are no longer under the law.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 6: 11 – 21</strong><br>
+                        <em>Final exhortations.</em><br><br>
+                        A reading from the First Letter to Timothy of St. Paul, apostle.<br><br>
+                        But as for you, man of God, shun all this; aim at righteousness,
+                        godliness, faith, love, steadfastness, and gentleness. Fight the good fight of
+                        the faith; take hold of the eternal life to which you were called when you
+                        made the good confession in the presence of many witnesses. In the
+                        presence of God who gives life to all things, and of Christ Jesus who in his
+                        testimony before Pontius Pilate made the good confession, I charge you to
+                        keep the commandment unstained and free from reproach until the
+                        appearing of our Lord Jesus Christ; and this will be made manifest at the
+                        proper time by the blessed and only Sovereign, the King of kings and Lord
+                        of lords, who alone has immortality and dwells in unapproachable light,
+                        whom no man has ever seen or can see. To him be honour and eternal
+                        dominance. Amen.<br><br>
+                        As for the rich in this world, charge them not to be haughty, nor to set
+                        their hopes on uncertain riches but on God who richly furnishes us with
+                        everything to enjoy. They are to do good, to be rich in good deeds, liberal
+                        and generous, thus laying up for themselves a good foundation for the
+                        future, so that they may take hold of the life which is life indeed.<br><br>
+                        O Timothy, guard what has been entrusted to you. Avoid the godless
+                        chatter and contradictions of what is falsely called knowledge, for by
+                        professing it some have missed the mark as regards the faith. Grace be with
+                        you.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Col. 2: 6, 7; Mt. 6: 19-20</strong><br><br>
+                        <em>R: Walk in the Lord Jesus Christ, as you have received him, firm in the
+                        faith that has been taught to you, * full of thanksgiving.</em><br>
+                        V: Do not gather treasures for yourselves on earth, gather treasures instead
+                        in heaven,<br>
+                        <em>R: full of thanksgiving.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 7 – 9</strong><br>
+                        <em>Do everything in the name of the Lord Jesus Christ.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch,
+                        bishop and martyr.<br><br>
+                        But some most worthless persons are in the habit of carrying about the
+                        name [of Jesus Christ] in wicked guile, while yet they practice things
+                        unworthy of God, and hold opinions contrary to the doctrine of Christ, to
+                        their own destruction, and that of those who give credit to them, whom you
+                        must avoid as you would wild beasts. For “the righteous man who avoids
+                        them is saved for ever; but the destruction of the ungodly is sudden, and a
+                        subject of rejoicing.” For “they are dumb dogs, that cannot bark,” raving
+                        mad, and biting secretly, against whom you must be on your guard, since
+                        they labour under an incurable disease. But our Physician is the only true
+                        God, the unbegotten and unapproachable, the Lord of all, the Father and
+                        Begetter of the only-begotten Son. We have also as a Physician the Lord our
+                        God, Jesus the Christ, the only begotten Son and Word, before time began,
+                        but who afterwards became also man, of Mary the virgin. For “the Word
+                        was made flesh.” Being incorporeal, He was in the body; being impassable,
+                        He was in a passable body; being immortal, He was in a mortal body; being
+                        life, He became subject to corruption, that He might free our souls from
+                        death and corruption, and heal them, and might restore them to health, when
+                        they were diseased with ungodliness and wicked lusts.<br><br>
+                        Let not then any one deceive you, as indeed you are not deceived; for
+                        you are wholly devoted to God. For when there is no evil desire within you,
+                        which might defile and torment you, then do you live in accordance with
+                        the will of God, and are [the servants] of Christ. Cast out that which defiles
+                        you, who are of the most holy Church of the Ephesians, which is so famous
+                        and celebrated throughout the world. They that are carnal cannot do those
+                        things that are spiritual, or they that are spiritual the things which are carnal;
+                        even as faith cannot do the works of unbelief, nor unbelief the works of
+                        faith. But you, being full of the Holy Spirit, do nothing according to the
+                        flesh, but all things according to the Spirit. You are complete in Christ
+                        Jesus, “who is the Saviour of all men, specially of them that believe.”<br><br>
+                        Nevertheless, I have heard of some who have passed in among you,
+                        holding the wicked doctrine of the strange and evil spirit; to whom you did
+                        not allow entrance to sow their discord but stopped your ears that you might
+                        not receive that error which was proclaimed by them, as being persuaded
+                        that that spirit which deceives the people does not speak the things of
+                        Christ, but his own, for he is a lying spirit. But the Holy Spirit does not
+                        speak His own things, but those of Christ, and that not from himself, but
+                        from the Lord; even as the Lord also announced to us the things that He
+                        received from the Father. For, says He, “the word that you hear is not mine,
+                        but the Father’s, who sent me.” And says He of the Holy Spirit, “He shall
+                        not speak of Himself, but whatsoever things He shall hear from me.” And
+                        He says of Himself to the Father, “I have,” says He, “glorified You upon the
+                        earth; I have finished the work which, You gave Me; I have manifested
+                        Your name to men.” And of the Holy Spirit, “He shall glorify me, for He
+                        receives of mine.” But the spirit of deceit preaches himself, and speaks his
+                        own things, for he seeks to please himself. He glorifies himself, for he is
+                        full of arrogance. He is lying, fraudulent, soothing, flattering, treacherous,
+                        rhapsodical, trifling, inharmonious, verbose, sordid, and timorous. From his
+                        power Jesus Christ will deliver you, who has founded you upon the rock, as
+                        being chosen stones, well fitted for the divine edifice of the Father, and who
+                        are raised up on high by Christ, who was crucified for you, making use of
+                        the Holy Spirit as a rope, and being borne up by faith, while exalted by love
+                        from earth to heaven, walking in company with those that are undefiled.<br><br>
+                        For, says [the Scripture], “Blessed are the undefiled in the way, who walk in
+                        the law of the Lord.” Now the way is unerring, namely, Jesus Christ. For,
+                        says He, “I am the way and the life.” And this way leads to the Father. For
+                        “no man,” says He, “comes to the Father but by me.” Blessed, then, are you
+                        who are God-bearers, spirit-bearers, temple-bearers, bearers of holiness,
+                        adorned in all respects with the commandments of Jesus Christ, being “a
+                        royal priesthood, a holy nation, a people that God has acquired,” on whose
+                        account I rejoice exceedingly, and have had the privilege, by this Epistle, of
+                        conversing with “the saints which are at Ephesus, the faithful in Christ
+                        Jesus.” I rejoice, therefore, over you, that you do not give heed to vanity,
+                        and love nothing according to the flesh, but according to God.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Col. 3: 17; 1 Cor. 10: 31</strong><br><br>
+                        <em>R: All that you do in words and deeds * do it all in the name of the Lord
+                        Jesus, giving thanks through him to God the Father.</em><br>
+                        V: Do everything for the glory of God.<br>
+                        <em>R: Do it all in the name of the Lord Jesus, giving thanks through him to
+                        God the Father.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 4:31 – 37</strong><br>
+                        A reading from the Gospel of St. Luke.<br><br>
+                        And he went down to Caper'na-um, a city of Galilee. And he was
+                        teaching them on the Sabbath; and they were astonished at his teaching, for
+                        his word was with authority.<br><br>
+                        And in the synagogue there was a man who had the spirit of an
+                        unclean demon; and he cried out with a loud voice, "Ah! What have you to
+                        do with us, Jesus of Nazareth? Have you come to destroy us? I know who
+                        you are, the Holy One of God." But Jesus rebuked him, saying, "Be silent,
+                        and come out of him!" And when the demon had thrown him down in the
+                        midst, he came out of him, having done him no harm. And they were all
+                        amazed and said to one another, "What is this word? For with authority and
+                        power he commands the unclean spirits, and they come out." And reports
+                        of him went out into every place in the surrounding region.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

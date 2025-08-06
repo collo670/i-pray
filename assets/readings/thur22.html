@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Thursday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Thursday, September 4, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Thursday of Week 22</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Am. 4:1 – 13</strong><br>
+                        <em>Against the woman of Samaria and the cult of Israel</em><br><br>
+                        A reading from the prophet Amos<br><br>
+                        "Hear this word, you cows of Bashan, who are in the mountain of Sama'ria, who oppress the poor, who crush the needy, who say to their husbands, ‘Bring, so that we may drink!’ The Lord GOD has sworn by his holiness that, behold, the days are coming upon you, when they shall take you away with hooks, even the last of you with fishhooks. And you shall go out through the breaches, every one straight before her; and you shall be cast forth into Harmon," says the LORD.<br><br>
+                        "Come to Bethel, and transgress; to Gilgal, and multiply transgression; bring your sacrifices every morning, your tithes every three days; offer a sacrifice of thanksgiving of that which is leavened, and proclaim freewill offerings, publish them; for so you love to do, O people of Israel!" says the Lord GOD. "I gave you cleanness of teeth in all your cities, and lack of bread in all your places, yet you did not return to me," says the LORD. "And I also withheld the rain from you when there were yet three months to the harvest; I would send rain upon one city, and send no rain upon another city; one field would be rained upon, and the field on which it did not rain withered; so two or three cities wandered to one city to drink water, and were not satisfied; yet you did not return to me," says the LORD.<br><br>
+                        "I smote you with blight and mildew; I laid waste your gardens and your vineyards; your fig trees and your olive trees the locust devoured; yet you did not return to me," says the LORD. "I sent among you a pestilence after the manner of Egypt; I slew your young men with the sword; I carried away your horses; and I made the stench of your camp go up into your nostrils; yet you did not return to me," says the LORD. "I overthrew some of you, as when God overthrew Sodom and Gomor'rah, and you were as a brand plucked out of the burning; yet you did not return to me," says the LORD. "Therefore thus I will do to you, O Israel; because I will do this to you: prepare to meet your God, O Israel!" For lo, he who forms the mountains, and creates the wind, and declares to man what is his thought; who makes the morning darkness, and treads on the heights of the earth – the LORD, the God of hosts, is his name!
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 49: 22-23; Ml. 1: 10</strong><br><br>
+                        <em>R: Understand this, you who forget God, or I will tear you to pieces where no one can rescue you. * Whoever makes thanksgiving his sacrifice honours me, to the upright man I will show how God can save.</em><br>
+                        V: I am not pleased with you, says the Lord of hosts, I do not accept the offering of your hands!<br>
+                        <em>R: Whoever makes thanksgiving his sacrifice honours me, to the upright man I will show how God can save.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>C. 19: 1 – 3, 5 – 6, 8 – 12</strong><br>
+                        <em>The way of light</em><br><br>
+                        A reading from the “Letter” attributed to Barnabas<br><br>
+                        The way of light, then, is as follows. If any one desires to travel to the appointed place, he must be zealous in his works. The knowledge, therefore, which is given to us for the purpose of walking in this way, is the following. You shall love Him that created you: you shall glorify Him that redeemed you from death. You shall be simple in heart, and rich in spirit. You shall not join yourself to those who walk in the way of death. You shall hate doing what is unpleasing to God: You shall hate all hypocrisy. You shall not forsake the commandments of the Lord. You shall not exalt yourself, but shall be of a lowly mind. You shall not take glory to yourself. You shall not take evil counsel against your neighbour. You shall not allow over-boldness to enter into your soul. You shall not commit fornication: you shall not commit adultery: you shall not be a corrupter of youth. You shall not let the word of God issue from your lips with any kind of impurity. You shall not accept persons when you reprove any one for transgression. You shall be meek: You shall be peaceable. You shall tremble at the words that you hear. You shall not be mindful of evil against your brother. You shall not be of doubtful mind as to whether a thing shall be or not. You shall not take the name of the Lord in vain. You shall love your neighbour more than your own soul. You shall not slay the child by procuring abortion; nor, again, shall you destroy it after it is born. You shall not withdraw your hand from your son, or from your daughter, but from their infancy you shall teach them the fear of the Lord. You shall not covet what is your neighbour’s, nor shall you be avaricious. You shall not be joined in soul with the haughty, but you shall be reckoned with the righteous and lowly. Receive as good things the trials that come upon you. You shall not be of double mind or of double tongue, for a double tongue is a snare of death. You shall be subject to the Lord, and to [other] masters as the image of God, with modesty and fear. You shall not issue orders with bitterness to your maidservant or your manservant, who trust in the same [God], lest you should not reverence that God who is above both; for He came to call men not according to their outward appearance, but according as the Spirit had prepared them. You shall communicate in all things with your neighbour; you shall not call things your own; for if you are partakers in common of things which are incorruptible, how much more [should you be] of those things which are corruptible! You shall not be hasty with your tongue, for the mouth is a snare of death. As far as possible, you shall be pure in your soul. Do not be ready to stretch forth your hands to take, while you contract them to give. You shall love, as the apple of your eye, every one that speaks to you the word of the Lord. You shall remember the Day of Judgment, night and day. You shall seek out every day the faces of the saints, either by word examining them, and going to exhort them, and meditating how to save a soul by the Word, or by your hands you shall labour for the redemption of your sins. You shall not hesitate to give, or murmur when you give. “Give to every one that asks you,” and you shall know who is the good Recompenser of the reward. You shall preserve what you have received [in charge], neither adding to it nor taking from it. To the last you shall hate the wicked [one]. You shall judge righteously. You shall not make a schism, but you shall pacify those that contend by bringing them together. You shall confess your sins. You shall not go to prayer with an evil conscience. This is the way of light.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cfr. Ps. 118: 101-102</strong><br><br>
+                        <em>R: I keep my feet far away from all ways of evil; * I will keep your word, Lord.</em><br>
+                        V: I do not turn aside from your judgements, because you instruct me;<br>
+                        <em>R: I will keep your word, Lord.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Tm. 2: 1 – 21</strong><br>
+                        <em>Exhortation to be constant in trials and in persecution.</em><br><br>
+                        A reading from the Second Letter of St. Paul, apostle, to Timothy.<br><br>
+                        You then, my son, be strong in the grace that is in Christ Jesus, and what you have heard from me before many witnesses entrust to faithful men who will be able to teach others also.<br><br>
+                        Share in suffering as a good soldier of Christ Jesus. No soldier on service gets entangled in civilian pursuits, since his aim is to satisfy the one who enlisted him. An athlete is not crowned unless he competes according to the rules. It is the hard-working farmer who ought to have the first share of the crops. Think over what I say, for the Lord will grant you understanding in everything.<br><br>
+                        Remember Jesus Christ, risen from the dead, descended from David, as preached in my gospel, the gospel for which I am suffering and wearing fetters like a criminal. But the word of God is not fettered. Therefore I endure everything for the sake of the elect, that they also may obtain salvation in Christ Jesus with its eternal glory.<br><br>
+                        The saying is sure: If we have died with him, we shall also live with him; if we endure, we shall also reign with him; if we deny him, he also will deny us; if we are faithless, he remains faithful -- for he cannot deny himself.<br><br>
+                        Remind them of this, and charge them before the Lord to avoid disputing about words, which does no good, but only ruins the hearers. Do your best to present yourself to God as one approved, a workman who has no need to be ashamed, rightly handling the word of truth.<br><br>
+                        Avoid such godless chatter, for it will lead people into more and more ungodliness, and their talk will eat its way like gangrene. Among them are Hymenae'us and Phile'tus, who have swerved from the truth by holding that the resurrection is past already. They are upsetting the faith of some.<br><br>
+                        But God's firm foundation stands, bearing this seal: "The Lord knows those who are his," and, "Let every one who names the name of the Lord depart from iniquity."<br><br>
+                        In a great house there are not only vessels of gold and silver but also of wood and earthenware, and some for noble use, some for ignoble. If any one purifies himself from what is ignoble, then he will be a vessel for noble use, consecrated and useful to the master of the house, ready for any good work.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>2 Cor. 4: 10, 12; 2 Tm. 2: 10</strong><br><br>
+                        <em>R: Always carrying in our bodies the death of Jesus, so that also the life of Jesus may be manifested in our bodies. * In a way that in us operates death, but in you life.</em><br>
+                        V: Therefore I bear everything for the elect, so that they also may reach salvation.<br>
+                        <em>R: In a way that in us operates death, but in you life.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 13 – 15</strong><br>
+                        <em>Nothing is better than having peace in Christ.</em><br><br>
+                        A reading from the “Letter to the Ephesians” of St. Ignatius of Antioch, bishop and martyr.<br><br>
+                        Take heed, then, often to come together to give thanks to God, and show forth His praise. For when you come frequently together in the same place, the powers of Satan are destroyed, and his “fiery darts” urging to sin fall back ineffectual. For your concord and harmonious faith prove his destruction, and the torment of his assistants. Nothing is better than that peace which is according to Christ, by which all war, both of aerial and terrestrial spirits, is brought to an end. “For we wrestle not against blood and flesh, but against principalities and powers, and against the rulers of the darkness of this world, against spiritual wickedness in heavenly places.” (Ep. 6: 12). I do not want you therefore to hurt yourselves in some diabolical thought, as Paul also says, since you have in Christ the hope and love that are the beginning and the end of life. The beginning of life is faith, charity is its apex. The union of the two virtues, becoming unity, brings the man of God to perfection; it includes and makes all the other virtues that are practiced in the way of love perfect. He who professes the faith does not commit sin and he who possesses charity cannot hate. He in fact who said: “You will love the Lord your God with all your heart” also said: “Love your neighbour as yourself” (Mt. 22: 37, 39). Thus those who make their profession of belonging to Christ are recognized not so much from what they say, but from their works. “Every tree in fact will be recognized by its fruit” (Lk. 6: 44). It is better to be a Christian without saying so, than to say it without being one, “because the kingdom of God does not consist in words, but in power” (1 Cor. 4: 20). “By believing from the heart you are made righteous, by confessing with your lips you are saved” (Rm. 10: 10). It is a good thing to teach, if he who speaks practices what he teaches. He in fact “who observes and teaches them to men will be considered great in the kingdom of heaven” (Mt. 5: 19). Our God and Lord Jesus “Christ, the Son of the living God” (Mt. 16: 16) first “did” and then “taught” (Act. 1: 1), as Luke testifies, “the brother who is famous in all the churches for spreading the Gospel” (2 Cor. 8: 18).<br><br>
+                        Nothing is hidden from the Lord, even our secrets are in front of him. Let us therefore do everything thinking that he dwells in us, in order that we may be his temple and he may be able to establish his dwelling in us.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Jn. 4: 7; cfr. Sir. 25: 1, 2</strong><br><br>
+                        <em>R: Dearly beloved, let us love one another, * because love comes from God.</em><br>
+                        V: The harmony among brothers and friendship among neighbours is pleasing to God and to men;<br>
+                        <em>R: because love comes from God.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 5: 1 – 11</strong><br>
+                        <em>They left everything and followed Him.</em><br><br>
+                        A reading from the Gospel of St. Luke.<br><br>
+                        While the people pressed upon him to hear the word of God, he was standing by the lake of Gennes'aret. And he saw two boats by the lake; but the fishermen had gone out of them and were washing their nets. Getting into one of the boats, which was Simon's, he asked him to put out a little from the land. And he sat down and taught the people from the boat.<br><br>
+                        And when he had ceased speaking, he said to Simon, "Put out into the deep and let down your nets for a catch." And Simon answered, "Master, we toiled all night and took nothing! But at your word I will let down the nets." And when they had done this, they enclosed a great shoal of fish; and as their nets were breaking, they beckoned to their partners in the other boat to come and help them. And they came and filled both the boats, so that they began to sink. But when Simon Peter saw it, he fell down at Jesus' knees, saying, "Depart from me, for I am a sinful man, O Lord." For he was astonished, and all that were with him, at the catch of fish which they had taken; and so also were James and John, sons of Zeb'edee, who were partners with Simon. And Jesus said to Simon, "Do not be afraid; henceforth you will be catching men." And when they had brought their boats to land, they left everything and followed him.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>
