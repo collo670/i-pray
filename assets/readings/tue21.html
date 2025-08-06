@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Tuesday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Tuesday, Week 21 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Tuesday of Week 21</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 5:8 – 21</strong><br>
+                        <em>Walk like sons of light.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br><br>
+                        For once you were darkness, but now you are light in the Lord; walk as children of light (for the fruit of light is found in all that is good and right and true), and try to learn what is pleasing to the Lord. Take no part in the unfruitful works of darkness, but instead expose them. For it is a shame even to speak of the things that they do in secret; but when anything is exposed by the light it becomes visible, for anything that becomes visible is light. Therefore it is said, "Awake, O sleeper, and arise from the dead, and Christ shall give you light." Look carefully then how you walk, not as unwise men but as wise, making the most of the time, because the days are evil. Therefore do not be foolish, but understand what the will of the Lord is. And do not get drunk with wine, for that is debauchery; but be filled with the Spirit, addressing one another in psalms and hymns and spiritual songs, singing and making melody to the Lord with all your heart, always and for everything giving thanks in the name of our Lord Jesus Christ to God the Father. Be subject to one another out of reverence for Christ.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 5, 8 – 9; Mt. 5, 14. 16</strong><br><br>
+                        <em>R: You are light in the Lord: behave like children of the light. * The fruit of light consists in every goodness, justice and truth.</em><br>
+                        V: You are the light of the world. Let your light shine out in front of men.<br>
+                        <em>R: The fruit of light consists in every goodness, justice and truth.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Nm. 13 – 14</strong><br>
+                        <em>When you sing psalms, everyone has to sing psalms.</em><br><br>
+                        A reading from the treatise “The good of singing psalms” of Niceta of Reims, bishop.<br><br>
+                        My dearest, let us psalmodize with an intent soul and a vigilant mind, as the psalmist exhorts us saying: “God is king of all the earth, sing hymns with art” (Ps. 46, 8); in a way that the psalm is recited not only with the “spirit”, that is with the sound of the voice, but also with the “mind” (cfr.1Cor.14, 15) meditating interiorly that which we psalmodize, so that the mind, dominated by strange thoughts, may not have to toil without fruit. Everything has to be celebrated while being in the presence of God, and not with the worry of pleasing men or oneself. We have an example of this consonance of the voice in those three most blessed young boys of which the book of Daniel speaks, when it says: “ Then those three young men, with only one voice, started to praise, to glorify, to bless God in the furnace saying: Blessed are you, Lord, God of our fathers (Dn. 3, 51 – 52).<br><br>
+                        Do you see how we are taught that the three praised the Lord with only one voice, so that we also can express with unanimity the same hearing with the same modulation of the voice. For this when we sing the psalms, every one has to psalmodize; when one prays, all have to pray, when the reading is proclaimed, keep silence, all together listen to it, and let it not happen that while the lector proclaims the reading another disturbs by praying in a loud voice. If then you have to arrive during the reading, having fulfilled the adoration to God and the sign of the cross, dispose yourself with care to listening.<br><br>
+                        The time of prayer is given to you when everyone prays, and it is given to you again every time that you want to pray privately: however in order to pray do not lose the reading, because you cannot have this always at your disposition and in the way that you want it, while the possibility of praying is always within your reach. And do not believe that it is of little use to listen to the sacred readings: in fact the same prayer is enriched, because the mind, nourished by the divine reality that is listened to, proceeds with greater facility.<br><br>
+                        In fact Mary, who leaves her sister Martha, while she remains seated at the feet of Jesus listened more attentively to the word, “she has chosen the better part” (cfr.Lk.10, 39.42), as the Lord confirmed. Therefore the deacon proclaims in a clear voice admonishing every one because in the prayer, in the prostration, in the psalmody, as in the listening of the sacred reading, the unity is conserved; the Lord loves in fact those who are unanimous, and he makes them live in his house (cfr.Ps.67, 7).
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 137, 1 – 2; 117, 28</strong><br><br>
+                        <em>R: Before the angels I want to sing to you, I prostrate myself before your holy temple. * I give thanks to your name, Lord.</em><br>
+                        V: You are my God and I give you thanks, you are my God and I exalt you.<br>
+                        <em>R: I give thanks to your name, Lord.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Titus 3: 3 – 15</strong><br>
+                        <em>The bath of regeneration.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to Titus.<br><br>
+                        For we ourselves were once foolish, disobedient, led astray, slaves to various passions and pleasures, passing our days in malice and envy, hated by men and hating one another; but when the goodness and loving kindness of God our Saviour appeared, he saved us, not because of deeds done by us in righteousness, but in virtue of his own mercy, by the washing of regeneration and renewal in the Holy Spirit, which he poured out upon us richly through Jesus Christ our Saviour, He did this so that we might be justified by his grace and become heirs in hope of eternal life. The saying is sure. I desire you to insist on these things, so that those who have believed in God may be careful to apply themselves to good deeds; these are excellent and profitable to men.<br><br>
+                        But avoid stupid controversies, genealogies, dissensions, and quarrels over the law, for they are unprofitable and futile. As for a man who is factious, after admonishing him once or twice, have nothing more to do with him, knowing that such a person is perverted and sinful; he is self-condemned.<br><br>
+                        When I send Artemas or Tych'icus to you, do your best to come to me at Nicop'olis, for I have decided to spend the winter there. Do your best to speed Zenas the lawyer and Apol'los on their way; see that they lack nothing. And let our people learn to apply themselves to good deeds, so as to help cases of urgent need, and not to be unfruitful. All who are with me send greetings to you. Greet those who love us in the faith. Grace be with you all.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 102, 13 – 14; Tit. 3, 5</strong><br><br>
+                        <em>R: As a father has mercy on his sons, so the Lord has mercy on those who fear him. * Because he knows of what we have been formed.</em><br>
+                        V: He has saved us not in virtue of the works that we have accomplished, but because of his mercy.<br>
+                        <em>R: Because he knows of what we have been formed.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Disc. 4: 2 – 7</strong><br>
+                        <em>No one must despair because of the greatness of his sins.</em><br><br>
+                        A reading from the Discourse of the IX th century.<br><br>
+                        Brothers, you have often heard spoken of two men, Adam and Christ: the first is the old, the second is new. Therefore he who is old is wicked, because he imitates the one who in paradise was proud and disobedient. He who is good is new, because he follows the one who said: “Learn from me for I am meek and humble of heart” (Mt. 11, 29) and of whom the Apostle affirms that he made himself “obedient unto death” (Phil. 2, 8).<br><br>
+                        Now because our time is called new, we exhort those who are old and live badly, to become new by converting to good. We incite those who are already new because of their good works, to try to renew themselves in this new time with better works. He who, for example is new because of chastity, having cast away vices, should renew himself renouncing also to the desire of evil.<br><br>
+                        So also he who is humble, obedient, merciful and patient, must renew himself, praying and everyday making progress in those virtues, according to what is written: They will go from virtue to virtue (Ps. 83, 8).<br><br>
+                        None of you, my dearest, is secure only because of the fact that he has been baptised: As not all those who run in the stadium win the prize (cfr. 1Cor. 9, 24), but only he who arrives first, so also not all those who have faith will save themselves, but only those who persevere in the good work that has been initiated. And as every combatant “is temperate in everything” (1Cor. 9, 25), so also you have to abstain from all the vices in order to defeat the devil, your persecutor. By means of the faith you have been called by the Lord in his vineyard, that is in the unity of the Holy Church: live and behave in a way that you can receive the money, that is the beatitude of the kingdom freely given by God.<br><br>
+                        No one must despair because of the greatness of his sins, saying: My sins are many, in which I have persevered up to old age and up to decay; in a way that I cannot obtain forgiveness, in so much as it has been they who have abandoned me and not I who have left them. May it not be that he despairs of the mercy of God, because some have been called in the vineyard of the Lord during the first hour, others at the third, others yet again at the sixth; others then at the ninth and in the end others at the eleventh hour. That is, some have been attracted to the service of God right from their infancy, others during adolescence, others during their youth, others during their old age and finally others in the time of decay.<br><br>
+                        And as no one, in whatever age he finds himself, should despair of being able to convert, so also no one must feel himself secure only because of the fact of having faith, but above all he must fear what has been written: “Many are called, but few are elected” (Mt. 22, 14). We know that we have been called through faith, but we do not know if we are elected. Therefore every one should be all the more humble, in so much as we do not know if we have been elected or not.<br><br>
+                        May the almighty God concede that you are not among the number of those who pass the Red Sea with dry feet, who eat the manna in the desert and who quench their thirst of the spiritual drink and then die in that same desert because of their grumbling; but that you may be numbered among those who enter into the promised land and, working faithfully in the vineyard of the Church, are found worthy of receiving the denarius of the eternal beatitudes; in a way that you can, together with Christ your head, of whom you are members, reign for all eternity. Amen.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>cfr. Vulg. Est. 14, 3. 19; Tob. 3, 13; Jdt. 6, 15</strong><br><br>
+                        <em>R: Besides you I have no other hope O Lord, God of Israel. * You, who even in anger use mercy, and in the time of tribulation forgive sins.</em><br>
+                        V: Lord, God of heaven and earth, look at our humiliation.<br>
+                        <em>R: You, who even in anger use mercy, and in the time of tribulation forgive sins.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 23: 23 – 26</strong><br>
+                        A reading from the Gospel of St. Matthew.<br><br>
+                        "Woe to you, scribes and Pharisees, hypocrites! For you tithe mint and dill and cummin, and have neglected the weightier matters of the law, justice and mercy and faith; these you ought to have done, without neglecting the others. You blind guides, straining out a gnat and swallowing a camel!<br><br>
+                        "Woe to you, scribes and Pharisees, hypocrites! For you cleanse the outside of the cup and of the plate, but inside they are full of extortion and rapacity. You blind Pharisee! First cleanse the inside of the cup and of the plate, that the outside also may be clean.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

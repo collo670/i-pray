@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Friday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Friday, Week 21 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Friday of Week 21</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 6: 10 – 20</strong><br>
+                        <em>The armour of God.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br><br>
+                        Finally, my brethren, be strong in the Lord and in the strength of his might. Put on the whole armour of God, that you may be able to stand against the wiles of the devil. For we are not contending against flesh and blood, but against the principalities, against the powers, against the world rulers of this present darkness, against the spiritual hosts of wickedness in the heavenly places. Therefore take the whole armour of God, that you may be able to withstand in the evil day, and having done all, to stand. Stand therefore, having girded your loins with truth, and having put on the breastplate of righteousness, and having shod your feet with the equipment of the gospel of peace; besides all these, taking the shield of faith, with which you can quench all the flaming darts of the evil one. And take the helmet of salvation, and the sword of the Spirit, which is the word of God. Pray at all times in the Spirit, with all prayer and supplication. To that end keep alert with all perseverance, making supplication for all the saints, and also for me, that utterance may be given me in opening my mouth boldly to proclaim the mystery of the gospel, for which I am an ambassador in chains; that I may declare it boldly, as I ought to speak.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 6, 14. 15. 18</strong><br><br>
+                        <em>R: Gird your loins with the truth, clothe yourselves with the armour of justice and with the zeal * for the propagation of the gospel of peace.</em><br>
+                        V: Pray incessantly with every type of prayer and intercession in the Spirit.<br>
+                        <em>R: for the propagation of the gospel of peace.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Hom. 17: 2 – 3</strong><br>
+                        <em>Two things in fact are asked of the disciple of Christ.</em><br><br>
+                        A reading from the “Homilies on the letter to the Ephesians” of St. John Chrysostom, bishop.<br><br>
+                        Two things in fact are asked of the disciple of Christ: that he shows himself worthy of the kingdom and that he shows esteem for the kingdom itself. The first thing is done when he lives in a way that is worthy of God, when he is just, temperate, and pure; the second, when he does not spare himself for the sake of the kingdom, when he is ready to give up everything, even his own life. This is why the Lord says: “The kingdom of heaven is like a treasure hidden in a field, which a man found and hid; then in his joy he goes and sells all that he has and buys that field” (Mt. 13, 44).<br><br>
+                        The man who has found the treasure is the one who has discovered the truth of the faith, who has seen the beauty of the virtue of the gospel. He sells all that he has, because he considers all the goods of the world as nothing compared to the good of the soul. He rejoices, because he knows that he has found a good that is incorruptible and eternal. He hides the treasure, because he does not boast of his good fortune, he does not make a show of his faith, but he keeps it in his heart with humility and simplicity. He buys the field, because he gives his whole life to Christ, he dedicates himself completely to the service of the Church.<br><br>
+                        This is the example that we must follow. We must seek the kingdom of God with all our heart, with all our soul, with all our mind, and with all our strength. We must be willing to sacrifice everything for it, because it is the only thing that is truly valuable. We must not be afraid of the persecutions, of the trials, of the sufferings, because they are the means by which we are purified and strengthened. We must not be attached to the goods of this world, because they are fleeting and vain. We must have our eyes fixed on the heavenly realities, on the glory that awaits us, on the joy that no one can take away from us. This is the wisdom of the Christian, this is the path of salvation, this is the will of God.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>cfr. Mt. 13, 44; 10, 37 – 38</strong><br><br>
+                        <em>R: The kingdom of heaven is like a treasure hidden in a field, which a man found and in his joy sold all that he had and bought that field. * Whoever loves his father or mother more than me is not worthy of me.</em><br>
+                        V: Whoever does not take up his cross and follow me is not worthy of me.<br>
+                        <em>R: Whoever loves his father or mother more than me is not worthy of me.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 3: 1 – 16</strong><br>
+                        <em>The ministers of the Church.</em><br><br>
+                        A reading from the First Letter of St. Paul, apostle, to Timothy.<br><br>
+                        The saying is sure: If a man desires the office of bishop, he desires a noble task. Therefore a bishop must be above reproach, the husband of one wife, temperate, sensible, dignified, hospitable, an apt teacher, no drunkard, not violent but gentle, not quarrelsome, and no lover of money. He must manage his own household well, with all dignity keeping his children submissive; for if a man does not know how to manage his own household, how can he care for God's church? He must not be a recent convert, or he may be puffed up with conceit and fall into the condemnation of the devil. Moreover he must be well thought of by outsiders, to avoid falling into disgrace and into a snare of the devil.<br><br>
+                        Deacons likewise must be serious, not double-tongued, not addicted to much wine, not greedy for gain; they must hold the mystery of the faith with a clear conscience. And let them first be tested; then if they prove themselves blameless let them serve as deacons. The women likewise must be serious, no slanderers, but temperate, faithful in all things. Let deacons be the husband of one wife, and let them manage their children and their households well; for those who serve well as deacons gain a good standing for themselves and also great confidence in the faith which is in Christ Jesus.<br><br>
+                        I hope to come to you soon, but I am writing these instructions to you so that, if I am delayed, you may know how one ought to behave in the household of God, which is the church of the living God, the pillar and bulwark of the truth. Great indeed, we confess, is the mystery of our religion: He was manifested in the flesh, vindicated in the Spirit, seen by angels, preached among the nations, believed on in the world, taken up in glory.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>cfr. Act. 20, 28; 1 Cor. 4, 2</strong><br><br>
+                        <em>R: Keep vigil over all the flock, in the midst of which the Holy Spirit has placed you as bishops * to guide the Church of God, acquired with the blood of his Son.</em><br>
+                        V: Faithfulness is asked of the one who has received the job of administrator.<br>
+                        <em>R: to guide the Church of God, acquired with the blood of his Son.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Cc. 1, 1 – 3, 2; 4, 1 – 2; 6, 1; 7, 1 – 8,1</strong><br>
+                        <em>I want you to preserve yourselves like beloved children.</em><br><br>
+                        A reading from the “Letter to the Christians of Tralles” of St. Ignatius of Antioch, bishop and martyr.<br><br>
+                        Ignatius, who is also called Theophorus, to the holy Church which is at Tralles, in Asia, beloved of God, the Father of Jesus Christ, elect, and worthy of God, possessing peace through the flesh, and blood, and passion of Jesus Christ, who is our hope, through our rising again to Him, which also I salute in its fullness, and in the apostolic character, and wish abundance of happiness. I know that you possess an irreproachable and sincere faith, and that you have received the word of God in an unadulterated form, and that you are established in the faith, and are not shaken by the proclamations of certain people who have no understanding. You are not like the foolish virgins, but like the wise and prudent ones who have oil in their vessels with the lamps. You are the temple of God, and Christ is your foundation. You are the stones of the temple, well polished and fit for the building. You are the sons of God in truth, and you walk in the commandments of God, and you are not of the world, but you are of God.<br><br>
+                        I exhort you therefore, be of one mind in the Lord Jesus Christ, and receive every one of you the bishop as Jesus Christ, and the presbyters as the council of God and the college of the apostles. And reverence the deacons as the commandment of God. Without the bishop, do nothing; keep your baptism inviolate; and guard your unity. Let no one do anything of which he is ashamed to speak. But even more, let him not do anything of which he is ashamed to think. For God sees not only the deeds, but also the thoughts and the intentions of the heart. He who is within the altar is pure, but he who is without is not pure; that is, he who does anything apart from the bishop, and presbytery, and deacons, such a man is not pure in his conscience. Not that I know there is anything of this kind among you; but I put you on your guard, inasmuch as I love you greatly, and foresee the snares of the devil.<br><br>
+                        Let us therefore be zealous to do all things in the fear of God, and let us strive to please him in all things. Let us love the prophets and the apostles, and let us imitate them. Let us not be called Christians only in name, but also in truth. For many are called, but few are chosen. Let us therefore be found among the few who are chosen, and not among the many who are called. Let us be zealous to do the will of God, and let us not be lukewarm, but fervent in spirit. Let us not love the world, nor the things that are in the world. For if any one loves the world, the love of the Father is not in him. Let us love God and his Christ, and let us love one another, as Christ has loved us. Let us not love with words, nor with the tongue, but in deed and in truth.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 4, 3 – 6; 1 Cor. 3, 11</strong><br><br>
+                        <em>R: Try to conserve the unity of the Spirit by means of the bonds of peace. Only one body, only one spirit, as only one is the hope to which you have been called. * One only is the Lord, one only the faith, one only the baptism.</em><br>
+                        V: No one can lay a foundation different from the one that has already been laid, that is Jesus Christ.<br>
+                        <em>R: One only is the Lord, one only the faith, one only the baptism.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 10: 1 – 12</strong><br>
+                        A reading from the Gospel of St. Luke.<br><br>
+                        After this the Lord appointed seventy others, and sent them on ahead of him, two by two, into every town and place where he himself was about to come. And he said to them, "The harvest is plentiful, but the labourers are few; pray therefore the Lord of the harvest to send out labourers into his harvest. Go your way; behold, I send you out as lambs in the midst of wolves. Carry no purse, no bag, no sandals; and salute no one on the way. Whatever house you enter, first say, `Peace be to this house!' And if a son of peace is there, your peace shall rest upon him; but if not, it shall return to you. And remain in the same house, eating and drinking what they provide, for the labourer deserves his wages. Do not go from house to house. And whenever you enter a town and they receive you, eat what is set before you; heal the sick in it and say to them, `The kingdom of God has come near to you.' But whenever you enter a town and they do not receive you, go into its streets and say, `Even the dust of your town that clings to our feet, we wipe off against you; nevertheless know this, that the kingdom of God has come near.' I tell you, it shall be more tolerable on that day for Sodom than for that town.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

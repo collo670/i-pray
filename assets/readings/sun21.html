@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Sunday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Sunday, Week 21 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Sunday of Week 21</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                    <option value="A">Year A</option>
+                    <option value="B">Year B</option>
+                    <option value="C">Year C</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 4:17 – 24</strong><br>
+                        <em>Clothe yourselves with the new man.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br><br>
+                        Now this I affirm and testify in the Lord, that you must no longer live as the Gentiles do, in the futility of their minds; they are darkened in their understanding, alienated from the life of God because of the ignorance that is in them, due to their hardness of heart; they have become callous and have given themselves up to licentiousness, greedy to practice every kind of uncleanness.<br><br>
+                        You did not so learn Christ! -- Assuming that you have heard about him and were taught in him, as the truth is in Jesus. Put off your old nature, which belongs to your former manner of life and is corrupt through deceitful lusts, and be renewed in the spirit of your minds, and put on the new nature, created after the likeness of God in true righteousness and holiness.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 4, 23 – 24; Col. 3, 9. 10</strong><br><br>
+                        <em>R: You have to renew your minds in the Spirit and clothe yourselves with the new man, * created according to God in justice and in true holiness.</em><br>
+                        V: You have undressed yourself of the old man with his actions; dress yourself with the new man,<br>
+                        <em>R: created according to God in justice and in true holiness.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Disc. 59: 2 – 4</strong><br>
+                        <em>The baptism of our Lord is our burial.</em><br><br>
+                        A reading from the “Discourses” of St. Maximus of Turin, bishop.<br><br>
+                        We read in the Scriptures that the salvation of all the human race was acquired with the blood of the Saviour, as the apostle Peter says: “not with the price of corruptible things, like silver and gold were we freed… but with the precious blood of Christ, like a lamb without defects and without stain” (1 Pt. 1, 18. 19). If therefore the price of our life is the blood of the Lord, you see how not only the earthly fragility of the field has been ransomed, but the eternal salvation of all the world; the evangelist in fact says that Christ did not come “To judge the world, but so that the world could be saved through him” (Jn. 3, 17).<br><br>
+                        You will ask me perhaps that if the field is the world, who could be the potter who was able to exercise his dominion on the world. If I am not mistaken, the potter is he himself who forms with earth the vases of our bodies, as the Scriptures says: “The Lord God formed man with the dust of the earth” (Gn. 2, 7). He is the potter who created us with his own hands for life, and through his Christ has recreated us for glory, as the apostle says: “we are transformed into that same image, of glory in glory” (2 Cor. 3, 18); that is, we because of our sins have become decadent of our original condition, in the second birth we are repaired by the mercy of this potter; we who participate in the death through the disobedience of Adam, rise again through the grace of the Saviour.<br><br>
+                        The field of the potter is bought by the blood of Christ for foreigners; for foreigners, I say, who, deprived of house and without country, were thrown as exiles into all the world; their rest is procured by the blood of Christ, so that they who do not possesses anything on earth, find burial in Christ. Who therefore are these pilgrims if not the most fervent Christians, who renouncing to the world and to any possession, find peace in the blood of Christ? In fact the Christian who does not possess at all the world, possesses entirely the Saviour.<br><br>
+                        To the foreigners then is promised the burial of Christ, in the sense that he who knows how to abstain from the desires of the flesh as a foreigner and pilgrim, will merit the peace of Christ. In fact what is the burial of Christ if not the peace of the Christian? We are therefore pilgrims in this world and we live as guests on the earth, according to the words of the Apostle who says: “As long as we live in this body we are in exile far away from the Lord” (2 Cor. 5, 6). We are foreigners, I say, and our burial has been bought at the price of the blood of the Saviour.<br><br>
+                        “Through baptism, says the Apostle, we have been buried together with him in death” (Rm. 6, 4). Therefore the baptism of the Lord is our burial: in it we die to sin, it is as if we are buried to sin and the nature of the interior old man being transformed in a second birth, we are brought back to a new infancy.<br><br>
+                        The baptism of the Saviour is our burial, because in it we are undressed of the life that we have lived in order to receive a new life. Great therefore is the grace of this burial, in which is inferred a beneficial death and a more just life is conceded as a gift; really great is the grace of this burial, which at the same time purifies the sinner and vivifies he who is dead.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Rm. 6, 4. 3</strong><br><br>
+                        <em>R: Through baptism we have been buried together with him in death, * because as Christ was raised from the dead by means of the glory of the Father, so also we can walk in a new life.</em><br>
+                        V: In as much as we have been baptised in Christ Jesus, we have been baptised in his death,<br>
+                        <em>R: because as Christ was raised from the dead by means of the glory of the Father, so also we can walk in a new life.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Titus 1: 1 – 16</strong><br>
+                        <em>The mission of Titus.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to Titus.<br><br>
+                        Paul, a servant of God and an apostle of Jesus Christ, to further the faith of God's elect and their knowledge of the truth which accords with godliness, in hope of eternal life which God, who never lies, promised ages ago and at the proper time manifested in his word through the preaching with which I have been entrusted by command of God our Saviour; To Titus, my true child in a common faith: Grace and peace from God the Father and Christ Jesus our Saviour.<br><br>
+                        This is why I left you in Crete, that you might amend what was defective, and appoint elders in every town as I directed you, if any man is blameless, the husband of one wife, and his children are believers and not open to the charge of being profligate or insubordinate. For a bishop, as God's steward, must be blameless; he must not be arrogant or quick-tempered or a drunkard or violent or greedy for gain, but hospitable, a lover of goodness, master of himself, upright, holy, and self-controlled; he must hold firm to the sure word as taught, so that he may be able to give instruction in sound doctrine and also to confute those who contradict it.<br><br>
+                        For there are many insubordinate men, empty talkers and deceivers, especially the circumcision party; they must be silenced, since they are upsetting whole families by teaching for base gain what they have no right to teach. One of themselves, a prophet of their own, said, "Cretans are always liars, evil beasts, lazy gluttons." This testimony is true. Therefore rebuke them sharply, that they may be sound in the faith, instead of giving heed to Jewish myths or to commands of men who reject the truth.<br><br>
+                        To the pure all things are pure, but to the corrupt and unbelieving nothing is pure; their very minds and consciences are corrupted. They profess to know God, but they deny him by their deeds; they are detestable, disobedient, unfit for any good deed.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 3, 8. 12; Rm. 1, 5</strong><br><br>
+                        <em>R: To me, who am the least among the saints, has been conceded this grace of announcing to the Gentiles the infinite richness of Christ, * who gives us the courage of drawing near in complete faith to God through faith in him.</em><br>
+                        V: We have received the grace of the apostolate in order to obtain the obedience to the faith on the part of all the peoples, to the glory of his name.<br>
+                        <em>R: who gives us the courage of drawing near in complete faith to God through faith in him.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 2, 4</strong><br>
+                        <em>The Shepherd should be discreet in keeping quiet and quick to speak.</em><br><br>
+                        A reading from the “Pastoral Rule” of St. Gregory the Great, pope.<br><br>
+                        The ruler should be discreet in keeping silence, profitable in speech; lest he either utter what ought to be suppressed or suppress what he ought to utter. For, as incautious speaking leads into error, so indiscreet silence leaves in error those who might have been instructed. For often improvident rulers, fearing to lose human favour, shrink timidly from speaking freely the things that are right; and, according to the voice of the Truth (John 10:12), serve unto the custody of the flock by no means with the zeal of shepherds, but in the way of hirelings; since they fly when the wolf comes if they hide themselves under silence. For hence it is that the Lord through the prophet upbraids them, saying, Dumb dogs, that cannot bark (Isaiah 56:10). Hence again He complains, saying, You have not gone up against the enemy, neither opposed a wall for the house of Israel, to stand in the battle in the day of the Lord (Ezekiel 13:5). Now to go up against the enemy is to go with free voice against the powers of this world for defence of the flock; and to stand in the battle in the day of the Lord is out of love of justice to resist bad men when they contend against us. Then, for a shepherd to have feared to say what is right, what else is it but to have turned his back in keeping silence? But surely, if he puts himself in front for the flock, he opposes a wall against the enemy for the house of Israel. Hence again to the sinful people it is said, Your prophets have seen false and foolish things for you: neither did they uncover your iniquity, to provoke you to repentance (Lamentations 2:14). For in sacred language teachers are sometimes called prophets, in that, by pointing out how fleeting are present things, they make manifest the things that are to come. And such the divine discourse convinces of seeing false things, because, while fearing to reprove faults, they vainly flatter evil doers by promising security: neither do they at all uncover the iniquity of sinners, since they refrain their voice from chiding. For the language of reproof is the key of discovery, because by chiding it discloses the fault of which even he who has committed it is often himself unaware. Hence Paul says, That he may be able by sound doctrine even to convince the gainsayers (Titus1: 9). And through Malachi; it is said. The priest’s lips keep knowledge, and they shall seek the law at his mouth (Malachi 2:7). Hence through Isaiah the Lord admonishes, saying, Cry aloud, spare not, lift up your voice like a trumpet (Isaiah 58:1). For it is true that whosoever enters on the priesthood undertakes the office of a herald, so as to walk, himself crying aloud, before the coming of the judge who follows terribly. Wherefore, if the priest knows not how to preach, what voice of a loud cry shall the mute herald utter? For hence it is that the Holy Spirit sat upon the first pastors under the appearance of tongues (Acts 2:3); because whomsoever He has filled, He himself at once makes eloquent.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 50, 15. 16 – 17</strong><br><br>
+                        <em>R: I will teach wanderers your ways, and sinners will return to you; * my tongue will exalt your justice.</em><br>
+                        V: Lord, open my lips, and my mouth will proclaim your praise;<br>
+                        <em>R: my tongue will exalt your justice.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- YEAR A Readings -->
+            <div id="year-A-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 16: 13-23</strong><br>
+                        A reading from the Gospel of St. Matthew.<br><br>
+                        Now when Jesus came into the district of Caesare'a Philip'pi, he asked his disciples, "Who do men say that the Son of man is?" And they said, "Some say John the Baptist, others say Eli'jah, and others Jeremiah or one of the prophets." He said to them, "But who do you say that I am?" Simon Peter replied, "You are the Christ, the Son of the living God."<br><br>
+                        And Jesus answered him, "Blessed are you, Simon Bar-Jona! For flesh and blood has not revealed this to you, but my Father who is in heaven. And I tell you, you are Peter, and on this rock I will build my church, and the powers of death shall not prevail against it. I will give you the keys of the kingdom of heaven, and whatever you bind on earth shall be bound in heaven, and whatever you loose on earth shall be loosed in heaven." Then he strictly charged the disciples to tell no one that he was the Christ.<br><br>
+                        From that time Jesus began to show his disciples that he must go to Jerusalem and suffer many things from the elders and chief priests and scribes, and be killed, and on the third day be raised. And Peter took him and began to rebuke him, saying, "God forbid, Lord! This shall never happen to you." But he turned and said to Peter, "Get behind me, Satan! You are a hindrance to me; for you are not on the side of God, but of men."
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Hom. 54: 1-6</strong><br>
+                        <em>Christ handed over the keys to Peter so that the Church could be diffused in the whole world.</em><br><br>
+                        A reading from the “Homilies on Matthew” of St. John Chrysostom, bishop.<br><br>
+                        “You are the Christ, the Son of the living God”. “Blessed are you, Simon son of Jonah, because neither flesh nor blood has revealed this to you” (Mt. 16: 17). Why is Peter proclaimed blessed? Because he has proclaimed true the Son of God. We cannot know the Son if not through the Father, nor the Father if not through the Son: and so the equality of the glory and the identity of the substance are demonstrated to us. What does Christ add? “You are Simon, the son of John: you will be called Cephas, which means Peter” (Jn. 1: 42). Since you have exalted my Father, I remember the one who has generated you, which means: as you are the son of Jonah, so also I am the son of my Father.<br><br>
+                        It would have been useless in fact to say: “You are the son of John” (Jn. 1: 42); but since Peter had said “you are the Son of God”, Jesus added it in order to demonstrate that he was the Son of God in the same way that Peter was the Son of John, that is of the same substance of the Father.<br><br>
+                        “And I tell you: you are Peter and on this rock I will build my Church” (Mt. 16: 18), that is on the faith confessed by you. He declares in this way that many will believe one day, and elevating the sentiments of the apostle he constituted him the shepherd of his Church. “And the gates of the underworld will not prevail against it” (Mt. 16: 18). If they do not prevail against the Church, much less will they prevail against me. Do not worry therefore when you will see that I will be betrayed and put on the cross.<br><br>
+                        Thus he confers on him another honour: “To you will I give the keys of the kingdom of heaven” (Mt. 16: 19). What does this mean: “To you I will give”? As the Father has let you know me I also will give you. He does not say: I will pray to the Father – even if this would have been a great demonstration of authority and a gift of ineffable value – but: I will give you. What? “The keys of the kingdom of heaven: and all that you bind on earth will be bound in heaven, and all that you loose on earth will be loosed in heaven” (Mt. 16: 19).<br><br>
+                        Do you see how he lifts Peter up to considerations that are more sublime revealing himself and demonstrating with these two promises that he is the Son of God?<br><br>
+                        Jesus promises to give to Peter things that are due directly to God: to remit sins and to make the Church firm in the midst of much agitation of the waves, making a fisherman more secure than a rock, even if the entire world would be against him.<br><br>
+                        Thus the Father said speaking to the prophet Jeremiah, that he would place him as a column of iron and like a wall of bronze; with this difference: Jeremiah was put in front of only one nation, Peter instead in front of the whole world.<br><br>
+                        I would like to ask those who want to see the dignity of the Son diminished, if the gifts that the Father gives to Peter are greater than those that the Son makes to him. The Father reveals the Son; but he confers the mission of propagating throughout the world the knowledge of the Father and of himself; and even more he gives to a mortal man every power in heaven, consigning the keys to him, he who has diffused the Church over all the earth and has manifested himself to be more steady than the heaven itself: in fact Jesus has said: “The heaven and the earth will pass away, but my words will not pass away” (Mt. 24: 35).
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 16: 17-18</strong><br><br>
+                        <em>R: Blessed are you, Simon son of Jonah, * because it is neither flesh nor blood which has revealed this to you, but my Father who is in heaven, says the Lord.</em><br>
+                        V: And I tell you: You are Peter and on this rock I will build my Church.<br>
+                        <em>R: Because it is neither flesh nor blood which has revealed this to you, but my Father who is in heaven, says the Lord</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- YEAR B Readings -->
+            <div id="year-B-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Jn. 6: 60-69</strong><br>
+                        A reading from the Gospel of St. John.<br><br>
+                        Many of his disciples, when they heard it, said, "This is a hard saying; who can listen to it?" But Jesus, knowing in himself that his disciples murmured at it, said to them, "Do you take offence at this? Then what if you were to see the Son of man ascending where he was before? It is the spirit that gives life, the flesh is of no avail; the words that I have spoken to you are spirit and life. But there are some of you that do not believe." For Jesus knew from the first who those were that did not believe, and who it was that would betray him. And he said, "This is why I told you that no one can come to me unless it is granted him by the Father." After this many of his disciples drew back and no longer went about with him.<br><br>
+                        Jesus said to the twelve, "Do you also wish to go away?" Simon Peter answered him, "Lord, to whom shall we go? You have the words of eternal life; and we have believed, and have come to know, that you are the Holy One of God."
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Part II, 3</strong><br>
+                        <em>The faith of the apostles.</em><br><br>
+                        A reading from the work “The Sacrament of the Altar” of Baldwin of Canterbury, bishop.<br><br>
+                        Among the disciples of Christ there were some who believed in him, others no; and among those who did not believe was Judas, who later would betray him. Christ knew them all, who were the believers and who were the non-believers; he even knew who would betray him and those who would go away from him. But before those who had decided to go away from him could do so, he showed that the faith in him does not belong to all, but to those to whom “it is granted by the Father” (Jn. 6: 65). Therefore neither flesh nor blood, but only the Father who is in heaven can reveal “the mystery of faith” (1 Tm. 3: 9); and he concedes this to some, to others no.<br><br>
+                        He knows for what reason he does not give it, it is not for us to know it; and in front of the sight of such an incomprehensible and mysterious thing we cannot do anything else but exclaim full of wonder: “How rich are the depths of God – how deep his wisdom and knowledge- and how impossible to penetrate his judgements and how inaccessible his ways!” (Rm. 11: 33).<br><br>
+                        Many then among the disciples who did not believe turned back preferring to follow Satan and not Christ. Therefore Jesus said to the twelve who had remained: “Do you also want to go away? Simon Peter answered: Lord, to whom shall we go?” (Jn. 6: 67- 68). If we go away from you, where will we find life and truth, where the author of life, where a similar master of truth? “You have words of eternal life” (Jn. 6: 68). Your words, listened to with veneration and kept with deep faith, give eternal life. With your words you promise eternal life, offering us your body and your blood. And we, who believe in your words, “have believed and know that you are the Holy One of God” (Jn. 6: 69); that is that you yourself are eternal life, and in your flesh and in your blood you do not give anything else if not what you are. We have believed, he says, and known that you are the Son of God; therefore you have words of eternal life, and we believe and know that what you have said is true, that we must eat your flesh and drink your blood, because you are the Christ, the Son of God. He does not say: we have known and believed, but “we have believed and known”. From this we can understand that this knowledge is formed in the mind by the progressing of the faith. In fact it is written: “If you will not believe you will not have stability” (Is. 7: 9). The faith itself is in someway a knowledge even for those who believe with simplicity, without understanding its reasoning. The knowledge instead that becomes formulated in concepts belongs to those who have the faculty that is exercised more in investigating the demonstrations of the faith, “ready always to answer to whoever asks a reason” (1 Pet. 3: 15) of the faith and of the hope that is in us.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Act. 4: 12; 1 Cor. 3: 11</strong><br><br>
+                        <em>R: In no one else is there salvation. * There is in fact no other name given to men by whom it is established that we can be saved.</em><br>
+                        V: For the foundation, nobody can lay any other than the one which has already been laid, that is Jesus Christ.<br>
+                        <em>R: There is in fact no other name given to men by whom it is established that we can be saved.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- YEAR C Readings -->
+            <div id="year-C-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lk. 13: 22- 30</strong><br>
+                        A reading from the Gospel of St. Luke.<br><br>
+                        He went on his way through towns and villages, teaching, and journeying toward Jerusalem. And some one said to him, "Lord, will those who are saved be few?" And he said to them, "Strive to enter by the narrow door; for many, I tell you, will seek to enter and will not be able. When once the householder has risen up and shut the door, you will begin to stand outside and to knock at the door, saying, `Lord, open to us.' He will answer you, `I do not know where you come from.' Then you will begin to say, `We ate and drank in your presence, and you taught in our streets.' But he will say, `I tell you, I do not know where you come from; depart from me, all you workers of iniquity!' There you will weep and gnash your teeth, when you see Abraham and Isaac and Jacob and all the prophets in the kingdom of God and you yourselves thrust out. And men will come from east and west, and from north and south, and sit at table in the kingdom of God. And behold, some are last who will be first, and some are first who will be last."
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Third Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lett. 112</strong><br>
+                        <em>Love and you will have the kingdom: love and you will possess it.</em><br><br>
+                        A reading from the “Letters” of St, Anselm, bishop.<br><br>
+                        Dearest brothers, God proclaims that he has put on sale the kingdom of heaven; and this kingdom is so excellent that its beatitude and glory “eye has not seen, nor ear heard, nor has it ever entered into the heart of man” (1 Cor. 2: 9). But so that you can think of it in some way, know that whoever will deserve to reign up there, will find in heaven and on earth all that he wants; he instead who does not want, will not find it either in heaven or on earth. So great in fact will the love and the reciprocal union be between God and those who find themselves there that all of them will love the other as themselves; and nevertheless all will love God more than themselves.<br><br>
+                        Therefore in heaven no one will want anything other than what God wants, and what one wants all will want; and that which one or all want together, God will want. Because whoever has a desire will see it realised be it with regard to himself and with regard to the others and to every creature, as also with regard to God. And so the individuals will be perfect sovereigns because all that they want will be carried out; and all together with God will be only one king and as only one man, because all will want only one thing and that which they want will be realised.<br><br>
+                        From heaven God proclaims that all this is on sale.<br><br>
+                        If someone asks at what price, he is answered: he who wants to give the kingdom of heaven does not need an earthly payment, nor can anyone give to God what he does not possess, because all that exist belongs to him. On the other hand God does not give a thing of such value completely gratuitously, because he does not give it to the one who does not love him. No one in fact gives that which is dearest to him to the one who does not love him. God therefore does not need something that is yours, nor does he have to give such a great thing to the one who does not care to love him: he searches for love, without which he is not obliged to give anything. Give him therefore love and you will obtain the kingdom: love and you will have it.<br><br>
+                        Finally, since to reign in heaven is no other than to be only one thing with God and with all the saints, the angels and men, united in only one will through the love so much as to exercise all together only one power: love God more than yourself and you will already begin to have on the earth that which you want to have perfectly in heaven. Be of only one will with God and with men, with those only however who are not in conflict with God, and you will begin in this way to reign with God and with all the just men. In the measure in which you now conform yourself to the will of God and of men, God and all his saints will conform themselves to your will. If therefore you want to be sovereign in heaven, love God and men as you need to and you will deserve to be that which you desire.<br><br>
+                        But you will not be able to have this perfect love, if you will not have emptied your heart of every other type of love. Therefore those who have their hearts full of the love of God and of the neighbour, do not want anything else if not that which God wants, or any other thing as long as it is not against God. For this they apply themselves assiduously in prayer and in talks and meditations on the heavenly realities, because it is sweet for them to desire God, to speak to him and to hear him speak, and to think of him whom they love so much; therefore they are glad with the one who is glad, they cry with the one who cries, they have compassion on the miserable and help the poor; thus they love the others as themselves. They despise riches, the first places, pleasures, and they do not love being praised and honoured, because he who loves these things, often fails against God and against the neighbour.<br><br>
+                        “On these two commandments depends all the Law and the Prophets” (Mt. 22: 40). He therefore who wants to have that perfect love with which the kingdom of heaven is acquired, must love contempt, poverty, trials and submission, as the holy men do.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Act. 4: 12; 1 Cor. 3: 11</strong><br><br>
+                        <em>R: In no other is there salvation; * There is no other name in fact given to men under the heavens, in which it has been established that we can be saved.</em><br>
+                        V: No one can put a foundation that is different from that which is already to be found, that is Jesus Christ.<br>
+                        <em>R: There is no other name in fact given to men under the heavens, in which it has been established that we can be saved.</em>
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+            const yearAContent = document.getElementById('year-A-readings');
+            const yearBContent = document.getElementById('year-B-readings');
+            const yearCContent = document.getElementById('year-C-readings');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                yearAContent.classList.add('hidden');
+                yearBContent.classList.add('hidden');
+                yearCContent.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                } else if (selectedCycle === 'A') {
+                    yearAContent.classList.remove('hidden');
+                } else if (selectedCycle === 'B') {
+                    yearBContent.classList.remove('hidden');
+                } else if (selectedCycle === 'C') {
+                    yearCContent.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Wednesday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Wednesday, Week 21 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Wednesday of Week 21</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 5: 22 – 33</strong><br>
+                        <em>Duties of the couples.</em><br><br>
+                        A reading from the Letter of St. Paul , apostle, to the Ephesians.<br><br>
+                        Wives, be subject to your husbands, as to the Lord. For the husband is the head of the wife as Christ is the head of the church, his body, and is himself its Saviour. As the church is subject to Christ, so let wives also be subject in everything to their husbands. Husbands, love your wives, as Christ loved the church and gave himself up for her, that he might sanctify her, having cleansed her by the washing of water with the word, that he might present the church to himself in splendour, without spot or wrinkle or any such thing, that she might be holy and without blemish. Even so husbands should love their wives as their own bodies. He who loves his wife loves himself. For no man ever hates his own flesh, but nourishes and cherishes it, as Christ does the church, because we are members of his body. "For this reason a man shall leave his father and mother and be joined to his wife, and the two shall become one flesh." This mystery is a profound one, and I am saying that it refers to Christ and the church; however, let each one of you love his wife as himself, and let the wife see that she respects her husband.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Gn. 2, 23. 24; Ep. 5, 32</strong><br><br>
+                        <em>R: This is flesh of my flesh and bone of my bones. For this the man will abandon his father and his mother and he will unite himself to his wife; * and the two will become only one flesh.</em><br>
+                        V: This is a great mystery: I say this in reference to Christ and to the Church.<br>
+                        <em>R: and the two will become only one flesh.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Hom. 3: 3</strong><br>
+                        <em>This mystery is great.</em><br><br>
+                        A reading from the “Homilies on some passages of the New Testament” of St. John Chrysostom, bishop.<br><br>
+                        As Eve came out of the side of Adam, so also we have come out of the side of Christ. This is what the expression “flesh of my flesh and bone of my bones” (Gn. 2, 23) wants to say. Everyone knows that Eve was formed from the side of Adam, and in the Scriptures it is clearly read that God made a deep sleep come upon him, he took out a rib and with it formed the woman. From where therefore can we apprehend that the Church has been born from the side of Christ? It is the Scriptures again that reveals this to us. After Christ, lifted up and nailed on the cross, gave up his spirit, “one of the soldiers struck his side with a lance and immediately there came out blood and water” (Jn. 19, 34): of that water and of that blood the whole Church is born. He Himself testifies to this saying: “If anyone is not born from water and the Holy Spirit, he cannot enter into the kingdom of God” (Jn. 3, 5); and here he calls Spirit the blood. In reality we come to the light thanks to the water of baptism, and we are then kept in life by the blood. Do you see therefore in what way we are flesh of his flesh and bone of his bone, from the moment that from that blood and from that water we are generated and kept in life?<br><br>
+                        As the woman was formed while Adam was immersed in a deep sleep, so also the Church was born from the side of Christ immersed in death. Above all the woman must not be loved only because of the fact that she is a member of our body and derives her origin from us, but still more because God has given him this explicit command saying: “For this the man will abandon his father and his mother, and will unite himself to his wife and the two will become only one flesh” (Jn. 2, 24). Paul also reminds us of this law in order to lead us in all ways to that love. Consider now with me the wisdom of the Apostle: not with only human or divine laws does he induce us to love the wives, but with the one and the other together; in a way that the men who are more elevated and spiritual may be greatly solicited by the divine laws; those instead who are weaker and simple, may draw incitement to love from the natural laws. Therefore he first expounds this doctrine starting from the example of Christ saying: “ Love your wives, as Christ has loved the Church” (Ep. 5, 25); in a second moment he adds the human motivations: “Husbands have the duty to love the wives as their own bodies"” then he refers to Christ again: “ Because we are members of his body” (Ep. 5, 28. 30), flesh of his flesh and bone of his bones; then he returns yet again to the human argument: “ For this a man will leave his father and his mother and will unite himself to his woman” (Ep. 5, 31); and after having reaffirmed this law he exclaims: “This mystery is great” (Ep. 5, 32).<br><br>
+                        Tell me: why is it great? Because it regards Christ and his Church. As the bridegroom, having left the father, hurries to meet the bride, so also Christ, having abandoned the paternal house, moves towards his bride: he has not called us to the sublime highness of the heavens, but he himself has descended to us. When we then hear of his coming being spoken of, we do not think of a movement, but rather of his adaptation: in fact, though being with us, he remained with the Father. For this the Apostle says: “This mystery is great” (Ep. 5, 32). Great also with regard to men; but above all when you consider it with reference to Christ and to his Church, then really the greatness of the mystery fills me with amazement. For this after having said: “This mystery is great” he immediately adds: “I say this of Christ and of the Church” (Ep. 5, 32).
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>cfr. Ap. 21, 10. 12. 14. 2</strong><br><br>
+                        <em>R: I saw the door of the city facing the East and the names of the apostles of the Lamb written on it, * and on its walls the angels kept vigil.</em><br>
+                        V: I saw the holy city, the new Jerusalem, come down from heaven, as beautiful as a bride all dressed for her husband,<br>
+                        <em>R: and on its walls the angels kept vigil.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 1: 1 – 20</strong><br>
+                        <em>The mission of Timothy. Paul minister of the gospel.</em><br><br>
+                        A reading from the first Letter of St. Paul, apostle, to Timothy.<br><br>
+                        Paul, an apostle of Christ Jesus by command of God our Saviour and of Christ Jesus our hope, To Timothy, my true child in the faith: Grace, mercy, and peace from God the Father and Christ Jesus our Lord.<br><br>
+                        As I urged you when I was going to Macedonia, remain at Ephesus that you may charge certain persons not to teach any different doctrine, nor to occupy themselves with myths and endless genealogies which promote speculations rather than the divine training that is in faith; whereas the aim of our charge is love that issues from a pure heart and a good conscience and sincere faith. Certain persons by swerving from these have wandered away into vain discussion, desiring to be teachers of the law, without understanding either what they are saying or the things about which they make assertions.<br><br>
+                        Now we know that the law is good, if any one uses it lawfully, understanding this, that the law is not laid down for the just but for the lawless and disobedient, for the ungodly and sinners, for the unholy and profane, for murderers of fathers and murderers of mothers, for manslayers, immoral persons, sodomites, kidnappers, liars, perjurers, and whatever else is contrary to sound doctrine, in accordance with the glorious gospel of the blessed God with which I have been entrusted.<br><br>
+                        I thank him who has given me strength for this, Christ Jesus our Lord, because he judged me faithful by appointing me to his service, though I formerly blasphemed and persecuted and insulted him; but I received mercy because I had acted ignorantly in unbelief, and the grace of our Lord overflowed for me with the faith and love that are in Christ Jesus. The saying is sure and worthy of full acceptance, that Christ Jesus came into the world to save sinners. And I am the foremost of sinners; but I received mercy for this reason, that in me, as the foremost, Jesus Christ might display his perfect patience for an example to those who were to believe in him for eternal life. To the King of ages, immortal, invisible, the only God, be honour and glory forever and ever. Amen.<br><br>
+                        This charge I commit to you, Timothy, my son, in accordance with the prophetic utterances which pointed to you, that inspired by them you may wage the good warfare, holding faith and a good conscience. By rejecting conscience, certain persons have made shipwreck of their faith, among them Hymenae'us and Alexander, whom I have delivered to Satan that they may learn not to blaspheme.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 1, 14. 15; Rm. 3, 23</strong><br><br>
+                        <em>R: The grace of our Lord has over abounded, together with faith and charity. * Christ Jesus has come into the world to save the sinners.</em><br>
+                        V: All have sinned and are without the glory of God.<br>
+                        <em>R: Christ Jesus has come into the world to save the sinners.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Lett. 161 : 1 – 2</strong><br>
+                        <em>Act energetically like an expert pilot.</em><br><br>
+                        A reading from the “Letter to bishop Amphilochius” of St. Basil the Great, bishop.<br><br>
+                        Blessed be God Who from age to age chooses them that please Him, distinguishes vessels of election, and uses them for the ministry of the Saints. Though you were trying to flee, as you confess, not from me, but from the calling you expected through me, He has netted you in the sure meshes of grace, and has brought you into the midst of Pisidia to catch men for the Lord, and draw the devil’s prey from the deep into the light. You too, may say as the blessed David said, “Where shall I go from your Spirit? Or where shall I flee from your presence.” Such is the wonderful work of our loving Master. “Asses are lost” that there may be a king of Israel. David, however, being an Israelite was granted to Israel; but the land which has nursed you and brought you to such a height of virtue, possesses you no longer, and sees her neighbour beautified by her own adornment. But all believers in Christ are one people; all Christ’s people, although He is hailed from many regions, are one Church; and so our country is glad and rejoices at the dispensation of the Lord, and instead of thinking that she is one man the poorer, considers that through one man she has become possessed of whole Churches. Only may the Lord grant me both to see you in person, and, so long as I am parted from you, to hear of your progress in the gospel, and of the good order of your Churches.<br><br>
+                        Play the man, then, and be strong, and walk before the people whom the Most High has entrusted to your hand. Like a skilful pilot, rise in mind above every wave lifted by heretical blasts; keep the boat from being overwhelmed by the salt and bitter billows of false doctrine; and wait for the calm to be made by the Lord as soon as there shall have been found a voice worthy of rousing Him to rebuke the winds and the sea. If you wish to visit me, now hurried by long sickness towards the inevitable end, do not wait for an opportunity, or for the word from me. You know that to a father’s heart every time is suitable to embrace a well-loved son, and that affection is stronger than words. Do not lament over a responsibility transcending your strength. If you had been destined to bear the burden unaided, it would have been not merely heavy; it would have been intolerable. But if the Lord shares the load with you, “cast all your care upon the Lord” and He will Himself act. Only be exhorted ever to give heed lest you be carried away by wicked customs. Rather change all previous evil ways into good by the help of the wisdom given you by God. For Christ has sent you not to follow others, but yourself to take the lead of all who are being saved. I charge you to pray for me, that, if I am still in this life, I may be permitted to see you with your Church. If, however, it is ordained that I now depart, may I see all of you hereafter with the Lord, your Church blooming like a vine with good works, and yourself like a wise husbandman and good servant giving meat in due season to his fellow-servants and receiving the reward of a wise and trusty steward. All who are with me salute your reverence. May you be strong and joyful in the Lord. May you be preserved glorious in the graces of the Spirit and of wisdom.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ep. 6, 10 – 11; cfr. Jb. 7, 1</strong><br><br>
+                        <em>R: Draw strength from the Lord and from the vigour of his power. * Clothe yourselves with the armour of God, in order to resist the traps of the devil.</em><br>
+                        V: Because the life of man on this earth is a hard battle.<br>
+                        <em>R: Clothe yourselves with the armour of God, in order to resist the traps of the devil.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 23: 27 – 32</strong><br>
+                        A reading from the Gospel of St. Matthew.<br><br>
+                        "Woe to you, scribes and Pharisees, hypocrites! For you are like whitewashed tombs, which outwardly appear beautiful, but within they are full of dead men's bones and all uncleanness. So you also outwardly appear righteous to men, but within you are full of hypocrisy and iniquity.<br><br>
+                        "Woe to you, scribes and Pharisees, hypocrites! For you build the tombs of the prophets and adorn the monuments of the righteous, saying, `If we had lived in the days of our fathers, we would not have taken part with them in shedding the blood of the prophets.' Thus you witness against yourselves, that you are sons of those who murdered the prophets. Fill up, then, the measure of your fathers.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

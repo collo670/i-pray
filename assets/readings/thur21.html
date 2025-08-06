@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Thursday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Thursday, Week 21 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Thursday of Week 21</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 6: 1 – 9</strong><br>
+                        <em>Duties in domestic life.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br><br>
+                        Children, obey your parents in the Lord, for this is right. "Honour your father and mother" (this is the first commandment with a promise), "that it may be well with you and that you may live long on the earth." Fathers, do not provoke your children to anger, but bring them up in the discipline and instruction of the Lord.<br><br>
+                        Slaves, be obedient to those who are your earthly masters, with fear and trembling, in singleness of heart, as to Christ; not in the way of eye-service, as men-pleasers, but as servants of Christ, doing the will of God from the heart, rendering service with a good will as to the Lord and not to men, knowing that whatever good any one does, he will receive the same again from the Lord, whether he is a slave or free. Masters, do the same to them, and forbear threatening, knowing that he who is both their Master and yours is in heaven, and that there is no partiality with him.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>cfr. 1 Cor. 7, 22 – 23; Gal. 3, 28</strong><br><br>
+                        <em>R: The slave who has been called in the Lord, is a freed man liberated by the Lord, he who is called as a free man, is a slave of Christ. * You have been bought at a dear price, don’t make yourselves slaves of men.</em><br>
+                        V: In Christ Jesus there is no Jew or Greek, there is no more slave or free man.<br>
+                        <em>R: You have been bought at a dear price, don’t make yourselves slaves of men.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 2, Hom. 1, 7</strong><br>
+                        <em>The hope of heavenly prizes.</em><br><br>
+                        A reading from the “Homilies on the prophet Ezekiel” of St. Gregory the Great, pope.<br><br>
+                        Only he who in the holy Church meditates on the ways of the just in order to imitate them can be introduced into the heavenly city. To be introduced consists in considering the house placed on the top of the mountain that is like the elect of the holy Church, who have reached the summit of virtue, who progress loving. One in fact who conducts a matrimonial life, is content with that which he possesses, and does not appropriate himself of the riches of the others, he gives his surplus to the needy, does not stop crying over the sins that ordinarily he commits in daily life. The same preoccupation of the family then is for him a motive of worry and pushes him to tears.<br><br>
+                        Another instead has already abandoned all the goods of the world, not desiring anything for himself, nourishes himself only through contemplation, cries with happiness in the hope of heavenly rewards, deprives himself also of that which would be conceded to him to possess everyday, and is eager for the encounter with God in the silence of loneliness, no preoccupation of this world that passes worries his soul, which instead day by day expands in the expectation of the joys of heaven.<br><br>
+                        Another again has abandoned all the goods of this world in order to turn internally his heart to the contemplation of the heavenly realities; above all, having to occupy a place of command for the edification of the brothers, though not giving in to the desires of the fallen realities, he is forced to occupy himself with them sometimes moved by the compassion for his neighbour, in order to come in this way to the help of all those who are in need; to those who listen he announces the word of life, and administers the necessary for both the soul and the bodies. And it is he who, for himself, in contemplation lives already eager for the desires of heaven, yet for the utility and the good of the neighbour accepts to occupy himself with the labours of the temporal realities.<br><br>
+                        For this reason he who in the holy Church employs himself with solicitude to progress, either in the holiness of conjugal life, or in the ascesis of the virgins and of those who abandon all the goods of this world, or in the perfection of the preachers, have already entered and already live in the city placed on the mountain. He instead who stops looking for a better life in order to progress, finds himself still outside that house. And even though he may admire the honour of which the holy Church already enjoys in the world, yet he is like one who looks at a building only from the outside and marvels. And because he places his attention only on the outside, he has not yet entered inside.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Rm. 8, 23; 1 Chr. 29, 15</strong><br><br>
+                        <em>R: We who possess the first fruits of the Spirit; * cry inwardly awaiting the adoption as sons, the redemption of our bodies.</em><br>
+                        V: We are foreigners in front of you and pilgrims like all our fathers;<br>
+                        <em>R: we cry inwardly awaiting the adoption as sons, the redemption of our bodies.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 2: 1 – 15</strong><br>
+                        <em>Exhortation to prayer.</em><br><br>
+                        A reading from the first Letter of St. Paul, apostle, to Timothy.<br><br>
+                        First of all, then, I urge that supplications, prayers, intercessions, and thanksgivings be made for all men, for kings and all who are in high positions, that we may lead a quiet and peaceable life, godly and respectful in every way. This is good, and it is acceptable in the sight of God our Saviour, who desires all men to be saved and to come to the knowledge of the truth. For there is one God, and there is one mediator between God and men, the man Christ Jesus, who gave himself as a ransom for all, the testimony to which was borne at the proper time. For this I was appointed a preacher and apostle (I am telling the truth, I am not lying), a teacher of the Gentiles in faith and truth. I desire then that in every place the men should pray, lifting holy hands without anger or quarrelling;<br><br>
+                        Also that women should adorn themselves modestly and sensibly in seemly apparel, not with braided hair or gold or pearls or costly attire but by good deeds, as befits women who profess religion. Let a woman learn in silence with all submissiveness. I permit no woman to teach or to have authority over men; she is to keep silent. For Adam was formed first, then Eve; and Adam was not deceived, but the woman was deceived and became a transgressor. Yet woman will be saved through bearing children, if she continues in faith and love and holiness, with modesty.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>1 Tm. 2, 5 – 6; Heb. 2, 17</strong><br><br>
+                        <em>R: One only is God, one only the mediator between God and men, the man Christ Jesus; * He has given himself as a ransom for all.</em><br>
+                        V: He had to make himself similar in everything to the brothers, in order to become merciful:<br>
+                        <em>R: he has given himself as a ransom for all.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Hom 6: 1 – 2</strong><br>
+                        <em>Each one of our prayers contains a thanksgiving.</em><br><br>
+                        A reading from the “Homilies on the first letter to Timothy” of St. John Chrysostom, bishop.<br><br>
+                        The priest is like a universal father. He needs therefore to take care of everyone, like God of whom he is priest; for this Paul says: “I recommend you first of all that he makes prayers and intercessions” (1 Tm. 2,1). From this are derived two good things: the hate that we have against the others is dissolved, because no one can hate the one for whom he prays; and they themselves become better, both because they pray for them, and because the scope of that prayer is that it puts aside their resentment against us. Nothing in fact helps teaching so much as loving and being loved.<br><br>
+                        Think what a great thing it would be that those who lay down traps, who scourge, who beat, who kill, could know that the victims of this violence offer ardent prayers to God for those who commit these acts against them!<br><br>
+                        Do you not see how the Apostle wants that the Christian is superior to all? As it happens that with children that, even if the small baby who is carried in the arms hits the face of his father, the paternal affection truly does not diminish because of this, so also us, even if we are beaten by those others, we must not be unkind to them.<br><br>
+                        What does this mean? “First of all” (1 Tm. 2, 1). It means: in the daily cult. And those who are being initiated know that every day we pray, morning and evening, and that we raise up intercessions for the entire world, for the kings and men of government.<br><br>
+                        Look at what he says and how, to render acceptable the exhortation, he adds the advantage that follows it: “So that we can pass, he says, a calm and peaceful life” (1 Tm. 2, 2). In other words, from the well being of these comes our peace: so also in the letter to the Romans, exhorting the faithful to obey the civil authorities, he says: “Not only because of fear of punishment, but also for reasons of conscience” (Rm. 13, 5). “Petitions, he says, intercessions, prayers and thanksgivings” (1Tm. 2, 1). Yes, certainly, we need to thank God also for the goods conceded to the others: for example; because “he makes his sun rise on the wicked and on the good and he makes the rain fall on the just and on the unjust” (Mt. 5, 45). Do you see how he unites us and holds us together, not only with the prayer, but also with the thanksgiving? In fact that which forces us to give thanks to God for the goods of our neighbour, pushes us to love also the neighbour and to be well disposed towards him. Because, if we need to give thanks for those who are near, much more should we do it for those who draw near to us openly or in a hidden way, voluntarily or against their wishes, and also for those who seem to want to do damage to us: in fact God disposes everything for our good.<br><br>
+                        Therefore our every prayer should contain a thanksgiving. That if we have been ordered to pray not only for the faithful but also for the unfaithful, imagine what a great evil it would be to pray against the brothers!
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 70, 8 – 9. 23</strong><br><br>
+                        <em>R: My mouth is full of your praise and your glory all day long. * Do not repel me in the time of my old age, do not abandon me when my strength declines.</em><br>
+                        V: Singing your praises, my lips and my life that you have ransomed will exult.<br>
+                        <em>R: Do not repel me in the time of my old age, do not abandon me when my strength declines.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 24: 42 – 51</strong><br>
+                        A reading from the Gospel of St. Matthew.<br><br>
+                        Watch therefore, for you do not know on what day your Lord is coming. But know this, that if the householder had known in what part of the night the thief was coming, he would have watched and would not have let his house be broken into. Therefore you also must be ready; for the Son of man is coming at an hour you do not expect.<br><br>
+                        "Who then is the faithful and wise servant, whom his master has set over his household, to give them their food at the proper time? Blessed is that servant whom his master when he comes will find so doing. Truly, I say to you, he will set him over all his possessions. But if that wicked servant says to himself, `My master is delayed,' and begins to beat his fellow servants, and eats and drinks with the drunken, the master of that servant will come on a day when he does not expect him and at an hour he does not know, and will punish him, and put him with the hypocrites; there men will weep and gnash their teeth.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

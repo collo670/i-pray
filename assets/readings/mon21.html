@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Monday, Week 21. Includes liturgical readings, reflections, and prayers for spiritual growth.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+            border-color: #bbf7d0;
+        }
+        .bg-green-100 {
+            background-color: rgba(220, 252, 231, 0.8);
+        }
+        .text-green-800 {
+            color: #166534;
+        }
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+        .text-gray-700 {
+            color: #374151;
+        }
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Office of Readings</h1>
+                <p class="text-sm text-gray-600">Monday, Week 21 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Monday of Week 21</h3>
+                </div>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <!-- CYCLE 1 Readings -->
+            <div id="cycle-1-readings" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Eph. 4:25 – 5:7</strong><br>
+                        <em>Be imitators of God.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to the Ephesians.<br><br>
+                        Therefore, putting away falsehood, let every one speak the truth with his neighbour, for we are members one of another. Be angry but do not sin; do not let the sun go down on your anger, and give no opportunity to the devil. Let the thief no longer steal, but rather let him labour, doing honest work with his hands, so that he may be able to give to those in need. Let no evil talk come out of your mouths, but only such as is good for edifying, as fits the occasion, that it may impart grace to those who hear. And do not grieve the Holy Spirit of God, in whom you were sealed for the day of redemption. Let all bitterness and wrath and anger and clamour and slander be put away from you, with all malice, and be kind to one another, tender hearted, forgiving one another, as God in Christ forgave you.<br><br>
+                        Therefore be imitators of God, as beloved children. And walk in love, as Christ loved us and gave himself up for us, a fragrant offering and sacrifice to God. But fornication and all impurity or covetousness must not even be named among you, as is fitting among saints. Let there be no filthiness, nor silly talk, nor levity, which are not fitting; but instead let there be thanksgiving. Be sure of this, that no fornicator or impure man, or one who is covetous (that is, an idolater), has any inheritance in the kingdom of Christ and of God. Let no one deceive you with empty words, for it is because of these things that the wrath of God comes upon the sons of disobedience. Therefore do not associate with them.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Col. 4, 2 – 3; Philemon 4, 6</strong><br><br>
+                        <em>R: Persevere in prayer and keep vigil in it, giving thanks. Pray also for us, * so that God may open the doors of the preaching and we may be able to announce the mystery of Christ.</em><br>
+                        V: In every necessity place before God your requests.<br>
+                        <em>R: so that God may open the doors of the preaching and we may be able to announce the mystery of Christ.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Disc. 5,5</strong><br>
+                        <em>The charity and the school of Christ.</em><br><br>
+                        A reading from the “Discourses” of the blessed Oglerio, abbot<br><br>
+                        We, brothers, who from Christ take the name of Christians and so we are, despise all transitory and fallen goods with their blind adorers and desiring to adhere to him alone, unite ourselves in brotherly fraternity in order to merit being called, and being really disciples of him who to his apostles, and to us through them, has given this command: “By this all will know that you are my disciples, if you have love for one another” (Jn. 13, 35).<br><br>
+                        From this the sons of the light are distinguished from the sons of darkness, the disciples of Christ from the disciples of the evil one, if they dilate reciprocally and towards all charity. Charity does not exclude anyone, but embraces everyone and contains everyone giving itself to everyone without distinction.<br><br>
+                        Charity is the affection of the heart that clasps Christ in the embrace of love. Charity is love that holds heaven and earth tightly; it is an invincible love, which does not fail even in front of threats and pleas. Charity is the indissoluble bond of love and peace; charity, queen of virtue, does not fear the arrival of any vice, but having received in pledge the blood of Christ and bearing on the front the vessel of the cross, turns to flight all its adversaries; and no one can resist its strength.<br><br>
+                        It is the friend of the eternal King, for which it is not afraid to draw near to him in complete trust. If among us, brothers, this queen of virtue reigns, immediately everyone, great and small, will know that we are truly disciples of the Lord. He who does not love does not belong to him who has given the commandment of love. Charity is the love of God and of the neighbour: he who does not love his neighbour cannot love God either and he who does not love, hates. Therefore he who hates his own brother, hates the author of charity. We therefore, gathered together by the love of Christ, love the Lord with all the heart and with all the soul, and the neighbour as our self; and, for love of him, we love not only the friends, but also the enemies, not being content with ourselves for not hating them, but having a true love for them. This is the school of Christ, this is the doctrine of the Holy Spirit. He, who goes away from this school and does not persevere in this doctrine, will perish in eternity. To the disciples of Jesus Christ, instead, to the lovers of charity, will be given the immense sweetness, the riches and the joy of eternal beatitudes, that he, who lives and reigns in the womb of the perfect Trinity will deign to give to us, God, blessed forever and ever. Amen.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Rm. 13, 8. 10; Gal. 5, 14</strong><br><br>
+                        <em>R: Do not have any debt with anyone, if not that of reciprocal love; because he who loves his fellow man has fulfilled the law. * Complete fulfilment of the law is love.</em><br>
+                        V: All the law finds its fullness in only one precept: to love your neighbour as yourself.<br>
+                        <em>R: Complete fulfilment of the law is love.</em>
+                    </p>
+                </section>
+            </div>
+
+            <!-- CYCLE 2 Readings -->
+            <div id="cycle-2-readings" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Titus 2: 1 – 3:2</strong><br>
+                        <em>Exhortation to the faithful.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to Titus.<br><br>
+                        But as for you, teach what befits sound doctrine. Bid the older men be temperate, serious, sensible, sound in faith, in love, and in steadfastness. Bid the older women likewise to be reverent in behaviour, not to be slanderers or slaves to drink; they are to teach what is good, and so train the young women to love their husbands and children, to be sensible, chaste, domestic, kind, and submissive to their husbands, that the word of God may not be discredited. Likewise urge the younger men to control themselves. Show yourself in all respects a model of good deeds, and in your teaching show integrity, gravity, and sound speech that cannot be censured, so that an opponent may be put to shame, having nothing evil to say of us. Bid slaves to be submissive to their masters and to give satisfaction in every respect; they are not to be refractory, nor to pilfer, but to show entire and true fidelity, so that in everything they may adorn the doctrine of God our Saviour.<br><br>
+                        For the grace of God has appeared for the salvation of all men, training us to renounce irreligion and worldly passions, and to live sober, upright, and godly lives in this world, awaiting our blessed hope, the appearing of the glory of our great God and Saviour Jesus Christ, who gave himself for us to redeem us from all iniquity and to purify for himself a people of his own who are zealous for good deeds. Declare these things; exhort and reprove with all authority. Let no one disregard you.<br><br>
+                        Remind them to be submissive to rulers and authorities, to be obedient, to be ready for any honest work, to speak evil of no one, to avoid quarrelling, to be gentle, and to show perfect courtesy toward all men.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>cfr. Tit. 2, 12. 13; Ep. 5, 15 – 16</strong><br><br>
+                        <em>R: Repudiating wickedness and worldly desires, let us live with soberness, justice and mercy in this world, * waiting for the manifestation of the glory of our great God and Saviour Jesus Christ.</em><br>
+                        V: Let us keep vigil attentively on our conduct: behaving not like fools, but like wise men, making profit of this present time.<br>
+                        <em>R: waiting for the manifestation of the glory of our great God and Saviour Jesus Christ.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Book 1, 9. 34. 38 – 39</strong><br>
+                        <em>There is need to pray in a special way for the whole body of the Church.</em><br><br>
+                        A reading from the treatise “Cain and Abel” of St. Ambrose, bishop.<br><br>
+                        “Offer a sacrifice of praise and pay your vows to the Most High.” To praise God means to make your vow and fulfil it. That is why the Samaritan who was cured of leprosy at Jesus command together with his nine companions is preferred to the others, because he was the only one to return to Christ, praising God and giving thanks. Jesus said to him: “Was there none of them to come back and give thanks except this foreigner?” And he told him: “Rise and go on your way: your faith has made you whole.”<br><br>
+                        The Lord Jesus also taught you in his own wonderful way about the goodness of the Father, who knows how to give good things, so that you should ask for good things from the one who is goodness itself. He told us to pray urgently and frequently: not that our prayers should be tedious and endless but that they should be persevering and frequent. Generally speaking, long prayers are full of meaningless phrases, while on the other hand total lack of interest is the result if prayers are given up altogether.<br><br>
+                        Next he warns that when you ask pardon for yourself it is then above all that you should remember to grant it to others, so that your prayer will be reinforced by your good works. The apostle also teaches that when you pray you should not be angry or involved in a quarrel with anyone, so that your prayer will not be unsettled or spoilt. He also teaches us to pray everywhere, while our Saviour says: “Go into your room.”<br><br>
+                        You must not think that he means by this a room with four walls separating you physically from others, but the room that is within you, where your thoughts are shut up, the place that contains your feelings. This room of prayer is with you at all times, wherever you go it is a secret place and what happens there is witnessed by God alone.<br><br>
+                        But you are taught to pray above all for the people, that is for the whole body, for all the members of your holy mother the Church, whose distinguishing mark is brotherly love. If you ask for something for yourself, you will be praying only for yourself. And if everyone prays only for himself, then you must remember that the favour shown to a sinner is less than that granted to someone asking on behalf of another. But now, because each is praying for all, then all are praying for everyone.<br><br>
+                        We can sum up in this way: if you ask for something only for yourself, you will be asking for yourself, as we have said, on your own. But if you ask for everybody, then everybody will be asking for you. For you are in fact in all. The reward then, is great, for the support of the whole people is gained for each individual by the prayers of each individual. There is no presumption in this point of view, only a sign of greater humility and the prospect of richer benefits.
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Ps. 60, 2 – 3. 6</strong><br><br>
+                        <em>R: Listen to my cry, O God, be attentive to my prayer: * from the ends of the earth I invoke you.</em><br>
+                        V: You, O God, have listened to my vows, you have given me the inheritance of the one who fears your name:<br>
+                        <em>R: from the ends of the earth I invoke you.</em>
+                    </p>
+                </section>
+                <hr class="border-dashed border-gray-300 my-6">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>Mt. 23: 13 – 22</strong><br>
+                        A reading from the Gospel of St. Matthew.<br><br>
+                        "But woe to you, scribes and Pharisees, hypocrites! Because you shut the kingdom of heaven against men; for you neither enter yourselves, nor allow those who would enter to go in.<br><br>
+                        Woe to you, scribes and Pharisees, hypocrites! For you traverse sea and land to make a single proselyte, and when he becomes a proselyte, you make him twice as much a child of hell as yourselves.<br><br>
+                        "Woe to you, blind guides, who say, `If any one swears by the temple, it is nothing; but if any one swears by the gold of the temple, he is bound by his oath.' You blind fools! For which is greater, the gold or the temple that has made the gold sacred? And you say, `If any one swears by the altar, it is nothing; but if any one swears by the gift that is on the altar, he is bound by his oath.'<br><br>
+                        You blind men! For which is greater, the gift or the altar that makes the gift sacred? So he, who swears by the altar, swears by it and by everything on it; and he, who swears by the temple, swears by it and by him who dwells in it; and he who swears by heaven, swears by the throne of God and by him who sits upon it.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-readings');
+            const cycle2Content = document.getElementById('cycle-2-readings');
+
+            function showContent() {
+                const selectedCycle = cycleSelector.value;
+                // Hide all
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+                // Show selected
+                if (selectedCycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (selectedCycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+            cycleSelector.addEventListener('change', showContent);
+            showContent(); // Initial load
+        });
+    </script>
+</body>
+</html>

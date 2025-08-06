@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>office of readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Saturday, August 9, 2025, for Ordinary Time. Readings include Paul's letter to Philemon, Timothy's instructions, and the Gospel of Matthew on the talents.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        body.light-mode .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .dark .bg-gradient-vintage {
+            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
+        }
+        .card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300 dark:text-white">
+
+    <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Office of Readings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Saturday, August 9, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 dark:bg-green-900/30 backdrop-blur-sm shadow-xl border border-dashed border-green-200 dark:border-green-800/30 season-border space-y-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15M12 1.5l8.25 8.25-8.25 8.25M12 22.5L3.75 14.25l8.25-8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Saturday - Ordinary Time</h3>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-6">
+                <label for="liturgical-cycle" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Liturgical Cycle</label>
+                <select id="liturgical-cycle" class="px-4 py-2 rounded-lg border-2 border-green-300 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                    <option value="1" selected>Cycle 1</option>
+                    <option value="2">Cycle 2</option>
+                </select>
+            </div>
+
+            <div id="cycle-1-content" class="liturgical-cycle-content">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Philemon. 1 – 25</strong><br>
+                        <em>Intercession of the Apostle for Onesimus.</em><br><br>
+                        A reading from the Letter of St. Paul, apostle, to Philemon.<br>
+                        Paul, a prisoner for Christ Jesus, and Timothy our brother, To Phile'mon our beloved fellow worker you our brother, and Ap'phia our sister and Archip'pus our fellow soldier, and the church in your house: Grace to you and peace from God our Father and the Lord Jesus Christ. I thank my God always when I remember you in my prayers, because I hear of your love and of the faith which you have toward the Lord Jesus and all the saints, and I pray that the sharing of your faith may promote the knowledge of all the good that is ours in Christ. For I have derived much joy and comfort from your love, my brother, because the hearts of the saints have been refreshed through you.<br><br>
+                        Accordingly, though I am bold enough in Christ to command you to do what is required, yet for love's sake I prefer to appeal to you -- I, Paul, an ambassador and now a prisoner also for Christ Jesus -- I appeal to you for my child, Ones'imus, whose father I have become in my imprisonment. (Formerly he was useless to you, but now he is indeed useful to you and to me.)<br><br>
+                        I am sending him back to you, and with him – I would say- sending my very heart. I would have been glad to keep him with me, in order that he might serve me on your behalf during my imprisonment for the gospel; but I preferred to do nothing without your consent in order that your goodness might not be by compulsion but of your own free will. Perhaps this is why he was parted from you for a while, that you might have him back for ever, no longer as a slave but more than a slave, as a beloved brother, especially to me but how much more to you, both in the flesh and in the Lord. So if you consider me your partner, receive him as you would receive me. If he has wronged you at all, or owes you anything, charge that to my account. I, Paul, write this with my own hand, I will repay it -- to say nothing of your owing me even your own self. Yes, brother, I want some benefit from you in the Lord. Refresh my heart in Christ. Confident of your obedience, I write to you, knowing that you will do even more than I say.<br><br>
+                        At the same time, prepare a guestroom for me, for I am hoping through your prayers to be granted to you. Ep'aphras, my fellow prisoner in Christ Jesus, sends greetings to you, and so do Mark, Aristar'chus, Demas, and Luke, my fellow workers. The grace of the Lord Jesus Christ be with your spirit.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Gal. 3, 28: 4, 7; Philemon 17, 16</strong><br><br>
+                        <em>R. All of you are one in Christ Jesus. * Therefore you are not anymore slave, but son, and if you are son, you are also heir by the will of God.</em><br>
+                        V: Welcome him not any more as a slave, but as a dear brother.<br>
+                        <em>R. Therefore you are not anymore slave, but son, and if you are son, you are also heir by the will of God.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Nm. 5 – 6</strong><br>
+                        <em>Let us follow the new life in Christ by means of the Spirit.</em><br><br>
+                        A reading from the "Discourse on baptism" of St. Pacian, bishop.<br>
+                        The sin of Adam had passed to the whole human race: "By one man sin entered into this world and by sin death: and so death passed upon all men." The justice of Christ, then, had to pass on to the entire human race. And just as Adam had caused the destruction of his descendants by sin, so Christ, by his justice, would bring life to the whole human race. The Apostle makes the point, saying. "For as by the disobedience of one man, many were made sinners; so also by the obedience of one many shall be made just…as sin has reigned to death, so also grace might reign by justice unto life everlasting through Jesus Christ our Lord."<br><br>
+                        Someone, perhaps, will object: The sin of Adam deservedly passed to posterity because they were born his descendants. But how are we born from Christ so that we can be saved through him? If you stop thinking in terms of the flesh you will understand our birth from Christ and his paternity in our regard. In these last days Christ took a soul and body in the womb of Mary. It is this flesh which he has come to save. He did not abandon it in hell, but joined it to his own spirit, making it his own. This is the marriage of the Lord, joined in the flesh of man – a great mystery uniting the two – Christ and the Church – in one flesh. This marriage, under the influence of the Holy Spirit, come down from heaven, has given birth to the people of God. Thanks to a heavenly seed inserted in the substance of our souls, we take form in the womb of our spiritual mother and, once we issue from her womb, we are vivified in Christ. And so the apostle says: "The first man, Adam, became a living soul; the last Adam became a life-giving spirit." It is thus by his priests that Christ engenders life in the Church, as the apostle confirms: "for in Christ Jesus did I beget you." It is the seed of Christ, that is to say the Spirit of God, which produces through the priest's hands the new man, conceived in the womb of his mother and born in the baptismal font under the auspices of faith.<br><br>
+                        We must receive Christ so that he may give us birth, as John the apostle says: To as many as received him, he gave the power of becoming sons of God." But this cannot be brought about without the bath of water and the sacrament of anointing which the bishop administers. The bath of water purifies us from our sins. The holy anointing pours down the Holy Spirit on us. This double blessing we obtain through the actions and words of the bishop.<br><br>
+                        So, it is the whole man that is reborn and renewed in Christ, in order that, just as Christ has arisen from the dead through the glory of the Father so we also may walk in newness of life, in other words, we must reject our former vices in order to practise a new Christian morality by the Spirit
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Rm. 5, 19. 21; 1 Jn 4, 10</strong><br><br>
+                        <em>R. Through the disobedience of one man, all are sinners; through the obedience of one man, all will be just. * Just as sin reigned wherever there was death, so grace will reign to bring eternal life, in Christ Jesus.</em><br>
+                        V: God has sent his Son as the victim of expiation for our sins.<br>
+                        <em>R. Just as sin reigned wherever there was death, so grace will reign to bring eternal life, in Christ Jesus.</em>
+                    </p>
+                </section>
+            </div>
+
+            <div id="cycle-2-content" class="liturgical-cycle-content hidden">
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">First Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>1 Tm. 4: 1 – 5:2</strong><br>
+                        <em>The bishop, master of the sound doctrine and man of piety.</em><br><br>
+                        A reading from the first Letter of St. Paul, apostle, to Timothy.<br>
+                        Now the Spirit expressly says that in later times some will depart from the faith by giving heed to deceitful spirits and doctrines of demons, through the pretensions of liars whose consciences are seared, who forbid marriage and enjoin abstinence from foods which God created to be received with thanksgiving by those who believe and know the truth. For everything created by God is good, and nothing is to be rejected if it is received with thanksgiving; for then it is consecrated by the word of God and prayer. If you put these instructions before the brethren, you will be a good minister of Christ Jesus, nourished on the words of the faith and of the good doctrine that you have followed. Have nothing to do with godless and silly myths. Train yourself in godliness; for while bodily training is of some value, godliness is of value in every way, as it holds promise for the present life and also for the life to come. The saying is sure and worthy of full acceptance. For to this end we toil and strive, because we have our hope set on the living God, who is the Saviour of all men, especially of those who believe. Command and teach these things.<br><br>
+                        Let no one despise your youth, but set the believers an example in speech and conduct, in love, in faith, in purity. Till I come, attend to the public reading of scripture, to preaching, to teaching. Do not neglect the gift you have, which was given you by prophetic utterance when the council of elders laid their hands upon you. Practice these duties, devote yourself to them, so that all may see your progress. Take heed to yourself and to your teaching; hold to that, for by so doing you will save both yourself and your hearers.<br><br>
+                        Do not rebuke an older man but exhort him as you would a father; treat younger men like brothers, older women like mothers, younger women like sisters, in all purity.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Response</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>1 Tm. 4, 8. 10; 2 Cor. 4, 9</strong><br><br>
+                        <em>R. Piety is useful to all, and brings with it the promise of life. We struggle and fight, * because we have placed our hope in the living God.</em><br>
+                        V: Persecuted, but not abandoned; struck down but not killed,<br>
+                        <em>R. because we have placed our hope in the living God.</em>
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Second Reading</h2>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>Cc. 8,1 – 9,2; 11, 1- 13,3</strong><br>
+                        <em>You will be reborn in faith that is the flesh of the Lord and in charity that is his blood.</em><br><br>
+                        A reading from the "Letter to the Christians of Tralles" of St. Ignatius of Antioch, bishop and martyr.<br>
+                        Wherefore, clothing yourselves with meekness, be renewed in faith, that is the flesh of the Lord, and in love, that is the blood of Jesus Christ. Let no one of you cherish any grudge against his neighbour. Give no occasion to the Gentiles, lest by means of a few foolish men the whole multitude [of those that believe] in God be evil spoken of. For, "Woe to him by whose vanity my name is blasphemed among any." Stop your ears, therefore, when any one speaks to you at variance with Jesus Christ, who was descended from David, and was also of Mary; who was truly born, and did eat and drink. He was truly persecuted under Pontius Pilate; He was truly crucified, and [truly] died, in the sight of beings in heaven, and on earth, and under the earth. He was also truly raised from the dead, His Father raising Him, even as after the same manner His Father will so raise up we who believe in Him by Christ Jesus, apart from whom we do not possess the true life. Flee, therefore, those evil offshoots [of Satan], which produce death-bearing fruit, whereof if any one tastes, he instantly dies. For these men are not the planting of the Father. For if they were, they would appear as branches of the cross, and their fruit would be incorruptible. By it He calls you through His passion, as being His members. The head, therefore, cannot be born by itself, without its members; God, who is [the Saviour] Himself, having promised their union. I salute you from Smyrna, together with the Churches of God which are with me, who have comforted me in all things, both in the flesh and in the spirit. My bonds, which I carry about with me for the sake of Jesus Christ (praying that I may attain to God), exhort you. Continue in harmony among yourselves, and in prayer with one another; for it becomes every one of you, and especially the presbyters, to comfort the bishop, to the honour of the Father, of Jesus Christ, and of the apostles. I entreat you in love to hear me, that I may not, by having written, be a testimony against you. And do you also pray for me, who have need of your love, along with the mercy of God, that I may be worthy of the lot for which I am destined, and that I may not be found reprobate. The love of the Smyrnaeans and Ephesians salutes you. Remember in your prayers the Church that is in Syria, from which also I am not worthy to receive my name, being the last of them. Fare you well in Jesus Christ, while you continue subject to the bishop, as to the command [of God], and in like manner to the presbyterate. And do you, every man, love one another with an undivided heart. Let my spirit be sanctified by yours, not only now, but also when I shall attain to God. For I am as yet exposed to danger. But the Father is faithful in Jesus Christ to fulfil both mine and your petitions: in whom may you be found without fault.
+                    </p>
+                </section>
+
+                <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+                <section>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <strong>2 Th. 2, 14 – 15; Sir. 15, 13</strong><br><br>
+                        <em>R. God has called you through the gospel, to possess the glory of our Lord Jesus Christ. * Therefore be firm and maintain the traditions that you have learned.</em><br>
+                        V: The Lord hates all abominations; it is not wanted by he who fears the Lord.<br>
+                        <em>R. Therefore be firm and maintain the traditions that you have learned.</em>
+                    </p>
+                </section>
+            </div>
+            
+            <hr class="border-dashed border-gray-300 dark:border-gray-600 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">Gospel</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <strong>Mt. 25: 14 – 30</strong><br>
+                    <em>You have been faithful in little: take part in the joy of your master.</em><br><br>
+                    A reading from the Gospel of St. Matthew.<br>
+                    "For it will be as when a man going on a journey called his servants and entrusted to them his property; to one he gave five talents, to another two, to another one, to each according to his ability. Then he went away. He who had received the five talents went at once and traded with them; and he made five talents more. So also, he who had the two talents made two talents more. But he who had received the one talent went and dug in the ground and hid his master's money. Now after a long time the master of those servants came and settled accounts with them. And he who had received the five talents came forward, bringing five talents more, saying, `Master, you delivered to me five talents; here I have made five talents more.' His master said to him, `Well done, good and faithful servant; you have been faithful over a little, I will set you over much; enter into the joy of your master.' And he also who had the two talents came forward, saying, `Master, you delivered to me two talents; here I have made two talents more.' His master said to him, `Well done, good and faithful servant; you have been faithful over a little, I will set you over much; enter into the joy of your master.' He also who had received the one talent came forward, saying, `Master, I knew you to be a hard man, reaping where you did not sow, and gathering where you did not winnow; so I was afraid, and I went and hid your talent in the ground. Here you have what is yours.' But his master answered him, `You wicked and slothful servant! You knew that I reap where I have not sowed, and gather where I have not winnowed? Then you ought to have invested my money with the bankers, and at my coming I should have received what was my own with interest. So take the talent from him, and give it to him who has the ten talents. For to every one who has will more be given, and he will have abundance; but from him who has not, even what he has will be taken away. And cast the worthless servant into the outer darkness; there men will weep and gnash their teeth.'"
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cycleSelector = document.getElementById('liturgical-cycle');
+            const cycle1Content = document.getElementById('cycle-1-content');
+            const cycle2Content = document.getElementById('cycle-2-content');
+
+            function showContentForCycle(cycle) {
+                // Hide all content blocks
+                cycle1Content.classList.add('hidden');
+                cycle2Content.classList.add('hidden');
+
+                // Show the selected cycle's content
+                if (cycle === '1') {
+                    cycle1Content.classList.remove('hidden');
+                } else if (cycle === '2') {
+                    cycle2Content.classList.remove('hidden');
+                }
+            }
+
+            cycleSelector.addEventListener('change', (event) => {
+                showContentForCycle(event.target.value);
+            });
+
+            // Set the initial state based on the selected option
+            showContentForCycle(cycleSelector.value);
+        });
+
+            
+    </script>
+</body>
+</html>
