@@ -6,7 +6,8 @@
     <title>ipray - Your prayer Companion</title>
     <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
     <meta name="description" content="A Catholic liturgical companion app for daily prayer and worship">
-   
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/i-pray/manifest.json">
 
     <link href="./output.css" rel="stylesheet">
     <!-- Tailwind CSS via CDN -->
@@ -108,6 +109,12 @@
     }
     </style>
 </head>
+<!-- Install Button -->
+<div id="installContainer" class="px-6 py-2">
+  <button id="installButton" class="hidden w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg text-center">
+    Install iPray App
+  </button>
+</div>
 <body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <div id="app" class="relative z-10">
         <!-- Updated Header -->
@@ -674,58 +681,97 @@
         }
         
         // PWA Service Worker Registration
-        function registerServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/ipray/service-worker.js', { scope: '/ipray/' })
-                        .then(registration => console.log('SW registered: ', registration.scope))
-                        .catch(err => console.log('SW registration failed: ', err));
-                });
-            }
+       function registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/i-pray/service-worker.js', { scope: '/i-pray/' })
+                .then(registration => console.log('SW registered:', registration.scope))
+                .catch(err => console.log('SW registration failed:', err));
+            });
         }
-        
-        // Initialize the app
-document.addEventListener('DOMContentLoaded', function() {
-    // Remove theme toggle functionality and hide the button
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.remove();
-    }
-    
-    // Initialize navigation and features
-    initNavigation();
-    initAccessibility();
-    calculateLiturgicalDay();
-    fetchSaintOfTheDay();
-    fetchDailyReadings();
-    setupPrayerReminders();
-    registerServiceWorker();
-    
-    // Set language
-    const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
-    setLanguage(preferredLang);
-    
-    // Add event listener for "Tap to view" on Carmen's prayer card
-    const toggleBtn = document.getElementById('togglePrayerBtn');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', togglePrayer);
-    }
-    
-    // Add event listener for Office of the Readings Mwaka 2
-    const officeReadingsMwaka2Btn = document.getElementById('officeReadingsMwaka2Btn');
-    if (officeReadingsMwaka2Btn) {
-        officeReadingsMwaka2Btn.addEventListener('click', openOfficeReadingsMwaka2);
-    }
-});
-// Function to open Office of the Readings for Mwaka 2
-function openOfficeReadingsMwaka2() {
-    window.location.href = "mwaka2.html";
-}
+        }
 
-// Function to open Office of the Readings for Mwaka 3
-function openOfficeReadingsMwaka3() {
-    window.location.href = "mwaka3.html";
-}
+        // Install Prompt Handling
+            let deferredPrompt;
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Show the install button
+            const installButton = document.getElementById('installButton');
+            const installContainer = document.getElementById('installContainer');
+            installButton.classList.remove('hidden');
+            installContainer.classList.remove('hidden');
+
+            // Listen for button click
+            installButton.addEventListener('click', () => {
+                // Hide the button once clicked
+                installButton.classList.add('hidden');
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond
+                deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+                });
+            });
+            });
+
+            // Optionally: Hide install button if already installed
+            window.addEventListener('appinstalled', () => {
+            const installContainer = document.getElementById('installContainer');
+            installContainer.classList.add('hidden');
+            console.log('App installed successfully');
+            });
+                    
+                    // Initialize the app
+            document.addEventListener('DOMContentLoaded', function() {
+                // Remove theme toggle functionality and hide the button
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    themeToggle.remove();
+                }
+                
+                // Initialize navigation and features
+                initNavigation();
+                initAccessibility();
+                calculateLiturgicalDay();
+                fetchSaintOfTheDay();
+                fetchDailyReadings();
+                setupPrayerReminders();
+                registerServiceWorker();
+                
+                // Set language
+                const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+                setLanguage(preferredLang);
+                
+                // Add event listener for "Tap to view" on Carmen's prayer card
+                const toggleBtn = document.getElementById('togglePrayerBtn');
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', togglePrayer);
+                }
+                
+                // Add event listener for Office of the Readings Mwaka 2
+                const officeReadingsMwaka2Btn = document.getElementById('officeReadingsMwaka2Btn');
+                if (officeReadingsMwaka2Btn) {
+                    officeReadingsMwaka2Btn.addEventListener('click', openOfficeReadingsMwaka2);
+                }
+            });
+            // Function to open Office of the Readings for Mwaka 2
+            function openOfficeReadingsMwaka2() {
+                window.location.href = "mwaka2.html";
+            }
+
+            // Function to open Office of the Readings for Mwaka 3
+            function openOfficeReadingsMwaka3() {
+                window.location.href = "mwaka3.html";
+            }
     </script>
 </body>
 </html>
