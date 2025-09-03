@@ -164,7 +164,7 @@
     <div id="homeView" class="space-y-8">
         <!-- Liturgical Season Image (static, styled by CSS) -->
         <div class="flex justify-center mb-4">
-            <img class="season-img" src="/assets/images/maria mdogo.png" alt="Liturgical Season">
+            <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season">
         </div>
         <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 season-border">
             <div class="text-center">
@@ -192,7 +192,7 @@
                 <div class="bg-white shadow-md rounded-lg p-4 mb-4">
                     <!-- Header with image and title -->
                     <div class="flex items-center space-x-4">
-                        <img src="/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
+                        <img src="assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
                         <h2 class="text-xl font-semibold text-gray-800">Pray To Carmen Hernandez</h2>
                     </div>
                         <!-- "Tap to view" button -->
@@ -512,46 +512,46 @@
             adventStart.setDate(adventStart.getDate() - 21);
             let season = 'Ordinary Time';
             let feast = null;
-            let seasonImage = '/assets/images/maria mdogo.png';
+            let seasonImage = 'assets/images/maria mdogo.png';
             let liturgicalColor = 'green';
             if (today.getMonth() === 11 && today.getDate() === 25) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 feast = 'Nativity of the Lord';
                 liturgicalColor = 'white';
             } else if (today.getMonth() === 0 && today.getDate() === 1) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 feast = 'Mary, Mother of God';
                 liturgicalColor = 'white';
             } else if (today.getMonth() === 0 && today.getDate() === 6) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 feast = 'Epiphany of the Lord';
                 liturgicalColor = 'white';
             } else if (today >= adventStart && today < christmas) {
                 season = 'Advent';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 liturgicalColor = 'purple';
             } else if (today >= christmas && today < new Date(year, 0, 8)) {
                 season = 'Christmas';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 liturgicalColor = 'white';
             } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
                 season = 'Ordinary Time';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 liturgicalColor = 'green';
             } else if (today >= ashWednesday && today < easter) {
                 season = 'Lent';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 liturgicalColor = 'purple';
             } else if (today >= easter && today < pentecost) {
                 season = 'Easter';
-                seasonImage = '/assets/images/maria mdogo.png';
+                seasonImage = 'assets/images/maria mdogo.png';
                 liturgicalColor = 'white';
             } else if (today >= pentecost && today < adventStart) {
                 season = 'Ordinary Time';
-                seasonImage = '/assets/maria mdogo.png';
+                seasonImage = 'assets/maria mdogo.png';
                 liturgicalColor = 'green';
             }
             if (today.getDate() === 2 && today.getMonth() === 2) {
@@ -608,7 +608,7 @@
                     {
                         name: "Carmen Hernandez",
                         prayer: "",
-                        image: "/assets/images/carmen.jpg",
+                        image: "assets/images/carmen.jpg",
                         bio: ""
                     },
                 ];
