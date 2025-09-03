@@ -147,9 +147,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
             </button>
-            <button id="languageToggle" class="p-2 rounded-full bg-gray-200 ml-4 text-sm font-medium">
-                EN
-            </button>
+            <a href="calendar.html" class="p-2 rounded-full bg-gray-200 ml-4" aria-label="Calendar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </a>
             <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -174,6 +176,13 @@
                 <h2 class="text-3xl font-bold mb-2 text-gray-800">
                     <span id="currentDate">Loading...</span>
                 </h2>
+                <p id="saintOfDay" class="text-md text-gray-700 font-medium mb-1 hidden"></p>
+                <div class="mt-2">
+                    <button id="toggleUpcomingFeasts" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none">
+                        Tap to see upcoming feasts
+                    </button>
+                    <div id="upcomingFeastsList" class="mt-3 text-left hidden"></div>
+                </div>
                 <p id="feastDay" class="text-xl text-purple-800 font-medium hidden">
                     Feast of All Saints
                 </p>
@@ -318,6 +327,75 @@
             }
         };
         
+        // Liturgical Feasts Data (fixed-date) copied from calendar for consistency
+        const LITURGICAL_FEASTS = {
+            0:[{date:1,name:"Mary, Mother of God",type:"Solemnity",color:"white"},{date:2,name:"Basil the Great and Gregory Nazianzen",type:"Memorial",color:"white"},{date:3,name:"Most Holy Name of Jesus",type:"Optional Memorial",color:"white"},{date:4,name:"Elizabeth Ann Seton",type:"Memorial",color:"white",country:"US"},{date:5,name:"John Neumann",type:"Memorial",color:"white",country:"US"},{date:6,name:"Epiphany",type:"Solemnity",color:"white"},{date:7,name:"Raymond of Penyafort",type:"Optional Memorial",color:"white"},{date:13,name:"Hilary of Poitiers",type:"Optional Memorial",color:"white"},{date:17,name:"Anthony of Egypt",type:"Memorial",color:"white"},{date:20,name:"Vincent, deacon and martyr",type:"Optional Memorial",color:"red"},{date:21,name:"Agnes, virgin and martyr",type:"Memorial",color:"red"},{date:22,name:"Vincent, deacon and martyr",type:"Optional Memorial",color:"red"},{date:23,name:"Marianne Cope",type:"Optional Memorial",color:"white",country:"US"},{date:24,name:"Francis de Sales",type:"Memorial",color:"white"},{date:25,name:"Conversion of Paul, Apostle",type:"Feast",color:"white"},{date:26,name:"Timothy and Titus",type:"Memorial",color:"white"},{date:27,name:"Angela Merici",type:"Optional Memorial",color:"white"},{date:28,name:"Thomas Aquinas",type:"Memorial",color:"white"},{date:31,name:"John Bosco",type:"Memorial",color:"white"}],
+            1:[{date:2,name:"Presentation of the Lord",type:"Feast",color:"white"},{date:3,name:"Blase, bishop and martyr",type:"Optional Memorial",color:"red"},{date:4,name:"Agatha, virgin and martyr",type:"Memorial",color:"red"},{date:6,name:"Paul Miki and companions",type:"Memorial",color:"red"},{date:8,name:"Josephine Bakhita",type:"Optional Memorial",color:"white"},{date:10,name:"Scholastica",type:"Memorial",color:"white"},{date:11,name:"Our Lady of Lourdes",type:"Optional Memorial",color:"white"},{date:14,name:"Cyril and Methodius",type:"Memorial",color:"white"},{date:21,name:"Peter Damian",type:"Optional Memorial",color:"white"},{date:22,name:"Chair of Peter",type:"Feast",color:"white"},{date:23,name:"Polycarp",type:"Memorial",color:"red"}],
+            2:[{date:3,name:"Katharine Drexel",type:"Optional Memorial",color:"white",country:"US"},{date:4,name:"Casimir",type:"Optional Memorial",color:"white"},{date:7,name:"Perpetua and Felicity",type:"Memorial",color:"red"},{date:8,name:"John of God",type:"Optional Memorial",color:"white"},{date:9,name:"Frances of Rome",type:"Optional Memorial",color:"white"},{date:17,name:"Patrick",type:"Optional Memorial",color:"green"},{date:18,name:"Cyril of Jerusalem",type:"Optional Memorial",color:"white"},{date:19,name:"Joseph, Husband of Mary",type:"Solemnity",color:"white"},{date:23,name:"Turibius of Mogrovejo",type:"Optional Memorial",color:"white"},{date:25,name:"Annunciation of the Lord",type:"Solemnity",color:"white"}],
+            3:[{date:2,name:"Francis of Paola",type:"Optional Memorial",color:"white"},{date:4,name:"Isidore",type:"Optional Memorial",color:"white"},{date:5,name:"Vincent Ferrer",type:"Optional Memorial",color:"white"},{date:7,name:"John Baptist de la Salle",type:"Memorial",color:"white"},{date:11,name:"Stanislaus",type:"Memorial",color:"red"},{date:13,name:"Martin I",type:"Optional Memorial",color:"red"},{date:21,name:"Anselm of Canterbury",type:"Optional Memorial",color:"white"},{date:23,name:"George or Adalbert",type:"Optional Memorial",color:"red"},{date:24,name:"Fidelis of Sigmaringen",type:"Optional Memorial",color:"red"},{date:25,name:"Mark the Evangelist",type:"Feast",color:"white"},{date:28,name:"Peter Chanel or Louis de Montfort",type:"Optional Memorial",color:"red"},{date:29,name:"Catherine of Siena",type:"Memorial",color:"white"},{date:30,name:"Pius V",type:"Optional Memorial",color:"white"}],
+            4:[{date:1,name:"Joseph the Worker",type:"Optional Memorial",color:"white"},{date:2,name:"Athanasius",type:"Memorial",color:"white"},{date:3,name:"Philip and James, Apostles",type:"Feast",color:"white"},{date:10,name:"Damien de Veuster",type:"Optional Memorial",color:"white",country:"US"},{date:13,name:"Our Lady of Fatima",type:"Optional Memorial",color:"white"},{date:14,name:"Matthias the Apostle",type:"Feast",color:"white"},{date:15,name:"Isidore the Farmer",type:"Optional Memorial",color:"white",country:"US"},{date:18,name:"John I",type:"Optional Memorial",color:"red"},{date:20,name:"Bernardine of Siena",type:"Optional Memorial",color:"white"},{date:21,name:"Christopher Magallanes and companions",type:"Optional Memorial",color:"red"},{date:22,name:"Rita of Cascia",type:"Optional Memorial",color:"white"},{date:24,name:"Bede or Gregory VII or Mary Magdalene de Pazzi",type:"Optional Memorial",color:"white"},{date:25,name:"Philip Neri",type:"Memorial",color:"white"},{date:26,name:"Augustine of Canterbury",type:"Optional Memorial",color:"white"},{date:31,name:"Visitation of the Blessed Virgin Mary",type:"Feast",color:"white"}],
+            5:[{date:1,name:"Justin Martyr",type:"Memorial",color:"red"},{date:3,name:"Charles Lwanga and companions",type:"Memorial",color:"red"},{date:5,name:"Boniface",type:"Memorial",color:"red"},{date:9,name:"Ephrem",type:"Optional Memorial",color:"white"},{date:11,name:"Barnabas the Apostle",type:"Memorial",color:"white"},{date:13,name:"Anthony of Padua",type:"Memorial",color:"white"},{date:19,name:"Romuald",type:"Optional Memorial",color:"white"},{date:21,name:"Aloysius Gonzaga",type:"Memorial",color:"white"},{date:22,name:"Paulinus or John Fisher and Thomas More",type:"Optional Memorial",color:"red"},{date:24,name:"Birth of John the Baptist",type:"Solemnity",color:"white"},{date:28,name:"Irenaeus",type:"Memorial",color:"red"},{date:29,name:"Peter and Paul, Apostles",type:"Solemnity",color:"white"},{date:30,name:"First Martyrs of the Church of Rome",type:"Optional Memorial",color:"red"}],
+            6:[{date:1,name:"Junípero Serra",type:"Optional Memorial",color:"white",country:"US"},{date:3,name:"Thomas the Apostle",type:"Feast",color:"white"},{date:5,name:"Anthony Zaccaria or Elizabeth of Portugal",type:"Optional Memorial",color:"white"},{date:6,name:"Maria Goretti",type:"Optional Memorial",color:"red"},{date:9,name:"Augustine Zhao Rong and companions",type:"Optional Memorial",color:"red"},{date:11,name:"Benedict",type:"Memorial",color:"white"},{date:13,name:"Henry",type:"Optional Memorial",color:"white"},{date:14,name:"Camillus de Lellis or Kateri Tekakwitha",type:"Optional Memorial",color:"white"},{date:15,name:"Bonaventure",type:"Memorial",color:"white"},{date:16,name:"Our Lady of Mount Carmel",type:"Optional Memorial",color:"white"},{date:18,name:"Camillus de Lellis",type:"Optional Memorial",color:"white",country:"US"},{date:20,name:"Apollinaris",type:"Optional Memorial",color:"red"},{date:21,name:"Lawrence of Brindisi",type:"Optional Memorial",color:"white"},{date:22,name:"Mary Magdalene",type:"Feast",color:"white"},{date:25,name:"James, Apostle",type:"Feast",color:"red"},{date:26,name:"Joachim and Anne",type:"Memorial",color:"white"},{date:29,name:"Martha",type:"Memorial",color:"white"},{date:30,name:"Peter Chrysologus",type:"Optional Memorial",color:"white"},{date:31,name:"Ignatius of Loyola",type:"Memorial",color:"white"}],
+            7:[{date:1,name:"Alphonsus Maria de Liguori",type:"Memorial",color:"white"},{date:4,name:"Jean Vianney",type:"Memorial",color:"white"},{date:5,name:"Dedication of Mary Major",type:"Optional Memorial",color:"white"},{date:6,name:"Transfiguration of the Lord",type:"Feast",color:"white"},{date:7,name:"Sixtus II or Cajetan",type:"Optional Memorial",color:"red"},{date:8,name:"Dominic",type:"Memorial",color:"white"},{date:9,name:"Teresa Benedicta of the Cross",type:"Optional Memorial",color:"red"},{date:10,name:"Lawrence, deacon and martyr",type:"Feast",color:"red"},{date:11,name:"Clare",type:"Memorial",color:"white"},{date:12,name:"Jane Frances de Chantal",type:"Optional Memorial",color:"white"},{date:13,name:"Pontian and Hippolytus",type:"Optional Memorial",color:"red"},{date:14,name:"Maximilian Kolbe",type:"Memorial",color:"red"},{date:15,name:"Assumption of the Blessed Virgin Mary",type:"Solemnity",color:"white"},{date:16,name:"Stephen of Hungary",type:"Optional Memorial",color:"white"},{date:19,name:"John Eudes",type:"Optional Memorial",color:"white"},{date:20,name:"Bernard of Clairvaux",type:"Memorial",color:"white"},{date:21,name:"Pius X",type:"Memorial",color:"white"},{date:22,name:"Queenship of Blessed Virgin Mary",type:"Memorial",color:"white"},{date:23,name:"Rose of Lima",type:"Optional Memorial",color:"white"},{date:24,name:"Bartholomew the Apostle",type:"Feast",color:"white"},{date:25,name:"Louis or Joseph of Calasanz",type:"Optional Memorial",color:"white"},{date:27,name:"Monica",type:"Memorial",color:"white"},{date:28,name:"Augustine of Hippo",type:"Memorial",color:"white"},{date:29,name:"Beheading of John the Baptist",type:"Memorial",color:"red"}],
+            8:[{date:3,name:"Gregory the Great",type:"Memorial",color:"white"},{date:8,name:"Birth of the Blessed Virgin Mary",type:"Feast",color:"white"},{date:9,name:"Peter Claver",type:"Memorial",color:"white",country:"US"},{date:12,name:"Holy Name of the Blessed Virgin Mary",type:"Optional Memorial",color:"white"},{date:13,name:"John Chrysostom",type:"Memorial",color:"white"},{date:14,name:"Exaltation of the Holy Cross",type:"Feast",color:"red"},{date:15,name:"Our Lady of Sorrows",type:"Memorial",color:"white"},{date:16,name:"Cornelius and Cyprian",type:"Memorial",color:"red"},{date:17,name:"Robert Bellarmine",type:"Optional Memorial",color:"white"},{date:19,name:"Januarius",type:"Optional Memorial",color:"red"},{date:20,name:"Andrew Kim and companions",type:"Memorial",color:"red"},{date:21,name:"Matthew the Evangelist",type:"Feast",color:"white"},{date:23,name:"Padre Pio",type:"Memorial",color:"white"},{date:26,name:"Cosmas and Damian",type:"Optional Memorial",color:"red"},{date:27,name:"Vincent de Paul",type:"Memorial",color:"white"},{date:28,name:"Wenceslaus or Lawrence Ruiz and companions",type:"Optional Memorial",color:"red"},{date:29,name:"Michael, Gabriel, and Raphael",type:"Feast",color:"white"},{date:30,name:"Jerome",type:"Memorial",color:"white"}],
+            9:[{date:1,name:"Thérèse of the Child Jesus",type:"Memorial",color:"white"},{date:2,name:"Guardian Angels",type:"Memorial",color:"white"},{date:3,name:"Francis of Assisi",type:"Memorial",color:"white"},{date:5,name:"Francis Xavier Seelos",type:"Optional Memorial",color:"white",country:"US"},{date:6,name:"Bruno or Marie-Rose Durocher",type:"Optional Memorial",color:"white"},{date:7,name:"Our Lady of the Rosary",type:"Memorial",color:"white"},{date:9,name:"Denis or John Leonardi",type:"Optional Memorial",color:"red"},{date:11,name:"John XXIII",type:"Optional Memorial",color:"white"},{date:14,name:"Callistus I",type:"Optional Memorial",color:"red"},{date:15,name:"Teresa of Jesus",type:"Memorial",color:"white"},{date:16,name:"Hedwig or Margaret Mary Alacoque",type:"Optional Memorial",color:"white"},{date:17,name:"Ignatius of Antioch",type:"Memorial",color:"red"},{date:18,name:"Luke the Evangelist",type:"Feast",color:"white"},{date:19,name:"Jean de Brébeuf and companions",type:"Memorial",color:"red",country:"US"},{date:20,name:"Paul of the Cross",type:"Optional Memorial",color:"white"},{date:22,name:"John Paul II",type:"Optional Memorial",color:"white"},{date:23,name:"John of Capistrano",type:"Optional Memorial",color:"white"},{date:24,name:"Anthony Mary Claret",type:"Optional Memorial",color:"white"},{date:28,name:"Simon and Jude",type:"Feast",color:"white"}],
+            10:[{date:1,name:"All Saints",type:"Solemnity",color:"white"},{date:2,name:"Commemoration of All Souls",type:"Solemnity",color:"white"},{date:3,name:"Martin de Porres",type:"Optional Memorial",color:"white"},{date:4,name:"Charles Borromeo",type:"Memorial",color:"white"},{date:9,name:"Dedication of the Lateran Basilica",type:"Feast",color:"white"},{date:10,name:"Leo the Great",type:"Memorial",color:"white"},{date:11,name:"Martin of Tours",type:"Memorial",color:"white"},{date:12,name:"Josaphat",type:"Memorial",color:"red"},{date:13,name:"Frances Xavier Cabrini",type:"Memorial",color:"white",country:"US"},{date:15,name:"Albert the Great",type:"Optional Memorial",color:"white"},{date:16,name:"Margaret of Scotland or Gertrude",type:"Optional Memorial",color:"white"},{date:17,name:"Elizabeth of Hungary",type:"Memorial",color:"white"},{date:18,name:"Rose Philippine Duchesne",type:"Optional Memorial",color:"white",country:"US"},{date:21,name:"Presentation of the Blessed Virgin Mary",type:"Memorial",color:"white"},{date:22,name:"Cecilia",type:"Memorial",color:"red"},{date:23,name:"Clement I or Columban or Miguel Pro",type:"Optional Memorial",color:"red"},{date:24,name:"Andrew Dung-Lac and companions",type:"Memorial",color:"red"},{date:25,name:"Catherine of Alexandria",type:"Optional Memorial",color:"red"},{date:30,name:"Andrew the Apostle",type:"Feast",color:"white"}],
+            11:[{date:3,name:"Francis Xavier",type:"Memorial",color:"white"},{date:4,name:"John Damascene",type:"Optional Memorial",color:"white"},{date:6,name:"Nicholas",type:"Optional Memorial",color:"white"},{date:7,name:"Ambrose",type:"Memorial",color:"white"},{date:8,name:"Immaculate Conception",type:"Solemnity",color:"white"},{date:9,name:"Juan Diego",type:"Optional Memorial",color:"white"},{date:11,name:"Damasus I",type:"Optional Memorial",color:"white"},{date:12,name:"Our Lady of Guadalupe",type:"Memorial",color:"white",country:"US"},{date:13,name:"Lucy",type:"Memorial",color:"red"},{date:14,name:"John of the Cross",type:"Memorial",color:"white"},{date:21,name:"Peter Canisius",type:"Optional Memorial",color:"white"},{date:23,name:"John of Kanty",type:"Optional Memorial",color:"white"},{date:25,name:"Nativity of the Lord",type:"Solemnity",color:"white"},{date:26,name:"Stephen, First Martyr",type:"Feast",color:"red"},{date:27,name:"John the Apostle",type:"Feast",color:"white"},{date:28,name:"Holy Innocents",type:"Feast",color:"red"},{date:29,name:"Thomas Becket",type:"Optional Memorial",color:"red"},{date:31,name:"Sylvester I",type:"Optional Memorial",color:"white"}]
+        };
+
+        function calculateEasterForFeasts(year) {
+            const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+            const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+            const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+            const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+            const m = Math.floor((a + 11 * h + 22 * l) / 451);
+            const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+            const day = ((h + l - 7 * m + 114) % 31) + 1;
+            return new Date(year, month, day);
+        }
+
+        function getLiturgicalInfoForToday(date = new Date()) {
+            const month = date.getMonth();
+            const day = date.getDate();
+            const year = date.getFullYear();
+            let feast = null, feastType = null, color = 'green';
+            const feastData = (LITURGICAL_FEASTS[month] || []).find(f => f.date === day);
+            if (feastData) { feast = feastData.name; feastType = feastData.type; color = feastData.color; }
+            const easter = calculateEasterForFeasts(year);
+            const ashWednesday = new Date(easter); ashWednesday.setDate(easter.getDate() - 46);
+            const pentecost = new Date(easter); pentecost.setDate(easter.getDate() + 49);
+            const christmas = new Date(year, 11, 25);
+            let season = 'Ordinary Time';
+            if (date >= new Date(year, 11, 1) && date < christmas) { season = 'Advent'; color = 'purple'; }
+            else if (date >= christmas && date < new Date(year + 1, 0, 8)) { season = 'Christmas'; color = 'white'; }
+            else if (date >= ashWednesday && date < easter) { season = 'Lent'; color = 'purple'; }
+            else if (date >= easter && date < pentecost) { season = 'Easter'; color = 'white'; }
+            return { season, color, feast, feastType };
+        }
+
+        function getUpcomingFeasts(nextCount = 5) {
+            const today = new Date();
+            const year = today.getFullYear();
+            let allFeasts = [];
+            for (let m = 0; m < 12; m++) {
+                (LITURGICAL_FEASTS[m] || []).forEach(f => {
+                    const d = new Date(year, m, f.date);
+                    if (d >= new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+                        allFeasts.push({ ...f, date: d });
+                    }
+                });
+            }
+            return allFeasts
+                .sort((a,b) => a.date - b.date)
+                .slice(0, nextCount)
+                .map(f => ({
+                    date: f.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    name: f.name,
+                    type: f.type,
+                    color: f.color
+                }));
+        }
+        
         function togglePrayer() {
             const prayerText = document.getElementById('prayerText');
             const toggleBtn = document.getElementById('togglePrayerBtn');
@@ -336,7 +414,10 @@
                     el.textContent = translations[lang][key];
                 }
             });
-            document.getElementById('languageToggle').textContent = lang === 'en' ? 'SW' : 'EN';
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.textContent = lang === 'en' ? 'SW' : 'EN';
+            }
             document.getElementById('appSubtitle').textContent = lang === 'sw' ? "Msaidizi wako Wa Sala" : "Your Prayer Companion";
             const season = document.getElementById('season').textContent;
             updateLiturgicalQuote(season, lang);
@@ -790,6 +871,49 @@
                 fetchDailyReadings();
                 setupPrayerReminders();
                 registerServiceWorker();
+                
+                // Populate Saint of the Day just below the date
+                const saintEl = document.getElementById('saintOfDay');
+                if (saintEl) {
+                    const info = getLiturgicalInfoForToday();
+                    if (info.feast) {
+                        saintEl.textContent = `Saint of the Day: ${info.feast}`;
+                        saintEl.classList.remove('hidden');
+                    }
+                }
+                
+                // Upcoming feasts toggle behavior
+                const toggleUpcoming = document.getElementById('toggleUpcomingFeasts');
+                const feastsList = document.getElementById('upcomingFeastsList');
+                if (toggleUpcoming && feastsList) {
+                    let loaded = false;
+                    toggleUpcoming.addEventListener('click', () => {
+                        feastsList.classList.toggle('hidden');
+                        if (!loaded) {
+                            const items = getUpcomingFeasts(5);
+                            if (!items.length) {
+                                feastsList.innerHTML = '<p class="text-sm text-gray-600">No upcoming feasts.</p>';
+                            } else {
+                                const container = document.createElement('div');
+                                container.className = 'space-y-2';
+                                items.forEach(e => {
+                                    const el = document.createElement('div');
+                                    el.className = 'flex items-center p-2 bg-white/70 rounded-lg shadow-sm';
+                                    el.innerHTML = `
+                                        <span class="text-xs font-medium w-16 text-gray-600">${e.date}</span>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">${e.name}</div>
+                                            <div class="text-xs text-gray-600">${e.type}</div>
+                                        </div>
+                                    `;
+                                    container.appendChild(el);
+                                });
+                                feastsList.appendChild(container);
+                            }
+                            loaded = true;
+                        }
+                    });
+                }
                 
                 // Set language
                 const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
