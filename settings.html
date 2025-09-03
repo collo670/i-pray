@@ -91,7 +91,7 @@
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400" id="pageSubtitle">
+                    <p class="text-sm text-gray-600 dark:text-gray-400" id="pageSubtitle" data-translate="settings">
                         settings
                     </p>
                 </div>
@@ -109,7 +109,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Home
+                <span data-translate="home">Home</span>
             </a>
             <!-- Settings Sections -->
             <div class="space-y-8">
@@ -117,35 +117,35 @@
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-palette mr-2 text-primary"></i>
-                        <span>App Theme</span>
+                        <span data-translate="appTheme">App Theme</span>
                     </h2>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="default">
                             <div class="w-full h-12 rounded mb-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
-                            <span>Default</span>
+                            <span data-translate="default">Default</span>
                         </button>
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="purple">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-purple"></div>
-                            <span>Advent/Lent</span>
+                            <span data-translate="adventLent">Advent/Lent</span>
                         </button>
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="white">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-white border border-gray-300"></div>
-                            <span>Christmas/Easter</span>
+                            <span data-translate="christmasEaster">Christmas/Easter</span>
                         </button>
                         <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="green">
                             <div class="w-full h-12 rounded mb-2 bg-liturgical-green"></div>
-                            <span>Ordinary Time</span>
+                            <span data-translate="ordinaryTime">Ordinary Time</span>
                         </button>
                     </div>
                     <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                         <div>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" id="darkModeToggle" class="rounded text-primary">
-                                <span class="ml-2">Dark Mode</span>
+                                <span class="ml-2" data-translate="darkMode">Dark Mode</span>
                             </label>
                         </div>
                         <button id="resetTheme" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary">
-                            Reset to Default
+                            <span data-translate="resetDefault">Reset to Default</span>
                         </button>
                     </div>
                 </section>
@@ -153,7 +153,7 @@
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-language mr-2 text-primary"></i>
-                        <span>Language Settings</span>
+                        <span data-translate="languageSettings">Language Settings</span>
                     </h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                         <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="en">
@@ -189,13 +189,13 @@
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-bell mr-2 text-primary"></i>
-                        <span>Prayer Reminders</span>
+                        <span data-translate="prayerReminders">Prayer Reminders</span>
                     </h2>
                     <div class="space-y-4">
                         <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
-                                <h3 class="font-medium">Morning Prayer (Lauds)</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Start your day with prayer</p>
+                                <h3 class="font-medium" data-translate="morningPrayer">Morning Prayer (Lauds)</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="startDayWithPrayer">Start your day with prayer</p>
                             </div>
                             <div class="flex items-center">
                                 <input type="time" value="06:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3">
@@ -207,8 +207,8 @@
                         </div>
                         <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
-                                <h3 class="font-medium">Angelus</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Noon prayer tradition</p>
+                                <h3 class="font-medium" data-translate="angelus">Angelus</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="noonPrayer">Noon prayer tradition</p>
                             </div>
                             <div class="flex items-center">
                                 <input type="time" value="12:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3">
@@ -220,8 +220,8 @@
                         </div>
                         <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
-                                <h3 class="font-medium">Divine Mercy (3 PM)</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Hour of Great Mercy</p>
+                                <h3 class="font-medium" data-translate="divineMercy">Divine Mercy (3 PM)</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="hourOfMercy">Hour of Great Mercy</p>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked class="sr-only peer">
@@ -234,13 +234,13 @@
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-universal-access mr-2 text-primary"></i>
-                        <span>Accessibility</span>
+                        <span data-translate="accessibility">Accessibility</span>
                     </h2>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
-                                <h3 class="font-medium">High Contrast Mode</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Improved visibility</p>
+                                <h3 class="font-medium" data-translate="highContrast">High Contrast Mode</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="improvedVisibility">Improved visibility</p>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="highContrastToggle" class="sr-only peer">
@@ -249,8 +249,8 @@
                         </div>
                         <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div>
-                                <h3 class="font-medium">Text Size</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Adjust to your preference</p>
+                                <h3 class="font-medium" data-translate="textSize">Text Size</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="adjustPreference">Adjust to your preference</p>
                             </div>
                             <select id="textSizeSelect" class="bg-white dark:bg-gray-600 rounded px-2 py-1">
                                 <option value="normal">Normal</option>
@@ -264,14 +264,14 @@
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-cog mr-2 text-primary"></i>
-                        <span>App Management</span>
+                        <span data-translate="appManagement">App Management</span>
                     </h2>
                     <div class="space-y-3">
                         <button id="clearCacheBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-medium">Clear Cache</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Free up storage space</p>
+                                    <h3 class="font-medium" data-translate="clearCache">Clear Cache</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="freeUpSpace">Free up storage space</p>
                                 </div>
                                 <i class="fas fa-chevron-right text-gray-400"></i>
                             </div>
@@ -279,8 +279,8 @@
                         <button id="exportDataBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-medium">Export Prayer Data</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Backup your prayer history</p>
+                                    <h3 class="font-medium" data-translate="exportPrayerData">Export Prayer Data</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="backupHistory">Backup your prayer history</p>
                                 </div>
                                 <i class="fas fa-chevron-right text-gray-400"></i>
                             </div>
@@ -288,7 +288,7 @@
                         <button id="checkUpdatesBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-medium">Check for Updates</h3>
+                                    <h3 class="font-medium" data-translate="checkUpdates">Check for Updates</h3>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">Current version: 1.2.0</p>
                                 </div>
                                 <i class="fas fa-chevron-right text-gray-400"></i>
@@ -297,7 +297,7 @@
                     </div>
                 </section>
                 <!-- Social & Support -->
-                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+              <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-hands-helping mr-2 text-primary"></i>
                         <span>Connect & Support</span>
@@ -360,7 +360,7 @@
                 </a>
                 <a href="settings.html" class="flex flex-col items-center px-2 py-1 rounded-lg text-primary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     </svg>
                     <span class="text-xs">Settings</span>
                 </a>
@@ -376,6 +376,79 @@
             setupEventListeners();
             checkPWAInstallation();
         });
+
+        const translations = {
+            en: {
+                settings: 'settings',
+                home: 'Home',
+                appTheme: 'App Theme',
+                default: 'Default',
+                adventLent: 'Advent/Lent',
+                christmasEaster: 'Christmas/Easter',
+                ordinaryTime: 'Ordinary Time',
+                darkMode: 'Dark Mode',
+                resetDefault: 'Reset to Default',
+                languageSettings: 'Language Settings',
+                prayerReminders: 'Prayer Reminders',
+                morningPrayer: 'Morning Prayer (Lauds)',
+                startDayWithPrayer: 'Start your day with prayer',
+                angelus: 'Angelus',
+                noonPrayer: 'Noon prayer tradition',
+                divineMercy: 'Divine Mercy (3 PM)',
+                hourOfMercy: 'Hour of Great Mercy',
+                accessibility: 'Accessibility',
+                highContrast: 'High Contrast Mode',
+                improvedVisibility: 'Improved visibility',
+                textSize: 'Text Size',
+                adjustPreference: 'Adjust to your preference',
+                appManagement: 'App Management',
+                clearCache: 'Clear Cache',
+                freeUpSpace: 'Free up storage space',
+                exportPrayerData: 'Export Prayer Data',
+                backupHistory: 'Backup your prayer history',
+                checkUpdates: 'Check for Updates'
+            },
+            sw: {
+                settings: 'Mipangilio',
+                home: 'Nyumbani',
+                appTheme: 'Mandhari ya Programu',
+                default: 'Chaguo-msingi',
+                adventLent: 'Majilio/Kwaresima',
+                christmasEaster: 'Noeli/Pasaka',
+                ordinaryTime: 'Majira ya Kawaida',
+                darkMode: 'Hali ya Giza',
+                resetDefault: 'Rudisha Chaguo-msingi',
+                languageSettings: 'Mipangilio ya Lugha',
+                prayerReminders: 'Vikumbusho vya Sala',
+                morningPrayer: 'Masifu ya Asubuhi (Lauds)',
+                startDayWithPrayer: 'Anza siku na sala',
+                angelus: 'Malaika wa Bwana',
+                noonPrayer: 'Sala ya mchana',
+                divineMercy: 'Huruma ya Mungu (9 Alasiri)',
+                hourOfMercy: 'Saa ya Huruma Kuu',
+                accessibility: 'Ufikiaji',
+                highContrast: 'Hali ya Kontrasti ya Juu',
+                improvedVisibility: 'Uonekano ulioboreshwa',
+                textSize: 'Ukubwa wa Maandishi',
+                adjustPreference: 'Rekebisha kadri upendavyo',
+                appManagement: 'Usimamizi wa Programu',
+                clearCache: 'Futa Kache',
+                freeUpSpace: 'Ongeza nafasi ya hifadhi',
+                exportPrayerData: 'Hamisha Data ya Sala',
+                backupHistory: 'Hifadhi historia yako ya sala',
+                checkUpdates: 'Angalia Sasisho'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
 
         function loadPreferences() {
             const savedTheme = localStorage.getItem('appTheme') || 'default';
@@ -401,8 +474,16 @@
                 document.body.classList.add(`text-${textSize}`);
             }
 
-            const language = localStorage.getItem('language') || 'en';
+            const language = localStorage.getItem('preferredLanguage') || localStorage.getItem('language') || 'en';
             highlightSelectedLanguage(language);
+            setLanguage(language);
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
+                    const l = localStorage.getItem('preferredLanguage') || 'en';
+                    highlightSelectedLanguage(l);
+                    setLanguage(l);
+                }
+            });
         }
 
         function updateThemeIcon(isDark) {
@@ -442,9 +523,12 @@
             document.querySelectorAll('.language-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const lang = this.dataset.lang;
+                    // Store under unified key and legacy key for backward compatibility
+                    localStorage.setItem('preferredLanguage', lang);
                     localStorage.setItem('language', lang);
                     highlightSelectedLanguage(lang);
-                    alert('Language changed to ' + lang + '. App will refresh.');
+                    // Notify other tabs/pages via storage event
+                    try { localStorage.setItem('langUpdatedAt', Date.now().toString()); } catch (e) {}
                     window.location.reload();
                 });
             });

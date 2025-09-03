@@ -191,6 +191,8 @@
                         May your prayers today bring you closer to God's grace and peace.
                     </p>
                 </div>
+
+                
             </div>
         </div>
 
@@ -228,7 +230,45 @@
                     </div>
                 </div>
             </div>
+
+            
         </main>
+
+        <!-- Social & Support (Bottom) -->
+        <section class="mx-6 mb-24 bg-white shadow-md rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-4">Connect & Support</h3>
+            <div class="grid grid-cols-4 gap-3 mb-4">
+                <a href="https://facebook.com" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <span class="text-xxs">Facebook</span>
+                </a>
+                <a href="https://wa.me/254123456789" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <span class="text-xxs">WhatsApp</span>
+                </a>
+                <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <span class="text-xxs">Email</span>
+                </a>
+                <a href="https://donate.ipray.app" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <span class="text-xxs">Donate</span>
+                </a>
+            </div>
+            <div class="pt-4 border-t border-gray-200 text-center">
+                <p class="text-sm text-gray-600">
+                    <span id="copyrightYear"></span> iPray App. All rights reserved.
+                </p>
+            </div>
+        </section>
 
 <!-- Bottom Navigation -->
 <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;">
@@ -918,6 +958,12 @@
                 // Set language
                 const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
                 setLanguage(preferredLang);
+                window.addEventListener('storage', (e) => {
+                    if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
+                        const lang = localStorage.getItem('preferredLanguage') || 'en';
+                        setLanguage(lang);
+                    }
+                });
                 
                 // Add event listener for "Tap to view" on Carmen's prayer card
                 const toggleBtn = document.getElementById('togglePrayerBtn');
@@ -930,6 +976,9 @@
                 if (officeReadingsMwaka2Btn) {
                     officeReadingsMwaka2Btn.addEventListener('click', openOfficeReadingsMwaka2);
                 }
+                // Footer year
+                const cy = document.getElementById('copyrightYear');
+                if (cy) { cy.textContent = new Date().getFullYear(); }
             });
             // Function to open Office of the Readings for Mwaka 2
             function openOfficeReadingsMwaka2() {

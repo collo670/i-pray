@@ -115,14 +115,14 @@
                     </svg>
                     Home
                 </a>
-                <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent" data-translate="liturgicalCalendar">
                     Liturgical Calendar
                 </h2>
             </div>
 
             <!-- Today's Liturgical Info -->
             <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
-                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Liturgical Season & Saint of the day</h3>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4" data-translate="seasonAndSaint">Liturgical Season & Saint of the day</h3>
                 <div class="flex items-center gap-4">
                     <div id="todayColor" class="liturgical-color green"></div>
                     <div>
@@ -146,7 +146,7 @@
 
             <!-- Monthly Calendar View -->
             <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
-                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">This Month</h3>
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4" data-translate="thisMonth">This Month</h3>
                 <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-center text-sm font-medium">
                     <!-- Filled by JavaScript -->
                 </div>
@@ -154,7 +154,7 @@
 
             <!-- Upcoming Events -->
             <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
-                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Upcoming Feasts & Solemnities</h3>
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4" data-translate="upcomingFeasts">Upcoming Feasts & Solemnities</h3>
                 <div id="upcomingEvents" class="space-y-3">
                     <!-- Filled by JavaScript -->
                 </div>
@@ -237,6 +237,40 @@
     </div>
 
     <script>
+        // ========== Translations ==========
+        const translations = {
+            en: {
+                liturgicalCalendar: 'Liturgical Calendar',
+                seasonAndSaint: 'Liturgical Season & Saint of the day',
+                thisMonth: 'This Month',
+                upcomingFeasts: 'Upcoming Feasts & Solemnities',
+                home: 'Home',
+                prayer: 'Prayer',
+                calendar: 'Calendar',
+                settings: 'Settings'
+            },
+            sw: {
+                liturgicalCalendar: 'Kalenda ya Kiliturujia',
+                seasonAndSaint: 'Msimu wa Kiliturujia & Mtakatifu wa leo',
+                thisMonth: 'Mwezi Huu',
+                upcomingFeasts: 'Sherehe Zinazokuja',
+                home: 'Nyumbani',
+                prayer: 'Sala',
+                calendar: 'Kalenda',
+                settings: 'Mipangilio'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
         // ========== Theme Toggle ==========
         function updateThemeMetaColor() {
             const meta = document.getElementById('theme-meta-color');
@@ -727,6 +761,14 @@ function getOfficeReadingsWeek() {
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             populateCalendar();
+            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(preferredLang);
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
+                    const lang = localStorage.getItem('preferredLanguage') || 'en';
+                    setLanguage(lang);
+                }
+            });
         });
     </script>
 </body>
