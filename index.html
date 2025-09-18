@@ -534,30 +534,29 @@
                             </h3>
                         </div>
                     `;
-                    // Special handling for Scripture card
-                    if (item.title === 'scripture') {
-                        navItem.addEventListener('click', async function (e) {
-                            e.preventDefault();
-                            const today = new Date();
-                            const day = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
-                            const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-                            const dayName = dayNames[day];
-                            // Calculate week number (Week 18 starts on August 3, 2025)
-                            const weekNumber = getCurrentWeekNumber();
-                            const filename = `${dayName}${weekNumber}.html`;
-                            const filePath = `assets/readings/${filename}`; // ✅ Relative path
-                            try {
-                                const response = await fetch(filePath, { method: 'HEAD' });
-                                if (response.ok) {
-                                    window.location.href = filePath; // Go to reading
-                                } else {
-                                    alert(`Scripture for ${dayName}, Week ${weekNumber} is not available yet.`);
-                                }
-                            } catch (err) {
-                                alert("Failed to load today's scripture.");
-                            }
-                        });
-                    }
+                    // Special handling for Scripture card (Office of Readings)
+                     if (item.title === 'scripture') {
+                         navItem.addEventListener('click', function (e) {
+                             e.preventDefault();
+                             const today = new Date();
+                             const currentDay = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+                             // Find the Sunday of the current week
+                             const currentSunday = new Date(today);
+                             currentSunday.setDate(today.getDate() - currentDay);
+                             // Reference Sunday for week 24: September 14, 2025
+                             const referenceSunday = new Date(2025, 8, 14); // September is 8 (0-based), 14
+                             const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                             const weeksDiff = Math.floor((currentSunday - referenceSunday) / msPerWeek);
+                             const week = 24 + weeksDiff;
+                             // Ensure within range 21 to 34
+                             if (week < 21 || week > 34) {
+                                 alert("Office of Readings for this week is not available.");
+                                 return;
+                             }
+                             const filename = `mwaka3-week${week}.html`;
+                             window.location.href = filename;
+                         });
+                     }
                     navGrid.appendChild(navItem);
                 });
             }
