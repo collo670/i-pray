@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ipray-v2';
+const CACHE_NAME = 'ipray-v3';
 const urlsToCache = [
   '/i-pray/',
   '/i-pray/index.html',
@@ -13,21 +13,7 @@ const urlsToCache = [
   '/i-pray/holy-rosary.html',
   '/i-pray/prayer.html',
   '/i-pray/sacraments.html',
-  '/i-pray/settings.html',
-  '/i-pray/mwaka3-week21.html',
-  '/i-pray/mwaka3-week22.html',
-  '/i-pray/mwaka3-week23.html',
-  '/i-pray/mwaka3-week24.html',
-  '/i-pray/mwaka3-week25.html',
-  '/i-pray/mwaka3-week26.html',
-  '/i-pray/mwaka3-week27.html',
-  '/i-pray/mwaka3-week28.html',
-  '/i-pray/mwaka3-week29.html',
-  '/i-pray/mwaka3-week30.html',
-  '/i-pray/mwaka3-week31.html',
-  '/i-pray/mwaka3-week32.html',
-  '/i-pray/mwaka3-week33.html',
-  '/i-pray/mwaka3-week34.html'
+  '/i-pray/settings.html'
 ];
 
 self.addEventListener('install', event => {
@@ -59,7 +45,19 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        return response || fetch(event.request);
+        if (response) {
+          return response;
+        }
+        return fetch(event.request).then(networkResponse => {
+          // Cache mwaka3-week files on first access
+          if (event.request.url.includes('/i-pray/mwaka3-week')) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return networkResponse;
+        });
       })
   );
 });
