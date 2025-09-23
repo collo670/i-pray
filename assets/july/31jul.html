@@ -228,5 +228,18 @@
         document.body.classList.toggle('dark', savedMode === 'dark');
         document.documentElement.classList.toggle('dark', savedMode === 'dark');
     </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
 </body>
 </html>
