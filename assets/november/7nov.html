@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Readings - iPray</title>
+    <link rel="icon" href="/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Readings for Friday, November 7, 2025. Ordinary Weekday. Readings include Romans 15, Psalm 98, and the Gospel of Luke 16, focusing on Paul's ministry to the Gentiles and the parable of the dishonest steward.">
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --current-theme: 'light';
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .theme-purple { --primary-color: #4A1E8A; }
+        .theme-red { --primary-color: #C41E3A; }
+        .theme-green { --primary-color: #2E7D32; }
+        .high-contrast { filter: contrast(1.5); }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
+        .bg-gradient-vintage {
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .season-border {
+            border-style: dashed;
+            border-width: 1px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+        .border-green-200 { border-color: #bbf7d0; }
+        .text-green-800 { color: #166534; }
+        @media (max-width: 640px) {
+            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="header-content">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Daily Readings</h1>
+                <p class="text-sm text-gray-600">Friday, November 7, 2025 • Ordinary Time</p>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+
+        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 mb-3">First Reading</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>Romans 15: 14-21</strong><br><br>
+
+                    14 And I myself also, my brethren, am assured of you, that you also are full of love, replenished with all knowledge, so that you are able to admonish one another.<br>
+                    15 But I have written to you, brethren, more boldly in some sort, as it were putting you in mind: because of the grace which is given me from God.<br>
+                    16 That I should be the minister of Christ Jesus among the Gentiles; sanctifying the gospel of God, that the oblation of the Gentiles may be made acceptable and sanctified in the Holy Ghost.<br>
+                    17 I have therefore glory in Christ Jesus towards God.<br>
+                    18 For I dare not to speak of any of those things which Christ worketh not by me, for the obedience of the Gentiles, by word and deed,<br>
+                    19 By the virtue of signs and wonders, in the power of the Holy Ghost, so that from Jerusalem round about as far as unto Illyricum, I have replenished the gospel of Christ.<br>
+                    20 And I have so preached this gospel, not where Christ was named, lest I should build upon another man's foundation.<br>
+                    21 But as it is written: They to whom he was not spoken of, shall see, and they that have not heard shall understand.
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 mb-3">Responsorial Psalm</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>Psalms 98: 1, 2-3ab, 3cd-4</strong><br><br>
+
+                    <em>R. The Lord has revealed to the nations his saving power.</em><br><br>
+
+                    1 Sing ye to the Lord anew canticle: because he hath done wonderful things. His right hand hath wrought for him salvation, and his arm is holy.<br>
+                    <em>R. The Lord has revealed to the nations his saving power.</em><br><br>
+
+                    2 The Lord hath made known his salvation: he hath revealed his justice in the sight of the Gentiles.<br>
+                    3ab He hath remembered his mercy his truth toward the house of Israel.<br>
+                    <em>R. The Lord has revealed to the nations his saving power.</em><br><br>
+
+                    3cd All the ends of the earth have seen the salvation of our God.<br>
+                    4 Sing joyfully to God, all the earth; make melody, rejoice and sing.<br>
+                    <em>R. The Lord has revealed to the nations his saving power.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 my-6">
+
+            <section class="text-center py-4 bg-white/50 rounded-xl">
+                <h2 class="text-xl font-bold text-purple-600 mb-3">Alleluia</h2>
+                <p class="text-gray-700 italic">
+                    <strong>First John 2: 5</strong><br><br>
+                    <em>R. Alleluia, alleluia.</em><br>
+                    5 Whoever keeps the word of Christ, the love of God is truly perfected in him.<br>
+                    <em>R. Alleluia, alleluia.</em>
+                </p>
+            </section>
+
+            <hr class="border-dashed border-gray-300 my-6">
+
+            <section>
+                <h2 class="text-xl font-bold text-green-800 mb-3">Gospel</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>Luke 16: 1-8</strong><br><br>
+
+                    1 And he said also to his disciples: There was a certain rich man who had a steward: and the same was accused unto him, that he had wasted his goods.<br>
+                    2 And he called him, and said to him: How is it that I hear this of thee? give an account of thy stewardship: for now thou canst be steward no longer.<br>
+                    3 And the steward said within himself: What shall I do, because my lord taketh away from me the stewardship? To dig I am not able; to beg I am ashamed.<br>
+                    4 I know what I will do, that when I shall be removed from the stewardship, they may receive me into their houses.<br>
+                    5 Therefore calling together every one of his lord's debtors, he said to the first: How much dost thou owe my lord?<br>
+                    6 But he said: An hundred barrels of oil. And he said to him: Take thy bill and sit down quickly, and write fifty.<br>
+                    7 Then he said to another: And how much dost thou owe? Who said: An hundred quarters of wheat. He said to him: Take thy bill, and write eighty.<br>
+                    8 And the lord commended the unjust steward, forasmuch as he had done wisely: for the children of this world are wiser in their generation than the children of light.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-xs font-medium">Lauds</span>
+            </a>
+
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+</body>
+</html>
