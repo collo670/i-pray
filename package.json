@@ -210,7 +210,8 @@
   "scripts": {
     "build": "postcss src/input.css -o dist/output.css",
     "generate:mwaka2": "node scripts/generate-mwaka2-weeks.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "extract:compline": "node scripts/extract-compline.js"
   },
   "repository": {
     "type": "git",
