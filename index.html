@@ -48,6 +48,8 @@
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Translation Script -->
+    <script src="translation.js" defer></script>
     <style>
         :root {
             --primary-color: rgb(155, 152, 152);
@@ -169,6 +171,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
+            </button>
+            <button id="translationToggle" class="p-2 rounded-full bg-gray-200 ml-2 font-medium text-sm" title="Translate to Swahili" onclick="window.toggleTranslation()">
+                EN
             </button>
         </div>
     </div>
