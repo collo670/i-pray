@@ -205,7 +205,7 @@
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
-    "tailwindcss": "^4.1.14"
+    "tailwindcss": "^4.1.11"
   },
   "scripts": {
     "build": "postcss src/input.css -o dist/output.css",

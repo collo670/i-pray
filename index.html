@@ -43,46 +43,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --background: 0 0% 100%;
-            --foreground: 222.2 84% 4.9%;
-
-            --card: 0 0% 100%;
-            --card-foreground: 222.2 84% 4.9%;
-
-            --popover: 0 0% 100%;
-            --popover-foreground: 222.2 84% 4.9%;
-
-            --primary: 277 84% 35%;
-            --primary-foreground: 0 0% 100%;
-
-            --secondary: 330 81% 60%;
-            --secondary-foreground: 0 0% 100%;
-
-            --muted: 210 40% 96.1%;
-            --muted-foreground: 215.4 16.3% 46.9%;
-
-            --accent: 45 93% 47%;
-            --accent-foreground: 222.2 47.4% 11.2%;
-
-            --destructive: 0 84.2% 60.2%;
-            --destructive-foreground: 210 40% 98%;
-
-            --border: 214.3 31.8% 91.4%;
-            --input: 214.3 31.8% 91.4%;
-            --ring: 277 84% 35%;
-
-            --radius: 1rem;
-
+            --primary-color: rgb(155, 152, 152);
         }
-         body {
-    @apply bg-background text-foreground;
-    background: var(--gradient-vintage);
-    min-height: 100vh;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-
-        .text-large { font-size: 0.5rem; }
-        .text-xxs { font-size: 0.4rem; }
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .text-large { font-size: 1.25rem; }
+        .text-xxs { font-size: 0.7rem; }
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
@@ -159,7 +127,7 @@
 </head>
 <!-- Install Button -->
 <div id="installContainer" class="px-6 py-2">
-  <button id="installButton" class="hidden w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg text-center">
+  <button id="installButton" class="hidden w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg text-center" data-translate="installApp">
     Install ipray App
   </button>
 </div>
@@ -211,7 +179,7 @@
                 <p id="saintOfDay" class="text-md text-gray-700 font-medium mb-1 hidden"></p>
                 <div class="mt-2">
                     <button id="toggleUpcomingFeasts" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none">
-                        Tap to see upcoming feasts
+                        <p id=feast>Tap to see upcoming feasts </p>
                     </button>
                     <div id="upcomingFeastsList" class="mt-3 text-left hidden"></div>
                 </div>
@@ -240,7 +208,7 @@
                         </button>
                     </div>
                     <div class="mt-3 text-center">
-                        <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none">
+                        <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none" data-translate="tapToViewPrayer">
                             Tap to view prayer
                         </button>
                     </div>
@@ -294,7 +262,7 @@
             </div>
             <div class="pt-4 border-t border-gray-200 text-center">
                 <p class="text-sm text-gray-600">
-                    <span id="copyrightYear"></span> iPray App. All rights reserved.
+                    <span id="copyrightYear"></span> <span data-translate="copyright">iPray App. All rights reserved.</span>
                 </p>
             </div>
         </section>
@@ -372,9 +340,15 @@
                 quoteChristmas: "Glory to God in the highest!",
                 quoteLent: "Repent and believe in the Gospel!",
                 quoteEaster: "Christ is risen! Alleluia!",
+                feast: "Tap to see upcoming feasts",
                 quoteOrdinary: "May your prayers today bring you closer to God's grace and peace.",
                 prayerMain: "<strong>Oh Lord</strong>, that by electing the servant of God Carmen Hernández as co-initiator of the Neocatechumenal Way, granted her a great love for Jesus Christ and the Church, for Holy Scripture and for liturgical prayer, a burning zeal for the itinerant announcement of the Gospel and fidelity to you in the trials of the cross; grant that I, through her intercession, may be faithful to the baptism I have received and, if it is your will, also grant the grace I ask of you. Through Jesus Christ, our Lord. Amen",
-                prayerFinal: "<strong>Final:</strong> Our Father. Hail Mary. Glory be. ..."
+                prayerFinal: "<strong>Final:</strong> Our Father. Hail Mary. Glory be. ...",
+                tapToViewPrayer: "Tap to view prayer",
+                tapToView: "Tap to view",
+                dailyReadings: "Daily Readings",
+                installApp: "Install ipray App",
+                copyright: "iPray App. All rights reserved."
             },
             sw: {
                 home: "Nyumbani",
@@ -392,9 +366,15 @@
                 quoteChristmas: "Utukufu kwa Mungu mbinguni!",
                 quoteLent: "Tubuni na muamini Injili!",
                 quoteEaster: "Kristo amefufuka! Aleluya!",
+                feast: "Gusa kuona sikukuu zijazo",
                 quoteOrdinary: "Naomba maombi yako leo yakuweke karibu na neema na amani ya Mungu.",
-                prayerMain: "<strong>Ee Bwana</strong>, ambaye kwa kumchagua mtumishi wa Mungu Carmen Hernández kama mwanzilishi mwenza wa Njia ya Neokatekumenato, ulimpa upendo mkubwa kwa Yesu Kristo na Kanisa, kwa Maandiko Matakatifu na kwa sala ya liturujia, ari inayowaka kwa tangazo la Injili la kimisionari na uaminifu kwako katika majaribu ya msalaba; naomba, kwa maombezi yake, niwe mwaminifu kwa ubatizo niliopokea na, kama ni mapenzi yako, nijalie pia neema ninayokuomba. Kwa njia ya Yesu Kristo, Bwana wetu. Amina",
-                prayerFinal: "<strong>Mwisho:</strong> Baba yetu. Salamu Maria. Atukuzwe Baba..."
+                prayerMain: "<strong>Ee Bwana</strong>, ambaye kwa kumchagua mtumishi wa Mungu Carmen Hernández kama mwanzilishi mwenza wa Njia ya Neokatekumenali, ulimpa upendo mkubwa kwa Yesu Kristo na Kanisa, kwa Maandiko Matakatifu na kwa sala ya liturujia, bidii inayowaka kwa tangazo la Injili la kimisionari na uaminifu kwako katika majaribu ya msalaba; nitimizie mimi, kwa maombezi yake, niwe mwaminifu kwa ubatizo niliopokea na, kama ni mapenzi yako, nitimizie pia neema ninayokuomba. Kwa njia ya Yesu Kristo, Bwana wetu. Amina",
+                prayerFinal: "<strong>Mwisho:</strong> Baba yetu. Salamu Maria. Atukuzwe Baba...",
+                tapToViewPrayer: "Gusa kuona sala",
+                tapToView: "Gusa kuona",
+                dailyReadings: "Masomo ya Kila Siku",
+                installApp: "Sakinisha App ya ipray",
+                copyright: "App ya iPray. Haki zote zimehifadhiwa."
             }
         };
         // Liturgical Feasts Data (fixed-date) copied from calendar for consistency
@@ -528,15 +508,199 @@
             const feastMap = {
                 "All Saints": "Watakatifu Wote",
                 "Mary, Mother of God": "Maria, Mama wa Mungu",
-                "Epiphany": "Ujulisho",
-                "Conversion of Paul, Apostle": "Mabadiliko ya Paulo, Mtume",
-                "Annunciation of the Lord": "Ujulisho wa Bwana",
+                "Epiphany": "Epifania",
+                "Conversion of Paul, Apostle": "Kuongoka kwa Paulo, Mtume",
+                "Annunciation of the Lord": "Kupashwa habari kwa Bwana",
                 "Nativity of the Lord": "Kuzaliwa kwa Bwana",
-                "Assumption of the Blessed Virgin Mary": "Maria Kujiongoza",
-                "Presentation of the Lord": "Utoaji wa Bwana",
+                "Assumption of the Blessed Virgin Mary": "Kupalizwa kwa Bikira ",
+                "Presentation of the Lord": "Kutolewa kwa Bwana Hekaluni",
                 "Birth of John the Baptist": "Kuzaliwa kwa Yohana Mbatizaji",
                 "Sts. Michael, Gabriel, and Raphael": "Mikaele, Gabarieli, na Rafaele",
-                "All Souls": "Wote Waliokufa"
+                "All Souls": "Marehemu Wote",
+                "Basil the Great and Gregory Nazianzen": "Basil Mkuu na Gregory wa Nazianzus",
+                "Most Holy Name of Jesus": "Jina Takatifu Zaidi la Yesu",
+                "Elizabeth Ann Seton": "Elizabeth Ann Seton",
+                "John Neumann": "John Neumann",
+                "Raymond of Penyafort": "Raymond wa Penyafort",
+                "Hilary of Poitiers": "Hilary wa Poitiers",
+                "Anthony of Egypt": "Anthony wa Misri",
+                "Vincent, deacon and martyr": "Vincent, shemasi na shahidi",
+                "Agnes, virgin and martyr": "Agnes, bikira na shahidi",
+                "Marianne Cope": "Marianne Cope",
+                "Francis de Sales": "Francis de Sales",
+                "Timothy and Titus": "Timotheo na Tito",
+                "Angela Merici": "Angela Merici",
+                "Thomas Aquinas": "Thomas Aquinas",
+                "John Bosco": "John Bosco",
+                "Blase, bishop and martyr": "Blase, askofu na shahidi",
+                "Agatha, virgin and martyr": "Agatha, bikira na shahidi",
+                "Paul Miki and companions": "Paul Miki na wenzake",
+                "Josephine Bakhita": "Josephine Bakhita",
+                "Scholastica": "Scholastica",
+                "Our Lady of Lourdes": "Mama Yetu wa Lourdes",
+                "Cyril and Methodius": "Cyril na Methodius",
+                "Peter Damian": "Peter Damian",
+                "Chair of Peter": "Kiti cha Peter",
+                "Polycarp": "Polycarp",
+                "Katharine Drexel": "Katharine Drexel",
+                "Casimir": "Casimir",
+                "Perpetua and Felicity": "Perpetua na Felicity",
+                "John of God": "John wa Mungu",
+                "Frances of Rome": "Frances wa Roma",
+                "Patrick": "Patrick",
+                "Cyril of Jerusalem": "Cyril wa Yerusalemu",
+                "Joseph, Husband of Mary": "Joseph, Mume wa Maria",
+                "Turibius of Mogrovejo": "Turibius wa Mogrovejo",
+                "Francis of Paola": "Francis wa Paola",
+                "Isidore": "Isidore",
+                "Vincent Ferrer": "Vincent Ferrer",
+                "John Baptist de la Salle": "John Baptist de la Salle",
+                "Stanislaus": "Stanislaus",
+                "Martin I": "Martin I",
+                "Anselm of Canterbury": "Anselm wa Canterbury",
+                "George or Adalbert": "George au Adalbert",
+                "Fidelis of Sigmaringen": "Fidelis wa Sigmaringen",
+                "Mark the Evangelist": "Marko Mwinjilisti",
+                "Peter Chanel or Louis de Montfort": "Peter Chanel au Louis de Montfort",
+                "Catherine of Siena": "Catherine wa Siena",
+                "Pius V": "Pius V",
+                "Joseph the Worker": "Joseph Mfanyakazi",
+                "Athanasius": "Athanasius",
+                "Philip and James, Apostles": "Philip na James, Mitume",
+                "Damien de Veuster": "Damien de Veuster",
+                "Our Lady of Fatima": "Mama Yetu wa Fatima",
+                "Matthias the Apostle": "Matthias Mtume",
+                "Isidore the Farmer": "Isidore Mkulima",
+                "John I": "John I",
+                "Bernardine of Siena": "Bernardine wa Siena",
+                "Christopher Magallanes and companions": "Christopher Magallanes na wenzake",
+                "Rita of Cascia": "Rita wa Cascia",
+                "Bede or Gregory VII or Mary Magdalene de Pazzi": "Bede au Gregory VII au Mary Magdalene de Pazzi",
+                "Philip Neri": "Philip Neri",
+                "Augustine of Canterbury": "Augustine wa Canterbury",
+                "Visitation of the Blessed Virgin Mary": "Ziara ya Bikira Maria",
+                "Justin Martyr": "Justin Shahidi",
+                "Charles Lwanga and companions": "Charles Lwanga na wenzake",
+                "Boniface": "Boniface",
+                "Ephrem": "Ephrem",
+                "Barnabas the Apostle": "Barnabas Mtume",
+                "Anthony of Padua": "Anthony wa Padua",
+                "Romuald": "Romuald",
+                "Aloysius Gonzaga": "Aloysius Gonzaga",
+                "Paulinus or John Fisher and Thomas More": "Paulinus au John Fisher na Thomas More",
+                "Irenaeus": "Irenaeus",
+                "Peter and Paul, Apostles": "Peter na Paul, Mitume",
+                "First Martyrs of the Church of Rome": "Washahidi wa Kwanza wa Kanisa la Roma",
+                "Junípero Serra": "Junípero Serra",
+                "Thomas the Apostle": "Thomas Mtume",
+                "Anthony Zaccaria or Elizabeth of Portugal": "Anthony Zaccaria au Elizabeth wa Ureno",
+                "Maria Goretti": "Maria Goretti",
+                "Augustine Zhao Rong and companions": "Augustine Zhao Rong na wenzake",
+                "Benedict": "Benedict",
+                "Henry": "Henry",
+                "Camillus de Lellis or Kateri Tekakwitha": "Camillus de Lellis au Kateri Tekakwitha",
+                "Bonaventure": "Bonaventure",
+                "Our Lady of Mount Carmel": "Mama Yetu wa Mlima Karmeli",
+                "Apollinaris": "Apollinaris",
+                "Lawrence of Brindisi": "Lawrence wa Brindisi",
+                "Mary Magdalene": "Mary Magdalene",
+                "James, Apostle": "James, Mtume",
+                "Joachim and Anne": "Joakim na Anna",
+                "Martha": "Martha",
+                "Peter Chrysologus": "Peter Chrysologus",
+                "Ignatius of Loyola": "Ignatius wa Loyola",
+                "Alphonsus Maria de Liguori": "Alphonsus Maria de Liguori",
+                "Jean Vianney": "Jean Vianney",
+                "Dedication of Mary Major": "Kujitolea kwa Mary Mkuu",
+                "Transfiguration of the Lord": "Ubadilishaji wa Bwana",
+                "Sixtus II or Cajetan": "Sixtus II au Cajetan",
+                "Dominic": "Dominic",
+                "Teresa Benedicta of the Cross": "Teresa Benedicta wa Msalaba",
+                "Lawrence, deacon and martyr": "Lawrence, shemasi na shahidi",
+                "Clare": "Clare",
+                "Jane Frances de Chantal": "Jane Frances de Chantal",
+                "Pontian and Hippolytus": "Pontian na Hippolytus",
+                "Maximilian Kolbe": "Maximilian Kolbe",
+                "Stephen of Hungary": "Stephen wa Hungaria",
+                "John Eudes": "John Eudes",
+                "Bernard of Clairvaux": "Bernard wa Clairvaux",
+                "Pius X": "Pius X",
+                "Queenship of Blessed Virgin Mary": "Ufalme wa Bikira Maria",
+                "Rose of Lima": "Rose wa Lima",
+                "Bartholomew the Apostle": "Bartholomew Mtume",
+                "Louis or Joseph of Calasanz": "Louis au Joseph wa Calasanz",
+                "Monica": "Monica",
+                "Augustine of Hippo": "Augustine wa Hippo",
+                "Beheading of John the Baptist": "Kukata Kichwa cha Yohana Mbatizaji",
+                "Gregory the Great": "Gregory Mkuu",
+                "Birth of the Blessed Virgin Mary": "Kuzaliwa kwa Bikira Maria",
+                "Peter Claver": "Peter Claver",
+                "Holy Name of the Blessed Virgin Mary": "Jina Takatifu la Bikira Maria",
+                "John Chrysostom": "John Chrysostom",
+                "Exaltation of the Holy Cross": "Kuinuliwa kwa Msalaba Mtakatifu",
+                "Our Lady of Sorrows": "Mama Yetu wa Huzuni",
+                "Cornelius and Cyprian": "Cornelius na Cyprian",
+                "Robert Bellarmine": "Robert Bellarmine",
+                "Januarius": "Januarius",
+                "Andrew Kim and companions": "Andrew Kim na wenzake",
+                "Matthew the Evangelist": "Matthew Mwinjilisti",
+                "Padre Pio": "Padre Pio",
+                "Cosmas and Damian": "Cosmas na Damian",
+                "Vincent de Paul": "Vincent de Paul",
+                "Wenceslaus or Lawrence Ruiz and companions": "Wenceslaus au Lawrence Ruiz na wenzake",
+                "Jerome": "Jerome",
+                "Thérèse of the Child Jesus": "Thérèse wa Mtoto Yesu",
+                "Guardian Angels": "Malaika Walinzi",
+                "Francis of Assisi": "Francis wa Assisi",
+                "Francis Xavier Seelos": "Francis Xavier Seelos",
+                "Bruno or Marie-Rose Durocher": "Bruno au Marie-Rose Durocher",
+                "Denis or John Leonardi": "Denis au John Leonardi",
+                "John XXIII": "John XXIII",
+                "Callistus I": "Callistus I",
+                "Teresa of Jesus": "Teresa wa Yesu",
+                "Hedwig or Margaret Mary Alacoque": "Hedwig au Margaret Mary Alacoque",
+                "Ignatius of Antioch": "Ignatius wa Antiokia",
+                "Luke the Evangelist": "Luke Mwinjilisti",
+                "Jean de Brébeuf and companions": "Jean de Brébeuf na wenzake",
+                "Paul of the Cross": "Paul wa Msalaba",
+                "John Paul II": "John Paul II",
+                "John of Capistrano": "John wa Capistrano",
+                "Anthony Mary Claret": "Anthony Mary Claret",
+                "Simon and Jude": "Simon na Jude",
+                "Martin de Porres": "Martin de Porres",
+                "Charles Borromeo": "Charles Borromeo",
+                "Dedication of the Lateran Basilica": "Kujitolea kwa Basilica ya Lateran",
+                "Leo the Great": "Leo Mkuu",
+                "Martin of Tours": "Martin wa Tours",
+                "Josaphat": "Josaphat",
+                "Frances Xavier Cabrini": "Frances Xavier Cabrini",
+                "Albert the Great": "Albert Mkuu",
+                "Margaret of Scotland or Gertrude": "Margaret wa Scotland au Gertrude",
+                "Elizabeth of Hungary": "Elizabeth wa Hungaria",
+                "Rose Philippine Duchesne": "Rose Philippine Duchesne",
+                "Presentation of the Blessed Virgin Mary": "Utoaji wa Bikira Maria",
+                "Cecilia": "Cecilia",
+                "Clement I or Columban or Miguel Pro": "Clement I au Columban au Miguel Pro",
+                "Andrew Dung-Lac and companions": "Andrew Dung-Lac na wenzake",
+                "Catherine of Alexandria": "Catherine wa Alexandria",
+                "Andrew the Apostle": "Andrew Mtume",
+                "Francis Xavier": "Francis Xavier",
+                "John Damascene": "John Damascene",
+                "Nicholas": "Nicholas",
+                "Ambrose": "Ambrose",
+                "Immaculate Conception": "Ujauzito Usio na Dhambi",
+                "Juan Diego": "Juan Diego",
+                "Damasus I": "Damasus I",
+                "Our Lady of Guadalupe": "Mama Yetu wa Guadalupe",
+                "Lucy": "Lucy",
+                "John of the Cross": "John wa Msalaba",
+                "Peter Canisius": "Peter Canisius",
+                "John of Kanty": "John wa Kanty",
+                "Stephen, First Martyr": "Stephen, Shahidi wa Kwanza",
+                "John the Apostle": "John Mtume",
+                "Holy Innocents": "Watoto Watakatifu",
+                "Thomas Becket": "Thomas Becket",
+                "Sylvester I": "Sylvester I"
             };
             return feastMap[name] || name;
         }
@@ -834,12 +998,13 @@
         const longMonth = longMonths[monthIndex]; // e.g., 'august'
         const fileName = `${day}${shortMonth}.html`; // e.g., 4aug.html
         const filePath = `/i-pray/assets/${longMonth}/${fileName}`; // ✅ Correct path
-        const readingsCard = document.createElement('div');
-        readingsCard.className = 'rounded-2xl p-6 bg-white shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
-        readingsCard.innerHTML = `
-            <h3 class="text-xl font-bold text-purple-600">Daily Readings</h3>
-            <p class="text-xs font-medium text-gray-500 mt-2">Tap to View</p>
-        `;
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+         const readingsCard = document.createElement('div');
+         readingsCard.className = 'rounded-2xl p-6 bg-white shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
+         readingsCard.innerHTML = `
+             <h3 class="text-xl font-bold text-purple-600">${translations[lang].dailyReadings}</h3>
+             <p class="text-xs font-medium text-gray-500 mt-2">${translations[lang].tapToView}</p>
+         `;
         // Click: Open in same tab
         readingsCard.addEventListener('click', () => {
             fetch(filePath)
