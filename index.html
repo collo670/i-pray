@@ -41,6 +41,8 @@
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Plausible Analytics -->
+    <script defer data-domain="ipray.app" src="https://plausible.io/js/script.js"></script>
     <style>
         :root {
             --primary-color: rgb(155, 152, 152);
@@ -134,7 +136,7 @@
 <body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <div id="app" class="relative z-10">
         <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
     <div class="header-content">
         <div>
             <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
@@ -145,13 +147,14 @@
             </p>
         </div>
         <div class="flex items-center">
-            <a href="calendar.html" class="p-2 rounded-full bg-gray-200 ml-4" aria-label="Calendar">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        
+            <a href="calendar.html" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Calendar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
             </a>
-            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2" title="Accessibility Options" aria-expanded="false" aria-controls="accessibilityMenu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
@@ -162,13 +165,13 @@
         </div>
     </div>
 </header>
-<main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6">
+<main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6" role="main">
     <div id="homeView" class="space-y-8">
         <!-- Liturgical Season Image (static, styled by CSS) -->
         <div class="flex justify-center mb-4">
             <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season">
         </div>
-        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 season-border">
+        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 season-border" aria-live="polite" aria-label="Liturgical Information">
             <div class="text-center">
                 <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 bg-white/60">
                     <span id="season">ordinary</span> <span id="liturgicalYear">2023</span>
@@ -190,11 +193,26 @@
                     <p id="liturgicalQuote" class="text-sm text-gray-600">
                         May your prayers today bring you closer to God's grace and peace.
                     </p>
+                    <div class="mt-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Prayer Streak</span>
+                            <span id="streakCount" class="text-sm font-bold text-purple-600">0 days</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div id="streakProgress" class="bg-purple-600 h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <button id="markPrayedBtn" class="mt-2 text-sm text-blue-600 hover:underline">Mark Today's Prayer as Completed</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <!-- Navigation items populated by JavaScript -->
+        </div>
+        <!-- Offline Prayer History and Favorites -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            <div id="prayerHistory" class="bg-white shadow-md rounded-lg p-6"></div>
+            <div id="prayerFavorites" class="bg-white shadow-md rounded-lg p-6"></div>
         </div>
                 <!-- Prayer content with TTS -->
                 <div class="bg-white shadow-md rounded-lg p-4 mb-4">
@@ -203,9 +221,17 @@
                             <img src="assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full">
                             <h2 class="text-xl font-semibold text-gray-800">Pray To Carmen Hernandez</h2>
                         </div>
-                        <button id="ttsButton" class="text-gray-500 hover:text-green-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Listen to the prayer">
-                            <i class="fas fa-volume-up w-5 h-5"></i>
-                        </button>
+                        <div class="flex items-center space-x-2">
+                            <button id="favoriteCarmen" class="text-gray-500 hover:text-yellow-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Add to favorites">
+                                <i class="far fa-star w-5 h-5" aria-hidden="true"></i>
+                            </button>
+                            <button id="shareCarmen" class="text-gray-500 hover:text-blue-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Share prayer">
+                                <i class="fas fa-share w-5 h-5" aria-hidden="true"></i>
+                            </button>
+                            <button id="ttsButton" class="text-gray-500 hover:text-green-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Listen to the prayer">
+                                <i class="fas fa-volume-up w-5 h-5" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="mt-3 text-center">
                         <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none" data-translate="tapToViewPrayer">
@@ -235,27 +261,27 @@
         <section class="mx-6 mb-24 bg-white shadow-md rounded-lg p-6">
             <h3 class="text-lg font-bold mb-4">Connect & Support</h3>
             <div class="grid grid-cols-4 gap-3 mb-4">
-                <a href="https://facebook.com" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <a href="https://facebook.com" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
-                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
                     </div>
                     <span class="text-xxs">Facebook</span>
                 </a>
-                <a href="https://wa.me/255742101013" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <a href="https://wa.me/255742101013" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
-                        <i class="fab fa-whatsapp"></i>
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
                     </div>
                     <span class="text-xxs">WhatsApp</span>
                 </a>
                 <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
                     </div>
                     <span class="text-xxs">Email</span>
                 </a>
-                <a href="https://donate.ipray.app" target="_blank" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <a href="https://donate.ipray.app" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
-                        <i class="fas fa-hand-holding-heart"></i>
+                        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
                     </div>
                     <span class="text-xxs">Donate</span>
                 </a>
@@ -267,7 +293,7 @@
             </div>
         </section>
 <!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;">
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
     <div class="flex justify-around h-full items-center">
         <!-- Home -->
         <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
@@ -303,20 +329,26 @@
     </div>
 </nav>
         <!-- Accessibility Menu -->
-        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white shadow-lg rounded-lg p-4 z-50 hidden">
+        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white shadow-lg rounded-lg p-4 z-50 hidden" role="dialog" aria-labelledby="accessibilityMenu">
             <h4 class="font-bold mb-2 text-gray-800">Accessibility</h4>
             <div class="space-y-2">
                 <button id="highContrastToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                     </svg>
                     <span>High Contrast</span>
                 </button>
                 <button id="textSizeToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <span>Large Text</span>
+                </button>
+                <button id="reminderToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <span>Prayer Reminders</span>
                 </button>
             </div>
         </div>
@@ -708,7 +740,10 @@
         function initAccessibility() {
             document.getElementById('accessibilityToggle').addEventListener('click', function(e) {
                 e.stopPropagation();
-                document.getElementById('accessibilityMenu').classList.toggle('hidden');
+                const menu = document.getElementById('accessibilityMenu');
+                const isHidden = menu.classList.contains('hidden');
+                menu.classList.toggle('hidden');
+                this.setAttribute('aria-expanded', !isHidden);
             });
             document.addEventListener('click', function() {
                 document.getElementById('accessibilityMenu').classList.add('hidden');
@@ -721,6 +756,10 @@
                 document.body.classList.toggle('text-large');
                 localStorage.setItem('largeText', document.body.classList.contains('text-large'));
             });
+            document.getElementById('reminderToggle').addEventListener('click', function() {
+                togglePrayerReminders();
+                this.textContent = localStorage.getItem('prayerReminders') === 'false' ? 'Enable Prayer Reminders' : 'Disable Prayer Reminders';
+            });
             if (localStorage.getItem('highContrast') === 'true') {
                 document.body.classList.add('high-contrast');
             }
@@ -729,6 +768,20 @@
             }
         }
         // Navigation
+        const navItemsData = [
+            // Scripture (Office of Readings) → Document/Text icon
+            { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
+            // Readings (Compline) → Moon icon
+            { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'compline.html' },
+            // Rosary → Heart (devotional)
+            { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />`, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
+            // Prayer Requests → Community/users icon (unchanged)
+            { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'carmen.html' },
+            // Morning Prayer → Sun icon (unchanged)
+            { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
+            // Way of the Cross → Cross (plus) icon
+            { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'via-cruce.html' }
+        ];
         function getCurrentWeekNumber() {
             const today = new Date();
             const currentSunday = new Date(today);
@@ -742,23 +795,9 @@
             return 18 + weeksSinceRef;
         }
         function initNavigation() {
-                const navItems = [
-                    // Scripture (Office of Readings) → Document/Text icon
-                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'scripture.html' },
-                    // Readings (Compline) → Moon icon
-                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'compline.html' },
-                    // Rosary → Heart (devotional)
-                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />`, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'holy-rosary.html' },
-                    // Prayer Requests → Community/users icon (unchanged)
-                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'carmen.html' },
-                    // Morning Prayer → Sun icon (unchanged)
-                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'prayer.html' },
-                    // Way of the Cross → Cross (plus) icon
-                    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'via-cruce.html' }
-                ];
                 const navGrid = document.getElementById('navGrid');
                 navGrid.innerHTML = '';
-                navItems.forEach(item => {
+                navItemsData.forEach(item => {
                     const navItem = document.createElement('a');
                     // Only prevent default for Scripture
                     if (item.title === 'scripture') {
@@ -766,11 +805,12 @@
                     } else {
                         navItem.href = item.link;
                     }
-                    navItem.className = 'block p-6 rounded-2xl cursor-pointer card-hover bg-white transition-all duration-300';
+                    navItem.className = 'nav-item block p-6 rounded-2xl cursor-pointer card-hover bg-white transition-all duration-300';
+                    navItem.setAttribute('data-title', item.title);
                     navItem.innerHTML = `
                         <div class="flex flex-col items-center text-center">
                             <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100">
-                                <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     ${item.icon}
                                 </svg>
                             </div>
@@ -780,29 +820,33 @@
                         </div>
                     `;
                     // Special handling for Scripture card (Office of Readings)
-                     if (item.title === 'scripture') {
-                         navItem.addEventListener('click', function (e) {
-                             e.preventDefault();
-                             const today = new Date();
-                             const currentDay = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
-                             // Find the Sunday of the current week
-                             const currentSunday = new Date(today);
-                             currentSunday.setDate(today.getDate() - currentDay);
-                             // Reference Sunday for week 24: September 14, 2025
-                             const referenceSunday = new Date(2025, 8, 14); // September is 8 (0-based), 14
-                             const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-                             const weeksDiff = Math.floor((currentSunday - referenceSunday) / msPerWeek);
-                             const week = 24 + weeksDiff;
-                             // Ensure within range 21 to 34
-                             if (week < 21 || week > 34) {
-                                 alert("Office of Readings for this week is not available.");
-                                 return;
-                             }
-                             const filename = `mwaka3-week${week}.html`;
-                             window.location.href = filename;
-                         });
-                     }
+                      if (item.title === 'scripture') {
+                          navItem.addEventListener('click', function (e) {
+                              e.preventDefault();
+                              const today = new Date();
+                              const currentDay = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+                              // Find the Sunday of the current week
+                              const currentSunday = new Date(today);
+                              currentSunday.setDate(today.getDate() - currentDay);
+                              // Reference Sunday for week 24: September 14, 2025
+                              const referenceSunday = new Date(2025, 8, 14); // September is 8 (0-based), 14
+                              const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                              const weeksDiff = Math.floor((currentSunday - referenceSunday) / msPerWeek);
+                              const week = 24 + weeksDiff;
+                              // Ensure within range 21 to 34
+                              if (week < 21 || week > 34) {
+                                  alert("Office of Readings for this week is not available.");
+                                  return;
+                              }
+                              const filename = `mwaka3-week${week}.html`;
+                              window.location.href = filename;
+                          });
+                      }
                     navGrid.appendChild(navItem);
+                    // Save prayer access
+                    navItem.addEventListener('click', () => {
+                        savePrayerAccess(item.id, translations['en'][item.title], item.link);
+                    });
                 });
             }
         // Masifu ya Asubuhi dynamic link
@@ -827,6 +871,7 @@
                 const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
                 const week = weekSequence[weekIndex];
                 const fileName = `${dayToPrefix[day]}${week}.html`;
+                savePrayerAccess('lauds', 'Lauds', fileName);
                 window.location.href = fileName;
             });
         }
@@ -1030,8 +1075,11 @@
             }
         }
         // Prayer Reminders
+        let reminderTimeouts = [];
         function setupPrayerReminders() {
             if (!('Notification' in window)) return;
+            const remindersEnabled = localStorage.getItem('prayerReminders') !== 'false';
+            if (!remindersEnabled) return;
             Notification.requestPermission().then(permission => {
                 if (permission === 'granted') {
                     scheduleDailyReminder(6, 0, 'Morning Prayer: Start your day with God');
@@ -1048,10 +1096,33 @@
                 reminderTime.setDate(reminderTime.getDate() + 1);
             }
             const timeout = reminderTime - now;
-            setTimeout(() => {
-                new Notification('iPray Reminder', { body: message });
-                scheduleDailyReminder(hour, minute, message);
+            const timeoutId = setTimeout(() => {
+                const notification = new Notification('iPray Reminder', {
+                    body: message,
+                    icon: 'assets/images/favicon.ico.jpg',
+                    actions: [{ action: 'snooze', title: 'Snooze 10 min' }]
+                });
+                notification.onclick = () => window.focus();
+                notification.onclose = () => scheduleDailyReminder(hour, minute, message);
+                notification.addEventListener('click', (event) => {
+                    if (event.action === 'snooze') {
+                        setTimeout(() => scheduleDailyReminder(hour, minute, message), 10 * 60 * 1000);
+                    }
+                });
             }, timeout);
+            reminderTimeouts.push(timeoutId);
+        }
+        function togglePrayerReminders() {
+            const enabled = localStorage.getItem('prayerReminders') !== 'false';
+            localStorage.setItem('prayerReminders', !enabled);
+            if (enabled) {
+                // Disable
+                reminderTimeouts.forEach(clearTimeout);
+                reminderTimeouts = [];
+            } else {
+                // Enable
+                setupPrayerReminders();
+            }
         }
         // PWA Service Worker Registration
        function registerServiceWorker() {
@@ -1130,6 +1201,7 @@
             // Initialize navigation and features
             initNavigation();
             initAccessibility();
+            initPrayerDB();
             const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
             calculateLiturgicalDay(preferredLang);
             fetchSaintOfTheDay();
@@ -1200,6 +1272,43 @@
             if (translationToggle) {
                 translationToggle.addEventListener('click', toggleTranslation);
             }
+            // Prayer streak
+            updateStreakDisplay();
+            const markPrayedBtn = document.getElementById('markPrayedBtn');
+            if (markPrayedBtn) {
+                markPrayedBtn.addEventListener('click', markPrayerCompleted);
+            }
+            // Search
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    filterNavItems(e.target.value);
+                });
+            }
+            // Favorite Carmen prayer
+            const favoriteCarmen = document.getElementById('favoriteCarmen');
+            if (favoriteCarmen) {
+                favoriteCarmen.addEventListener('click', () => {
+                    toggleFavorite('carmen', 'Pray To Carmen Hernandez', '#');
+                    const icon = favoriteCarmen.querySelector('i');
+                    icon.classList.toggle('far');
+                    icon.classList.toggle('fas');
+                });
+            }
+            // Share Carmen prayer
+            const shareCarmen = document.getElementById('shareCarmen');
+            if (shareCarmen) {
+                shareCarmen.addEventListener('click', () => {
+                    sharePrayer('Pray To Carmen Hernandez', 'Join me in praying to Carmen Hernandez for intercession.');
+                });
+            }
+            // Save access for Carmen prayer when viewed
+            const togglePrayerBtn = document.getElementById('togglePrayerBtn');
+            if (togglePrayerBtn) {
+                togglePrayerBtn.addEventListener('click', () => {
+                    savePrayerAccess('carmen', 'Pray To Carmen Hernandez', '#');
+                });
+            }
             // TTS button behavior
             const ttsButton = document.getElementById('ttsButton');
             if (ttsButton) {
@@ -1233,6 +1342,158 @@
         // Function to open Office of the Readings for Mwaka 3
         function openOfficeReadingsMwaka3() {
             window.location.href = "mwaka3.html";
+        }
+        // Offline Prayer History and Favorites using IndexedDB
+        let prayerDB;
+        function initPrayerDB() {
+            const request = indexedDB.open('PrayerAppDB', 1);
+            request.onerror = () => console.error('IndexedDB error');
+            request.onsuccess = (event) => {
+                prayerDB = event.target.result;
+                loadPrayerHistory();
+                loadFavorites();
+            };
+            request.onupgradeneeded = (event) => {
+                prayerDB = event.target.result;
+                if (!prayerDB.objectStoreNames.contains('prayers')) {
+                    prayerDB.createObjectStore('prayers', { keyPath: 'id' });
+                }
+                if (!prayerDB.objectStoreNames.contains('favorites')) {
+                    prayerDB.createObjectStore('favorites', { keyPath: 'id' });
+                }
+            };
+        }
+        function savePrayerAccess(prayerId, title, url) {
+            if (!prayerDB) return;
+            const transaction = prayerDB.transaction(['prayers'], 'readwrite');
+            const store = transaction.objectStore('prayers');
+            const prayer = { id: prayerId, title, url, lastAccessed: new Date() };
+            store.put(prayer);
+        }
+        function toggleFavorite(prayerId, title, url) {
+            if (!prayerDB) return;
+            const transaction = prayerDB.transaction(['favorites'], 'readwrite');
+            const store = transaction.objectStore('favorites');
+            const getRequest = store.get(prayerId);
+            getRequest.onsuccess = () => {
+                if (getRequest.result) {
+                    store.delete(prayerId);
+                } else {
+                    store.put({ id: prayerId, title, url, added: new Date() });
+                }
+                loadFavorites();
+            };
+        }
+        function loadPrayerHistory() {
+            if (!prayerDB) return;
+            const transaction = prayerDB.transaction(['prayers'], 'readonly');
+            const store = transaction.objectStore('prayers');
+            const request = store.getAll();
+            request.onsuccess = () => {
+                const history = request.result.sort((a, b) => new Date(b.lastAccessed) - new Date(a.lastAccessed)).slice(0, 10);
+                displayPrayerHistory(history);
+            };
+        }
+        function loadFavorites() {
+            if (!prayerDB) return;
+            const transaction = prayerDB.transaction(['favorites'], 'readonly');
+            const store = transaction.objectStore('favorites');
+            const request = store.getAll();
+            request.onsuccess = () => {
+                displayFavorites(request.result);
+            };
+        }
+        function displayPrayerHistory(history) {
+            const historyEl = document.getElementById('prayerHistory');
+            if (!historyEl) return;
+            historyEl.innerHTML = '<h3 class="text-lg font-bold mb-4">Recent Prayers</h3>';
+            if (history.length === 0) {
+                historyEl.innerHTML += '<p class="text-gray-500">No recent prayers</p>';
+                return;
+            }
+            history.forEach(prayer => {
+                const item = document.createElement('a');
+                item.href = prayer.url;
+                item.className = 'block p-3 bg-white rounded-lg shadow-sm mb-2 hover:bg-gray-50';
+                item.innerHTML = `<div class="font-medium">${prayer.title}</div><div class="text-sm text-gray-500">${new Date(prayer.lastAccessed).toLocaleDateString()}</div>`;
+                historyEl.appendChild(item);
+            });
+        }
+        function displayFavorites(favorites) {
+            const favEl = document.getElementById('prayerFavorites');
+            if (!favEl) return;
+            favEl.innerHTML = '<h3 class="text-lg font-bold mb-4">Favorite Prayers</h3>';
+            if (favorites.length === 0) {
+                favEl.innerHTML += '<p class="text-gray-500">No favorites yet</p>';
+                return;
+            }
+            favorites.forEach(prayer => {
+                const item = document.createElement('a');
+                item.href = prayer.url;
+                item.className = 'block p-3 bg-white rounded-lg shadow-sm mb-2 hover:bg-gray-50';
+                item.innerHTML = `<div class="font-medium">${prayer.title}</div>`;
+                favEl.appendChild(item);
+            });
+        }
+        // Prayer Streaks and Progress Tracking
+        function getPrayerStreak() {
+            const prayedDates = JSON.parse(localStorage.getItem('prayedDates') || '[]');
+            const today = new Date().toDateString();
+            if (!prayedDates.includes(today)) return 0;
+            let streak = 0;
+            let checkDate = new Date();
+            while (prayedDates.includes(checkDate.toDateString())) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            }
+            return streak;
+        }
+        function markPrayerCompleted() {
+            const today = new Date().toDateString();
+            let prayedDates = JSON.parse(localStorage.getItem('prayedDates') || '[]');
+            if (!prayedDates.includes(today)) {
+                prayedDates.push(today);
+                localStorage.setItem('prayedDates', JSON.stringify(prayedDates));
+                updateStreakDisplay();
+                if (window.plausible) window.plausible('Prayer Completed');
+            }
+        }
+        function updateStreakDisplay() {
+            const streak = getPrayerStreak();
+            document.getElementById('streakCount').textContent = `${streak} days`;
+            const progress = Math.min(streak / 7 * 100, 100); // Weekly goal
+            document.getElementById('streakProgress').style.width = `${progress}%`;
+        }
+        // Search and Filtering
+        function filterNavItems(query) {
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const text = translations['en'][title] || '';
+                if (text.toLowerCase().includes(query.toLowerCase())) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        // Social Sharing
+        window.sharePrayer = function(title, text, url = window.location.href) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: text,
+                    url: url
+                }).then(() => {
+                    if (window.plausible) window.plausible('Prayer Shared');
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(`${title}\n${text}\n${url}`).then(() => {
+                    alert('Prayer link copied to clipboard!');
+                    if (window.plausible) window.plausible('Prayer Shared');
+                });
+            }
         }
     </script>
     <!-- Module for Prayer Wall and TTS utilities (integrated from dump.html) -->
@@ -1278,11 +1539,21 @@
                     const postBtn = document.getElementById('postRequestBtn');
                     if (uidEl) uidEl.textContent = `Your User ID (Offline Mode)`;
                     if (postBtn) postBtn.disabled = true;
+                    // Hide loader and show offline message
+                    const loader = document.getElementById('requestsLoader');
+                    const list = document.getElementById('requestsList');
+                    if (loader) loader.classList.add('hidden');
+                    if (list) list.innerHTML = '<p class="text-center text-gray-500">Prayer requests are not available in offline mode.</p>';
                 }
             } catch (e) {
                 console.error('Firebase initialization failed:', e);
                 const uidEl = document.getElementById('userIdDisplay');
                 if (uidEl) uidEl.textContent = 'Error connecting to database.';
+                // Hide loader and show error message
+                const loader = document.getElementById('requestsLoader');
+                const list = document.getElementById('requestsList');
+                if (loader) loader.classList.add('hidden');
+                if (list) list.innerHTML = '<p class="text-center text-red-500">Failed to connect to prayer requests database.</p>';
             }
         };
         function renderRequest(request) {
@@ -1297,15 +1568,27 @@
                 <p class="text-gray-800 font-medium mb-2 leading-relaxed">${request.text}</p>
                 <div class="flex justify-between items-center text-xs text-gray-500 border-t border-gray-100 pt-2 mt-2">
                     <span>${isMine ? 'You' : 'Community'} | ${formattedTime}</span>
-                    <button data-request-id="${request.id}" class="pray-button flex items-center px-2 py-1 rounded-full transition-all duration-300 ${hasPrayed ? 'bg-green-500 text-white' : 'bg-purple-100 text-purple-600 hover:bg-purple-200'}">
-                        <i class="fas fa-cross mr-1"></i>
-                        Prayed: <span class="prayed-count ml-1 font-semibold">${prayedCount}</span>
-                    </button>
+                    <div class="flex items-center space-x-2">
+                        <button data-request-id="${request.id}" class="share-button flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-all duration-300">
+                            <i class="fas fa-share mr-1"></i>
+                            Share
+                        </button>
+                        <button data-request-id="${request.id}" class="pray-button flex items-center px-2 py-1 rounded-full transition-all duration-300 ${hasPrayed ? 'bg-green-500 text-white' : 'bg-purple-100 text-purple-600 hover:bg-purple-200'}">
+                            <i class="fas fa-cross mr-1"></i>
+                            Prayed: <span class="prayed-count ml-1 font-semibold">${prayedCount}</span>
+                        </button>
+                    </div>
                 </div>
             `;
-            const button = item.querySelector('.pray-button');
-            if (button) {
-                button.addEventListener('click', () => togglePrayerStatus(request.id, hasPrayed));
+            const prayButton = item.querySelector('.pray-button');
+            if (prayButton) {
+                prayButton.addEventListener('click', () => togglePrayerStatus(request.id, hasPrayed));
+            }
+            const shareButton = item.querySelector('.share-button');
+            if (shareButton) {
+                shareButton.addEventListener('click', () => {
+                    window.sharePrayer('Prayer Request', request.text);
+                });
             }
             return item;
         }

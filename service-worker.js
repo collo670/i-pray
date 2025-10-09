@@ -431,6 +431,11 @@ self.addEventListener('fetch', event => {
             });
           }
           return networkResponse;
+        }).catch(() => {
+          // Fallback for navigation requests when offline
+          if (event.request.mode === 'navigate') {
+            return caches.match('/i-pray/fallback.html');
+          }
         });
       })
   );
