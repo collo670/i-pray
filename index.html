@@ -51,7 +51,9 @@
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
         }
+        .text-small { font-size: 0.875rem; }
         .text-large { font-size: 1.25rem; }
+        .text-xlarge { font-size: 1.5rem; }
         .text-xxs { font-size: 0.7rem; }
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
@@ -263,25 +265,33 @@
             <div class="grid grid-cols-4 gap-3 mb-4">
                 <a href="https://facebook.com" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
-                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                        </svg>
                     </div>
                     <span class="text-xxs">Facebook</span>
                 </a>
                 <a href="https://wa.me/255742101013" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                        </svg>
                     </div>
                     <span class="text-xxs">WhatsApp</span>
                 </a>
                 <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
-                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                     </div>
                     <span class="text-xxs">Email</span>
                 </a>
                 <a href="https://donate.ipray.app" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
-                        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
                     </div>
                     <span class="text-xxs">Donate</span>
                 </a>
@@ -297,32 +307,30 @@
     <div class="flex justify-around h-full items-center">
         <!-- Home -->
         <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
             <span class="text-xs font-medium" data-translate="home">Home</span>
         </a>
         <!-- Lauds / Morning Prayer -->
         <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
             <!-- Sunrise Icon -->
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                <!-- Sun rays -->
-                <circle cx="12" cy="12" r="3" fill="currentColor" />
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
             </svg>
             <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
         </a>
         <!-- Calendar -->
         <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
             </svg>
             <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
         </a>
         <!-- Settings -->
         <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
             </svg>
             <span class="text-xs font-medium" data-translate="settings">Settings</span>
         </a>
@@ -338,11 +346,29 @@
                     </svg>
                     <span>High Contrast</span>
                 </button>
-                <button id="textSizeToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                <button id="textSizeSmall" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>Small Text</span>
+                </button>
+                <button id="textSizeNormal" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>Normal Text</span>
+                </button>
+                <button id="textSizeLarge" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <span>Large Text</span>
+                </button>
+                <button id="textSizeExtraLarge" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>Extra Large Text</span>
                 </button>
                 <button id="reminderToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -737,6 +763,13 @@
             return feastMap[name] || name;
         }
         // Accessibility Features
+        function setTextSize(size) {
+            document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
+            if (size !== 'normal') {
+                document.body.classList.add(`text-${size}`);
+            }
+            localStorage.setItem('textSize', size);
+        }
         function initAccessibility() {
             document.getElementById('accessibilityToggle').addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -752,9 +785,17 @@
                 document.body.classList.toggle('high-contrast');
                 localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
             });
-            document.getElementById('textSizeToggle').addEventListener('click', function() {
-                document.body.classList.toggle('text-large');
-                localStorage.setItem('largeText', document.body.classList.contains('text-large'));
+            document.getElementById('textSizeSmall').addEventListener('click', function() {
+                setTextSize('small');
+            });
+            document.getElementById('textSizeNormal').addEventListener('click', function() {
+                setTextSize('normal');
+            });
+            document.getElementById('textSizeLarge').addEventListener('click', function() {
+                setTextSize('large');
+            });
+            document.getElementById('textSizeExtraLarge').addEventListener('click', function() {
+                setTextSize('xlarge');
             });
             document.getElementById('reminderToggle').addEventListener('click', function() {
                 togglePrayerReminders();
@@ -763,9 +804,8 @@
             if (localStorage.getItem('highContrast') === 'true') {
                 document.body.classList.add('high-contrast');
             }
-            if (localStorage.getItem('largeText') === 'true') {
-                document.body.classList.add('text-large');
-            }
+            const textSize = localStorage.getItem('textSize') || 'normal';
+            setTextSize(textSize);
         }
         // Navigation
         const navItemsData = [
@@ -1258,6 +1298,10 @@
                     const lang = localStorage.getItem('preferredLanguage') || 'en';
                     setLanguage(lang);
                 }
+                if (e.key === 'textSize') {
+                    const size = e.newValue || 'normal';
+                    setTextSize(size);
+                }
             });
             // Add event listener for "Tap to view" on Carmen's prayer card
             const toggleBtn = document.getElementById('togglePrayerBtn');
@@ -1334,6 +1378,8 @@
                     }
                 });
             }
+            // Enhance accessibility for small text
+            enhanceSmallTextAccessibility();
         });
         // Function to open Office of the Readings for Mwaka 2
         function openOfficeReadingsMwaka2() {
@@ -1494,6 +1540,62 @@
                     if (window.plausible) window.plausible('Prayer Shared');
                 });
             }
+        }
+        // Accessibility enhancement for small text elements
+        function enhanceSmallTextAccessibility() {
+            const elements = document.querySelectorAll('*');
+            elements.forEach(el => {
+                if (el.children.length > 0 || !el.textContent.trim()) return; // skip if has children or no text
+                const style = window.getComputedStyle(el);
+                const fontSize = parseFloat(style.fontSize);
+                if (fontSize < 14) { // small text threshold
+                    const color = style.color;
+                    const bgColor = getBackgroundColor(el);
+                    const contrast = calculateContrast(color, bgColor);
+                    if (contrast < 4.5) {
+                        // Enhance contrast by setting high contrast colors
+                        el.style.color = '#000000';
+                        el.style.backgroundColor = '#ffffff';
+                        // Add ARIA label for screen readers
+                        if (!el.getAttribute('aria-label')) {
+                            el.setAttribute('aria-label', el.textContent.trim());
+                        }
+                    }
+                    // Ensure screen reader accessibility
+                    if (!el.getAttribute('aria-hidden') && !el.getAttribute('role')) {
+                        el.setAttribute('role', 'text');
+                    }
+                }
+            });
+        }
+
+        function getBackgroundColor(el) {
+            let bg = window.getComputedStyle(el).backgroundColor;
+            if (bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
+                let parent = el.parentElement;
+                while (parent) {
+                    bg = window.getComputedStyle(parent).backgroundColor;
+                    if (bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') break;
+                    parent = parent.parentElement;
+                }
+            }
+            return bg || '#ffffff'; // default to white
+        }
+
+        function calculateContrast(color1, color2) {
+            const l1 = getLuminance(color1);
+            const l2 = getLuminance(color2);
+            return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+        }
+
+        function getLuminance(color) {
+            const rgb = color.match(/\d+/g);
+            if (!rgb || rgb.length < 3) return 0.5; // neutral luminance
+            const r = parseInt(rgb[0]) / 255;
+            const g = parseInt(rgb[1]) / 255;
+            const b = parseInt(rgb[2]) / 255;
+            const toLinear = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
         }
     </script>
     <!-- Module for Prayer Wall and TTS utilities (integrated from dump.html) -->
