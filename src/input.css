@@ -1,1 +1,5 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Paste any custom CSS that used @apply here (replace the inline <style> in index.html). */

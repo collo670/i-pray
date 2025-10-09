@@ -43,14 +43,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --primary-color: rgb(155, 152, 152);
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+
+            --primary: 277 84% 35%;
+            --primary-foreground: 0 0% 100%;
+
+            --secondary: 330 81% 60%;
+            --secondary-foreground: 0 0% 100%;
+
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+
+            --accent: 45 93% 47%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 277 84% 35%;
+
+            --radius: 1rem;
+
         }
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .text-large { font-size: 1.25rem; }
-        .text-xxs { font-size: 0.7rem; }
+         body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-vintage);
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+        .text-large { font-size: 0.5rem; }
+        .text-xxs { font-size: 0.4rem; }
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
@@ -346,7 +378,7 @@
             },
             sw: {
                 home: "Nyumbani",
-                lauds: "Sala ya Asubuhi",
+                lauds: "Masifu",
                 calendar: "Kalenda",
                 settings: "Mipangilio",
                 prayers: "Sala",
@@ -362,7 +394,7 @@
                 quoteEaster: "Kristo amefufuka! Aleluya!",
                 quoteOrdinary: "Naomba maombi yako leo yakuweke karibu na neema na amani ya Mungu.",
                 prayerMain: "<strong>Ee Bwana</strong>, ambaye kwa kumchagua mtumishi wa Mungu Carmen Hernández kama mwanzilishi mwenza wa Njia ya Neokatekumenato, ulimpa upendo mkubwa kwa Yesu Kristo na Kanisa, kwa Maandiko Matakatifu na kwa sala ya liturujia, ari inayowaka kwa tangazo la Injili la kimisionari na uaminifu kwako katika majaribu ya msalaba; naomba, kwa maombezi yake, niwe mwaminifu kwa ubatizo niliopokea na, kama ni mapenzi yako, nijalie pia neema ninayokuomba. Kwa njia ya Yesu Kristo, Bwana wetu. Amina",
-                prayerFinal: "<strong>Mwisho:</strong> Baba yetu. Salamu Maria. Utukufu. ..."
+                prayerFinal: "<strong>Mwisho:</strong> Baba yetu. Salamu Maria. Atukuzwe Baba..."
             }
         };
         // Liturgical Feasts Data (fixed-date) copied from calendar for consistency
