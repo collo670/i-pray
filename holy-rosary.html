@@ -7,7 +7,7 @@
     <meta name="description" content="Pray the Holy Rosary with guided meditation and prayers">
     
     <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https.tailwindcss.com"></script>
     
     <!-- Custom Tailwind Config -->
     <script>
@@ -20,7 +20,7 @@
                         'accent': '#F59E0B',
                     },
                     backgroundImage: {
-                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
                     }
                 }
             }
@@ -28,54 +28,16 @@
     </script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https.googleapis.com/css2?family=Inter@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Light mode styles */
-        body.light-mode {
             background-color: #f5f5f5;
             color: #1a1a1a;
         }
 
-        .dark-mode-toggle {
-            background-color: #333;
-            color: #e0e0e0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: auto;
-            font-size: 0.8rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border: none;
-        }
-
-        .dark-mode-toggle:hover {
-            background-color: #555;
-        }
-
-        body.light-mode .dark-mode-toggle {
-            background-color: #ccc;
-            color: #333;
-        }
-
-        body.light-mode .dark-mode-toggle:hover {
-            background-color: #aaa;
-        }
-
         .card {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        body.light-mode .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -83,24 +45,16 @@
         .bg-gradient-vintage {
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
         }
-        
-        body.light-mode .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-        
-        .dark .bg-gradient-vintage {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
-        
+
         .card-hover {
             transition: all 0.3s ease;
         }
-        
-        .card-hover:hover {
+
+        .card-hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
+
         @media (max-width: 640px) {
             .bottom-nav {
                 padding-bottom: env(safe-area-inset-bottom);
@@ -111,21 +65,16 @@
 <body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <div id="app" class="relative z-10">
         <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-            <div class="flex items-center justify-between">
+        <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+            <div class="flex items-center justify-center">
                 <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-gray-600">
                         Holy Rosary
                     </p>
                 </div>
-                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
-                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
             </div>
         </header>
 
@@ -133,64 +82,64 @@
         <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
             <div class="space-y-6">
                 <div class="flex items-center justify-between">
-                    <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-200 shadow-sm">
+                    <a href="index.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white  hover  text-gray-800  transition-colors duration-200 shadow-sm">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                         Home
                     </a>
-                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600   bg-clip-text text-transparent">
                         Holy Rosary
                     </h2>
                 </div>
 
-                <div class="rounded-2xl p-8 bg-white dark:bg-gray-800 shadow-xl">
+                <div class="rounded-2xl p-8 bg-white  shadow-xl">
                     <div class="text-center mb-8">
-                        <div class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-red-100 dark:bg-red-900/30">
-                            <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-red-100 ">
+                            <svg class="w-8 h-8 text-red-600 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">The Holy Rosary</h3>
-                        <p class="text-gray-600 dark:text-gray-300">A powerful prayer that unites us with Mary and meditates on the mysteries of Christ's life.</p>
+                        <h3 class="text-2xl font-bold mb-2 text-gray-800 ">The Holy Rosary</h3>
+                        <p class="text-gray-600 ">A powerful prayer that unites us with Mary and meditates on the mysteries of Christ's life.</p>
                     </div>
 
                     <div class="space-y-6">
                         <div class="border-l-4 border-red-500 pl-4">
-                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">The Apostles' Creed</h4>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm">I believe in God, the Father Almighty, Creator of Heaven and earth; and in Jesus Christ, His only Son Our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried...</p>
+                            <h4 class="text-lg font-semibold text-gray-800  mb-2">The Apostles' Creed</h4>
+                            <p class="text-gray-600  text-sm">I believe in God, the Father Almighty, Creator of Heaven and earth; and in Jesus Christ, His only Son Our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried...</p>
                         </div>
 
                         <div class="border-l-4 border-red-500 pl-4">
-                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">The Lord's Prayer</h4>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm">Our Father, who art in heaven, hallowed be thy name; thy kingdom come; thy will be done on earth as it is in heaven...</p>
+                            <h4 class="text-lg font-semibold text-gray-800  mb-2">The Lord's Prayer</h4>
+                            <p class="text-gray-600  text-sm">Our Father, who art in heaven, hallowed be thy name; thy kingdom come; thy will be done on earth as it is in heaven...</p>
                         </div>
 
                         <div class="border-l-4 border-red-500 pl-4">
-                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">The Hail Mary</h4>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm">Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus...</p>
+                            <h4 class="text-lg font-semibold text-gray-800  mb-2">The Hail Mary</h4>
+                            <p class="text-gray-600  text-sm">Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus...</p>
                         </div>
 
                         <div class="border-l-4 border-red-500 pl-4">
-                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">The Glory Be</h4>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm">Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+                            <h4 class="text-lg font-semibold text-gray-800  mb-2">The Glory Be</h4>
+                            <p class="text-gray-600  text-sm">Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
                         </div>
                     </div>
                     
 
-                    <div class="mt-8 p-6 bg-red-50 dark:bg-red-900/20 rounded-xl">
-                        <h4 class="font-semibold text-red-800 dark:text-red-300 mb-3">Today's Mysteries</h4>
+                    <div class="mt-8 p-6 bg-red-50  rounded-xl">
+                        <h4 class="font-semibold text-red-800  mb-3">Today's Mysteries</h4>
                        <!-- Static Mystery Cards -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md gap-4">
                             <!-- Joyful Mysteries -->
-                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                            <div class="p-4 rounded-lg bg-white  shadow">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="text-2xl"></span>
-                                    <h5 class="font-bold text-gray-800 dark:text-white">The Joyful Mysteries</h5>
+                                    <h5 class="font-bold text-gray-800 ">The Joyful Mysteries</h5>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Monday & Saturday</p>
-                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('joyful')">Tap to View</button>
-                                <div id="joyful" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <p class="text-xs text-gray-500  mb-3">Meditated on Monday & Saturday</p>
+                                <button class="text-sm text-blue-600  focus" onclick="toggleMystery('joyful')">Tap to View</button>
+                                <div id="joyful" class="mt-3 space-y-1 text-sm text-gray-600  hidden">
                                     <ol class="list-decimal list-inside">
                                         <li>The Annunciation</li>
                                         <li>The Visitation</li>
@@ -202,14 +151,14 @@
                             </div>
 
                             <!-- Sorrowful Mysteries -->
-                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                            <div class="p-4 rounded-lg bg-white  shadow">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="text-2xl"></span>
-                                    <h5 class="font-bold text-gray-800 dark:text-white">The Sorrowful Mysteries</h5>
+                                    <h5 class="font-bold text-gray-800 ">The Sorrowful Mysteries</h5>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Tuesday & Friday</p>
-                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('sorrowful')">Tap to View</button>
-                                <div id="sorrowful" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <p class="text-xs text-gray-500  mb-3">Meditated on Tuesday & Friday</p>
+                                <button class="text-sm text-blue-600  focus" onclick="toggleMystery('sorrowful')">Tap to View</button>
+                                <div id="sorrowful" class="mt-3 space-y-1 text-sm text-gray-600  hidden">
                                     <ol class="list-decimal list-inside">
                                         <li>The Agony in the Garden</li>
                                         <li>The Scourging at the Pillar</li>
@@ -221,14 +170,14 @@
                             </div>
 
                             <!-- Glorious Mysteries -->
-                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                            <div class="p-4 rounded-lg bg-white  shadow">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="text-2xl"></span>
-                                    <h5 class="font-bold text-gray-800 dark:text-white">The Glorious Mysteries</h5>
+                                    <h5 class="font-bold text-gray-800 ">The Glorious Mysteries</h5>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Sunday & Wednesday</p>
-                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('glorious')">Tap to View</button>
-                                <div id="glorious" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <p class="text-xs text-gray-500  mb-3">Meditated on Sunday & Wednesday</p>
+                                <button class="text-sm text-blue-600  focus" onclick="toggleMystery('glorious')">Tap to View</button>
+                                <div id="glorious" class="mt-3 space-y-1 text-sm text-gray-600  hidden">
                                     <ol class="list-decimal list-inside">
                                         <li>The Resurrection</li>
                                         <li>The Ascension</li>
@@ -240,14 +189,14 @@
                             </div>
 
                             <!-- Luminous Mysteries -->
-                            <div class="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
+                            <div class="p-4 rounded-lg bg-white  shadow">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="text-2xl"></span>
-                                    <h5 class="font-bold text-gray-800 dark:text-white">The Luminous Mysteries</h5>
+                                    <h5 class="font-bold text-gray-800 ">The Luminous Mysteries</h5>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Meditated on Thursday</p>
-                                <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none" onclick="toggleMystery('luminous')">Tap to View</button>
-                                <div id="luminous" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <p class="text-xs text-gray-500  mb-3">Meditated on Thursday</p>
+                                <button class="text-sm text-blue-600  focus" onclick="toggleMystery('luminous')">Tap to View</button>
+                                <div id="luminous" class="mt-3 space-y-1 text-sm text-gray-600  hidden">
                                     <ol class="list-decimal list-inside">
                                         <li>The Baptism of Jesus</li>
                                         <li>The Wedding at Cana</li>
@@ -261,14 +210,14 @@
                     </div>
 
                      <!-- Divine Mercy Chaplet -->
-                    <div class="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
-                        <h4 class="font-semibold text-blue-800 dark:text-blue-300 flex items-center gap-2 mb-3">
+                    <div class="mt-8 p-6 bg-blue-50  rounded-xl border border-blue-200 ">
+                        <h4 class="font-semibold text-blue-800  flex items-center gap-2 mb-3">
                             <span class="text-xl">💧</span>
                             Divine Mercy Chaplet
                         </h4>
-                        <button class="text-sm text-blue-600 dark:text-blue-400 focus:outline-none mb-3" onclick="toggleSection('divineMercy')">Tap to View</button>
-                        <div id="divineMercy" class="space-y-3 text-sm text-gray-700 dark:text-gray-300 hidden">
-                            <p><strong>Time:</strong> Traditionally prayed at 3:00 PM (the Hour of Mercy).</p>
+                        <button class="text-sm text-blue-600  focus mb-3" onclick="toggleSection('divineMercy')">Tap to View</button>
+                        <div id="divineMercy" class="space-y-3 text-sm text-gray-700  hidden">
+                            <p><strong>Time:</strong> Traditionally prayed at 3 PM (the Hour of Mercy).</p>
                             <p><strong>On the Crucifix:</strong> "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</p>
                             <p><strong>On the First Small Beads (3x):</strong> "For the sake of His sorrowful Passion, have mercy on us and on the whole world."</p>
                             <p><strong>On the Large Bead:</strong> "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</p>
@@ -279,13 +228,13 @@
                     </div>
 
                     <!-- Litany to the Blessed Virgin Mary -->
-                    <div class="mt-8 p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
-                        <h4 class="font-semibold text-purple-800 dark:text-purple-300 flex items-center gap-2 mb-3">
+                    <div class="mt-8 p-6 bg-purple-50  rounded-xl border border-purple-200 ">
+                        <h4 class="font-semibold text-purple-800  flex items-center gap-2 mb-3">
                             <span class="text-xl">👑</span>
                             Litany of the Blessed Virgin Mary
                         </h4>
-                        <button class="text-sm text-purple-600 dark:text-purple-400 focus:outline-none mb-3" onclick="toggleSection('litany')">Tap to View</button>
-                        <div id="litany" class="space-y-2 text-sm text-gray-700 dark:text-gray-300 hidden max-h-96 overflow-y-auto">
+                        <button class="text-sm text-purple-600  focus mb-3" onclick="toggleSection('litany')">Tap to View</button>
+                        <div id="litany" class="space-y-2 text-sm text-gray-700  hidden max-h-96 overflow-y-auto">
                             <p>Lord, have mercy. Lord, have mercy.</p>
                             <p>Christ, have mercy. Christ, have mercy.</p>
                             <p>Lord, have mercy. Lord, have mercy.</p>
@@ -344,8 +293,8 @@
                         </div>
                     </div>
 
-                    <div class="mt-8 pt-6 border-t border-dashed border-gray-300 dark:border-gray-700">
-                        <p class="text-sm italic text-gray-600 dark:text-gray-300 text-center">
+                    <div class="mt-8 pt-6 border-t border-dashed border-gray-300 ">
+                        <p class="text-sm italic text-gray-600  text-center">
                             "The Rosary is the most beautiful and the most rich in graces of all prayers; it is the prayer that touches most the Heart of the Mother of God." - Saint Padre Pio
                         </p>
                     </div>
@@ -354,27 +303,27 @@
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
+        <nav class="fixed bottom-0 left-0 right-0 bg-white  border-t border-gray-200  px-6 py-4 shadow-lg bottom-nav">
             <div class="flex justify-around">
-                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500  hover ">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     <span class="text-xs font-medium">Home</span>
                 </a>
-                <a href="prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500  hover ">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                     <span class="text-xs font-medium">Prayer</span>
                 </a>
-                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500  hover ">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <span class="text-xs font-medium">Calendar</span>
                 </a>
-                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500  hover ">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     </svg>
@@ -386,26 +335,6 @@
 
 
    <script>
-    // Theme Management
-                function initTheme() {
-                    const savedMode = localStorage.getItem('themeMode');
-                    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    const isDark = savedMode ? savedMode === 'dark' : prefersDark;
-                    if (isDark) {
-                        document.body.classList.remove('light-mode');
-                        document.documentElement.classList.add('dark');
-                        document.getElementById('themeIcon').innerHTML = `
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                        `;
-                    } else {
-                        document.body.classList.add('light-mode');
-                        document.documentElement.classList.remove('dark');
-                        document.getElementById('themeIcon').innerHTML = `
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                        `;
-                    }
-                }
-
                 // Toggle Mystery Visibility
                 function toggleMystery(id) {
                     const element = document.getElementById(id);
@@ -450,7 +379,6 @@
 
                 // Initialize on DOM load
                 document.addEventListener('DOMContentLoaded', function() {
-                    initTheme();
                     autoExpandTodaysMystery(); // Auto-expand today's mystery
                 });
         </script>
