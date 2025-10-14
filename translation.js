@@ -70,7 +70,34 @@ window.translations = {
     "September": "Septemba",
     "October": "Oktoba",
     "November": "Novemba",
-    "December": "Desemba"
+    "December": "Desemba",
+
+    // Prayer.html specific translations
+    "daily prayers": "Sala za kila siku",
+    "Home": "Nyumbani",
+    "Daily Prayers": "Sala za Kila Siku",
+    "Evening": "Jioni",
+    "Rosary": "Rozari",
+    "The Apostles' Creed": "Nasadiki ya Mitume",
+    "The Lord's Prayer": "Sala ya Bwana",
+    "The Hail Mary": "Sikukuu ya Maria",
+    "The Glory Be": "Utukufu Wa Milele",
+    "The Hail Holy Queen": "Sikukuu ya Malkia Mtakatifu",
+    "Morning Offering": "Sadaka ya Asubuhi",
+    "Act of Contrition": "Kitendo cha Kutubu",
+    "Prayer to St. Michael": "Sala kwa Mtakatifu Mikaeli",
+    "The Hail Mary": "Sikukuu ya Maria",
+    "The Glory Be": "Utukufu Wa Milele",
+    "The Hail Holy Queen": "Sikukuu ya Malkia Mtakatifu",
+    "Morning Offering": "Sadaka ya Asubuhi",
+    "Act of Contrition": "Kitendo cha Kutubu",
+    "Prayer to St. Michael": "Sala kwa Mtakatifu Mikaeli",
+    "Favorite Prayers": "Maombi Nipendayo",
+    "Pray without ceasing.": "Omba bila kukoma.",
+    "Install iPray App?": "Sakinisha Programu ya iPray?",
+    "Access prayers offline": "Fikia maombi nje ya mtandao",
+    "Later": "Baadaye",
+    "Install": "Sakinisha"
 };
 
 // State to track current language - using window object for GitHub Pages compatibility
@@ -141,30 +168,47 @@ window.toggleTranslation = function() {
  */
 window.translateToSwahili = function() {
     try {
+        // First, handle elements with data-translate attributes
+        const translatableElements = document.querySelectorAll('[data-translate]');
+        translatableElements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (window.translations[key]) {
+                if (!element.hasAttribute('data-original-text')) {
+                    element.setAttribute('data-original-text', element.textContent);
+                }
+                element.textContent = window.translations[key];
+            }
+        });
+
         // Get all text nodes in the document
         const textNodes = getTextNodes(document.body);
-        
+
         // Translate each text node
         textNodes.forEach(node => {
             if (!node || !node.nodeValue) return;
-            
+
             const originalText = node.nodeValue.trim();
             if (originalText && originalText.length > 0) {
+                // Skip if parent has data-translate (already handled above)
+                if (node.parentNode && node.parentNode.hasAttribute('data-translate')) {
+                    return;
+                }
+
                 // Store original text if not already stored
                 if (!node.hasAttribute) return; // Skip if node doesn't support attributes
-                
+
                 if (!node.hasAttribute('data-original-text')) {
                     node.setAttribute('data-original-text', originalText);
                 }
-                
+
                 // Translate text
                 node.nodeValue = translateText(originalText);
             }
         });
-        
+
         // Translate attributes (like placeholders, titles, etc.)
         translateAttributes();
-        
+
         console.log('Translation to Swahili completed');
     } catch (error) {
         console.error('Error in translateToSwahili:', error);
@@ -175,16 +219,29 @@ window.translateToSwahili = function() {
  * Restore original English text
  */
 window.translateToEnglish = function() {
+    // First, restore elements with data-translate attributes
+    const translatableElements = document.querySelectorAll('[data-translate]');
+    translatableElements.forEach(element => {
+        if (element.hasAttribute('data-original-text')) {
+            element.textContent = element.getAttribute('data-original-text');
+        }
+    });
+
     // Get all text nodes in the document
     const textNodes = getTextNodes(document.body);
-    
+
     // Restore original text for each node
     textNodes.forEach(node => {
+        // Skip if parent has data-translate (already handled above)
+        if (node.parentNode && node.parentNode.hasAttribute('data-translate')) {
+            return;
+        }
+
         if (node.hasAttribute('data-original-text')) {
             node.nodeValue = node.getAttribute('data-original-text');
         }
     });
-    
+
     // Restore original attributes
     restoreAttributes();
 }

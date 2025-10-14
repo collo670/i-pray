@@ -20,6 +20,9 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Translation Script -->
+    <script src="translation.js"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class', // ✅ Required for dark: utility classes
@@ -105,16 +108,21 @@
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="daily prayers">
                         daily prayers
                     </p>
                 </div>
-                <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
-                    <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <!-- Sun Icon (Light Mode) -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
+                <div class="flex items-center gap-2">
+                    <button id="translationToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300" title="Translate to Swahili">
+                        EN
+                    </button>
+                    <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
+                        <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <!-- Sun Icon (Light Mode) -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -129,7 +137,7 @@
                         </svg>
                         Home
                     </a>
-                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent" data-translate="Daily Prayers">
                         Daily Prayers
                     </h2>
                 </div>
@@ -137,19 +145,23 @@
                 <!-- Prayer Categories -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                     <button id="masifuAsubuhiLink"
-                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium"
+                        data-translate="Lauds">
                         Lauds
                     </button>
                     <button onclick="location.href='#'"
-                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium"
+                        data-translate="Evening">
                         Evening
                     </button>
                     <button onclick="location.href='holy-rosary.html'"
-                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium"
+                        data-translate="Rosary">
                         Rosary
                     </button>
                     <button onclick="location.href='sacraments.html'"
-                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">
+                        class="category-btn p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium"
+                        data-translate="Sacraments">
                         Sacraments
                     </button>
                 </div>
@@ -159,7 +171,7 @@
                     <!-- The Apostles' Creed -->
                     <div class="prayer-card purple-border rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg">
                         <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">The Apostles' Creed</h3>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white" data-translate="The Apostles' Creed">The Apostles' Creed</h3>
                             <button class="favorite-btn text-gray-400 hover:text-yellow-500" data-prayer="apostles-creed">
                                 <i class="far fa-star"></i>
                             </button>
@@ -263,7 +275,7 @@
 
                 <!-- Favorites Section -->
                 <div id="favoritesSection" class="hidden">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Favorite Prayers</h3>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4" data-translate="Favorite Prayers">Favorite Prayers</h3>
                     <div id="favoritesList" class="space-y-4">
                         <!-- Favorites will be populated by JavaScript -->
                     </div>
@@ -271,7 +283,7 @@
 
                 <!-- Inspirational Quote -->
                 <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-gray-700 dark:to-gray-800 rounded-xl">
-                    <p class="text-center text-gray-600 dark:text-gray-300 italic">
+                    <p class="text-center text-gray-600 dark:text-gray-300 italic" data-translate="Pray without ceasing.">
                         "Pray without ceasing." - 1 Thessalonians 5:17
                     </p>
                 </div>
@@ -324,23 +336,35 @@
     </div>
 
     <script>
+        // Save prayer access function (for consistency with index.html)
+        function savePrayerAccess(prayerId, title, url) {
+            // This function tracks prayer access for analytics and history
+            if (window.plausible) window.plausible('Prayer Accessed', { props: { prayerId, title } });
+        }
+
         // Masifu ya Asubuhi dynamic link
         const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
         if (masifuAsubuhiLink) {
             masifuAsubuhiLink.addEventListener('click', function() {
                 const day = new Date().getDay();
                 const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-                const weekSequence = [1, 2, 3, 4];
+                const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
+                // Find the most recent Sunday (start of the current liturgical week)
                 const now = new Date();
                 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const daysSinceSunday = today.getDay();
-                const referenceSunday = new Date(today);
-                referenceSunday.setDate(today.getDate() - daysSinceSunday);
+                const daysSinceSunday = today.getDay(); // 0=Sunday, 6=Saturday
+                const currentSunday = new Date(today);
+                currentSunday.setDate(today.getDate() - daysSinceSunday);
+                // Reference Sunday for week 2 (the start of the current cycle)
+                // Let's use a known Sunday date for week 2, e.g., August 3, 2025 (which is a Sunday)
+                const referenceWeek2Sunday = new Date(2025, 7, 3); // August is month 7 (0-based)
+                referenceWeek2Sunday.setHours(0,0,0,0);
                 const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-                const weeksSinceReference = Math.floor((today - referenceSunday) / msPerWeek);
-                const weekIndex = weeksSinceReference % weekSequence.length;
+                const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+                const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
                 const week = weekSequence[weekIndex];
                 const fileName = `${dayToPrefix[day]}${week}.html`;
+                savePrayerAccess('lauds', 'Lauds', fileName);
                 window.location.href = fileName;
             });
         }
@@ -507,6 +531,25 @@
             initFavorites();
             initCategories();
             displayFavorites();
+
+            // Initialize translation system for prayer.html
+            if (window.initTranslation) {
+                window.initTranslation();
+            } else {
+                // Fallback initialization if translation.js hasn't loaded yet
+                setTimeout(() => {
+                    if (window.initTranslation) {
+                        window.initTranslation();
+                    }
+                }, 100);
+            }
+        });
+
+        // Also try to initialize after window load as a fallback
+        window.addEventListener('load', () => {
+            if (window.initTranslation) {
+                window.initTranslation();
+            }
         });
     </script>
 </body>
