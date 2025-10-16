@@ -1,8 +1,3 @@
-/**
- * Translation functionality for i-pray app
- * Provides English to Swahili translation for the app content
- */
-
 // Dictionary of English to Swahili translations
 // Using window object to make it globally accessible for GitHub Pages
 window.translations = {

@@ -83,63 +83,154 @@
             background-color: rgba(255,255,255,0.1);
         }
         
-        /* Hamburger Menu */
+        /* Enhanced Mobile Navigation with Tailwind */
         .hamburger {
             display: none;
             cursor: pointer;
             padding: 10px;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
         }
-        
+
+        .hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
         .hamburger div {
             width: 25px;
             height: 3px;
             background-color: white;
-            margin: 5px 0;
-            transition: all 0.3s;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
         }
-        
-        /* Mobile Menu */
+
+        /* Hamburger to X animation */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile Menu Styles */
         @media (max-width: 768px) {
             .hamburger {
                 display: block;
             }
-            
+
             .nav-links {
                 position: absolute;
                 top: 100%;
                 left: 0;
+                right: 0;
                 width: 100%;
-                background-color: #8B0000;
+                background-color: #222;
                 flex-direction: column;
                 align-items: center;
                 padding: 10px 0;
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.5s ease-out;
+                transition: all 0.3s ease;
+                opacity: 0;
+                transform: translateY(-10px);
+                border-radius: 0 0 0.75rem 0.75rem;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             }
-            
+
             .dark-mode .nav-links {
-                background-color: #222;
+                background-color: #1f2937;
+                border-top: 1px solid #374151;
             }
-            
+
             .nav-links.active {
-                max-height: 500px; /* Adjust based on content */
+                max-height: 500px;
+                opacity: 1;
+                transform: translateY(0);
+                padding: 16px 0;
             }
-            
+
             .nav-links li {
                 width: 100%;
                 text-align: center;
-                margin: 0;
+                margin: 2px 0;
                 padding: 0;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
             }
-            
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.15s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.25s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.3s; }
+
             .nav-links a {
                 padding: 12px 20px;
-                border-radius: 0;
+                border-radius: 0.375rem;
+                margin: 2px 16px;
+                width: calc(100% - 32px);
+                transition: all 0.2s ease;
+                font-size: 0.9em;
             }
-            
+
             .nav-links li:hover {
-                background-color: rgba(0,0,0,0.1);
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: translateX(4px);
+            }
+        }
+
+        /* Enhanced responsive styles */
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 8px 16px;
+            }
+
+            .nav-logo {
+                font-size: 1.1em;
+            }
+
+            .hamburger {
+                padding: 8px;
+            }
+
+            .hamburger div {
+                width: 22px;
+                height: 2.5px;
+                margin: 4px 0;
+            }
+        }
+
+        /* Touch-friendly enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-links a {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .hamburger {
+                min-height: 48px;
+                min-width: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
         
@@ -231,14 +322,138 @@
             background-color: #333;
             border-left-color: #FFA07A;
         }
+
+        /* Bottom Navigation Styles */
+        .bottom-nav {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav a {
+            transition: all 0.2s ease;
+            min-height: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .bottom-nav a:hover {
+            background-color: rgba(147, 51, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .bottom-nav a.active {
+            color: rgb(147, 51, 234);
+            background-color: rgba(147, 51, 234, 0.1);
+        }
+
+        /* Dark mode bottom navigation */
+        .dark-mode .bottom-nav {
+            background-color: rgba(31, 41, 55, 0.95);
+            border-top-color: rgb(55, 65, 81);
+        }
+
+        /* Ensure bottom nav is above mobile menu and visible */
+        .bottom-nav {
+            z-index: 50 !important;
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+        }
+
+        /* Ensure content doesn't get hidden behind bottom nav */
+        body {
+            padding-bottom: 5rem !important;
+        }
+
+        /* Make sure bottom nav is visible on all pages */
+        .bottom-nav {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        /* Mobile menu and bottom nav integration */
+        @media (max-width: 768px) {
+            /* When mobile menu is open, ensure bottom nav stays visible */
+            .nav-links.active ~ .bottom-nav {
+                opacity: 0.9;
+            }
+
+            /* Adjust body padding when mobile menu is active */
+            .nav-links.active {
+                z-index: 45;
+            }
+
+            /* Ensure smooth transition between mobile menu and bottom nav */
+            .nav-links {
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+        }
+
+        /* Enhanced visibility for bottom navigation */
+        .bottom-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        /* Dark mode adjustments for bottom nav */
+        .dark-mode .bottom-nav {
+            background: rgba(17, 24, 39, 0.95);
+            border-top-color: rgba(55, 65, 81, 0.8);
+        }
+
+        /* Mobile responsive adjustments for bottom nav */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                padding: 12px 16px;
+                height: 5rem;
+            }
+
+            .bottom-nav a {
+                font-size: 0.75rem;
+                padding: 6px 8px;
+            }
+
+            .bottom-nav svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding: 8px 12px;
+                height: 4rem;
+            }
+
+            .bottom-nav a {
+                font-size: 0.7rem;
+                padding: 4px 6px;
+            }
+
+            .bottom-nav svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
     </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">ipray</a>
             
-            <div class="hamburger" onclick="toggleMenu()">
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -437,25 +652,35 @@
     </div>
     
     <script>
-        // Toggle mobile menu
+        // Enhanced mobile menu toggle with smooth animations
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
-            
+
+            // Toggle active classes
             navLinks.classList.toggle('active');
-            
-            // Animate hamburger to X
-            if (navLinks.classList.contains('active')) {
-                hamburger.children[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
-                hamburger.children[1].style.opacity = '0';
-                hamburger.children[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
-            } else {
-                hamburger.children[0].style.transform = 'rotate(0) translate(0)';
-                hamburger.children[1].style.opacity = '1';
-                hamburger.children[2].style.transform = 'rotate(0) translate(0)';
+            hamburger.classList.toggle('active');
+
+            // Add haptic feedback on mobile devices
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            // Enhanced accessibility
+            const isOpen = navLinks.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            navLinks.setAttribute('aria-hidden', !isOpen);
+
+            // Focus management for accessibility
+            if (isOpen) {
+                // Focus first menu item when opening
+                setTimeout(() => {
+                    const firstLink = navLinks.querySelector('a');
+                    if (firstLink) firstLink.focus();
+                }, 100);
             }
         }
-        
+
         // Close mobile menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
@@ -464,7 +689,7 @@
                 }
             });
         });
-        
+
         // Dark mode toggle
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
@@ -477,12 +702,194 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
         }
-        
+
         // Check for dark mode preference
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.body.classList.add('dark-mode');
             document.querySelector('.toggle-btn').textContent = 'Light Mode';
         }
+
+        // Translations
+        const translations = {
+            en: {
+                home: "Home",
+                lauds: "Lauds",
+                calendar: "Calendar",
+                settings: "Settings"
+            },
+            sw: {
+                home: "Nyumbani",
+                lauds: "Masifu",
+                calendar: "Kalenda",
+                settings: "Mipangilio"
+            }
+        };
+
+        // Language Management
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Toggle translation function
+        window.toggleTranslation = function() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const newLang = currentLang === 'en' ? 'sw' : 'en';
+            setLanguage(newLang);
+        };
+
+        // Enhanced Bottom Navigation Functions
+        function initBottomNavigation() {
+            console.log('Initializing bottom navigation...');
+
+            // Wait for DOM to be fully loaded
+            if (!document.querySelector('.bottom-nav')) {
+                console.log('Bottom nav element not found, retrying...');
+                setTimeout(initBottomNavigation, 100);
+                return;
+            }
+
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.bottom-nav a');
+            console.log('Found', navLinks.length, 'navigation links');
+            console.log('Current page:', currentPage);
+
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                console.log('Link href:', href, 'Current page:', currentPage);
+
+                // Better active state detection
+                if (href === currentPage ||
+                    (currentPage === '' && href === 'index.html') ||
+                    (currentPage.includes('jumatatu') && href === 'lauds.html')) {
+
+                    link.classList.add('text-purple-600', 'active');
+                    link.classList.remove('text-gray-500');
+                    link.setAttribute('aria-current', 'page');
+                    console.log('Set active state for:', href);
+                } else {
+                    link.classList.add('text-gray-500');
+                    link.classList.remove('text-purple-600', 'active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            // Add click handlers for navigation
+            const homeLink = document.querySelector('.bottom-nav a[href="index.html"]');
+            if (homeLink) {
+                homeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    savePrayerAccess('home', 'Home', 'index.html');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const laudsLink = document.querySelector('.bottom-nav a[href="lauds.html"]');
+            if (laudsLink) {
+                laudsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Navigate to appropriate Lauds file based on day
+                    const day = new Date().getDay();
+                    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+                    const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
+                    const now = new Date();
+                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    const daysSinceSunday = today.getDay();
+                    const currentSunday = new Date(today);
+                    currentSunday.setDate(today.getDate() - daysSinceSunday);
+                    const referenceWeek2Sunday = new Date(2025, 7, 3);
+                    referenceWeek2Sunday.setHours(0,0,0);
+                    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                    const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+                    const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
+                    const week = weekSequence[weekIndex];
+                    const fileName = `${dayToPrefix[day]}${week}.html`;
+                    savePrayerAccess('lauds', 'Lauds', fileName);
+                    window.location.href = fileName;
+                });
+            }
+
+            const calendarLink = document.querySelector('.bottom-nav a[href="calendar.html"]');
+            if (calendarLink) {
+                calendarLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    savePrayerAccess('calendar', 'Calendar', 'calendar.html');
+                    window.location.href = 'calendar.html';
+                });
+            }
+
+            const settingsLink = document.querySelector('.bottom-nav a[href="settings.html"]');
+            if (settingsLink) {
+                settingsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    savePrayerAccess('settings', 'Settings', 'settings.html');
+                    window.location.href = 'settings.html';
+                });
+            }
+
+            console.log('Bottom navigation initialized successfully');
+        }
+
+        // Save prayer access for history
+        function savePrayerAccess(prayerId, title, url) {
+            // Simple localStorage-based history (since we don't have IndexedDB in these pages)
+            const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+            const newAccess = {
+                id: prayerId,
+                title: title,
+                url: url,
+                lastAccessed: new Date().toISOString()
+            };
+
+            // Remove existing entry if present
+            const filteredHistory = history.filter(item => item.id !== prayerId);
+            filteredHistory.unshift(newAccess);
+
+            // Keep only last 10 entries
+            localStorage.setItem('prayerHistory', JSON.stringify(filteredHistory.slice(0, 10)));
+        }
+
+        // Keyboard navigation support for mobile menu
+        document.addEventListener('keydown', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    toggleMenu();
+                }
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (navLinks.classList.contains('active') &&
+                !navLinks.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                toggleMenu();
+            }
+        });
+
+        // Initialize bottom navigation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initBottomNavigation();
+
+            // Set initial language
+            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(preferredLang);
+
+            // Add translation toggle listener if button exists
+            const translationToggle = document.getElementById('translationToggle');
+            if (translationToggle) {
+                translationToggle.addEventListener('click', toggleTranslation);
+            }
+        });
     </script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -497,6 +904,7 @@
     });
   }
 </script>
+
 </body>
 </html>
 
