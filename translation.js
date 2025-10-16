@@ -7,16 +7,16 @@
 // Using window object to make it globally accessible for GitHub Pages
 window.translations = {
     // App title and navigation
-    "ipray": "ninaomba",
-    "Your Prayer Companion": "Msaidizi Wako wa Maombi",
-    "Install ipray App": "Sakinisha Programu ya ninaomba",
+    "ipray": "ipray",
+    "Your Prayer Companion": "Msaidizi Wako katika Sala",
+    "Install ipray App": "Pakua ipray",
     
     // Navigation and buttons
     "Tap to see upcoming feasts": "Gusa kuona sherehe zinazokuja",
     "Calendar": "Kalenda",
     
     // Common liturgical terms
-    "ordinary": "ya kawaida",
+    "ordinary": "Kipindi cha kawaida",
     "Feast of All Saints": "Sikukuu ya Watakatifu Wote",
     "Loading...": "Inapakia...",
     
@@ -81,23 +81,23 @@ window.translations = {
     "The Apostles' Creed": "Nasadiki ya Mitume",
     "The Lord's Prayer": "Sala ya Bwana",
     "The Hail Mary": "Sikukuu ya Maria",
-    "The Glory Be": "Utukufu Wa Milele",
+    "The Glory Be": "Atukuzwe baba...",
     "The Hail Holy Queen": "Sikukuu ya Malkia Mtakatifu",
     "Morning Offering": "Sadaka ya Asubuhi",
-    "Act of Contrition": "Kitendo cha Kutubu",
+    "Act of Contrition": "Toba",
     "Prayer to St. Michael": "Sala kwa Mtakatifu Mikaeli",
-    "The Hail Mary": "Sikukuu ya Maria",
-    "The Glory Be": "Utukufu Wa Milele",
+    "The Hail Mary": "Salamu Maria",
+    "The Glory Be": "Atukuzwe baba...",
     "The Hail Holy Queen": "Sikukuu ya Malkia Mtakatifu",
     "Morning Offering": "Sadaka ya Asubuhi",
     "Act of Contrition": "Kitendo cha Kutubu",
     "Prayer to St. Michael": "Sala kwa Mtakatifu Mikaeli",
     "Favorite Prayers": "Maombi Nipendayo",
     "Pray without ceasing.": "Omba bila kukoma.",
-    "Install iPray App?": "Sakinisha Programu ya iPray?",
-    "Access prayers offline": "Fikia maombi nje ya mtandao",
+    "Install iPray App?": "Pakua iPray?",
+    "Access prayers offline": "Fikia sala nje ya mtandao",
     "Later": "Baadaye",
-    "Install": "Sakinisha"
+    "Install": "Pakua"
 };
 
 // State to track current language - using window object for GitHub Pages compatibility

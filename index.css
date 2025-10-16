@@ -1,0 +1,300 @@
+:root {
+    --primary-color: rgb(155, 152, 152);
+}
+body {
+    font-family: 'Cinzel Decorative', serif;
+    transition: all 0.3s ease;
+}
+.text-small { font-size: 0.875rem; }
+.text-large { font-size: 1.25rem; }
+.text-xlarge { font-size: 1.5rem; }
+.text-xxs { font-size: 0.7rem; }
+.bg-gradient-vintage {
+    background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+}
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-highlighted {
+    background-color: #e0e0e0;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+.card-hover {
+    transition: all 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.season-border {
+    border-style: dashed;
+    border-width: 1px;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+.bg-purple-100 { background-color: rgba(237, 233, 254, 0.8); }
+.bg-white-100 { background-color: rgba(255, 255, 255, 0.8); }
+.bg-red-100 { background-color: rgba(254, 226, 226, 0.8); }
+.bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+.bg-gold-100 { background-color: rgba(254, 249, 195, 0.8); }
+.border-purple-200 { border-color: #e9d5ff; }
+.border-white-200 { border-color: #e5e7eb; }
+.border-red-200 { border-color: #fecaca; }
+.border-green-200 { border-color: #bbf7d0; }
+.border-gold-200 { border-color: #fef08a; }
+.text-purple-800 { color: #9333ea; }
+.text-white-800 { color: #f9fafb; }
+.text-red-800 { color: #991b1b; }
+.text-green-800 { color: #166534; }
+.text-gold-800 { color: #854d0e; }
+@media (max-width: 640px) {
+    .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
+
+    /* Responsive floating header on mobile */
+    header[role="banner"] {
+        margin: 4px 8px 0 8px !important;
+    }
+
+    /* Responsive floating navigation on mobile */
+    nav[role="navigation"][aria-label="Main Navigation"] {
+        margin: 0 8px 4px 8px !important;
+    }
+}
+.season-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #ffc107; /* Yellow border */
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+.bottom-nav {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+}
+/* Loading Spinner for Prayer Wall */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #4A1E8A;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Accessibility Utilities */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Enhanced focus indicators */
+*:focus {
+    outline: 2px solid #4A1E8A;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .card {
+        border: 2px solid #000000;
+    }
+
+    .bg-gradient-vintage {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Loading Skeleton Animation */
+@keyframes pulse-skeleton {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse-skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Progressive Enhancement */
+.no-js .js-only {
+    display: none !important;
+}
+
+.js .no-js {
+    display: none !important;
+}
+
+/* Enhanced button states */
+button:disabled,
+button[aria-busy="true"] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button[aria-busy="true"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Toast Notifications */
+.toast-notification {
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Error States */
+.error-state {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.error-state .error-icon {
+    color: #dc2626;
+    margin-right: 0.5rem;
+}
+
+/* Success States */
+.success-state {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.success-state .success-icon {
+    color: #16a34a;
+    margin-right: 0.5rem;
+}
+
+/* Progressive Enhancement Fallbacks */
+.no-js .loading-fallback {
+    display: block !important;
+}
+
+.js .loading-fallback {
+    display: none;
+}
+
+/* Floating Header Effect */
+header[role="banner"] {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    position: relative !important;
+    z-index: 30 !important;
+    margin: 8px 16px 0 16px !important;
+}
+
+/* Floating Bottom Navigation Effect */
+nav[role="navigation"][aria-label="Main Navigation"] {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-bottom: none !important;
+    position: fixed !important;
+    z-index: 40 !important;
+    margin: 0 16px 8px 16px !important;
+}
+
+/* Enhanced Card States */
+.card-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
