@@ -71,12 +71,6 @@ p {
     margin: 12px 0;
     text-align: justify;
 }
-.navigation {
-    padding: 25px 40px;
-    background: #ecf0f1;
-    text-align: center;
-    border-top: 1px solid #bdc3c7;
-}
 .nav-button {
     display: inline-block;
     padding: 12px 24px;
