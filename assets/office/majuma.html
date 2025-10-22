@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menyu Kuu ya Liturgia</title>
+     <link href="./dist/output.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #313030; /* Background nyepesi */
+            color: #333333; /* Rangi ya maandishi meusi */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Hakikisha inajaza urefu wote wa skrini */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-container {
+            background-color: #ffffff; /* Rangi ya nyuma ya kontena */
+            padding: 30px;
+            border-radius: 12px; /* Kona za duara */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Kivuli */
+            max-width: 600px; /* Upana wa juu wa kontena */
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffc107; /* Rangi ya kichwa */
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+
+        .menu-item-container {
+            position: relative; /* Muhimu kwa ajili ya kuweka dropdown */
+            margin-bottom: 15px;
+        }
+
+        .menu-button {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #444141; /* Rangi nyekundu iliyokolea */
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            cursor: pointer; /* Onyesha kuwa inaweza kubofya */
+            border: none; /* Ondoa mpaka wa default wa kitufe */
+        }
+
+        .menu-button:hover {
+            color: black;
+            background-color: #ffc107; /* Rangi nyekundu iliyokolea zaidi wakati wa hover */
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            position:relative;
+            top: 100%; /* Weka chini ya kitufe */
+            left: 0;
+            right: 0;
+            background-color: #706b6b;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10; /* Hakikisha inaonekana juu ya vipengele vingine */
+            overflow: hidden; /* Ficha kingo za ndani */
+            margin-top: 5px; /* Nafasi kidogo kutoka kitufe */
+            max-height: 0; /* Ficha kwa default */
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0;
+            opacity: 0;
+        }
+
+        .dropdown-menu.active {
+            max-height: 300px; /* Urefu wa juu wa menyu kunjuzi */
+            padding: 10px 0;
+            opacity: 1;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            text-align: left;
+            transition: background-color 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+            .main-container {
+                padding: 20px;
+            }
+            .menu-button {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="menu-item-container">
+            <button class="menu-button" onclick="toggleDropdown(this)">Juma la Kwanza</button>
+            <div class="dropdown-menu">
+                <a href="jumapili1.html" class="dropdown-item">Jumapili</a>
+                <a href="jumatatu1.html" class="dropdown-item">Jumatatu</a>
+                <a href="jumanne1.html" class="dropdown-item">Jumanne</a>
+                <a href="jumatano1.html" class="dropdown-item">Jumatano</a>
+                <a href="alhamisi1.html" class="dropdown-item">Alhamisi</a>
+                <a href="ijumaa1.html" class="dropdown-item">Ijumaa</a>
+                <a href="jumamosi1.html" class="dropdown-item">Jumamosi</a>
+            </div>
+        </div>
+
+        <div class="menu-item-container">
+            <button class="menu-button" onclick="toggleDropdown(this)">Juma la Pili</button>
+            <div class="dropdown-menu">
+                <a href="jumapili2.html" class="dropdown-item">Jumapili</a>
+                <a href="jumatatu2.html" class="dropdown-item">Jumatatu</a>
+                <a href="jumanne2.html" class="dropdown-item">Jumanne</a>
+                <a href="jumatano2.html" class="dropdown-item">Jumatano</a>
+                <a href="alhamisi2.html" class="dropdown-item">Alhamisi</a>
+                <a href="ijumaa2.html" class="dropdown-item">Ijumaa</a>
+                <a href="jumamosi2.html" class="dropdown-item">Jumamosi</a>
+            </div>
+        </div>
+
+        <div class="menu-item-container">
+            <button class="menu-button" onclick="toggleDropdown(this)">Juma la Tatu</button>
+            <div class="dropdown-menu">
+                <a href="jumapili3.html" class="dropdown-item">Jumapili</a>
+                <a href="jumatatu3.html" class="dropdown-item">Jumatatu</a>
+                <a href="jumann3e.html" class="dropdown-item">Jumanne</a>
+                <a href="jumatano3.html" class="dropdown-item">Jumatano</a>
+                <a href="alhamisi3.html" class="dropdown-item">Alhamisi</a>
+                <a href="ijumaa3.html" class="dropdown-item">Ijumaa</a>
+                <a href="jumamosi3.html" class="dropdown-item">Jumamosi</a>
+            </div>
+        </div>
+
+        <div class="menu-item-container">
+            <button class="menu-button" onclick="toggleDropdown(this)">Juma la Nne</button>
+            <div class="dropdown-menu">
+                <a href="jumapili4.html" class="dropdown-item">Jumapili</a>
+                <a href="jumatatu4.html" class="dropdown-item">Jumatatu</a>
+                <a href="jumanne4.html" class="dropdown-item">Jumanne</a>
+                <a href="jumatano4.html" class="dropdown-item">Jumatano</a>
+                <a href="alhamisi4.html" class="dropdown-item">Alhamisi</a>
+                <a href="ijumaa4.html" class="dropdown-item">Ijumaa</a>
+                <a href="jumamosi4.html" class="dropdown-item">Jumamosi</a>
+            </div>
+        </div>
+
+        <div class="menu-item-container">
+            <button class="menu-button" onclick="toggleDropdown(this)">Sherehe za Bwana</button>
+            <div class="dropdown-menu">
+                <a href="trinity.html" class="dropdown-item">Utatu Mtakatifu</a>
+                <a href="mwilinadamu.html" class="dropdown-item">Mwili na Damu ya Kristo</a>
+                <a href="sacredheart.html" class="dropdown-item">Moyo Mtakatifu wa Yesu</a>
+                <a href="kristomfalme.html" class="dropdown-item">Kristo Mfalme</a>
+            </div>
+        </div>
+
+        <div class="menu-item-container">
+            <a href="antifona.html" class="menu-button">Antifona za Jumapili</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle dropdown visibility
+        function toggleDropdown(button) {
+            const dropdownMenu = button.nextElementSibling; // Get the next sibling, which is the dropdown menu
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-menu.active').forEach(menu => {
+                if (menu !== dropdownMenu) {
+                    menu.classList.remove('active');
+                }
+            });
+            // Toggle the clicked dropdown
+            dropdownMenu.classList.toggle('active');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.menu-item-container')) {
+                document.querySelectorAll('.dropdown-menu.active').forEach(menu => {
+                    menu.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

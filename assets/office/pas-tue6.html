@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 6 JUMANNE - Muundo wa Liturujia</title>
+    <style>
+        /* Fonti maalum ya Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Rangi ya asili: kijivu-100 */
+            color: #1f2937; /* Rangi ya maandishi: kijivu-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Mitindo ya hali ya giza */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Upau wa Urambazaji */
+        .navbar {
+            background-color: #202847; /* Bluu nyeusi maalum kwa upau wa urambazaji */
+            color: #ffffff; /* maandishi meupe */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* kivuli cha kati */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* upana wa juu: 7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* maandishi mazito */
+            font-size: 1.25rem; /* ukubwa wa maandishi: xl */
+            letter-spacing: -0.025em; /* nafasi ya herufi */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Kitufe cha Hamburger kwa simu */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* mpaka */
+            border-radius: 0.25rem; /* mviringo */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Hakikisha hakuna rangi ya asili ya kitufe */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Kontena ya viungo vya urambazaji */
+        .nav-links {
+            width: 100%; /* upana kamili */
+            display: none; /* imefichwa kwa chaguo-msingi, inadhibitiwa na JS */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* nafasi ya y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, muhimu kubatilisha JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* ukubwa wa maandishi: sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* nafasi ya y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* mviringo-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Hakikisha viungo vinachukua upana kamili kwenye simu */
+            color: #ffffff; /* Rangi ya kiungo chaguo-msingi */
+            text-decoration: none; /* Ondoa mstari wa chini */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* Rangi nyeupe ya asili kwa kiungo kinachotumika */
+            color: #1e40af; /* Rangi ya maandishi ya bluu nyeusi kwa kiungo kinachotumika */
+            font-weight: 600; /* Nusu-mzito */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Kijivu-700 kwa hali ya giza inayotumika */
+            color: #f9fafb; /* Maandishi mepesi kwa hali ya giza inayotumika */
+        }
+
+        /* Kontena ya kugeuza */
+        .toggles-container {
+            max-width: 80rem; /* upana wa juu: 7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* nafasi ya x-4 */
+        }
+
+        /* Vifungo vya kugeuza */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Mviringo kamili */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Rangi za kitufe cha hali nyepesi */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Kijivu-200 */
+            color: #374151; /* Kijivu-700 */
+        }
+        /* Rangi za kitufe cha hali ya giza */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Kijivu-800 */
+            color: #d1d5db; /* Kijivu-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* imefichwa */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Eneo Kuu la Maudhui */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* upana wa juu: 4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* kivuli-lg */
+            border-radius: 0.5rem; /* mviringo-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Kichwa Kikuu */
+        .main-title {
+            font-size: 1.875rem; /* ukubwa wa maandishi: 3xl */
+            font-weight: 800; /* maandishi mazito sana */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* urefu wa mstari: tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Mitindo ya Sehemu */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (kwa kukabiliana na nanga) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Ondoa ukingo hasi kwa sehemu ya kwanza */
+            padding-top: 0; /* Ondoa padding kwa sehemu ya kwanza */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* ukubwa wa maandishi: 2xl */
+            font-weight: 700; /* maandishi mazito */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* mpaka wa chini: 2px, bluu-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* ukubwa wa maandishi: xl */
+            font-weight: 600; /* maandishi nusu-mzito */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* ukubwa wa maandishi: sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* urefu wa mstari: relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Sehemu za Kiitikizano (Responsory) */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Bluu nyepesi */
+            border-left: 4px solid #3b82f6; /* Mpaka wa bluu */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* mviringo-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Kijivu-700 */
+            border-left-color: #6b7280; /* Kijivu-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* maandishi nusu-mzito */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* maandishi ya kati */
+            margin-top: 0.5rem;
+        }
+
+        /* Madarasa ya kurekebisha ukubwa wa maandishi (yanatumika kwa .content-wrapper na JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Ndogo kuliko ukubwa wa maandishi chaguo-msingi */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* ukubwa wa maandishi: sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* ukubwa wa maandishi: base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* ukubwa wa maandishi: lg */
+
+        /* Rekebisha vichwa na vipengele vingine sawia kwa mabadiliko ya ukubwa wa maandishi */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Maswali ya media kwa kurekebisha ukubwa wa maandishi kwenye skrini ndogo */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 6 JUMANNE</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menyu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="lent-mon3.html" class="navbar-link">Jumatatu</a>
+                    <a href="lent-tue3.html" class="navbar-link active-day">Jumanne</a>
+                    <a href="lent-wed3.html" class="navbar-link">Jumatano</a>
+                    <a href="lent-thur3.html" class="navbar-link">Alhamisi</a>
+                    <a href="lent-fri3.html" class="navbar-link">Ijumaa</a>
+                    <a href="lent-sat3.html" class="navbar-link">Jumamosi</a>
+                    <a href="lent-sun3.html" class="navbar-link">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Hali ya Giza</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Ukubwa wa Maandishi</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 6 JUMANNE
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    Cycle 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. 1 Yoh. 2:12-17
+                    </h3>
+                    <p class="paragraph-text">
+                        Yeye afanyaye mapenzi ya Mungu adumu hata milele.
+                        Somo kutoka kwa Waraka wa Kwanza wa Yohana Mtakatifu, mtume.
+                    </p>
+                    <p class="paragraph-text">
+                        Nawaandikia ninyi, watoto wadogo, kwa sababu mmesamehewa dhambi zenu kwa ajili yake. Nawaandikia ninyi, akina baba, kwa sababu mmemjua yeye aliye tangu mwanzo. Ninawaandikia ninyi, vijana, kwa sababu mmemshinda yule mwovu. Ninawaandikia ninyi, watoto, kwa sababu mnamjua Baba. Nawaandikia ninyi, akina baba, kwa sababu mmemjua yeye aliye tangu mwanzo. Nawaandikia ninyi, vijana, kwa sababu mna nguvu, na neno la Mungu linakaa ndani yenu, nanyi mmemshinda yule mwovu.
+                    </p>
+                    <p class="paragraph-text">
+                        Msiipende dunia wala mambo yaliyomo katika dunia. Mtu akiipenda dunia, kumpenda Baba hakumo ndani yake. Maana kila kilichomo duniani, yaani, tamaa ya mwili, na tamaa ya macho, na kiburi cha uzima, havitokani na Baba, bali vyatokana na dunia. Na dunia inapita, pamoja na tamaa zake; bali yeye afanyaye mapenzi ya Mungu adumu hata milele.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ulimwengu pamoja na tamaa yake itapita; *bali yeye afanyaye mapenzi ya Mungu ataishi milele, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mtu akiipenda dunia, kumpenda Baba hakumo ndani yake.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> bali yeye afanyaye mapenzi ya Mungu ataishi milele, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Tratt. 2, 8-14
+                    </h3>
+                    <p class="paragraph-text">
+                        Yeye afanyaye mapenzi ya Mungu anadumu milele.
+                        Usomaji kutoka kwa risala "Kwenye barua ya kwanza ya Yohana" ya St. Augustine, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Tunawezaje kumpenda Mungu ikiwa tunaipenda dunia? Basi tujiandae, kukaliwa na upendo. Mbili ni aina za upendo, za ulimwengu na wa Mungu: ikiwa upendo wa dunia unakaa ndani yetu, hakuna nafasi ya kumpenda Mungu. Acha kuupenda ulimwengu utoke nawe utakaliwa na ule wa Mungu; bora itachukua nafasi yake. Uliipenda dunia, hutaki kuipenda tena; unapokwisha kutakasa moyo wako kutoka kwa upendo wa kidunia, utavuta upendo wa kiungu; na tayari upendo, ambao hakuna uovu unaweza kuendelea, utaanza kukaa. Sikiliza sasa maneno ya yule anayekuja kutakasa. Atapata mioyo ya watu kama shamba. Lakini atapata nini? Akipata msitu atang'oa; akipata shamba safi, atapanda. Hapa anataka kupanda mti, ule wa hisani. Na ni msitu gani anataka kung'oa? Upendo wa dunia. Msikilize: "Msiipende dunia, wala mambo ya dunia, mtu akiipenda dunia, kumpenda Mungu hakumo ndani yake" (1 Yoh. 2:15).
+                    </p>
+                    <p class="paragraph-text">
+                        Je, unataka kuwa na upendo wa Mungu ili uwe warithi pamoja wa Mwana? Usiipende dunia. Ondoa upendo potovu wa ulimwengu; ili kujazwa na upendo wa Mungu. Wewe ni chombo, lakini bado umejaa; kitupu ulicho nacho, ili kupokea kile ambacho huna. Hakika ndugu zetu wamezaliwa upya kwa maji na kwa Roho; na kwa miaka mingapi tumezaliwa upya kwa maji na kwa Roho! Ni vyema tusiipende dunia, ili sakramenti zisigeuze kuwa hukumu yetu, badala ya vyombo vya wokovu. Ni tegemeo la wokovu kumiliki hisani katika mzizi, kuwa na wema wa uchaji Mungu, si umbo la nje tu. Umbo ni zuri na takatifu; lakini ina thamani gani, ikiwa haina mizizi?
+                    </p>
+                    <p class="paragraph-text">
+                        Tusiipende dunia, wala mambo ya dunia. Kwa hakika “chote kilicho katika dunia ni tamaa ya mwili, na tamaa ya macho, na kiburi cha uzima” (1 Yoh. 2:16). Tatu ni za tamaa na juu ya hizi tatu Bwana pia hujaribiwa na shetani. Alijaribiwa na tamaa ya mwili, alipomwambia: “Ikiwa wewe ni Mwana wa Mungu, yaambie mawe haya yawe mikate” (Mt. 4:3). Lakini ni kwa njia gani alimfukuza mjaribu na kutufundisha sisi askari jinsi ya kupigana? Zingatia anachojibu: Mwanadamu haishi kwa mkate tu, bali kwa kila neno litokalo katika kinywa cha Mungu.” ( Mt. 4:4 ) Alijaribiwa " pia na tamaa ya macho, ili afanye muujiza, alipoambiwa: “Jitupe chini kwa maana imeandikwa: Atawaamuru malaika zake kukuhusu, nao watakuinua mikononi mwao, ili usipige jiwe” (6 M. Kristo alimpinga mjaribu.
+                    </p>
+                    <p class="paragraph-text">
+                        Ni kwa njia gani Bwana alijaribiwa katika tamaa? Aliposafirishwa juu ya kilele cha mlima mrefu na aliambiwa: “Haya yote nitakupa, ikiwa utanisujudia” (Mt. 4:9). Alitaka kumjaribu mfalme wa nyakati na tamaa ya ufalme wa duniani; lakini Bwana aliyezifanya mbingu na nchi, alimtawala shetani. Je, kuna nini kisicho cha kawaida katika ukweli kwamba Mungu anamshinda shetani?
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini anamjibu shetani ili akufundishe kile unachopaswa kujibu katika majaribu: "Imeandikwa: Utamsujudia Bwana Mungu wako, na kwake peke yake utamfanyia ibada" (Mt. 4: 10). Mkiyakumbuka hayo, hamtakuwa na tamaa ya dunia; kama hamna haya, hamtatiishwa na tamaa ya mwili, wala ya macho, wala tamaa ya dunia; na hivyo utaweka nafasi kwa ajili ya uvamizi wa upendo wa kumpenda Mungu.
+                    </p>
+                    <p class="paragraph-text">
+                        Sikiliza Maandiko: "Nimesema: Ninyi ni miungu, ninyi nyote ni wana wa Aliye Juu" (Zab. 81: 6). Kwa hiyo ukitaka kuwa miungu na wana wa Aliye Juu Zaidi, “msiipende dunia wala mambo ya dunia Ulimwengu pamoja na tamaa zake utapita, bali yeye afanyaye mapenzi ya Mungu hudumu milele.” ( 1 Yoh. 2:15, 17 ) Kwa njia iyo hiyo Mungu anadumu milele.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Tunajua kwamba tumepita kutoka kifo hadi uzimani kwa sababu tunawapenda ndugu. *Yeye asiyependa hukaa katika mauti, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Sheria nzima inapata utimilifu wake katika kanuni moja tu: Mpende jirani yako kama nafsi yako.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yeye asiyependa hukaa katika mauti, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    Cycle 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. Matendo. 21:27-39
+                    </h3>
+                    <p class="paragraph-text">
+                        Kukamatwa kwa Paulo huko Yerusalemu.
+                        Somo kutoka kwa Matendo ya Mitume.
+                    </p>
+                    <p class="paragraph-text">
+                        Hata zile siku saba zilipokaribia kukamilika, Wayahudi kutoka Asia, aliyemwona Hekaluni, akauchochea umati wote wa watu, akaweka mikono yake juu yake. wakipiga kelele, wakisema, Enyi watu wa Israeli, msaada! Kwa maana hapo awali walikuwa wamemwona Trofimo, Mwefeso, pamoja naye mjini, wakadhani ya kuwa Paulo amemleta hekaluni. Basi mji wote ukasisimka, watu wakakimbia pamoja; wakamkamata Paulo na kumkokota nje ya Hekalu, na mara milango ikafungwa. Na walipokuwa wakijaribu kumwua, habari ikamfikia mkuu wa kikosi ya kwamba Yerusalemu yote ina machafuko. Mara akatwaa askari na maakida, akawakimbilia; nao walipomwona jemadari na askari, wakaacha kumpiga Paulo. Ndipo yule jemadari akakaribia, akamkamata, akaamuru afungwe kwa minyororo miwili. Akauliza yeye ni nani na amefanya nini. Baadhi ya watu katika ule umati wakapiga kelele jambo hili, na wengine jingine; na kwa vile hakuweza kujua ukweli kwa sababu ya ghasia ile, akaamuru apelekwe ndani ya ngome. Hata alipofika kwenye ngazi, akabebwa na askari kwa sababu ya jeuri ya mkutano; kwa maana kundi la watu lilimfuata, wakipiga kelele, “Mwondoe! Hata Paulo alipokuwa karibu kuingizwa ndani ya ngome, alimwambia mkuu wa jeshi, Naweza kukuambia neno? Naye akasema, Je! unajua Kigiriki? Paulo akajibu, akasema, Mimi ni Myahudi, mtu wa Tarso katika Kilikia, mwenyeji wa mji usio wa kawaida; nakuomba, niruhusu niseme na watu.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Sisi tulio hai tumekabiliwa na kifo kwa ajili ya Yesu. *Ili pia kifo cha Yesu kipate kuonekana katika miili yetu inayokufa. Aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kwa ajili yako tunauawa mchana kutwa, tunachukuliwa kama kondoo wa kuchinjwa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ili mauti ya Yesu idhihirishwe katika miili yetu ipatikanayo na mauti. Aleluya, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Diski. 73, 1-2
+                    </h3>
+                    <p class="paragraph-text">
+                        Hebu tushukuru kwa mchango wa kimungu.
+                        Usomaji kutoka kwa "Majadiliano" ya Mtakatifu Leo Mkuu, papa.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa kuwa Ufufuo uliobarikiwa na utukufu wa Bwana wetu Yesu Kristo, ambapo uweza wa Kiungu uliinua Hekalu la kweli la MUNGU katika siku tatu, ambalo uovu wa Wayahudi ulikuwa umepindua, siku arobaini takatifu, wapendwao zimekamilika leo, ambazo kwa uteuzi mtakatifu zaidi zilitolewa kwa mafundisho yetu yenye faida zaidi, ili, katika kipindi ambacho Bwana apate kufufua kwa muda mrefu katika imani yetu. iliyoimarishwa kwa dalili zinazohitajika.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa maana Kifo cha Kristo kilikuwa kimesumbua sana mioyo ya wanafunzi, na aina fulani ya dhoruba ya kutoamini ilikuwa imetanda juu ya akili zao zilizojaa huzuni kwa kuteswa kwake msalabani, wakati wa kutoa kwake roho, katika kuzikwa kwa mwili wake usio na uhai. Kwa maana, wakati wanawake watakatifu, kama hadithi ya Injili inavyofunua, walipoleta habari juu ya jiwe lililovingirishwa kutoka kaburini, kaburi lililokuwa halina mwili wote, na malaika wakimshuhudia BWANA aliye hai, maneno yao yalionekana kama dharau kwa Mitume na wanafunzi wengine. Ambayo mashaka, matokeo ya udhaifu wa kibinadamu, Roho wa Kweli kwa hakika hangeruhusu kuwepo katika vifua vya mhubiri Wake mwenyewe, kama wasiwasi wao wa kutetemeka na kusitasita kwao kwa uangalifu kungaliweka misingi ya imani yetu.
+                    </p>
+                    <p class="paragraph-text">
+                        Ilikuwa ni mashaka yetu na hatari zetu ambazo zilitolewa kwa Mitume: ni sisi wenyewe ambao katika watu hawa tulifundishwa jinsi ya kukutana na usaliti wa wasiomcha Mungu na hoja za hekima ya kidunia. Tunaagizwa kwa kuangalia kwao, tunafundishwa na kusikilizwa kwao, tunasadikishwa na mashiko yao. Hebu tutoe shukrani kwa usimamizi wa Kiungu na wepesi wa lazima wa imani wa Mababa watakatifu. Wengine walitilia shaka, ili tusiwe na shaka.
+                    </p>
+                    <p class="paragraph-text">
+                        Siku hizo, kwa hiyo, wapendwa, ambazo ziliingilia kati kati ya Ufufuo wa Bwana na Kupaa kwake hazikupita kwa tafrija isiyo ya kawaida, lakini siri kuu ziliidhinishwa ndani yao, kweli za kina zilifunuliwa. Ndani yao hofu ya kifo cha kutisha iliondolewa, na kutokufa sio tu kwa roho bali pia kwa mwili. Ndani yao, kwa pumzi ya Bwana juu yao, Roho Mtakatifu hutiwa juu ya Mitume wote, na kwa wenye heri. Mtume Petro zaidi ya wengine wote utunzaji wa kundi la Bwana umekabidhiwa, pamoja na funguo za ufalme. Kisha ilikuwa kwamba Bwana alijiunga na wale wanafunzi wawili kama mwandamani njiani, na, kwa kufagia mbali mawingu yote ya kutokuwa na hakika kwetu, akawakemea kwa wepesi wa mioyo yao yenye woga. Mioyo yao iliyotiwa nuru inashika moto wa imani, na vuguvugu kama walivyokuwa, wanafanywa kuwaka wakati Bwana anafunua Maandiko. Katika kuumega mkate pia macho yao hufumbuliwa wanapokula pamoja Naye: ni heri zaidi jinsi gani kufumbuliwa kwa macho yao, ambao utukufu wa asili yao unafunuliwa kuliko ule wa wazazi wetu wa kwanza, ambao matokeo mabaya ya makosa yao yalianguka juu yao.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Bado kitambo kidogo hamtaniona tena, *aleluya, aleluya; na baada ya kitambo kidogo mtaniona, kwa sababu naenda kwa Baba, aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Ninarudi kwa Baba yangu naye ni Baba yenu, Mungu wangu na Mungu wenu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Kwa sababu mimi naenda kwa Baba, aleluya, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel" class="liturgical-section">
+                <h2 class="section-heading">
+                    Injili. Yohana 16:5-11
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Nisipokwenda Wakili hatakuja kwenu.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Lakini sasa naenda zake yeye aliyenipeleka; lakini hakuna hata mmoja wenu aniulizaye, Unakwenda wapi? Lakini kwa kuwa nimewaambia hayo huzuni imejaa mioyoni mwenu. Lakini mimi nawaambia iliyo kweli; yawafaa ninyi mimi niondoke, kwa maana nisipoondoka, huyo Msaidizi hatakuja kwenu; lakini nikienda, nitampeleka kwenu. Naye atakapokuja atauhakikisha ulimwengu kwa habari ya dhambi, na haki, na hukumu; kwa habari ya dhambi, kwa sababu hawaniamini mimi; kwa habari ya haki, kwa sababu mimi naenda kwa Baba, wala hamtaniona tena; kwa habari ya hukumu, kwa sababu mkuu wa ulimwengu huu amekwisha kuhukumiwa.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Kugeuza hali ya giza
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Angalia hifadhi ya ndani kwa upendeleo wa mandhari
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Kugeuza ukubwa wa maandishi
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Anza na 'text-size-base'
+
+        // Anzisha ukubwa wa maandishi kutoka hifadhi ya ndani au chaguo-msingi
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainContentWrapper.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainContentWrapper.classList.add('text-size-base'); // Chaguo-msingi
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Kugeuza menyu ya hamburger kwa simu
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            // Kwenye skrini ndogo, ficha wakati kiungo kinapobofya
+            if (window.innerWidth < 768) {
+                const navLinksList = navLinks.querySelectorAll('a');
+                navLinksList.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Funga menyu ya hamburger wakati unaporekebisha ukubwa wa skrini hadi desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

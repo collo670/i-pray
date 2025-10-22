@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUMAPILI YA PENTEKOSTE - Muundo wa Liturujia</title>
+    <style>
+        /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">JUMAPILI YA PENTEKOSTE</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button" aria-controls="nav-links" aria-expanded="false">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menyu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links hidden">
+                <div class="nav-links-group">
+                    <a href="lent-mon3.html" class="navbar-link">Jumatatu</a>
+                    <a href="lent-tue3.html" class="navbar-link">Jumanne</a>
+                    <a href="lent-wed3.html" class="navbar-link">Jumatano</a>
+                    <a href="lent-thur3.html" class="navbar-link">Alhamisi</a>
+                    <a href="lent-fri3.html" class="navbar-link">Ijumaa</a>
+                    <a href="lent-sat3.html" class="navbar-link">Jumamosi</a>
+                    <a href="lent-sun3.html" class="navbar-link active-day">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Hali ya Giza</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Ukubwa wa Maandishi</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                JUMAPILI YA PENTEKOSTE
+            </h1>
+
+            <section id="cycle-1-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    Cycle 1 & 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. Rm. 8:5-27
+                    </h3>
+                    <p class="paragraph-text">
+                        Wale wanaoongozwa na Roho wa Mungu, hao ndio watoto wa Mungu.
+                        Somo kutoka kwa Waraka kwa Warumi wa Mtakatifu Paulo, mtume.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa maana wale wanaoishi kwa kuufuata mwili huweka nia zao katika mambo ya mwili, bali wale waifuatao Roho huweka nia zao katika mambo ya Roho.
+                    </p>
+                    <p class="paragraph-text">
+                       Kuweka nia katika mwili ni mauti, bali nia ya Roho ni uzima na amani.
+                    </p>
+                    <p class="paragraph-text">
+                       Kwa maana nia ya mwili ni uadui na Mungu; haitii sheria ya Mungu, lakini hawezi;
+                    </p>
+                    <p class="paragraph-text">
+                     na wale waufuatao mwili hawawezi kumpendeza Mungu.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini ninyi hamwufuati mwili, bali mwaifuata Roho, ikiwa Roho wa Mungu anakaa ndani yenu. Yeyote asiye na Roho wa Kristo si wake.
+                    </p>
+                    <p class="paragraph-text">
+                       Lakini Kristo akiwa ndani yenu, ijapokuwa miili yenu imekufa kwa sababu ya dhambi, roho zenu zi hai kwa sababu ya haki.
+                    </p>
+                    <p class="paragraph-text">
+                       Ikiwa Roho wake yeye aliyemfufua Yesu katika wafu anakaa ndani yenu, yeye aliyemfufua Kristo Yesu katika wafu ataihuisha na miili yenu iliyo katika hali ya kufa, kwa Roho wake anayekaa ndani yenu.
+                    </p>
+                    <p class="paragraph-text">
+                      Basi, ndugu, tu wadeni, si wa mwili, ili tuishi kwa kuufuata mwili;-
+                    </p>
+                    <p class="paragraph-text">
+                       kwa maana mkiishi kwa kufuata mambo ya mwili, mtakufa; bali kama mkiyafisha matendo ya mwili kwa Roho, mtaishi.
+                    </p>
+                    <p class="paragraph-text">
+                       Kwa maana wote wanaoongozwa na Roho wa Mungu hao ndio wana wa Mungu.
+                    </p>
+                    <p class="paragraph-text">
+                      Kwa maana hamkupokea roho ya utumwa na kuwatia tena woga, bali mlipokea roho ya kufanywa wana. Tunapolia, “Abba! Baba!"
+                    </p>
+                    <p class="paragraph-text">
+                       Roho mwenyewe ndiye akishuhudia pamoja na roho zetu, ya kuwa sisi tu watoto wa Mungu;
+                    </p>
+                    <p class="paragraph-text">
+                         na kama tu watoto, basi, tu warithi, warithi wa Mungu, warithio pamoja na Kristo; mradi tu tunateswa pamoja naye ili tupate na kutukuzwa pamoja naye.
+                    </p>
+                    <p class="paragraph-text">
+                         Nayahesabu mateso ya wakati huu wa sasa kuwa si kitu kama utukufu utakaofunuliwa kwetu.
+                    </p>
+                    <p class="paragraph-text">
+                       Kwa maana viumbe vyote pia vinatazamia kwa shauku kufunuliwa kwa wana wa Mungu;
+                    </p>
+                    <p class="paragraph-text">
+                         kwa maana uumbaji ulitiishwa chini ya ubatili, si kwa mapenzi yake yenyewe, bali kwa mapenzi yake yeye aliyeutiisha katika tumaini;
+                    </p>
+                    <p class="paragraph-text">
+                       kwa sababu viumbe vyenyewe vitawekwa huru kutoka katika utumwa wa uharibifu na kupata uhuru wa utukufu wa watoto wa Mungu.
+                    </p>
+                    <p class="paragraph-text">
+                       Twajua ya kuwa hata sasa viumbe vyote vinaugua pamoja katika utungu;
+                    </p>
+                    <p class="paragraph-text">
+                        wala si uumbaji tu, bali na sisi wenyewe tulio na malimbuko ya Roho, tunaugua kwa ndani, tukingojea kufanywa wana, ukombozi wa miili yetu.
+                    </p>
+                    <p class="paragraph-text">
+                      Kwa maana katika tumaini hili tuliokolewa. Sasa tumaini linaloonekana sio tumaini. Kwa maana ni nani anayetumainia kile anachokiona?
+                    </p>
+                    <p class="paragraph-text">
+                      Lakini tukitumainia tusichokiona, twakingoja kwa saburi.
+                    </p>
+                    <p class="paragraph-text">
+                         Kadhalika Roho hutusaidia udhaifu wetu; kwa maana hatujui kuomba jinsi itupasavyo, lakini Roho mwenyewe hutuombea kwa kuugua kusikoweza kusema.
+                    </p>
+                    <p class="paragraph-text">
+                      Na yeye aichunguzaye mioyo ya watu aijua nia ya Roho ilivyo, kwa sababu Roho huwaombea watakatifu kama apendavyo Mungu.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <h4 class="subsection-heading">Kiitikizano 1</h4>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ninyi nyote mmekuwa wana wa Mungu kwa njia ya imani katika Kristo Yesu; Mungu amemtuma Roho wa Mwanawe mioyoni mwetu, ambaye alia, Aba, Baba, aleluya.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Hakutupatia Roho ya woga, bali ya nguvu, ya upendo na hekima.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hakika Mungu amemtuma Roho wa Mwanawe mioyoni mwetu aliaye, Aba, Baba, aleluya.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <h4 class="subsection-heading">Kiitikizano 2</h4>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hamkupokea roho ya utumwa ili mpate kuogopa tena. *Mmepokea roho ya wana wa kulea, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kwamba ninyi ni wana inathibitishwa na ukweli kwamba Mungu amemtuma Roho wa Mwanawe mioyoni mwenu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mmepokea roho ya wana wa kulea, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Kitabu cha 3, 17, 1-3
+                    </h3>
+                    <p class="paragraph-text">
+                        Utume wa Roho Mtakatifu.
+                        Usomaji kutoka kwa risala "Dhidi ya uzushi" ya Mtakatifu Irenaeus, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Bwana alipowapa wanafunzi uwezo wa kutoa kuzaliwa upya katika uzima wa Mungu, alisema: ‘Enendeni, mkawafanye mataifa yote kuwa wanafunzi, mkiwabatiza kwa jina la Baba na la Mwana na la Roho Mtakatifu’.
+                    </p>
+                    <p class="paragraph-text">
+                        Aliahidi kwa njia ya manabii wake kwamba angemimina Roho yake katika nyakati za mwisho juu ya watumishi wake na wajakazi wake ili watoe unabii.
+                    </p>
+                    <p class="paragraph-text">
+                        Na hivyo Roho alishuka juu ya Mwana wa Mungu, ambaye alifanyika Mwana wa Adamu, na pamoja naye akawa na desturi ya kukaa katika jamii ya binadamu na kukaa katika uumbaji wa Mungu, ndani ya watu, kufanya mapenzi ya Baba kati yao na kufanya tabia zao za kale kuwa mpya kwa upya wa Kristo.
+                    </p>
+                    <p class="paragraph-text">
+                        Luka anasema kwamba siku ya Pentekoste, baada ya kupaa kwa Bwana, Roho alishuka juu ya wanafunzi kwa uwezo wa kuwapa mataifa yote kuingia katika uzima, na kufungua Agano Jipya. Na kwa hivyo katika kila lugha waliimba wimbo kwa Mungu kwa pamoja; kwa maana Roho aliwaleta pamoja mataifa yaliyotawanyika katika umoja, akamtolea Baba malimbuko ya mataifa yote.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo Bwana aliahidi kututumia Roho Mtakatifu ili kutufanya tuwe wa kufaa kwa makusudi ya Mungu. Kama vile unga mkavu usivyoweza kushikana na kuwa donge la unga, pungufu ya mkate, bila unyevu, vivyo hivyo na sisi, tulio wengi, hatungeweza kuwa wamoja katika Kristo Yesu bila maji yatokayo mbinguni. Na kama vile udongo mkavu hauwezi kuzaa matunda isipokuwa unapopokea unyevu, vivyo hivyo sisi, ambao kwa kuanzia ni kuni kavu, hatuwezi kamwe kuzaa matunda ya uzima isipokuwa mvua kutoka mbinguni inyeshe kwa mapenzi yetu.
+                    </p>
+                    <p class="paragraph-text">
+                        Maana miili yetu kwa maji ya ubatizo imepokea umoja uletao uhuru kutoka kwa uharibifu; lakini nafsi zetu zimepokea kwa Roho.
+                    </p>
+                    <p class="paragraph-text">
+                        Roho ya Mungu ikamshukia Bwana, ‘Roho ya hekima na ufahamu, roho ya shauri na uweza, roho ya maarifa na ibada, roho ya kumcha Bwana. Alitoa Roho yule yule tena kwa Kanisa, akituma Msaidizi kwa kila taifa kutoka mbinguni, kutoka ambayo Bwana alisema 'Ibilisi alitupwa chini kama umeme. Kwa hiyo twahitaji umande wa Mungu, ili tusiteketezwe na kutozaa matunda, bali tuwe na Kianzi wakati tuna mshitaki. Kwa maana Bwana amemkabidhi Roho Mtakatifu mtu wake aliyeanguka kati ya wanyang'anyi. Akimhurumia amefunga majeraha yake, na kutoa sarafu mbili za kifalme, zilizopigwa chapa na sura ya Roho na maandiko ya Baba na Mwana. Tunapaswa kuzikubali, na kuifanya sarafu tuliyokabidhiwa izae matunda na kuongezeka kwa ajili ya Bwana.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hata ilipotimia siku ya Pentekoste, wanafunzi wake walikuwa wamekusanyika wote mahali pamoja; ghafula, sauti ikatoka mbinguni, kama uvumi wa upepo wa nguvu ukienda kasi kasi, ikaijaza nyumba yote, aleluya.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Walipokuwa pamoja wote mahali pamoja, ghafla sauti kutoka mbinguni ikasikika kama ngurumo ya upepo mkali, ikajaa nyumba yote, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili.
+                    </h3>
+                    <p class="paragraph-text">
+                        Kwa asili yetu inapewa chakula kamili, ambacho ndani yake mna uzima: Roho Mtakatifu.
+                        Somo kutoka kwa "Majadiliano juu ya Roho Mtakatifu" ya Mtakatifu Gregory wa Nyssa, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Daudi daima hutoa yaliyomo katika kila sherehe kwa uzuri zaidi, akitengeneza zeze yake tamu na fumbo linaloshughulikiwa. Kwa hivyo, akipiga nyimbo za Roho wa hekima na kuinua wimbo, nabii huyohuyo anatuonyesha sisi pia sherehe kuu ya Pentekoste na kwa upatano wake wa kimungu anarudia kwetu zaburi ambayo inajibu zawadi ya kimungu ya leo: "Njoni, mpigieni Bwana furaha yetu" (Zab. 94: 1).
+                    </p>
+                    <p class="paragraph-text">
+                        Kwanza kabisa ni lazima tujue faida hii ya Mungu, ili kuyapatanisha basi maneno ya nabii kwa hoja ya hotuba. Niruhusu nikuelezee, kulingana na uwezekano wangu.
+                    </p>
+                    <p class="paragraph-text">
+                        Hapo mwanzo wanadamu walikuwa mbali na maarifa ya Mungu na, wakiwa wamemwacha Bwana wa ulimwengu mzima, baadhi yao waliabudu nguvu za asili, wengine waliamini kwamba ilikuwa nzuri kuabudu pepo; kwa wengi sanamu za simulakramu zilizotengenezwa na mikono ya wanadamu zilionekana kuwa miungu, ambayo waliweka wakfu madhabahu, mahekalu, dhabihu, wahasiriwa, mahali patakatifu na nyua takatifu na vitu vingine kama hivyo kwao.
+                    </p>
+                    <p class="paragraph-text">
+                        Bwana wa maumbile aligeuza mtazamo wake wa upole kwenye asili potovu ya wanadamu na akayaita maisha ya mwanadamu hatua kwa hatua kurudi kutoka kwenye upotofu hadi kwenye ujuzi fulani wa ukweli.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hakika wale ambao kwa mujibu wa maagizo ya daktari humrejesha yule ambaye ni dhaifu baada ya njaa ya muda mrefu na, kwa kuzingatia udhaifu wake, hawampi chakula kingi anavyotaka mara moja, lakini wakati kwa mlo wa wastani amepata nguvu zake, basi wanamruhusu kujishibisha kwa raha yake; vivyo hivyo kwa ubinadamu uliochoshwa na njaa ya kutisha, Maongozi ya kimungu yanasambaza chakula cha mafumbo ya kimungu kwa njia ambayo siku baada ya siku, ikiendelea na utaratibu, inaweza hatimaye kufikia kilele cha ukamilifu.
+                    </p>
+                    <p class="paragraph-text">
+                        Kinachotupa wokovu ni ile nguvu muhimu, ambayo tunaamini kwa jina la Baba na la Mwana na la Roho Mtakatifu.
+                    </p>
+                    <p class="paragraph-text">
+                        Sasa wakati wanadamu, kwa sababu ya udhaifu wa roho zao uliosababishwa na njaa hiyo, hawakufaa tena kufahamu sakramenti ya wokovu, walikumbushwa kutoka kwa ushirikina na manabii na kwa sheria, ili kujizoeza kutofautisha uungu wa pekee na kutambua ndani yake nguvu pekee ya Baba, isiyofaa kama tulivyosema kupokea chakula kigumu zaidi. Baadaye, kwa wale ambao sheria ilikuwa imewatayarisha kwa ujuzi kamili zaidi wa uungu, Mwana wa Pekee alifunuliwa kupitia injili. Hatimaye, kwenu mmepewa chakula kikamilifu kwa ajili ya asili yetu, ambayo ndani yake mna uzima: Roho Mtakatifu.
+                    </p>
+                    <p class="paragraph-text">
+                        Haya ndiyo maudhui ya sherehe za leo. Kwa hiyo ni hivyo tu, tukiunganishwa tena na wanakwaya wanaosherehekea ukuu wa Roho Mtakatifu, tunamsikiliza Daudi, mkuu wa kwaya hii ya kiroho, anayeimba: “Njooni, mpigieni Bwana shangwe yenu” (Zab. 94:1) kwamba, kama vile Mtume asemavyo: “Bwana ndiye mtoa roho” (1Kor. 15:45).
+                    </p>
+                    <p class="paragraph-text">
+                        Ndugu, tujizimize nafsi zetu kwa utamu wa uchaji Mungu, na kufurahia pamoja na kwaya za mitume na manabii, tushangilie kwa ajili ya zawadi za Roho Mtakatifu na tufurahi katika siku hii aliyoifanya Bwana, katika Kristo Yesu Bwana wetu, utukufu una yeye milele na milele.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Moto wa kimungu ulikuja, si kuwaka bali kuangaza, si kuteketeza, bali kuangaza na kukuta mioyo ya wanafunzi kama vyombo safi. *Na kusambaza zawadi na karama, aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Iliwakuta kwa umoja katika upendo na neema ya Mwenyezi Mungu iliwavamia na kuwaangazia.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Na kuwagawia karama na karama, aleluya, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Diski. 8, 1-3
+                    </h3>
+                    <p class="paragraph-text">
+                        Umoja wa Kanisa unazungumza katika lugha zote.
+                        Usomaji kutoka kwa "Discourses" za mwandishi Mwafrika wa karne ya VI.
+                    </p>
+                    <p class="paragraph-text">
+                        Mitume walinena kwa lugha zote. Ilikuwa ni kwa njia hii ndipo Mungu alipotaka kudhihirisha uwepo wa Roho Mtakatifu, kwa njia ambayo yeye aliyempokea angeweza kunena kwa lugha zote. Ni lazima kwa kweli, kuelewa vizuri, ndugu wapendwa, kwamba ni hasa shukrani kwa Roho Mtakatifu kwamba upendo wa Mungu hupatikana katika mioyo yetu.
+                    </p>
+                    <p class="paragraph-text">
+                        Na kwa kuwa ilikuwa ni upendo uliopaswa kukusanya Kanisa la Mungu kutoka sehemu zote za ulimwengu, mtu mmoja tu, akimpokea Roho Mtakatifu, ndiye angeweza kunena lugha zote. Hivyo sasa Kanisa, lililokusanyika kwa kazi ya Roho Mtakatifu, linaonyesha umoja wake katika lugha zote.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hivyo ikiwa mtu atamwambia mmoja wenu. Mmempokea Roho Mtakatifu, kwa nini hamsemi kwa lugha zote? Lazima ujibu: Hakika mimi nanena kwa lugha zote, kwa kweli nimeingizwa katika mwili wa Kristo ulio ndani ya Kanisa, ambalo huzungumza lugha zote. Je, ni kitu gani kingine ambacho Mungu alitaka kumaanisha kupitia uwepo wa Roho Mtakatifu, kama si kwamba Kanisa lake lingezungumza katika lugha zote?
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa njia hii linatimizwa lile ambalo Bwana aliahidi: Hakuna mtu atiaye divai mpya katika viriba vikuukuu, bali divai mpya hutiwa katika viriba vipya na hivyo vyote viwili huhifadhiwa (taz. Lk. 5:37-38). Kwa hiyo waliposikika wakisema kwa lugha zote, baadhi yao kwa akili walisema: “Wamelewa kwa mvinyo mpya” (Mdo. 2:13). Kwa kweli walikuwa wamefanywa viriba vipya, vilivyofanywa upya kwa neema ya utakatifu, kwa njia inayojaa divai mpya, ya Roho Mtakatifu, wakinena lugha zote, wakichangamka, iliwakilishwa kwa muujiza huo ulio dhahiri zaidi ukweli kwamba Kanisa lingekuwa katoliki kwa njia ya lugha za mataifa yote.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hivyo sherehekea siku hii, kama mshiriki wa mwili wa kipekee wa Kristo. Kwa kweli husherehekei bila faida ikiwa wewe ndio unaadhimisha. Ikiwa ni wewe umeingizwa katika Kanisa hilo, ambalo Bwana aliyejazwa na Roho Mtakatifu, analieneza kwa nguvu zake katika ulimwengu wote, anatambua kuwa ni lake, akitambuliwa nalo.
+                    </p>
+                    <p class="paragraph-text">
+                        Bwana-arusi hajamwacha Bibi-arusi wake, kwa hiyo hakuna anayeweza kumpa mwingine tofauti.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa kweli, kwenu ninyi tu, ambao mmeundwa kwa muungano wa mataifa yote, yaani, kwenu Kanisa la Kristo, mwili wa Kristo, bibi-arusi wa Kristo, Mtume Mchukuliane ninyi kwa " cha ninyi kwa upendo akijaribu kuhifadhi umoja wa Mungu anasema: Roho kupitia kifungo amani” (Efe. 4:2).
+                    </p>
+                    <p class="paragraph-text">
+                        Hii ndiyo nyumba ya Mungu, iliyojengwa juu ya mawe yaliyo hai, ambayo yeye anapendezwa nayo kukaa na mahali ambapo macho yake hayapaswi kuchukizwa na mgawanyiko wowote wa uovu.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mungu anayewajua wanadamu, amewapa ninyi pia Roho Mtakatifu kama alivyowapa ninyi, akiisafisha mioyo yao kwa imani. Haleluya hakufanya tofauti yoyote kati yenu na wao.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kwa hiyo Mungu amewapa wapagani nafasi ya kuongoka ili wapate uzima.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> wala hajaleta tofauti yoyote kati yako na wao, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Diski. 77, 1-3
+                    </h3>
+                    <p class="paragraph-text">
+                        Mungu amemtuma Roho wa Mwanawe mioyoni mwetu ambaye alia: Aba Baba.
+                        Usomaji kutoka kwa "Majadiliano" ya Mtakatifu Leo Mkuu, papa.
+                    </p>
+                    <p class="paragraph-text">
+                        Wapendwa wapendwa, sikukuu ya leo, inayoadhimishwa ulimwenguni kote, iliwekwa wakfu kwa kuja kwa Roho Mtakatifu, ambaye alishuka, kama walivyotarajia, kwa Mitume na kwa watu wa waumini siku hamsini baada ya Ufufuo wa Bwana.
+                    </p>
+                    <p class="paragraph-text">
+                        Ilingoja kwa sababu Bwana Yesu alikuwa ameiahidi, si kana kwamba ingeanza basi kwa mara ya kwanza kukaa ndani ya watakatifu, bali ili kuwasha kwa ari kubwa zaidi mioyo iliyowekwa wakfu kwake na kuifurika kwa wingi zaidi na kufanya karama zake ziongezeke; si kuanza kwa hiyo kazi mpya kwa ukweli wa kuwa mkarimu zaidi katika kujitoa mwenyewe.
+                    </p>
+                    <p class="paragraph-text">
+                        Ukuu wa Roho Mtakatifu kamwe hautofautiani na uweza wa Baba na wa Mwana, na kile ambacho serikali ya kimungu inaweka katika usimamizi wa vitu vyote, kinatokana na usimamizi wa Utatu wote. Moja ni huruma ya rehema, moja ni ukali wa haki; hakuna mgawanyiko wa shughuli pale ambapo hakuna tofauti ya mapenzi. Mambo yanayomulika Baba, yanamwangazia Mwana, yanamulika Roho Mtakatifu; na kwa kuwa mmoja ni Nafsi aliyetumwa, na mwingine Nafsi ya anayetuma na mwingine ya yule anayeahidi, wakati huo huo unadhihirika kwetu Umoja na Utatu, ili kutufanya tufahamu kuwa dhati ni sawa lakini haiko peke yake, na kwamba utambulisho wa kitu hicho hauashirii utambulisho wa Nafsi.
+                    </p>
+                    <p class="paragraph-text">
+                        Ikiwa basi baadhi ya matendo, kuokoa daima ushirikiano wa uungu usioweza kutenganishwa, wengine Baba hufanya kazi, wengine Mwana na wengine ni wa Roho Mtakatifu, wanategemea mpango wa ukombozi wetu, kwa sababu ya wokovu wetu. Kama mwanadamu, aliyeumbwa kwa sura na mfano wa Mungu angebakia katika hadhi iliyotolewa kwa asili yake, wala, kwa kudanganywa na mitego ya Ibilisi na kusukumwa na tamaa angekuwa amekengeuka kutoka kwa sheria iliyowekwa juu yake, Muumba wa ulimwengu hangekuwa kiumbe, wa Milele hangejitiisha chini ya hali ya muda, wala Mwana wa Mungu hangekuwa sawa na mwili wa Baba (katika hali kama hiyo ya mtumwa) 8:3). Lakini kwa kuwa “kifo kilikuwa kimeingia ulimwenguni kwa sababu ya wivu wa Ibilisi” ( Ws. 2:24 ), na utumwa wetu haungeweza kubatilishwa bila yeye kuchukua katika mkono wake jambo letu, kuwa, bila kudhuru ukuu wake, mtu wa kweli, mtu pekee ambaye hakupata uchafuzi wa dhambi, Utatu mwenye rehema alizigawanya kazi za Baba kwa njia ya ukombozi na ukombozi wa Baba Mtakatifu. Roho iliwaka.
+                    </p>
+                    <p class="paragraph-text">
+                        Ilikuwa ni lazima kwa kweli kwamba wao pia ambao walipaswa kuokolewa walifanya jambo kwa nia yao wenyewe, na kwamba mioyo iliyoongoka kwa Mkombozi ilijivuta wenyewe mbali na utawala wa adui; kwa hiyo, kama vile Mtume asemavyo: “Mungu amemtuma Roho wa Mwanawe mioyoni mwao, ambaye alia, Aba, yaani, Baba” (Gal. 4:6). Na “ambapo kuna Roho kuna uhuru” (2Kor.3:17) Zaidi ya hayo “hakuna awezaye kusema, Yesu ni Bwana ikiwa si chini ya utendaji wa Roho Mtakatifu” (1Kor. 12:3).
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo, tukiongozwa na neema, kwa hekima tunajua kwa njia ya imani kwamba yale ambayo katika ukombozi wetu ni ya Baba, yale ambayo yanafaa kwa Mwana au Roho Mtakatifu, na yale ambayo ni ya kawaida kwao, basi tunakaribisha bila shaka yale yote ambayo yametimizwa kwa ajili yetu katika kufedheheshwa kwa mwili bila kuhusisha chochote kisichostahili kwa utukufu wa Utatu wa pekee na unaofanana. Ni kweli, hakuna akili inayoweza kumwelewa Mungu, hakuna lugha inayoweza kuzungumza juu yake; kwamba kidogo juu ya yote ambayo akili ya mwanadamu inaweza kufahamu juu ya kiini cha uungu wa Baba, bila kufikiria kitu sawa cha Mwana wa Pekee na wa Roho Mtakatifu, haina ujuzi wa imani, lakini imefichwa na mwili; na kile kinachoonekana kuhisi kinafaa kuhusiana na Baba, kwa kweli kinapoteza, kwa sababu kinajifanya kuwa mgeni kwa Utatu wote ambao ndani yake hauhifadhi umoja. Ukweli ambao unatofautishwa na ukosefu wa usawa sio ukweli mmoja.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hakika *ninyi mmekuwa watoto wa Mungu, kwa kuwa Mungu amemtuma Roho wa Mwanawe mioyoni mwenu, ambaye alia, Aba, yaani, Baba! Aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mungu hakutupa roho ya woga, bali ya nguvu, upendo na hekima.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Roho wa Mwanawe mioyoni mwenu ambaye alilia: Aba, Baba! Aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Diski. 30
+                    </h3>
+                    <p class="paragraph-text">
+                        Kanisa la Kristo ni pale ambapo umwilisho wa Kristo kutoka kwa Bikira unahubiriwa.
+                        Usomaji kutoka kwa "Kazi" za Mtakatifu Cromazio wa Aquilea, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Baada ya Bwana na Mwokozi wetu Yesu Kristo kufa, kufufuka tena na kupaa mbinguni, Kanisa lake lililoundwa na watu wapatao mia moja, wakakusanyika pamoja katika ukumbi wa ghorofa ya juu, pamoja na Maria mama yake Yesu na ndugu zake. Haiwezekani kuzungumzia Kanisa ambalo Mariamu mama yake Yesu hayupo pamoja na ndugu zake. Kanisa la Kristo kwa kweli ndipo ambapo umwilisho wa Kristo kutoka kwa Bikira unahubiriwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Na pale ambapo mitume, ndugu za Bwana wanahubiri, injili inasikilizwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Hapo mwanzo, baada ya kupaa kwa Bwana mbinguni, Kanisa lilikuwa na watu mia moja na ishirini tu, kisha likaongezeka hata kuujaza ulimwengu wote katika mataifa mengi. Kwamba hili lingetokea linadhihirishwa na Bwana mwenyewe katika injili, anapowaambia mitume wake: “Ikiwa chembe ya ngano haitaanguka katika udongo na kufa, hubakia hali iyo hiyo iyo peke yake, badala yake ikifa, hutoa matunda mengi” (Yn. 12:23).
+                    </p>
+                    <p class="paragraph-text">
+                        Ufufuo wa Bwana, baada ya mateso yake kwa ajili ya wokovu wa wanadamu kweli umeleta matunda tele. Katika punje ya ngano Mwokozi wetu anataka kuonyesha mwili wake. Baada ya kuzikwa kwake atazaa matunda mengi sana, kwa sababu kwa kufufuka kwake Bwana miganda ya wema na mavuno ya mataifa yanayoamini yamechipuka katika ulimwengu wote. Kifo cha mmoja tu kimekuwa maisha ya wote.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa sababu, katika kifungu kingine cha injili, anafanya ulinganisho huu: "Ufalme wa mbinguni unaweza kulinganishwa na punje ya haradali, ambayo mtu huchukua na kuipanda katika shamba lake, ambayo ni ndogo kuliko mbegu zote, lakini ikiisha kumea, huwa kubwa kuliko kunde zingine na kuwa mti, hata ndege wa angani huja na kukaa katika matawi yake" (Mt. 13: 31-32). Bwana amejifananisha na mbegu ya haradali ambaye, ingawa ni Bwana wa utukufu, mwenye ukuu wa milele, alijifanya kuwa mdogo kuliko wote, akikaribia kuzaliwa kama mtoto mdogo wa Bikira.
+                    </p>
+                    <p class="paragraph-text">
+                        Anapandwa ardhini mwili wake unapotolewa kaburini. Lakini baada ya kufufuka kwake, kwa utukufu wa ufufuo anainuliwa kutoka duniani, ili awe mti ambao ndani ya matawi yake ndege wa angani hukaa. Katika mti huu iliwakilishwa Kanisa, ambalo baada ya kifo cha Kristo limefufuka katika utukufu. Matawi yake si wengine ila mitume, kwani kama vile matawi kwa asili hupamba mti, vivyo hivyo mitume kwa uzuri wa neema yao hupamba Kanisa la Kristo.
+                    </p>
+                    <p class="paragraph-text">
+                        Katika matawi ndege wa angani wanaonekana kukaa. Katika ndege hawa wa mbinguni tunasawiriwa kwa mafumbo, sisi tunaoingia katika Kanisa la Kristo anatulia katika mafundisho ya mitume kama katika matawi yake.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo hapo mwanzo, baada ya kupaa kwa Bwana, Kanisa lilikuwa na watu wachache tu, lakini kisha likakua sana hata likajaza dunia nzima, si miji tu, bali pia mataifa mbalimbali. Waajemi wanaamini, Wahindi wanaamini, ulimwengu wote unaamini. Mataifa yanaongozwa kwa amani kwa kumwabudu Kristo si kwa hofu ya upanga au kwa hofu ya mfalme, lakini kwa imani pekee katika Kristo. Na ikiwa ni lazima, wako tayari kutoa uhai wao kwa ajili ya Mfalme wao badala ya kupoteza imani. Na kwa haki, kwa sababu Mfalme huyu tunayempigania huwapa thawabu askari wake pia baada ya kufa.
+                    </p>
+                    <p class="paragraph-text">
+                        Wafalme wa ulimwengu hawawezi kutoa kitu baada ya kifo kwa askari aliyekubali kuuawa kwa ajili yake; lakini mfalme Kristo atathawabisha kwa kutoweza kufa askari wake ambao wamejiacha wauawe kwa ajili yake. Askari wa ulimwengu, akiuawa kwa ajili ya mfalme, ameshindwa. Askari wa Kristo, badala yake, anashinda kwa njia kubwa zaidi anapostahili kuuawa kwa ajili ya Kristo.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Siku zote tunatolewa tufe kwa ajili ya Yesu, ili uzima wa Yesu udhihirishwe katika miili yetu inayokufa.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kwa ajili yenu tunauawa kila siku, tunahesabiwa kuwa kama kondoo wa kuchinjwa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> ili uzima wa Yesu udhihirishwe katika miili yetu ipatikanayo na mauti, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel-vigil" class="liturgical-section">
+                <h2 class="section-heading">
+                    INJILI YA MKESHA. Yohana 7:37-39
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Mito ya maji ya uzima itabubujika.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        [Yohana 7:37] Hata siku ya mwisho ya sikukuu, ile siku kuu, Yesu alisimama, akatangaza, Mtu akiona kiu, na aje kwangu anywe.
+                    </p>
+                    <p class="paragraph-text">
+                        [Yohana 7:38] Yeye aniaminiye mimi, kama yasemavyo maandiko, Mito ya maji yaliyo hai itatoka moyoni mwake.
+                    </p>
+                    <p class="paragraph-text">
+                        [Yohana 7:39] Hayo aliyasema juu ya Roho ambaye wale wamwaminio watampokea; kwa maana Roho alikuwa hajatolewa, kwa sababu Yesu alikuwa bado hajatukuzwa.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel-day" class="liturgical-section">
+                <h2 class="section-heading">
+                    INJILI YA SIKU. Yohana 20:19-23
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Kama vile Baba alivyonituma mimi, nami nawatuma ninyi, mpokeeni Roho Mtakatifu.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        [Yohana 20:19] Ikawa jioni ya siku ile, siku ya kwanza ya juma, milango imefungwa pale walipokuwapo wanafunzi, kwa hofu ya Wayahudi, Yesu akaja akasimama kati yao, akawaambia, Amani iwe kwenu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Yohana 20:20] Alipokwisha kusema hayo, akawaonyesha mikono yake na ubavu wake. Ndipo wanafunzi wakafurahi walipomwona Bwana.
+                    </p>
+                    <p class="paragraph-text">
+                        [Yohana 20:21] Yesu akawaambia tena, Amani iwe kwenu. Kama vile Baba alivyonituma mimi, nami nawatuma ninyi.
+                    </p>
+                    <p class="paragraph-text">
+                        [Yohana 20:22] Naye akiisha kusema hayo, akawavuvia, akawaambia, Pokeeni Roho Mtakatifu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Yohana 20:23] Mikisamehe dhambi za mtu ye yote, zimesamehewa; mkizibakiza dhambi za mtu yo yote, zitabakizwa.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kugeuza hali ya giza
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const htmlElement = document.documentElement;
+
+            // Angalia hifadhi ya ndani kwa upendeleo wa mandhari
+            if (localStorage.getItem('theme') === 'dark') {
+                htmlElement.classList.add('dark');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // Kugeuza ukubwa wa maandishi
+            const textSizeToggle = document.getElementById('text-size-toggle');
+            const mainContentWrapper = document.getElementById('main-content-wrapper');
+            const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+            let currentTextSizeIndex = 1; // Anza na 'text-size-base'
+
+            // Anzisha ukubwa wa maandishi kutoka hifadhi ya ndani au chaguo-msingi
+            const savedTextSize = localStorage.getItem('textSize');
+            if (savedTextSize && textSizes.includes(savedTextSize)) {
+                mainContentWrapper.classList.add(savedTextSize);
+                currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+            } else {
+                mainContentWrapper.classList.add('text-size-base'); // Chaguo-msingi
+            }
+
+            textSizeToggle.addEventListener('click', () => {
+                mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+                currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+                mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+                localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+            });
+
+            // Kugeuza menyu ya hamburger kwa simu
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const navLinks = document.getElementById('nav-links');
+
+            // Function to update hamburger button aria-expanded attribute
+            function updateHamburgerAria() {
+                const isExpanded = !navLinks.classList.contains('hidden');
+                hamburgerButton.setAttribute('aria-expanded', isExpanded);
+            }
+
+            // Initial setup for hamburger menu visibility and aria attribute
+            function initializeHamburgerMenu() {
+                if (window.innerWidth >= 768) {
+                    navLinks.classList.remove('hidden');
+                } else {
+                    navLinks.classList.add('hidden');
+                }
+                updateHamburgerAria();
+            }
+
+            hamburgerButton.addEventListener('click', () => {
+                navLinks.classList.toggle('hidden');
+                updateHamburgerAria();
+            });
+
+            // Close hamburger menu when a link is clicked on small screens
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 768) {
+                        navLinks.classList.add('hidden');
+                        updateHamburgerAria();
+                    }
+                });
+            });
+
+            // Adjust hamburger menu visibility on resize
+            window.addEventListener('resize', () => {
+                initializeHamburgerMenu();
+            });
+
+            // Initialize on page load
+            initializeHamburgerMenu();
+        });
+    </script>
+
+</body>
+</html>

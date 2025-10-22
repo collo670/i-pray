@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 6 JUMAMOSI - Muundo wa Liturujia</title>
+    <style>
+        /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            display: none; /* hidden by default, controlled by JS */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 6 JUMAMOSI</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menyu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="lent-mon3.html" class="navbar-link">Jumatatu</a>
+                    <a href="lent-tue3.html" class="navbar-link">Jumanne</a>
+                    <a href="lent-wed3.html" class="navbar-link">Jumatano</a>
+                    <a href="lent-thur3.html" class="navbar-link">Alhamisi</a>
+                    <a href="lent-fri3.html" class="navbar-link">Ijumaa</a>
+                    <a href="lent-sat3.html" class="navbar-link active-day">Jumamosi</a>
+                    <a href="lent-sun3.html" class="navbar-link">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Hali ya Giza</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Ukubwa wa Maandishi</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 6 JUMAMOSI
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    Cycle 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. 1 Yoh. 3:18-24
+                    </h3>
+                    <p class="paragraph-text">
+                        Amri ya imani na upendo.
+                        Somo kutoka kwa Waraka wa Kwanza wa Yohana Mtakatifu, mtume.
+                    </p>
+                    <p class="paragraph-text">
+                        Watoto wadogo, tusipende kwa neno wala kwa usemi, bali kwa tendo na kweli. Katika hili tutajua ya kuwa sisi tu wa kweli, nasi tutaituliza mioyo yetu mbele zake kila wakati mioyo yetu inapotuhukumu; kwa maana Mungu ni mkuu kuliko mioyo yetu, naye anajua kila kitu. Wapenzi, mioyo yetu isipotuhukumu, tuna ujasiri mbele za Mungu; nasi tunapokea kutoka kwake chochote tuombacho, kwa kuwa tunazishika amri zake na kufanya yale yanayompendeza. Na hii ndiyo amri yake, kwamba tuliamini jina la Mwana wake Yesu Kristo, na kupendana sisi kwa sisi, kama vile alivyotuamuru. Wote wazishikao amri zake hukaa ndani yake, naye ndani yao. Na katika hili twajua ya kuwa anakaa ndani yetu, kwa huyo Roho ambaye ametupa.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yeye azishikaye amri za Mungu hukaa ndani ya Mungu, naye ndani yake; *kwa huyo Roho ambaye ametupa twajua ya kuwa anakaa ndani yetu; aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Bwana ameumba hekima katika Roho Mtakatifu, ameisambaza kwa kila mwanadamu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> kutoka kwa Roho ambaye ametupa twajua ya kuwa anakaa ndani yetu, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Tratt. 5:11-13
+                    </h3>
+                    <p class="paragraph-text">
+                        Hatupendi kwa maneno, wala kwa ulimi, bali kwa ukweli na kweli.
+                        kutoka kwa "Mkataba juu ya Barua ya kwanza ya Yohana" ya St. Augustine, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        "Kutokana na hili tumejua upendo". Hapa anazungumza juu ya utimilifu wa upendo, ule ukamilifu ambao umependekezwa kwetu: “Katika hili tumelifahamu pendo, naye aliutoa uhai wake kwa ajili yetu; kwa hiyo imetupasa sisi pia kuutoa uhai kwa ajili ya hao ndugu” (1 Yoh. 3:16). Kutoka hapa kukaja msemo: Petro, wanipenda? Lisha kondoo wangu (taz. Yoh. 21:16).
+                    </p>
+                    <p class="paragraph-text">
+                        Ili upate kuelewa jinsi alivyotaka alishe kondoo wake, hiyo ni hadi kutoa uhai kwa ajili yao, mara moja akaongeza: “Ulipokuwa kijana ulijivika mwenyewe na kwenda ulikotaka; lakini utakapokuwa mzee utanyosha mikono yako, na mtu mwingine atakuvika nguo na kukupeleka usikotaka kwenda”. “Hayo aliyasema, anaongeza mwinjilisti, ili kuonyesha ni aina gani ya kifo ambacho atamtukuza Mungu” (Yn. 21:18-19). Alimfundisha yule ambaye alikuwa amemwambia: “Lisha kondoo wangu” kutoa uhai wake kwa ajili ya kondoo wake.
+                    </p>
+                    <p class="paragraph-text">
+                        Ndugu, hisani inaanzia wapi? Makini: umesikia ambapo ukamilifu wake unafikia, Bwana mwenyewe katika Injili ametuletea mwisho na njia: "Hakuna aliye na upendo mwingi kuliko huu, wa kutoa maisha yake kwa ajili ya rafiki zake mwenyewe" (Yn. 15: 13). Kwa hiyo, katika Injili, alitufunulia ukamilifu wa upendo, na hapa anatupendekeza.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini nyinyi mnajadili na kujiuliza: lini tutapata sadaka hii? Hutaki kukata tamaa hivi karibuni juu yako mwenyewe; labda ndani yako upendo umezaliwa tu, lakini bado haujakamilika. Ulishe, ili usishindwe. Lakini unaweza kuniambia: Nitajua nini? Tumesikia katika kile kinachojumuisha ukamilifu wake, na tusikie kutoka mahali inapoanza: "Ikiwa mtu yeyote ana mali katika ulimwengu huu na akimwona ndugu yake akiwa na uhitaji akamfungia moyo wake mwenyewe, upendo wa Mungu unawezaje kukaa ndani yake?" (1 Yoh. 3:17). Hapa ndipo upendo unapoanzia. Ikiwa bado huwezi kufa kwa ajili ya huyo ndugu, uwe tayari kumpa huyo ndugu sehemu ya mali yako. Lakini labda utasema: ninajali nini? Je, ni lazima nitoe pesa zangu ili asipate umasikini? Ikiwa dhamiri yako inakushauri mambo haya, upendo wa Baba haukai ndani yako. Ikiwa upendo wa Baba haukai ndani yako, wewe hujazaliwa na Mungu. Unawezaje kujivunia kuwa Mkristo? Unabeba jina, lakini huna ukweli.
+                    </p>
+                    <p class="paragraph-text">
+                        Ikiwa badala yake jina linafuatwa na kazi, wanaweza pia kukuita mpagani, lakini wewe kwa ukweli unajionyesha kuwa Mkristo. Ikiwa haujionyeshi kuwa Mkristo mwenye mambo ya hakika, hata kama kila mtu anakuita Mkristo, jina hilo lina manufaa gani kwako wakati hali halisi hailingani nalo? “Ikiwa mtu ana mali ya dunia na akimuona ndugu yake yuko katika dhiki humfungia yake moyoni mwake kwake, upendo wa Mungu unawezaje kukaa ndani yake? Watoto, tupende si kwa maneno tu, wala kwa ulimi, bali kwa mambo ya kweli na kweli”: (1 Yoh. 3:17-18).
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mtu asiyempenda ndugu yake ambaye anamwona, anawezaje kumpenda Mungu asiyemwona? *Hii ndiyo amri tuliyopokea kutoka kwake: Yeye anayempenda Mungu, lazima ampende pia ndugu yake, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kumpenda jirani kama nafsi yako ni ya thamani zaidi kuliko maangamizi na dhabihu zote.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hii ndiyo amri tuliyopokea kutoka kwake: Yeye ampendaye Mungu, na ampende na ndugu yake, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    Cycle 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. Matendo. 24:1-27
+                    </h3>
+                    <p class="paragraph-text">
+                        Paulo mbele ya liwali Feliksi.
+                        Somo kutoka kwa Matendo ya Mitume.
+                    </p>
+                    <p class="paragraph-text">
+                        Hata baada ya siku tano, kuhani mkuu Anania akashuka pamoja na wazee fulani na msemaji mmoja Tertulo. Wakamfungulia liwali kesi yao dhidi ya Paulo; naye alipoitwa, Tertulo akaanza kumshitaki, akisema: “Kwa kuwa tunafurahia amani nyingi kupitia kwako, na kwa kuwa kwa uandalizi wako, wewe Felisi aliye bora sana, matengenezo yanaletwa kwa ajili ya taifa hili, katika kila njia na kila mahali tunakubali jambo hili kwa shukrani zote. Lakini, nisikuzuie zaidi, nakuomba kwa wema wako utusikie kwa ufupi. Kwa maana tumemwona mtu huyu ni mtu mbaya, mchochezi katika Wayahudi wote katika ulimwengu wote, na kiongozi wa madhehebu ya Wanazareti. Hata alijaribu kulitia unajisi hekalu, lakini tukamkamata. Kwa kumchunguza wewe mwenyewe utaweza kujifunza kutoka kwake juu ya yote tunayomshitaki.” Wayahudi nao wakaunga mkono shtaka hilo, wakithibitisha kwamba hayo yote yalikuwa hivyo.
+                    </p>
+                    <p class="paragraph-text">
+                        Na liwali alipomwashiria azungumze, Paulo akajibu: “Kwa kuwa najua kwamba umekuwa mwamuzi juu ya taifa hili kwa miaka mingi, najitetea kwa furaha. Kama mjuavyo, si zaidi ya siku kumi na mbili tangu nilipokwea kwenda kuabudu Yerusalemu; nao hawakuniona nikihojiana na mtu yeyote, wala kufanya fujo katika hekalu, au katika masinagogi, au mjini. Wala hawawezi kukuthibitishia kile wanachopinga sasa mimi. Lakini nakiri neno hili kwenu, ya kwamba mimi namwabudu Mungu wa baba zetu, kwa Njia ile waiitayo madhehebu, nikiamini yote yaliyowekwa na torati, au yaliyoandikwa katika manabii, nikiwa na tumaini katika Mungu, ambalo wanalikubali wenyewe, ya kwamba kutakuwa na ufufuo wa wenye haki na wasio haki pia. Kwa hiyo sikuzote najitahidi kuwa na dhamiri safi mbele za Mungu na mbele ya wanadamu. Baada ya miaka kadhaa nilikuja kuleta sadaka na matoleo kwa taifa langu. Nilipokuwa nikifanya hivyo walinikuta nikiwa nimetakaswa hekaluni, bila umati wala fujo. Lakini Wayahudi wengine kutoka Asia imewapasa kuwa hapa mbele yako na kunishtaki kama wana neno juu yangu. au waseme wenyewe kosa gani waliloliona nilipokuwa nimesimama mbele ya baraza, isipokuwa neno hili moja nililolia nilipokuwa nimesimama kati yao, Kwa habari ya ufufuo wa wafu ninahukumiwa mbele yenu leo.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini Felisi, akijua sana habari ya ile Njia, akawaahirisha, akisema, Lisia, mkuu wa jeshi atakaposhuka, nitaamua kesi yenu. Kisha akatoa amri kwa yule akida kwamba awekwe chini ya ulinzi, lakini awe na uhuru fulani, na kwamba yeyote miongoni mwa marafiki zake asizuiwe kumhudumia. Baada ya siku kadhaa akaja Felisi pamoja na mkewe Drusila, ambaye alikuwa Myahudi; naye akatuma kumwita Paulo, akamsikiliza akisema juu ya imani katika Kristo Yesu. Naye alipokuwa akijadiliana juu ya haki, na kuwa na kiasi, na hukumu itakayokuja, Felisi alishtuka akasema, Nenda sasa hivi; nikipata nafasi nitakuita. Wakati huohuo alitumaini kwamba fedha angepewa na Paulo. Kwa hiyo alimtuma mara kwa mara na kuzungumza naye. Lakini miaka miwili ilipotimia, Porkio Festo alichukua nafasi ya Felisi; naye Felisi alitaka kujipendekeza kwa Wayahudi, akamwacha Paulo gerezani.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Watawawekea mikono na kuwaudhi, na kuwatia katika masunagogi na magereza kwa ajili ya jina langu. *Hilo litakupa fursa ya kutoa ushahidi. Aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Watakukabidhi kwa Sanhedrini, utaonekana mbele ya magavana na wafalme kwa ajili yangu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hii itakupa fursa ya kutoa ushahidi. Aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. 74, 5
+                    </h3>
+                    <p class="paragraph-text">
+                        Kupitia njia ya upendo, sisi pia tunaweza kuinuka kwa Kristo.
+                        Usomaji kutoka kwa "Majadiliano" ya Mtakatifu Leo Mkuu, papa.
+                    </p>
+                    <p class="paragraph-text">
+                        Na kwa hivyo, wapendwa, na tufurahi kwa furaha ya kiroho, na tumshukuru Mungu kwa furaha na kuinua macho ya mioyo yetu bila kizuizi hadi vilele ambapo Kristo yuko. Akili ambazo zimesikia mwito wa kuinuliwa hazipaswi kushinikizwa na mapenzi ya kidunia, wale ambao wameandikiwa tangu zamani kwa mambo ya milele hawapaswi kuchukuliwa pamoja na vitu vinavyoharibika; wale walioingia katika njia ya Kweli wasinaswe katika mitego yenye hila, na waamini lazima wachukue njia yao katika mambo haya ya muda ili kukumbuka kwamba wanakaa katika bonde la ulimwengu huu, ambayo, ijapokuwa wanakutana na baadhi ya vivutio, hawana budi kuvikumbatia kwa dhambi, bali kwa uhodari kupita humo.
+                    </p>
+                    <p class="paragraph-text">
+                        Maana kwa ibada hii Mtume Petro aliyebarikiwa anatuamsha, na kutusihi kwa hamu ile ya upendo aliyoichukua kwa ajili ya kulisha kondoo wa Kristo kwa maungamo matatu ya upendo kwa Bwana, asema, “wapenzi, nawasihi, kama wageni na wasafiri, ziepukeni tamaa za mwili zipiganazo na roho. Lakini anasa za mwili hupigana vita kwa ajili ya akina nani, ikiwa si kwa ajili ya Ibilisi, ambaye furaha yake ni kuzifunga roho zile zishindanazo juu ya mambo ya juu, kwa ushawishi wa mambo mema yaharibikayo, na kuwavuta kutoka katika makao ambayo yeye mwenyewe amefukuzwa? Dhidi ya njama zake kila muumini lazima aangalie kwa makini ili aweze kumponda adui yake upande ambapo mashambulizi yanafanywa. Na hakuna silaha yenye nguvu zaidi, mpendwa, dhidi ya hila za shetani kuliko rehema nzuri na hisani kubwa, ambayo kwayo kila dhambi huepukwa au hushindwa. Lakini nguvu hii adhimu haipatikani mpaka yale yanayopingana nayo yapinduliwe. Na ni uadui gani wa rehema na sadaka kama ubakhili ambao huchipua maovu yote? Na isipoangamizwa kwa kukosa lishe, lazima iote katika udongo wa moyo huo ambamo magugu haya mabaya yameota mizizi, miiba na michongoma ya uovu badala ya mbegu yoyote ya wema wa kweli.
+                    </p>
+                    <p class="paragraph-text">
+                        Basi, wapendwa, na tupinge uovu huu hatari na “tufuate mapendo,” ambayo pasipo hayo hakuna wema unaoweza kusitawi, ili kwa njia hii ya upendo ambayo kwayo Kristo alishuka kwetu, sisi pia tuweze kupaa kwake, ambaye kwake Mungu Baba na Roho Mtakatifu ni heshima na utukufu milele na milele. Amina.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Hivi ndivyo tunavyojua upendo ni nini. *Yesu Kristo aliutoa uhai wake kwa ajili yetu, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Sisi twapenda, kwa sababu yeye alitupenda sisi kwanza.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yesu Kristo aliutoa uhai wake kwa ajili yetu, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel" class="liturgical-section">
+                <h2 class="section-heading">
+                    Injili. Yohana 16:23-28
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Baba anawapenda ninyi, kwa sababu ninyi mmenipenda mimi na mmeamini.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Siku hiyo hamtaniomba neno lolote. Amin, amin, nawaambia, Mkimwomba Baba neno lo lote, atawapa kwa jina langu. Hata sasa hamkuomba neno kwa jina langu; ombeni, nanyi mtapata, ili furaha yenu iwe kamili. “Nimewaambia haya kwa mifano; saa inakuja ambayo sitasema nanyi tena kwa mafumbo, bali nitawaambia waziwazi juu ya Baba. Siku hiyo mtaomba kwa jina langu; wala siwaambii kwamba nitawaombea kwa Baba; kwa maana Baba mwenyewe anawapenda ninyi, kwa sababu ninyi mmenipenda mimi na kusadiki ya kwamba mimi nalitoka kwa Baba. Nilitoka kwa Baba na nimekuja ulimwenguni; tena nauacha ulimwengu na kwenda kwa Baba."
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Kugeuza hali ya giza
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Angalia hifadhi ya ndani kwa upendeleo wa mandhari
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Kugeuza ukubwa wa maandishi
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Anza na 'text-size-base'
+
+        // Anzisha ukubwa wa maandishi kutoka hifadhi ya ndani au chaguo-msingi
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainContentWrapper.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainContentWrapper.classList.add('text-size-base'); // Chaguo-msingi
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Kugeuza menyu ya hamburger kwa simu
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            // Kwenye skrini ndogo, ficha wakati kiungo kinapobofya
+            if (window.innerWidth < 768) {
+                const navLinksList = navLinks.querySelectorAll('a');
+                navLinksList.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Funga menyu ya hamburger wakati unaporekebisha ukubwa wa skrini hadi desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

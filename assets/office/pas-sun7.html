@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 7 JUMAPILI - Muundo wa Liturujia</title>
+    <style>
+        /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            display: none; /* hidden by default, controlled by JS */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 7 JUMAPILI</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menyu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="lent-mon3.html" class="navbar-link">Jumatatu</a>
+                    <a href="lent-tue3.html" class="navbar-link">Jumanne</a>
+                    <a href="lent-wed3.html" class="navbar-link">Jumatano</a>
+                    <a href="lent-thur3.html" class="navbar-link">Alhamisi</a>
+                    <a href="lent-fri3.html" class="navbar-link">Ijumaa</a>
+                    <a href="lent-sat3.html" class="navbar-link">Jumamosi</a>
+                    <a href="lent-sun3.html" class="navbar-link active-day">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Hali ya Giza</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Ukubwa wa Maandishi</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 7 JUMAPILI<br>KUPANDA KWA BWANA
+            </h1>
+
+            <section id="shared-readings" class="liturgical-section">
+                <h2 class="section-heading">
+                    Mizunguko 1 na 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Usomaji wa Kwanza. Ep. 4:1-24
+                    </h3>
+                    <p class="paragraph-text">
+                        Kupanda mbinguni, Kristo amegawa karama kwa wanadamu.
+                        Somo kutoka kwa Waraka kwa Waefeso wa Mtakatifu Paulo, mtume.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:1] Basi, mimi niliye mfungwa kwa ajili ya Bwana, nawasihi mwenende maisha yanayoustahili wito wenu mlioitiwa; [Waefeso 4:2] kwa unyenyekevu wote na upole, kwa uvumilivu, mkichukuliana katika upendo;
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:4] Kuna mwili mmoja na Roho mmoja, kama vile mlivyoitwa kwenye tumaini moja la mwito wenu, [Waefeso 4:5] Bwana mmoja, imani moja, ubatizo mmoja, [Waefeso 4:6] Mungu mmoja na Baba wa sisi sote, aliye juu ya yote na katika yote na ndani ya yote.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:7] Lakini kila mmoja wetu alipewa neema kwa kadiri ya kipimo cha kipawa chake Kristo.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:8] Kwa hiyo imesemwa, Alipopaa juu aliteka mateka, akawapa wanadamu vipawa.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:9] (Kwa kusema, Alipaa,” ina maana gani ila kwamba alishuka pia pande za chini za nchi? [Waefeso 4:10] Yeye aliyeshuka ndiye yeye aliyepaa juu sana kuliko mbingu zote, ili avijaze vitu vyote.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:11] Na karama zake zilikuwa kwamba wengine wawe mitume, wengine manabii, wengine wainjilisti, wengine wachungaji na waalimu, [Waefeso 4:12] ili kuwatayarisha watakatifu kwa kazi ya huduma, kwa ajili ya kuujenga mwili wa Kristo, [Waefeso 4:13] hata sisi sote tutakapoufikia umoja wa imani na wa utu uzima, hata kumpima Mwana wa utu uzima. ya Kristo; [Waefeso 4:14] ili tusiwe tena watoto wachanga, tukitupwa huku na huku, na kuchukuliwa na kila upepo wa elimu, kwa ujanja wa wanadamu, kwa ujanja katika hila za udanganyifu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:15] Bali tukiishika kweli katika upendo, na tukue katika kila njia hata tumfikie yeye aliye kichwa, hata ndani ya Kristo, [Waefeso 4:16] ambaye kutoka kwake mwili wote unaungamanishwa na kushikanishwa kwa kila kiungo kinachoshirikishwa kwa ajili yake, kila kiungo kinapofanya kazi yake ipasavyo, hukua na kujijenga katika upendo.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:17] Basi, nasisitiza neno hili, tena nashuhudia katika Bwana, kwamba msienende tena kama watu wa Mataifa, katika ubatili wa nia zao; [Waefeso 4:18] akili zao zimetiwa giza, nao wamefarakana na uzima wa Mungu, kwa sababu ya ujinga uliomo ndani yao, kwa sababu ya ugumu wa mioyo yao; [Waefeso 4:19] wamekuwa wakaidi, wamejitia katika uasherati, wenye kutamani kufanya kila namna ya uchafu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:20] Hamkujifunza hivyo Kristo! -- [Waefeso 4:21] mkidhani ya kuwa mmesikia habari zake na kufundishwa ndani yake, kama kweli ilivyo ndani ya Yesu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Waefeso 4:22] vueni utu wa zamani, unaoufuata mwenendo wenu wa kwanza, unaoharibika kwa kuzifuata tamaa danganyifu;
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Kristo, akipaa mbinguni, alichukua wafungwa pamoja naye, akawagawia wanadamu vipawa, *aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mungu anapaa katikati ya shangwe, Bwana kwa sauti ya tarumbeta:
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> amewagawia wanadamu zawadi, aleluya.
+                    </p>
+                    <p class="kiitikizano-response mt-4">
+                        <span class="font-bold">AU</span>
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mungu anapaa katikati ya shangwe, *aleluya. Bwana, kwa sauti ya tarumbeta, aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kupanda mbinguni alichukua pamoja naye wafungwa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Bwana, wakati wa sauti ya baragumu, aleluya, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-1-second-reading" class="liturgical-section">
+                <h2 class="section-heading">
+                    Mzunguko 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Tratt. 10, 9
+                    </h3>
+                    <p class="paragraph-text">
+                        Maneno ya mwisho ya Kristo kabla ya kupaa mbinguni.
+                        Usomaji kutoka kwa “Mkataba juu ya barua ya Yohana” ya Mtakatifu Augustino, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Bwana wetu Yesu Kristo, kupaa mbinguni siku ya arobaini, alipendekeza kwetu mwili wake ambao ulipaswa kubaki hapa chini; hii kwa sababu aliona kimbele kwamba wengi wangemletea heshima kwa sababu alikuwa amepaa mbinguni, wakati wangekanyaga viungo vyake juu ya nchi; kwa hiyo heshima aliyopewa isingefaa. Na ili mtu yeyote asifanye kosa, akiabudu kichwa mbinguni lakini akiwadharau washiriki walio duniani, alisema hususa ni wapi washiriki wake wangepatikana.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hakika, alipokuwa karibu kupaa mbinguni, alitamka maneno yake ya mwisho; baada ya maneno haya hakusema tena duniani. Kichwa, kwenye hatua ya kupaa mbinguni, alipendekeza kwetu washiriki ambao wangebaki duniani; naye akatoweka. Sasa Kristo anenaye duniani hatapatikana tena; anasikika akisema, lakini kutoka mbinguni. Na kwa nini alizungumza kutoka mbinguni? Kwa sababu washiriki wake walikanyagwa chini ya miguu hapa duniani. Kwa kweli, alimwambia Sauli mtesaji hivi kutoka juu: “Sauli, Sauli, kwa nini unanitesa?” ( Mdo. 9:4 ). Nimepanda mbinguni, lakini bado ninabaki duniani; hapo nimekaa mkono wa kuume wa Baba, hapa bado nateseka na njaa, nina kiu na ni msafiri.
+                    </p>
+                    <p class="paragraph-text">
+                        Ni kwa njia gani basi alipendekeza kwetu mwili wake juu ya nchi alipokuwa karibu kupaa? Wanafunzi walikuwa wamemwuliza alipokuwa karibu kuondoka, wakasema, “Bwana! huu ndio wakati ambao utaujenga upya ufalme wa Israeli?” Akajibu: “Si kazi yenu kujua nyakati na nyakati ambazo Baba ameziweka kwa chaguo lake; bali mtapokea nguvu za Roho Mtakatifu ambaye atashuka juu yenu nanyi mtakuwa mashahidi wangu”. Chunguza hadi mwili wake unafikia wapi, tazama mahali asipotaka kukanyagwa: “Mtakuwa mashahidi wangu katika Yerusalemu, na katika Yudea yote, na Samaria, na hata miisho ya dunia” (Mdo. 1:6-8).
+                    </p>
+                    <p class="paragraph-text">
+                        Hapa ndipo ninapobaki, mimi ninayepaa. napaa, ndiyo, kwa sababu mimi ndiye kichwa; lakini mwili wangu bado unabaki hapa chini. Wapi? Duniani kote. Uwe mwangalifu usikanyage: haya ni maneno ya mwisho ya Kristo, ambaye yuko karibu kupaa mbinguni.
+                    </p>
+                    <p class="paragraph-text">
+                        Ndugu, tafakarini kwa hisia za Kikristo: ikiwa kwa warithi maneno ya yule anayekaribia kufa ni matamu sana, mpendwa sana, ya thamani sana, maneno ya mwisho ya Kristo yangepaswa kusema nini, si alipokuwa karibu kuwekwa kaburini bali alipokuwa karibu kupaa mbinguni, yangekuwa kwa warithi wake!
+                    </p>
+                    <p class="paragraph-text">
+                        Nafsi ya mtu anayekufa inaongozwa mahali pengine, wakati mwili umewekwa chini ya ardhi; hapendezwi tena kama maneno yake yanafuatwa tena au la; kwa sasa anafanya au anateseka mambo mengine, mwili wake ukiwa umelala kaburini; na bado maneno ya mwisho yaliyotamkwa alipokuwa amekufa, yanahifadhiwa kwa wivu.
+                    </p>
+                    <p class="paragraph-text">
+                        Je, wale wanaoshika maneno ya mwisho ya yeye aketiye mbinguni na ambaye kutoka juu anaona kama wanadharauliwa au la, wanatumainia nini wao wenyewe? Kuhusu yeye aliyesema: “Sauli, Sauli, kwa nini unanitesa?” na ni nani anayeweka akiba kwa ajili ya siku ya hukumu yale yote anayoona washiriki wake wakiteseka?
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Enyi malango, inueni vichwa vyenu. *Inueni enyi malango ya kale, mfalme wa utukufu aingie, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Saa ambayo Mwana wa Adamu atatukuzwa imefika.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Inueni enyi malango ya kale, mfalme wa utukufu aingie, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2-second-reading" class="liturgical-section">
+                <h2 class="section-heading">
+                    Mzunguko 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Diski. Juu ya Kupaa kwa Bwana.
+                    </h3>
+                    <p class="paragraph-text">
+                        Hakuna mtu aliyepata kwenda mbinguni, isipokuwa Mwana wa Adamu aliyeshuka kutoka mbinguni.
+                        Usomaji kutoka kwa "Majadiliano" ya Mtakatifu Augustino, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Leo Yesu Kristo Bwana wetu alipaa mbinguni: mioyo yetu na ipae pamoja naye.
+                    </p>
+                    <p class="paragraph-text">
+                        Sikiliza maneno ya Mtakatifu Paulo: ‘Ikiwa mmefufuliwa pamoja na Kristo, yatafuteni yaliyo juu Kristo aliko, ameketi mkono wa kuume wa Mungu. Yafikirini yaliyo juu, si yaliyo katika nchi’. Kama vile alivyopaa bila kutuacha, vivyo hivyo tuko pamoja naye mbinguni, ingawa ahadi zake bado hazijatimizwa katika miili yetu.
+                    </p>
+                    <p class="paragraph-text">
+                        Kristo sasa ameinuliwa juu ya mbingu; lakini bado anapitia duniani mateso yoyote tunayopata washiriki wake. Alionyesha kwamba hilo ni kweli alipopaaza sauti kutoka mbinguni: 'Sauli, Sauli, kwa nini unanitesa?' Na: 'Nilikuwa na kiu nanyi mkaninywesha'.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa nini basi tusijitie bidii duniani ili kuwa na furaha pamoja naye tayari mbinguni kwa njia ya imani, tumaini na mapendo ambayo yanatuunganisha pamoja naye? Kristo, akiwa mbinguni, yuko pamoja nasi pia; na sisi, tukiwa duniani, pia tuko pamoja naye. Yuko pamoja nasi katika Uungu wake na uweza wake na upendo wake; na sisi, ingawa hatuwezi kuwa pamoja naye katika uungu kama alivyo pamoja nasi, tunaweza kuwa naye katika upendo wetu, upendo wetu kwake.
+                    </p>
+                    <p class="paragraph-text">
+                        Hakuondoka mbinguni aliposhuka kwetu kutoka mbinguni; na hakutuacha alipopaa tena mbinguni. Maneno yake mwenyewe yanaonyesha kwamba alikuwa mbinguni alipokuwa hapa: ‘Hakuna mtu aliyepaa mbinguni, ila yeye aliyeshuka kutoka mbinguni, yaani, Mwana wa Adamu. Alisema hivyo kwa sababu ya umoja kati yetu na yeye mwenyewe, kwa maana yeye ni kichwa chetu na sisi ni mwili wake. Maneno ‘hakuna mwingine ila yeye’ ni ya kweli, kwa kuwa sisi ni Kristo, kwa maana ya kwamba yeye ni Mwana wa binadamu kwa ajili yetu, na sisi ni watoto wa Mungu kwa ajili yake.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa sababu hiyo Mtakatifu Paulo anasema: Kama vile mwili ni mmoja, nao una viungo vingi, na viungo vyote vya mwili huo, ingawa ni vingi, ni mwili mmoja; vivyo hivyo na Kristo'. Hasemi, ‘ndivyo ilivyo kwa Kristo’, bali, ‘ndivyo ilivyo kwa Kristo pia’. Vivyo hivyo Kristo ni viungo vingi, lakini mwili mmoja.
+                    </p>
+                    <p class="paragraph-text">
+                        Alishuka kutoka mbinguni, basi, kwa rehema; naye ndiye pekee aliyepaa, kwa kuwa tuko ndani yake kwa njia ya neema. Ndiyo maana hakuna aliyeshuka ila Kristo, na hakuna mwingine ila Kristo aliyepaa: si kwamba hadhi ya kichwa imeunganishwa na mwili, bali kwamba mwili katika umoja wake haujatenganishwa na kichwa chake.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Baada ya mateso yake, Yesu aliwatokea wanafunzi wake kwa muda wa siku arobaini, akawafundisha juu ya Ufalme wa Mungu. Na walipokuwa wakitazama, aliinuliwa, *na wingu likamchukua kutoka machoni pao.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Alipokuwa pamoja nao aliwaambia wasiondoke Yerusalemu, bali wangojee kile ambacho Baba aliahidi.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> na walipokuwa wakitazama aliinuliwa na wingu likamchukua kutoka machoni pao, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="year-a-gospel" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA A
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili. Mathayo 28:16-20
+                    </h3>
+                    <p class="paragraph-text">
+                        Nimepewa mamlaka yote mbinguni na duniani.
+                        Somo la Injili ya Mt. Mathayo.
+                    </p>
+                    <p class="paragraph-text">
+                        [Mathayo 28:16] Basi wale wanafunzi kumi na mmoja walikwenda Galilaya mpaka mlima ambao Yesu alikuwa amewaagiza.
+                    </p>
+                    <p class="paragraph-text">
+                        [Mathayo 28:17] Nao walipomwona wakamsujudia; lakini wengine walitilia shaka.
+                    </p>
+                    <p class="paragraph-text">
+                        [Mathayo 28:18] Yesu akaja kwao, akawaambia, Nimepewa mamlaka yote mbinguni na duniani.
+                    </p>
+                    <p class="paragraph-text">
+                        [Mathayo 28:19] Basi, enendeni, mkawafanye mataifa yote kuwa wanafunzi, mkiwabatiza kwa jina la Baba, na Mwana, na Roho Mtakatifu; [Mathayo 28:20] na kuwafundisha kuyashika yote niliyowaamuru ninyi; na tazama, mimi nipo pamoja nanyi siku zote, hata ukamilifu wa dahari.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Usomaji wa Tatu. Diski. 74, 1-2
+                    </h3>
+                    <p class="paragraph-text">
+                        Kile kilichoonekana kwa Mkombozi wetu, kilipitishwa chini ya ishara za sakramenti.
+                        Usomaji kutoka kwa "Majadiliano" ya Mtakatifu Leo Mkuu, papa.
+                    </p>
+                    <p class="paragraph-text">
+                        Siri ya wokovu wetu mpendwa, ambayo Muumba wa ulimwengu aliithamini kwa bei ya damu yake, sasa imefanywa chini ya hali ya unyonge tangu siku ya kuzaliwa kwake kwa mwili hadi mwisho wa Mateso yake.
+                    </p>
+                    <p class="paragraph-text">
+                        Na ingawa hata katika “umbo la mtumwa” ishara nyingi za Uungu zimedhihirika, lakini matukio ya kipindi hicho chote yalitumika hasa kuonyesha uhalisi wa kudhaniwa kwake Uanaume.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini baada ya Mateso, minyororo ya mauti ilipokatika, iliyodhihirisha nguvu zake yenyewe kwa kumshambulia Yeye, ambaye hakujua dhambi, udhaifu uligeuzwa kuwa nguvu, mauti kuwa umilele, matusi kuwa utukufu, ambayo Bwana Yesu Kristo alionyesha kwa uthibitisho mwingi wazi machoni pa wengi, hata akachukua hata mbinguni ushindi wa ushindi aliopata juu ya wafu. Kwa hivyo, kama vile kwenye ukumbusho wa Pasaka, Ufufuo wa Bwana ulikuwa sababu ya furaha yetu; hivyo somo la furaha yetu ya sasa ni Kupaa kwake, tunapoadhimisha na kuiheshimu ipasavyo siku ile ambayo Asili ya unyenyekevu wetu katika Kristo iliinuliwa juu ya jeshi lote la mbinguni, juu ya safu zote za malaika, zaidi ya kilele cha uwezo wote, kuketi pamoja na Mungu Baba.
+                    </p>
+                    <p class="paragraph-text">
+                        Ambapo utaratibu wa Utunzaji wa matukio tunawekwa msingi na kujengwa, ili Neema ya Mungu ipate kuwa ya ajabu zaidi, wakati, ijapokuwa kuondolewa machoni pa watu kile kilichohisiwa kuwaamuru watiishwe, imani haikuanguka, tumaini halikuyumba, upendo haukupoa.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwani ni nguvu ya akili kuu na nuru ya roho aminifu, bila kusita kuamini kile kisichoonekana kwa macho ya mwili, na huko kurekebisha mapenzi ya mtu mahali ambapo huwezi kuelekeza macho yako.
+                    </p>
+                    <p class="paragraph-text">
+                        Na utauwa huu utachipuka wapi mioyoni mwetu? Kwa hiyo Bwana wetu akamwambia yule ambaye alionekana kuwa na shaka juu ya Ufufuo wa Kristo, hadi alipojaribu kwa kuona na kugusa athari za Mateso Yake katika Mwili Wake hasa, “kwa kuwa umeniona, umesadiki; Kwa hivyo, wapendwa, ili tuweze kupata baraka hii, wakati mambo yote yalipotimia kuhusu kuhubiri Injili na mafumbo ya Agano Jipya, Bwana wetu Yesu Kristo, katika siku ya arobaini baada ya Ufufuo mbele ya wanafunzi, aliinuliwa mbinguni, na kukomesha uwepo wake pamoja nasi katika mwili, kukaa juu ya mkono wa kuume wa Baba kwa utakatifu kwa ajili ya nyakati zilizowekwa kwa ajili ya Kanisa. kukamilika, na anakuja kuwahukumu walio hai na waliokufa katika mwili uleule aliopaa. Na ili kile ambacho hadi wakati huo kilikuwa kinaonekana na Mkombozi wetu kiligeuzwa kuwa uwepo wa sakramenti, na imani hiyo iwe bora zaidi na zaidi. nguvu zaidi, macho yakaacha mafundisho, ambayo mamlaka yake yangekubaliwa na mioyo yenye imani iliyoangazwa kwa miale kutoka juu.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mungu alimfufua Kristo kutoka kwa wafu akamtukuza, ili imani yenu na tumaini lenu liwe imara kwa *Mungu.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Alimpa uwezo, utukufu na ufalme.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> ili imani yenu na tumaini lenu liwe imara kwa Mungu, aleluya.
+                    </p>
+                    <p class="kiitikizano-response mt-4">
+                        <span class="font-bold">AU</span>
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Enyi malango, inueni vichwa vyenu. *Inueni, enyi malango ya kale, mfalme wa utukufu aingie, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Saa imefika ya Mwana wa Adamu kutukuzwa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Inueni, enyi malango ya kale, na aingie mfalme wa utukufu, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="year-b-gospel" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA B
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili. Marko 16:15-20
+                    </h3>
+                    <p class="paragraph-text">
+                        Yesu anachukuliwa mbinguni na kuketi mkono wa kuume wa Mungu.
+                        Somo la Injili ya Mtakatifu Marko.
+                    </p>
+                    <p class="paragraph-text">
+                        [Marko 16:15] Akawaambia, Enendeni ulimwenguni mwote, mkaihubiri Injili kwa viumbe vyote.
+                    </p>
+                    <p class="paragraph-text">
+                        [Marko 16:16] Aaminiye na kubatizwa ataokoka; lakini asiyeamini atahukumiwa.
+                    </p>
+                    <p class="paragraph-text">
+                        [Marko 16:17] Na ishara hizi zitafuatana na hao waaminio: katika jina langu watatoa pepo; watasema kwa lugha mpya;
+                    </p>
+                    <p class="paragraph-text">
+                        [Marko 16:18] watashika nyoka, hata wakinywa kitu cha kufisha, hakitawadhuru kabisa; wataweka mikono yao juu ya wagonjwa, nao watapata afya."
+                    </p>
+                    <p class="paragraph-text">
+                        [Marko 16:19] Basi Bwana Yesu, baada ya kusema nao, alikuwa akachukuliwa juu mbinguni, akaketi mkono wa kuume wa Mungu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Marko 16:20] Nao wakatoka, wakahubiri kila mahali, naye Bwana akitenda kazi pamoja nao na kulithibitisha lile neno kwa ishara zilizokuwako. Amina.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Usomaji wa Tatu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Mfalme wa utukufu ni nani?
+                        Usomaji kutoka kwa "Majadiliano juu ya Kupaa kwa Kristo" ya St. Gregory wa Nyssa, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Injili inasimulia tabia na maisha ya Bwana duniani na kurudi kwake mbinguni. Hapa badala yake mtunga-zaburi, akijiinua juu yake mwenyewe, karibu hajalemewa tena na uzito wa mwili, analetwa kati ya nguvu za mbinguni na kutufanya tusikie sauti zao, wakati walifuatana na kurudi kwa Bwana mbinguni: kwa malaika wanaoshughulika na mambo ya kidunia na kwa wale ambao kifungu cha maisha ya mwanadamu kimekabidhiwa, wapeni agizo hili, na muinue mfalme, malango ya zamani: utukufu uingie” ( ZAB. 23:9 ). Kwa hili, kwa kuwa yeye aliye na kila kitu, popote alipo anajipunguza kwa uwezo wa wale wanaompokea, na sio tu kwamba anakuwa mtu kati ya wanadamu, lakini pia anapojiona kuwa miongoni mwa malaika anajishusha chini kwa asili yao, walinzi wanauliza msimulizi: "Ni nani huyu mfalme wa utukufu?" ( ZAB. 23:8 ).
+                    </p>
+                    <p class="paragraph-text">
+                        Mamlaka hujibu na kuonyesha jinsi alivyo na nguvu na nguvu katika vita yule ambaye, akipigana dhidi ya yule aliyeshikilia asili ya kibinadamu katika utumwa na ambaye alikuwa na amri juu ya kifo, ameshinda adui mwenye nguvu zaidi, akiwarudishia wanadamu uhuru na amani. Sauti zile zile zinarudia mwaliko: fumbo la kifo tayari limetimizwa, na ushindi juu ya adui zake umepatikana, ukiinua juu yao ushindi wa msalaba. “Amepaa juu ameleta wafungwa pamoja naye” ( Efe. 4:8 ), yeye ambaye “amewagawia wanadamu” zawadi hizi zenye thamani zaidi za uhai na za ufalme.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini bado anajikuta mbele ya milango iliyofungwa. Walii wetu wanakwenda mbele yao na kuwaamrisha kufungua milango, ili upatikane ndani yake utukufu wake. Lakini hawamtambui, kwa sababu amevaa maisha yetu ya taabu na mavazi yake ni mekundu kwa kuwa amepitia shinikizo la divai la maumivu ya wanadamu. Na kwa hiyo tena masahaba zake wanaulizwa na sauti hiyo: “Ni nani huyu mfalme wa utukufu?” Lakini hajibu tena: “Bwana mwenye nguvu na hodari katika vita”, bali: “Bwana wa majeshi” ( Zab. 23:10 ), yeye aliye na ukuu wa ulimwengu, anayechukua tena vitu vyote ndani yake, ambaye ana ukuu juu ya yote, ambaye huvirudisha vitu vyote kwenye hali ya awali: huyu ndiye Mfalme wa utukufu.
+                    </p>
+                    <p class="paragraph-text">
+                        Je, unaona jinsi Daudi amefanya sherehe hii kuwa tamu, akichanganya yake neema pamoja na furaha ya Kanisa. Kwa hili sisi pia, kwa kadiri tuwezavyo, kumwiga Nabii katika upendo kwa Mungu, katika upole wa maisha, katika uvumilivu kwa wale wanaotuchukia na kututesa, ili mafundisho yake yaweze kutuongoza na kutufundisha kuishi vizuri na kwa furaha, katika Kristo Yesu Bwana wetu, ambaye utukufu una yeye milele na milele. Amina.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Enyi malango, inueni vichwa vyenu. *Inueni, enyi malango ya kale, mfalme wa utukufu aingie, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Saa imefika ya Mwana wa Adamu kutukuzwa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Inueni, enyi malango ya kale, na aingie mfalme wa utukufu, aleluya.
+                    </p>
+                    <p class="kiitikizano-response mt-4">
+                        <span class="font-bold">AU</span>
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Enendeni ulimwenguni mwote, mkaihubiri Injili kwa kila kiumbe. *Aaminiye na kubatizwa ataokoka, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mtu asipozaliwa kwa maji na kwa Roho, hawezi kuuingia ufalme wa Mungu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Aaminiye na kubatizwa ataokoka, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="year-c-gospel" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA C
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili. Luka 24:46-53
+                    </h3>
+                    <p class="paragraph-text">
+                        Hata alipokuwa akiwabariki, alichukuliwa juu mbinguni.
+                        Somo la Injili ya Mtakatifu Luka.
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 24:46] akawaambia, Ndivyo ilivyoandikwa, ya kwamba Kristo atateswa, na kufufuka siku ya tatu katika wafu; [Luka 24:47] na kwamba mataifa yote watahubiriwa kwa jina lake habari ya toba na ondoleo la dhambi, kuanzia tangu Yerusalemu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 24:48] Ninyi ni mashahidi wa mambo haya.
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 24:49] Na tazama, nawaletea juu yenu ahadi ya Baba yangu; lakini kaeni humu mjini, hata mvikwe uwezo utokao juu.
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 24:50] Kisha akawaongoza nje mpaka Bethania, akainua mikono yake akawabariki.
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 24:51] Alipokuwa akiwabariki, alijitenga nao, akachukuliwa juu mbinguni.
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 24:52] Wakarudi Yerusalemu wakiwa na furaha kuu, [Luka 24:53] wakakaa sikuzote hekaluni wakimsifu Mungu.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Usomaji wa Tatu. Kitabu cha 9
+                    </h3>
+                    <p class="paragraph-text">
+                        Bwana wetu Yesu Kristo amefungua kwa ajili yetu njia mpya na iliyo hai.
+                        Usomaji kutoka kwa "Maoni juu ya Injili ya Yohana" ya Mtakatifu Cyril wa Alexandria, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Ikiwa pamoja na Baba - alisema Bwana - hakukuwa na makao mengi, angeenda mapema zaidi kuandaa makao ya watakatifu. Lakini akijua kwamba tayari kuna wengi waliotayarishwa, wanaongojea kuwasili kwa wale wanaompenda Mungu, si kwa sababu hii - alisema - kwamba niondoke, lakini kwa sababu kurudi kwako kwenye njia ya mbinguni ni jambo ambalo linapaswa kutayarishwa, mahali ambapo hapo awali hapakuweza kufikiwa, ambayo ilibidi kusawazishwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Mbingu kwa kweli ilikuwa haiwezi kufikiwa kabisa na wanadamu, na haijawahi kamwe kupenya asili ya mwanadamu ndani ya patakatifu pa patakatifu pa malaika. Kristo alikuwa wa kwanza kuzindua kwa ajili yetu njia hiyo ya kufikia na amempa mwanadamu njia ya kupaa, akijitoa mwenyewe kwa Mungu Baba kama matunda ya kwanza ya wafu na wale walalao juu ya nchi, na kujidhihirisha kuwa mwanadamu kwa roho za mbinguni.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa ajili hiyo malaika wa mbinguni, wakipuuza fumbo kuu na tukufu la ujio huo katika mwili wa mwanadamu, wakastaajabu, wakamtazama kwa mshangao yule aliyepaa, na kufadhaishwa na tamasha jipya na lisilosikika, walikuwa karibu kusema: “Ni nani huyu ajaye kutoka Edomu?” (Isa. 63:1), yaani kutoka duniani. Lakini Bwana hakuruhusu kwamba umati huo wa selestia ubaki bila kujua hekima hiyo ya ajabu ya Mungu Baba; aliwaamuru, kwa kweli, wafungue milango ya mbinguni kwa Mfalme na Bwana wa ulimwengu wote mzima, akisema hivi kwa mshangao: “Inueni, enyi wakuu milango yenu, inueni, milango ya milele, na aingie mfalme wa utukufu” ( Zab. 23:7 ) Vulg.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo, Bwana wetu Yesu Kristo ametuanzishia njia mpya na iliyo hai, kama vile Paulo asemavyo: “Hakuingia katika patakatifu palipofanywa kwa mikono ya wanadamu, bali aliingia mbinguni kwenyewe, ili aonekane sasa mbele za Mungu kwa niaba yetu” (Ebr. 9:24). Kwa kweli Kristo hakupaa ili kujidhihirisha mbele ya Mungu Baba: alikuwa, yuko na daima atakuwa ndani ya Baba, na chini ya mtazame yule aliye muumba; yeye daima ni kitu cha radhi yake.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini sasa Neno limepaa kama mwanadamu akijionyesha kwa namna mpya na isiyo ya kawaida, kwa sababu hapo awali alikuwa hana ubinadamu. Na hii ni kwa sababu yetu na kwa faida yetu, ambayo, baada ya kuwa sawa na wanadamu, alisikia katika ukweli wote, katika uwezo wake wa Mwana na kama mwanadamu: "Keti upande wangu wa kuume" (Zab. 109: 1), kutoka ambapo yeye hupitisha kwa jamii yote ya wanadamu, iliyopitishwa naye, utukufu wa filiation.
+                    </p>
+                    <p class="paragraph-text">
+                        Yeye ni mmoja wetu kweli, kwa kadiri alivyotokea mkono wa kuume wa Mungu na Baba kama mwanadamu, ingawa yuko juu ya kila kiumbe na yuko sawa na Baba, akiwa ni fahari yake, Mungu kutoka kwa Mungu na nuru kutoka kwa nuru ya kweli. Kwa hiyo ametokea mbele za Baba kama mwanadamu ili atulete sisi, ambao kwa sababu ya hali ya kale tuliondolewa mbele zake, tukamwendea tena. Amepaa kama Mwana, ili sisi pia tuketi kama wana na, katika yeye, tuweze kuitwa wana wa Mungu. Kwa maana Paulo huyu, ambaye anathibitisha kwamba ana Kristo ndani yake ambaye anazungumza kupitia kwake, anafundisha kwamba mambo ambayo yamefanyika kwa njia ya pekee kuhusiana na Kristo ni ya kawaida kwa asili ya kibinadamu, akisema: "Kwa yeye alitufufua na kutuketisha mbinguni katika Kristo" ( Efe 2: 6 ).
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa Kristo kihalisi anastahili, na kwake peke yake kama Mwana kwa asili, hadhi na utukufu wa kuketi pamoja na Mungu Baba. Lakini kwa kuwa yeye aliyeketi ni sawa na sisi aliyetokea kama mwanadamu, na kwa sasa anatambulika kama Mungu kutoka kwa Mungu, kwa hiyo anapitisha kwa njia fulani neema yake na heshima yake kwetu pia.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ninamrudia *yeye aliyenituma; maajabu, aleluya. unamshukuru Mungu na kutangaza yote yake.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Naenda kuwaandalia mahali; Nitarudi na kuwachukua ninyi pamoja nami, ili nilipo ninyi nanyi mwepo.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Unamhimidi Mungu na kutangaza maajabu yake yote, aleluya.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Kugeuza hali ya giza
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Angalia hifadhi ya ndani kwa upendeleo wa mandhari
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Kugeuza ukubwa wa maandishi
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Anza na 'text-size-base'
+
+        // Anzisha ukubwa wa maandishi kutoka hifadhi ya ndani au chaguo-msingi
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainContentWrapper.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainContentWrapper.classList.add('text-size-base'); // Chaguo-msingi
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Kugeuza menyu ya hamburger kwa simu
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            // Kwenye skrini ndogo, ficha wakati kiungo kinapobofya
+            if (window.innerWidth < 768) {
+                const navLinksList = navLinks.querySelectorAll('a');
+                navLinksList.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Funga menyu ya hamburger wakati unaporekebisha ukubwa wa skrini hadi desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

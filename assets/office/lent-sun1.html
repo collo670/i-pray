@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 1 JUMAPILI - Muundo wa Liturujia</title>
+    <style>
+       /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 1 JUMAPILI</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="lent-mon1.html" class="navbar-link">Jumatatu ya 1</a>
+                    <a href="lent-tue1.html" class="navbar-link">Jumanne ya 1</a>
+                    <a href="lent-wed1.html" class="navbar-link">Jumatano ya 1</a>
+                    <a href="lent-thur1.html" class="navbar-link">Alhamisi ya 1</a>
+                    <a href="lent-fri1.html" class="navbar-link">Ijumaa ya 1</a>
+                    <a href="lent-sat1.html" class="navbar-link">Jumamosi ya 1</a>
+                    <a href="lent-sun2.html" class="navbar-link active-day">Jumapili ya 2</a> </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Dark Mode</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Text Size</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                KWARESIMA WIKI YA 1 JUMAPILI
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza: Dt. 6:4 – 25 Sheria ya upendo.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka katika kitabu cha Kumbukumbu la Torati.
+                    </p>
+                    <p class="paragraph-text">
+                        Sikia, Ee Israeli, Bwana, Mungu wetu, ndiye Bwana mmoja; nawe mpende Bwana, Mungu wako, kwa moyo wako wote, na kwa roho yako yote, na kwa nguvu zako zote; na maneno haya ninayokuamuru leo, yatakuwa juu ya moyo wako; nawe uwafundishe watoto wako kwa bidii, na kuyanena uketipo katika nyumba yako, na utembeapo njiani, na ushikapo mkono wako na kulala. yawe kama utepe katikati ya macho yako, nawe yaandike juu ya miimo ya nyumba yako, na juu ya malango yako.
+                    </p>
+                    <p class="paragraph-text">
+                        "Na Bwana, Mungu wako, atakapokuingiza katika nchi aliyowaapia baba zako, yaani, Ibrahimu, na Isaka, na Yakobo, ya kuwa atakupa, pamoja na miji mikubwa, mizuri, usiyoijenga, na nyumba zilizojaa vitu vyote vyema, usivyovijaza, na visima vilivyochimbwa, usichochinga wewe; nanyi mtatoka katika nchi ya Misri, katika nyumba ya utumwa, mtamtumikia Yehova, Mungu wenu, na kuapa kwa jina lake; “Usimjaribu BWANA, Mungu wako, kama ulivyomjaribu huko Masa, nawe uyashike kwa bidii maagizo ya BWANA, Mungu wako, na shuhuda zake, na sheria zake alizokuamuru.
+                    </p>
+                    <p class="paragraph-text">
+                        Nanyi fanyeni yaliyo sawa na mema machoni pa BWANA, ili kufanikiwa kwenu, na kuingia na kuimiliki nchi hiyo nzuri, ambayo BWANA aliwaapia baba zenu, kwa kuwatupa nje adui zenu wote mbele yenu, kama BWANA alivyoahidi. Wakati ujao mwanao atakapokuuliza, ‘Ni nini maana ya hizi shuhuda na sheria na hukumu ambazo Yehova Mungu wetu amekuamuru? nanyi mtamwambia mwanao, Tulikuwa watumwa wa Farao huko Misri, na Bwana akatutoa katika nchi ya Misri kwa mkono wa nguvu; naye Bwana akaonyesha ishara na maajabu, makubwa na mabaya, juu ya Misri, na juu ya Farao, na juu ya nyumba yake yote; Mungu wetu, kwa faida yetu siku zote, ili atuhifadhi hai, kama hivi leo, na itakuwa haki kwetu, tukitunza kufanya amri hii yote mbele za Bwana, Mungu wetu, kama alivyotuamuru.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Sikiliza, Ee Israeli, uangalie kutenda yote ambayo Bwana amekuagiza; * kubali kwamba Yehova Mungu wako ni Mungu, Mungu mwaminifu, ambaye hushikilia agano lake na fadhili zake kwa wale wanaompenda.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mpende Bwana Mungu wako kwa moyo wako wote, na kwa roho yako yote na kwa nguvu zako zote.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Jueni kwamba Mwenyezi-Mungu, Mungu wenu, ndiye Mungu, Mungu mwaminifu, ambaye hutunza agano lake na rehema zake kwa wale wampendao.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili: Nm. 49 – 50 Ni nani anayeweza kuonyesha upendo wa Mungu?
+                    </h3>
+                    <p class="paragraph-text">
+                        kutoka "Barua kwa Wakorintho" ya Mtakatifu Clement wa kwanza, papa na mfiadini.
+                    </p>
+                    <p class="paragraph-text">
+                        Yeye aliye na upendo katika Kristo na azishike amri za Kristo.
+                    </p>
+                    <p class="paragraph-text">
+                        Ni nani anayeweza kuelezea kifungo kilichobarikiwa cha upendo wa Mungu? Ni mwanadamu gani anayeweza kusema ubora wa uzuri wake, kama inavyopaswa kuambiwa? Urefu ambao upendo huinuka hauelezeki. Upendo hutuunganisha na Mungu. Upendo husitiri wingi wa dhambi. Upendo huvumilia yote, hustahimili kila kitu. Hakuna kitu cha msingi, hakuna kitu kiburi katika upendo. Upendo haukubali mafarakano: upendo hautokei fitna: upendo hufanya mambo yote kwa amani. Kwa upendo wateule wote wa Mungu wamekamilishwa; pasipo upendo hakuna kitu kinachompendeza Mungu. Kwa upendo Bwana ametuchukua kwake. Kwa ajili ya Upendo aliotuzaa, Yesu Kristo Bwana wetu alitoa damu yake kwa ajili yetu kwa mapenzi ya Mungu; Yake nyama kwa miili yetu, na nafsi yake kwa ajili ya roho zetu. Unaona, mpendwa, jinsi jambo kuu na la ajabu ni upendo, na kwamba hakuna kutangaza ukamilifu wake.
+                    </p>
+                    <p class="paragraph-text">
+                        Ni nani anayefaa kupatikana ndani yake, isipokuwa yule ambaye Mungu ameahidi kufanya hivyo? Basi, na tuombe na tuombe rehema zake, ili tuishi bila lawama katika upendo, bila ubaguzi wowote wa kibinadamu kwa ajili ya mtu mwingine juu ya mwingine.
+                    </p>
+                    <p class="paragraph-text">
+                        Vizazi vyote tangu Adamu hata leo vimepita; lakini wale ambao, kwa neema ya Mungu, wamekamilishwa katika upendo, sasa wanayo nafasi kati ya watauwa, na watadhihirishwa katika ufunuo wa ufalme wa Kristo. Kwa maana imeandikwa, Ingieni katika vyumba vyenu vya siri kwa kitambo kidogo, hata ghadhabu yangu na ghadhabu yangu zitakapopita, nami nitaikumbuka siku ya rehema, nami nitawainua kutoka makaburini mwenu.
+                    </p>
+                    <p class="paragraph-text">
+                        Wapenzi, heri sisi tukizishika amri za Mungu katika upatano wa upendo; ili kwa njia ya upendo dhambi zetu zipate kusamehewa. Kwa maana imeandikwa, Heri waliosamehewa makosa yao, na waliositiriwa dhambi zao; Baraka hii inakuja juu ya wale ambao wamechaguliwa na Mungu kupitia Yesu Kristo Bwana wetu; Utukufu una yeye milele na milele. Amina.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Tumeliamini pendo alilo nalo Mungu kwetu sisi. *Yeye aliye katika upendo huu, hukaa ndani ya Mungu, na Mungu hukaa ndani yake.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Tupendane, kwa maana pendo latoka kwa Mungu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yeye aliye katika upendo huu hukaa ndani ya Mungu na Mungu hukaa ndani yake.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza: Kwa mfano. 5:1-6:1 Farao aliwatesa sana watu wa Israeli.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka katika kitabu cha Kutoka.
+                    </p>
+                    <p class="paragraph-text">
+                        Baadaye Musa na Haruni wakamwendea Farao, wakasema, Bwana, Mungu wa Israeli, asema hivi, Wape watu wangu ruhusa waende zao, ili wanifanyie sikukuu huko nyikani. Farao akasema, BWANA ni nani, hata niisikilize sauti yake, na kuwapa Israeli ruhusa waende zao? Mimi simjui Bwana, na zaidi ya hayo sitamjua. Wakasema, Mungu wa Waebrania amekutana nasi; twakusihi, twende safari ya siku tatu jangwani, tumtolee dhabihu Bwana, Mungu wetu, asije akatupiga kwa tauni, ou kwa upanga. Lakini mfalme wa Misri akawaambia, Musa na Haruni, mbona mnawaondoa watu katika kazi zao? Nendeni kwenye mizigo yenu. Farao akasema, Tazama, watu wa nchi sasa ni wengi, nanyi mwawapumzisha na mizigo yao. Siku iyo hiyo Farao akawaamuru wasimamizi wa watu na wasimamizi wao, “Msiwape watu tena majani ya kutengeneza matofali, kama hapo awali; waende wakajikusanyie majani. Lakini hesabu ya matofali waliyofanya hapo kwanza utawawekea, usiipunguze kabisa; kwa maana hawana kazi; kwa hiyo wanalia, Twendeni tukamtolee Mungu wetu dhabihu. Kazi nzito na iwekwe juu ya watu hao, waifanye kazi, wala wasijali maneno ya uongo.” Basi wasimamizi wa kazi na wasimamizi wa watu wakatoka na kuwaambia watu, Farao asema hivi, Mimi sitawapa majani. Enendeni ninyi wenyewe, mkajitafutie nyasi zenu po pote mtakapozipata; lakini kazi yenu haitapungua hata kidogo. Basi hao watu wakatawanyika katika nchi yote ya Misri ili kukusanya makapi badala ya majani. Wasimamizi wa kazi wakahimiza, wakisema, Timizeni kazi yenu, kazi yenu ya kila siku, kama hapo palipokuwa na majani. Na wasimamizi wa wana wa Israeli, ambao wasimamizi wa Farao walikuwa wamewaweka juu yao, walipigwa, na kuulizwa, Mbona hamjafanya kazi yenu yote ya kutengeneza matofali leo, tangu sasa? Ndipo wasimamizi wa wana wa Israeli wakaja na kumlilia Farao, wakisema, Mbona unawatenda hivi watumishi wako? Sisi watumishi wako hatupewi majani, lakini wao hutuambia, Fanyeni matofali. Na tazama, watumishi wako tunapigwa; lakini hatia iko kwa watu wako mwenyewe."
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini yeye akasema, Ninyi ni wavivu, ni wavivu; kwa hiyo mwasema, Twendeni tukamtolee Bwana dhabihu. Nendeni sasa, mkafanye kazi; kwa kuwa hamtapewa majani, lakini idadi sawa ya matofali mtaitoa." Wasimamizi wa wana wa Israeli wakaona ya kuwa wako katika hali mbaya, waliposema, Msipunguze hata kidogo hesabu yenu ya kila siku ya matofali. Wakakutana na Musa na Haruni, ambao walikuwa wakiwangoja, walipokuwa wakitoka kwa Farao; wakawaambia, Bwana na awaangalie ninyi na kuhukumu, kwa sababu mmetukosea machoni pa Farao na mbele ya watumishi wake, mmeweka upanga mikononi mwao ili kutuua. Ndipo Musa akamgeukia tena BWANA, akasema, Ee BWANA, mbona umewatenda mabaya watu hawa? Kwa maana tangu nilipokuja kwa Farao kusema kwa jina lako, amewatenda mabaya watu hawa, nawe hukuwaokoa watu wako hata kidogo.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini BWANA akamwambia Musa, Sasa utaona nitakavyomtenda Farao;
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Musa akaenda kwa Farao, akamhubiri neno la Bwana, akisema,
+                        Wape watu wangu ruhusa waende zao, ili wanifanyie karamu jangwani.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mungu wa Waebrania amenituma kukuambia,
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Waache watu wangu waondoke, ili wanifanyi karamu jangwani.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili: Lett. 140, 13 - 15 Tamaa ya Kristo ni zawadi ya upendo.
+                    </h3>
+                    <p class="paragraph-text">
+                        kutoka kwa “Nyaraka” za Mtakatifu Augustino, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Mwanadamu Kristo hawezi kupendekezwa kama mfano wa furaha ya kidunia, kama yeye mwenyewe amefunua katika ujumbe wa Agano Jipya, ambayo haizingatii maisha ya muda bali yale ya milele. Kwa hiyo unyonge wake, shauku, kupigwa mijeledi, mate, dharau, msalaba, majeraha na kifo chenyewe, kama mtu anavyoshinda na kutiishwa kabisa. Haya yote ili waamini wake wapate jifunzeni ni zawadi gani ya upendo kuomba na kumtumainia yeye ambaye watakuwa wana wake. Kwa hiyo haingekuwa haki kumtumikia Mungu ili kufikia furaha ya kidunia, kudhalilisha na kudharau imani ya mtu mwenyewe, akiiona kuwa kitu cha maana kidogo.
+                    </p>
+                    <p class="paragraph-text">
+                        Kristo ni mwanadamu na wakati huo huo pia Mungu: kutoka kwa ubinadamu wake ambao umejaa huruma na kutoka kwa kipengele chake cha utumishi tunapaswa kujifunza nini cha kudharau katika maisha haya na kutumaini katika mengine. Yeye katika saa ya mateso yake, ilipoonekana kwamba maadui walikuwa wanabeba ushindi mkubwa, alijieleza kwa sauti ya udhaifu wetu, ambapo utu wetu wa kale ulisulubishwa, ili kufuta mwili wa dhambi: “Mungu wangu, Mungu wangu mbona umeniacha?” ( Zab. 21:2 ). Kwa sauti ya udhaifu wetu, ambapo Kichwa chetu kiligeuka sura, kinasemwa katika zaburi ya 21: “Mungu wangu, Mungu wangu” niangalie “mbona umeniacha?” kwa sababu mwenye kuswali asipojibiwa maombi yake anajiona ameachwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Yesu akawa sauti hii, sauti ya mwili wake, yaani Kanisa ambalo lilipaswa kubadilishwa kutoka utu wa kale hadi kuwa jipya; sauti ya kweli ya udhaifu wake wa kibinadamu, ambaye alikuwa amenyimwa wema wa Agano la Kale ili apate kujifunza kutamani na kutumaini wale wa Agano Jipya.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ametwaa udhaifu wetu na amejitwika magonjwa yetu.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Bwana alileta maovu yetu sisi sote juu yake.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Na amejitwika magonjwa yetu.
+                    </p>
+                </div>
+            </section>
+
+            <section id="mwaka-a" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA A
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili: Mathayo 4:1-11 Yesu anafunga siku arobaini jangwani na kujaribiwa.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka Injili ya Mt.
+                    </p>
+                    <p class="paragraph-text">
+                        Kisha Yesu alipandishwa na Roho nyikani ili ajaribiwe na Ibilisi. Akafunga siku arobaini mchana na usiku, mwisho akaona njaa. Mjaribu akaja akamwambia, "Ikiwa wewe ni Mwana wa Mungu, amuru kwamba mawe haya yawe mikate."
+                    </p>
+                    <p class="paragraph-text">
+                        Naye akajibu, Imeandikwa, Mtu hataishi kwa mkate tu, ila kwa kila neno litokalo katika kinywa cha Mungu. Kisha Ibilisi akamchukua mpaka mji mtakatifu, akamweka juu ya kinara cha hekalu, akamwambia, Ukiwa ndiwe Mwana wa Mungu, jitupe chini; kwa maana imeandikwa, Atakuagizia malaika zake; Yesu akamwambia, Tena imeandikwa, Usimjaribu Bwana Mungu wako. Kisha Ibilisi akamchukua mpaka mlima mrefu sana, akamwonyesha milki zote za ulimwengu na fahari yake; akamwambia, Haya yote nitakupa, ukianguka na kuniabudu. Ndipo Yesu akamwambia, Nenda zako, Shetani; kwa maana imeandikwa, Msujudie Bwana Mungu wako, umwabudu yeye peke yake. Kisha Ibilisi akamwacha; na tazama, malaika wakaja wakamtumikia.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Tatu: Diski. 40:10 Mkristo ana uwezekano wa kushinda majaribu.
+                    </h3>
+                    <p class="paragraph-text">
+                        kutoka kwa "Majadiliano" ya Mtakatifu Gregory wa Nazianzen, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Ikiwa baada ya ubatizo mjaribu, mtesi wa nuru, atakushambulia, na kwa hakika atakushambulia - kwa kweli yeye pia alijaribu Neno la Mungu lililofichwa katika mwili, hiyo ndiyo nuru yenyewe iliyofunikwa na ubinadamu - unajua jinsi ya kumshinda: usiogopa vita. mpingeni kwa maji, mpingeni kwa Roho ambamo mishale yote yenye moto ya yule mwovu itaangamizwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Ikiwa atakuletea umaskini wako - hakusita kwa kweli kufanya hivyo pia na Kristo, na kumfanya atambue njaa yake ili abadilishe mawe kuwa mkate - kumbuka majibu yake (cf. Mt. 4: 4). Mfundishe asiyoyajua; mpingeni kwa neno hilo la uzima ambalo ni mkate ulioshuka kutoka mbinguni na kuupa ulimwengu uzima.
+                    </p>
+                    <p class="paragraph-text">
+                        Ikiwa anakutishia kwa utukufu - kama alivyofanya naye alipompeleka kwenye kinara cha hekalu na kumwambia: "Jitupe chini", ili kuonyesha uungu wako (Mt. 4: 6) - usijiruhusu kubebwa na kiburi. Akikushinda katika hili hataishia hapa. Hashibiki, anatamani sana; anavutia pia kwa kipengele cha wema na kuwashinda wema katika uovu: hii ndiyo njia yake ya kupigana.
+                    </p>
+                    <p class="paragraph-text">
+                        Mwizi huyo pia ni mjuzi mtaalam wa Maandiko Matakatifu. Hapa kwamba “imeandikwa” kuhusu mkate, hapo inawahusu malaika. Kwa kweli imeandikwa: "Kwa malaika zake atawaamuru kwa ajili yako, watakuchukua mikononi mwao" (Lk. 4: 10, 11). Ewe mwanafalsafa mbaya! Kwa nini unaacha kinachofuata kiende kimya kimya? Ninaelewa kabisa, hata kama umekaa kimya, kwa sababu ilisema: Nitatembea juu yenu, asp na basil, nitawakanyaga nyoka na nge; kulindwa na kuimarishwa, kuthibitishwa vyema, na Utatu.
+                    </p>
+                    <p class="paragraph-text">
+                        Akikushambulia kwa ubakhili, na kuzifanya falme zote kung'aa mbele ya macho yako mara moja kana kwamba ni zake na kutaka kuabudiwa kwako, mdharau kama mtu mnyonge. Ukitetewa na ishara ya msalabani, mwambie: Mimi pia ni sura ya Mungu, sijatupwa nje kama ninyi, kwa sababu ya kiburi, kutoka katika utukufu wa mbinguni; nimevikwa Kristo; kwa ubatizo Kristo amekuwa urithi wangu: ninyi mnaopaswa kuniabudu. Niamini mimi, kushinda na kufedheheshwa na maneno haya, ataachana na wale wote ambao wameangaziwa, kama alivyojiondoa kutoka kwa Kristo, asili ya nuru.
+                    </p>
+                    <p class="paragraph-text">
+                        Ubatizo hutoa faida hizi kwa yeye ambaye anatambua nguvu zake. Inatoa karamu hizo za fahari kwa wale wanaoteseka na njaa inayostahili kusifiwa.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yesu aliongozwa na Roho nyikani ili ajaribiwe na Ibilisi; *mjaribu akamkaribia na kusema: “Ikiwa wewe ni Mwana wa Mungu, yaambie mawe haya yawe mikate.”
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Akafunga siku arobaini mchana na usiku, akaona njaa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mjaribu akamkaribia na kusema, "Ikiwa wewe ni Mwana wa Mungu, yaambie mawe haya yawe mikate."
+                    </p>
+                </div>
+            </section>
+
+            <section id="mwaka-b" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA B
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili: Mk. 1: 12 - 15 Yesu, akijaribiwa na Shetani, anatumikiwa na malaika.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka Injili ya Mtakatifu Marko.
+                    </p>
+                    <p class="paragraph-text">
+                        Mara Roho akamfukuza nyikani. Akawako nyikani siku arobaini, akijaribiwa na Shetani; naye alikuwa pamoja na hayawani mwitu; na malaika wakamtumikia.
+                    </p>
+                    <p class="paragraph-text">
+                        Hata baada ya Yohana kutiwa mbaroni, Yesu akaenda Galilaya, akihubiri Injili ya Mungu, akisema, Wakati umetimia, na ufalme wa Mungu umekaribia;
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Tatu: Diski. 30 Roho na Jangwa.
+                    </h3>
+                    <p class="paragraph-text">
+                        kutoka kwa "Mazungumzo" ya Isaac wa Stella, abate.
+                    </p>
+                    <p class="paragraph-text">
+                        “Yesu aliongozwa na Roho mpaka jangwani” (Mt. 4:1). Bwana wangu Yesu Kristo anafanya kila kitu ou kuongozwa, ou kutumwa, ou kuitwa, ou kuamuru; kwa hiari yake mwenyewe hafanyi lolote. Ametumwa anakuja ulimwenguni, akiongozwa anakwenda nyikani, akiitwa amefufuka kutoka kwa wafu, kama ilivyoandikwa: Ondoka, utukufu wangu, ondoka, kinubi na zeze! (cf. Zab. 56:9).
+                    </p>
+                    <p class="paragraph-text">
+                        Kuelekea shauku, hata hivyo, yeye huharakisha kwa hiari na kwa mapenzi yake mwenyewe, kama nabii alikuwa ametabiri: "Ametolewa dhabihu, kwa sababu aliitaka" (Isa. 53: 7 Vulg.). Hasa katika hili alijifanya mtiifu kwa Baba hadi kufa. Mwalimu, kwa kweli, na kielelezo cha utii, hakutaka ama kufanya ou kuteseka kitu kingine chochote nje ya hii, ambayo ndiyo njia pekee inayoongoza kwenye uzima katika ukweli: "Akaongozwa na Roho jangwani" ou, kama mwinjilisti mwingine asemavyo: "Roho ikamsukuma jangwani" (Mk. 1: 12). “Wale wanaoongozwa na Roho wa Mungu hao ndio wana wa Mungu” (Rum. 8:14). Yeye hata hivyo, akiwa Mwana kwa namna ya pekee na inayostahili zaidi, anasukumwa ou kuongozwa jangwani kwa njia tofauti na bora zaidi kuliko hizo nyingine.
+                    </p>
+                    <p class="paragraph-text">
+                        "Akiwa amejaa" Roho Mtakatifu, alitoka Yordani, akaongozwa na Roho hata jangwani" (Lk. 4: 1). Kwa wengine Roho Mtakatifu hupewa kwa kipimo fulani na kulingana na kipimo hiki wanaongozwa katika kila kitu; hata hivyo, ambaye ndani yake utimilifu wa Uungu ulipendezwa kukaa, alipokea utimilifu wa Roho. Kwa hiyo analetwa kwa nguvu zaidi na kikamilifu zaidi kutimiza maagizo ya Baba. "Aliporudi" anasema "kutoka Yordani, alisukumwa jangwani". Yeye aliyeshuka ulimwenguni, anakuja kutoka Yordani, kutoka hapa basi, akirudi tena, anaacha ulimwengu huu na kwenda kwa Baba. Kwa hiyo, anayetaka kupanda aje Yordani, aje kwenye mteremko, aje kwenye unyenyekevu, ambao ndio sharti pekee la kupaa. Kwa kweli, "yeyote anayejidhili, atatukuzwa" (Lk. 14: 11 na 18: 14).
+                    </p>
+                    <p class="paragraph-text">
+                        Hapa anampata Roho Mtakatifu, anayekaa juu ya wanyenyekevu na wapole, juu ya yeye ambaye anaogopa neno la Mungu, ambaye huwapinga wenye kiburi huku akiwapa neema yake wanyenyekevu, ili waweze kuudharau ulimwengu na kukimbia karne, kumshinda shetani na kujiondoa kutoka kwa makundi ya watu, katikati yao mazungumzo ya waovu huharibu desturi; wanatafuta jangwa na mahali pa siri ambapo wanamngojea Mungu, na mahali ambapo wanaweza kumwomba kama shomaro, na kumtafakari kama njiwa; ambapo, akijibu, atazungumza na mioyo yao akisema, kulingana na nabii: "Nitamwongoza hadi jangwani na nitasema na moyo wake" (Hos. 2: 16).
+                    </p>
+                    <p class="paragraph-text">
+                        Hivyo Bwana wetu Yesu Kristo, mpole na mnyenyekevu wa moyo, baada ya kufikia unyenyekevu na upole kiasi kwamba alijitiisha chini ya mikono ya yule aliyekuwa mdogo kuliko yeye ili abatizwe, wakati huo ambao alistahili kupendelewa kama vile sauti ya baba inavyothibitisha: “Huyu ni Mwanangu mpendwa ninayependezwa naye” kwa sababu ya unyenyekevu na utiifu wake; na kwa ajili hii alimnyanyua kwa haki na kumfadhilisha juu ya wengine; kwa hiyo kuanzia hapo msikilizeni. Na juu ya wanyenyekevu na wapole Roho Mtakatifu, ambaye aliongozwa hadi jangwani, alishuka kama ndani ya hekalu lake mwenyewe na la ndani.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mwambieni Bwana, Kimbilio langu na ngome yangu, Mungu wangu ninayemtumaini. Atakuweka huru na mtego wa mwindaji, na tauni iharibuyo.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Uaminifu wake utakuwa ngao na silaha zako; hutaogopa vitisho vya usiku.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Atakuweka huru na mtego wa mwindaji, na tauni iharibuyo.
+                    </p>
+                </div>
+            </section>
+
+            <section id="mwaka-c" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA C
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili: Luka 4:1-13 Yesu, akiwa amejaa Roho Mtakatifu, alirudi kutoka Yordani, akaongozwa na Roho kwa muda wa siku arobaini nyikani.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka Injili ya Mtakatifu Luka.
+                    </p>
+                    <p class="paragraph-text">
+                        Yesu, akiwa amejaa Roho Mtakatifu, alirudi kutoka Yordani, akaongozwa na Roho kwa muda wa siku arobaini nyikani, akijaribiwa na Ibilisi. Wala hakula kitu siku zile; na zilipokwisha aliona njaa. Ibilisi akamwambia, Ukiwa ndiwe Mwana wa Mungu, liamuru jiwe hili liwe mkate. Yesu akamjibu, Imeandikwa, Mtu hataishi kwa mkate tu. Ibilisi akamchukua juu, akamwonyesha milki zote za ulimwengu kwa dakika moja, akamwambia, Nitakupa wewe enzi hii yote na fahari yake, kwa kuwa imo mikononi mwangu, nami humpa yeye nipendaye. Basi ikiwa wewe utaniabudu, yote yatakuwa yako.” Yesu akamjibu, Imeandikwa, Msujudie Bwana Mungu wako, umwabudu yeye peke yake. Akamchukua mpaka Yerusalemu, akamweka juu ya kinara cha hekalu, akamwambia, Ukiwa ndiwe Mwana wa Mungu, jitupe chini kutoka hapa;
+                    </p>
+                    <p class="paragraph-text">
+                        [Luka 4:10] kwa maana imeandikwa, Atakuagizia malaika zake wakulinde; na `Mikononi mwao watakuchukua, usije ukakwaa mguu wako katika jiwe. Yesu akamjibu, Imeandikwa, Usimjaribu Bwana Mungu wako. Ibilisi alipomaliza kila jaribu, akamwacha hata wakati ufaao.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Tatu: kutoka kwa “Hotuba za Wimbo ulio bora” za Origen, mpresbiteri.
+                    </h3>
+                    <p class="paragraph-text">
+                        Yesu alijaribiwa ili Kanisa lipate kujifunza kwamba huenda kwake kupitia dhiki na majaribu mengi.
+                    </p>
+                    <p class="paragraph-text">
+                        Maisha ya wanadamu yamejaa mitego ya hila, yote ni wavu wa udanganyifu unaolenga wanadamu kwa sababu ya chuki dhidi ya Bwana, na mwindaji huyo mkubwa aitwaye Nembroth. Kwa hakika ni nani, kama si ibilisi, si jitu la kweli ambalo pia lilimwasi Mungu? Mitego ya majaribu na udanganyifu wa mitego inaitwa nyavu za shetani haswa. Na kwa vile adui alikuwa amezitanda nyavu hizi pande zote na alikuwa amemfanya karibu kila mmoja aanguke, ilikuwa ni lazima kwamba mtu fulani mwenye nguvu na mwenye nguvu zaidi kuliko yeye aje kuzivunja ili kufungua njia kwa wale ambao wangemf Kwa sababu hii Mwokozi pia, kabla ya kufikia muungano wa ndoa na Kanisa, alijaribiwa na shetani, ili kwa ushindi wake juu ya majaribu aweze kumwandaa na kumwita kwake, akimfundisha kwa uwazi na mfano wake kwamba si katika uvivu na katika anasa, lakini kwa njia ya dhiki nyingi na majaribu kwamba alikuwa na kuja kwa Kristo.
+                    </p>
+                    <p class="paragraph-text">
+                        Hakuna mtu mwingine ambaye alikuwa na uwezo wa kwenda zaidi ya nyavu hizi, kama ilivyoandikwa: "Wote walikuwa wamefanya dhambi" (Rum. 3: 23). Na tena, Maandiko yanasema: “Hakuna mtu duniani ambaye ni mwadilifu hivi kwamba anafanya mema tu na hatendi dhambi” (Q. 7:20), na tena: Hakuna asiye na dhambi, hata kama ameishi kwa siku moja tu (taz. Zab. 50:7; Yb. 15:14). Kwa hiyo, Bwana na Mwokozi wetu Yesu amekuwa peke yake ambaye hakutenda dhambi, lakini Baba “alimtoa katika dhambi kwa niaba yetu” ( 2 Kor. 5:21 ), ili “kumtuma Mwana wake mwenyewe katika mwili sawa na ule wa dhambi, na kwa sababu ya dhambi, aliihukumu dhambi katika mwili” ( Rum. 8:3 ).
+                    </p>
+                    <p class="paragraph-text">
+                        Basi, akazisogelea nyavu hizi, lakini ndiye peke yake ambaye hakubaki amenaswa nazo, badala yake, akazivunja na kuharibu. aliwapa Kanisa lake ujasiri wa kukanyaga mitego na kupita chini ya miguu yao, akisema kwa bidii zote: “Tumewekwa huru kama ndege kutoka katika mtego wa wawindaji, mtego umekatika nasi tumeokoka” (Zab. 123:7).
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini ni nani aliyevunja mtego huo ikiwa si yeye pekee ambaye hangeweza kushindwa? Kwa sababu alikufa, ni kweli, lakini kwa mapenzi yake mwenyewe na si kama sisi, kwa kuwa tumefanya dhambi. Na akiwa huru kati ya wafu, kwa njia hiyo alimdhoofisha yeye aliyekuwa na mamlaka juu ya kifo, akawaweka huru wale waliokuwa watumwa wa kifo. Na hakujifufua tu, bali aliwaamsha pia na kuwaketisha pamoja naye mbinguni. Kwa kweli, akipaa mbinguni, aliongoza utumwa huo akiwa mtumwa, si tu akiziweka huru roho bali alifufua pia miili, kama injili inavyothibitisha inaposema kwamba: “Miili mingi ya wafu watakatifhu itafufuka na kuonekana na wengi, nao wataingia katika mji mtakatifu” wa Mungu aliye hai, Yerusalemu ( Mt. 27:52, 53 ).
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ninyi ndio mlionistahimili katika majaribu yangu, nami nitawaandalia ufalme kama vile Baba alivyoniwekea tayari.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Msiogope, enyi kundi dogo, kwa sababu Baba yenu imempendeza kuwapa ufalme wake.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const htmlElement = document.documentElement;
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const navLinks = document.getElementById('nav-links');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const textSizeToggle = document.getElementById('text-size-toggle');
+            const mainContentWrapper = document.getElementById('main-content-wrapper'); 
+
+            // --- Hamburger Menu Toggle ---
+            hamburgerButton.addEventListener('click', () => {
+                navLinks.classList.toggle('hidden');
+                // For small screens, ensure it stacks vertically
+                if (!navLinks.classList.contains('hidden')) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.flexDirection = 'column';
+                } else {
+                    navLinks.style.display = 'none';
+                }
+            });
+
+            // Close nav links when a link is clicked (for mobile)
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 768) { // md breakpoint
+                        navLinks.style.display = 'none';
+                    }
+                });
+            });
+
+            // --- Dark Mode Toggle ---
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    htmlElement.classList.add('dark');
+                    htmlElement.classList.remove('light');
+                } else {
+                    htmlElement.classList.add('light');
+                    htmlElement.classList.remove('dark');
+                }
+            };
+
+            darkModeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Apply saved theme on page load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // If no saved theme, check system preference
+                applyTheme('dark');
+            } else {
+                applyTheme('light'); // Default to light if no preference
+            }
+
+            // --- Text Size Adjustment Toggle ---
+            const fontSizeClasses = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+            let currentFontSizeIndex = 1; // Default to 'text-size-base'
+
+            const applyFontSize = (index) => {
+                fontSizeClasses.forEach(sizeClass => {
+                    mainContentWrapper.classList.remove(sizeClass);
+                });
+                mainContentWrapper.classList.add(fontSizeClasses[index]);
+            };
+
+            textSizeToggle.addEventListener('click', () => {
+                currentFontSizeIndex = (currentFontSizeIndex + 1) % fontSizeClasses.length;
+                applyFontSize(currentFontSizeIndex);
+                localStorage.setItem('fontSizeIndex', currentFontSizeIndex);
+            });
+
+            // Apply saved font size on page load
+            const savedFontSizeIndex = localStorage.getItem('fontSizeIndex');
+            if (savedFontSizeIndex !== null) {
+                currentFontSizeIndex = parseInt(savedFontSizeIndex);
+                applyFontSize(currentFontSizeIndex);
+            } else {
+                applyFontSize(currentFontSizeIndex); // Apply default if no saved preference
+            }
+        });
+    </script>
+</body>
+</html>

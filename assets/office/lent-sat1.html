@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 1 JUMAMOSI - Muundo wa Liturujia</title>
+    <style>
+       /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 1 JUMAMOSI</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="jumatatu.html" class="navbar-link">Jumatatu</a>
+                    <a href="jumanne.html" class="navbar-link">Jumanne</a>
+                    <a href="jumatano.html" class="navbar-link">Jumatano</a>
+                    <a href="alkhamisi.html" class="navbar-link">Alhamisi</a>
+                    <a href="ijumaa.html" class="navbar-link">Ijumaa</a>
+                    <a href="jumamosi.html" class="navbar-link active-day">Jumamosi</a> <a href="jumapili.html" class="navbar-link">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Dark Mode</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Text Size</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 1 JUMAMOSI
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza: Dt. 16: 1 - 17 Sikukuu ambazo watu wa Israeli wanapaswa kusherehekea.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka katika kitabu cha Kumbukumbu la Torati.
+                    </p>
+                    <p class="paragraph-text">
+                        Kumbukumbu la Torati 16:1 “Utunze mwezi wa Abibu, ukamfanyie pasaka BWANA, Mungu wako; kwa maana katika mwezi wa Abibu BWANA, Mungu wako, alikutoa Misri usiku.
+                    </p>
+                    <p class="paragraph-text">
+                        Kumbukumbu la Torati 16:2 nawe utamtolea BWANA, Mungu wako, sadaka ya pasaka, katika kondoo au ng'ombe, mahali atakapopachagua BWANA apakalishe jina lake.
+                    </p>
+                    <p class="paragraph-text">
+                        Msile mkate uliotiwa chachu pamoja nayo; muda wa siku saba utaila pamoja na mikate isiyotiwa chachu, mkate wa mateso; kwa maana ulitoka katika nchi ya Misri kwa kukimbia kwa haraka; ili ukumbuke siku ile uliyotoka katika nchi ya Misri siku zote za maisha yako.
+                    </p>
+                    <p class="paragraph-text">
+                        Chachu isionekane kwako katika mipaka yako yote muda wa siku saba; wala nyama yoyote utakayochinja jioni ya siku ya kwanza isibaki usiku kucha hata asubuhi.
+                    </p>
+                    <p class="paragraph-text">
+                        Huruhusiwi kutoa sadaka ya pasaka ndani ya miji yako yote akupayo Bwana, Mungu wako; Kumbukumbu la Torati 16:6 lakini mahali atakapopachagua BWANA, Mungu wako, apakalishe jina lake, ndipo utakaposongeza
+                        sadaka ya pasaka, jioni wakati wa machweo ya jua, wakati uliotoka Misri.
+                    </p>
+                    <p class="paragraph-text">
+                        Nawe utaitosa na kumla mahali atakapochagua BWANA, Mungu wako; na asubuhi utageuka na kwenda kwako mahema. Kwa muda wa siku sita mtakula mikate isiyochachwa; na siku ya saba kutakuwa na kusanyiko la makini kwa Bwana, Mungu wako; msifanye kazi yo yote juu yake.
+                    </p>
+                    <p class="paragraph-text">
+                        Kumbukumbu la Torati 16:9 “Utahesabu majuma saba; anza kuhesabu majuma saba tangu ulipotia mundu kwenye nafaka isiyoiva. Ndipo utamfanyia Bwana, Mungu wako, sikukuu ya majuma, pamoja na sehemu ya matoleo ya hiari kutoka mkononi mwako, utakayotoa kama vile akubarikivyo
+                        Bwana, Mungu wako; nawe utafurahi mbele za BWANA, Mungu wako, wewe, na mwana wako, na binti yako, na mtumwa wako, na mjakazi wako, na Mlawi aliye ndani ya miji yako, na mgeni, na yatima, na mjane aliyefiwa na mumewe, walio kati yenu, mahali atakapochagua BWANA, Mungu wenu, apakalishe jina lake. Nawe utakumbuka ya kuwa ulikuwa mtumwa huko Misri; nanyi mtazishika amri hizi.
+                    </p>
+                    <p class="paragraph-text">
+                        Kumbukumbu la Torati 16:13 “Nawe utaiadhimisha sikukuu ya vibanda muda wa siku saba, utakapokusanya matunda katika sakafu yako ya nafaka, na shinikizo lako la divai; nawe utafurahi katika sikukuu yako, wewe, na mwana wako, na binti yako, na mtumwa wako, na mjakazi wako, na Mlawi, na mgeni, na yatima walio ndani ya mji wako.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa muda wa siku saba utamfanyia Bwana, Mungu wako, sikukuu, mahali atakapochagua BWANA; kwa kuwa BWANA, Mungu wako, atakubarikia katika mazao yako yote, na katika kazi yote ya mikono yako, nawe utakuwa na furaha tele.
+                    </p>
+                    <p class="paragraph-text">
+                        "Mara tatu kwa mwaka na watokee wanaume wako wote mbele za Bwana, Mungu wako, mahali atakapochagua; katika sikukuu ya mikate isiyotiwa chachu, na katika sikukuu ya majuma, na katika sikukuu ya vibanda; wasionekane mbele za BWANA mikono mitupu; kila mtu na atoe baraka ya BWANA, kama awezavyo, kama awezavyo, kama awezavyo.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mwana-kondoo lazima awe hana dosari; jumuiya yote ya Israeli itachinja wakati wa machweo ya jua * Damu itakuwa ishara kwenu; halitakuwa kwenu pigo la maangamizi.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mmekombolewa kwa damu ya thamani ya Kristo, kama ile ya mwanakondoo asiye na dosari na asiye na dosari.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Damu itakuwa ishara kwenu, wala haitakuwa kwenu pigo la maangamizi.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili: Kitabu cha 4, 18, 1 - 2. 4. 5. Sadaka ya Kanisa ni safi.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka kwa risala "Dhidi ya uzushi" ya Mtakatifu Irenaeus, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Sadaka ya Kanisa ambayo Bwana alitufundisha kutoa ulimwenguni kote, inahesabiwa kuwa dhabihu safi na Mungu na kukubaliwa naye. Kwa maana hahitaji dhabihu yetu, lakini, mradi tu zawadi imekubaliwa, mtu anayetoa dhabihu anatukuzwa katika tendo la kutoa. Zawadi yoyote tunayoweza kumtolea mfalme ni uthibitisho wa heshima na uaminifu tunaohisi kwa ajili yake, na ilikuwa ni kwa sababu alitutaka tutoe matoleo yetu kwa urahisi na kutokuwa na hatia kwamba Bwana alisema, ‘Utoapo sadaka yako madhabahuni, na huko ukumbuke ya kuwa ndugu yako ana neno juu yako, iache sadaka yako mbele ya madhabahu, uende zako; upatane kwanza na ndugu yako, kisha uje uitoe zawadi yako’. Ni lazima, kwa hiyo, tumtolee Mungu malimbuko ya uumbaji wake, kama Musa asemavyo, 'Msionekane mtupu mbele za Bwana, Mungu wenu'. Kupitia zawadi hizo mwanadamu anaweza kuonyesha shukrani zake kwa Mungu na hivyo kupokea kutoka kwake heshima ambayo Mungu hutoa.
+                    </p>
+                    <p class="paragraph-text">
+                        Sadaka kama hizo hazijakataliwa. Kulikuwa na matoleo chini ya sheria ya kale na kuna matoleo sasa: matoleo yaliyotolewa na watu wakati huo, matoleo yanayotolewa sasa na Kanisa. Ni tabia maalum tu ya matoleo ambayo imebadilishwa; zamani zilifanywa na watumwa, sasa zinafanywa na watu huru. Bwana mmoja na yule yule hupokea dhabihu, lakini kama kuna tabia fulani inayohusiana na matoleo ya watumwa, vivyo hivyo watu huru pia hutoa ishara ya uhuru wao kupitia asili ya matoleo wanayotoa. Kwa Mungu hakuna kitu kisicho na kusudi, hakuna kitu kisicho na maana au kisichozingatiwa. Kwa hiyo, chini ya sheria ya kale waliweka wakfu sehemu ya kumi ya mali zao, ambapo wale ambao wamepokea uhuru wao, waliweka kando yote waliyo nayo kwa ajili ya matumizi ya Bwana, na ni kwa sababu wanatumaini kupokea baraka kubwa zaidi kwamba wao kwa furaha na uhuru hujisalimisha zaidi ya kiwango cha chini. Mjane maskini alitupa riziki yake yote kwenye hazina ya hekalu.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo, yatupasa kumtolea Mungu dhabihu na kujionyesha kwa kila jambo kuwa tunamshukuru yeye aliyetufanya, katika usafi wa mawazo yetu, unyofu wa imani yetu, uthabiti wa matumaini yetu na mapendo yetu ya moto, tunapomtolea malimbuko ya viumbe ambavyo ni vyake. Hii ndiyo sadaka safi ambayo Kanisa pekee linamtolea muumba wake, likiwasilisha zawadi yake kwake kwa shukrani kutoka kwa uumbaji wake.
+                    </p>
+                    <p class="paragraph-text">
+                        Tunamtolea yeye kilicho chake, tunapokumbuka ipasavyo ushirika wetu na muungano na kukiri ufufuo wa mwili na roho. Kwa maana kama vile mkate wa dunia, mara tu umepokea wito wa Mungu juu yake, si mkate wa kawaida tena, lakini Ekaristi, na inaundwa na vipengele viwili mbinguni na duniani, vivyo hivyo miili yetu, mara tu inapopokea Ekaristi, haiwezi kuharibika tena, bali ina ndani yake tumaini la ufufuo.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Sheria si kielelezo kamili na cha uaminifu cha mambo halisi, bali ni maelezo machache tu; haiwezi kamwe, kwa dhabihu zile zile zinazotolewa daima, kuwakamilisha wale wanaomkaribia Mungu. * Lakini kwa toleo moja, Kristo amewakamilisha hata milele wale wanaotakaswa.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Kristo alitupenda akajitoa kwa ajili yetu, sadaka yenye harufu nzuri kwa Mungu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Lakini kwa toleo moja Kristo amewakamilisha hata milele wale wanaotakaswa.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza: Kut. 12:37 - 49; 13:11 – 16 Kuondoka kwa Waebrania. Sheria juu ya Pasaka na juu ya wana wa kwanza.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka katika kitabu cha Kutoka.
+                    </p>
+                    <p class="paragraph-text">
+                        Wana wa Israeli wakasafiri kutoka Ramesesi mpaka Sukothi, watu wapatao mia sita elfu waendao kwa miguu, bila kuhesabu wanawake na watoto. Na mkutano wa watu waliochangamana wakakwea pamoja nao, na ng'ombe wengi sana, kondoo na ng'ombe. Nao wakaoka mikate isiyotiwa chachu ya ule unga waliouleta kutoka Misri, kwa maana haukutiwa chachu, kwa sababu walitolewa watoke Misri, wasiweze kukawia, wala hawakujiandalia chakula.
+                    </p>
+                    <p class="paragraph-text">
+                        Wakati wana wa Israeli walikaa katika Misri ilikuwa miaka mia nne na thelathini. Hata mwisho wa miaka mia nne na thelathini, siku iyo hiyo, majeshi yote ya BWANA yalitoka nchi ya Misri. Ulikuwa ni usiku wa kulindwa na BWANA, ili kuwatoa katika nchi ya Misri; kwa hiyo usiku huohuo ni usiku wa kulindwa kwa BWANA na wana wote wa Israeli katika vizazi vyao.
+                    </p>
+                    <p class="paragraph-text">
+                        BWANA akawaambia Musa na Haruni, Amri ya pasaka ndiyo hii; mgeni asiile; lakini kila mtumwa aliyenunuliwa kwa fedha anaweza kuila baada ya kumtahiri. Mkaaji mgeni wala mtumishi aliyeajiriwa asile. Italiwa katika nyumba moja; usiitoe nyama yo yote nje ya nyumba; wala msivunje mfupa wake. Mkutano wote wa Israeli wataishika. Tena mgeni atakapokaa pamoja nanyi, na kutaka kumfanyia Bwana pasaka, waume wake wote na watatahiriwe, ndipo anaweza kukaribia na kuifanya; atakuwa kama mzaliwa wa nchi. Lakini mtu ye yote asiyetahiriwa asile.
+                    </p>
+                    <p class="paragraph-text">
+                        Kutakuwa na sheria moja kwa mzalia, na kwa mgeni akaaye kati yenu. “Na BWANA atakapokuleta katika nchi ya Mkanaani, kama alivyokuapia wewe na baba zako, na kukupa wewe, utamtengea BWANA kila afunguaye tumbo la kwanza. Wazaliwa wa kwanza wote wa mifugo yenu walio waume watakuwa wa Bwana. Kila mzaliwa wa kwanza wa punda utamkomboa kwa mwanakondoo, au kama hutaki kumkomboa utamvunja shingo. Kila mzaliwa wa kwanza wa binadamu katika wana wako utamkomboa.
+                    </p>
+                    <p class="paragraph-text">
+                        Na wakati ujao mwanao atakapokuuliza, Maana yake nini hii? utamwambia, Kwa mkono wa nguvu Bwana alitutoa Misri, katika nyumba ya utumwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa maana Farao alipokataa kwa ukaidi kutuacha tuende zake, BWANA akawaua wazaliwa wa kwanza wote katika nchi ya Misri, wazaliwa wa kwanza wa binadamu na wa kwanza wa ng’ombe. Kwa hiyo namtolea BWANA sadaka waume wote wafunguao tumbo; lakini wazaliwa wa kwanza wote wa wanangu nawakomboa. Nayo itakuwa kama chapa mkononi mwako, au utepe katikati ya macho yako; kwa maana Bwana alitutoa Misri kwa mkono hodari.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Wazazi wake Yesu walimleta Yerusalemu ili wamtoe kwa Bwana, kama ilivyoandikwa katika torati, *Kila mzaliwa wa kwanza wa kiume atawekwa wakfu kwa Mungu.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Wakamtolea Bwana jozi ya hua kwa ajili yake;
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> kama ilivyoandikwa katika torati, Kila mzaliwa wa kwanza wa kiume atawekwa wakfu kwa Mungu.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili: Nm. 9 – 10 Maswali mazito zaidi kuhusu wanaume.
+                    </h3>
+                    <p class="paragraph-text">
+                        kutoka katiba ya kichungaji "Gaudium et Spes" ya Mtaguso wa Pili wa Vatikano juu ya Kanisa katika ulimwengu wa kisasa.
+                    </p>
+                    <p class="paragraph-text">
+                        Ulimwengu wa kisasa unajidhihirisha kwa wakati mmoja na wenye nguvu na dhaifu, wenye uwezo wa vitendo vyema au vya ubaya zaidi. Mbele inalala njia ya uhuru au utumwa, maendeleo au kushuka, udugu au chuki. Zaidi ya hayo, mwanadamu anakuwa na ufahamu kwamba nguvu alizoziachilia ziko mikononi mwake mwenyewe, na kwamba yeye mwenyewe lazima ama azidhibiti au awe mtumwa nazo. Ndio maana anajiuliza maswali.
+                    </p>
+                    <p class="paragraph-text">
+                        Uwili unaoathiri ulimwengu wa kisasa ni, kwa kweli, dalili ya uwili wa kina ambao uko ndani ya mwanadamu mwenyewe. Yeye ndiye mahali pa kukutana na nguvu nyingi zinazokinzana. Katika hali yake kama kiumbe aliyeumbwa amewekewa mipaka na mapungufu elfu moja, hata hivyo anahisi kutokuwa na kikomo katika matamanio yake na kuandikiwa maisha ya juu zaidi. Akiwa amevurugwa na vivutio vingi analazimika kuchagua kati ya hivyo na kukataa baadhi yake. Mbaya zaidi, mnyonge na mwenye dhambi jinsi alivyo, mara nyingi anafanya yale anayochukia na hafanyi anachotaka. Na hivyo anajiona amegawanyika na matokeo yake ni mifarakano mingi katika maisha ya kijamii.
+                    </p>
+                    <p class="paragraph-text">
+                        Wengi, ni kweli, wanashindwa kuona hali ya kushangaza ya hali hii katika uwazi wake wote kwa kuwa maono yao yametiwa ukungu katika kiwango cha kivitendo na uyakinifu, au wanazuiwa hata kuifikiria kwa unyonge wa shida yao.
+                    </p>
+                    <p class="paragraph-text">
+                        Wengine hujidanganya kwamba wamepata amani katika mtazamo wa ulimwengu ambao sasa ni mtindo. Bado kuna wengine ambao matumaini yao yamewekwa kwenye ukombozi wa kweli na kamili wa mwanadamu kupitia juhudi za kibinadamu pekee na wanatazamia paradiso fulani ya wakati ujao ambapo matamanio yote ya mioyo yao yatatimizwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Wala si jambo la ajabu kupata watu ambao wamepoteza imani maishani wakisifu aina ya ugumu wa upumbavu ambao ungefanya maisha matupu yenye umuhimu wowote ndani yenyewe na kuyawekeza kwa maana ya mawazo yao wenyewe.
+                    </p>
+                    <p class="paragraph-text">
+                        Walakini, mbele ya maendeleo ya kisasa kuna kundi linalokua la wanaume ambao wanauliza maswali ya msingi zaidi ya yote au
+                        kuwatazama kwa ufahamu mzuri zaidi: mwanadamu ni nini? Ni nini maana ya mateso, uovu, kifo, ambayo hayajaondolewa na maendeleo haya yote? Je, mafanikio haya yana thamani ya bei inayopaswa kulipwa? Mwanadamu anaweza kuchangia nini kwa jamii? Je, anaweza kutarajia kutoka kwake? Je, nini kitatokea baada ya maisha haya ya duniani kuisha?
+                    </p>
+                    <p class="paragraph-text">
+                        Kanisa linaamini kwamba Kristo, ambaye alikufa na kufufuka kwa ajili ya wote, anaweza kumwonyesha mwanadamu njia na kumtia nguvu kwa njia ya Roho ili apate
+                        kustahili hatima yake: wala hakuna jina jingine chini ya mbingu walilopewa wanadamu liwapasalo kuokolewa kwalo. Kanisa vilevile linaamini kwamba ufunguo, kiini na madhumuni ya historia nzima ya mwanadamu yanapatikana katika Bwana na Mwalimu wake. Pia anashikilia kwamba katika misukosuko hii yote kuna jambo kubwa ambalo halibadiliki, jambo kubwa ambalo lina msingi wake mkuu katika Kristo, ambaye ni yeye yule jana, na leo, na hata milele.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Kifo, ushindi wako uko wapi? Kifo, uchungu wako uko wapi? Uchungu wa kifo ni dhambi, * basi na tumshukuru Mungu kwa kutupa ushindi kwa njia ya Bwana wetu Yesu Kristo.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Bwana ni mwema kwa wale wanaomtumaini, kwa nafsi inayomtafuta.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Basi na tumshukuru Mungu kwa kutupa ushindi kwa Bwana wetu Yesu Kristo.
+                    </p>
+                </div>
+            </section>
+
+            <section id="injili" class="liturgical-section">
+                <h2 class="section-heading">
+                    Injili
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili: Mt 5:43-48 Iweni wakamilifu kama Baba yenu wa mbinguni alivyo mkamilifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo la Injili ya Mt.
+                    </p>
+                    <p class="paragraph-text">
+                        Mmesikia kwamba imenenwa, Umpende jirani yako, na, umchukie adui yako. Lakini mimi nawaambia, Wapendeni adui zenu, waombeeni wanaowaudhi, ili mpate kuwa wana wa Baba yenu aliye mbinguni; kwa maana yeye huwaangazia jua lake waovu na wema, huwanyeshea mvua wenye haki na wasio haki. Kwa maana mkiwapenda wale wanaowapenda ninyi, mna thawabu gani? Je! hata watoza ushuru hawafanyi vivyo hivyo? Na mkiwasalimu ndugu zenu tu, mnafanya nini zaidi ya wengine? Je! hata watu wa mataifa mengine hawafanyi vivyo hivyo. Basi ninyi mnapaswa kuwa wakamilifu, kama Baba yenu wa mbinguni alivyo mkamilifu.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const htmlElement = document.documentElement;
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const navLinks = document.getElementById('nav-links');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const textSizeToggle = document.getElementById('text-size-toggle');
+            // Target the inner div for text scaling, which contains all the liturgical content
+            const mainContentWrapper = document.getElementById('main-content-wrapper'); 
+
+            // --- Hamburger Menu Toggle ---
+            hamburgerButton.addEventListener('click', () => {
+                navLinks.classList.toggle('hidden');
+                // For small screens, ensure it stacks vertically
+                if (!navLinks.classList.contains('hidden')) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.flexDirection = 'column';
+                } else {
+                    navLinks.style.display = 'none';
+                }
+            });
+
+            // Close nav links when a link is clicked (for mobile)
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 768) { // md breakpoint
+                        navLinks.style.display = 'none';
+                    }
+                });
+            });
+
+            // --- Dark Mode Toggle ---
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    htmlElement.classList.add('dark');
+                    htmlElement.classList.remove('light');
+                } else {
+                    htmlElement.classList.add('light');
+                    htmlElement.classList.remove('dark');
+                }
+            };
+
+            darkModeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Apply saved theme on page load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // If no saved theme, check system preference
+                applyTheme('dark');
+            } else {
+                applyTheme('light'); // Default to light if no preference
+            }
+
+            // --- Text Size Adjustment Toggle ---
+            const fontSizeClasses = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+            let currentFontSizeIndex = 1; // Default to 'text-size-base'
+
+            const applyFontSize = (index) => {
+                fontSizeClasses.forEach(sizeClass => {
+                    mainContentWrapper.classList.remove(sizeClass);
+                });
+                mainContentWrapper.classList.add(fontSizeClasses[index]);
+            };
+
+            textSizeToggle.addEventListener('click', () => {
+                currentFontSizeIndex = (currentFontSizeIndex + 1) % fontSizeClasses.length;
+                applyFontSize(currentFontSizeIndex);
+                localStorage.setItem('fontSizeIndex', currentFontSizeIndex);
+            });
+
+            // Apply saved font size on page load
+            const savedFontSizeIndex = localStorage.getItem('fontSizeIndex');
+            if (savedFontSizeIndex !== null) {
+                currentFontSizeIndex = parseInt(savedFontSizeIndex);
+                applyFontSize(currentFontSizeIndex);
+            } else {
+                applyFontSize(currentFontSizeIndex); // Apply default if no saved preference
+            }
+        });
+    </script>
+</body>
+</html>

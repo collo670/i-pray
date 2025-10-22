@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozari Takatifu</title>
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico.jpg">
+
+    <style>
+        
+         
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            display: none; /* hidden by default, controlled by JS */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        li{
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+
+      
+    </style>
+</head>
+<body>
+
+
+     <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">ROZARI TAKATIFU</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menyu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="rozari.html" class="navbar-link">Rozari Takatifu</a>
+                    <a href="index.html" class="navbar-link">Home</a>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Hali ya Giza</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Ukubwa wa Maandishi</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h2 class="section-heading">Namna ya Kusali Rozari Takatifu:</h2>
+            <p class="paragraph-text">KWA JINA NA BABA...NASADIKI...BABA YETU...
+                (katika punje tatu za kwanza, inasemwa salamu maria tukiomba atuzidishie Imani, Matumaini na Mapendo)...Atukuzwe...Twasifu milele...Tendo la kwanza (kufuatana na mafungu ya matendo katika siku husika)...Baba yetu...Salamu maria 10...Atukuzwe...Twasifu milele...
+                (rudia hayo baada ya kila punje 10 ndogo za salamu maria)
+            </p >
+
+
+            <h2 class="section-heading">MATENDO YA FURAHA (Jumatatu na Jumamosi)</h2>
+            <ol>
+                <li>Tendo la kwanza; Malaika Gabrieli anampasha habari Maria kuwa atakuwa Mama wa Mungu.
+                    Tumwombe Mungu atujalie unyenyekevu.</li>
+                <li>Tendo la pili; Maria Mtakatifu anakwenda kumtembelea Elizabeti.
+                    Tumwombe Mungu atujalie mapendo ya jirani.</li>
+                <li>Tendo la tatu; Yesu anazaliwa Betlehemu.
+                    Tumwombe Mungu atujalie moyo wa ufukara</li>
+                <li>Tendo la nne; Yesu anatolewa hekaluni.
+                    Tumwombe Mungu atujalie usafi wa moyo.</li>
+                <li>Tendo la tano; Maria anamkuta Yesu hekaluni.
+                    Tumwombe Mungu atujalie kuwatii wakubwa wetu.</li>
+            </ol>
+    
+
+            <h2 class="section-heading">MATENDO YA UCHUNGU (Jumanne na Ijumaa)</h2>
+            <ol>
+                <li>Tendo la kwanza; Yesu anatoka jasho la damu kwa ajili yetu.
+                    Tumwombe Mungu atujalie sikitiko la dhambi.</li>
+                <li>Tendo la pili; Yesu anapigwa kwa mijeledi kwa ajili yetu.
+                    Tumwombe Mungu atujalie kuacha dhambi za uchafu.</li>
+                <li>Tendo la tatu; Yesu anatiwa miiba kichwani kwa ajili yetu.
+                    Tumwombe Mungu atujalie kushinda kiburi.</li>
+                <li>Tendo la nne; Yesu anachukua Msalaba kwa ajili yetu.
+                    Tumwombe Mungu atujalie kuvumilia taabu.</li>
+                <li>Tendo la tano; Yesu anakufa Msalabani.
+                    Tumwombe Mungu atujalie kuwapenda Yesu na Maria.</li>
+            </ol>
+        
+            <h2 class="section-heading">MATENDO YA UTUKUFU (Jumatano na Jumapili)</h2>
+            <ol>
+                <li>Tendo la kwanza; Yesu anafufuka.
+                    Tumwombe Mungu atujalie kugeuka watakatifu.</li>
+                <li>Tendo la pili; Yesu anapaa mbinguni.
+                    Tumwombe Mungu atujalie kwenda mbinguni.</li>
+                <li>Tendo la tatu; Roho Mtakatifu anawashukia Mitume.
+                    Tumwombe Mungu atujalie bidii katika dini yetu.</li>
+                <li>Tendo la nne; Bikira Maria anapalizwa mbinguni.
+                    Tumwombe Mungu atujalie kufa vizuri.</li>
+                <li>Tendo la tano; Bikira Maria anawekwa Malkia mbinguni.
+                    Tumwombe Mungu atujalie kudumu katika njia njema.</li>
+            </ol>
+        
+
+    
+          <h2 class="section-heading">MATENDO YA MWANGA (Alhamisi pekee)</h2>
+            <ol>
+                <li>Tendo la kwanza; Yesu anabatizwa Mto Jordani.
+                    Tumwombe Mungu atujalie uaminifu kwa ahadi zetu za ubatizo.</li>
+                <li>Tendo la pili; Yesu anageuza maji kuwa divai huko Kana.
+                    Tumwombe Mungu atujalie kuukoleza ulimwengu kwa chachu ya Injili.</li>
+                <li>Tendo la tatu; Yesu anatangaza Ufalme wa Mungu.
+                    Tumwombe Mungu atujalie kupokea Ufalme wake kwa toba ya kweli.</li>
+                <li>Tendo la nne; Yesu anageuka sura.
+                    Tumwombe Mungu atujalie neema ya kuung’arisha ulimwengu kwa uso wa Yesu.</li>
+                <li>Tendo la tano; Yesu anaweka Sakramenti ya Ekaristia.
+                    Tumwombe Mungu atujalie neema ya kujitoa sadaka kwa ajili ya wengine.</li>
+            </ol>
+        
+
+        
+          <h2 class="section-heading">SALAMU MALKIA</h2>
+            <p class="paragraph-text">
+                Salamu Malkia, Mama mwenye huruma,<br>
+                Uzima, tulizo na matumaini yetu, salamu.<br>
+                Tunakusihi ugenini hapa,<br>
+                Sisi wana wa Eva.<br>
+                Tunakulilia tukilalamika na kuhuzunika,<br>
+                Bondeni huku kwenye machozi.<br>
+                Haya basi, Mwombezi wetu,<br>
+                Utuangalie kwa macho yako yenye huruma.<br>
+                Na mwisho wa ugeni huu, utuonyeshe Yesu,<br>
+                Mzao mbarikiwa wa tumbo lako.<br>
+                Ee mpole, ee mwema,<br>
+                Ee mpendevu, Bikira Maria.
+            </p>
+    
+
+        
+            <h2 class="section-heading">LITANIA YA BIKIRA MARIA</h2>
+            <p>
+                <ol class="litania">
+                    <li>Bwana utuhurumie</li>
+                    <li>Bwana utuhurumie</li>
+                    <li>Kristo utuhurumie</li>
+                    <li>Bwana utuhurumie</li>
+                    <li>Bwana utuhurumie</li>
+                    <li>Kristo utusikie</li>
+                    <li>Kristo utusikilize</li>
+                    <li>Mungu Baba wa Mbinguni,…… Utuhurumie</li>
+                    <li>Mungu Mwana Mkombozi wa dunia ……… Utuhurumie</li>
+                    <li>Mungu Roho Mtakatifu …….. Utuhurumie</li>
+                    <li>Utatu Mtakatifu Mungu Mmoja …….. Utuhurumie</li>
+                    <li>Maria Mtakatifu ………. utuombee</li>
+                    <li>Mzazi Mtakatifu wa Mungu …….. utuombee</li>
+                    <li>Bikira Mtakatifu Mkuu wa Mabikira …….. utuombee</li>
+                    <li>Mama wa Kristo ……… utuombee</li>
+                    <li>Mama wa Neema ya Mungu ………….. utuombee</li>
+                    <li>Mama Mtakatifu sana ……… utuombee</li>
+                    <li>Mama mwenye usafi wa Moyo ……….. utuombee</li>
+                    <li>Mama mwenye ubikira ……….. utuombee</li>
+                    <li>Mama usiye na doa ……….. utuombee</li>
+                    <li>Mama mpendelevu ………. utuombee</li>
+                    <li>Mama mstajabivu ………. utuombee</li>
+                    <li>Mama wa Muumba ………. utuombee</li>
+                    <li>Mama wa Mkombozi ………….. utuombee</li>
+                    <li>Mama wa Kanisa……….. utuombee</li>
+                    <li>Bikira mwenye utaratibu ………….. utuombee</li>
+                    <li>Bikira mwenye heshima ………….. utuombee</li>
+                    <li>Bikira mwenye sifa ………….. utuombee</li>
+                    <li>Bikira mwenye uwezo ………….. utuombee</li>
+                    <li>Bikra mweye huruma ………….. utuombee</li>
+                    <li>Bikra mwaminifu………….. utuombee</li>
+                    <li>Kioo cha haki ………….. utuombee</li>
+                    <li>Kikao cha hekima ………….. utuombee</li>
+                    <li>Sababu ya furaha yetu ………….. utuombee</li>
+                    <li>Chombo cha neema ………….. utuombee</li>
+                    <li>Chombo cha kuheshimiwa ………….. utuombe</li>
+                    <li>Chombo bora cha ibada ………….. utuombee</li>
+                    <li>Waridi lenye fumbo ………….. utuombee</li>
+                    <li>Mnara wa Daudi ………….. utuombee</li>
+                    <li>Mnara wa pembe ………….. utuombee</li>
+                    <li>Nyumba ya dhahabu ………….. utuombee</li>
+                    <li>Sanduku la Agano ………….. utuombee</li>
+                    <li>Mlango wa Mbingu ………….. utuombee</li>
+                    <li>Nyota ya asubuhi ………….. utuombee</li>
+                    <li>Afya ya wagonjwa ………….. utuombee</li>
+                    <li>Kimbilio la wakosefu ………….. utuombee</li>
+                    <li>Mtuliza wenye huzuni ………….. utuombee</li>
+                    <li>Msaada wa waKristo ………….. utuombee</li>
+                    <li>Malkia wa Malaika ………….. utuombee</li>
+                    <li>Malkia wa Mababu ………….. utuombee</li>
+                    <li>Malkia wa Manabii ………….. utuombee</li>
+                    <li>Malkia wa Mitume ………….. utuombee</li>
+                    <li>Malkia wa Mashahidi ………….. utuombee</li>
+                    <li>Malkia wa Waungama dini ………….. utuombee</li>
+                    <li>Malkia wa Mabikira ………….. utuombee</li>
+                    <li>Malkia wa Watakatifu wote ………….. utuombee</li>
+                    <li>Malkia uliyepalizwa Mbinguni ………….. utuombee</li>
+                    <li>Malkia wa Rozari takatifu ………….. utuombee</li>
+                    <li>Malkia wa amani ………….. utuombee</li>
+                    <li>Mwanakodoo wa Mungu uondoaye dhambi za dunia,…………..Utusamehe ee Bwana.</li>
+                    <li>Mwanakondoo wa Mungu uondoaye dhambi za dunia,…………..Utusikilize ee Bwana</li>
+                    <li>Mwanakondoo wa Mungu uondoaye dhambi za dunia,…………..Utuhurumie.</li>
+                </ol>
+            </p>
+        
+           <h2 class="section-heading">ROZARI YA HURUMA YA MUNGU</h2>
+            <p class="centered-text"><strong>KWA JINA LA BABA NA LA MWANA NA LA ROHO MTAKATIFU….</strong></p>
+            <p class="paragraph-text"><strong>Unaweza kutumia chembe za rozari ya kawaida au Rozari ya Huruma ya Mungu.</strong></p>
+            <p class="paragraph-text"><strong>Baba Yetu Mara 1</strong></p>
+            <p class="paragraph-text">Baba yetu, uliye mbinguni Jina lako litukuzwe, ufalme wako ufike,
+                utakalo lifanyike duniani kama mbinguni. Utupe leo mkate wetu wa kila siku,
+                utusamehe makosa yetu, kama nasi tunavyowasamehe waliotukosea. Usitutie kishawishini bali utuopoe
+                maovuni. Amina.</p>
+            <p class="paragraph-text"> <strong>Salamu Maria Mara 1</strong><br>
+                Salam Maria, umejaa neema, Bwana yu nawe,
+                umebarikiwa kuliko wanawake wote na Yesu mzao wa tumbo lako amebarikiwa.
+                Maria mtakatifu mama wa Mungu, utuombee sisi wakosefu sasa na saa ya kufa kwetu. Amina.
+            </p>
+            <p class="paragraph-text"> <strong>Nasadiki kwa Mungu, Baba Mwenyezi</strong>, mwumba mbingu na dunia. Na kwa Yesu Kristu,
+                Mwanaye wa pekee, Bwana wetu; aliyetungwa kwa Roho Mtakatifu, akazaliwa na Bikira Maria,
+                akateswa kwa mamlaka ya Ponsyo Pilato, akasulubiwa, akafa, akazikwa, akashukia kuzimu;
+                siku ya tatu akafufuka katika wafu; akapaa mbinguni; amekaa kuume kwa Mungu Baba Mwenyezi;
+                toka huko atakuja kuwahukumu wazima na wafu. Nasadiki kwa Roho Mtakatifu,
+                Kanisa takatifu katoliki, ushirika wa Watakatifu, maondoleo ya dhambi,
+                ufufuko wa miili, uzima wa milele. Amina.</p>
+
+            <p class="paragraph-text"> <strong>Pahali penye punje kubwa</strong> (Badala ya Baba yetu): Baba wa Milele, ninakutolea Mwili na Damu,
+                Roho na Umungu, wa Mwanao Mpenzi sana, Bwana wetu Yesu Kristu, kwa ajili ya malipizi ya dhambi zetu,
+                na dhambi za dunia nzima.</p>
+            <p class="paragraph-text"> <strong>Pahali penye punje ndogo</strong> (badala ya Salamu Maria): Kwa ajili ya mateso makali ya Bwana wetu Yesu Kristu,
+                Utuhurumie sisi na dunia nzima.</p>
+            <p class="paragraph-text"> Mwisho wa Rozari sali mara tatu sala ifuatayo: Mungu Mtakatifu, Mtakatifu mwenye Enzi, Mtakatifu unayeishi milele,
+                Utuhurumie sisi na dunia nzima.</p>
+
+
+                <script>
+        // Kugeuza hali ya giza
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Angalia hifadhi ya ndani kwa upendeleo wa mandhari
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Kugeuza ukubwa wa maandishi
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Anza na 'text-size-base'
+
+        // Anzisha ukubwa wa maandishi kutoka hifadhi ya ndani au chaguo-msingi
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainContentWrapper.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainContentWrapper.classList.add('text-size-base'); // Chaguo-msingi
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Kugeuza menyu ya hamburger kwa simu
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            // Kwenye skrini ndogo, ficha wakati kiungo kinapobofya
+            if (window.innerWidth < 768) {
+                const navLinksList = navLinks.querySelectorAll('a');
+                navLinksList.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Funga menyu ya hamburger wakati unaporekebisha ukubwa wa skrini hadi desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        });
+    </script>   
+</body>
+</html>

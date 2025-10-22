@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 6 JUMATATU - Muundo wa Liturujia</title>
+    <style>
+        /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            display: none; /* hidden by default, controlled by JS */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 6 JUMATATU</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="lent-mon3.html" class="navbar-link active-day">Jumatatu</a>
+                    <a href="lent-tue3.html" class="navbar-link">Jumanne</a>
+                    <a href="lent-wed3.html" class="navbar-link">Jumatano</a>
+                    <a href="lent-thur3.html" class="navbar-link">Alhamisi</a>
+                    <a href="lent-fri3.html" class="navbar-link">Ijumaa</a>
+                    <a href="lent-sat3.html" class="navbar-link">Jumamosi</a>
+                    <a href="lent-sun3.html" class="navbar-link">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Dark Mode</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Text Size</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 6 JUMATATU
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. 1 Yoh. 2:1-11
+                    </h3>
+                    <p class="paragraph-text">
+                        Amri mpya.
+                        Somo kutoka kwa Waraka wa Kwanza wa Yohana Mtakatifu, mtume.
+                    </p>
+                    <p class="paragraph-text">
+                        Watoto wangu wadogo, nawaandikia haya ili kwamba msitende dhambi; Lakini kama mtu akitenda dhambi tunaye Mwombezi kwa Baba, Yesu Kristo mwenye haki. naye ndiye kafara ya dhambi zetu, wala si kwa dhambi zetu tu, bali na kwa dhambi za ulimwengu wote. Na katika hili tunaweza kujua kwamba tumemjua yeye, ikiwa tunashika amri zake. Yeye asemaye, Nimemjua, lakini akaziasi amri zake, ni mwongo, wala kweli haimo ndani yake; bali yeye alishikaye neno lake, ndani yake huyo upendo wa kweli kwa Mungu umekamilika. Katika hili tunaweza kuwa na hakika ya kuwa tumo ndani yake yeye asemaye ya kuwa anakaa ndani yake imempasa kuenenda jinsi yeye alivyoenenda.
+                    </p>
+                    <p class="paragraph-text">
+                        Wapenzi, siwaandikii amri mpya, bali amri ya zamani mliyokuwa nayo tangu mwanzo; amri ya zamani ni neno mlilosikia. Lakini ninawaandikia amri mpya, iliyo kweli ndani yake na ndani yenu, kwa sababu giza linapita na ile nuru ya kweli imekwisha kung’aa. Yeye asemaye yumo nuruni, naye anamchukia ndugu yake, yumo gizani. Yeye ampendaye ndugu yake, akaa katika nuru, na ndani yake hakuna sababu ya kuwakwaza. Bali yeye amchukiaye ndugu yake, yumo gizani, tena anakwenda gizani, wala hajui aendako, kwa sababu giza limempofusha macho.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Nawapeni amri mpya, kwamba mpendane. *Yeye ampendaye ndugu yake, hukaa katika nuru, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Katika hili twajua ya kuwa tumemjua Kristo ikiwa tunazishika amri zake.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yeye ampendaye ndugu yake, hukaa katika nuru, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Tratt. 1, 9-12
+                    </h3>
+                    <p class="paragraph-text">
+                        Upendo wa kindugu uko katika umoja wa upendo.
+                        Usomaji kutoka kwa "Mkataba juu ya barua ya kwanza ya Yohana" ya St. Augustine, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        “Na katika hili,” asema, “tumemjua yeye, ikiwa tunashika amri zake.” Amri zipi?” Hebu tuone kama amri hii hii haiitwi upendo.” Zingatia Injili, “Amri mpya,” asema Bwana, “nawapa ninyi mpendane. Katika hili twajua ya kuwa tumo ndani yake.” Kwa kuwa wamekamilishwa katika upendo, anawaita: ni nini utimilifu wa upendo, kuwapenda hata adui, na kuwapenda kwa kusudi hili, ili wawe ndugu; Kwa maana hakusema, Baba waache waishi muda mrefu, hakika wananiua, lakini alikuwa akitoa kutoka kwao mauti ambayo ni ya milele na milele, kwa maombi yake ya rehema zaidi, na kwa nguvu zake nyingi zaidi waliamini, na kumwaga damu ya Kristo waliimwaga, wakati wao walikuwa wamekwisha kuamini katika upendo wake. Akigusa ukamilifu wa upendo wa maadui, Bwana akionya, anasema, “Basi iweni wakamilifu, kama Baba yenu wa Mbinguni alivyo mkamilifu.
+                    </p>
+                    <p class="paragraph-text">
+                        "Yeye ampendaye ndugu yake, akaa katika nuru, wala ndani yake hamna kikwazo." Ni akina nani wanaofanya kashfa au kashfa? Wale waliochukizwa katika Kristo, na katika Kanisa. Kwa hiyo, hao huchukua kashfa, au, tukio la kushindwa, wanaomwacha Kristo au Kanisa. Ni wapi tunaelewa kwamba Zaburi kwa kusema, "Jua halitakuunguza mchana, wala mwezi usiku," ilisema juu ya hili, kwamba kuungua kunamaanisha kashfa. au tukio la kujikwaa? Katika nafasi ya kwanza alama mfano wenyewe. Kama vile mtu anayeungua asemavyo, siwezi kustahimili, siwezi, niondoke na kurudi nyuma; kwa hivyo wale watu ambao hawawezi kustahimili baadhi ya mambo katika Kanisa, na kujiondoa wenyewe kutoka kwa jina la Kristo au kutoka kwa Kanisa, wanapata kashfa. Kwa maana angalieni jinsi wale waliotawaliwa na jua, watu wa mwilini ambao Kristo aliwahubiria juu ya mwili wake, akisema, Yeye asiyeula mwili wa Mwana wa Adamu na kutokunywa damu yake, hatakuwa na uzima ndani yake. Watu sabini walisema, "Neno hili ni gumu," wakamwacha, wakabaki wale kumi na wawili. Hao wote jua likawaka, nao wakarudi nyuma, wasiweze kustahimili nguvu za Neno. Basi wakabaki wale kumi na wawili. Na watu wasije wakafikiri kwamba wanampa Kristo manufaa kwa kumwamini Kristo, na si kwamba anawapa faida; wale Thenashara waliposalia, Bwana akawaambia, Je! ninyi nanyi mwataka kuondoka? Ili ujue kwamba mimi ni muhimu kwako, si wewe kwangu. Lakini wale ambao jua halijawachoma wakajibu kwa sauti ya Petro, wakisema, Bwana, wewe una neno la uzima wa milele; twende kwa nani?
+                    </p>
+                    <p class="paragraph-text">
+                        Ni kwa maana gani basi, kwamba hakuna kashfa au sababu ya kumkwaza yeye ambaye ampenda ndugu yake? Kwa sababu yeye ampendaye ndugu yake, huvumilia yote kwa ajili ya umoja; kwa sababu ni katika umoja wa upendo ndipo upendo wa kindugu upo. Sikia basi kile Bwana anasema: “Amri mpya nawapa kwamba mpendane.” Sheria ni nini isipokuwa amri? Zaidi ya hayo, inakuwaje hawachukui sababu ya kuwakwaza, bali kwa sababu wanavumiliana? Kama Paulo asemavyo, “mkichukuliana katika upendo, mkijitahidi kuuhifadhi umoja wa Roho katika vifungo vya amani” (Efe. 4:2-3). Hii ndiyo sheria ya Kristo; sikilizeni kwa hakika, tena jinsi Mtume anapendekeza: “Bebeaneni mizani, hivyo mtaitimiza sheria ya Kristo” (Gal. 6:2).
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mimi ndimi Bwana, Mungu wako; tembea sawasawa na sheria zangu. *Shika sheria zangu na uziweke katika matendo, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Mkizishika amri zangu, mtakaa katika pendo langu, kama mimi nilivyozishika amri za Baba yangu na kukaa katika pendo lake.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Zingatia sheria zangu na uziweke katika vitendo, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. Matendo. 21:1-26
+                    </h3>
+                    <p class="paragraph-text">
+                        Safari ya kwenda Yerusalemu.
+                        Somo kutoka kwa Matendo ya Mitume.
+                    </p>
+                    <p class="paragraph-text">
+                        Tulipoachana nao, tukasafiri kwa meli, tukafika Kosi moja kwa moja, na kesho yake tukafika Rodo, na kutoka huko tukafika Patara. Tukapata meli iliyokuwa inakwenda Foinike, tukapanda, tukasafiri. Tulipofika mbele ya Kupro, tukaiacha upande wake wa kushoto, tukapanda meli mpaka Siria, tukatia nanga Tiro; maana hapo meli ilikuwa ipakue shehena yake. Tukawatafuta wale wanafunzi, tukakaa huko siku saba. Kwa njia ya Roho walimwambia Paulo asiende Yerusalemu. Hata siku zetu zilipotimia, tuliondoka, tukaendelea na safari yetu; nao wote, pamoja na wake zao na watoto, wakatusindikiza mpaka nje ya mji; tukapiga magoti ufukweni tukasali na kuagana. Kisha tukapanda meli, nao wakarudi makwao. Hata tulipomaliza safari kutoka Tiro tukafika Tolemaisi; tukawasalimu ndugu na kukaa nao siku moja. Kesho yake tukaondoka, tukafika Kaisaria; tukaingia nyumbani kwa mhubiri Filipo, ambaye alikuwa mmoja wa wale saba, tukakaa kwake. Naye alikuwa na binti wanne wasioolewa, waliotabiri.
+                    </p>
+                    <p class="paragraph-text">
+                        Tulipokuwa tukikaa kwa siku kadhaa, nabii mmoja jina lake Agabo akashuka kutoka Uyahudi. Akaja kwetu akautwaa mshipi wa Paulo, akajifunga miguu na mikono, akasema, Roho Mtakatifu asema hivi, Ndivyo Wayahudi huko Yerusalemu watamfunga mtu mwenye mshipi huu, na kumtia mikononi mwa Mataifa. Tuliposikia hayo, sisi na watu wa huko tukamsihi asipande kwenda Yerusalemu. Ndipo Paulo akajibu, “Mnafanya nini, mnalia na kunivunja moyo? kufa huko Yerusalemu kwa ajili ya jina la Bwana Yesu.” Naye alipokataa kushawishiwa, tukanyamaza, tukasema, Mapenzi ya Bwana yatendeke.
+                    </p>
+                    <p class="paragraph-text">
+                        Baada ya siku hizo tukajitayarisha, tukapanda kwenda Yerusalemu. Na baadhi ya wanafunzi wa Kaisaria walifuatana nasi, wakatuleta mpaka nyumbani kwa Mnasoni wa Kipro, mfuasi wa zamani, ambaye tulikuwa tunakwenda kukaa kwake. Tulipofika Yerusalemu, wale ndugu walitukaribisha kwa furaha. Kesho yake Paulo akaingia pamoja nasi kwa Yakobo; na wazee wote walikuwapo. Baada ya kuwasalimu, akawaeleza moja baada ya nyingine mambo ambayo Mungu alikuwa amefanya kati ya mataifa kupitia huduma yake. Nao waliposikia wakamtukuza Mungu. Wakamwambia, Waona, ndugu, jinsi walivyo maelfu katika Wayahudi walioamini; wote wana bidii kwa ajili ya sheria; nao wameambiwa habari zako ya kwamba unawafundisha Wayahudi wote walio katika Mataifa kumwacha Musa, ukiwaambia wasiwatahiri watoto wao, wala kuzishika mila. Nini basi kifanyike? Hakika watasikia kwamba umekuja. Fanyeni basi tunayowaambia. Tunao wanaume wanne walio chini ya nadhiri; wachukue watu hawa, ujitakase pamoja nao, ukawalipe gharama zao, wapate kunyoa nywele zao. Hivyo wote watajua kwamba hakuna chochote katika yale waliyoambiwa juu yako bali kwamba wewe mwenyewe unaishi kwa kushika sheria. Lakini kwa habari ya watu wa Mataifa walioamini, tuliwapelekea barua iliyotuhukumu kwamba wajiepushe na vitu vilivyotambikiwa sanamu, na damu, na vilivyonyongwa, na uasherati. Ndipo Paulo akawachukua wale watu, na siku ya pili yake akajitakasa pamoja nao, akaingia hekaluni, ili kuwajulisha siku zile za utakaso zitakapotimia, na matoleo kwa ajili ya kila mmoja wao.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mimi niko tayari si kufungwa tu, bali hata kufa huko Yerusalemu kwa ajili ya jina la Bwana Yesu, *aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Nakamilisha katika mwili wangu yale yaliyopungua ya mateso ya Kristo, kwa ajili ya mwili wake, yaani, Kanisa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Kwa jina la Bwana Yesu, aleluya, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Diski. 2, 12
+                    </h3>
+                    <p class="paragraph-text">
+                        Roho Mtakatifu hutufanya upya katika ubatizo.
+                        kutoka kwa "Vitabu vitatu juu ya Utatu" cha Didymus wa Alexandria.
+                    </p>
+                    <p class="paragraph-text">
+                        Kuwa Mungu, Roho Mtakatifu, pamoja na Baba na Mwana, hutufanya wapya katika ubatizo. Anaturudisha nyuma kutoka kwa ubaya hadi kwa uzuri wetu wa zamani, na hutujaza na neema yake, ili tusiwe na uwezo wowote wa mambo ambayo hayastahili upendo. Anatuweka huru kutoka katika dhambi na kifo; na kutoka katika hali ya udongo, wa udongo na majivu, anatufanya kuwa wa kiroho, washiriki katika utukufu wa kimungu, wana na warithi wa Mungu wetu na Baba, walioumbwa kwa mfano wa Mwana, warithi wenzake na ndugu zake, ambao watatawala pamoja naye na kushiriki utukufu wake. Badala ya dunia anatupa mbingu, na katika ukarimu wake anatupa paradiso. Yeye hutupa sisi tayari heshima kubwa zaidi kuliko malaika, na katika maji ya kimungu ya font yeye huzima moto mkali na usiozimika wa kuzimu.
+                    </p>
+                    <p class="paragraph-text">
+                        Wanaume wametungwa mimba mara mbili, kwanza ya mwili, pili ya Roho wa Mungu. Waandishi watakatifu wameshughulika na somo hili kikamilifu; Nitakumbuka majina yao na kuelezea mafundisho ya kila mmoja wao. Yohana: “Bali wote waliompokea aliwapa uwezo wa kufanyika watoto wa Mungu, ndio wale waliaminio jina lake; waliozaliwa si kwa damu, wala si kwa mapenzi ya mwili, wala si kwa mapenzi ya mtu, bali kwa Mungu’.
+                    </p>
+                    <p class="paragraph-text">
+                        Anasema kwamba wale wote ambao wamemwamini Kristo wamepokea uwezo wa kufanyika watoto wa Mungu, yaani, wa Roho Mtakatifu, na kupata ushirika na Mungu. Ili kutufundisha kwamba Mungu anayetuzaa ni Roho Mtakatifu, Mtakatifu Yohana aliongeza maneno haya ya Kristo: Amin, amin, nawaambia, Mtu asipozaliwa kwa maji na kwa Roho, hawezi kuuingia ufalme wa Mungu’.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa njia inayoonekana fonti huzaa miili yetu ya kimwili kupitia huduma ya makuhani; na kwa njia ya kiroho kupitia huduma ya malaika Roho wa Mungu, ambaye haonekani kwa akili yoyote, anabatiza nafsi zetu pamoja na miili yetu katika muungano na yeye mwenyewe na kuwapa kuzaliwa upya. Mbatizaji aliposema: 'Yeye atawabatiza kwa Roho Mtakatifu na kwa moto', alikuwa anazungumza kihalisi, lakini pia kwa mujibu wa maneno 'ya maji na Roho'. Chombo cha udongo cha mwanadamu kinahitaji kwanza kusafishwa kwa maji, kisha kiwe kigumu kabisa katika moto wa kiroho - 'Mungu ni moto ulao'- na hatimaye kutayarishwa na kufanywa upya na Roho Mtakatifu. Kwa maana moto wa Roho pia waweza kumwosha, na maji yana uwezo wa kumtia moto tena katika tanuru.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Nitamimina maji juu ya udongo wenye kiu, na vijito vya maji juu ya nchi kavu. Nitamimina roho yangu juu ya wazao wako, *nao watakua kama mierebi kwenye vijito, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Maji nitakayotoa yatageuka kuwa chemchemi ya maji, yakibubujikia uzima wa milele.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel" class="liturgical-section">
+                <h2 class="section-heading">
+                    Injili. Yohana 15:26 - 16:4
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Roho wa kweli atanishuhudia.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Lakini ajapo huyo Msaidizi, nitakayewapelekea kutoka kwa Baba, huyo Roho wa kweli, atokaye kwa Baba, yeye atanishuhudia; nanyi pia ni mashahidi, kwa sababu mmekuwa pamoja nami tangu mwanzo.
+                    </p>
+                    
+                    <p class="paragraph-text">
+                        “Hayo yote nimewaambia ili kuwaepusha na kukengeuka. Watawatoa katika masinagogi; hakika saa inakuja ambayo mtu yeyote akiwaua atadhani kwamba anamtumikia Mungu. Nao watafanya hivyo kwa sababu hawakumjua Baba wala mimi. Lakini nimewaambia hayo, ili saa yake itakapofika mkumbuke ya kuwa naliwaambieni. “Sikuwaambieni mambo haya tangu mwanzo, kwa sababu nilikuwa pamoja nanyi.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Check local storage for theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Text size toggle
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Start with 'text-size-base'
+
+        // Initialize text size from local storage or default
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainContentWrapper.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainContentWrapper.classList.add('text-size-base'); // Default
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Hamburger menu toggle for mobile
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            // On small screens, hide when a link is clicked
+            if (window.innerWidth < 768) {
+                const navLinksList = navLinks.querySelectorAll('a');
+                navLinksList.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Close hamburger menu when resizing to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,4 +1,21 @@
-const CACHE_NAME = 'ipray-v202509231745';
+const CACHE_NAME = 'ipray-v202509231746';
+// Define critical assets that should be cached immediately for faster initial load
+const CRITICAL_ASSETS = [
+  '/i-pray/',
+  '/i-pray/index.html',
+  '/i-pray/index.js',
+  '/i-pray/index.css',
+  '/i-pray/manifest.json',
+  '/i-pray/theme-manager.js',
+  '/i-pray/translation.js',
+  '/i-pray/assets/css/styles.css',
+  '/i-pray/assets/images/icon-192x192.png',
+  '/i-pray/assets/images/icon-512x512.png',
+  '/i-pray/assets/images/maria mdogo.png',
+  '/i-pray/fallback.html'
+];
+
+// Define all assets that should be cached
 const urlsToCache = [
   '/i-pray/',
   '/i-pray/index.html',
@@ -394,9 +411,16 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        return cache.addAll(urlsToCache);
+        // First cache critical assets for immediate app functionality
+        return cache.addAll(CRITICAL_ASSETS)
+          .then(() => {
+            // Then cache all other assets in the background
+            // This ensures the app loads quickly while still caching everything
+            return cache.addAll(urlsToCache.filter(url => !CRITICAL_ASSETS.includes(url)));
+          });
       })
   );
+  // Skip waiting to activate the new service worker immediately
   self.skipWaiting();
 });
 
@@ -416,27 +440,84 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Apply different strategies based on request type
+  const requestURL = new URL(event.request.url);
+  
+  // Skip non-GET requests and non-HTTP/HTTPS requests
+  if (event.request.method !== 'GET' || 
+      !requestURL.protocol.startsWith('http')) {
+    return;
+  }
+  
+  // For API requests or external resources, use network first
+  if (!requestURL.pathname.startsWith('/i-pray/')) {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+  
+  // For HTML files, use network first with cache fallback
+  if (requestURL.pathname.endsWith('.html') || 
+      requestURL.pathname === '/i-pray/' || 
+      event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request)
+            .then(cachedResponse => {
+              return cachedResponse || caches.match('/i-pray/fallback.html');
+            });
+        })
+    );
+    return;
+  }
+  
+  // For images, CSS, JS, and other static assets, use cache first with network fallback
   event.respondWith(
     caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
+      .then(cachedResponse => {
+        // Return cached response if available
+        if (cachedResponse) {
+          // Fetch from network in the background to update cache
+          fetch(event.request)
+            .then(networkResponse => {
+              caches.open(CACHE_NAME).then(cache => {
+                cache.put(event.request, networkResponse.clone());
+              });
+            })
+            .catch(() => {/* Ignore network errors */});
+          
+          return cachedResponse;
         }
-        return fetch(event.request).then(networkResponse => {
-          // Cache mwaka3-week files on first access
-          if (event.request.url.includes('/i-pray/mwaka3-week')) {
+        
+        // If not in cache, fetch from network
+        return fetch(event.request)
+          .then(networkResponse => {
             const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then(cache => {
               cache.put(event.request, responseClone);
             });
-          }
-          return networkResponse;
-        }).catch(() => {
-          // Fallback for navigation requests when offline
-          if (event.request.mode === 'navigate') {
-            return caches.match('/i-pray/fallback.html');
-          }
-        });
+            return networkResponse;
+          })
+          .catch(() => {
+            // For images, return a placeholder if available
+            if (event.request.destination === 'image') {
+              return caches.match('/i-pray/assets/images/placeholder.png')
+                .catch(() => new Response('Image not available', { status: 404 }));
+            }
+            
+            // For other resources, just fail
+            return new Response('Resource not available', { status: 404 });
+          });
       })
   );
 });

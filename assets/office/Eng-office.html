@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of Readings</title>
+     <link href="./dist/output.css" rel="stylesheet">
+    <style>
+        /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Toggles container - moved to top-right corner */
+        .toggles-container {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 20; /* Increased z-index to ensure it's on top */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main container for the menu */
+        .menu-container {
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 1rem; /* rounded-xl */
+            padding: 2rem; /* p-8 */
+            max-width: 32rem; /* max-w-md */
+            width: 90%; /* Responsive width */
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html.dark .menu-container {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .menu-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 800; /* font-extrabold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .menu-title {
+            color: #ffc107; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .menu-title {
+                font-size: 2.5rem; /* sm:text-5xl */
+            }
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column by default */
+            gap: 1rem; /* gap-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .button-grid {
+                grid-template-columns: repeat(2, 1fr); /* Two columns on small screens and up */
+            }
+        }
+
+        /* Dropdown container for each season */
+        .dropdown-container {
+            position: relative; /* Needed for absolute positioning of dropdown content */
+            width: 100%;
+        }
+
+        .liturgical-button {
+            width: 100%; /* Make button fill its container */
+            padding: 1rem 1.5rem; /* py-4 px-6 */
+            border-radius: 0.75rem; /* rounded-xl */
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            color: #ffffff; /* text-white */
+            background-color:#2a2a2a; /* bg-blue-600 */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5), 0 2px 4px -1px rgba(59, 130, 246, 0.25); /* shadow-lg with blue color */
+            display: flex; /* To center text and potentially add an arrow */
+            justify-content: center;
+            align-items: center;
+        }
+        .liturgical-button:hover {
+            background-color: #2a2a2a; /* hover:bg-blue-700 */
+            transform: translateY(-2px); /* hover:translate-y-[-2px] */
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.5), 0 4px 6px -2px rgba(37, 99, 235, 0.25); /* hover:shadow-xl */
+        }
+        .liturgical-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06); /* active:shadow-md */
+        }
+
+        /* Dropdown content styling */
+        .dropdown-content {
+            position: absolute;
+            top: 100%; /* Position below the button */
+            left: 0;
+            right: 0; /* Make it span the width of its parent .dropdown-container */
+            background-color: #ffffff; /* bg-white */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            z-index: 10; /* Ensure it appears above other content */
+            overflow: hidden; /* For rounded corners on children */
+            margin-top: 0.5rem; /* Space between button and dropdown */
+            text-align: left; /* Align text within dropdown */
+        }
+        html.dark .dropdown-content {
+            background-color: #374151; /* dark:bg-gray-700 */
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1rem; /* py-3 px-4 */
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        html.dark .dropdown-item {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        .dropdown-item:hover {
+            background-color: #f3f4f6; /* hover:bg-gray-100 */
+            color: #1f2937; /* hover:text-gray-900 */
+        }
+        html.dark .dropdown-item:hover {
+            background-color: #4b5563; /* dark:hover:bg-gray-600 */
+            color: #f9fafb; /* dark:hover:text-gray-100 */
+        }
+
+        /* Text size adjustment classes for dropdown items */
+        .text-size-sm .dropdown-item { font-size: 0.75rem; }
+        .text-size-base .dropdown-item { font-size: 0.875rem; }
+        .text-size-lg .dropdown-item { font-size: 1rem; }
+        .text-size-xl .dropdown-item { font-size: 1.125rem; }
+
+        /* Adjust main title for text size changes */
+        .text-size-sm .menu-title { font-size: 1.8rem; }
+        .text-size-base .menu-title { font-size: 2.25rem; }
+        .text-size-lg .menu-title { font-size: 2.5rem; }
+        .text-size-xl .menu-title { font-size: 2.75rem; }
+
+        /* Adjust liturgical button for text size changes */
+        .text-size-sm .liturgical-button { font-size: 1rem; padding: 0.75rem 1.25rem; }
+        .text-size-base .liturgical-button { font-size: 1.125rem; padding: 1rem 1.5rem; }
+        .text-size-lg .liturgical-button { font-size: 1.25rem; padding: 1.25rem 1.75rem; }
+        .text-size-xl .liturgical-button { font-size: 1.375rem; padding: 1.5rem 2rem; }
+
+        /* Responsive adjustments for menu-container padding */
+        @media (min-width: 640px) {
+            .menu-container {
+                padding: 2.5rem; /* sm:p-10 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toggles-container">
+        <button id="dark-mode-toggle" class="toggle-button">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <span>Hali ya Giza</span>
+        </button>
+
+        <button id="text-size-toggle" class="toggle-button">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+            </svg>
+            <span>Ukubwa wa Maandishi</span>
+        </button>
+    </div>
+
+    <div id="main-menu-container" class="menu-container">
+        <h1 class="menu-title">Choose a Liturgical Season</h1>
+        <div class="button-grid">
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="majilio-dropdown">Advent</button>
+                <div id="majilio-dropdown" class="dropdown-content hidden">
+                    <a href="advent1.html" class="dropdown-item">week 1</a>
+                    <a href="advent2.html" class="dropdown-item">week 2</a>
+                    <a href="advent3.html" class="dropdown-item">week 3</a>
+                    <a href="advent4.html" class="dropdown-item">week 4</a>
+                    
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="noeli-dropdown">Christmas & Noel</button>
+                <div id="noeli-dropdown" class="dropdown-content hidden">
+                    <a href="noeli-option1.html" class="dropdown-item">Chaguo 1</a>
+                    <a href="noeli-option2.html" class="dropdown-item">Chaguo 2</a>
+                    <a href="noeli-option3.html" class="dropdown-item">Chaguo 3</a>
+                    <a href="noeli-option4.html" class="dropdown-item">Chaguo 4</a>
+                    <a href="noeli-option5.html" class="dropdown-item">Chaguo 5</a>
+                    <a href="noeli-option6.html" class="dropdown-item">Chaguo 6</a>
+                    <a href="noeli-option7.html" class="dropdown-item">Chaguo 7</a>
+                    <a href="noeli-option8.html" class="dropdown-item">Chaguo 8</a>
+                    <a href="noeli-option9.html" class="dropdown-item">Chaguo 9</a>
+                    <a href="noeli-option10.html" class="dropdown-item">Chaguo 10</a>
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="wakati-kawaida-dropdown">Ordinary</button>
+                <div id="wakati-kawaida-dropdown" class="dropdown-content hidden">
+                    <a href="ordinary1.html" class="dropdown-item">ordinary 1</a>
+                    <a href="ordinary2.html" class="dropdown-item">ordinary 2</a>
+                    <a href="ord3.html" class="dropdown-item">ordinary 3</a>
+                    <a href="ord4.html" class="dropdown-item">ordinary4</a>
+                    <a href="ord5.html" class="dropdown-item">ordinary5</a>
+                    <a href="ord6.html" class="dropdown-item">ordinary 6</a>
+                    <a href="ord7.html" class="dropdown-item">ordinary 7</a>
+                    <a href="ord8.html" class="dropdown-item">ordinary8</a>
+                    <a href="ord9.html" class="dropdown-item">ordinary 9</a>
+                    <a href="ord10.html" class="dropdown-item">ordinary 10</a>
+                    <a href="ord11.html" class="dropdown-item">ordinary 11</a>
+                    <a href="ord12.html" class="dropdown-item">ordinary 12</a>
+                    <a href="ord24.html" class="dropdown-item">ordinary 24</a>
+                    <a href="ord25.html" class="dropdown-item">ordinary 25</a>
+                    <a href="ord26.html" class="dropdown-item">ordinary 26</a>
+                    <a href="ord27.html" class="dropdown-item">ordinary 27</a>
+                    <a href="ord28.html" class="dropdown-item">ordinary 28</a>
+                    <a href="ord29.html" class="dropdown-item">ordinary 29</a>
+                    <a href="ord30.html" class="dropdown-item">ordinary 30</a>
+                    <a href="ord31.html" class="dropdown-item">ordinary 32</a>
+                   
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="kwaresima-dropdown">Lent</button>
+                <div id="kwaresima-dropdown" class="dropdown-content hidden">
+                    <a href="ash.html" class="dropdown-item">ash wednesday</a>
+                    <a href="lent1.html" class="dropdown-item">week  1</a>
+                    <a href="lent2.html" class="dropdown-item">week 2</a>
+                    <a href="lent3.html" class="dropdown-item">week 3</a>
+                    <a href="lent4.html" class="dropdown-item">week 4</a>
+                    <a href="lent5.html" class="dropdown-item">week 5</a>
+                    <a href="lent6.html" class="dropdown-item">week 6</a>
+                    <a href="holyweek.html" class="dropdown-item">Holy week</a>
+                    
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="pasaka-dropdown">Eastertide</button>
+                <div id="pasaka-dropdown" class="dropdown-content hidden">
+                
+                    <a href="easter.html" class="dropdown-item">week 1</a>
+                    <a href="easter2.html" class="dropdown-item">week 2</a>
+                    <a href="easter3.html" class="dropdown-item">week 3</a>
+                    <a href="easter4.html" class="dropdown-item">week 4</a>
+                    <a href="easter5.html" class="dropdown-item">week 5</a>
+                    <a href="easter6.html" class="dropdown-item">week 6</a>
+                   <a href="easter7.html" class="dropdown-item">Ascension</a>
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="pentekoste-dropdown">Pentecost</button>
+                <div id="pentekoste-dropdown" class="dropdown-content hidden">
+                    <a href="pentecost.html" class="dropdown-item">PENTECOST</a>
+                   
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <button class="liturgical-button" aria-expanded="false" aria-controls="pentekoste-dropdown">Solemnities</button>
+                <div id="pentekoste-dropdown" class="dropdown-content hidden">
+                    <a href="pentekoste.html" class="dropdown-item">PENTEKOSTE</a>
+                   
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Check local storage for theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Text size toggle
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainMenuContainer = document.getElementById('main-menu-container');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Start with 'text-size-base'
+
+        // Initialize text size from local storage or default
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainMenuContainer.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainMenuContainer.classList.add('text-size-base'); // Default
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainMenuContainer.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainMenuContainer.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Dropdown functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownButtons = document.querySelectorAll('.liturgical-button');
+
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent document click from immediately closing
+
+                    const dropdownContent = document.getElementById(button.getAttribute('aria-controls'));
+
+                    // Close any other open dropdowns
+                    document.querySelectorAll('.dropdown-content').forEach(content => {
+                        if (content !== dropdownContent && !content.classList.contains('hidden')) {
+                            content.classList.add('hidden');
+                            // Update aria-expanded for the closed dropdown's button
+                            const associatedButton = document.querySelector(`[aria-controls="${content.id}"]`);
+                            if (associatedButton) {
+                                associatedButton.setAttribute('aria-expanded', 'false');
+                            }
+                        }
+                    });
+
+                    // Toggle the clicked dropdown
+                    const isHidden = dropdownContent.classList.contains('hidden');
+                    dropdownContent.classList.toggle('hidden');
+                    button.setAttribute('aria-expanded', !isHidden);
+                });
+            });
+
+            // Close dropdowns when clicking anywhere else on the document
+            document.addEventListener('click', (event) => {
+                document.querySelectorAll('.dropdown-content').forEach(content => {
+                    if (!content.classList.contains('hidden')) {
+                        content.classList.add('hidden');
+                        const associatedButton = document.querySelector(`[aria-controls="${content.id}"]`);
+                        if (associatedButton) {
+                            associatedButton.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+            });
+
+            // Close dropdown when a dropdown item is clicked
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    // Find the parent dropdown-content and hide it
+                    let parentContent = item.closest('.dropdown-content');
+                    if (parentContent) {
+                        parentContent.classList.add('hidden');
+                        const associatedButton = document.querySelector(`[aria-controls="${parentContent.id}"]`);
+                        if (associatedButton) {
+                            associatedButton.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

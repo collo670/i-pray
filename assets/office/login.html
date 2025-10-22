@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ipray</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode {
+            background-color: #f0f0f0;
+            color: #1a1a1a;
+        }
+
+        .dark-mode-toggle {
+            background-color: #333;
+            color: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: none;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #555;
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .login-card {
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .login-card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .ipray-heading {
+            color: #ffc107;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .icon-circle {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            border: 4px solid #ffc107;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .icon-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .input-field {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #e0e0e0;
+        }
+
+        body.light-mode .input-field {
+            background-color: #e9e9e9;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+
+        .btn-primary {
+            background-color: #ffc107;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0a800;
+        }
+
+        .google-btn {
+            background-color: #4285F4;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .google-btn:hover {
+            background-color: #357ae8;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #aaa;
+        }
+
+        body.light-mode .divider {
+            color: #555;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #444;
+        }
+        
+        body.light-mode .divider::before,
+        body.light-mode .divider::after {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: .25em;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: .25em;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <div class="min-h-screen flex flex-col items-center justify-center px-4">
+        <button id="darkModeToggle" class="dark-mode-toggle absolute top-4 right-4 z-20">Light Mode</button>
+
+        <div class="icon-container">
+            <div class="icon-circle">
+                <img src="assets/images/bikira maria.jpg" alt="Ipray Icon">
+            </div>
+        </div>
+
+        <h1 class="ipray-heading mb-6">ipray</h1>
+
+        <div class="login-card w-full max-w-md p-8 rounded-xl">
+            <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="input-field w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="password" name="password" class="input-field w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                </div>
+                <button type="submit" class="btn-primary w-full py-2 rounded-lg">Login</button>
+            </form>
+
+            <div class="divider my-6">OR</div>
+
+            <button id="google-signin-btn" class="google-btn w-full py-2 px-4 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.42-4.55H24v8.51h13.07c-.6 5.33-4.66 9.21-9.65 9.21-5.8 0-10.5-4.7-10.5-10.5s4.7-10.5 10.5-10.5c3.36 0 6.17 1.39 8.08 3.24l6.29-6.29C35.09 4.38 29.92 2 24 2 11.98 2 2.22 9.48 2.22 20s9.76 18 19.78 18c11.04 0 17.7-7.82 17.7-17.45z"></path>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 19.99 0 24s.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.24-5.61c-2.11 1.41-4.79 2.24-7.65 2.24-5.27 0-9.74-3.58-11.34-8.49l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
+                Sign in with Google
+            </button>
+        </div>
+    </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const darkModeToggle = document.getElementById('darkModeToggle');
+
+            function setTheme(mode) {
+                if (mode === 'light') {
+                    body.classList.remove('dark-mode');
+                    body.classList.add('light-mode');
+                    darkModeToggle.textContent = 'Dark Mode';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.classList.remove('light-mode');
+                    body.classList.add('dark-mode');
+                    darkModeToggle.textContent = 'Light Mode';
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                setTheme('dark');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    setTheme('light');
+                } else {
+                    setTheme('dark');
+                }
+            });
+
+            // --- Google Sign-In Functionality ---
+            const googleBtn = document.getElementById('google-signin-btn');
+
+            googleBtn.addEventListener('click', () => {
+                // Note: A full implementation requires a Google Cloud project and a valid client ID.
+                // Replace 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com' with your actual client ID.
+                const client = google.accounts.oauth2.initTokenClient({
+                    client_id: 'PASTE_YOUR_CLIENT_ID_HERE',
+                    scope: 'https://www.googleapis.com/auth/userinfo.profile ' +
+                           'https://www.googleapis.com/auth/userinfo.email',
+                    callback: (tokenResponse) => {
+                        if (tokenResponse && tokenResponse.access_token) {
+                            console.log("Access Token: " + tokenResponse.access_token);
+                            alert('Sign-in successful! Check the console for the access token.');
+
+                            // Use the token to get user info from Google
+                            fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                                headers: {
+                                    'Authorization': `Bearer ${tokenResponse.access_token}`
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('User Info:', data);
+                                alert(`Hello, ${data.name}! Your email is ${data.email}.`);
+                            })
+                            .catch(error => {
+                                console.error('Error fetching user info:', error);
+                            });
+                        } else if (tokenResponse && tokenResponse.error) {
+                            console.error("Google Sign-In Error:", tokenResponse);
+                            alert("An error occurred during Google Sign-In.");
+                        }
+                    },
+                });
+
+                // This opens the Google sign-in popup.
+                client.requestAccessToken();
+            });
+        });
+    </script>
+</body>
+</html>

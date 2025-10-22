@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalenda ya Liturgia ya Kikatoliki 2025 - Catholic Liturgical Calendar 2025</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for liturgical colors */
+        .advent { color: #800080; font-weight: bold; }
+        .christmas { color: #ffd700; background-color: #4a4a4a; padding: 2px 5px; border-radius: 3px; }
+        .lent { color: #800080; font-weight: bold; }
+        .easter { color: #ffffff; background-color: #c8102e; padding: 2px 5px; border-radius: 3px; }
+        .ordinary { color: #2c6e49; }
+        .solemnity { font-weight: bold; color: #c8102e; }
+        .feast { font-style: italic; color: #4a4a4a; }
+        .memorial { color: #4a4a4a; }
+        /* Background image with semi-transparent overlay for readability */
+        .vintage-background {
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        .vintage-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85); /* Semi-transparent white overlay */
+            z-index: 1;
+        }
+        .vintage-background > * {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Kalenda ya Liturgia ya Kikatoliki 2025 - Catholic Liturgical Calendar 2025</h1>
+        <div class="flex justify-center mb-4">
+            <button id="sw-btn" class="px-4 py-2 bg-yellow-400 text-black font-bold rounded-l focus:outline-none">Swahili</button>
+            <button id="en-btn" class="px-4 py-2 bg-gray-300 text-black font-bold rounded-r focus:outline-none">English</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="calendar"></div>
+    </div>
+
+    <script>
+        // Easter Sunday 2025: April 20
+        const easterSunday = new Date(2025, 3, 20); // Months are 0-based in JS
+
+        // Calculate key movable feasts relative to Easter
+        const ashWednesday = new Date(easterSunday);
+        ashWednesday.setDate(easterSunday.getDate() - 46); // 46 days before Easter
+        const palmSunday = new Date(easterSunday);
+        palmSunday.setDate(easterSunday.getDate() - 7); // Sunday before Easter
+        const goodFriday = new Date(easterSunday);
+        goodFriday.setDate(easterSunday.getDate() - 2); // Friday before Easter
+        const ascension = new Date(easterSunday);
+        ascension.setDate(easterSunday.getDate() + 40); // 40 days after Easter
+        const pentecost = new Date(easterSunday);
+        pentecost.setDate(easterSunday.getDate() + 50); // 50 days after Easter
+        const trinitySunday = new Date(easterSunday);
+        trinitySunday.setDate(easterSunday.getDate() + 56); // Sunday after Pentecost
+        const corpusChristi = new Date(easterSunday);
+        corpusChristi.setDate(easterSunday.getDate() + 60); // Thursday after Trinity
+
+        // First Sunday of Advent 2025: November 30
+        const firstAdvent = new Date(2025, 10, 30);
+
+        // Fixed feasts and solemnities with Swahili and English names
+        const fixedFeasts = [
+            { date: new Date(2025, 0, 1), nameSw: "Maria, Mama wa Mungu", nameEn: "Mary, Mother of God", type: "solemnity" },
+            { date: new Date(2025, 0, 6), nameSw: "Epifania", nameEn: "Epiphany", type: "solemnity" },
+            { date: new Date(2025, 1, 2), nameSw: "Kupakwa kwa Bwana", nameEn: "Presentation of the Lord", type: "feast" },
+            { date: new Date(2025, 2, 25), nameSw: "Matamko ya Bwana", nameEn: "Annunciation", type: "solemnity" },
+            { date: new Date(2025, 5, 24), nameSw: "Kuzaliwa kwa Yohana Mbatizaji", nameEn: "Nativity of John the Baptist", type: "solemnity" },
+            { date: new Date(2025, 5, 29), nameSw: "Watakatifu Petro na Paulo", nameEn: "Saints Peter and Paul", type: "solemnity" },
+            { date: new Date(2025, 7, 15), nameSw: "Kupaa kwa Maria", nameEn: "Assumption of Mary", type: "solemnity" },
+            { date: new Date(2025, 10, 1), nameSw: "Watakatifu Wote", nameEn: "All Saints", type: "solemnity" },
+            { date: new Date(2025, 10, 2), nameSw: "Roho Zote", nameEn: "All Souls", type: "memorial" },
+            { date: new Date(2025, 11, 8), nameSw: "Kutungwa bila Waa", nameEn: "Immaculate Conception", type: "solemnity" },
+            { date: new Date(2025, 11, 25), nameSw: "Krismasi", nameEn: "Christmas", type: "solemnity" },
+        ];
+
+        // Movable feasts with Swahili and English names
+        const movableFeasts = [
+            { date: ashWednesday, nameSw: "Jumatano ya Majivu", nameEn: "Ash Wednesday", type: "lent" },
+            { date: palmSunday, nameSw: "Jumashamisi ya Matawi", nameEn: "Palm Sunday", type: "lent" },
+            { date: goodFriday, nameSw: "Ijumaa ya Mateso", nameEn: "Good Friday", type: "lent" },
+            { date: easterSunday, nameSw: "Pasaka", nameEn: "Easter Sunday", type: "easter" },
+            { date: ascension, nameSw: "Kupaa kwa Bwana", nameEn: "Ascension", type: "easter" },
+            { date: pentecost, nameSw: "Pentekoste", nameEn: "Pentecost", type: "easter" },
+            { date: trinitySunday, nameSw: "Utatu Mtakatifu", nameEn: "Trinity Sunday", type: "solemnity" },
+            { date: corpusChristi, nameSw: "Mwili na Damu ya Kristo", nameEn: "Corpus Christi", type: "solemnity" },
+        ];
+
+        // Combine all feasts
+        const allFeasts = [...fixedFeasts, ...movableFeasts];
+
+        // Months in Swahili and English
+        const months = [
+            { sw: "Januari", en: "January" },
+            { sw: "Februari", en: "February" },
+            { sw: "Machi", en: "March" },
+            { sw: "Aprili", en: "April" },
+            { sw: "Mei", en: "May" },
+            { sw: "Juni", en: "June" },
+            { sw: "Julai", en: "July" },
+            { sw: "Agosti", en: "August" },
+            { sw: "Septemba", en: "September" },
+            { sw: "Oktoba", en: "October" },
+            { sw: "Novemba", en: "November" },
+            { sw: "Desemba", en: "December" },
+        ];
+
+        // Seasons in Swahili and English
+        const seasons = {
+            advent: { sw: "Majilio", en: "Advent" },
+            christmas: { sw: "Krismasi", en: "Christmas" },
+            lent: { sw: "Kwaresima", en: "Lent" },
+            easter: { sw: "Pasaka", en: "Easter" },
+            ordinary: { sw: "Wakati wa Kawaida", en: "Ordinary Time" },
+        };
+
+        let currentLang = 'sw'; // default language
+
+        function renderCalendar(lang) {
+            const calendarDiv = document.getElementById("calendar");
+            calendarDiv.innerHTML = "";
+
+            months.forEach((month, monthIndex) => {
+                const monthDiv = document.createElement("div");
+                monthDiv.className = "bg-white p-6 rounded-lg shadow-md";
+                monthDiv.innerHTML = `<h3 class="text-xl font-semibold text-gray-800 mb-4">${month[lang]} 2025</h3>`;
+
+                // Get number of days in the month
+                const daysInMonth = new Date(2025, monthIndex + 1, 0).getDate();
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const currentDate = new Date(2025, monthIndex, day);
+                    const dayDiv = document.createElement("div");
+                    dayDiv.className = "p-2 border-b border-gray-200 vintage-background";
+
+                    // Determine liturgical season
+                    let seasonKey = "ordinary";
+                    let seasonClass = "ordinary";
+
+                    if (currentDate >= firstAdvent && currentDate < new Date(2025, 11, 25)) {
+                        seasonKey = "advent";
+                        seasonClass = "advent";
+                    }
+                    else if (currentDate >= new Date(2025, 11, 25) || 
+                            (currentDate.getFullYear() === 2026 && currentDate <= new Date(2026, 0, 12))) {
+                        seasonKey = "christmas";
+                        seasonClass = "christmas";
+                    }
+                    else if (currentDate >= ashWednesday && currentDate < new Date(2025, 3, 17)) {
+                        seasonKey = "lent";
+                        seasonClass = "lent";
+                    }
+                    else if (currentDate >= easterSunday && currentDate <= pentecost) {
+                        seasonKey = "easter";
+                        seasonClass = "easter";
+                    }
+
+                    // Check for feasts
+                    const feasts = allFeasts.filter(feast => 
+                        feast.date.getDate() === day && 
+                        feast.date.getMonth() === monthIndex &&
+                        feast.date.getFullYear() === 2025
+                    );
+
+                    let feastText = "";
+                    if (feasts.length > 0) {
+                        feastText = `<strong class='text-gray-800'>${lang === 'sw' ? 'Sikukuu' : 'Feasts'}:</strong><br>`;
+                        feasts.forEach(feast => {
+                            feastText += `<span class="${feast.type}">${feast[lang === 'sw' ? 'nameSw' : 'nameEn']}</span><br>`;
+                        });
+                    }
+
+                    dayDiv.innerHTML = `
+                        <p class="text-gray-800">${day} ${month[lang]}: 
+                        <span class="${seasonClass}">${seasons[seasonKey][lang]}</span></p>
+                        ${feastText}
+                    `;
+                    monthDiv.appendChild(dayDiv);
+                }
+
+                calendarDiv.appendChild(monthDiv);
+            });
+        }
+
+        // Initial render
+        renderCalendar(currentLang);
+
+        // Button event listeners
+        document.getElementById('sw-btn').addEventListener('click', function() {
+            currentLang = 'sw';
+            this.classList.add('bg-yellow-400');
+            this.classList.remove('bg-gray-300');
+            document.getElementById('en-btn').classList.remove('bg-yellow-400');
+            document.getElementById('en-btn').classList.add('bg-gray-300');
+            renderCalendar(currentLang);
+        });
+
+        document.getElementById('en-btn').addEventListener('click', function() {
+            currentLang = 'en';
+            this.classList.add('bg-yellow-400');
+            this.classList.remove('bg-gray-300');
+            document.getElementById('sw-btn').classList.remove('bg-yellow-400');
+            document.getElementById('sw-btn').classList.add('bg-gray-300');
+            renderCalendar(currentLang);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masifu ya Asubuhi - Alhamisi</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color:  #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .dark-mode .navbar {
+            background-color:  #222;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Nyumbani</a></li>
+                <li><a href="asubuhi.html">Masifu ya Asubuhi</a></li>
+                <li><a href="jioni.html">Masifu ya Jioni</a></li>
+                <li><a href="somo.html">Somo la Kila Siku</a></li>
+                <li><a href="takwimu.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+        
+        <h1>JUMA 1: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
+        
+        <div class="prayer-section">
+            <h2>UTENZI wa Kawaida</h2>
+            <p class="verse">Fahari yake ye Baba</p>
+            <p class="verse">Kristo nuru yetu,</p>
+            <p class="verse">Kwa upendo na huruma</p>
+            <p class="verse">Aja kufanya kivuko</p>
+            <p class="verse">Cha shimo kubwa ajabu,</p>
+            <p class="verse">Shimo kubwa la madhambi Baina ya wanadamu Na Mungu Mtakatifu.</p>
+            <p class="verse">Kristo siku ya jana,</p>
+            <p class="verse">Na leo pia Kristo,</p>
+            <p class="verse">Ana hali ile ile,</p>
+            <p class="verse">Habadiliki milele,</p>
+            <p class="verse">Mfano wa Mungu wetu,</p>
+            <p class="verse">Mungu aliyefichika;</p>
+            <p class="verse">Na 'Hekima ya Milele' Ndilo hasa jina lake.</p>
+            <p class="verse">Neno lake hulishika</p>
+            <p class="verse">Karne hata karne, Yupo pamoja na sisi Hadi mwisho wa nyakati.</p>
+            <p class="verse">Mchana Yeye ni wingu,</p>
+            <p class="verse">Usiku mwali wa moto, Hivyo hututangulia Katika zakeye njia.</p>
+            <p class="verse">Tunakutukuza Baba</p>
+            <p class="verse">Chanzo halisi cha mwanga,</p>
+            <p class="verse">Kadhalika na Kristo,</p>
+            <p class="verse">Yeye Mwanao mpendwa,</p>
+            <p class="verse">Akaaye ndani yetu Pamoja na Roho wako: Ndo Utatu wa milele</p>
+            <p class="verse">Katika Mungu Mmoja.</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. I<br>Ant. ya Kawaida: Kinanda na kinubi, amkeni; nitaiamsha alfajiri.<br>Ant. ya Kipindi cha Pasaka: Ee Mungu, utukuzwe juu ya mbingu, aleluya.</p>
+            
+            <h2>Zab. 57</h2>
+            <p class="psalm-title">Kuomba msaada<br>Zaburi hii hutukuza mateso ya Kristo (Mt. Augustino)</p>
+            
+            <p class="verse">Unihurumie, Ee Mungu, unihurumie, * kwako ninakimbilia usalama.</p>
+            <p class="verse">Kivulini mwa mabawa yako, napata usalama, * hata hapo dhoruba kali itakapopita.</p>
+            <p class="verse">Namlilia Mungu Mkuu, *</p>
+            <p class="verse">Mungu anijaliaye kila kitu.</p>
+            <p class="verse">Atanisikiliza kutoka mbinguni na kuniokoa; / atawashinda hao wenye kunidhulumu. * Mungu atanionyesha mapendo na uaminifu wake. Adui wanizunguka kama simba wala watu; / meno yao ni kama mikuki na mishale, * ndimi zao ni kama panga kali. Utukuzwe, Ee Mungu, Juu ya mbingu, * utukufu wako uenee duniani kote.</p>
+            <p class="verse">Adui wamenitegea wavu waninase, * nami nasononeka kwa huzuni.</p>
+            <p class="verse">Wamenichimbia shimo njiani, * lakini wao wenyewe wametumbukia humo. Niko imara, Ee Mungu, niko imara; * nitaimba na kukushangilia!</p>
+            <p class="verse">Amka, ee nafsi yangu! / Amkeni, enyi zeze na kinubi! * Nitayaamsha mapambazuko!</p>
+            <p class="verse">Ee Bwana, nitakushukuru kati ya mataifa; * nitakuimbia sifa kati ya watu.</p>
+            <p class="verse">Upendo wako mkuu waenea hata mbinguni, * uaminifu wako wafika hata mawinguni.</p>
+            <p class="verse">Utukuzwe, Ee Mungu, juu ya mbingu; * utukufu wako uenee duniani kote.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Kinanda na kinubi, amkeni; nitaiamsha alfajiri.<br>Ant. ya Kipindi cha Pasaka: Ee Mungu, utukuzwe juu ya mbingu, aleluya.</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. II<br>Ant. ya Kawaida: Bwana asema hivi: Watu wangu watashibishwa mema yangu.<br>Ant. ya Kipindi cha Pasaka: Bwana amewakomboa watu wake, aleluya.</p>
+            
+            <h2>WIMBO: Yer. 31:10-14</h2>
+            <p class="psalm-title">Furaha ya watu waliokombolewa<br>Yesu ilimpasa kufa kusudi awaunganishe watoto wa Mungu waliokuwa wametawanyika (Rej. Yoh. 11:51-52)</p>
+            
+            <p class="verse">Lisikieni neno la BWANA, enyi mataifa, * litangazeni visiwani mbali; mkaseme,</p>
+            <p class="verse">Aliyemtawanya Israeli atamkusanya, na kumlinda; * kama mchungaji alindavyo kundi lake.</p>
+            <p class="verse">Kwa maana BWANA amemweka huru Yakobo, * amemkomboa mkononi mwake aliyekuwa hodari kuliko yeye.</p>
+            <p class="verse">Nao watakuja, na kuimba katika mlima Sion, * wataukimbilia wema wa BWANA, nafaka, na divai na mafuta, * na wachanga wa kondoo na wa ng'ombe; na roho zao zitakuwa kama bustani iliyotiwa maji; * wala hawatahuzunika tena kabisa.</p>
+            <p class="verse">Ndipo bikira atafurahi katika kucheza, * na vijana na wazee pamoja; maana nitageuza masikitiko yao kuwa furaha, / nami nitawafariji, na kuwafurahisha * waache huzuni zao.</p>
+            <p class="verse">Nami nitaishibisha roho ya makuhani kwa unono; * na watu wangu watashiba kwa wema wangu.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Bwana asema hivi: Watu wangu watashibishwa mema yangu.<br>Ant. ya Kipindi cha Pasaka: Bwana amewakomboa watu wake, aleluya.</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. III<br>Ant. ya Kawaida: Bwana ni mkuu, astahili sifa katika mji wa Mungu wetu.<br>Ant. ya Kipindi cha Pasaka: Mungu yu pamoja nasi, Mungu wetu milele na milele, aleluya.</p>
+            
+            <h2>Zab. 48</h2>
+            <p class="psalm-title">Sion mji wa Mungu<br>Akanipeleka juu ya mlima mrefu sana. Akanionyesha mji mtakatifu, yaani Yerusalemu (Ufu. 21:10)</p>
+            
+            <p class="verse">Mungu ni mkuu na wa kusufika sana, / katika mji wa Mungu wetu, * juu ya mlima wake mtakatifu.</p>
+            <p class="verse">Sion, mlima wa Mungu, ni mrefu na mzuri; * mji wa mfalme mkuu ni furaha ya ulimwengu.</p>
+            <p class="verse">Katika ngome za mji Sion, *</p>
+            <p class="verse">Mungu amejionyesha kuwa mwamba wa usalama.</p>
+            <p class="verse">Wafalme walikusanyika, * wakaanza kushambulia.</p>
+            <p class="verse">Lakini walipouona tu mji wa Sion, wakashangaa; * wakashikwa na hofu, wakatimua mbio.</p>
+            <p class="verse">Woga uliwafika wakaanza kuhangaika, * wakawa kama mwanamke anayejifungua.</p>
+            <p class="verse">Uliwarusharusha kama meli katika dhoruba. / Yote tuliyosikia Mungu ametenda, * sasa sisi wenyewe tumeyaona,</p>
+            <p class="verse">katika mji wa Mungu, Mungu mwenye nguvu, * Mungu atauweka mji huo salama milele.</p>
+            <p class="verse">Ee Mungu, twautafakari upendo wako mkuu, * tukiwa Hekaluni mwako.</p>
+            <p class="verse">Wewe wasifika kila mahali, / sifa zako zaenea popote duniani. * Wewe watawala kwa haki; watu wa Sion wafurahi! / Wewe watoa hukumu zilizo sawa; * watu wa mji wa Yuda na washangilie!</p>
+            <p class="verse">Haya, nendeni Sion mkauzunguke, * nendeni mkahesabu minara yake.</p>
+            <p class="verse">Zitazameni kuta zake na kuchunguza ngome zake; * mpate kukisimulia kizazi kijacho, kwamba:</p>
+            <p class="verse">“Huyu ni Mungu, Mungu wetu milele! * Atakuwa kiongozi wetu milele”!</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Bwana ni mkuu, astahili sifa katika mji wa Mungu wetu.<br>Ant. ya Kipindi cha Pasaka: Mungu yu pamoja nasi, Mungu wetu milele na milele, aleluya.</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <h2>SOMO la Kawaida</h2>
+            <div class="reading">
+                <p>Isa. 66:1-2</p>
+                <p>BWANA asema hivi, Mbingu ni kiti changu cha enzi, na dunia ni mahali pa kuweka miguu yangu; mtanijengea nyumba ya namna gani? Na mahali pangu pa kupumzikia ni mahali gani? Maana mkono wangu ndio uliofanya hivi vyote, vitu hivi vyote vikapata kutokea, asema BWANA; lakini mtu huyu ndiye nitakayemwangalia, mtu aliye mnyonge, mwenye roho iliyopondeka, atetemekaye asikiapo neno langu.</p>
+            </div>
+        </div>
+        
+        <div class="prayer-section">
+            <h2>KIITIKIZANO</h2>
+            <p class="leader">K. Naliita kwa moyo wangu wote: Bwana nisikie! (W. warudie)</p>
+            <p class="response">W. Bwana nisikie!</p>
+            <p class="leader">K. Nitazitii amri zako.</p>
+            <p class="response">W. Bwana nisikie!</p>
+            <p class="leader">K. Atukuzwe Baba na Mwana na Roho Mtakatifu.</p>
+            <p class="response">W. Naliita kwa moyo wangu wote: Bwana nisikie!</p>
+            
+            <p class="antiphon">Ant. ya Wimbo wa Zakaria: Tumtumikie Bwana kwa uchaji, naye atatuopoa mikononi mwa adui zetu.</p>
+        </div>
+
+         <div>
+            <h2>WIMBO WA ZAKARIA</h2>
+            <p class="verse">Asifiwe, * Bwana Mungu wa Israeli, kwani amekuja kuwasaidia * na kuwakomboa watu wake</p>
+            <p class="verse">Ametupatia Mwokozi shujaa, * mzao wa Daudi, mtumishi wake.</p>
+            <p class="verse">Aliahidi hapo kale * kwa njia ya manabii wake watakatifu, Kwamba atatuokoa kutoka maadui wetu * na kutoka mikono ya wote wanaotuchukia.</p>
+            <p class="verse">Alisema kwamba atawaonea huruma wazee wetu, * na kukumbuka agano lake takatifu.</p>
+            <p class="verse">Kwa kiapo alichomwapia mzee wetu Abrahamu / aliahidi kutukomboa kutoka maadui wetu 
+                * na kutujalia tumtumikie bila hofu, ili tuwe watakatifu na waadilifu mbele yake * siku zote za maisha yetu.</p>
+            <p class="verse">Nawe, mwanangu, utuitwa: * nabii wa Mungu Aliye Juu, utamtangulia Bwana * kumtayarishia njia yake; </p>
+            <p class="verse">kuwatangazia wtukwamba watakaokolewa kwa kuondolewa dhambi zao.</p>
+            <p class="verse">Mungu wetu ni mpole na mwenye huruma, / atasababisha pambazuko angavu la ukombozi*</p>
+            <p class="verse">litujie kutoka juu, na kuwaangazia wote wanaokaa / katika giza kuu la kifo, * aongoza hatua zetu katika njia ya amani.</p>
+            <p class="verse">Atukuzwe Baba na Mwana na Roho Mtakatifu, * kama mwanzo, na sasa, na siku zote na milele. Amina.</p>
+
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <h2>MAOMBI</h2>
+            <p class="leader">Tumshukuru Kristo ambaye ametupatia siku hii mpya, na tumwombe: W. Bwana, uipokee na kuibariki kazi yetu ya leo.</p>
+            
+            <div class="intercession">
+                <p>Ulijitoa mwenyewe kwa Baba badala yetu;</p>
+                <p class="intercession-response">— unganisha majitoleo yetu na yako. (W.)</p>
+                
+                <p>Wewe ni mpole na mnyenyekevu wa moyo;</p>
+                <p class="intercession-response">— utufundishe kuwapokea wengine kama ulivyofanya. (W.)</p>
+                
+                <p>Kama jua lichomozavyo kila siku, nuru itokee ndani ya mioyo yetu,</p>
+                <p class="intercession-response">— na ing'ae duniani kwa mapendo. (W.)</p>
+                
+                <p>Onyesha huruma yako kwa wagonjwa,</p>
+                <p class="intercession-response">— ili tumaini lao kwako lipate kuongezeka siku hata siku. (W.)</p>
+            </div>
+
+            <hr>
+            
+            <h3>Baba Yetu</h3>
+            <p>Baba yetu uliye mbinguni, jina lako litukuzwe
+                ufalme wako ufike, utakalo lifanyike duniani kama mbinguni
+                utupe leo mkate wetu wa kila siku,Utusamehe makosa yetu,
+                kama tunavyowasamehe waliotukosea.
+                usitutie katika vishawishi, lakini utuokoe maovuni.</p>
+            
+            
+            <h2>SALA</h2>
+            <p>Mungu Mwenyezi wa milele, tunakutolea sala zetu asubuhi, mchana na jioni. 
+                Utuondolee mioyoni mwetu giza la dhambi, na utufikishe kwenye mwanga halisi, 
+                yaani, Kristo Mwanao, anayeishi na kutawala nawe na Roho Mtakatifu, 
+                Mungu, daima na milele.</p>
+        </div>
+
+         <div>
+            <h3>Mwisho</h3>
+            <p>K. Bwana atubariki, atukinge na movu yote, na atufikishe kwenye uzima wa milele.</p>
+             <p>W. Amina.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.toggle('active');
+            
+            // Animate hamburger to X
+            if (navLinks.classList.contains('active')) {
+                hamburger.children[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+                hamburger.children[1].style.opacity = '0';
+                hamburger.children[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+            } else {
+                hamburger.children[0].style.transform = 'rotate(0) translate(0)';
+                hamburger.children[1].style.opacity = '1';
+                hamburger.children[2].style.transform = 'rotate(0) translate(0)';
+            }
+        }
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleMenu();
+                }
+            });
+        });
+        
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.querySelector('.toggle-btn');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.textContent = 'Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                btn.textContent = 'Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+        
+        // Check for dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.toggle-btn').textContent = 'Light Mode';
+        }
+    </script>
+</body>
+</html>

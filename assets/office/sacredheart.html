@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masifu ya Asubuhi - Moyo Mtakatifu wa Yesu</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color:#111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .dark-mode .navbar {
+            background-color: #222;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #222;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+             <ul class="nav-links">
+                <li><a href="index.html">Nyumbani</a></li>
+                <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                <li><a href="Eng-office.html">Ofice of Readings</a></li>
+                <li><a href="rozari.html">Rozari Takatifu</a></li>
+                <li><a href="calender.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+        
+        <h1>MOYO MTAKATIFU WA YESU<br>MASIFU YA ASUBUHI</h1>
+        
+        <div class="prayer-section">
+            <p class="antiphon">Ant. ya Mwaliko: Moyo wa Yesu ulijeruhiwa kwa sababu alitupenda sisi; njooni, tumwabudu.</p>
+            
+            <h2>UTENZI</h2>
+            <p class="verse">Upendo wa Bwana Mungu<br>Ulionyeshwa kwa watu<br>Katika moyo majeruhi<br>Wa Kristo wetu Mwokozi;<br>Atuomba tushiriki<br>Sasa Msalaba wake, Katika matendo yake<br>Sehemu yetu tushike.</p>
+            <p class="verse">Penye upendo wa kweli<br>Na palipo na fadhili,<br>Hapo Mungu wa upendo<br>Daima atakuwapo;<br>Bwana atufunga sisi<br>Kwa mnyororo mwepesi Unaowaacha huru<br>Wafungwa walio radhi.</p>
+            <p class="verse">Sisi hapa ni zawadi<br>Ya Baba kwa Kristo<br>Aliyewapenda watu,<br>Kuwapenda hata mwisho;<br>Mzigo wake mwepesi<br>Kwa shangwe twauchukua, Kwa furaha twainama<br>Tufungiwe yake nira.</p>
+            <p class="verse">Asifiwe Baba, Mwana<br>Na Roho Mtakatifu,<br>Wa milele, wa daima<br>Utatu wa utukufu,<br>Maskani wafanyao<br>Na kubaki hata mwisho<br>Katika minyenyekevu Mioyo yenye upendo.</p>
+        </div>
+        
+        <div class="prayer-section">
+            <h2>ZABURI</h2>
+            <p>Zaburi na wimbo, taz. Jumapili, Juma 1, uk. 676 nk.</p>
+            <p class="antiphon">Ant. 1: Yesu akasimama na kusema kwa sauti kubwa: 'Aonaye kiu, na aje kwangu anywe.'</p>
+            <p class="antiphon">Ant. 2: Njooni kwangu, ninyi nyote mnaosumbuka na kulemewa na mizigo, nami nitawapumzisha.</p>
+            <p class="antiphon">Ant. 3: Mwanangu, nipe moyo wako, uzingatie ushauri wangu.</p>
+        </div>
+        
+        <div class="prayer-section">
+            <h2>SOMO</h2>
+            <div class="reading">
+                <p>Yer. 31:32</p>
+                <p>Agano hili ndilo nitakalofanya na nyumba ya Israeli, baada ya siku zile, asema BWANA; Nitatia sheria yangu ndani yao, na katika mioyo yao nitaiandika; nami nitakuwa Mungu wao, nao watakuwa watu wangu.</p>
+            </div>
+        </div>
+        
+        <div class="prayer-section">
+            <h2>KIITIKIZANO</h2>
+            <p class="leader">K. Jitwikeni nira yangu; jifunzeni kwangu. (W. warudie)</p>
+            <p class="response">W. Jitwikeni nira yangu; jifunzeni kwangu.</p>
+            <p class="leader">K. Mimi ni mpole na mnyenyekevu wa moyo.</p>
+            <p class="response">W. Jifunzeni kwangu.</p>
+            <p class="leader">K. Atukuzwe Baba na Mwana na Roho Mtakatifu.</p>
+            <p class="response">W. Jitwikeni nira yangu; jifunzeni kwangu.</p>
+            
+            <p class="antiphon">Ant. ya Wimbo wa Zakaria: Katika upole na huruma yake, Mungu ametujia; amewakomboa watu wake, aleluya.</p>
+        </div>
+
+        <div>
+            <h2>WIMBO WA ZAKARIA</h2>
+            <p class="verse">Asifiwe, * Bwana Mungu wa Israeli, kwani amekuja kuwasaidia * na kuwakomboa watu wake</p>
+            <p class="verse">Ametupatia Mwokozi shujaa, * mzao wa Daudi, mtumishi wake.</p>
+            <p class="verse">Aliahidi hapo kale * kwa njia ya manabii wake watakatifu, Kwamba atatuokoa kutoka maadui wetu * na kutoka mikono ya wote wanaotuchukia.</p>
+            <p class="verse">Alisema kwamba atawaonea huruma wazee wetu, * na kukumbuka agano lake takatifu.</p>
+            <p class="verse">Kwa kiapo alichomwapia mzee wetu Abrahamu / aliahidi kutukomboa kutoka maadui wetu 
+                * na kutujalia tumtumikie bila hofu, ili tuwe watakatifu na waadilifu mbele yake * siku zote za maisha yetu.</p>
+            <p class="verse">Nawe, mwanangu, utuitwa: * nabii wa Mungu Aliye Juu, utamtangulia Bwana * kumtayarishia njia yake; </p>
+            <p class="verse">kuwatangazia wtukwamba watakaokolewa kwa kuondolewa dhambi zao.</p>
+            <p class="verse">Mungu wetu ni mpole na mwenye huruma, / atasababisha pambazuko angavu la ukombozi*</p>
+            <p class="verse">litujie kutoka juu, na kuwaangazia wote wanaokaa / katika giza kuu la kifo, * aongoza hatua zetu katika njia ya amani.</p>
+            <p class="verse">Atukuzwe Baba na Mwana na Roho Mtakatifu, * kama mwanzo, na sasa, na siku zote na milele. Amina.</p>
+
+        </div>
+        
+        <div class="prayer-section">
+            <h2>MAOMBI</h2>
+            <p class="leader">Twamwomba Yesu, ambaye ni mpole na mnyenyekevu wa moyo, kwa kumwambia:</p>
+            <p class="response">W. Bwana mpendwa, utuhurumie.</p>
+            
+            <div class="intercession">
+                <p>Yesu, umungu wote umo ndani yako:</p>
+                <p class="intercession-response">— utuwezeshe kushiriki umungu wako. (W.)</p>
+                
+                <p>Yesu, ndani yako zimo hazina zote za hekima na elimu:</p>
+                <p class="intercession-response">— kwa njia ya Kanisa lako utuonyeshe hekima ya Mungu iliyo ya namna nyingi. (W.)</p>
+                
+                <p>Yesu, Baba alipendezwa nawe sana:</p>
+                <p class="intercession-response">— utuwezeshe kushikilia mafundisho yako (W.)</p>
+                
+                <p>Yesu, sisi sote tumenufaishwa na utimilifu wako:</p>
+                <p class="intercession-response">— utujalie kwa wingi neema na ukweli wa Baba. (W.)</p>
+                
+                <p>Yesu, wewe ni chanzo cha uzima na utakatifu:</p>
+                <p class="intercession-response">— ututakatifuze na kutukamilisha katika upendo. (W.)</p>
+            </div>
+            
+            <h3>Baba Yetu</h3>
+            <p>Baba yetu uliye mbinguni, jina lako litukuzwe
+                ufalme wako ufike, utakalo lifanyike duniani kama mbinguni
+                utupe leo mkate wetu wa kila siku, Utusamehe makosa yetu,
+                kama tunavyowasamehe waliotukosea.
+                usitutie katika vishawishi, lakini utuokoe maovuni.</p>
+            
+            <h2>SALA</h2>
+            <p>Mungu Mwenyezi na Baba, twaona fahari juu ya Moyo Mtakatifu wa Yesu, Mwanao mpendwa, tunapokumbuka mambo makuu aliyotutendea kwa upendo wake. Utujaze neema zinazobubujika kwa wingi kutoka Moyo wa Yesu, chemchemi ya baraka za mbinguni. (Tunaomba hayo) kwa njia ya Bwana wetu. (Kwa njia ya Kristo Bwana wetu.)</p>
+        </div>
+         <div>
+            <h3>Mwisho</h3>
+            <p>K. Bwana atubariki, atukinge na movu yote, na atufikishe kwenye uzima wa milele.</p>
+             <p>W. Amina.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.toggle('active');
+            
+            // Animate hamburger to X
+            if (navLinks.classList.contains('active')) {
+                hamburger.children[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+                hamburger.children[1].style.opacity = '0';
+                hamburger.children[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+            } else {
+                hamburger.children[0].style.transform = 'rotate(0) translate(0)';
+                hamburger.children[1].style.opacity = '1';
+                hamburger.children[2].style.transform = 'rotate(0) translate(0)';
+            }
+        }
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleMenu();
+                }
+            });
+        });
+        
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.querySelector('.toggle-btn');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.textContent = 'Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                btn.textContent = 'Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+        
+        // Check for dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.toggle-btn').textContent = 'Light Mode';
+        }
+    </script>
+</body>
+</html>

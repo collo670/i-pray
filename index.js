@@ -808,9 +808,39 @@ function togglePrayerReminders() {
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/i-pray/service-worker.js', { scope: '/i-pray/' })
-                .then(registration => console.log('SW registered:', registration.scope))
-                .catch(err => console.log('SW registration failed:', err));
+            navigator.serviceWorker.register('/i-pray/service-worker.js', { 
+                scope: '/i-pray/',
+                updateViaCache: 'none' // Always check the network for updates
+            })
+            .then(registration => {
+                console.log('SW registered:', registration.scope);
+                
+                // Check for updates every hour
+                setInterval(() => {
+                    registration.update();
+                    console.log('Checking for SW updates');
+                }, 60 * 60 * 1000);
+                
+                // Handle updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New service worker is installed but waiting to activate
+                            if (confirm('New version available! Reload to update?')) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            })
+            .catch(err => console.log('SW registration failed:', err));
+        });
+        
+        // Detect controller change (service worker update)
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log('Service worker controller changed');
         });
     }
 }

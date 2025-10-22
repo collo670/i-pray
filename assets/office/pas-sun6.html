@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 6 JUMAPILI - Muundo wa Liturujia</title>
+    <style>
+        /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            display: none; /* hidden by default, controlled by JS */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 6 JUMAPILI</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="lent-mon3.html" class="navbar-link">Jumatatu</a>
+                    <a href="lent-tue3.html" class="navbar-link">Jumanne</a>
+                    <a href="lent-wed3.html" class="navbar-link">Jumatano</a>
+                    <a href="lent-thur3.html" class="navbar-link">Alhamisi</a>
+                    <a href="lent-fri3.html" class="navbar-link">Ijumaa</a>
+                    <a href="lent-sat3.html" class="navbar-link">Jumamosi</a>
+                    <a href="lent-sun3.html" class="navbar-link active-day">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Dark Mode</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Text Size</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 6 JUMAPILI
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. 1 Yoh. 1:1-10
+                    </h3>
+                    <p class="paragraph-text">
+                        Yesu, Neno la uzima na nuru ya Mungu.
+                        Somo kutoka kwa Waraka wa Kwanza wa Yohana Mtakatifu, mtume.
+                    </p>
+                    <p class="paragraph-text">
+                        Lile lililokuwako tangu mwanzo, tulililisikia, tuliloliona kwa macho yetu, na tulilolitazama na kuligusa kwa mikono yetu, kwa habari ya neno la uzima; ule uzima ulidhihirishwa, nasi tuliuona na kuushuhudia, na kuwatangazia uzima wa milele ule ule uliokuwa kwa Baba, ukadhihirishwa kwetu sisi tuliouona sisi pia. ili mpate kushirikiana nasi; na ushirika wetu ni pamoja na Baba na pamoja na Mwana wake Yesu Kristo. Nasi tunaandika haya ili furaha yetu ikamilike.
+                    </p>
+                    <p class="paragraph-text">
+                        Na hii ndiyo habari tuliyoisikia kwake, na kuihubiri kwenu, ya kwamba Mungu ni nuru, wala hamna giza lolote ndani yake. Tukisema ya kwamba tuna ushirika naye, huku tukienenda gizani, twasema uongo, wala hatuenendi kwa kweli; bali tukienenda nuruni, kama yeye alivyo katika nuru, twashirikiana sisi kwa sisi, na damu yake Yesu, Mwana wake, yatusafisha dhambi yote. Tukisema kwamba hatuna dhambi, twajidanganya wenyewe, wala kweli haimo mwetu. Tukiziungama dhambi zetu, Yeye ni mwaminifu na wa haki hata atuondolee dhambi zetu, na kutusafisha na udhalimu wote. Tukisema kwamba hatukutenda dhambi, twamfanya yeye kuwa mwongo, wala neno lake halimo mwetu.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Uhai huu umeonekana; tumeliona na tunalishuhudia. Tunawatangazia uzima wa milele, *uliokuwako kwa Baba na umekuwako ionekane kwetu, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Twajua ya kuwa Mwana wa Mungu amekwisha kuja, yeye ndiye Mungu wa kweli, na uzima wa milele.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> aliyekuwa pamoja na Baba na kudhihirishwa kwetu, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. Tratt. 1, 5-6
+                    </h3>
+                    <p class="paragraph-text">
+                        Upendo hufunika wingi wa dhambi.
+                        kutoka kwa "Mkataba juu ya Barua ya kwanza ya St. John" ya St. Augustine, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa maana tunakimbia, na kukimbilia nchi yetu wenyewe; na tukikata tamaa ya kuupata, kwa kukata tamaa huko tunafeli. Lakini ambaye anataka tumfikie ili atulinde katika ardhi yetu, anatulisha njia. Hebu tusikilize basi: “Tukisema ya kwamba tuna ushirika naye, na tukienenda gizani, twasema uongo, wala hatuifanyii kweli. Tusiseme kwamba tuna ushirika naye, ikiwa tunaenenda gizani. "Tukienenda nuruni, kama yeye alivyo katika nuru, tuna ushirika sisi kwa sisi." Na tuenende nuruni, kama yeye alivyo katika nuru, ili tuweze kuwa na ushirika naye. Na tufanye nini kuhusu dhambi zetu? Sikia kinachofuata, “Na damu ya Yesu Kristo Mwanawe itatusafisha na dhambi yote.” Anamaanisha nini, “kutoka kwa dhambi zote”? Tazama, hata sasa, katika jina la Kristo ambaye hawa wamekiri sasa, waitwao watoto wachanga, wametakaswa dhambi zao zote. Walikuja zamani, wakatoka mpya. Anamaanisha nini? Kwa maana maisha ya zamani ni uzee pamoja na dozi yake yote, lakini maisha mapya ni uchanga wa kuzaliwa upya. Lakini tufanye nini? Dhambi zilizopita zimesamehewa, si kwa hawa tu bali na kwetu pia; na baada ya kusamehewa na kukomeshwa kwa dhambi zote, sisi tunaoishi katika ulimwengu huu katikati ya majaribu, tumetenda wengine. Kwa hiyo kile anachoweza, mwacheni mwanadamu afanye; na akiri yeye mwenyewe kuwa jinsi alivyo, ili apate kuponywa na Yeye aliye siku zote jinsi alivyo: kwa maana alikuwako na yuko; hatukuwa na tuko.
+                    </p>
+                    <p class="paragraph-text">
+                        Maana tazama asemavyo; "Tukisema kwamba hatuna dhambi, twajidanganya wenyewe, wala kweli haimo mwetu." Kwa hiyo, ikiwa umekiri kuwa wewe ni mwenye dhambi, ukweli uko ndani yako: kwa maana Kweli yenyewe ni mwanga. Uhai wako bado haujang’aa katika mng’ao mkamilifu, kwa sababu kuna dhambi ndani yako; lakini mmekwisha anza kutiwa nuru, kwa sababu ndani yenu mna maungamo ya dhambi. Kwa maana tazama kile kinachofuata: “Tukiziungama dhambi zetu, Yeye aliye mwaminifu na wa haki atatusamehe dhambi zetu, na kutusafisha na udhalimu wote.” Sio tu kutoka kwa makosa ya zamani, lakini pia kutoka kwa wale ambao hatimaye walitenda baada ya ubatizo; kwa sababu mwanadamu, maadamu anaubeba mwili, hawezi ila kuwa na dhambi nyepesi kwa vyovyote vile. Na dhambi hizi nyepesi, ambazo tunazungumza, usizidharau. Ikiwa unazidharau unapozipima, ogopa unapozihesabu.
+                    </p>
+                    <p class="paragraph-text">
+                        Dhambi nyingi nyepesi humfanya mtu kuwa na dhambi kubwa: matone mengi hujaza mto; nafaka nyingi hufanya donge. Na kuna tumaini gani? Kabla ya yote, ungama, mtu awaye yote asije akajiona kuwa mwenye haki, na kuinua shingo mbele ya macho ya Mungu, ambaye aona kitu ambacho hakikuwako na kilichopo. Kabla ya yote, basi, ungamo; basi, upendo; kwa maana imeandikwa, Upendo husitiri wingi wa dhambi.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mungu alitupenda sisi kwanza hata akamtuma Mwanawe kuwa kafara ya dhambi zetu. *Wapenzi, ikiwa Mungu alitupenda hivi, imetupasa na sisi kupendana, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Hakuna aliye na upendo mwingi kuliko huu, wa kuutoa uhai wake kwa ajili ya rafiki zake mwenyewe.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Wapenzi, ikiwa Mungu alitupenda hivi, nasi tunapaswa kupendana, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza. Matendo. 20:17-38
+                    </h3>
+                    <p class="paragraph-text">
+                        Paulo huko Mileto anazungumza na wazee wa Kanisa la Efeso.
+                        Somo kutoka kwa Matendo ya Mitume.
+                    </p>
+                    <p class="paragraph-text">
+                        Naye kutoka Mileto akatuma watu Efeso na kuwaita wazee wa kanisa. Walipofika kwake, aliwaambia: “Ninyi wenyewe mnajua jinsi nilivyoishi kati yenu siku zote tangu siku ile ya kwanza nilipokanyaga katika Asia, nikimtumikia Bwana kwa unyenyekevu wote na kwa machozi na kwa majaribu yaliyonipata kwa hila za Wayahudi; jinsi sikujiepusha katika kuwahubiria neno lo lote lililofaa, na kuwafundisha hadharani na nyumba kwa nyumba, nikiwashuhudia Wayahudi na Wayunani wamtubie Mungu na kumwamini Bwana wetu Yesu Kristo. Na sasa, tazama, naenda Yerusalemu hali nimefungwa Roho Mtakatifu, nisijue yatakayonipata huko; isipokuwa Roho Mtakatifu hunishuhudia katika kila mji ya kwamba vifungo na dhiki vinaningoja. Lakini siuhesabu uzima wangu kuwa kitu cho chote wala si kitu kwangu mimi mwenyewe, ikiwa tu nitatimiza mwendo wangu na huduma niliyopokea kwa Bwana Yesu ya kushuhudia Habari Njema ya neema ya Mungu. Na sasa, angalieni, najua ya kuwa ninyi nyote niliowahubiria ufalme hamtaniona tena. Kwa hiyo nawashuhudia hivi leo ya kwamba sina hatia katika damu yenu nyote kwa maana sikujiepusha na kuwatangazia ninyi kusudi lote la Mungu. Jitunzeni nafsi zenu, na lile kundi lote nalo, ambalo Roho Mtakatifu amewaweka ninyi kuwa waangalizi ndani yake, mpate kulilisha kanisa lake Mungu, alilolinunua kwa damu ya Mwanawe mwenyewe. Mimi najua ya kuwa baada ya kuondoka kwangu mbwa-mwitu wakali wataingia kwenu, wasilihurumie kundi; na katika ninyi wenyewe watainuka watu wakisema mapotovu, wawavute hao wanafunzi wawafuate wao. Kwa hiyo kesheni, mkikumbuka ya kwamba kwa muda wa miaka mitatu, usiku wala mchana, sikuacha kumwonya kila mtu kwa machozi. Na sasa ninawaweka ninyi kwa Mungu, na kwa neno la neema yake, ambalo laweza kuwajenga na kuwapa urithi pamoja nao wote waliotakaswa. Sikutamani fedha wala dhahabu wala mavazi ya mtu. Ninyi wenyewe mnajua ya kuwa mikono hii ilifanya kazi kwa mahitaji yangu na ya wale waliokuwa pamoja nami. Katika mambo yote nimewaonyesha ya kwamba kwa kutaabika hivi imempasa kuwasaidia walio dhaifu, mkiyakumbuka maneno ya Bwana Yesu, jinsi alivyosema, Ni heri kutoa kuliko kupokea. Naye alipokwisha kusema hayo, alipiga magoti pamoja nao wote, akaomba. Na wote wakalia, wakamkumbatia Paulo na kumbusu, wakihuzunika zaidi ya neno lile alilolinena, ya kwamba hawatamwona tena uso wake. Wakamleta kwenye meli.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Lilindeni kundi lote, ambalo Roho Mtakatifu amewaweka ninyi ndani yake, *ili mlichunge Kanisa la Mungu, alilolinunua kwa damu yake. Aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Sasa inatakiwa kwamba wale waliopewa dhamana lazima wathibitike kuwa waaminifu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> kulichunga Kanisa la Mungu, ambalo amelinunua kwa damu yake. Aleluya, aleluya.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili. 55, 1-2
+                    </h3>
+                    <p class="paragraph-text">
+                        Kristo ikilinganishwa na tai.
+                        kutoka kwa "Majadiliano" ya Mtakatifu Maximus wa Turin, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Mwanadamu anarudishwa kwa neema kwa umri mdogo na, ingawa amechoka na uzee, anazaliwa mara ya pili katika tabia ambazo ni za mtoto asiye na hatia, kwa njia ambayo, baada ya kupokea Sakramenti, tangu zamani tunajikuta watoto tena. Kufanywa upya kunaashiria kuondoka kwa kile ulichokuwa na kuchukulia vile tulivyokuwa hapo mwanzo. Kwa upya kama huo, neophytes huitwa, ambayo kwa kuwa wameacha makosa ya zamani kwa maisha mapya, wanapokea neema ya unyenyekevu, kama Mtume anavyosema: "Lazima uvue utu wa kale pamoja na mwenendo wake wa zamani na uvae utu mpya, ulioumbwa kulingana na Mungu" (Ep. 4: 22, 24). Kama vile Daudi anavyosema: “Unafanya upya ujana wako kama tai” (Zab. 102:5); kwa maneno haya unaweza kuelewa neema ya ubatizo, ambayo kwa hiyo yote yale katika maisha yetu ambayo yanakaribia kufa yanaweza kuzaliwa upya, na kujifanya upya katika ujana yale ambayo yameharibiwa na uzee wa dhambi. Na ili nanyi mpate kujua kwamba nabii anazungumza juu ya neema ya ubatizo, amelinganisha kufanywa upya na ule wa tai, ambaye inasemekana hubadilika mara kwa mara manyoya yake: wakati inapoteza ya zamani hujifufua yenyewe na mpya ambayo huweka mahali pao, ili, baada ya kuweka kando mabaki ya zamani, huvaa tena na mpya.
+                    </p>
+                    <p class="paragraph-text">
+                        Neofiti wetu pia walibatizwa hivi majuzi, wakiwa wameweka kando mabaki ya maisha ya zamani kama tai, wamevaa vazi jipya la utakatifu na, wakati dhambi zilizopita zimeshindwa, wamepambwa kwa neema ya kutokufa. Ndani yao zimezeeka dhambi za uzee tu za kitambo, sio maisha, na kama tai anavyobadilishwa kuwa ujana mpya, vivyo hivyo wanazaliwa upya katika utoto wa kiroho. Wanajua jinsi wanavyopaswa kuishi duniani, lakini wanakosa usalama katika njia ya haki iliyorejeshwa.
+                    </p>
+                    <p class="paragraph-text">
+                        Basi na tutafakari kwa umakini zaidi asemayo Daudi mtakatifu; hasemi: Ataufanya upya ujana wako kama tai, bali kama tai. Kwa hiyo anathibitisha kwamba vijana wetu wanapaswa kufanywa upya kama tai mmoja wa kipekee. Ningesema kwamba tai huyu mmoja pekee ndiye Kristo Bwana, ambaye ujana wake ulifanywa upya alipofufuka kutoka kwa wafu. Aliweka kando mabaki ya mwili unaoharibika, na kuchanua maua tena akichukua mwili ambao ulirudishwa kwenye uhai, kama yeye mwenyewe asemavyo kupitia nabii: "Mwili wangu umechanua maua tena na kwa wimbo wangu nitashukuru" (cf. Zab. 27: 7 Vulg). Anasema: “Mwili wangu umechanua maua tena”. Tazama ametumia kitenzi gani. Hasemi: imechanua, lakini imechanua tena. Kwa kweli kile ambacho hakikuwa na maua hapo awali hakiwezi kutoa maua tena. Mwili wa Bwana ulikuwa umechanua maua, wakati kwa mara ya kwanza alipotoka katika tumbo la bikira la Bikira Maria, kama nabii Isaya asemavyo: “Chipukizi litachipuka katika shina la Yese, chipukizi litatoka katika mizizi yake” (Isa. 11:1). Badala yake amechanua tena wakati, ua la mwili wake lililokatwa na Wayahudi, lilipochipuka tena likiwa limerudishwa kwenye uzima katika utukufu wa ufufuo; na kama ua amepulizia juu ya watu wote manukato na fahari ya kutokufa, akimimina hiyo ni harufu nzuri ya matendo mema na kuonyesha fahari ya uungu wa milele usioharibika.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Sasa tumefunguliwa kutoka kwa sheria, kwa kuwa tumeifia ile sheria iliyokuwa inatufanya tuwe wafungwa, ili tupate kutumika katika utawala mpya wa Roho, na si katika ule utaratibu wa kale wa Maandiko Matakatifu, *aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Upendo wa Mungu umemiminwa mioyoni mwetu na Roho Mtakatifu ambaye tumepewa.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> ili kutumika katika utawala mpya wa Roho na si katika utawala wa zamani wa kanuni iliyoandikwa, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel-a" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA A - Injili. Yohana 14:15-21
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Nami nitamwomba Baba naye atawapa Mfariji mwingine.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        “Mkinipenda, mtazishika amri zangu. Nami nitamwomba Baba, naye atawapa Msaidizi mwingine, akae nanyi hata milele, ndiye Roho wa kweli, ambaye ulimwengu hauwezi kumpokea, kwa kuwa haumwoni wala haumtambui; ninyi mnamjua, kwa maana anakaa kwenu, naye atakuwa ndani yenu. “Sitawaacha ninyi hali ya ukiwa, nitakuja kwenu. Bado kitambo kidogo na ulimwengu hautaniona tena, bali ninyi mtaniona; kwa sababu mimi ni hai, ninyi nanyi mtaishi. Siku hiyo mtajua ya kuwa mimi ni ndani ya Baba yangu, nanyi ndani yangu, nami ndani yenu. Yeye aliye na amri zangu, na kuzishika, yeye ndiye anipendaye; naye anipendaye atapendwa na Baba yangu, nami nitampenda na kujidhihirisha kwake."
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Tatu. Hom. 75,1
+                    </h3>
+                    <p class="paragraph-text">
+                        Sitawaacha ninyi yatima.
+                        kutoka kwa "Homilies juu ya injili ya Yohana" ya Mtakatifu John Chrysostom, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        “Mkinipenda, mtazishika amri zangu” (Yn. 14:15). Nimewapa ninyi amri, kwamba mpendane na kutendeana kama mimi nilivyowatendea ninyi. Huu ndio upendo: kuzifuata amri na kujitiisha chini ya mpendwa. “Nitamwomba Baba naye atawapa Mfariji mwingine” (Yn. 14:16). Haya ni maneno ya mtu ambaye anakaribia kuondoka. Na kwa vile bado walikuwa hawamfahamu vizuri, kuna uwezekano kwamba, alipokuwa hayupo, wangetafuta kampuni yake, maneno yake, uwepo wake wa kimwili na hakuna kitu ambacho kingeweza kuwafariji kwa kutokuwepo kwake. Na anasema nini? “Nitamwomba Baba naye atawapa Mfariji mwingine”; huyo ni Mwingine ambaye atakuwa kama mimi.
+                    </p>
+                    <p class="paragraph-text">
+                        Baada ya kuwatakasa kwa dhabihu yake, basi Roho Mtakatifu atakuja bila kutarajia. Kwa nini haikushuka Yesu alipokuwa katikati yao? Kwa sababu dhabihu ilikuwa bado haijatolewa. Wakati basi dhambi ilikuwa tayari imeharibiwa na wao, wakiwa wametumwa miongoni mwa hatari, walikuwa wakijitayarisha kwa ajili ya vita, kuja kwa Mfariji ilikuwa muhimu. Lakini kwa nini basi Roho hakuja mara baada ya ufufuo? Ili waweze kuipokea kwa hamu kubwa zaidi na kwa neema kubwa zaidi.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa kweli, maadamu Kristo alikuwa pamoja nao, hawakuteswa; lakini alipokwisha kwenda, walibaki peke yao na kuogopa sana, wakamngoja kwa hamu kubwa. “Ili ikae kwenu” (Yn. 14:16), hiyo ni kwamba haitajiondoa kutoka kwenu hata baada ya kifo chako. Ili kwamba, basi, walipomsikia akizungumza juu ya Paraclite, wasifikiri juu ya mwili mpya kwa matumaini ya kuweza kumwona kwa macho, ili kuwatenga wazo hili Kristo anaongeza: "kwamba ulimwengu hauwezi kupokea, kwa sababu haumwoni." ( Yoh. 14:17 ).
+                    </p>
+                    <p class="paragraph-text">
+                        Hataishi nanyi kama nilivyoishi, lakini ataishi ndani ya nafsi zenu: hii ndiyo maana ya kwamba “nitakuwa ndani yenu”. Anamwita wakati huo Roho wa kweli, akiweka kwa njia hii mifano ya sheria ya kale. "Ili abaki nanyi". Hii ina maana gani? Alichosema juu yake mwenyewe: "Mimi ni pamoja nawe" (Mt. 28: 20). Lakini zaidi ya hili, anaonyesha pia: hatateseka yale ambayo nimeteseka, wala hataondoka.
+                    </p>
+                    <p class="paragraph-text">
+                        "Kwamba ulimwengu hauwezi kupokea, kwa sababu haumwoni" (Yn. 14:17). Jinsi gani? Je, labda alikuwa katika idadi ya vitu vinavyoonekana? Sivyo kabisa.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini Kristo hapa anamaanisha maarifa; anaongeza kwa hakika: “wala hammjui”; kwa mazoea ujuzi sahihi huitwa maono, kuona kukiwa ndiko kupenya zaidi hisi zetu. Anawaita waovu, ulimwengu na kwa hili anawafariji wanafunzi, akiwapa zawadi hii ya thamani. Unaona jinsi anavyoinua ukuu wa zawadi: anasema kwamba ni nyingine, tofauti na yeye; anaongeza kuwa hatawaacha, kisha atakuja tu kwa wale aliowajia. Na tena: "Atakaa ndani yako".
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini hata kwa njia hii hana uwezo wa kuondoa huzuni ya wanafunzi. Wanaendelea kumtafuta yeye na kampuni yake. Ili kuwasaidia, anasema: “Sitawaacha ninyi yatima, nitarudi kwenu.” (Yn. 14:18). Usiogope; Sikukuambia kwamba nitakutumia Paraclite mwingine kwa sababu nilikuwa naenda kukuacha milele. Sikusema kwamba mimi ningekaa ndani yako, kana kwamba sitakuona tena. Kwa kweli, mimi mwenyewe nitakuja kwako. “Sitawaacha ninyi yatima” (Yn. 14:18).
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Haleluya sitawaacha ninyi yatima; Ninaenda nami nitarudi kwenu, *na mioyo yenu itashangilia, aleluya, aleluya.*
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Nisipokwenda, Mfariji hatakuja kwenu; lakini nitakapokwenda nitamtuma kwenu.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> na mioyo yenu itafurahi, aleluya, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel-b" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA B - Injili. Yohana 15:9-17
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Hakuna aliye na upendo mwingi kuliko huu, wa kutoa nafsi yake kwa ajili ya rafiki zake.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Kama vile Baba alivyonipenda mimi, nami nilivyowapenda ninyi; kaeni katika upendo wangu. Mkizishika amri zangu, mtakaa katika pendo langu, kama mimi nilivyozishika amri za Baba yangu na kukaa katika pendo lake. Hayo nimewaambia, ili furaha yangu iwe ndani yenu, na furaha yenu iwe kamili. “Hii ndiyo amri yangu, kwamba mpendane kama nilivyowapenda ninyi. Hakuna aliye na upendo mwingi kuliko huu, wa mtu kuutoa uhai wake kwa ajili ya rafiki zake. Ninyi ni rafiki zangu mkitenda ninayowaamuru. Siwaiti tena watumwa, kwa maana mtumwa hajui atendalo bwana wake; lakini nimewaita ninyi rafiki, kwa kuwa yote niliyoyasikia kwa Baba yangu nimewajulisha. Si ninyi mlionichagua mimi, bali ni mimi niliyewachagua ninyi, nami nikawaweka mwende mkazae matunda, na matunda yenu yapate kukaa; ili kwamba lolote mtakalomwomba Baba kwa jina langu, awapeni. Hili nawaamuru, mpendane.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Tatu. Tratt. 82, 1-4
+                    </h3>
+                    <p class="paragraph-text">
+                        Tunampenda Kristo tunaposhika amri zake.
+                        kutoka kwa "Maoni juu ya injili ya St. John" ya St. Augustine, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Mwokozi, kwa kusema hivyo na wanafunzi, anazidi kupongeza zaidi na zaidi neema ambayo kwayo tunaokolewa, anaposema, “Hivyo hutukuzwa Baba yangu, kwa vile mzaavyo matunda mengi, na kufanywa wanafunzi wangu. Kwa maana ikiwa Mungu Baba hutukuzwa katika hili, kwamba twazaa matunda mengi, na kufanywa wanafunzi wa Kristo, tusiuhesabu utukufu wetu wenyewe kwa huo, kana kwamba tunaupata wenyewe. Kwa maana neema ya namna hii inatoka kwake, na kwa hiyo utukufu si wetu, bali ni wake. Kwa hiyo pia, katika kifungu kingine, baada ya kusema, Vivyo hivyo nuru yenu na iangaze mbele ya watu, wapate kuyaona matendo yenu mema; ili kuwaepusha na wazo kwamba matendo hayo mema yalikuwa ya wao wenyewe, mara moja aliongeza, “na wapate kumtukuza Baba yenu aliye mbinguni.” Kwa maana hapa hutukuzwa Baba, kwamba tuzae matunda mengi, na kufanywa wanafunzi wa Kristo. Na sisi tumeumbwa hivi na nani isipokuwa kwa Yeye ambaye rehema yake imetulinda? Kwa maana tu kazi yake, tuliumbwa katika Kristo Yesu, tutende matendo mema.
+                    </p>
+                    <p class="paragraph-text">
+                        “Kama vile Baba alivyonipenda mimi,” Anasema, “mimi nilivyowapenda ninyi, kaeni katika pendo langu.” Hapa, basi, unaona, ni chanzo cha matendo yetu mema. Kwani tunapaswa kuzipata wapi. Je! si kwamba imani hutenda kazi kwa upendo? Na tunapaswa kupendaje, ikiwa si kwamba tulipendwa kwanza? Kwa uwazi wenye kutokeza hili latangazwa na mwinjilisti yuleyule katika waraka wake: “Sisi twampenda Mungu kwa sababu Yeye alitupenda sisi kwanza.”
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa maana Baba naye anatupenda sisi, bali ndani yake; kwa maana katika hili hutukuzwa Baba, kwamba sisi tuzae matunda katika mzabibu, yaani, ndani ya Mwana, na hivyo kufanywa wanafunzi wake.
+                    </p>
+                    <p class="paragraph-text">
+                        “Kaeni,” Anasema, “katika upendo wangu.” Tutabakije? Sikiliza kinachofuata: “Mkizishika amri zangu, mtakaa katika pendo langu.”
+                    </p>
+                    <p class="paragraph-text">
+                        Upendo huleta kushika amri zake; lakini je, kuzishika amri zake kunaleta upendo? Ni nani anayeweza kutilia shaka kwamba ni upendo unaotangulia? Kwa maana hana sababu ya kweli ya kushika amri ambaye amepungukiwa na upendo.
+                    </p>
+                    <p class="paragraph-text">
+                        Na kwa hiyo, kwa kusema, “Mkizishika amri zangu, mtakaa katika pendo langu,” haonyeshi chanzo ambacho upendo huchipuka, bali njia ambayo kwayo unadhihirishwa. Kana kwamba alisema, Msidhani ya kuwa munakaa katika pendo langu, msipozishika amri zangu; maana ni kama umeziweka hivyo mtakaa. Kwa maneno mengine, itakuwa dhahiri kwamba mtakaa katika pendo langu ikiwa mtazishika amri zangu.
+                    </p>
+                    <p class="paragraph-text">
+                        Ili mtu yeyote asijidanganye mwenyewe kwa kusema kwamba anampenda, ikiwa hazishiki amri zake. Kwa maana twampenda kwa kipimo kile kile tunachoshika amri zake; na kadiri tunavyozishika, ndivyo tunavyopenda.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo si ili tupate upendo wake kwamba tunashika yote anayotuamuru: kama hangetupenda sisi kwanza, hatungeweza kuzishika amri zake. Hii ndiyo neema inayofunuliwa kwa wanyenyekevu. Wakati inabaki siri kwa wenye kiburi.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Yeye anipendaye mimi atapendwa na Baba yangu; nami nitampenda yeye na kujidhihirisha kwake.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Yeye azipokeaye amri zangu na kuzishika, huyo ndiye anipendaye.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> nami nitampenda yeye na nitajidhihirisha kwake, aleluya.
+                    </p>
+                </div>
+            </section>
+
+            <section id="gospel-c" class="liturgical-section">
+                <h2 class="section-heading">
+                    MWAKA C - Injili. Yohana 14:23-29
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Roho Mtakatifu atawakumbusha yote niliyowaambia.
+                        Somo la Injili ya Yohana Mtakatifu.
+                    </h3>
+                    <p class="paragraph-text">
+                        Yesu akamjibu, Mtu akinipenda, atalishika neno langu, na Baba yangu atampenda; nasi tutakuja kwake, na kufanya makao kwake. Yeye asiyenipenda, yeye hayashiki maneno yangu; na neno mnalolisikia si langu, bali ni la Baba aliyenituma. “Hayo nimewaambia nikiwa bado pamoja nanyi. Lakini huyo Msaidizi, huyo Roho Mtakatifu, ambaye Baba atampeleka kwa jina langu, atawafundisha yote, na kuwakumbusha yote niliyowaambia. Amani nawaachieni; amani yangu nawapa; sivyo niwapavyo ninyi kama ulimwengu utoavyo. Msifadhaike mioyoni mwenu, wala msiogope. Mmenisikia nikiwaambia, Naenda zangu, nami nitakuja kwenu. Kama mngalinipenda, mngalifurahi, kwa sababu mimi naenda kwa Baba; kwa maana Baba ni mkuu kuliko mimi. Na sasa nimewaambia kabla halijatokea, ili litakapotukia mpate kuamini.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Tatu. 27, 8-10
+                    </h3>
+                    <p class="paragraph-text">
+                        Kama sina sadaka, mimi si kitu.
+                        kutoka kwa "Hotuba za Wimbo wa Nyimbo" za St. Bernard, abate.
+                    </p>
+                    <p class="paragraph-text">
+                        "Mimi na Baba" asema Mwana, "tutakuja kwake na tutafanya makao ndani yake ( Yn. 14: 23 ) Kwake, hiyo ni kwa mtu mtakatifu. Nadhani kwamba nabii pia hakuzungumza juu ya kitu kingine chochote aliposema: "Lakini unaishi katika makao takatifu, wewe, sifa ya Israeli" ( Zab. 21: 4 ): "Kwa njia ya Mitume pia anatangaza Kristo moyoni mwako. 3:17).
+                    </p>
+                    <p class="paragraph-text">
+                        Haipaswi kustaajabishwa, ikiwa Bwana Yesu anafurahi kuishi katika mbingu hii, ambayo hasemi tu: "Na iwe", kama vile viumbe vingine, lakini alipigana ili kuishinda na akafa ili kuikomboa. Kwa hili, baada ya kuteseka, anasema kwa hamu zaidi: "Hili ndilo raha yangu milele, hapa nitaishi, kwa sababu nimeitamani" (Zab. 131:14). Heri nafsi ambayo inasemwa hivi juu yake: “Njoo, rafiki yangu” (Ms. 2:10, 13; 4:7, 8) nami nitaweka kiti changu cha enzi ndani yako. Ee nafsi yangu, kwa nini una huzuni, na kwa nini unaugua kwa ajili yangu? Je, unafikiri labda hutapata nafasi ndani yako kwa ajili ya Bwana? Na ni nafasi gani ndani yetu inayoweza kuwa na uwezo wa utukufu wake na ya kutosha kwa utukufu wake? Ili nipate kustahili angalau kumwabudu mahali ambapo ni pa kuweka miguu yake! Ni nani atakayeniwezesha kushika nyayo za nafsi takatifu ambayo Bwana ameichagua kuwa urithi wake? Hata hivyo, ikiwa atajitolea kupenyeza katika nafsi yangu pia mafuta ya rehema yake, ili kwamba mimi pia niweze kusema: “Ninakimbia katika njia ya amri zako, kwa sababu umeongeza moyo wangu” ( Zab. 118:32 ), basi labda nitaweza pia kutoa ndani yangu, ikiwa si kisimio kikubwa kilichopambwa ambapo anaweza kuketi angalau kwenye meza ya kichwa mahali ambapo anaweza kupumzika pamoja na wanafunzi wake.
+                    </p>
+                    <p class="paragraph-text">
+                        Zaidi ya hayo ni lazima roho ikue na kuongeza uwezo wake wa kumpokea Mungu. Uwezo wake ni upendo wake, kama vile Mtume asemavyo: ipanueni mioyo yenu (taz. 2Kor. 6:13). Kwa kweli, hata ikiwa roho, ambayo ni roho, haichukui nyongeza ya mwili, lakini neema huiletea kile kilichokataliwa na mwili. asili. Inakua na kuenea, lakini kiroho. Hukua na kuendelea katika utu mkamilifu, kwa kipimo kinachohitajika kwa ukomavu kamili wa Kristo; inakua pia kama hekalu takatifu la Bwana.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa hiyo ukuu wa kila nafsi hupimwa kwa hisani iliyo nayo: aliye na vingi ni mkubwa, aliye na kidogo ni mdogo, asiye nacho si kitu, kama vile Mtakatifu Paulo asemavyo: “Kama sina upendo, mimi si kitu” (1Kor. 13:2).
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mtu akinipenda, atalishika neno langu; na Baba yangu atampenda; nasi tutakuja kwake, na kufanya makao ndani yake.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Upendo wa Mungu ni mkamilifu kweli kweli kwa yule anayeshika neno lake.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Nasi tutakuja kwake na tutafanya makao ndani yake, aleluya.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+
+        // Check local storage for theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Text size toggle
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+        const textSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentTextSizeIndex = 1; // Start with 'text-size-base'
+
+        // Initialize text size from local storage or default
+        const savedTextSize = localStorage.getItem('textSize');
+        if (savedTextSize && textSizes.includes(savedTextSize)) {
+            mainContentWrapper.classList.add(savedTextSize);
+            currentTextSizeIndex = textSizes.indexOf(savedTextSize);
+        } else {
+            mainContentWrapper.classList.add('text-size-base'); // Default
+        }
+
+        textSizeToggle.addEventListener('click', () => {
+            mainContentWrapper.classList.remove(textSizes[currentTextSizeIndex]);
+            currentTextSizeIndex = (currentTextSizeIndex + 1) % textSizes.length;
+            mainContentWrapper.classList.add(textSizes[currentTextSizeIndex]);
+            localStorage.setItem('textSize', textSizes[currentTextSizeIndex]);
+        });
+
+        // Hamburger menu toggle for mobile
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            // On small screens, hide when a link is clicked
+            if (window.innerWidth < 768) {
+                const navLinksList = navLinks.querySelectorAll('a');
+                navLinksList.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        // Close hamburger menu when resizing to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

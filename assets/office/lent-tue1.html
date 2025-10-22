@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="sw" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI YA 1 JUMANNE - Muundo wa Liturujia</title>
+    <style>
+       /* Custom font Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        html.dark body {
+            background-color: #111827; /* dark:bg-gray-900 */
+            color: #f9fafb; /* dark:text-gray-100 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #202847; /* Custom dark blue for navbar */
+            color: #ffffff; /* text-white */
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        html.dark .navbar {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        .navbar-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            margin-right: 1.5rem; /* mr-6 */
+        }
+
+        .navbar-brand-text {
+            font-weight: 700; /* font-bold */
+            font-size: 1.25rem; /* text-xl */
+            letter-spacing: -0.025em; /* tracking-tight */
+        }
+        @media (min-width: 640px) { /* sm */
+            .navbar-brand-text {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        /* Hamburger button for mobile */
+        .hamburger-button-wrapper {
+            display: block;
+        }
+        @media (min-width: 768px) { /* md */
+            .hamburger-button-wrapper {
+                display: none; /* md:hidden */
+            }
+        }
+
+        .hamburger-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.75rem; /* px-3 py-2 */
+            border-width: 1px; /* border */
+            border-radius: 0.25rem; /* rounded */
+            color: #bfdbfe; /* text-blue-200 */
+            border-color: #60a5fa; /* border-blue-400 */
+            cursor: pointer;
+            background: none; /* Ensure no default button background */
+        }
+        .hamburger-button:hover {
+            color: #ffffff; /* hover:text-white */
+            border-color: #ffffff; /* hover:border-white */
+        }
+        .hamburger-button svg {
+            fill: currentColor;
+            height: 0.75rem; /* h-3 */
+            width: 0.75rem; /* w-3 */
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            width: 100%; /* w-full */
+            flex-grow: 1;
+            margin-top: 1rem; /* mt-4 */
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links {
+                display: flex !important; /* md:flex, important to override JS hidden */
+                align-items: center; /* md:items-center */
+                width: auto; /* md:w-auto */
+                flex-direction: row; /* md:flex-row */
+                margin-top: 0; /* md:mt-0 */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .nav-links-group {
+            font-size: 0.875rem; /* text-sm */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* flex-col */
+            row-gap: 0.5rem; /* space-y-2 */
+        }
+        @media (min-width: 768px) { /* md */
+            .nav-links-group {
+                flex-direction: row; /* md:flex-row */
+                column-gap: 1rem; /* md:space-x-4 */
+                row-gap: 0; /* md:space-y-0 */
+            }
+        }
+
+        .navbar-link {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block; /* Ensure links take full width on mobile */
+            color: #ffffff; /* Default link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        html.dark .navbar-link:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-link.active-day {
+            background-color: #ffffff; /* White background for active link */
+            color: #1e40af; /* Dark blue text for active link */
+            font-weight: 600; /* Semi-bold */
+        }
+        html.dark .navbar-link.active-day {
+            background-color: #374151; /* Gray-700 for dark mode active */
+            color: #f9fafb; /* Light text for dark mode active */
+        }
+
+        /* Toggles container */
+        .toggles-container {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* justify-end */
+            padding: 1rem; /* p-4 */
+            padding-top: 1.5rem; /* pt-6 */
+            padding-bottom: 0; /* pb-0 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggles-container {
+                padding-left: 1.5rem; /* sm:px-6 */
+                padding-right: 1.5rem; /* sm:px-6 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .toggles-container {
+                padding-left: 2rem; /* md:px-8 */
+                padding-right: 2rem; /* md:px-8 */
+            }
+        }
+
+        .toggles-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 */
+        }
+
+        /* Toggle buttons */
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-button:hover {
+            transform: translateY(-1px);
+        }
+        /* Light mode button colors */
+        html.light .toggle-button {
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #374151; /* Gray-700 */
+        }
+        /* Dark mode button colors */
+        html.dark .toggle-button {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+
+        .toggle-button svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            fill: currentColor; /* fill-current */
+        }
+
+        .toggle-button span {
+            display: none; /* hidden */
+        }
+        @media (min-width: 640px) { /* sm */
+            .toggle-button span {
+                display: inline; /* sm:inline */
+            }
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-content-area {
+                padding: 1.5rem; /* sm:p-6 */
+            }
+        }
+
+        .content-wrapper {
+            max-width: 56rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff; /* bg-white */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .content-wrapper {
+            background-color: #1f2937; /* dark:bg-gray-800 */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .content-wrapper {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .content-wrapper {
+                padding: 2.5rem; /* md:p-10 */
+            }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            text-align: center;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 2rem; /* mb-8 */
+            line-height: 1.25; /* leading-tight */
+        }
+        html.dark .main-title {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .main-title {
+                font-size: 2.25rem; /* sm:text-4xl */
+            }
+        }
+
+        /* Section styles */
+        .liturgical-section {
+            margin-bottom: 2.5rem; /* mb-10 */
+            padding-top: 4rem; /* pt-16 */
+            margin-top: -4rem; /* -mt-16 (for anchor offset) */
+        }
+        .liturgical-section:first-of-type {
+            margin-top: 0; /* Remove negative margin for the first section */
+            padding-top: 0; /* Remove padding for the first section */
+        }
+        html.dark .liturgical-section {
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563eb; /* text-blue-700 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        html.dark .section-heading {
+            color: #60a5fa; /* dark:text-blue-400 */
+            border-color: #374151; /* dark:border-gray-700 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .section-heading {
+                font-size: 1.875rem; /* sm:text-3xl */
+            }
+        }
+
+        .subsection-heading {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        html.dark .subsection-heading {
+            color: #e5e7eb; /* dark:text-gray-200 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .subsection-heading {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
+        }
+
+        .paragraph-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* text-gray-700 */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        html.dark .paragraph-text {
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .paragraph-text {
+                font-size: 1rem; /* sm:text-base */
+            }
+        }
+
+        /* Kiitikizano (Responsory) sections */
+        .kiitikizano-section {
+            background-color: #e0f2fe; /* Light blue */
+            border-left: 4px solid #3b82f6; /* Blue border */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.dark .kiitikizano-section {
+            background-color: #374151; /* Gray-700 */
+            border-left-color: #6b7280; /* Gray-500 */
+        }
+        .kiitikizano-response {
+            font-weight: 600; /* font-semibold */
+        }
+        .kiitikizano-verse {
+            font-weight: 500; /* font-medium */
+            margin-top: 0.5rem;
+        }
+
+        /* Text size adjustment classes (applied to .content-wrapper by JS) */
+        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
+        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
+        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
+        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+
+        /* Adjust headings and other elements proportionally for text size changes */
+        .text-size-sm .subsection-heading { font-size: 1rem; }
+        .text-size-base .subsection-heading { font-size: 1.25rem; }
+        .text-size-lg .subsection-heading { font-size: 1.5rem; }
+        .text-size-xl .subsection-heading { font-size: 1.75rem; }
+
+        .text-size-sm .section-heading { font-size: 1.25rem; }
+        .text-size-base .section-heading { font-size: 1.5rem; }
+        .text-size-lg .section-heading { font-size: 1.75rem; }
+        .text-size-xl .section-heading { font-size: 2rem; }
+
+        .text-size-sm .main-title { font-size: 1.5rem; }
+        .text-size-base .main-title { font-size: 1.875rem; }
+        .text-size-lg .main-title { font-size: 2.25rem; }
+        .text-size-xl .main-title { font-size: 2.5rem; }
+
+        /* Media queries for text size adjustment on small screens */
+        @media (min-width: 640px) {
+            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
+            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
+            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
+            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
+
+            .text-size-sm .subsection-heading { font-size: 1.25rem; }
+            .text-size-base .subsection-heading { font-size: 1.5rem; }
+            .text-size-lg .subsection-heading { font-size: 1.75rem; }
+            .text-size-xl .subsection-heading { font-size: 2rem; }
+
+            .text-size-sm .section-heading { font-size: 1.5rem; }
+            .text-size-base .section-heading { font-size: 1.875rem; }
+            .text-size-lg .section-heading { font-size: 2.25rem; }
+            .text-size-xl .section-heading { font-size: 2.5rem; }
+
+            .text-size-sm .main-title { font-size: 1.875rem; }
+            .text-size-base .main-title { font-size: 2.25rem; }
+            .text-size-lg .main-title { font-size: 2.5rem; }
+            .text-size-xl .main-title { font-size: 3rem; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="navbar-brand-text">WIKI YA 1 JUMANNE</span>
+            </div>
+
+            <div class="hamburger-button-wrapper">
+                <button id="hamburger-button" class="hamburger-button">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+
+            <div id="nav-links" class="nav-links">
+                <div class="nav-links-group">
+                    <a href="jumatatu.html" class="navbar-link">Jumatatu</a>
+                    <a href="jumanne.html" class="navbar-link active-day">Jumanne</a> <a href="jumatano.html" class="navbar-link">Jumatano</a>
+                    <a href="alkhamisi.html" class="navbar-link">Alhamisi</a>
+                    <a href="ijumaa.html" class="navbar-link">Ijumaa</a>
+                    <a href="jumamosi.html" class="navbar-link">Jumamosi</a>
+                    <a href="jumapili.html" class="navbar-link">Jumapili</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toggles-container">
+        <div class="toggles-group">
+            <button id="dark-mode-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span>Dark Mode</span>
+            </button>
+
+            <button id="text-size-toggle" class="toggle-button">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Text Size</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="main-content-wrapper" class="content-wrapper">
+
+            <h1 class="main-title">
+                WIKI YA 1 JUMANNE
+            </h1>
+
+            <section id="cycle-1" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 1
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza: Dt. 9: 7 - 21, 25-29 Maombi ya maombezi ya Musa.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka katika kitabu cha Kumbukumbu la Torati.
+                    </p>
+                    <p class="paragraph-text">
+                        Kumbuka, wala usisahau jinsi ulivyomkasirisha Bwana, Mungu wako, jangwani; tangu siku ulipotoka katika nchi ya Misri, hata mlipofika mahali hapa, mmekuwa waasi juu ya Bwana. Hata kule Horebu mlimkasirisha BWANA, naye BWANA akawakasirikia hata akawa tayari kuwaangamiza. Nilipopanda mlimani ili kuzipokea mbao za mawe, mbao za agano alilofanya BWANA nanyi, nalikaa mlimani siku arobaini mchana na usiku; sikula mkate wala sikunywa maji. Bwana akanipa zile mbao mbili za mawe zilizoandikwa kwa chanda cha Mungu; na juu yake yalikuweko maneno yote Bwana aliyowaambia mlimani kutoka kati ya moto siku ya kusanyiko. Na mwisho wa siku arobaini, mchana na usiku, Bwana akanipa zile mbao mbili za mawe, mbao za agano. Ndipo Bwana akaniambia, Ondoka, ushuke upesi kutoka hapa; kwa maana watu wako uliowaleta kutoka Misri wametenda maovu; wamekengeuka upesi katika njia niliyowaamuru; wamejifanyia sanamu ya kusubu. “Tena BWANA akaniambia, Nimewaona watu hawa, na tazama, ni watu wakaidi, niache, niwaangamize, na kulifuta jina lao chini ya mbingu, nami nitakufanya wewe kuwa taifa lenye nguvu na kuu kuliko wao. Basi nikageuka nikashuka kutoka mlimani, na ule mlima ulikuwa unawaka moto; na zile mbao mbili za agano zilikuwa mikononi mwangu, na tazama, mlikuwa mmefanya dhambi juu ya Bwana, Mungu wenu, mmejifanyia ndama ya kuyeyusha; kama hapo awali, siku arobaini mchana na usiku sikula chakula, wala sikunywa maji, kwa sababu ya dhambi zenu zote mlizofanya, kwa kufanya yaliyo maovu machoni pa Bwana, hata kumtia hasira ghadhabu aliyochukua BWANA juu yenu, hata akawa tayari kuwaangamiza. Lakini Bwana alinisikiliza wakati huo pia. Bwana akamkasirikia sana Haruni hata akawa tayari kumwangamiza; nami nikamwombea Haruni pia wakati huohuo. Kisha nikakitwaa kile kitu cha dhambi, yule ndama mliyemtengeneza, nikaiteketeza kwa moto, nikaipondaponda, nikaikisaga kidogo sana, hata ikawa safi kama mavumbi; nami nikayatupa mavumbi yake katika kijito kilichoshuka kutoka mlimani.
+                    </p>
+                    <p class="paragraph-text">
+                        “Huko Tabera pia, na katika Masa, na Kibroth-hataava, mlimkasirisha BWANA, na hapo BWANA alipowatuma kutoka Kadesh-barnea, akisema, Kweeni mkaimiliki nchi niliyowapa, ndipo mliasi amri ya BWANA, Mungu wenu, wala hamkumwasi tangu siku ile nilipomwasi, wala hamkumwasi. alijua wewe.
+                    </p>
+                    <p class="paragraph-text">
+                        “Basi nikalala kifudifudi mbele za BWANA siku hizi arobaini mchana na usiku, kwa sababu BWANA alisema atakuangamiza. Nikamwomba Bwana, Ee Bwana MUNGU, usiwaangamize watu wako, na urithi wako, uliowakomboa kwa ukuu wako, uliowatoa katika Misri kwa mkono wa nguvu. Wakumbuke watumishi wako, Ibrahimu, na Isaka, na Yakobo, na ukaidi wao, na ukaidi wao, na ukaidi wao, wala usiwadharau watu hawa, wala ukaidi wa watu hawa; nchi uliyotutoa kutoka kwayo sema, “Kwa sababu BWANA hakuweza kuwaleta katika nchi aliyowaahidi, na kwa sababu aliwachukia, amewatoa ili kuwaua jangwani” kwa kuwa wao ni watu wako na urithi wako, ambao uliwatoa kwa nguvu zako nyingi na kwa mkono wako ulionyoshwa.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Musa akamwomba Bwana, Mungu wake, akasema, Ee Bwana, kwa nini kuwaka hasira yako juu ya watu wako? Mkumbuke Ibrahimu, na Isaka, na Israeli, uliyeapa kuwapa nchi itiririkayo maziwa na asali. * Na Bwana akaacha nia yake ya kuwadhuru watu wake.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Bwana akamwambia Musa, Umepata neema mbele zangu, nami nimekujua kwa jina lako.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Na Bwana akaiacha nia yake ya kuwadhuru watu wake.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili: Diski. 14, 8 Mungu hajatufanyia nini?
+                    </h3>
+                    <p class="paragraph-text">
+                        kutoka "Hotuba juu ya Waraka kwa Warumi" ya St. John Chrysostom, askofu.
+                    </p>
+                    <p class="paragraph-text">
+                        Je, Mungu hajatufanyia nini? Alitufanyia ulimwengu unaoonekana na usioonekana; kwa ajili yetu aliruhusu manabii kukaribishwa vibaya, kufanywa wafungwa na kutupwa katika tanuru ya moto, na kuteswa maelfu ya maovu mengine.
+                    </p>
+                    <p class="paragraph-text">
+                        Aliwafufua manabii hao kwa ajili yetu, vivyo hivyo na mitume; kwa ajili yetu alimtoa Mwana wake wa pekee afe; alitaka tuketi mkono wake wa kuume, huku akichukua kila tusi kwa ajili yetu; kwa hakika anasema: “matukano ya wale wanaokutukana yaniangukia” (Zab. 68:10).
+                    </p>
+                    <p class="paragraph-text">
+                        Na hata ikiwa mara nyingi na kwa njia nyingi tunaenda mbali naye, yeye hatutupi, lakini anatuhimiza tena na kutabiri kwamba wengine watuombee, ili aweze kutupa neema yake: ndivyo alivyofanya na Musa, aliposema: "Hasira yangu na iwaka juu yao na kuwaangamiza (Kut. 32: 10), ili kuwaombea.
+                    </p>
+                    <p class="paragraph-text">
+                        Sasa naye anafanya vivyo hivyo, na kwa ajili hiyo ametuongezea karama ya maombi. Amefanya hivyo kwa kweli, si kwa sababu anahitaji dua yetu, bali ili sisi, tukijiona tumeokoka, tusiwe mbaya zaidi. Kwa hiyo mara nyingi anawaambia Waebrania wajipatanishe wenyewe kwa ajili ya upendo wa Daudi au kwa ajili ya mtu mwingine, akiweka kwa njia hii yeye mwenyewe njia ya upatanisho. Kwa hakika angeonekana kuwa mkarimu zaidi ikiwa angeshuka ili awekewe mtu huyo peke yake na si kupitia kwa wengine; lakini hakutaka kufanya hivi, ili njia hii ya upatanisho isiwe nia ya kuwatia woga wale ambao wangeokolewa. Kwa kweli alimwambia Yeremia: "Usiwaombee watu hawa, kwa maana hawatakusikiliza wewe."
+                        ( Yer. 7:16 ); hata hivyo hakutaka aache kuomba, lakini alitaka kuwatisha: na nabii, akielewa hili, hakuacha kusihi.
+                    </p>
+                    <p class="paragraph-text">
+                        Hii pia ilitokea kwa Waninawi: baada ya kuwatamkia hukumu ya wakati ujao, bila kutaja tumaini la wema, aliwatia hofu sana na kuwashawishi watubu. Akiwa na Waebrania pia anafanya hivyo, akiwachochea na kumfanya nabii huyo aheshimike zaidi machoni pao, ili angalau kwa njia hiyo waweze kumsikiliza. Baadaye, kwa kuwa ilishughulikia ugonjwa usiotibika na hii haionekani kwa manabii wengine, kwanza anawaonya kubaki mahali hapo; wao wakiwa wamekataa na kukimbilia Misri, anakubali hili pia, mradi tu hawakuanguka katika uovu wa Wamisri. Akiwa hajatii hata katika hili, anamtuma nabii pamoja nao ili asiwafukuze kabisa. Nini, katika kweli manabii hawakuteseka kwa sababu yao? Kukatwa, kutupwa nje, kufunikwa na matusi, kupigwa kwa mawe, na kutokuwa na mwisho wa mateso mengine mazito, na bila kustahimili hii Waisraeli waligeukia kwao kila wakati. Samweli hakuacha kumlilia Sauli na, ingawa alikuwa amepatwa na makosa mazito na yasiyovumilika kutoka kwake, alisahau kila tusi. Yeremia alitunga kitabu cha Maombolezo kwa ajili ya watu wa Kiyahudi; na ijapokuwa alipewa na kamanda wa Waajemi usalama na uhuru wa kuishi pale alipotaka, alipendelea makazi duni katika nchi ya kigeni ili kuishi na watu wake wasio na furaha, badala ya kuishi katika nyumba yake mwenyewe.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ndugu zangu, wachukueni manabii walionena kwa jina la Bwana kuwa kielelezo cha saburi. * Tazama, tunawaita wenye heri wale ambao wameteseka kwa saburi.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Ni kwa lengo la kurekebisha ndipo Mola anawaadhibu wale walio karibu naye.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Tazama, tunawaita heri wale wanaoteseka kwa saburi.
+                    </p>
+                </div>
+            </section>
+
+            <section id="cycle-2" class="liturgical-section">
+                <h2 class="section-heading">
+                    CYCLE 2
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Somo la Kwanza: Kut. 6:29 – 7:25 Pigo la kwanza la Misri.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka katika kitabu cha Kutoka.
+                    </p>
+                    <p class="paragraph-text">
+                        BWANA akamwambia Musa, Mimi ndimi BWANA; mwambie Farao mfalme wa Misri yote nikuambiayo. Lakini Musa akamwambia Bwana, Tazama, mimi ni mtu wa midomo isiyotahiriwa, basi Farao atanisikilizaje? BWANA akamwambia Musa, Tazama, nimekufanya wewe kuwa kama Mungu kwa Farao, na Haruni ndugu yako atakuwa nabii wako. Nawe utanena yote nitakayokuamuru; na Haruni ndugu yako atamwambia Farao awape ruhusa wana wa Israeli watoke katika nchi yake.
+                    </p>
+                    <p class="paragraph-text">
+                        Lakini nitaufanya mgumu moyo wa Farao, nami nijapoziongeza ishara na maajabu yangu katika nchi ya Misri, Farao hatawasikiliza ninyi; basi nitaweka mkono wangu juu ya Misri, na kuyatoa majeshi yangu, watu wangu wana wa Israeli, katika nchi ya Misri kwa matendo makuu ya hukumu. Na Wamisri watajua ya kuwa mimi ndimi BWANA, nitakapounyosha mkono wangu juu ya Misri, na kuwatoa wana wa Israeli kati yao. Musa na Haruni wakafanya hivyo; wakafanya kama BWANA alivyowaamuru. Basi Musa alikuwa mtu wa miaka themanini, na Haruni alikuwa na umri wa miaka themanini na mitatu, hapo waliponena na Farao. BWANA akawaambia Musa na Haruni, Farao atakapowaambia, Jithibitisheni kwa kufanya miujiza, ndipo mtamwambia Haruni, Twaa fimbo yako, uitupe chini mbele ya Farao, ili iwe nyoka.
+                    </p>
+                    <p class="paragraph-text">
+                        Basi Musa na Haruni wakaenda kwa Farao, wakafanya kama BWANA alivyoamuru; Haruni akaitupa fimbo yake chini mbele ya Farao na watumishi wake, nayo ikawa nyoka. Ndipo Farao akawaita wenye hekima na wachawi; na hao pia, waganga wa Misri, wakafanya vivyo hivyo kwa uganga wao. Kila mtu akaitupa fimbo yake, ikawa nyoka. Lakini fimbo ya Haruni ikameza fimbo zao.
+                    </p>
+                    <p class="paragraph-text">
+                        Bado moyo wa Farao ukawa mgumu, wala hakuwasikiliza; kama BWANA alivyosema. Kisha BWANA akamwambia Musa, Moyo wa Farao ni mgumu, anakataa kuwapa watu ruhusa waende zao. Enenda kwa Farao asubuhi, naye anatoka kwenda majini; umngojee ukingoni mwa mto, na uichukue mkononi mwako ile fimbo iliyogeuzwa kuwa nyoka. Nawe umwambie, Bwana, Mungu wa Waebrania, alinituma kwako, kusema, Wape watu wangu ruhusa waende zao ili wanitumikie jangwani; na tazama, bado hujatii.
+                    </p>
+                    <p class="paragraph-text">
+                        BWANA asema hivi, Kwa hili utajua ya kuwa mimi ndimi BWANA; tazama, nitayapiga maji yaliyomo ndani ya Mto Nile kwa fimbo niliyo nayo mkononi mwangu, nayo yatageuka kuwa damu; na samaki katika Mto Nile watakufa, na Mto Nile utanuka, na Wamisri watachukia kunywa maji ya mto Nile. BWANA akamwambia Musa, Mwambie Haruni, Twaa fimbo yako, na unyooshe mkono wako juu ya maji ya Misri, na juu ya mito yao, na mifereji yao, na madimbwi yao, na mabirika yao yote ya maji, ili yawe damu; kutakuwa na damu katika nchi
+                        yote ya Misri, katika vyombo vya miti na vya mawe. Musa na Haruni wakafanya kama BWANA alivyoamuru; machoni pa Farao na machoni pa watumishi wake, akainua fimbo na kuyapiga maji yaliyokuwa ndani ya Mto Nile, na maji yote yaliyokuwa ndani ya Mto Nile yakageuka kuwa damu. Na wale samaki katika mto Nile wakafa; na Mto Nile ukachafuka, hata Wamisri wasiweze kunywa maji ya mto Nile; kukawa na damu katika nchi yote ya Misri. Lakini waganga wa Misri wakafanya vivyo hivyo kwa uganga wao; basi moyo wa Farao ukakaa mgumu, asiwasikilize; kama BWANA alivyosema.
+                    </p>
+                    <p class="paragraph-text">
+                        Farao akageuka, akaingia nyumbani kwake, wala hakulitia moyoni hata neno hili. Wamisri wote wakachimba pande zote za Mto Nile wapate maji ya kunywa, kwa maana hawakuweza kuyanywa maji ya Mto Nile. Zilipita siku saba baada ya BWANA kuupiga mto Nile.
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Malaika akamwaga kikombe chake juu ya mito, ikawa damu. Naye akasema: Wewe ni mwenye haki, wewe uliyeko na uliyekuwako, wewe uliye Mtakatifu, kwa sababu ndivyo ulivyohukumu. * Wamemwaga damu ya watakatifu na ya manabii.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Nikasikia sauti ikitoka madhabahuni ikisema, Naam, Bwana, Mungu Mwenyezi, hukumu zako ni za kweli na za haki!
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Wamemwaga damu ya watakatifu na ya manabii.
+                    </p>
+                </div>
+
+                <div class="mb-6 mt-8">
+                    <h3 class="subsection-heading">
+                        Somo la Pili: Cc. 1 - 3 Yeye atoaye uzima, pia anafundisha jinsi ya kuomba.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo kutoka kwa risala "Juu ya Baba Yetu" ya Mtakatifu Cyprian, askofu na mfia imani.
+                    </p>
+                    <p class="paragraph-text">
+                        Maagizo ya kiinjili, ndugu wapendwa, si kitu kingine ila mafundisho ya kimungu, - misingi ambayo tumaini lapaswa kujengwa, tegemeo la kuimarisha imani, lishe ya kuchangamsha moyo, usukani wa kuongoza njia yetu, walinzi wa kupata wokovu, - ambao, wakati wanafundisha akili tulivu za waamini duniani, huwaongoza kwenye falme za mbinguni.
+                    </p>
+                    <p class="paragraph-text">
+                        Mungu, zaidi ya hayo, alitaka mambo mengi yasemwe na yasikiwe kwa njia ya manabii watumishi wake; lakini ni wakuu zaidi sana wale anaozungumza Mwana, ambayo Neno la Mungu lililokuwa ndani ya manabii hushuhudia, kwa sauti yake mwenyewe; si sasa akitoa amri kuitayarisha njia ya kuja kwake, bali yeye mwenyewe anakuja na kutufungulia na kutuonyesha njia, ili sisi ambao hapo awali tulikuwa tukizunguka katika giza la mauti, bila kufikiri kimbele na vipofu, tukiangazwa na nuru ya neema, tupate kuishika njia ya uzima, pamoja na Bwana kuwa mtawala na kiongozi wetu!
+                    </p>
+                    <p class="paragraph-text">
+                        Yeye, miongoni mwa mawaidha Yake mengine ya salamu na maagizo ya kimungu ambayo kwayo Yeye huwashauri watu Wake kwa ajili ya wokovu wao, Mwenyewe pia alitoa namna ya kuomba—Yeye Mwenyewe alitushauri na kutuelekeza kile tunachopaswa kuomba. Yeye aliyetufanya tuishi, alitufundisha pia kuomba, kwa wema huohuo, yaani,
+                        ambao kwa huo amejishusha ili kutoa na kukabidhi vitu vingine vyote; ili kwamba tunaposema na Baba katika sala hiyo na dua ambayo Mwana ametufundisha, tupate kusikilizwa kwa urahisi zaidi.
+                    </p>
+                    <p class="paragraph-text">
+                        Tayari Yeye alikuwa ametabiri kwamba saa ilikuwa inakuja “ambayo waabudu wa kweli wanapaswa kumwabudu Baba katika roho na kweli; na hivyo alitimiza yale aliyoahidi tangu mwanzo, ili sisi ambao kwa utakatifu wake tulipokea Roho na kweli, kwa mafundisho yake pia tupate kumwabudu kweli na kiroho.
+                    </p>
+                    <p class="paragraph-text">
+                        Kwa maana ni nini kinachoweza kuwa sala ya kiroho zaidi ya ile tuliyopewa na Kristo, ambaye pia alipewa Roho Mtakatifu? Je, ni maombi gani kwa Baba yanaweza kuwa ya kweli zaidi kuliko yale tuliyokabidhiwa na Mwana ambaye ni Kweli, kutoka katika kinywa Chake mwenyewe? Ili kuomba kinyume na alivyofundisha si ujinga peke yake, bali pia ni dhambi; kwa kuwa yeye mwenyewe aliweka, na kusema, Mnazikataa amri za Mungu, mpate kuyashika mapokeo yenu.
+                    </p>
+                    <p class="paragraph-text">
+                        Basi, ndugu wapendwa, na tuombe kama Mungu Mwalimu wetu alivyotufundisha. Ni maombi ya upendo na ya kirafiki kumwomba Mungu kwa neno lake mwenyewe, ili asikie katika maombi ya Kristo. Acha Baba ayatambue maneno ya Mwanawe tunapofanya maombi yetu, na acha Yeye pia akaaye ndani ya kifua chetu Mwenyewe akae katika sauti yetu. Na kwa kuwa tunaye kama Mwombezi kwa Baba kwa ajili ya dhambi zetu, na sisi, kama wenye dhambi tunapoomba kwa niaba ya dhambi zetu, tuweke mbele maneno ya Mtetezi wetu. Kwa maana kwa kuwa Yeye anasema, kwamba “lolote tutakalomwomba Baba kwa jina Lake, atatupa,” ni jinsi gani tunaweza kupata kile tunachoomba katika jina la Kristo, ikiwa tunaomba katika maombi yake mwenyewe!
+                    </p>
+                </div>
+
+                <div class="kiitikizano-section">
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Mpaka sasa hamkuomba neno kwa jina langu. Ombeni, nanyi mtapata, ili furaha yenu ikamilike.
+                    </p>
+                    <p class="kiitikizano-verse">
+                        <span class="font-bold">V:</span> Nanyi mkiomba lo lote kwa jina langu, hilo nitalifanya, ili Baba atukuzwe ndani ya Mwana.
+                    </p>
+                    <p class="kiitikizano-response">
+                        <span class="font-bold">R:</span> Ombeni, nanyi mtapata, ili furaha yenu ikamilike.
+                    </p>
+                </div>
+            </section>
+
+            <section id="injili" class="liturgical-section">
+                <h2 class="section-heading">
+                    Injili
+                </h2>
+
+                <div class="mb-6">
+                    <h3 class="subsection-heading">
+                        Injili: Mathayo 6:7 – 15 Unaomba hivi.
+                    </h3>
+                    <p class="paragraph-text">
+                        Somo la Injili ya Mtakatifu Mathayo.
+                    </p>
+                    <p class="paragraph-text">
+                        “Na katika kusali msipayuke-payuke, kama wafanyavyo Mataifa; kwa maana wao hudhani ya kuwa watasikiwa kwa sababu ya maneno yao kuwa mengi; msiwe kama wao; kwa maana Baba yenu anajua mnayohitaji kabla ninyi hamjamwomba. Basi salini hivi: Baba yetu uliye mbinguni, Jina lako litukuzwe. Ufalme wako uje. Mapenzi yako yatimizwe, duniani kama huko mbinguni. Utupe leo mkate wetu wa kila siku; Utusamehe deni zetu, kama sisi nasi tunavyowasamehe wadeni wetu; Na usitutie majaribuni, Bali utuokoe na yule mwovu. Kwa maana mkiwasamehe watu makosa yao, na Baba yenu wa mbinguni atawasamehe ninyi; bali msipowasamehe watu makosa yao, wala Baba yenu hatawasamehe ninyi makosa yenu.”
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const htmlElement = document.documentElement;
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const navLinks = document.getElementById('nav-links');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const textSizeToggle = document.getElementById('text-size-toggle');
+            // Target the inner div for text scaling, which contains all the liturgical content
+            const mainContentWrapper = document.getElementById('main-content-wrapper'); 
+
+            // --- Hamburger Menu Toggle ---
+            hamburgerButton.addEventListener('click', () => {
+                navLinks.classList.toggle('hidden');
+                // For small screens, ensure it stacks vertically
+                if (!navLinks.classList.contains('hidden')) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.flexDirection = 'column';
+                } else {
+                    navLinks.style.display = 'none';
+                }
+            });
+
+            // Close nav links when a link is clicked (for mobile)
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 768) { // md breakpoint
+                        navLinks.style.display = 'none';
+                    }
+                });
+            });
+
+            // --- Dark Mode Toggle ---
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    htmlElement.classList.add('dark');
+                    htmlElement.classList.remove('light');
+                } else {
+                    htmlElement.classList.add('light');
+                    htmlElement.classList.remove('dark');
+                }
+            };
+
+            darkModeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Apply saved theme on page load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // If no saved theme, check system preference
+                applyTheme('dark');
+            } else {
+                applyTheme('light'); // Default to light if no preference
+            }
+
+            // --- Text Size Adjustment Toggle ---
+            const fontSizeClasses = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+            let currentFontSizeIndex = 1; // Default to 'text-size-base'
+
+            const applyFontSize = (index) => {
+                fontSizeClasses.forEach(sizeClass => {
+                    mainContentWrapper.classList.remove(sizeClass);
+                });
+                mainContentWrapper.classList.add(fontSizeClasses[index]);
+            };
+
+            textSizeToggle.addEventListener('click', () => {
+                currentFontSizeIndex = (currentFontSizeIndex + 1) % fontSizeClasses.length;
+                applyFontSize(currentFontSizeIndex);
+                localStorage.setItem('fontSizeIndex', currentFontSizeIndex);
+            });
+
+            // Apply saved font size on page load
+            const savedFontSizeIndex = localStorage.getItem('fontSizeIndex');
+            if (savedFontSizeIndex !== null) {
+                currentFontSizeIndex = parseInt(savedFontSizeIndex);
+                applyFontSize(currentFontSizeIndex);
+            } else {
+                applyFontSize(currentFontSizeIndex); // Apply default if no saved preference
+            }
+        });
+    </script>
+</body>
+</html>

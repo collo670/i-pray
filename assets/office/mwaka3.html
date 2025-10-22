@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>kawaida</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    body{
+        background-color: #1f2937;
+        
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+      margin: 0 auto;
+    }
+    h1{
+        color: white;
+        font-size: xx-large;
+    }
+  </style>
+</head>
+    <body data-src="PDFS/MwakaSehemu3.pdf">
+        <nav class="fixed top-0 left-0 right-0 bg-[#202847] shadow z-50">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="text-lg font-semibold text-white">KIPINDI CHA KAWAIDA 21-34</div>
+                <div class="space-x-4">
+                <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+                <a href="#" class="text-gray-300 hover:text-white"></a>
+              <a href="#" class="text-gray-300 hover:text-white"></a>
+            </div>
+        </div>
+        </nav>
+
+    <br><br><br>
+            <div class="mb-4 text-center">
+             <div class="inline-flex flex-wrap justify-center gap-2">
+                <button id="prevPage" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Previous</button>
+                <button id="nextPage" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Next</button>
+                <button id="zoomIn" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Zoom In</button>
+                <button id="zoomOut" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Zoom Out</button>
+            </div>
+            </div>
+
+            <canvas id="pdfCanvas" class="border rounded shadow w-full max-w-4xl"></canvas>
+
+            <div class="text-sm mt-2 text-center">
+                Page <span id="pageNum">1</span> of <span id="pageCount">--</span>
+            </div>
+
+   <script>
+                        // BUG: viewer was undefined, url should be from body[data-src]
+                        const url = document.body.getAttribute('data-src');
+
+                        let pdfDoc = null;
+                        let pageNum = 1;
+                        let currentScale = 1.5;
+
+                        const canvas = document.getElementById('pdfCanvas');
+                        const ctx = canvas.getContext('2d');
+
+                        function renderPage(num) {
+                            pdfDoc.getPage(num).then((page) => {
+                                const viewport = page.getViewport({ scale: currentScale });
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+
+                                page.render({ canvasContext: ctx, viewport });
+                                document.getElementById('pageNum').textContent = num;
+
+                                // Save last viewed page
+                                localStorage.setItem(`lastPage_${url}`, num);
+                            });
+                        }
+
+                        document.getElementById('prevPage').addEventListener('click', () => {
+                            if (pageNum <= 1) return;
+                            pageNum--;
+                            renderPage(pageNum);
+                        });
+
+                        document.getElementById('nextPage').addEventListener('click', () => {
+                            if (pageNum >= pdfDoc.numPages) return;
+                            pageNum++;
+                            renderPage(pageNum);
+                        });
+
+                        document.getElementById('zoomIn').addEventListener('click', () => {
+                            currentScale *= 1.2;
+                            renderPage(pageNum);
+                        });
+
+                        document.getElementById('zoomOut').addEventListener('click', () => {
+                            currentScale /= 1.2;
+                            renderPage(pageNum);
+                        });
+
+                        document.addEventListener('keydown', (e) => {
+                            if (e.key === 'ArrowRight') document.getElementById('nextPage').click();
+                            if (e.key === 'ArrowLeft') document.getElementById('prevPage').click();
+                        });
+
+                        canvas.addEventListener('click', (e) => {
+                            const rect = canvas.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            // Use canvas.style.width for correct click region
+                            const displayWidth = canvas.offsetWidth;
+                            const clickX = e.clientX - rect.left;
+                            if (clickX < displayWidth / 2 && pageNum > 1) {
+                                pageNum--;
+                                renderPage(pageNum);
+                            } else if (clickX >= displayWidth / 2 && pageNum < pdfDoc.numPages) {
+                                pageNum++;
+                                renderPage(pageNum);
+                            }
+                        });
+
+                        pdfjsLib.getDocument(url).promise.then((pdf) => {
+                            pdfDoc = pdf;
+                            document.getElementById('pageCount').textContent = pdf.numPages;
+
+                            // Restore last page if available
+                            const savedPage = parseInt(localStorage.getItem(`lastPage_${url}`), 10);
+                            pageNum = savedPage && savedPage >= 1 && savedPage <= pdf.numPages ? savedPage : 1;
+                            renderPage(pageNum);
+                        });
+                    </script>
+                </body>
+            </html>
