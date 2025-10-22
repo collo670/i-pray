@@ -109,19 +109,19 @@ foreach ($week in $weeksToUpdate) {
 
     # 3. Read the existing HTML file and replace the main content
     $htmlTemplate = Get-Content -Raw -LiteralPath $targetHtmlFile
-    $mainOpen = [regex]::Match($htmlTemplate, '<main\b[^>]*>', 'IgnoreCase')
-    $mainClose = [regex]::Match($htmlTemplate, '</main\s*>', 'IgnoreCase')
+    $mainContentMatch = [regex]::Match($htmlTemplate, '(?s)(<main\b[^>]*>).*(</main\s*>)', 'IgnoreCase')
 
-    if (-not ($mainOpen.Success -and $mainClose.Success)) {
-      Write-Error "Could not find <main>...</main> in template file: $targetHtmlFile. Skipping."
+    if (-not $mainContentMatch.Success) {
+      Write-Error "Could not find <main>...</main> block in template file: $targetHtmlFile. Skipping."
       continue
     }
 
-    $beforeMain = $htmlTemplate.Substring(0, $mainOpen.Index + $mainOpen.Length)
-    $afterMain  = $htmlTemplate.Substring($mainClose.Index)
+    # We will replace everything between <main> and </main>
+    $mainOpenTag = $mainContentMatch.Groups[1].Value
+    $mainCloseTag = $mainContentMatch.Groups[2].Value
 
     # 4. Assemble the final HTML
-    $finalHtml = $beforeMain + "`r`n" + $newMainContent + "`r`n" + $afterMain
+    $finalHtml = $htmlTemplate.Substring(0, $mainContentMatch.Index) + $mainOpenTag + "`r`n" + $newMainContent + "`r`n    " + $mainCloseTag + $htmlTemplate.Substring($mainContentMatch.Index + $mainContentMatch.Length)
 
     # 5. Write the updated content back to the file
     $finalHtml | Set-Content -LiteralPath $targetHtmlFile -Encoding UTF8

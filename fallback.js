@@ -494,52 +494,23 @@ function initNavigation() {
         if (item.title === 'scripture') {
             navItem.addEventListener('click', function (e) {
                 e.preventDefault();
-                // Determine today's weekday in Swahili filenames
-                const dayNames = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
                 const today = new Date();
-                const weekday = dayNames[today.getDay()];
-
-                // Compute Ordinary Time week number using a fixed reference Sunday.
-                // Use the same approach as existing code: base on a known Sunday and count weeks.
-                // Reference Sunday for week 24: September 14, 2025 (0-based month: 8)
-                const currentDay = today.getDay(); // 0 = Sun
+                const currentDay = today.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+                // Find the Sunday of the current week
                 const currentSunday = new Date(today);
-                currentSunday.setHours(0,0,0,0);
                 currentSunday.setDate(today.getDate() - currentDay);
-                const referenceSunday = new Date(2025, 8, 14);
-                referenceSunday.setHours(0,0,0,0);
+                // Reference Sunday for week 24: September 14, 2025
+                const referenceSunday = new Date(2025, 8, 14); // September is 8 (0-based), 14
                 const msPerWeek = 7 * 24 * 60 * 60 * 1000;
                 const weeksDiff = Math.floor((currentSunday - referenceSunday) / msPerWeek);
-                const week = 24 + weeksDiff; // yields an Ordinary Time week number
-
-                // Map week number to the corresponding folder name
-                const weekFolderMap = {
-                    21: 'ishirini_na_moja',
-                    22: 'ishirini_na_mbili',
-                    23: 'ishirini_na_tatu',
-                    24: 'ishirini_na_nne',
-                    25: 'ishirini_na_tano',
-                    26: 'ishirini_na_sita',
-                    27: 'ishirini_na_saba',
-                    28: 'ishirini_na_nane',
-                    29: 'ishirini_na_tisa',
-                    30: 'thelathini',
-                    31: 'thelathini_na_moja',
-                    32: 'thelathini_na_mbili',
-                    33: 'thelathini_na_tatu',
-                    34: 'thelathini_na_nne'
-                };
-
-                const folder = weekFolderMap[week];
-                if (!folder) {
-                    alert('Office of Readings for this week is not available.');
+                const week = 24 + weeksDiff;
+                // Ensure within range 21 to 34
+                if (week < 21 || week > 34) {
+                    alert("Office of Readings for this week is not available.");
                     return;
                 }
-
-                // Build the path to ofisi ya masomo/{folder}/{weekday}.html
-                const targetPath = `ofisi ya masomo/${folder}/${weekday}.html`;
-                // Navigate
-                window.location.href = targetPath;
+                const filename = `mwaka3-week${week}.html`;
+                window.location.href = filename;
             });
         }
         navGrid.appendChild(navItem);
