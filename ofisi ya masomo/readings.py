@@ -155,6 +155,8 @@ def create_sample_readings():
         
         "Psalm": "R. Blessed are they who hope in the Lord. Blessed is the man who walks not in the counsel of the wicked, nor stands in the way of sinners, nor sits in the seat of scoffers; but his delight is in the law of the LORD, and on his law he meditates day and night. R. Blessed are they who hope in the Lord. He is like a tree planted by streams of water, that yields its fruit in its season, and its leaf does not wither. In all that he does, he prospers. R. Blessed are they who hope in the Lord. The wicked are not so, but are like chaff which the wind drives away. For the LORD knows the way of the righteous, but the way of the wicked will perish. R. Blessed are they who hope in the Lord.",
         
+        "Acclamation": "Alleluia, alleluia. I am the way, the truth, and the life, says the Lord; no one comes to the Father, except through me. Alleluia, alleluia.",
+        
         "Gospel": "A reading from the holy Gospel according to Luke. Jesus said to his disciples: \"I came to cast fire upon the earth; and would that it were already kindled! I have a baptism to be baptized with; and how I am constrained until it is accomplished! Do you think that I have come to give peace on earth? No, I tell you, but rather division; for henceforth in one house there will be five divided, three against two and two against three; they will be divided, father against son and son against father, mother against daughter and daughter against her mother, mother-in-law against her daughter-in-law and daughter-in-law against her mother-in-law.\""
     }
 

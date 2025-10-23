@@ -29,11 +29,11 @@
         .header {
             background: linear-gradient(135deg, #667eea 0%, #0cd234 100%);
             color: white;
-            padding: 30px 20px;
+            padding: 10px 5px;
             text-align: center;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .header h1 {
             font-size: 2em;
@@ -94,15 +94,28 @@
             text-align: left;
         }
         .psalm-response {
-            background: #f0e6ff;
+           background: linear-gradient(135deg, #667eea 0%, #0cd234 100%);
             padding: 12px 20px;
             margin: 15px 0;
             border-radius: 5px;
             text-align: center;
             font-weight: 600;
-            color: #764ba2;
+            color: #060000;
             font-style: italic;
             box-shadow: 0 2px 5px rgba(118, 75, 162, 0.15);
+        }
+        .acclamation {
+            background: #fffde7;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            color: #0b0100;
+            font-style: italic;
+            box-shadow: 0 2px 5px rgba(192, 57, 43, 0.15);
+            border-left: 4px solid #f39c12;
+            border-right: 4px solid #f39c12;
         }
         .citation {
             color: #764ba2;
@@ -170,16 +183,17 @@
 <body>
     <div class="header">
         <h1>Daily Readings</h1>
-        <div class="date-display" id="currentDate"></div>
-        
+        <div class="date-display" id="currentDate">
+        </div> 
     </div>
     
     <div class="container">
-        <div class="content" id="readingsContent">
+        <div id="readingsContent">
             <div class="loading">
                 
                 <p>Loading today's readings...</p>
             </div>
+        </div>
         </div>
         
         <div class="content" style="text-align: center;">
@@ -224,7 +238,7 @@
             }
 
             // Order of readings
-            const readingOrder = ['FirstReading', 'Psalm', 'Gospel'];
+            const readingOrder = ['FirstReading', 'Psalm', 'Acclamation', 'Gospel'];
             
             // Display readings in the correct order
             readingOrder.forEach(key => {
@@ -235,6 +249,7 @@
                     let title = key;
                     if (key === 'FirstReading') title = 'First Reading';
                     if (key === 'Psalm') title = 'Responsorial Psalm';
+                    if (key === 'Acclamation') title = 'Gospel Acclamation';
                     
                     // Extract citation and content
                     const { citation, content } = extractCitation(readings[key], key);
@@ -245,6 +260,12 @@
                             <h2 class="reading-title">${title}</h2>
                             ${citation ? `<div class="citation">${citation}</div>` : ''}
                             ${formatPsalm(content)}
+                        `;
+                    } else if (key === 'Acclamation') {
+                        // Format the acclamation
+                        section.innerHTML = `
+                            <h2 class="reading-title">${title}</h2>
+                            <div class="acclamation">${content}</div>
                         `;
                     } else {
                         section.innerHTML = `
@@ -269,6 +290,12 @@
             } else if (readingType === 'Gospel') {
                 startPhrase = 'A reading from the holy Gospel';
                 citationPattern = /A reading from the holy Gospel according to (.*?)\./;
+            } else if (readingType === 'Acclamation') {
+                // For Acclamation, we don't need to extract a citation
+                return {
+                    citation: '',
+                    content: text
+                };
             } else if (readingType === 'Psalm') {
                 // For Psalm, we'll try to identify the psalm number or reference
                 
