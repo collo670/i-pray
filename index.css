@@ -1,5 +1,5 @@
 :root {
-    --primary-color:  #02460f;
+    --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%);
 }
 body {
     font-family: 'Cinzel Decorative', serif;
@@ -10,7 +10,7 @@ body {
 .text-xlarge { font-size: 1.5rem; }
 .text-xxs { font-size: 0.7rem; }
 .bg-gradient-vintage {
-    background: linear-gradient(135deg, #02460f 0%, #d1c3cd 50%, #62acdd 100%);
+    background: var(--primary-color);
 }
 .card {
     background-color: #ffffff;
