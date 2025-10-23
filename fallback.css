@@ -10,7 +10,7 @@ body {
 .text-xlarge { font-size: 1.5rem; }
 .text-xxs { font-size: 0.7rem; }
 .bg-gradient-vintage {
-    background: linear-gradient(135deg, #02460f 0%, #d1c3cd 50%, #62acdd 100%);
+    background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #448cbb 100%);
 }
 .card {
     background-color: #ffffff;
