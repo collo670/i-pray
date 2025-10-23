@@ -757,17 +757,7 @@ async function fetchDailyReadings() {
         `;
         // Click: Open in same tab
         readingsCard.addEventListener('click', () => {
-            fetch(filePath)
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = filePath; // Open in same tab
-                    } else {
-                        alert("Today's reading is not available yet.");
-                    }
-                })
-                .catch(() => {
-                    alert("Could not load today's reading.");
-                });
+            window.location.href = 'readings.html'; // Open the new readings page
         });
         // Insert before navGrid
         const homeView = document.getElementById('homeView');

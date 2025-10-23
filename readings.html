@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catholic Daily Readings - iPray</title>
+    <link rel="icon" href="/i-pray/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #0cd234 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header .meta {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        h2 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        h3 {
+            color: #764ba2;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        .reading-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .reading-title {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        .reading-content {
+            text-align: justify;
+            white-space: pre-line;
+        }
+        .response {
+            background: #fff8e1;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            font-weight: 600;
+            text-align: center;
+            font-style: italic;
+            color: #764ba2;
+            font-size: 1.05em;
+        }
+        .psalm-verse {
+            margin: 12px 0;
+            text-align: left;
+        }
+        .psalm-response {
+            background: #f0e6ff;
+            padding: 12px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            color: #764ba2;
+            font-style: italic;
+            box-shadow: 0 2px 5px rgba(118, 75, 162, 0.15);
+        }
+        .citation {
+            color: #764ba2;
+            font-style: italic;
+            font-size: 1em;
+            margin: 0 0 15px 0;
+            padding: 5px 10px;
+            border-left: 3px solid #667eea;
+            background-color: rgba(102, 126, 234, 0.05);
+            border-radius: 0 5px 5px 0;
+        }
+        .verse {
+            font-weight: bold;
+            color: #764ba2;
+        }
+        p {
+            margin: 12px 0;
+            text-align: justify;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 20px 0;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .nav-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(118, 75, 162, 0.3);
+            border-radius: 50%;
+            border-top-color: #764ba2;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+        }
+        .date-display {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Daily Readings</h1>
+        <div class="date-display" id="currentDate"></div>
+        
+    </div>
+    
+    <div class="container">
+        <div class="content" id="readingsContent">
+            <div class="loading">
+                
+                <p>Loading today's readings...</p>
+            </div>
+        </div>
+        
+        <div class="content" style="text-align: center;">
+            <a href="index.html" class="nav-button">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Display current date
+        function formatDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        document.getElementById('currentDate').textContent = formatDate(new Date());
+        
+        async function fetchDailyReadings() {
+            try {
+                const response = await fetch('ofisi ya masomo/readings.json');
+                if (!response.ok) {
+                    throw new Error('Readings file not found. Please run the readings.py script first.');
+                }
+                const readings = await response.json();
+                displayReadings(readings);
+            } catch (error) {
+                document.getElementById('readingsContent').innerHTML = `
+                    <div class="error-message">
+                        <p>Failed to load readings. Please try again later.</p>
+                        <p style="font-size: 0.9em; margin-top: 10px;">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayReadings(readings) {
+            const container = document.getElementById('readingsContent');
+            container.innerHTML = '';
+
+            if (Object.keys(readings).length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 20px;">No readings available for today.</p>';
+                return;
+            }
+
+            // Order of readings
+            const readingOrder = ['FirstReading', 'Psalm', 'Gospel'];
+            
+            // Display readings in the correct order
+            readingOrder.forEach(key => {
+                if (readings[key]) {
+                    const section = document.createElement('div');
+                    section.className = 'reading-section';
+                    
+                    let title = key;
+                    if (key === 'FirstReading') title = 'First Reading';
+                    if (key === 'Psalm') title = 'Responsorial Psalm';
+                    
+                    // Extract citation and content
+                    const { citation, content } = extractCitation(readings[key], key);
+                    
+                    if (key === 'Psalm') {
+                        // Format the psalm with response pattern
+                        section.innerHTML = `
+                            <h2 class="reading-title">${title}</h2>
+                            ${citation ? `<div class="citation">${citation}</div>` : ''}
+                            ${formatPsalm(content)}
+                        `;
+                    } else {
+                        section.innerHTML = `
+                            <h2 class="reading-title">${title}</h2>
+                            ${citation ? `<div class="citation">${citation}</div>` : ''}
+                            <div class="reading-content">${content}</div>
+                        `;
+                    }
+                    container.appendChild(section);
+                }
+            });
+        }
+        
+        function extractCitation(text, readingType) {
+            // Different patterns for different reading types
+            let citationPattern;
+            let startPhrase = '';
+            
+            if (readingType === 'FirstReading') {
+                startPhrase = 'A reading from';
+                citationPattern = /A reading from (.*?)\./;
+            } else if (readingType === 'Gospel') {
+                startPhrase = 'A reading from the holy Gospel';
+                citationPattern = /A reading from the holy Gospel according to (.*?)\./;
+            } else if (readingType === 'Psalm') {
+                // For Psalm, we'll try to identify the psalm number or reference
+                
+                // Try to find common psalm citation patterns
+                const psalmPatterns = [
+                    /Psalm (\d+[:\d-,\s]*)/i,           // Psalm 23
+                    /Psalms (\d+[:\d-,\s]*)/i,          // Psalms 23
+                    /Ps\.? (\d+[:\d-,\s]*)/i,           // Ps. 23
+                    /Psalm (\d+)[:\s](\d+)[-,](\d+)/i,  // Psalm 23:1-6
+                    /Responsorial Psalm[:\s]+(\d+)/i    // Responsorial Psalm: 23
+                ];
+                
+                for (const pattern of psalmPatterns) {
+                    const match = text.match(pattern);
+                    if (match) {
+                        // If we found a psalm reference, use it as citation
+                        return {
+                            citation: `Psalm ${match[1]}`,
+                            content: text
+                        };
+                    }
+                }
+                
+                // If no specific psalm number is found, check if the response gives a hint
+                if (text.includes('R.')) {
+                    const responseStart = text.indexOf('R.') + 2;
+                    const responseEnd = text.indexOf('.', responseStart);
+                    if (responseEnd > responseStart) {
+                        const response = text.substring(responseStart, responseEnd).trim();
+                        return {
+                            citation: `Responsorial Psalm`,
+                            content: text
+                        };
+                    }
+                }
+                
+                // Default citation for psalms if nothing specific is found
+                return { 
+                    citation: 'Responsorial Psalm',
+                    content: text 
+                };
+            }
+            
+            // Extract citation using the pattern
+            const match = text.match(citationPattern);
+            let citation = '';
+            let content = text;
+            
+            if (match && match[0]) {
+                citation = match[0];
+                
+                // Remove the citation from the content
+                // Find the end of the first sentence that contains the citation
+                const firstSentenceEnd = text.indexOf('.', text.indexOf(startPhrase)) + 1;
+                if (firstSentenceEnd > 0) {
+                    content = text.substring(firstSentenceEnd).trim();
+                }
+            }
+            
+            return { citation, content };
+        }
+        
+        function formatPsalm(psalmText) {
+            // For the specific format in readings.json where R. marks the response
+            // and it's repeated throughout the text
+            
+            // First, check if we have the R. pattern in the text
+            if (!psalmText.includes('R.')) {
+                return `<div class="reading-content">${psalmText}</div>`;
+            }
+            
+            // Extract the first response (everything after first R. until the next sentence)
+            const firstRIndex = psalmText.indexOf('R.');
+            let endOfResponseIndex = psalmText.indexOf('.', firstRIndex + 2);
+            if (endOfResponseIndex === -1) {
+                endOfResponseIndex = psalmText.length;
+            }
+            
+            // Get the response text
+            const response = psalmText.substring(firstRIndex + 2, endOfResponseIndex).trim();
+            
+            // Format with response pattern
+            let formattedPsalm = '<div class="reading-content">';
+            
+            // Split the psalm text by "R." which indicates where responses occur
+            const parts = psalmText.split('R.');
+            
+            // Process each part
+            for (let i = 0; i < parts.length; i++) {
+                // Skip empty parts
+                if (!parts[i].trim()) continue;
+                
+                // For the first part (before any response)
+                if (i === 0) {
+                    // Add verses
+                    const verses = parts[i].split(/(?<=\.|\?|\!)\s+/);
+                    for (let verse of verses) {
+                        if (verse.trim()) {
+                            formattedPsalm += `<div class="psalm-verse">${verse.trim()}</div>`;
+                        }
+                    }
+                } else {
+                    // Add the response
+                    formattedPsalm += `<div class="psalm-response">R. ${response}</div>`;
+                    
+                    // Remove the response text from this part and add the remaining verses
+                    let remainingText = parts[i].substring(parts[i].indexOf('.') + 1).trim();
+                    
+                    // Split into verses
+                    const verses = remainingText.split(/(?<=\.|\?|\!)\s+/);
+                    for (let verse of verses) {
+                        if (verse.trim()) {
+                            formattedPsalm += `<div class="psalm-verse">${verse.trim()}</div>`;
+                        }
+                    }
+                }
+            }
+            
+            formattedPsalm += '</div>';
+            return formattedPsalm;
+        }
+
+        fetchDailyReadings();
+    </script>
+</body>
+</html>
