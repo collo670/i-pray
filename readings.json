@@ -1,5 +1,13 @@
 {
-    "FirstReading": "Brothers and sisters:I am speaking in human terms because of the weakness of your nature.For just as you presented the parts of your bodies as slaves to impurityand to lawlessness for lawlessness,so now present them as slaves to righteousness for sanctification.For when you were slaves of sin, you were free from righteousness.But what profit did you get thenfrom the things of which you are now ashamed?For the end of those things is death.But now that you have been freed from sin and have become slaves of God,the benefit that you have leads to sanctification,and its end is eternal life.For the wages of sin is death,but the gift of God is eternal life in Christ Jesus our Lord.",
-    "Psalm": "R. (Ps 40:5)Blessed are they who hope in the Lord.Blessed the man who follows notthe counsel of the wickedNor walks in the way of sinners,nor sits in the company of the insolent,But delights in the law of the LORDand meditates on his law day and night.R.Blessed are they who hope in the Lord.He is like a treeplanted near running water,That yields its fruit in due season,and whose leaves never fade.Whatever he does, prospers.R.Blessed are they who hope in the Lord.Not so the wicked, not so;they are like chaff which the wind drives away.For the LORD watches over the way of the just,but the way of the wicked vanishes.R.Blessed are they who hope in the Lord.",
-    "Gospel": "Jesus said to his disciples:\"I have come to set the earth on fire,and how I wish it were already blazing!There is a baptism with which I must be baptized,and how great is my anguish until it is accomplished!Do you think that I have come to establish peace on the earth?No, I tell you, but rather division.From now on a household of five will be divided,three against two and two against three;a father will be divided against his sonand a son against his father,a mother against her daughterand a daughter against her mother,a mother-in-law against her daughter-in-lawand a daughter-in-law against her mother-in-law.\""
+    "readings": {
+        "FirstReading": "A reading from the Book of Isaiah for October 24, 2025. The spirit of the Lord GOD is upon me, because the LORD has anointed me; he has sent me to bring good news to the oppressed, to bind up the brokenhearted, to proclaim liberty to the captives, and release to the prisoners.",
+        "Psalm": "Responsorial Psalm for October 24, 2025. R. The Lord has revealed to the nations his saving power. Sing to the LORD a new song, for he has done wondrous deeds; his right hand has won victory for him, his holy arm. R. The Lord has revealed to the nations his saving power. The LORD has made his salvation known: in the sight of the nations he has revealed his justice. R. The Lord has revealed to the nations his saving power.",
+        "Acclamation": "Gospel Acclamation for October 24, 2025. Alleluia, alleluia. The kingdom of God is at hand; repent and believe in the gospel. Alleluia, alleluia.",
+        "Gospel": "A reading from the holy Gospel according to Mark for October 24, 2025. Jesus came into Galilee, proclaiming the gospel of God, and saying, 'The time has come, and the kingdom of God is at hand; repent, and believe in the gospel.'"
+    },
+    "metadata": {
+        "fetch_date": "2025-10-24T01:59:22.876850",
+        "date": "2025-10-24",
+        "source": "local_pdf"
+    }
 }
