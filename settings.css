@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #7C3AED;
+    --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%);
 }
 body {
     font-family: 'Inter', sans-serif;
