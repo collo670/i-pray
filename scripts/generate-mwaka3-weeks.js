@@ -24,7 +24,7 @@ function escapeHtml(content) {
 
 function buildHtml({ displayWeekNum, days }) {
   const dayOrder = [
-    'Jumapili',
+    'Dominika',
     'Jumatatu',
     'Jumanne',
     'Jumatano',
@@ -49,7 +49,7 @@ function buildHtml({ displayWeekNum, days }) {
   }
 
   const sections = [
-    sectionFor('Jumapili', 'jumapili'),
+    sectionFor('Dominika', 'dominika'),
     sectionFor('Jumatatu', 'jumatatu'),
     sectionFor('Jumanne', 'jumanne'),
     sectionFor('Jumatano', 'jumatano'),
@@ -97,7 +97,7 @@ function buildHtml({ displayWeekNum, days }) {
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold text-purple-600">Wiki ${displayWeekNum}</h1>
-                <p class="text-sm text-gray-600">Jumapili ${displayWeekNum} - Jumamosi ${displayWeekNum}</p><br><br>
+                <p class="text-sm text-gray-600">Dominika ${displayWeekNum} - Jumamosi ${displayWeekNum}</p><br><br>
             </div>
             <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all" title="Nyumbani">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,12 +155,12 @@ ${sections}
     
     document.addEventListener('DOMContentLoaded', function() {
         const dayMapping = {
-            0: 'jumapili', 1: 'jumatatu', 2: 'jumanne', 3: 'jumatano', 
+            0: 'dominika', 1: 'jumatatu', 2: 'jumanne', 3: 'jumatano', 
             4: 'alhamisi', 5: 'ijumaa', 6: 'jumamosi'
         };
         const currentDayIndex = new Date().getDay();
         const currentDayId = dayMapping[currentDayIndex];
-        const allSections = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+        const allSections = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
         allSections.forEach(day => {
             const content = document.getElementById(day + '-content');
             if (content) {
@@ -202,7 +202,7 @@ function splitWeeks(fullText) {
     .replace(/\n{2,}/g, '\n\n');
 
   const dayVariants = {
-    Jumapili: ['Jumapili', 'Dominika', 'DOMINIKA'],
+    Dominika: ['Dominika', 'DOMINIKA'],
     Jumatatu: ['Jumatatu', 'JUMATATU'],
     Jumanne: ['Jumanne', 'JUMANNE'],
     Jumatano: ['Jumatano', 'JUMATANO'],
@@ -255,9 +255,9 @@ function splitWeeks(fullText) {
   }
   for (const seg of segments) {
     const day = seg.day;
-    if (day === 'Jumapili') {
+    if (day === 'Dominika') {
       pushWeek(true);
-      week['Jumapili'] = seg.text;
+      week['Dominika'] = seg.text;
     } else if (['Jumatatu','Jumanne','Jumatano','Alhamisi','Ijumaa','Jumamosi'].includes(day)) {
       if (Object.keys(week).length === 0) continue; // ignore before first Sunday
       week[day] = seg.text;
@@ -265,7 +265,7 @@ function splitWeeks(fullText) {
     }
   }
   pushWeek(true);
-  return weeks.filter(w => w['Jumapili']);
+  return weeks.filter(w => w['Dominika']);
 }
 
 async function main() {

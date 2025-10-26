@@ -59,7 +59,7 @@ function Remove-EnglishOfficeLinks {
 
 # Get all weekday HTML files
 $weekdayFiles = Get-ChildItem -Path . -Filter "*.html" | Where-Object { 
-    $_.Name -match "^(jumatatu|jumanne|jumatano|alhamisi|ijumaa|jumamosi|jumapili)" 
+    $_.Name -match "^(jumatatu|jumanne|jumatano|alhamisi|ijumaa|jumamosi|dominika)" 
 }
 
 # Process each file

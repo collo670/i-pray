@@ -495,7 +495,7 @@ function initNavigation() {
             navItem.addEventListener('click', function (e) {
                 e.preventDefault();
                 // Determine today's weekday in Swahili filenames
-                const dayNames = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+                const dayNames = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
                 const today = new Date();
                 const weekday = dayNames[today.getDay()];
 
@@ -555,7 +555,7 @@ const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
 if (masifuAsubuhiLink) {
     masifuAsubuhiLink.addEventListener('click', function() {
         const day = new Date().getDay();
-        const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+        const dayToPrefix = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
         const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
         // Find the most recent Sunday (start of the current liturgical week)
         const now = new Date();
@@ -735,19 +735,25 @@ async function fetchSaintOfTheDay() {
 async function fetchDailyReadings() {
     try {
         const today = new Date();
-        const day = today.getDate(); // 1, 2, ..., 31
-        const monthIndex = today.getMonth(); // 0 = Jan, 6 = Jul, 7 = Aug, ..., 11 = Dec
+        const day = today.getDate();
+        const monthIndex = today.getMonth();
+        
         // Only July to December
         if (monthIndex < 6) {
             console.warn("Readings only available from July onward.");
             return;
         }
+        
         const shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         const longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-        const shortMonth = shortMonths[monthIndex]; // e.g., 'aug'
-        const longMonth = longMonths[monthIndex]; // e.g., 'august'
-        const fileName = `${day}${shortMonth}.html`; // e.g., 4aug.html
-        const filePath = `/i-pray/assets/${longMonth}/${fileName}`; // ✅ Correct path
+        const shortMonth = shortMonths[monthIndex];
+        const longMonth = longMonths[monthIndex];
+        
+        // Format filename to match actual files (with space)
+        const fileName = `${day} ${shortMonth}.html`;
+        
+        // Check if running locally or on GitHub Pages
+        const baseUrl = window.location.hostname === "collo670.github.io" ? "/i-pray" : "";
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         const readingsCard = document.createElement('div');
         readingsCard.className = 'rounded-2xl p-6 bg-white shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
@@ -755,9 +761,26 @@ async function fetchDailyReadings() {
             <h3 class="text-xl font-bold text-purple-600">${translations[lang].dailyReadings}</h3>
             <p class="text-xs font-medium text-gray-500 mt-2">${translations[lang].tapToView}</p>
         `;
-        // Click: Open in same tab
-        readingsCard.addEventListener('click', () => {
-            window.location.href = 'readings.html'; // Open the new readings page
+        // Click: Fetch and display daily readings
+        readingsCard.addEventListener('click', async () => {
+            try {
+                const today = new Date();
+                const day = today.getDate();
+                const shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+                const longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+                const monthIndex = today.getMonth();
+                const shortMonth = shortMonths[monthIndex];
+                const longMonth = longMonths[monthIndex];
+                const fileName = `${day} ${shortMonth}.html`;
+                
+                // Navigate to the daily reading file in the current month's folder
+                const readingPath = `assets/${longMonth}/${fileName}`;
+                console.log('Attempting to load:', readingPath); // For debugging
+                window.location.href = readingPath;
+            } catch (error) {
+                console.error('Error fetching daily readings:', error);
+                alert('Unable to load daily readings. Please try again later.');
+            }
         });
         // Insert before navGrid
         const homeView = document.getElementById('homeView');

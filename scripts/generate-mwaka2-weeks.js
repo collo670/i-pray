@@ -15,7 +15,7 @@ const outPrefix = getArg('--prefix', 'mwaka2-week');
 const titlePrefix = getArg('--title', 'Mwaka Sehemu 2 - Wiki');
 
 function buildHtml({ title, weekIndex, days }) {
-  const dayOrder = ['Jumapili', 'Jumatatu', 'Jumanne', 'Jumatano', 'Alhamisi', 'Ijumaa', 'Jumamosi'];
+  const dayOrder = ['Dominika', 'Jumatatu', 'Jumanne', 'Jumatano', 'Alhamisi', 'Ijumaa', 'Jumamosi'];
   const headings = dayOrder
     .filter((day) => days[day])
     .map((day) => {
@@ -119,7 +119,7 @@ function splitWeeks(fullText) {
 
   // Split by days markers; we will scan sequentially and cut weeks
   const dayVariants = {
-    Jumapili: ['Jumapili', 'Dominika', 'DOMINIKA'],
+    Dominika: ['Dominika', 'DOMINIKA'],
     Jumatatu: ['Jumatatu', 'JUMATATU'],
     Jumanne: ['Jumanne', 'JUMANNE'],
     Jumatano: ['Jumatano', 'JUMATANO'],
@@ -180,11 +180,11 @@ function splitWeeks(fullText) {
   // Group into weeks starting at Jumapili and ending at Jumamosi
   const weeks = [];
   let week = {};
-  const order = ['Jumapili', 'Jumatatu', 'Jumanne', 'Jumatano', 'Alhamisi', 'Ijumaa', 'Jumamosi'];
+  const order = ['Dominika', 'Jumatatu', 'Jumanne', 'Jumatano', 'Alhamisi', 'Ijumaa', 'Jumamosi'];
   let expectingIndex = 0; // expecting next day index in order
 
   function pushWeekIfComplete(force = false) {
-    const hasStart = typeof week['Jumapili'] === 'string' && week['Jumapili'].length > 0;
+    const hasStart = typeof week['Dominika'] === 'string' && week['Dominika'].length > 0;
     const hasEnd = typeof week['Jumamosi'] === 'string' && week['Jumamosi'].length > 0;
     const anyDays = Object.keys(week).length > 0;
     if (force || (hasStart && hasEnd)) {
@@ -202,7 +202,7 @@ function splitWeeks(fullText) {
       // Start of a week
       // If we already have content, close previous week
       pushWeekIfComplete(true);
-      week['Jumapili'] = seg.text;
+      week['Dominika'] = seg.text;
       expectingIndex = 1;
     } else {
       if (Object.keys(week).length === 0) {
@@ -220,7 +220,7 @@ function splitWeeks(fullText) {
 
   // Flush last week if it has content
   pushWeekIfComplete(true);
-  return weeks.filter((w) => w['Jumapili']);
+  return weeks.filter((w) => w['Dominika']);
 }
 
 async function main() {
