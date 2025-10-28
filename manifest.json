@@ -3,8 +3,8 @@
     "short_name":  "iPray",
     "start_url":  "/i-pray/",
     "display":  "standalone",
-    "background_color":  "(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)",
-    "theme_color":  "(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)",
+    "background_color":  "linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)",
+    "theme_color":  "linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)",
     "description":  "A Catholic liturgical companion for daily prayer and worship.",
     "icons":  [
                   {
