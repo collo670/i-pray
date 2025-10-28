@@ -316,6 +316,11 @@ header[role="banner"] {
     background-color: rgba(255,255,255,0.1);
 }
 
+/* Bottom navigation height */
+nav[role="navigation"][aria-label="Main Navigation"] {
+    height: 4.5rem;
+}
+
 /* Enhanced Mobile Navigation with Tailwind */
 .hamburger {
     display: none;

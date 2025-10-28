@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>prayer - iPray</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="index.css">
     <meta name="description" content="Daily prayers and devotions for Catholic faithful">
     
     <!-- PWA Manifest -->
@@ -44,24 +44,7 @@
     </script>
 
     <style>
-        :root {
-            --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        /* Apply gradient based on mode */
-        body {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-
-        body.dark {
-            background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-        }
-
+        /* Keep small custom rules but let index.css / Tailwind handle backgrounds and most styling */
         .prayer-card {
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
@@ -80,51 +63,42 @@
         .yellow-border { border-left-color: #F59E0B; }
         .pink-border { border-left-color: #DB2777; }
 
-        .favorite-btn {
-            transition: all 0.2s ease;
-        }
-
-        .favorite-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .favorite-btn.active {
-            color: #DC2626;
-        }
+        .favorite-btn { transition: all 0.2s ease; }
+        .favorite-btn:hover { transform: scale(1.1); }
+        .favorite-btn.active { color: #DC2626; }
 
         @media (max-width: 640px) {
-            .bottom-nav {
-                padding-bottom: env(safe-area-inset-bottom);
-            }
+            .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-vintage dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
     <div id="app" class="relative z-10">
-        <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                        ipray
-                    </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="daily prayers">
-                        daily prayers
-                    </p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button id="translationToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300" title="Translate to Swahili">
-                        EN
-                    </button>
-                    <button id="themeToggle" class="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300 transition-all duration-300">
-                        <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <!-- Sun Icon (Light Mode) -->
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </header>
+        <!-- Updated Header (match index.html) -->
+<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+    <div class="header-content">
+        <div>
+            <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                ipray
+            </h1>
+            <p id="appSubtitle" class="text-sm text-gray-600">Your Prayer Companion</p>
+        </div>
+        <div class="flex items-center">
+            <a href="calendar.html" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Calendar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </a>
+            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2" title="Accessibility Options" aria-expanded="false" aria-controls="accessibilityMenu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+            </button>
+            <button id="translationToggle" class="p-2 rounded-full bg-gray-200 ml-2 font-medium text-sm" title="Translate to Swahili">EN</button>
+        </div>
+    </div>
+</header>
 
         <!-- Main Content -->
         <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
@@ -290,32 +264,32 @@
             </div>
         </main>
 
-        <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav">
-            <div class="flex justify-around">
-                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <!-- Bottom Navigation (match index.html structure; Prayer is active) -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500" data-translate="home">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                     </svg>
-                    <span class="text-xs font-medium">Home</span>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
                 </a>
-                <a href="prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
                     </svg>
-                    <span class="text-xs font-medium">Prayer</span>
+                    <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
                 </a>
-                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
                     </svg>
-                    <span class="text-xs font-medium">Calendar</span>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
                 </a>
-                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
                     </svg>
-                    <span class="text-xs font-medium">Settings</span>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
                 </a>
             </div>
         </nav>
