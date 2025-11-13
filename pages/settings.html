@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - ipray</title>
+    <meta name="description" content="iPray app settings and preferences">
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/ipray/manifest.json">
+    <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+<body class="min-h-screen bg-gradient-vintage dark:bg-gray-900 dark:text-white transition-colors duration-300">
+    <div id="app">
+        <!-- Header -->
+        <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        ipray
+                    </h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-400" id="pageSubtitle" data-translate="settings">
+                        settings
+                    </p>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-6 pb-24">
+            
+            <!-- Settings Sections -->
+            <div class="space-y-8">
+                <!-- App Theme -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-palette mr-2 text-primary"></i>
+                        <span data-translate="appTheme">App Theme</span>
+                    </h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="default" aria-label="Select default theme">
+                            <div class="w-full h-12 rounded mb-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
+                            <span data-translate="default">Default</span>
+                        </button>
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="purple" aria-label="Select Advent/Lent theme">
+                            <div class="w-full h-12 rounded mb-2 bg-liturgical-purple"></div>
+                            <span data-translate="adventLent">Advent/Lent</span>
+                        </button>
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="white" aria-label="Select Christmas/Easter theme">
+                            <div class="w-full h-12 rounded mb-2 bg-liturgical-white border border-gray-300"></div>
+                            <span data-translate="christmasEaster">Christmas/Easter</span>
+                        </button>
+                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="green" aria-label="Select Ordinary Time theme">
+                            <div class="w-full h-12 rounded mb-2 bg-liturgical-green"></div>
+                            <span data-translate="ordinaryTime">Ordinary Time</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="darkModeToggle" class="rounded text-primary" aria-label="Toggle dark mode">
+                                <span class="ml-2" data-translate="darkMode">Dark Mode</span>
+                            </label>
+                        </div>
+                        <button id="resetTheme" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary">
+                            <span data-translate="resetDefault">Reset to Default</span>
+                        </button>
+                    </div>
+                </section>
+                <!-- Language Settings -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-language mr-2 text-primary"></i>
+                        <span data-translate="languageSettings">Language Settings</span>
+                    </h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="en">
+                            <span class="mr-2">🇺🇸</span>
+                            <span>English</span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="sw">
+                            <span class="mr-2">🇹🇿</span>
+                            <span>Swahili</span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="es">
+                            <span class="mr-2">🇪🇸</span>
+                            <span>Spanish</span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="fr">
+                            <span class="mr-2">🇫🇷</span>
+                            <span>French</span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="pt">
+                            <span class="mr-2">🇵🇹</span>
+                            <span>Portuguese</span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="it">
+                            <span class="mr-2">🇮🇹</span>
+                            <span>Italian</span>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Changing language will refresh the app. Your preferences will be saved.
+                    </p>
+                </section>
+                <!-- Prayer Reminders -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-bell mr-2 text-primary"></i>
+                        <span data-translate="prayerReminders">Prayer Reminders</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium" data-translate="morningPrayer">Morning Prayer (Lauds)</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="startDayWithPrayer">Start your day with prayer</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="time" value="06:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3" aria-label="Set morning prayer reminder time">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer" aria-label="Toggle morning prayer reminder">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium" data-translate="angelus">Angelus</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="noonPrayer">Noon prayer tradition</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="time" value="12:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3" aria-label="Set angelus reminder time">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer" aria-label="Toggle angelus reminder">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium" data-translate="divineMercy">Divine Mercy (3 PM)</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="hourOfMercy">Hour of Great Mercy</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer" aria-label="Toggle divine mercy reminder">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <!-- Accessibility -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-universal-access mr-2 text-primary"></i>
+                        <span data-translate="accessibility">Accessibility</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium" data-translate="highContrast">High Contrast Mode</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="improvedVisibility">Improved visibility</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="highContrastToggle" class="sr-only peer" aria-label="Toggle high contrast mode">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <h3 class="font-medium" data-translate="textSize">Text Size</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="adjustPreference">Adjust to your preference</p>
+                            </div>
+                            <select id="textSizeSelect" class="bg-white dark:bg-gray-600 rounded px-2 py-1" aria-label="Select text size">
+                                <option value="small">Small</option>
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
+                                <option value="xlarge">Extra Large</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                <!-- App Management -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-cog mr-2 text-primary"></i>
+                        <span data-translate="appManagement">App Management</span>
+                    </h2>
+                    <div class="space-y-3">
+                        <button id="clearCacheBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-medium" data-translate="clearCache">Clear Cache</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="freeUpSpace">Free up storage space</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </button>
+                        <button id="exportDataBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-medium" data-translate="exportPrayerData">Export Prayer Data</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="backupHistory">Backup your prayer history</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </button>
+                        <button id="checkUpdatesBtn" class="w-full text-left p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-medium" data-translate="checkUpdates">Check for Updates</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Current version: 1.2.0</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+                <!-- Social & Support -->
+              <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-hands-helping mr-2 text-primary"></i>
+                        <span>Connect & Support</span>
+                    </h2>
+                    <div class="grid grid-cols-4 gap-3 mb-4">
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <span class="text-xxs">Facebook</span>
+                        </a>
+                        <a href="https://wa.me/254123456789" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <span class="text-xxs">WhatsApp</span>
+                        </a>
+                        <a href="mailto:support@ipray.app" rel="noopener noreferrer" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span class="text-xxs">Email</span>
+                        </a>
+                        <a href="https://donate.ipray.app" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mb-1">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <span class="text-xxs">Donate</span>
+                        </a>
+                    </div>
+                    <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <i class="far fa-copyright mr-1"></i>
+                            <span id="copyrightYear"></span> iPray App. All rights reserved.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </main>
+       <!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+    <div class="flex justify-around h-full items-center">
+        <!-- Home -->
+        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
+            
+            <span class="text-xs font-medium" data-translate="home">Home</span>
+        </a>
+        <!-- Lauds / Morning Prayer -->
+        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
+            
+            <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
+        </a>
+        <!-- Calendar -->
+        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
+            
+            <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+        </a>
+        <!-- Settings -->
+        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
+            
+            <span class="text-xs font-medium" data-translate="settings">Settings</span>
+        </a>
+    </div>
+</nav>
+    </div>
+
+    <script src="../js/settings.js"></script>
+</body>
+</html>

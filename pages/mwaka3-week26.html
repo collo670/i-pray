@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kipindi cha Mwaka - Wiki 26</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="theme-color" content="#7C3AED">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#7C3AED',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-green': '#2E7D32'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%); }
+        .card { background-color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1rem; padding: 1.5rem; margin-top: 1rem; }
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -6px rgba(0,0,0,0.12), 0 6px 8px -6px rgba(0,0,0,0.06); }
+        .season-border { border-style: dashed; border-width: 1px; border-color: #bbf7d0; }
+    </style>
+    <meta name="description" content="Wiki ya Mwaka Sehemu 3 - Wiki 6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="min-h-screen" style="text-align: justify;">
+    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-purple-600">Wiki 26</h1>
+                <p class="text-sm text-gray-600">Jumapili 26 - Jumamosi 26</p><br><br>
+            </div>
+            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all" title="Nyumbani">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+        <section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Jumapili ya 26</h2>
+            <a id="jumapili-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="jumapili-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 1,1-11 <br> <br>Kiitikizano: <br>Flp 1,9.10.6<br> <br> <br>K. Pendo lenu lizidi kuwa jingi sana, katika hekima na ufahamu wote, * mpate kuyakubali yaliyo <br>mema na kuwa na mioyo safi na bila kosa. <br>W. Yeye aliyeanza kazi njema, ataimaliza hata siku ya Kristo Yesu, <br>K. mpate kuyakubali yaliyo mema na kuwa na mioyo safi na bila kosa. <br> <br>SOMO LA PILI: <br>Toka “Waraka kwa Wafilipi” wa mt. Polikarpo, askofu na shahidi <br> <br> Mmeokolewa kama zawadi <br> <br>(Sasishwa kulingana na MwakaSehemu3.pdf kwa Jumapili ya 26: maandishi ya asili yamethibitishwa hapa. Hakuna mabadiliko ya maandishi, muundo umehifadhiwa.) </p><br><br><p class="text-gray-700 leading-relaxed">212 - Ofisi ya Masomo Kipindi cha kawaida</p><br><br>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="jumatatu-section" onclick="toggleSection('jumatatu')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Jumatatu ya 26</h2>
+            <a id="jumatatu-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="jumatatu-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 1,12-26 <br> <br>Kiitikizano: <br>Flp 1,20-21<br> <br> <br>K. Kama vile nilivyotazamia sana, najua kwamba sitaaibika kamwe: * Kristo ataadhimishwa katika <br>mwili wangu; ikiwa kwa maisha yangu, au ikiwa kwa mauti yangu. <br>W. Kwa maana kwangu mimi kuishi ni Kristo, na kufa ni faida. <br>K. Kristo ataadhimishwa katika mwili wangu; ikiwa kwa maisha yangu, au ikiwa kwa mauti <br>yangu. <br> <br>SOMO LA PILI: <br>Toka “Waraka kwa Wafilipi ” wa mt. Polikarpo, askofu na shahidi <br> <br>Tuvae silaha za haki <br> <br>(Sasishwa kulingana na MwakaSehemu3.pdf kwa Jumatatu ya 26: maandishi yamehakikishwa na kurekebishwa inapobidi, bila kubadili muundo wa HTML.) </p><br><br><p class="text-gray-700 leading-relaxed">Kipindi cha kawaida Ofisi ya masomo -213 <br>Kiitikizano: <br>Flp 4, 8-9<br> <br> <br>K. Mambo yoyote yaliyo ya kweli, yoyote yaliyo ya staha, ya haki, yoyote yaliyo safi, yenye <br>kupendeza, yoyote yenye sifa njema, yatendeni hayo: * na Mungu wa amani atakuwa pamoja <br>nanyi! <br>W. Ukiwapo wema wowote, ikiwapo sifa nzuri yoyote, yatafakarini hayo. <br>K. na Mungu wa amani atakuwa pamoja nanyi!</p><br><br>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="jumanne-section" onclick="toggleSection('jumanne')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Jumanne ya 26</h2>
+            <a id="jumanne-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="jumanne-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 1,27 – 2,11 <br> <br>Kiitikizano: <br>I Pet 2, 24; Ebr 2, 14; 12, 2<br> <br> <br>K. Kristo alizichukua dhambi zetu katika mwili wake juu ya mti, * ili kwa njia ya mauti amharibu <br>yeye aliyekuwa na nguvu za mauti. <br>W. Mwanzilishi wa imani yetu, ambaye kwa ajili ya furaha iliyowekwa mbele yake, aliustahimili <br>msalaba, <br>K. ili kwa njia ya mauti amharibu yeye aliyekuwa na nguvu za mauti. <br> <br> <br>SOMO LA PILI: <br>Toka “Waraka kwa Wafilipi” wa mt. Polikarpo, askofu na shahidi. <br> <br>Kristo alitupatia mfano katika yeye mwenyewe <br> <br>Mapresbiteri wawe wenye huruma na rehema kwa wote; wawaite wazururaji, wawatembelee <br>wagonjwa bila kusahau mjane, yatima na maskini; watende mema mbele ya Mungu na watu (2 Kor <br>8,21).Wazuie ghadhabu, waache kila upendeleo, kila hukumu bila haki, kila aina ya tamaa. <br>Wasisikilize mabaya yanayosemwa dhidi ya mtu ye yote, wala wasiwe wakali mno katika kuamua, <br>wakijua kwamba sote tumekosa. <br>Tukimwomba Bwana atusamehe, twapaswa na sisi kusamehe; tupo chini ya mtazamo wa <br>Bwana Mungu, na “sisi sote tutasimama mbele ya kiti cha hukumu cha Kristo na kila mtu miongoni <br>mwetu atatoa habari zake mwenyewe mbele za Mungu” (Rum 14,10.12). Tumtumikie, basi, kwa <br>kicho na kwa heshima kubwa, kama alivyotuamuru yeye mwenyewe na mitume waliotuhubiri Injili <br>na manabii waliotutangazia ujio wa Bwana. Tukuze mema kwa nguvu zetu zote, tuepushe vikwazo, <br>ndugu za uongo na wale ambao kinafiki wajipamba kwa jina la Bwana na wapeleka wajinga <br>kwenye upotovu. <br>Yeye siyekiri kwamba Kristo alikuja katika mwili ni mpinga Kristo (I Yoh 4,2.3; 2 Yoh 7), na <br>yule asiyetabua ushuhuda wa msalaba ni wa Ibilisi; na yule anayeangusha maneno ya Bwana <br>kulingana na tamaa zake, tena akana ufufuko na hukumu, huyu ni mzaliwa wa kwanza wa Shetani. <br>Tuache, basi, kando maneno ya uongo ya watu na mafundisho ya ubatili, na tugeukie mafundisho <br>tuliyopata tangu mwanzo: Tuwe na akili na kiasi ili tukeshe katika sala (I Pet 4,7). Tudumu katika <br>kufunga na tumwombe Mungu aonaye yote kwa sala kwamba äsitutie majaribuni”(Mt 6,13), kwa <br>kuwa, kama alivyosema Bwana, “roho i radhi, lakini mwili ni dhaifu” (Mt 26,41). <br>Tubaki imara tukishika tumaini letu na dhamana ya haki yetu, Yesu Kristo, “aliyezichukua <br>dhambi zetu katika mwili wake juu ya mti. Yeye hakutenda dhambi, wala hila haikuonekana <br>kinywani mwake” (I Pet 2,24,22). Lakini kwa ajili yetu alivumilia kila kitu, ili tuishi katika yeye. <br>Tuwe, basi, wafuasi wa uvumilivu wake na, tungepaswa kuteseka kwa ajili ya jina lake, tumpe <br>utukufu. Huu ndio mfano aliotupatia katika yeye mwenyewe, nasi tukamwamini. </p><br><br><p class="text-gray-700 leading-relaxed">214 - Ofisi ya Masomo Kipindi cha kawaida <br> <br>Kiitikizano <br>Rum 12,17; 2 Kor 6,3; Mdo 24,15.16<br> <br> <br>K. Tujaribu kutenda mema sio tu mbele ya Mungu, bali pia machoni pa watu, wala tusitoe sababu <br>ya kikwazo kwa mtu ye yote, * ili utumishi wetu usilaumiwe. <br>W. Tukilisha tumaini kwa Mungu, najikaza kuhifadhi dhamiri isiyo na hatia mbele za Mungu na <br>mbele ya watu, <br>K. ili utumishi wetu usilaumiwe.</p><br><br>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="jumatano-section" onclick="toggleSection('jumatano')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Jumatano ya 26</h2>
+            <a id="jumatano-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="jumatano-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 2,12-30 <br> <br>Kiitikizano: <br>2 Pet 1,10,11; Efe 5,8.11<br> <br> <br>K. Jitahidini zaidi kufanya imara kuitwa kwenu na uteule wenu: * maana hivi mtaruzukiwa <br>kuingia katika ufalme wa milele wa Bwana na mwokozi wetu. <br>W. Enendeni kama watoto wa nuru, wala msishirikiane na matendo yasiyozaa ya giza: <br>K. maana hivi mtaruzukiwa kuingia katika ufalme wa milele wa Bwana na mwokozi wetu. <br> <br>SOMO LA PILI: <br>Toka “Waraka kwa Wafilipi” wa mt. Polikarpo, askofu na shahidi. <br> <br>Tutembee katika imani na katika haki <br> <br>Nawasihi wote: litiini neno la haki na dumuni katika nguvu ile ambayo macho yenu wenyewe <br>walisifu mfano wake sio tu katika wabarikiwa Inyasio, Zosimo na Rufo, bali pia katika wengine <br>waliokuwepo katikati yenu na katika Paulo mwenyewe na mitume wengine. Jueni kwamba wao <br>hawakupiga mbio bure (Flp 2,16), bali katika imani na katika haki, na kwamba sasa wamo kwenye <br>mahali walipoahidiwa, karibu na Bwana, ambaye walishiriki mateso pamoja naye. Wao <br>hawakupenda ulimwengu huu wa sasa (2 Tim 4,10), bali yule aliyetufia sisi sote na amefufuliwa na <br>Mungu kwa ajili yetu. <br>Dumuni imara katika mawazo hayo na fuateni mfano wa Bwana, mkishika imani bila kusita. <br>Wapendeni ndugu zenu na mpendane. Mwe pamoja katika ukweli; peaneni fadhila kwa utamu wa <br>Bwana, msimdharau mtu ye yote. Mnapoweza kutenda mema, msiyacheleweshe, “madhali sadaka <br>huokoa na mauti” (Tob 4,10). “Mnyenyekeane” (Efe 5,21) na “mwenendo wenu kati ya Mataifa <br>uwe mzuri” (I Pet 2,12); mtastahili hivyo sifa kwa ajili ya matendo yenu mema na Bwana <br>hatalaaniwa kwa kosa lenu. Ole yule ambaye kwa sababu yake jina la Bwana ladharauliwa. <br>Wafundisheni wote mwenendo ule mtakatifu mnamoishi ninyi wenyewe. <br>Nimesikitika sana kwa sababu ya Valente, aliyekuwa zamani mpresbiteri katikati yenu na <br>ambaye, kwa mwenendo wake, aonyesha sasa upungufu mkuu katika kuheshimu kazi <br>aliyokabidhiwa. Mjiepushe na kila ubaya. <br>Asiyeweza kujitawala mwenyewe, atawezaje vipi kuwashauri wengine? Kwa sababu <br>asiyeacha tamaa ataona amechafuliwa na ibada ya sanamu na atahesabiwa kati ya wapagani, <br>wasiojua hukumu ya Bwana. “Au hamjui ya kwamba watakatifu watauhukumu ulimwengu?”(I Kor <br>6,2), kama anavyofundisha Paulo? <br>Ila mimi bado, sijasikia kamwe kusema, wala sijaona kitu kama hicho juu yenu, ambao <br>katikati yenu Paulo alifanya kazi na awadokeza mwanzoni mwa waraka wake. Naam, yeye alijisikia <br>fahari juu yenu katika makanisa yote ambayo sasa walimjua Mungu, bali sisi hatukumjua bado. </p><br><br><p class="text-gray-700 leading-relaxed">Kipindi cha kawaida Ofisi ya masomo -215 <br>Ya uchungu mwingi ni, basi, kwangu Valente na mke wake. Bwana awajalie neema ya <br>uongofu halisi. Ila mwasiliane nao bila ukali, wala si kama maadui (2 The 3,15), bali waiteni kama <br>viungo vinavyoteseka na vilivyopotoka ili mwili wenu wote uokolewe. Mkiwasaidia, mtachangia <br>ujenzi wa ninyi wenyewe. <br> <br>Kiitikizano: <br>Flp 2,12-13; Yn 15,5<br> <br> <br>K. Utimizeni wokovu wenu kwa kuogopa na kutetemeka. * Kwa maana Mungu ndiye atendaye <br>kazi ndani yenu, kutaka kwenu na kutenda kwenu, kwa kulitimiza kusudi lake jema. <br>W. Asema Bwana: Pasipo mimi ninyi hamwezi kufanya neno lo lote. <br>K. Kwa maana Mungu ndiye atendaye kazi ndani yenu, kutaka kwenu na kutenda kwenu, kwa <br>kulitimiza kusudi lake jema.</p><br><br>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="alhamisi-section" onclick="toggleSection('alhamisi')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Alhamisi ya 26</h2>
+            <a id="alhamisi-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="alhamisi-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 3,1-16 <br> <br>Kiitikizano: <br>Flp 3,8.10; Rum 6,8<br> <br> <br>K. Nimepata hasara ya mambo yote, ili nipate Kristo, * ili nijue uweza wa kufufuka kwake, na <br>ushirika wa mateso yake. <br>W. Tukiwa tulikufa pamoja na Kristo, twaamini ya kuwa tutaishi pamoja naye: <br>K. ili nijue uweza wa kufufuka kwake, na ushirika wa mateso yake. <br> <br>SOMO LA PILI: <br>Tokea “Waraka kwa Wafilipi ” wa mt. Polikarpo, askofu na shahidi. <br> <br>Kristo awafanye kukua katika imani na katika kweli <br> <br>Najua vema uzoefu wenu katika Maandiko Matakatifu na kwamba hamna kitu msichojua: <br>mimi mwenyewe sina kiasi hicho. Yanitosha kuwakumbusha yasemayo Maandiko: Mwe na hofu <br>wala msitende dhambi (Zab 4,4) na “jua lisichwe na uchungu wenu bado haujawatoka” (Efe 4,26). <br>Mbarikiwa anayeyakumbuka: nami naamini kwamba hayo yatukia kweli katikati yenu. <br>Mungu, Baba wa Bwana wetu Yesu Kristo, na Yesu Kristo mwenyewe, Mwana wa Mungu na <br>kuhani wa milele, wawafanye kukua katika imani na katika ukweli na katika kila upole, bila hasira, <br>katika uvumilivu na ukarimu, katika nguvu na katika usafi. Bwana awajalie kushiriki kwenye urithi <br>wa watakatifu wake, na atupe, pamoja nanyi, hata pia na sisi na wale wote ambao chini ya mbingu, <br>watamwamini Bwana Yesu Kristo na “Baba aliyemfufua kutoka kwa wafu”(Gal 1,1). <br>Waombeeni waumini wote. Mmwombee mfalme, wenye mamlaka na wakuu, wale <br>wanaowadhulumu na kuwachukia na maadui wa msalaba, ili tunda lenu lidhihirike katika kila <br>jambo na mwe wakamilifu katika yeye. <br>Mliniandikia ninyi au Inyasio, kwamba ikiwa mtu ye yote aenda huko Siria apeleke pia barua <br>yenu; nitafanya hivi, mara tu nikipata nafasi. Nitaenda mimi mwenyewe au nitamtuma mtu <br>kuipeleka. Kama mlivyoomba, twawatuma ninyi nyaraka za Inyasio, iwe ile iliyoandikwa kwenu au <br>zingine zilizohifadhiwa nasi, nasi twaziingiza zote pamoja na hii ya sasa. Mtaweza kupata matunda <br>tele mle, kwa sababu zinaleta imani, nguvu na yale yote yanayochangia kukua katika Bwana wetu. <br>Kwa upande wenu mtushirikishe yale mliyojifunza kwa hakika iwe toka Inyasio au toka wenziwe. <br>Nilimwandikisha barua hii kwa Kreshente niliyemsifu mimi mwenyewe na sasa narudia <br>kumpendekeza. Mwenendo wake pamoja nasi ulikuwa bila lawama na ninaamini kwamba utakuwa </p><br><br><p class="text-gray-700 leading-relaxed">216 - Ofisi ya Masomo Kipindi cha kawaida <br>hivyo pia pamoja nanyi. Nawakabidhi pia dada yake atakapofika kati yenu. Dumuni imara katika <br>Bwana Yesu Kristo na neema yake iwe pamoja nanyi nyote. Amen. <br> <br>Kiitikizano: <br>Ebr 13, 20.21; 2Mak 1,3<br> <br> <br>K. Mungu wa amani awafanye ninyi kuwa wakamilifu katika kila tendo jema, mpate kuyafanya <br>mapenzi yake; * naye afanye ndani yenu lipendezalo mbele zake kwa njia ya Yesu Kristo. <br>W. Awapeni nyote nia ya kumwabudu na kuyatimiza mapenzi yake, <br>K. naye afanye ndani yenu lipendezalo mbele zake kwa njia ya Yesu Kristo.</p><br><br>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="ijumaa-section" onclick="toggleSection('ijumaa')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Ijumaa ya 26</h2>
+            <a id="ijumaa-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="ijumaa-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 3,17 - 4,9 <br> <br>Kiitikizano: <br>Efe 4,17; I The 5,15-18<br> <br> <br>K. Nashuhudia katika Bwana: tangu sasa msienende kama Mataifa waenendavyo, bali siku zote <br>lifuateni lililo jema, ninyi kwa ninyi na kwa watu wote: * Maana hayo ni mapenzi ya Mungu <br>kwenu katika Kristo Yesu. <br>W. Furahini sikuzote, ombeni bila kukoma, shukuruni kwa kila jambo. <br>K. Maana hayo ni mapenzi ya Mungu kwenu katika Kristo Yesu. <br> <br>SOMO LA PILI: <br>Toka makala “Juu ya waraka kwa Wafilipi” wa mt.Ambrosio, askofu. <br> <br> Furahini sikuzote katika Bwana <br> <br>Kama mlivyosikia katika somo lililotangulia, alimonena Mtume: “Furahini katika Bwana <br>sikuzote” (Flp 4,4); upendo wa Mungu, ndugu wapendwa, watuita, kwa wokovu wa roho zetu, kwa <br>furaha za heri ya milele. Furaha za ulimwengu zaelekea kwenye huzuni bila mwisho. Ila furaha <br>zinazoitikia mapenzi ya Bwana zawapeleka kwenye furaha za kudumu na bila machweo wale <br>wanaozihifadhi kwa bidii. Kwa hiyo Mtume asema: “Tena nasema: Furahini” (Flp 4,4). <br>Yeye awashauri kukuza daima zaidi furaha yetu katika Mungu kwa njia ya kuzifuata amri <br>zake, kwa sababu zaidi tutapambana katika ulimwengu huu ili kuzitii amri za Bwana, zaidi <br>tutakuwa wenye heri kwenye maisha yajayo, na tutashinda utukufu zaidi machoni pa Mungu. <br>“Upole wenu na ujulikane na watu wote” (Flp 4,5); yaani, mwenendo wenu mtakatifu <br>udhihirike sio tu machoni pa Mungu, bali pia machoni pa watu, kama mfano wa unyofu na kiasi <br>kwa wale wote wanaoishi pamoja nanyi duniani. Acheni toka kwenu ukumbusho safi, uwe wa <br>maisha ya kikristo au wa unyofu wa kibinadamu. <br>“Bwana yu karibu! Msijisumbue kwa neno lolote” (Flp 4,5-6). Bwana yupo daima karibu na <br>wale wote wanaomwita kwa moyo mnyofu, kwa imani halisi, kwa tumaini imara, kwa upendo <br>mkamilifu; naam, yeye ajua yale mnayohitaji kabla hamjamwomba: yeye yu daima tayari kuja <br>kusaidia kwenye kila hitaji wale wote wanaomtumikia kwa uaminifu. Kwa hiyo tusisumbukie sana <br>mabaya yanayotukumba, wakati tunayo hakika kwamba Mungu ulinzi wetu, yu karibu sana nasi, <br>kama alivyosema: “Bwana yu karibu nao waliovunjika moyo, na waliopondeka roho huwaokoa. <br>Mateso ya wenye haki ni mengi, lakini Bwana humponya nayo yote” (Zab 34,19-20). Tukijitahidi <br>kutimiza na kuhifadhi aliyetuamuru, yeye hachelewi kutujalia aliyetuahidi. <br>“Bali katika kila neno kwa kusali na kuomba, pamoja na kushukuru, haja zenu na zijulikane <br>na Mungu” (Flp 4,6) ili kuweza kukabili majaribio kwa uvumilivu na utulivu na kamwe kwa </p><br><br><p class="text-gray-700 leading-relaxed">Kipindi cha kawaida Ofisi ya masomo -217 <br>kupenda mapambano –Mungu na atulinde-, bali kwa “kumshukuru Mungu Baba sikuzote kwa <br>mambo yote” (Efe 5,20). <br> <br>Kiitikizano: <br>Zab 40,2-4<br> <br> <br>K. Bwana aliisimamisha miguu yangu mwambani, akaziimarisha hatua zangu.* Akatia wimbo <br>mpya kinywani mwangu. <br>W. Akasikia kilio changu, akanipandisha toka shimo la mauti <br>K. Akatia wimbo mpya kinywani mwangu..</p><br><br>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="jumamosi-section" onclick="toggleSection('jumamosi')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Jumamosi ya 26</h2>
+            <a id="jumamosi-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="jumamosi-content">
+                <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SITA <br> <br>SOMO LA KWANZA: Flp 4,10-23 <br> <br>Kiitikizano: <br>Flp 4,12-13; 2 Kor 12,10<br> <br> <br>K. Najua kudhiliwa, tena najua kufanikiwa; nimefundishwa kushiba na kuona njaa, kuwa na vingi <br>na kupungukiwa. * Nayaweza mambo yote katika yeye anitiaye nguvu. <br>W. Napendezwa na udhaifu na shida kwa ajili ya Kristo. <br>K. Nayaweza mambo yote katika yeye anitiaye nguvu. <br> <br>SOMO LA PILI: <br>Toka kitabu “Maisha ya kikristo” ya Mt. Gregorio wa Nisa, askofu. <br> <br>Pigana pambano zuri la imani <br> <br>“Mtu akiwa ndani ya Kristo, amekuwa kiumbe kipya; ya kale yamepita”(2 Kor 5,17). Kwa <br>mengine, ameita kiumbe kipya kukaa kwa Roho Mtakatifu afanyaye moyo safi, bila hatia na huru <br>toka kila uovu, ubaya na aibu. <br>Wakati roho inapotubu, yachukia dhambi, inajitoa kwa wema na bidii yote, yakaribisha ndani <br>yake neema ya Roho Mtakatifu, na yapata kuwa kiumbe kipya kabisa. Hapo yatekelezwa neno la <br>Maandiko: “Toeni ile chachu ya kale, mpate kuwa donge jipya” (I Kor 5,7), na pia hili: “Tuifanye <br>karamu si kwa chachu ya kale, bali kwa yasiyochachika, ndio weupe wa moyo na kweli” (I Kor <br>5,8). Maneno hayo, nasema, yaambatana na yale yote yaliyonenwa juu ya maumbile mapya. <br>Mjaribu atega mitego mingi kwa roho yetu na umbile la kibinadamu ni dhaifu mno ili kuleta ushindi <br>juu yake. Kwa hiyo Mtume atushauri kuvaa silaha za mbinguni: Vaeni dirii ya haki kifuani na <br>kufungiwa miguu utayari tupatao kwa injili ya amani, na mjifunge kweli viunoni (Efe 6,14). <br>Waona njia ngapi za wokovu Mtume alikuonyesha, zote zikielekea kwenye ufalme mmoja na <br>lengo moja. Maisha yageuka kuwa mpito halisi kwenye njia ya amri mpaka hatima ya mwisho <br>uliowekwa na Mungu. <br>Mtume anena bado: “Na tupige mbio kwa saburi katika yale mashindano, tukimtazama Yesu <br>mwenye kuanzisha na mwenye kutimiza imani yetu” (Ebr 12,1-2). <br>Anayejionyesha mkuu kuliko vishawishi wa safari ya duniani bila kuvutiwa na fahari ya <br>kibinadamu, atasikia haja ya kujitoa mhanga kwa Mungu. Kujitoa mwenyewe kwa Mungu <br>kwamaanisha kutotafuta kamwe mapenzi yake, bali yale ya Mungu na kuyafuata kama uongozi safi, <br>na baadaye kuridhika na yale yanayohitajika kwa maisha yake mwenyewe. Hayo yatasaidia kila <br>mmoja kutekeleza kwa bidii zaidi wajibu wake kwa manufaa yake na ya wengine, kama ifaavyo <br>kwa mwanafunzi wa Kristo. Ndiyo Bwana atakayo asemapo: Mtu atakaye kuwa wa kwanza na <br>mkuu, atakuwa wa mwisho kuliko wote, na mtumishi wa wote (Mk 9,35). </p><br><br><p class="text-gray-700 leading-relaxed">218 - Ofisi ya Masomo Kipindi cha kawaida <br>Anayekubali mwongozo huu, apaswa kutumikia bure, kujitia chini ya wote na kutoa huduma <br>zake kama mdeni anayerudisha mkopo kwa bei kubwa. <br>Wale wenye mamlaka, wanayo heshima kubwa kuliko wengine. Utumishi wao ni wa kufunga <br>zaidi kuliko ule wa wale waliopo chini yao. Wapaswa kutoa mfano wa kujua kutumikia wengine <br>kwa unyenyekevu, wakihesabu ndugu kama hazina iliyokabidhiwa kwao na Mungu. <br>Aliye na uwajibikaji juu ya wengine na atende kama mlezi mwenye dhamira, <br>anayeshughulikia kwa bidii watoto aliokabidhiwa na wazazi. Ukiwepo uhusiano kama huu wa <br>uelewano na usikizano kati ya yule aongozaye na yule anayetii, utii utageuka kuwa wa furaha na <br>amri yenye kupendeza. Mtakuwa na hakika ya kuwepo kwenye njia kamilifu. Mkiheshimiana, <br>mtaendesha duniani maisha ya heri ya malaika. <br> <br>Kiitikizano: <br>Gal 5,13; I Kor 10,32<br> <br> <br>K. Ninyi mliitwa mpate uhuru; lakini uhuru wenu usiwe sababu ya kufuata mwili, * bali <br>tumikianeni kwa upendo. <br>W. Msiwakoseshe Wayahudi, wala Wayunani, wala kanisa la Mungu, <br>K. bali tumikianeni kwa upendo. <br> <br> <br> <br>JUMA LA ISHIRINI NA SABA. KIPINDI CHA KAWAIDA</p><br><br>
+        </section>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-2.924-1.756 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+    function toggleSection(day) {
+        const content = document.getElementById(day + '-content');
+        const link = document.getElementById(day + '-link');
+        const section = document.getElementById(day + '-section') || event.currentTarget;
+        
+        if (content.classList.contains('hidden')) {
+            // Hide all other sections
+            document.querySelectorAll('[id$="-content"]').forEach(el => {
+                if (el !== content) {
+                    el.classList.add('hidden');
+                    const otherLink = document.getElementById(el.id.replace('-content', '-link'));
+                    if (otherLink) otherLink.textContent = 'Tap to view';
+                }
+            });
+            
+            // Show this section
+            content.classList.remove('hidden');
+            link.textContent = 'Tap to hide';
+        } else {
+            content.classList.add('hidden');
+            link.textContent = 'Tap to view';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const dayMapping = {
+            0: 'jumapili', 1: 'jumatatu', 2: 'jumanne', 3: 'jumatano', 
+            4: 'alhamisi', 5: 'ijumaa', 6: 'jumamosi'
+        };
+        
+        const currentDayIndex = new Date().getDay();
+        const currentDayId = dayMapping[currentDayIndex];
+        
+        const allSections = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+        allSections.forEach(day => {
+            const content = document.getElementById(day + '-content');
+            if (content) {
+                content.classList.add('hidden');
+                const link = document.getElementById(day + '-link');
+                if (link) link.textContent = 'Tap to view';
+            }
+        });
+        
+        const currentContent = document.getElementById(currentDayId + '-content');
+        if (currentContent) {
+            currentContent.classList.remove('hidden');
+            const currentLink = document.getElementById(currentDayId + '-link');
+            if (currentLink) currentLink.textContent = 'Tap to hide';
+        }
+    });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+</body>
+</html>
+
+
+
+

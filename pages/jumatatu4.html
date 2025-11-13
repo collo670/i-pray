@@ -1,0 +1,1118 @@
+﻿<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masifu ya Asubuhi - Jumatatu (Juma IV)</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+﻿        /* Navigation Bar Styles - Responsive */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .dark-mode .navbar {
+            background-color: #1f2937;
+            border-bottom: 1px solid #374151;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            position: relative;
+        }
+
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Hamburger Menu - Responsive */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: transparent;
+            border: none;
+            transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Hamburger Animation to X */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Tablet & Mobile Menu (max-width: 768px) */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                width: 100%;
+                background-color: #222;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+                transform: translateY(-10px);
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .dark-mode .nav-links {
+                background-color: #1f2937;
+                border-top: 1px solid #374151;
+            }
+
+            .nav-links.active {
+                max-height: 500px;
+                opacity: 1;
+                transform: translateY(0);
+                padding: 16px 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                opacity: 0;
+                transform: translateX(-20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.08s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.12s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.16s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.24s; }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                padding: 14px 20px;
+                border-radius: 0;
+                width: 100%;
+                font-size: 0.9em;
+                transition: all 0.2s ease;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.08);
+                transform: translateX(4px);
+            }
+
+            .dark-mode .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Small Devices (max-width: 640px) */
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 10px 12px;
+            }
+
+            .nav-logo {
+                font-size: 1.1em;
+            }
+
+            .hamburger {
+                min-width: 42px;
+                min-height: 42px;
+                padding: 8px;
+            }
+
+            .hamburger div {
+                width: 23px;
+                height: 2.5px;
+                margin: 4px 0;
+            }
+
+            .nav-links a {
+                font-size: 0.85em;
+                padding: 12px 18px;
+            }
+        }
+
+        /* Extra Small Devices (max-width: 480px) */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 8px 10px;
+            }
+
+            .nav-logo {
+                font-size: 0.95em;
+            }
+
+            .hamburger {
+                min-width: 40px;
+                min-height: 40px;
+                padding: 6px;
+            }
+
+            .hamburger div {
+                width: 22px;
+                height: 2px;
+                margin: 3px 0;
+            }
+
+            .nav-links {
+                max-height: 400px;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+                padding: 12px 16px;
+            }
+        }
+
+        /* Touch-Friendly Mobile Enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            .hamburger {
+                min-height: 48px;
+                min-width: 48px;
+            }
+
+            .nav-links a {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links a:active {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
+
+        /* Bottom Navigation Styles */
+        .bottom-nav {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav a {
+            transition: all 0.2s ease;
+            min-height: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .bottom-nav a:hover {
+            background-color: rgba(147, 51, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .bottom-nav a.active {
+            color: rgb(147, 51, 234);
+            background-color: rgba(147, 51, 234, 0.1);
+        }
+
+        /* Dark mode bottom navigation */
+        .dark-mode .bottom-nav {
+            background-color: rgba(31, 41, 55, 0.95);
+            border-top-color: rgb(55, 65, 81);
+        }
+
+        /* Ensure bottom nav is above mobile menu and visible */
+        .bottom-nav {
+            z-index: 50 !important;
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+        }
+
+        /* Ensure content doesn't get hidden behind bottom nav */
+        body {
+            padding-bottom: 5rem !important;
+        }
+
+        /* Make sure bottom nav is visible on all pages */
+        .bottom-nav {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        /* Mobile menu and bottom nav integration */
+                /* RESPONSIVE MOBILE NAVIGATION STYLES */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: transparent;
+            border: none;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger div {
+            width: 26px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-7px, 8px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-6px, -8px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: calc(100% + 2px);
+                left: 0;
+                right: 0;
+                background-color: #222;
+                flex-direction: column;
+                align-items: stretch;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.4s ease;
+                opacity: 0;
+                z-index: 999;
+            }
+
+            .dark-mode .nav-links {
+                background-color: #1f2937;
+            }
+
+            .nav-links.active {
+                max-height: 500px;
+                opacity: 1;
+                padding: 12px 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                margin: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                padding: 14px 20px;
+                border-radius: 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: translateX(4px);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-logo {
+                font-size: 1rem;
+            }
+
+            .hamburger div {
+                width: 24px;
+                height: 2.5px;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+                padding: 12px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 8px 10px;
+            }
+
+            .nav-logo {
+                font-size: 0.9rem;
+            }
+
+            .hamburger {
+                min-width: 40px;
+                min-height: 40px;
+                padding: 6px;
+            }
+
+            .hamburger div {
+                width: 22px;
+                height: 2px;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+                padding: 12px 16px;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .hamburger {
+                min-height: 48px;
+                min-width: 48px;
+            }
+
+            .nav-links a {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+            }
+        }
+            /* When mobile menu is open, ensure bottom nav stays visible */
+            .nav-links.active ~ .bottom-nav {
+                opacity: 0.9;
+            }
+
+            /* Adjust body padding when mobile menu is active */
+            .nav-links.active {
+                z-index: 45;
+            }
+
+            /* Ensure smooth transition between mobile menu and bottom nav */
+            .nav-links {
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+        }
+
+        /* Enhanced visibility for bottom navigation */
+        .bottom-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        /* Dark mode adjustments for bottom nav */
+        .dark-mode .bottom-nav {
+            background: rgba(17, 24, 39, 0.95);
+            border-top-color: rgba(55, 65, 81, 0.8);
+        }
+
+        /* Mobile responsive adjustments for bottom nav */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                padding: 12px 16px;
+                height: 5rem;
+            }
+
+            .bottom-nav a {
+                font-size: 0.75rem;
+                padding: 6px 8px;
+            }
+
+            .bottom-nav svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding: 8px 12px;
+                height: 4rem;
+            }
+
+            .bottom-nav a {
+                font-size: 0.7rem;
+                padding: 4px 6px;
+            }
+
+            .bottom-nav svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+             <ul class="nav-links">
+                <li><a href="../index.html">Nyumbani</a></li>
+                <li><a href="index.html#office-of-readings">Ofisi ya Masomo</a></li>
+                <li></li>
+                <li><a href="holy-rosary.html">Rozari Takatifu</a></li>
+                <li><a href="calendar.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+        
+        <h1>JUMA IV: JUMATATU<br>MASIFU YA ASUBUHI</h1>
+        
+        <div class="prayer-section">
+            <h2>UTENZI wa Kawaida</h2>
+            <p class="verse">Njoo, Ewe Roho Mwumbaji, njoo,</p>
+            <p class="verse">Katika mioyo yetu fanya maskani yako;</p>
+            <p class="verse">Tupe hisani zako za daima, Sisi tunaoishi na kumudu</p>
+            <p class="verse">Kwa nguvu zako na wako uweza.</p>
+            <p class="verse">Washa mi'li yetu kwa moto wako,</p>
+            <p class="verse">Elekeza tena yetu mioyo</p>
+            <p class="verse">Kwenye upendo wako wa Kimungu;</p>
+            <p class="verse">Mi'li yetu ilo dhaifu sana Hiyo itie nguvu ya kudumu.</p>
+            <p class="verse">Umfukuzie mbali shetani Alo adui yetu duniani,</p>
+            <p class="verse">Tupate ishi katika amani; Baya au ovu halitatupata Wewe ukiwa kiongozi wetu.</p>
+            <p class="verse">Kwa njia yako basi tujifunze,</p>
+            <p class="verse">Tukamjue Baba, pia Mwana,</p>
+            <p class="verse">Na tukakufahamu wewe Roho</p>
+            <p class="verse">Uliyetoka kwa hao wawili,</p>
+            <p class="verse">Ili twabudu kwa imani kweli.</p>
+        </div>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. I</p>
+            <p class="antiphon">Ant. ya Kawaida: Asubuhi, Bwana, watushibisha kwa pendo lako.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Desemba 17-23: Tazama, Bwana, mtawala wa wafalme wa dunia, atakuja. Heri yao walio tayari kumlaki.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Kipindi cha Pasaka: Utukufu wa Bwana, Mungu wetu, uwe juu yetu, aleluya.</p>
+            
+            <h2>Zab. 90</h2>
+            <p class="psalm-title">Mungu wa milele na binadamu kiumbe<br>Mbele ya Bwana, hakuna tofauti kati ya siku moja na miaka elfu; kwake yote ni mamoja (2 Pet. 3:8)</p>
+            
+            <p class="verse">Ee Mungu, tangu awali, * wewe umekuwa makao yetu.</p>
+            <p class="verse">Kabla ya kuwepo milima, * kabla hujauumba ulimwengu; wewe, ndiwe Mungu, * tangu milele na hata milele.</p>
+            <p class="verse">Ukimwambia binadamu, â€œSiku zako zimekwisha,â€ * binadamu hurudia mavumbini alikotoka!</p>
+            <p class="verse">Kwako miaka elfu ni kama siku moja tu, / ni kama jana ambayo imekwisha pita; * kwako ni kama mkesha mmoja tu wa usiku!</p>
+            <p class="verse">Wawafutilia mbali watu kama ndoto! * Binadamu ni kama nyasi:</p>
+            <p class="verse">asubuhi huchipua na kuchanua, * jioni zimekwisha nyauka na kukauka.</p>
+            <p class="verse">Hasira yako inatuangamiza; * tunatishwa na ghadhabu yako.</p>
+            <p class="verse">Maana wewe wayajua maovu yetu; * wayafichua madhambi yetu kwa mwanga wako.</p>
+            <p class="verse">Kwa hasira yako maisha yetu yatoweka, * yanaisha kama pumzi.</p>
+            <p class="verse">Huenda tukaishi miaka sabini, * au tukiwa wenye afya, themanini; lakini yote ni shida na taabu! * Siku zapita mbio, nasi twatoweka mara!</p>
+            <p class="verse">Nani anayetambua uzito wa hasira yako? * Nani anayejali matokeo ya ghadhabu yako?</p>
+            <p class="verse">Utufundishe ufupi wa maisha yetu, * ili tuweze kuwa na hekima.</p>
+            <p class="verse">Urudi, Ee Mungu! Utakasirika hata lini? * Utuonee huruma sisi watumishi wako.</p>
+            <p class="verse">Utujaze upendo wako mkuu asubuhi, * tushangilie na kufurahi maisha yetu yote.</p>
+            <p class="verse">Utujalie sasa miaka mingi ya furaha, * kama ulivyotupa miaka mingi ya shida na taabu.</p>
+            <p class="verse">Utuonyeshe matendo yako sisi watumishi wako; * uwaonyeshe wazao wetu uwezo wako mtukufu.</p>
+            <p class="verse">Ee Bwana, Mungu wetu, utufadhili; / utegemeze kazi zetu, * ufanikishe shughuli zetu.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Asubuhi, Bwana, watushibisha kwa pendo lako.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Desemba 17-23: Tazama, Bwana, mtawala wa wafalme wa dunia, atakuja. Heri yao walio tayari kumlaki.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Kipindi cha Pasaka: Utukufu wa Bwana, Mungu wetu, uwe juu yetu, aleluya.</p>
+        </div>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. II</p>
+            <p class="antiphon">Ant. ya Kawaida: Sifa za Bwana zisikike kutoka miisho ya dunia.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Desemba 17-23: Mwimbieni Bwana wimbo mpya; msifuni kote ulimwenguni.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Kipindi cha Pasaka: Nitageuza giza iwe mwanga machoni pao, aleluya.</p>
+            
+            <h2>WIMBO: Isa. 42:10-16</h2>
+            <p class="psalm-title">Wimbo kwa Mungu aliye Mshindi na Mwokozi<br>Walikuwa wanaimba wimbo mpya mbele ya kiti cha enzi (Ufu. 14:3)</p>
+            
+            <p class="verse">Mwimbieni BWANA wimbo mpya, * Na sifa zake tokea mwisho wa dunia; Ninyi mshukao baharini, na vyote vilivyomo, * Na visiwa, nao wakaao humo.</p>
+            <p class="verse">Jangwa na miji yake na ipaze sauti zao, * Vijiji vinavyokaliwa na Kedari;</p>
+            <p class="verse">Na waimbe wenyeji wa Sela, * Wapige kelele toka vilele vya milima.</p>
+            <p class="verse">Na wamtukuze BWANA, * Na kutangaza sifa zake visiwani.</p>
+            <p class="verse">BWANA atatokea kama shujaa; * Ataamsha wivu kama mtu wa vita;</p>
+            <p class="verse">Atalia, naam, atapiga kelele; * Atawatenda adui zake mambo makuu.</p>
+            <p class="verse">Siku nyingi nimenyamaza kimya; * Nimenyamaza, nikajizuia;</p>
+            <p class="verse">Sasa nitapiga kelele / Kama mwanamke aliye katika kuzaa; * Nitaugua na kutweta pamoja.</p>
+            <p class="verse">Nitaharibu milima na vilima, * Nitavikausha vyote vimeavyo;</p>
+            <p class="verse">Nitaifanya mito ya maji kuwa visiwa, * Na kuyakausha maziwa ya maji.</p>
+            <p class="verse">Nitawaleta vipofu kwa njia wasiyoijua; * Katika mapito wasiyoyajua nitawaongoza;</p>
+            <p class="verse">Nitafanya giza kuwa nuru mbele yao, * Na mahali palipopotoka kuwa pamenyoka.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Sifa za Bwana zisikike kutoka miisho ya dunia.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Desemba 17-23: Mwimbieni Bwana wimbo mpya; msifuni kote ulimwenguni.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Kipindi cha Pasaka: Nitageuza giza iwe mwanga machoni pao, aleluya.</p>
+        </div>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. III</p>
+            <p class="antiphon">Ant. ya Kawaida: Lisifuni jina la Bwana, ninyi mnaosimama nyumbani mwa Bwana.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Desemba 17-23: Je, Mwana wa Mtu ajapo, ataikuta imani yo yote duniani?</p>
+            <p class="antiphon" style="display:none;">Ant. ya Kipindi cha Pasaka: Bwana anao uwezo wa kufanya cho chote atakacho, aleluya.</p>
+            
+            <h2>Zab. 135:1-12</h2>
+            <p class="psalm-title">Sifa kwa Mungu<br>Ninyi ni ukoo mteule, mlioteuliwa kutangaza matendo makuu ya Mungu aliyewaiteni kutoka gizani, akawaingizeni katika mwanga wake mkuu (Rej. 1 Pet. 2:9) Lisifuni jina la Mungu, * enyi watumishi wa Mungu, mnaosimama nyumbani mwa Mungu, * Hekaluni mwa Mungu wetu.</p>
+            
+            <p class="verse">Msifuni Mungu kwa kuwa ni mwema; * liimbieni jina lake sifa, maana inafaa.</p>
+            <p class="verse">Mungu amejichagulia Yakobo kuwa wake, * watu wa Israeli kuwa mali yake mwenyewe.</p>
+            <p class="verse">Najua hakika kuwa Mungu ni mkuu; * Bwana wetu ni mkuu juu ya miungu yote.</p>
+            <p class="verse">Mungu hufanya yote anayotaka, * mbinguni, duniani, baharini na vilindini.</p>
+            <p class="verse">Huleta mawingu kutoka mipaka ya dunia; / hufanya gharika kuu kwa umeme, * na huvumisha upepo kutoka ghala zake.</p>
+            <p class="verse">Aliwaua wazaliwa wa kwanza kule Misri, * wazaliwa wa watu na wanyama kadhalika.</p>
+            <p class="verse">Alifanya ishara na maajabu kwako, ee Misri, * dhidi ya Farao na maofisa wake wote.</p>
+            <p class="verse">Aliyaangamiza mataifa mengi, * akawaua wafalme wenye nguvu:</p>
+            <p class="verse">akina Sihoni, mfalme wa Waamori, * na Ogu, mfalme wa Bashani, na wafalme wote wa Kanaani.</p>
+            <p class="verse">Alichukua nchi zao na kuwapa watu wake; * aliwapa Waisraeli ziwe urithi wao.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Lisifuni jina la Bwana, ninyi mnaosimama nyumbani mwa Bwana.</p>
+            <p class="antiphon" style="display:none;">Ant. ya Desemba 17-23: Je, Mwana wa Mtu ajapo, ataikuta imani yo yote duniani?</p>
+            <p class="antiphon" style="display:none;">Ant. ya Kipindi cha Pasaka: Bwana anao uwezo wa kufanya cho chote atakacho, aleluya.</p>
+        </div>
+        
+        <div class="prayer-section">
+            <h2>SOMO la Kawaida:</h2>
+            <div class="reading">
+                <p>Yud. 8:26</p>
+                <p>Yakumbukeni yote aliyomtendea Abrahamu, na majaribu yote aliyomjaribia Isaka, na yote yaliyompata Yakobo katika Mesopotamia ya Shamu alipowachunga kondoo za mjomba wake Labani.</p>
+            </div>
+        </div>
+        
+        <div class="prayer-section">
+            <h2>KIITIKIZANO</h2>
+            <p class="leader">K. Furahini katika Bwana, enyi waadilifu; kwa maana kusifu kunawapasa wanyofu wa moyo. (W. warudie)</p>
+            <p class="response">W. Furahini katika Bwana, enyi waadilifu; kwa maana kusifu kunawapasa wanyofu wa moyo.</p>
+            <p class="leader">K. Mwimbieni wimbo mpya.</p>
+            <p class="response">W. Kwa maana kusifu kunawapasa wanyofu wa moyo.</p>
+            <p class="leader">K. Atukuzwe Baba na Mwana na Roho Mtakatifu.</p>
+            <p class="response">W. Furahini katika Bwana, enyi waadilifu; kwa maana kusifu kunawapasa wanyofu wa moyo.</p>
+            
+            <p class="antiphon">Ant. ya Wimbo wa Zakaria: Atukuzwe Bwana kwa kuwa ametujia na kutukomboa.</p>
+        </div>
+
+        <div>
+            <h2>WIMBO WA ZAKARIA</h2>
+            <p class="verse">Asifiwe, * Bwana Mungu wa Israeli, kwani amekuja kuwasaidia * na kuwakomboa watu wake</p>
+            <p class="verse">Ametupatia Mwokozi shujaa, * mzao wa Daudi, mtumishi wake.</p>
+            <p class="verse">Aliahidi hapo kale * kwa njia ya manabii wake watakatifu, Kwamba atatuokoa kutoka maadui wetu * na kutoka mikono ya wote wanaotuchukia.</p>
+            <p class="verse">Alisema kwamba atawaonea huruma wazee wetu, * na kukumbuka agano lake takatifu.</p>
+            <p class="verse">Kwa kiapo alichomwapia mzee wetu Abrahamu / aliahidi kutukomboa kutoka maadui wetu 
+                * na kutujalia tumtumikie bila hofu, ili tuwe watakatifu na waadilifu mbele yake * siku zote za maisha yetu.</p>
+            <p class="verse">Nawe, mwanangu, utuitwa: * nabii wa Mungu Aliye Juu, utamtangulia Bwana * kumtayarishia njia yake; </p>
+            <p class="verse">kuwatangazia wtukwamba watakaokolewa kwa kuondolewa dhambi zao.</p>
+            <p class="verse">Mungu wetu ni mpole na mwenye huruma, / atasababisha pambazuko angavu la ukombozi*</p>
+            <p class="verse">litujie kutoka juu, na kuwaangazia wote wanaokaa / katika giza kuu la kifo, * aongoza hatua zetu katika njia ya amani.</p>
+            <p class="verse">Atukuzwe Baba na Mwana na Roho Mtakatifu, * kama mwanzo, na sasa, na siku zote na milele. Amina.</p>
+
+        </div>
+        
+        <div class="prayer-section">
+            <h2>MAOMBI</h2>
+            <p class="leader">Baba Mwenyezi, mbingu haziwezi kuushika ukuu wako: hata hivyo, kwa njia ya Mwanao tumejifunza kusema:</p>
+            <p class="response">W. Baba, utawala wako ufike!</p>
+            
+            <div class="intercession">
+                <p>Sisi wanao tunakusifu;</p>
+                <p class="intercession-response">â€” jina lako litukuzwe katika mioyo ya watu wote. (W.)</p>
+                
+                <p>Utusaidie leo tuweze kuishi tukiwa na tumaini la kufika mbinguni:</p>
+                <p class="intercession-response">â€” utufanye tuwe tayari kutekeleza matakwa yako hapa duniani. (W.)</p>
+                
+                <p>Utupe leo moyo wa kuwasamehe wenzetu,</p>
+                <p class="intercession-response">â€” kama unavyotusamehe makosa yetu. (W.)</p>
+                
+                <p>Baba, uwe nasi katika majaribu yetu yote:</p>
+                <p class="intercession-response">â€” usikubali tutengane nawe. (W.)</p>
+            </div>
+            
+            <h3>Baba Yetu</h3>
+            <p>Baba yetu uliye mbinguni, jina lako litukuzwe
+                ufalme wako ufike, utakalo lifanyike duniani kama mbinguni
+                utupe leo mkate wetu wa kila siku, Utusamehe makosa yetu,
+                kama tunavyowasamehe waliotukosea.
+                usitutie katika vishawishi, lakini utuokoe maovuni.</p>
+            
+            <h2>SALA</h2>
+            <p>Bwana Mungu, uliyewakabidhi wanadamu dunia ili waitumie na kuitunza, na uliyelifanya jua, ili liwaangazie na kuwapa watu mahitaji yao: utujalie leo neema ili tukafanye kazi kiaminifu kwa ajili ya utukufu wako, na kwa ajili ya mahitaji ya jirani zetu. (Tunaomba hayo) kwa njia ya Bwana wetu. (Kwa njia ya Kristo Bwana wetu.)</p>
+        </div>
+         <div>
+            <h3>Mwisho</h3>
+            <p>K. Bwana atubariki, atukinge na movu yote, na atufikishe kwenye uzima wa milele.</p>
+             <p>W. Amina.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Enhanced mobile menu toggle with smooth animations
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+
+            // Toggle active classes
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            // Add haptic feedback on mobile devices
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            // Enhanced accessibility
+            const isOpen = navLinks.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            navLinks.setAttribute('aria-hidden', !isOpen);
+
+            // Focus management for accessibility
+            if (isOpen) {
+                // Focus first menu item when opening
+                setTimeout(() => {
+                    const firstLink = navLinks.querySelector('a');
+                    if (firstLink) firstLink.focus();
+                }, 100);
+            }
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.querySelector('.toggle-btn');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.textContent = 'Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                btn.textContent = 'Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.toggle-btn').textContent = 'Light Mode';
+        }
+
+        // Translations
+        const translations = {
+            en: {
+                home: "Home",
+                lauds: "Lauds",
+                calendar: "Calendar",
+                settings: "Settings"
+            },
+            sw: {
+                home: "Nyumbani",
+                lauds: "Masifu",
+                calendar: "Kalenda",
+                settings: "Mipangilio"
+            }
+        };
+
+        // Language Management
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Toggle translation function
+        window.toggleTranslation = function() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const newLang = currentLang === 'en' ? 'sw' : 'en';
+            setLanguage(newLang);
+        };
+
+        // Enhanced Bottom Navigation Functions
+        function initBottomNavigation() {
+            console.log('Initializing bottom navigation...');
+
+            // Wait for DOM to be fully loaded
+            if (!document.querySelector('.bottom-nav')) {
+                console.log('Bottom nav element not found, retrying...');
+                setTimeout(initBottomNavigation, 100);
+                return;
+            }
+
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.bottom-nav a');
+            console.log('Found', navLinks.length, 'navigation links');
+            console.log('Current page:', currentPage);
+
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                console.log('Link href:', href, 'Current page:', currentPage);
+
+                // Better active state detection
+                if (href === currentPage ||
+                    (currentPage === '' && href === 'index.html') ||
+                    (currentPage.includes('jumatatu') && href === 'lauds.html')) {
+
+                    link.classList.add('text-purple-600', 'active');
+                    link.classList.remove('text-gray-500');
+                    link.setAttribute('aria-current', 'page');
+                    console.log('Set active state for:', href);
+                } else {
+                    link.classList.add('text-gray-500');
+                    link.classList.remove('text-purple-600', 'active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            // Add click handlers for navigation
+            const homeLink = document.querySelector('.bottom-nav a[href="../index.html"]');
+            if (homeLink) {
+                homeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    savePrayerAccess('home', 'Home', 'index.html');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const laudsLink = document.querySelector('.bottom-nav a[href="lauds.html"]');
+            if (laudsLink) {
+                laudsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Navigate to appropriate Lauds file based on day
+                    const day = new Date().getDay();
+                    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+                    const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
+                    const now = new Date();
+                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    const daysSinceSunday = today.getDay();
+                    const currentSunday = new Date(today);
+                    currentSunday.setDate(today.getDate() - daysSinceSunday);
+                    const referenceWeek2Sunday = new Date(2025, 7, 3);
+                    referenceWeek2Sunday.setHours(0,0,0);
+                    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                    const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+                    const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
+                    const week = weekSequence[weekIndex];
+                    const fileName = `${dayToPrefix[day]}${week}.html`;
+                    savePrayerAccess('lauds', 'Lauds', fileName);
+                    window.location.href = fileName;
+                });
+            }
+
+            const calendarLink = document.querySelector('.bottom-nav a[href="calendar.html"]');
+            if (calendarLink) {
+                calendarLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    savePrayerAccess('calendar', 'Calendar', 'calendar.html');
+                    window.location.href = 'calendar.html';
+                });
+            }
+
+            const settingsLink = document.querySelector('.bottom-nav a[href="settings.html"]');
+            if (settingsLink) {
+                settingsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    savePrayerAccess('settings', 'Settings', 'settings.html');
+                    window.location.href = 'settings.html';
+                });
+            }
+
+            console.log('Bottom navigation initialized successfully');
+        }
+
+        // Save prayer access for history
+        function savePrayerAccess(prayerId, title, url) {
+            // Simple localStorage-based history (since we don't have IndexedDB in these pages)
+            const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+            const newAccess = {
+                id: prayerId,
+                title: title,
+                url: url,
+                lastAccessed: new Date().toISOString()
+            };
+
+            // Remove existing entry if present
+            const filteredHistory = history.filter(item => item.id !== prayerId);
+            filteredHistory.unshift(newAccess);
+
+            // Keep only last 10 entries
+            localStorage.setItem('prayerHistory', JSON.stringify(filteredHistory.slice(0, 10)));
+        }
+
+        // Keyboard navigation support for mobile menu
+        document.addEventListener('keydown', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    toggleMenu();
+                }
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (navLinks.classList.contains('active') &&
+                !navLinks.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                toggleMenu();
+            }
+        });
+
+        // Initialize bottom navigation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initBottomNavigation();
+
+            // Set initial language
+            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(preferredLang);
+
+            // Add translation toggle listener if button exists
+            const translationToggle = document.getElementById('translationToggle');
+            if (translationToggle) {
+                translationToggle.addEventListener('click', toggleTranslation);
+            }
+        });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+

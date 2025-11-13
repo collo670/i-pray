@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar - ipray</title>
+    <meta name="description" content="Modern Catholic liturgical calendar with feasts, seasons, and prayer cycles" />
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/ipray/manifest.json" />
+    <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)" id="theme-meta-color" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                    },
+                    backgroundImage: {
+                        'bg-gradient-vintage': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)
+        }
+
+        body {
+            font-family: 'Cinzel Decorative', serif;
+            transition: 0.3s ease;
+            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .liturgical-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .purple { background-color: #7C3AED; }
+        .white { background-color: #FFFFFF; border: 1px solid #ddd; }
+        .red { background-color: #DC2626; }
+        .green { background-color: #16A34A; }
+        .rose { background-color: #DB2777; }
+
+        @media (max-width: 640px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-vintage">
+
+    <div id="app" class="relative z-10">
+
+        <!-- Header -->
+        <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        ipray
+                    </h1>
+                    <p class="text-sm text-gray-600">Liturgical Calendar</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+
+            
+
+            <!-- Today's Liturgical Info -->
+            <section class="mb-8 p-6 rounded-2xl bg-white shadow-xl">
+                <h3 class="text-lg font-bold text-gray-800 mb-4" data-translate="seasonAndSaint">Liturgical Season & Saint of the day</h3>
+                <div class="flex items-center gap-4">
+                    <div id="todayColor" class="liturgical-color green"></div>
+                    <div>
+                        <p class="font-semibold text-gray-800" id="todaySeason">Ordinary Time</p>
+                        <p class="text-sm text-gray-600" id="todayFeast">No feast today</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prayer Weeks -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl card-hover">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">Morning Prayer</h3>
+                    <div class="text-3xl font-bold text-purple-600" id="morningWeek"></div>
+                </div>
+                <div class="p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl card-hover">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">Office of Readings</h3>
+                    <div class="text-3xl font-bold text-green-600" id="readingsWeek"></div>
+                </div>
+            </div>
+
+            <!-- Monthly Calendar View -->
+            <section class="mb-8 p-6 rounded-2xl bg-white shadow-xl">
+                <h3 class="text-xl font-bold text-gray-800 mb-4" data-translate="thisMonth">This Month</h3>
+                <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-center text-sm font-medium">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Upcoming Events -->
+            <section class="mb-8 p-6 rounded-2xl bg-white shadow-xl">
+                <h3 class="text-xl font-bold text-gray-800 mb-4" data-translate="upcomingFeasts">Upcoming Feasts & Solemnities</h3>
+                <div id="upcomingEvents" class="space-y-3">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Liturgical Colors Guide -->
+            <section class="p-6 bg-gray-50 rounded-xl mb-8">
+                <h4 class="font-semibold text-gray-800 mb-3">Liturgical Colors</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div class="flex items-center">
+                        <span class="liturgical-color purple"></span>
+                        <span class="ml-2">Purple: Advent, Lent</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="liturgical-color white"></span>
+                        <span class="ml-2">White: Christmas, Easter</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="liturgical-color red"></span>
+                        <span class="ml-2">Red: Apostles, Martyrs</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="liturgical-color green"></span>
+                        <span class="ml-2">Green: Ordinary Time</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inspirational Quote -->
+            <section class="mt-8 pt-6 border-t border-dashed border-gray-300 text-center">
+                <p class="text-sm italic text-gray-600">
+                    “The liturgical year makes present the mystery of Christ, from the Incarnation to the Second Coming.”
+                </p>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+    <div class="flex justify-around h-full items-center">
+        <!-- Home -->
+        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
+            
+            <span class="text-xs font-medium" data-translate="home">Home</span>
+        </a>
+        <!-- Lauds / Morning Prayer -->
+        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
+            
+            <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
+        </a>
+        <!-- Calendar -->
+        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
+            
+            <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+        </a>
+        <!-- Settings -->
+        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
+            
+            <span class="text-xs font-medium" data-translate="settings">Settings</span>
+        </a>
+    </div>
+</nav>
+    </div>
+
+    <!-- PWA Installation Prompt -->
+    <div id="installPrompt" class="fixed bottom-20 left-0 right-0 bg-white shadow-xl mx-4 p-4 rounded-lg hidden">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-medium">Install iPray App?</p>
+                <p class="text-sm text-gray-600">Access offline, get notifications</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="dismissInstall" class="px-3 py-1 rounded-lg border border-gray-300">Later</button>
+                <button id="installBtn" class="px-3 py-1 rounded-lg bg-purple-600 text-white">Install</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== Translations ==========
+        const translations = {
+            en: {
+                liturgicalCalendar: 'Liturgical Calendar',
+                seasonAndSaint: 'Liturgical Season & Saint of the day',
+                thisMonth: 'This Month',
+                upcomingFeasts: 'Upcoming Feasts & Solemnities',
+                home: 'Home',
+                prayer: 'Prayer',
+                calendar: 'Calendar',
+                settings: 'Settings'
+            },
+            sw: {
+                liturgicalCalendar: 'Kalenda ya Kiliturujia',
+                seasonAndSaint: 'Msimu wa Kiliturujia & Mtakatifu wa leo',
+                thisMonth: 'Mwezi Huu',
+                upcomingFeasts: 'Sherehe Zinazokuja',
+                home: 'Nyumbani',
+                prayer: 'Sala',
+                calendar: 'Kalenda',
+                settings: 'Mipangilio'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // ========== Theme Toggle ==========
+        function updateThemeMetaColor() {
+            const meta = document.getElementById('theme-meta-color');
+            meta.setAttribute('content', '#7C3AED');
+        }
+
+        function initTheme() {
+            // Always use light theme
+            localStorage.setItem('themeMode', 'light');
+            updateThemeMetaColor();
+        }
+
+        // Theme toggle removed - always using light mode
+
+        window.addEventListener('storage', () => initTheme());
+
+       // === Liturgical Feasts Data (January) ===
+        const LITURGICAL_FEASTS = {
+    // Month: 0 = Jan, 1 = Feb, ..., 11 = Dec
+    0: [ // January
+        { date: 1, name: "Mary, Mother of God", type: "Solemnity", color: "white" },
+        { date: 2, name: "Basil the Great and Gregory Nazianzen", type: "Memorial", color: "white" },
+        { date: 3, name: "Most Holy Name of Jesus", type: "Optional Memorial", color: "white" },
+        { date: 4, name: "Elizabeth Ann Seton", type: "Memorial", color: "white", country: "US" },
+        { date: 5, name: "John Neumann", type: "Memorial", color: "white", country: "US" },
+        { date: 6, name: "Epiphany", type: "Solemnity", color: "white" },
+        { date: 7, name: "Raymond of Penyafort", type: "Optional Memorial", color: "white" },
+        { date: 13, name: "Hilary of Poitiers", type: "Optional Memorial", color: "white" },
+        { date: 17, name: "Anthony of Egypt", type: "Memorial", color: "white" },
+        { date: 20, name: "Vincent, deacon and martyr", type: "Optional Memorial", color: "red" },
+        { date: 21, name: "Agnes, virgin and martyr", type: "Memorial", color: "red" },
+        { date: 22, name: "Vincent, deacon and martyr", type: "Optional Memorial", color: "red" },
+        { date: 23, name: "Marianne Cope", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 24, name: "Francis de Sales", type: "Memorial", color: "white" },
+        { date: 25, name: "Conversion of Paul, Apostle", type: "Feast", color: "white" },
+        { date: 26, name: "Timothy and Titus", type: "Memorial", color: "white" },
+        { date: 27, name: "Angela Merici", type: "Optional Memorial", color: "white" },
+        { date: 28, name: "Thomas Aquinas", type: "Memorial", color: "white" },
+        { date: 31, name: "John Bosco", type: "Memorial", color: "white" }
+    ],
+    1: [ // February
+        { date: 2, name: "Presentation of the Lord", type: "Feast", color: "white" },
+        { date: 3, name: "Blase, bishop and martyr", type: "Optional Memorial", color: "red" },
+        { date: 4, name: "Agatha, virgin and martyr", type: "Memorial", color: "red" },
+        { date: 6, name: "Paul Miki and companions", type: "Memorial", color: "red" },
+        { date: 8, name: "Josephine Bakhita", type: "Optional Memorial", color: "white" },
+        { date: 10, name: "Scholastica", type: "Memorial", color: "white" },
+        { date: 11, name: "Our Lady of Lourdes", type: "Optional Memorial", color: "white" },
+        { date: 14, name: "Cyril and Methodius", type: "Memorial", color: "white" },
+        { date: 21, name: "Peter Damian", type: "Optional Memorial", color: "white" },
+        { date: 22, name: "Chair of Peter", type: "Feast", color: "white" },
+        { date: 23, name: "Polycarp", type: "Memorial", color: "red" }
+    ],
+    2: [ // March
+        { date: 3, name: "Katharine Drexel", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 4, name: "Casimir", type: "Optional Memorial", color: "white" },
+        { date: 7, name: "Perpetua and Felicity", type: "Memorial", color: "red" },
+        { date: 8, name: "John of God", type: "Optional Memorial", color: "white" },
+        { date: 9, name: "Frances of Rome", type: "Optional Memorial", color: "white" },
+        { date: 17, name: "Patrick", type: "Optional Memorial", color: "green" },
+        { date: 18, name: "Cyril of Jerusalem", type: "Optional Memorial", color: "white" },
+        { date: 19, name: "Joseph, Husband of Mary", type: "Solemnity", color: "white" },
+        { date: 23, name: "Turibius of Mogrovejo", type: "Optional Memorial", color: "white" },
+        { date: 25, name: "Annunciation of the Lord", type: "Solemnity", color: "white" }
+    ],
+    3: [ // April
+        { date: 2, name: "Francis of Paola", type: "Optional Memorial", color: "white" },
+        { date: 4, name: "Isidore", type: "Optional Memorial", color: "white" },
+        { date: 5, name: "Vincent Ferrer", type: "Optional Memorial", color: "white" },
+        { date: 7, name: "John Baptist de la Salle", type: "Memorial", color: "white" },
+        { date: 11, name: "Stanislaus", type: "Memorial", color: "red" },
+        { date: 13, name: "Martin I", type: "Optional Memorial", color: "red" },
+        { date: 21, name: "Anselm of Canterbury", type: "Optional Memorial", color: "white" },
+        { date: 23, name: "George or Adalbert", type: "Optional Memorial", color: "red" },
+        { date: 24, name: "Fidelis of Sigmaringen", type: "Optional Memorial", color: "red" },
+        { date: 25, name: "Mark the Evangelist", type: "Feast", color: "white" },
+        { date: 28, name: "Peter Chanel or Louis de Montfort", type: "Optional Memorial", color: "red" },
+        { date: 29, name: "Catherine of Siena", type: "Memorial", color: "white" },
+        { date: 30, name: "Pius V", type: "Optional Memorial", color: "white" }
+    ],
+    4: [ // May
+        { date: 1, name: "Joseph the Worker", type: "Optional Memorial", color: "white" },
+        { date: 2, name: "Athanasius", type: "Memorial", color: "white" },
+        { date: 3, name: "Philip and James, Apostles", type: "Feast", color: "white" },
+        { date: 10, name: "Damien de Veuster", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 13, name: "Our Lady of Fatima", type: "Optional Memorial", color: "white" },
+        { date: 14, name: "Matthias the Apostle", type: "Feast", color: "white" },
+        { date: 15, name: "Isidore the Farmer", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 18, name: "John I", type: "Optional Memorial", color: "red" },
+        { date: 20, name: "Bernardine of Siena", type: "Optional Memorial", color: "white" },
+        { date: 21, name: "Christopher Magallanes and companions", type: "Optional Memorial", color: "red" },
+        { date: 22, name: "Rita of Cascia", type: "Optional Memorial", color: "white" },
+        { date: 24, name: "Bede or Gregory VII or Mary Magdalene de Pazzi", type: "Optional Memorial", color: "white" },
+        { date: 25, name: "Philip Neri", type: "Memorial", color: "white" },
+        { date: 26, name: "Augustine of Canterbury", type: "Optional Memorial", color: "white" },
+        { date: 31, name: "Visitation of the Blessed Virgin Mary", type: "Feast", color: "white" }
+    ],
+    5: [ // June
+        { date: 1, name: "Justin Martyr", type: "Memorial", color: "red" },
+        { date: 3, name: "Charles Lwanga and companions", type: "Memorial", color: "red" },
+        { date: 5, name: "Boniface", type: "Memorial", color: "red" },
+        { date: 9, name: "Ephrem", type: "Optional Memorial", color: "white" },
+        { date: 11, name: "Barnabas the Apostle", type: "Memorial", color: "white" },
+        { date: 13, name: "Anthony of Padua", type: "Memorial", color: "white" },
+        { date: 19, name: "Romuald", type: "Optional Memorial", color: "white" },
+        { date: 21, name: "Aloysius Gonzaga", type: "Memorial", color: "white" },
+        { date: 22, name: "Paulinus or John Fisher and Thomas More", type: "Optional Memorial", color: "red" },
+        { date: 24, name: "Birth of John the Baptist", type: "Solemnity", color: "white" },
+        { date: 28, name: "Irenaeus", type: "Memorial", color: "red" },
+        { date: 29, name: "Peter and Paul, Apostles", type: "Solemnity", color: "white" },
+        { date: 30, name: "First Martyrs of the Church of Rome", type: "Optional Memorial", color: "red" }
+    ],
+    6: [ // July
+        { date: 1, name: "Junípero Serra", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 3, name: "Thomas the Apostle", type: "Feast", color: "white" },
+        { date: 5, name: "Anthony Zaccaria or Elizabeth of Portugal", type: "Optional Memorial", color: "white" },
+        { date: 6, name: "Maria Goretti", type: "Optional Memorial", color: "red" },
+        { date: 9, name: "Augustine Zhao Rong and companions", type: "Optional Memorial", color: "red" },
+        { date: 11, name: "Benedict", type: "Memorial", color: "white" },
+        { date: 13, name: "Henry", type: "Optional Memorial", color: "white" },
+        { date: 14, name: "Camillus de Lellis or Kateri Tekakwitha", type: "Optional Memorial", color: "white" },
+        { date: 15, name: "Bonaventure", type: "Memorial", color: "white" },
+        { date: 16, name: "Our Lady of Mount Carmel", type: "Optional Memorial", color: "white" },
+        { date: 18, name: "Camillus de Lellis", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 20, name: "Apollinaris", type: "Optional Memorial", color: "red" },
+        { date: 21, name: "Lawrence of Brindisi", type: "Optional Memorial", color: "white" },
+        { date: 22, name: "Mary Magdalene", type: "Feast", color: "white" },
+        { date: 25, name: "James, Apostle", type: "Feast", color: "red" },
+        { date: 26, name: "Joachim and Anne", type: "Memorial", color: "white" },
+        { date: 29, name: "Martha", type: "Memorial", color: "white" },
+        { date: 30, name: "Peter Chrysologus", type: "Optional Memorial", color: "white" },
+        { date: 31, name: "Ignatius of Loyola", type: "Memorial", color: "white" }
+    ],
+    7: [ // August
+        { date: 1, name: "Alphonsus Maria de Liguori", type: "Memorial", color: "white" },
+        { date: 4, name: "Jean Vianney", type: "Memorial", color: "white" },
+        { date: 5, name: "Dedication of Mary Major", type: "Optional Memorial", color: "white" },
+        { date: 6, name: "Transfiguration of the Lord", type: "Feast", color: "white" },
+        { date: 7, name: "Sixtus II or Cajetan", type: "Optional Memorial", color: "red" },
+        { date: 8, name: "Dominic", type: "Memorial", color: "white" },
+        { date: 9, name: "Teresa Benedicta of the Cross", type: "Optional Memorial", color: "red" },
+        { date: 10, name: "Lawrence, deacon and martyr", type: "Feast", color: "red" },
+        { date: 11, name: "Clare", type: "Memorial", color: "white" },
+        { date: 12, name: "Jane Frances de Chantal", type: "Optional Memorial", color: "white" },
+        { date: 13, name: "Pontian and Hippolytus", type: "Optional Memorial", color: "red" },
+        { date: 14, name: "Maximilian Kolbe", type: "Memorial", color: "red" },
+        { date: 15, name: "Assumption of the Blessed Virgin Mary", type: "Solemnity", color: "white" },
+        { date: 16, name: "Stephen of Hungary", type: "Optional Memorial", color: "white" },
+        { date: 19, name: "John Eudes", type: "Optional Memorial", color: "white" },
+        { date: 20, name: "Bernard of Clairvaux", type: "Memorial", color: "white" },
+        { date: 21, name: "Pius X", type: "Memorial", color: "white" },
+        { date: 22, name: "Queenship of Blessed Virgin Mary", type: "Memorial", color: "white" },
+        { date: 23, name: "Rose of Lima", type: "Optional Memorial", color: "white" },
+        { date: 24, name: "Bartholomew the Apostle", type: "Feast", color: "white" },
+        { date: 25, name: "Louis or Joseph of Calasanz", type: "Optional Memorial", color: "white" },
+        { date: 27, name: "Monica", type: "Memorial", color: "white" },
+        { date: 28, name: "Augustine of Hippo", type: "Memorial", color: "white" },
+        { date: 29, name: "Beheading of John the Baptist", type: "Memorial", color: "red" }
+    ],
+    8: [ // September
+        { date: 3, name: "Gregory the Great", type: "Memorial", color: "white" },
+        { date: 8, name: "Birth of the Blessed Virgin Mary", type: "Feast", color: "white" },
+        { date: 9, name: "Peter Claver", type: "Memorial", color: "white", country: "US" },
+        { date: 12, name: "Holy Name of the Blessed Virgin Mary", type: "Optional Memorial", color: "white" },
+        { date: 13, name: "John Chrysostom", type: "Memorial", color: "white" },
+        { date: 14, name: "Exaltation of the Holy Cross", type: "Feast", color: "red" },
+        { date: 15, name: "Our Lady of Sorrows", type: "Memorial", color: "white" },
+        { date: 16, name: "Cornelius and Cyprian", type: "Memorial", color: "red" },
+        { date: 17, name: "Robert Bellarmine", type: "Optional Memorial", color: "white" },
+        { date: 19, name: "Januarius", type: "Optional Memorial", color: "red" },
+        { date: 20, name: "Andrew Kim and companions", type: "Memorial", color: "red" },
+        { date: 21, name: "Matthew the Evangelist", type: "Feast", color: "white" },
+        { date: 23, name: "Padre Pio", type: "Memorial", color: "white" },
+        { date: 26, name: "Cosmas and Damian", type: "Optional Memorial", color: "red" },
+        { date: 27, name: "Vincent de Paul", type: "Memorial", color: "white" },
+        { date: 28, name: "Wenceslaus or Lawrence Ruiz and companions", type: "Optional Memorial", color: "red" },
+        { date: 29, name: "Michael, Gabriel, and Raphael", type: "Feast", color: "white" },
+        { date: 30, name: "Jerome", type: "Memorial", color: "white" }
+    ],
+    9: [ // October
+        { date: 1, name: "Thérèse of the Child Jesus", type: "Memorial", color: "white" },
+        { date: 2, name: "Guardian Angels", type: "Memorial", color: "white" },
+        { date: 3, name: "Francis of Assisi", type: "Memorial", color: "white" },
+        { date: 5, name: "Francis Xavier Seelos", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 6, name: "Bruno or Marie-Rose Durocher", type: "Optional Memorial", color: "white" },
+        { date: 7, name: "Our Lady of the Rosary", type: "Memorial", color: "white" },
+        { date: 9, name: "Denis or John Leonardi", type: "Optional Memorial", color: "red" },
+        { date: 11, name: "John XXIII", type: "Optional Memorial", color: "white" },
+        { date: 14, name: "Callistus I", type: "Optional Memorial", color: "red" },
+        { date: 15, name: "Teresa of Jesus", type: "Memorial", color: "white" },
+        { date: 16, name: "Hedwig or Margaret Mary Alacoque", type: "Optional Memorial", color: "white" },
+        { date: 17, name: "Ignatius of Antioch", type: "Memorial", color: "red" },
+        { date: 18, name: "Luke the Evangelist", type: "Feast", color: "white" },
+        { date: 19, name: "Jean de Brébeuf and companions", type: "Memorial", color: "red", country: "US" },
+        { date: 20, name: "Paul of the Cross", type: "Optional Memorial", color: "white" },
+        { date: 22, name: "John Paul II", type: "Optional Memorial", color: "white" },
+        { date: 23, name: "John of Capistrano", type: "Optional Memorial", color: "white" },
+        { date: 24, name: "Anthony Mary Claret", type: "Optional Memorial", color: "white" },
+        { date: 28, name: "Simon and Jude", type: "Feast", color: "white" }
+    ],
+    10: [ // November
+        { date: 1, name: "All Saints", type: "Solemnity", color: "white" },
+        { date: 2, name: "Commemoration of All Souls", type: "Solemnity", color: "white" },
+        { date: 3, name: "Martin de Porres", type: "Optional Memorial", color: "white" },
+        { date: 4, name: "Charles Borromeo", type: "Memorial", color: "white" },
+        { date: 9, name: "Dedication of the Lateran Basilica", type: "Feast", color: "white" },
+        { date: 10, name: "Leo the Great", type: "Memorial", color: "white" },
+        { date: 11, name: "Martin of Tours", type: "Memorial", color: "white" },
+        { date: 12, name: "Josaphat", type: "Memorial", color: "red" },
+        { date: 13, name: "Frances Xavier Cabrini", type: "Memorial", color: "white", country: "US" },
+        { date: 15, name: "Albert the Great", type: "Optional Memorial", color: "white" },
+        { date: 16, name: "Margaret of Scotland or Gertrude", type: "Optional Memorial", color: "white" },
+        { date: 17, name: "Elizabeth of Hungary", type: "Memorial", color: "white" },
+        { date: 18, name: "Rose Philippine Duchesne", type: "Optional Memorial", color: "white", country: "US" },
+        { date: 21, name: "Presentation of the Blessed Virgin Mary", type: "Memorial", color: "white" },
+        { date: 22, name: "Cecilia", type: "Memorial", color: "red" },
+        { date: 23, name: "Clement I or Columban or Miguel Pro", type: "Optional Memorial", color: "red" },
+        { date: 24, name: "Andrew Dung-Lac and companions", type: "Memorial", color: "red" },
+        { date: 25, name: "Catherine of Alexandria", type: "Optional Memorial", color: "red" },
+        { date: 30, name: "Andrew the Apostle", type: "Feast", color: "white" }
+    ],
+    11: [ // December
+        { date: 3, name: "Francis Xavier", type: "Memorial", color: "white" },
+        { date: 4, name: "John Damascene", type: "Optional Memorial", color: "white" },
+        { date: 6, name: "Nicholas", type: "Optional Memorial", color: "white" },
+        { date: 7, name: "Ambrose", type: "Memorial", color: "white" },
+        { date: 8, name: "Immaculate Conception", type: "Solemnity", color: "white" },
+        { date: 9, name: "Juan Diego", type: "Optional Memorial", color: "white" },
+        { date: 11, name: "Damasus I", type: "Optional Memorial", color: "white" },
+        { date: 12, name: "Our Lady of Guadalupe", type: "Memorial", color: "white", country: "US" },
+        { date: 13, name: "Lucy", type: "Memorial", color: "red" },
+        { date: 14, name: "John of the Cross", type: "Memorial", color: "white" },
+        { date: 21, name: "Peter Canisius", type: "Optional Memorial", color: "white" },
+        { date: 23, name: "John of Kanty", type: "Optional Memorial", color: "white" },
+        { date: 25, name: "Nativity of the Lord", type: "Solemnity", color: "white" },
+        { date: 26, name: "Stephen, First Martyr", type: "Feast", color: "red" },
+        { date: 27, name: "John the Apostle", type: "Feast", color: "white" },
+        { date: 28, name: "Holy Innocents", type: "Feast", color: "red" },
+        { date: 29, name: "Thomas Becket", type: "Optional Memorial", color: "red" },
+        { date: 31, name: "Sylvester I", type: "Optional Memorial", color: "white" }
+    ]
+};
+
+// Movable Feasts (examples)
+function getMovableFeasts(year) {
+    const easter = calculateEaster(year);
+    return [
+        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 39), name: "Ascension", type: "Solemnity", color: "white" },
+        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 49), name: "Pentecost", type: "Solemnity", color: "red" },
+        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 56), name: "Most Holy Trinity", type: "Solemnity", color: "white" },
+        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 60), name: "Corpus Christi", type: "Solemnity", color: "white" },
+        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 61), name: "Sacred Heart of Jesus", type: "Solemnity", color: "white" },
+        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 62), name: "Immaculate Heart of Mary", type: "Memorial", color: "white" },
+        { date: new Date(easter.getFullYear(), 0, 1), name: "Mary, Mother of God", type: "Solemnity", color: "white" },
+        { date: new Date(easter.getFullYear(), 0, 6), name: "Epiphany", type: "Solemnity", color: "white" },
+        { date: new Date(easter.getFullYear(), 0, 8), name: "Baptism of the Lord", type: "Feast", color: "white" }
+    ];
+}
+
+        // ========== Easter & Liturgical Year Helpers ==========
+        function calculateEaster(year) {
+            const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+            const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+            const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+            const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+            const m = Math.floor((a + 11 * h + 22 * l) / 451);
+            const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+            const day = ((h + l - 7 * m + 114) % 31) + 1;
+            return new Date(year, month, day);
+        }
+
+        function getAdventStart(year) {
+            const christmas = new Date(year, 11, 25);
+            const dayOfWeek = christmas.getDay();
+            const adventSunday = new Date(christmas);
+            adventSunday.setDate(christmas.getDate() - dayOfWeek - 21);
+            return adventSunday;
+        }
+
+        // ========== Prayer Week Logic (Week 3 & 19) ==========
+        // Get the most recent Sunday (start of liturgical week)
+function getStartOfWeek() {
+    const today = new Date();
+    const day = today.getDay(); // 0 = Sunday
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - day); // Roll back to Sunday
+    startOfWeek.setHours(0, 0, 0, 0);
+    return startOfWeek;
+}
+
+// === Morning Prayer Week (1–4 rotating cycle, starts at 3, changes every Sunday) ===
+function getMorningPrayerWeek() {
+    const today = new Date();
+    // Find most recent Sunday
+    const startOfWeek = getStartOfWeek();
+    // Set base: August 11, 2025 is week 3
+    const baseDate = new Date(2025, 7, 10); // August is month 7 (0-indexed), Sunday before Aug 11
+    const baseWeek = 3;
+    const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
+    // Cycle 1-4
+    return ((baseWeek - 1 + diffWeeks) % 4) + 1;
+}
+
+// === Office of Readings Week (17–34 sequential cycle, starts at 19, changes every Sunday) ===
+function getOfficeReadingsWeek() {
+    const today = new Date();
+    // Find most recent Sunday
+    const startOfWeek = getStartOfWeek();
+    // Set base: August 11, 2025 is week 19
+    const baseDate = new Date(2025, 7, 10); // August is month 7 (0-indexed), Sunday before Aug 11
+    const baseWeek = 19;
+    const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
+    // Cycle 17-34
+    const week = ((baseWeek - 17 + diffWeeks) % 18) + 17;
+    return `Week ${week}`;
+}
+
+        // ========== Today's Liturgical Info ==========
+        function getLiturgicalInfo(today = new Date()) {
+            const month = today.getMonth();
+            const date = today.getDate();
+            const year = today.getFullYear();
+
+            let feast = null, feastType = null, color = "green";
+
+            // Check fixed feasts
+            if (LITURGICAL_FEASTS[month]) {
+                const feastData = LITURGICAL_FEASTS[month].find(f => f.date === date);
+                if (feastData) {
+                    feast = feastData.name;
+                    feastType = feastData.type;
+                    color = feastData.color;
+                }
+            }
+
+            // Determine season
+            const easter = calculateEaster(year);
+            const ashWednesday = new Date(easter); ashWednesday.setDate(easter.getDate() - 46);
+            const pentecost = new Date(easter); pentecost.setDate(easter.getDate() + 49);
+            const christmas = new Date(year, 11, 25);
+
+            let season = "Ordinary Time";
+            if (today >= new Date(year, 11, 1) && today < christmas) {
+                season = "Advent"; color = "purple";
+            } else if (today >= christmas && today < new Date(year + 1, 0, 8)) {
+                season = "Christmas"; color = "white";
+            } else if (today >= ashWednesday && today < easter) {
+                season = "Lent"; color = "purple";
+            } else if (today >= easter && today < pentecost) {
+                season = "Easter"; color = "white";
+            }
+
+            return { season, color, feast, feastType };
+        }
+
+        // ========== Calendar Grid ==========
+        function renderCalendar() {
+            const today = new Date();
+            const month = today.getMonth();
+            const year = today.getFullYear();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay();
+
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            days.forEach(day => {
+                const th = document.createElement('div');
+                th.className = 'font-bold text-gray-600';
+                th.textContent = day;
+                grid.appendChild(th);
+            });
+
+            for (let i = 0; i < startingDay; i++) {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'py-2 rounded-lg text-sm text-center';
+
+                // Check for feast
+                const feast = LITURGICAL_FEASTS[month]?.find(f => f.date === i);
+                if (feast) {
+                    if (feast.type === "Solemnity") {
+                        cell.classList.add('bg-red-100', 'font-bold', 'text-red-800');
+                    } else if (feast.type === "Feast") {
+                        cell.classList.add('bg-purple-100', 'text-purple-800');
+                    } else {
+                        cell.classList.add('bg-gray-100', 'text-gray-700');
+                    }
+                }
+
+                if (i === today.getDate() && month === today.getMonth()) {
+                    cell.classList.add('ring-2', 'ring-primary', 'font-bold');
+                }
+                cell.textContent = i;
+                grid.appendChild(cell);
+            }
+        }
+
+        // ========== Upcoming Events ==========
+        function getUpcomingEvents() {
+            const today = new Date();
+            const year = today.getFullYear();
+            let allFeasts = [];
+
+            for (let month = 0; month < 12; month++) {
+                const feasts = LITURGICAL_FEASTS[month] || [];
+                feasts.forEach(f => {
+                    const date = new Date(year, month, f.date);
+                    if (date >= today) allFeasts.push({ ...f, date });
+                });
+            }
+
+            return allFeasts
+                .sort((a, b) => a.date - b.date)
+                .slice(0, 5)
+                .map(f => ({
+                    date: f.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    name: f.name,
+                    type: f.type,
+                    color: f.color
+                }));
+        }
+
+        // ========== Populate UI ==========
+        function populateCalendar() {
+            const info = getLiturgicalInfo();
+            document.getElementById('todaySeason').textContent = info.season;
+            document.getElementById('todayFeast').textContent = info.feast || 'No feast today';
+            document.getElementById('todayColor').className = `liturgical-color ${info.color}`;
+
+            document.getElementById('morningWeek').textContent = `Week ${getMorningPrayerWeek()}`;
+            document.getElementById('readingsWeek').textContent = getOfficeReadingsWeek();
+
+            renderCalendar();
+
+            const events = getUpcomingEvents();
+            const container = document.getElementById('upcomingEvents');
+            container.innerHTML = events.length ? '' : '<p class="text-gray-600 dark:text-gray-300">No upcoming feasts.</p>';
+
+            events.forEach(e => {
+                const el = document.createElement('div');
+                el.className = 'flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg';
+                el.innerHTML = `
+                    <span class="text-sm font-medium w-16 text-gray-600 dark:text-gray-300">${e.date}</span>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-800 dark:text-white">${e.name}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">${e.type}</div>
+                    </div>
+                    <span class="liturgical-color ${e.color}"></span>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        // ========== Init ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            populateCalendar();
+            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(preferredLang);
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
+                    const lang = localStorage.getItem('preferredLanguage') || 'en';
+                    setLanguage(lang);
+                }
+            });
+        });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+</body>
+</html>

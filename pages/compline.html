@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compline - Liturgy of the Hours</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="theme-color" content="#7C3AED">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
+                        'secondary': '#DB2777',
+                        'accent': '#F59E0B',
+                        'liturgical-purple': '#4A1E8A',
+                        'liturgical-white': '#F8F9FA',
+                        'liturgical-red': '#C41E3A',
+                        'liturgical-green': '#2E7D32',
+                        'liturgical-gold': '#FFD700',
+                    },
+                    backgroundImage: {
+                        'vintage-texture': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & Font Awesome with preconnect for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%); }
+        .card { background-color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1rem; padding: 1.5rem; margin-top: 1rem; }
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -6px rgba(0,0,0,0.12), 0 6px 8px -6px rgba(0,0,0,0.06); }
+        .season-border { border-style: dashed; border-width: 1px; border-color: #bbf7d0; }
+        .compline-text { font-size: 1.05rem; line-height: 1.6; }
+        .antiphon { font-style: italic; color: #7C3AED; margin: 0.5rem 0; }
+        .psalm-number { font-weight: bold; color: #2E7D32; }
+        .reading-ref { font-weight: bold; color: #DB2777; }
+        .responsory { color: #F59E0B; font-style: italic; }
+        .prayer { color: #4B5563; }
+    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+    
+    <meta name="description" content="Compline - Final Prayer of the Day">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="min-h-screen bg-gradient-vintage transition-colors duration-300" style="text-align: justify;">
+        <!-- Updated Header -->
+<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+    <div class="header-content">
+        <div>
+            <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                ipray
+            </h1>
+            <p id="appSubtitle" class="text-sm text-gray-600">
+                Compline
+            </p>
+        </div>
+        <div class="flex items-center">
+
+            <a href="calendar.html" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Calendar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </a>
+            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2" title="Accessibility Options" aria-expanded="false" aria-controls="accessibilityMenu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+            </button>
+            <button id="translationToggle" class="p-2 rounded-full bg-gray-200 ml-2 font-medium text-sm" title="Translate to Swahili">
+                EN
+            </button>
+        </div>
+    </div>
+</header>
+    <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+
+        <section class="collapsed-section card card-hover season-border" id="saturday-section" onclick="toggleSection('saturday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Saturday</h2>
+            <a id="saturday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="saturday-content" class="compline-text hidden">
+                <p><strong>God, come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>All praise to you, O God, this night,<br>
+                For all the blessings of the light;<br>
+                Keep us, we pray, O king of kings,<br>
+                Beneath your own almighty wings.</p>
+                <p>Forgive us, Lord, through Christ your Son<br>
+                Whatever wrong this day we’ve done;<br>
+                Your peace give to the world, O Lord,<br>
+                That all might live in one accord.</p>
+                <p>Enlighten us, O Blessed Light,<br>
+                And give us rest throughout this night.<br>
+                O strengthen us, that for your sake,<br>
+                We all may serve you when we wake.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon 1: Have mercy, Lord, and hear my prayer.</p>
+                <p class="psalm-number">Psalm 4</p>
+                <p>When I call, answer me, O God of justice;*<br> from anguish you released me, have mercy and hear me!<br>
+                O men, how long will your hearts be closed,*<br> will you love what is futile and seek what is false?<br>
+                It is the Lord who grants favors to those whom he loves;*<br> the Lord hears me whenever I call him.<br>
+                Fear him; do not sin: ponder on your bed and be still.*<br><br>
+                Make justice your sacrifice, and trust in the Lord.<br>
+                “What can bring us happiness?” many say.*<br> Let the light of your face shine on us, O Lord.<br>
+                You have put into my heart a greater joy*<br> than they have from abundance of corn and new wine.<br>
+                I will lie down in peace and sleep comes at once*<br> for you alone, Lord, make me dwell in safety.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Have mercy, Lord, and hear my prayer.</p>
+
+                <p class="antiphon">Antiphon 2: In the silent hours of night, bless the Lord.</p>
+                <p class="psalm-number">Psalm 134</p>
+                <p>O come, bless the Lord,*<br> all you who serve the Lord, who stand in the house of the Lord,*<br> in the courts of the house of our God.<br>
+                Lift up your hands to the holy place*<br> and bless the Lord through the night.<br>
+                May the Lord bless you from Zion,*<br> he who made both heaven and earth.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: In the silent hours of night, bless the Lord.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">Deuteronomy 6:4-7</p>
+                <p>Hear, O Israel! The Lord is our God, the Lord alone! Therefore, you shall love the Lord, your God, with all your heart, and with all your soul, and with all your strength. Take to heart these words which I enjoin on you today. Drill them into your children. Speak of them at home and abroad, whether you are busy or at rest.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">Lord, be with us throughout this night.<br>
+                When day comes may we rise from sleep to rejoice in the resurrection of your Christ, who lives and reigns for ever and ever.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Salve Regina (Hail Holy Queen) or Ave Maria (Hail Mary)</p>
+            </div>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="sunday-section" onclick="toggleSection('sunday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Sunday</h2>
+            <a id="sunday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="sunday-content" class="compline-text hidden">
+                <p><strong>God, come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>Christ, thou who art the light and day,<br>
+                who chasest nightly shades away,<br>
+                thyself the Light of Light confessed,<br>
+                and promiser of radiance blest.</p>
+                <p>O holy Lord, we pray to thee,<br>
+                throughout the night our guardian be;<br>
+                in thee vouchsafe us to repose,<br>
+                all peaceful till the night shall close.</p>
+                <p>O let our eyes due slumber take,<br>
+                our hearts to thee forever wake:<br>
+                and let thy right hand from above<br>
+                shield us who turn to thee in love.</p>
+                <p>O strong defender, hear our prayers,<br>
+                repel our foes and break their snares,<br>
+                and govern thou thy servants here,<br>
+                those ransomed with thy life-blood dear.</p>
+                <p>Almighty Father, this accord<br>
+                through Jesus Christ, thy Son our Lord,<br>
+                Who with the Holy Ghost and thee<br>
+                doth reign through all eternity.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon: Night holds no terrors for me sleeping under God’s wings.</p>
+                <p class="psalm-number">Psalm 91</p>
+                <p>He who dwells in the shelter of the Most High*<br> and abides in the shade of the Almighty says to the Lord: “My refuge,*<br> my stronghold, my God in whom I trust!”<br>
+                It is he who will free you from the snare*<br> of the fowler who seeks to destroy you;<br>
+                he will conceal you with his pinions*<br> and under his wings you will find refuge.<br>
+                You will not fear the terror of the night*<br> 
+                nor the arrow that flies by day,<br>
+                nor the plague that prowls in the darkness*<br> 
+                nor the scourge that lays waste at noon.<br>
+                A thousand may fall at your side,*<br> 
+                ten thousand fall at your right, you, it will never approach;*<br> 
+                his faithfulness is buckler and shield.<br>
+                Your eyes have only to look*<br> to see how the wicked are repaid,<br>
+                you who have said: “Lord, my refuge!”*
+                <br> and have made the Most High your dwelling.<br>
+                Upon you no evil shall fall,*<br> 
+                no plague approach where you dwell.<br>
+                For you has he commanded his angels,*<br>
+                to keep you in all your ways.<br>
+                They shall bear you upon their hands*<br> 
+                lest you strike your foot against a stone.<br>
+                On the lion and the viper you will tread*<br> 
+                and trample the young lion and the dragon.<br>
+                Since he clings to me in love, I will free him;*<br> 
+                protect him for he knows my name.<br>
+                When he calls I shall answer: “I am with you,”*<br> 
+                I will save him in distress and give him glory.<br>
+                With length of life I will content him;*<br> 
+                I shall let him see my saving power.<br>
+                <strong>Glory to the Father, and to the Son,*<br> 
+                and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> 
+                and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Night holds no terrors for me sleeping under God’s wings.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">Revelation 22:4-5</p>
+                <p>They shall see the Lord face to face and bear his name on their foreheads. The night shall be no more. They will need no light from lamps or the sun, for the Lord God shall give them light, and they shall reign forever.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">Lord, we have celebrated today the mystery of the rising of Christ to new life.<br>
+                May we now rest in your peace, safe from all that could harm us, and rise refreshed and joyful, to praise you throughout another day.<br>
+                We ask this through Christ our Lord.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Regina Cæli (Queen of Heaven, rejoice, alleluia)</p>
+            </div>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="monday-section" onclick="toggleSection('monday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Monday</h2>
+            <a id="monday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="monday-content" class="compline-text hidden">
+                <p><strong>God, come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>We praise you, Father, for your gifts<br>
+                Of dusk and nightfall over earth,<br>
+                Foreshadowing the mystery<br>
+                Of death that leads to endless day.</p>
+                <p>Within your hands we rest secure;<br>
+                In quiet sleep our strength renew;<br>
+                Yet give your people hearts that wake<br>
+                In love to you, unsleeping Lord.</p>
+                <p>Your glory may we ever seek<br>
+                In rest, as in activity,<br>
+                Until its fullness is revealed,<br>
+                O source of life, O Trinity.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon: O Lord, our God, unwearied is your love for us.</p>
+                <p class="psalm-number">Psalm 86</p>
+                <p>Turn your ear, O Lord, and give answer*<br> for I am poor and needy.<br>
+                Preserve my life, for I am faithful:*<br> save the servant who trusts in you.<br>
+                You are my God; have mercy on me, Lord,*<br> for I cry to you all day long.<br>
+                Give joy to your servant, O Lord,*<br> for to you I lift up my soul.<br>
+                O Lord, you are good and forgiving,*<br> full of love to all who call.<br>
+                Give heed, O Lord, to my prayer*<br> and attend to the sound of my voice.<br>
+                In the day of distress I will call*<br> and surely you will reply.<br>
+                Among the gods there is none like you, O Lord;*<br> nor work to compare with yours.<br>
+                All the nations shall come to adore you*<br> and glorify your name, O Lord:<br>
+                for you are great and do marvelous deeds,*<br> you who alone are God.<br>
+                Show me, Lord, your way † so that I may walk in your truth.*<br> Guide my heart to fear your name.<br>
+                I will praise you, Lord my God, with all my heart*<br> and glorify your name for ever;<br>
+                for your love to me has been great:*<br> you have saved me from the depths of the grave.<br>
+                The proud have risen against me; † ruthless men seek my life:*<br> to you they pay no heed.<br>
+                But you, God of mercy and compassion,*<br> slow to anger, O Lord, abounding in love and truth,*<br> turn and take pity on me.<br>
+                O give your strength to your servant*<br> and save your handmaid’s son.<br>
+                Show me the sign of your favor † that my foes may see to their shame*<br> that you console me and give me your help.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: O Lord, our God, unwearied is your love for us.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">1 Thessalonians 5:9-10</p>
+                <p>God has destined us for acquiring salvation through our Lord Jesus Christ. He died for us, that all of us, whether awake or asleep, together might live with him.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">Lord, give our bodies restful sleep and let the work we have done today bear fruit in eternal life.<br>
+                We ask this through Christ our Lord.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Salve Regina (Hail Holy Queen) or Ave Maria (Hail Mary)</p>
+            </div>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="tuesday-section" onclick="toggleSection('tuesday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Tuesday</h2>
+            <a id="tuesday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="tuesday-content" class="compline-text hidden">
+                <p><strong>God, come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>O Father, bring us back again<br>
+                Who on this day have strayed from you,<br>
+                That, sheltered by your loving hand,<br>
+                Our evening prayer we may renew.</p>
+                <p>Give us untroubled heart and mind,<br>
+                So flooded with your tranquil light,<br>
+                That nothing evil there may hide<br>
+                To take away our peace tonight.</p>
+                <p>We thank you, Father, source of light,<br>
+                With Christ your Son and Spirit blest,<br>
+                Who give the marvel of new day,<br>
+                And with the evening star, give rest.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon: Do not hide your face from me; in you I put my trust.</p>
+                <p class="psalm-number">Psalm 143:1-11</p>
+                <p>Lord, listen to my prayer:*<br> turn your ear to my appeal.<br>
+                You are faithful, you are just; give answer. † Do not call your servant to judgment*<br> for no one is just in your sight.<br>
+                The enemy pursues my soul;*<br> he has crushed my life to the ground;<br>
+                he has made me dwell in darkness*<br> like the dead, long forgotten.<br>
+                Therefore my spirit fails;*<br> my heart is numb within me.<br>
+                I remember the days that are past:*<br> I ponder all your works.<br>
+                I muse on what your hand has wrought † and to you I stretch out my hands.*<br> Like a parched land my soul thirsts for you.<br>
+                Lord, make haste and answer;*<br> for my spirit fails within me.<br>
+                Do not hide your face*<br> lest I become like those in the grave.<br>
+                In the morning let me know your love*<br> for I put my trust in you.<br>
+                Make me know the way I should walk:*<br> to you I lift up my soul.<br>
+                Rescue me, Lord, from my enemies;*<br> I have fled to you for refuge.<br>
+                Teach me to do your will*<br> for you, O Lord, are my God.<br>
+                Let your good spirit guide me*<br> in ways that are level and smooth.<br>
+                For your name’s sake, Lord, save my life;*<br> in your justice save my soul from distress.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Do not hide your face from me; in you I put my trust.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">1 Peter 5:8-9a</p>
+                <p>Stay sober and alert. Your opponent the devil is prowling like a roaring lion looking for someone to devour. Resist him, solid in your faith.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">Lord,<br>
+                fill this night with your radiance.<br>
+                May we sleep in peace and rise with joy to welcome the light of a new day in your name.<br>
+                We ask this through Christ our Lord.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Salve Regina (Hail Holy Queen) or Ave Maria (Hail Mary)</p>
+            </div>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="wednesday-section" onclick="toggleSection('wednesday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Wednesday</h2>
+            <a id="wednesday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="wednesday-content" class="compline-text hidden">
+                <p><strong>God, come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>O love of God, how strong and true,<br>
+                Eternal, and yet ever new,<br>
+                Uncomprehended and unbought,<br>
+                Beyond all knowledge and all thought!</p>
+                <p>O heav’nly love, how precious still<br>
+                In days of weariness and ill,<br>
+                In nights of pain and helplessness,<br>
+                To heal, to comfort and to bless!</p>
+                <p>We read thee best in him who came<br>
+                And bore for us the cross of shame,<br>
+                Sent by the Father from on high,<br>
+                Our life to live, our death to die.</p>
+                <p>O love of God, our shield and stay<br>
+                Through all the perils of our way,<br>
+                Eternal love, in thee we rest.<br>
+                For ever safe, for ever blest.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon 1: Lord God, be my refuge and my strength.</p>
+                <p class="psalm-number">Psalm 31:1-6</p>
+                <p>In you, O Lord, I take refuge.*<br> Let me never be put to shame.<br>
+                In your justice, set me free,*<br> hear me and speedily rescue me.<br>
+                Be a rock of refuge for me,*<br> a mighty stronghold to save me,<br>
+                for you are my rock, my stronghold.*<br><br>
+                For your name’s sake, lead me and guide me.<br>
+                Release me from the snares they have hidden*<br> for you are my refuge, Lord.<br>
+                Into your hands I commend my spirit.*<br> It is you who will redeem me, Lord.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Lord God, be my refuge and my strength.</p>
+
+                <p class="antiphon">Antiphon 2: Out of the depths I cry to you, Lord.</p>
+                <p class="psalm-number">Psalm 130</p>
+                <p>Out of the depths I cry to you, O Lord,*<br> Lord, hear my voice!<br>
+                O let your ears be attentive*<br> to the voice of my pleading.<br>
+                If you, O Lord, should mark our guilt,*<br> Lord, who would survive?<br>
+                But with you is found forgiveness:*<br> for this we revere you.<br>
+                My soul is waiting for the Lord,*<br> I count on his word.<br>
+                My soul is longing for the Lord*<br> more than watchman for daybreak.<br>
+                Let the watchman count on daybreak*<br> and Israel on the Lord.<br>
+                Because with the Lord there is mercy*<br> and fullness of redemption,<br>
+                Israel indeed he will redeem*<br> from all its iniquity.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Out of the depths I cry to you, Lord.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">Ephesians 4:26-27</p>
+                <p>If you are angry, let it be without sin. The sun must not go down on your wrath; do not give the devil a chance to work on you.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">Lord Jesus Christ, you have given your followers an example of gentleness and humility, a task that is easy, a burden that is light.<br>
+                Accept the prayers and work of this day, and give us the rest that will strengthen us to render more faithful service to you who live and reign for ever and ever.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Salve Regina (Hail Holy Queen) or Ave Maria (Hail Mary)</p>
+            </div>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="thursday-section" onclick="toggleSection('thursday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Thursday</h2>
+            <a id="thursday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="thursday-content" class="compline-text hidden">
+                <p><strong>God,  come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>O Christ, you are the light and day<br>
+                Which drives away the darkest night,<br>
+                The ever shining Sun of God<br>
+                And pledge of future heavenly light.</p>
+                <p>As now the ev’ning shadows fall<br>
+                Please grant us, Lord, in haste we pray,<br>
+                A quiet night to rest in you<br>
+                Until the coming break of day.</p>
+                <p>Remember us, poor mortal ones,<br>
+                We humbly ask, O Lord our God,<br>
+                And may your presence in our souls,<br>
+                Be forever our great reward.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon: In you, my God, my body will rest in hope.</p>
+                <p class="psalm-number">Psalm 16</p>
+                <p>Preserve me, God, I take refuge in you. † I say to the Lord: “You are my God.*<br> My happiness lies in you alone.”<br>
+                He has put into my heart a marvelous love*<br> for the faithful ones who dwell in his land.<br>
+                Those who choose other gods increase their sorrows. † Never will I offer their offerings of blood.*<br> Never will I take their name upon my lips.<br>
+                O Lord, it is you who are my portion and cup;*<br> it is you yourself who are my prize.<br>
+                The lot marked out for me is my delight:*<br> welcome indeed the heritage that falls to me!<br>
+                I will bless the Lord who gives me counsel,*<br> who even at night directs my heart.<br>
+                I keep the Lord ever in my sight:*<br> since he is at my right hand, I shall stand firm.<br>
+                And so my heart rejoices, my soul is glad;*<br> even my body shall rest in safety.<br>
+                For you will not leave my soul among the dead,*<br> nor let your beloved know decay.<br>
+                You will show me the path of life, † the fullness of joy in your presence,*<br> at your right hand happiness for ever.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: In you, my God, my body will rest in hope.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">1 Thessalonians 5:23</p>
+                <p>May the God of peace make you perfect in holiness. May he preserve you whole and entire, spirit, soul, and body, irreproachable at the coming of our Lord Jesus Christ.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">Lord God, send peaceful sleep to refresh our tired bodies.<br>
+                May your help always renew us and keep us strong in your service.<br>
+                We ask this through Christ our Lord.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Salve Regina (Hail Holy Queen) or Ave Maria (Hail Mary)</p>
+            </div>
+        </section>
+
+        <section class="collapsed-section card card-hover season-border" id="friday-section" onclick="toggleSection('friday')">
+            <h2 class="text-xl font-bold text-green-800 mb-3">Friday</h2>
+            <a id="friday-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
+            <div id="friday-content" class="compline-text hidden">
+                <p><strong>God, come to my assistance.</strong><br>
+                — Lord, make haste to help me.<br>
+                <strong>Glory to the Father, and to the Son, and to the Holy Spirit:</strong> — as it was in the beginning, is now, and will be for ever. Amen. Alleluia.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">HYMN</h3>
+                <p>Now with the fast-departing light,<br>
+                Maker of all we ask of Thee,<br>
+                Of thy great mercy, through the night<br>
+                Our guardian and defence to be.</p>
+                <p>Far off let idle visions fly;<br>
+                No phantom of the night molest:<br>
+                Curb thou our raging enemy,<br>
+                That we in chaste repose may rest.</p>
+                <p>Father of mercies hear our cry;<br>
+                Hear us, O sole-begotten Son!<br>
+                Who, with the Holy Ghost most high,<br>
+                Reignest while endless ages run.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">PSALMODY</h3>
+                <p class="antiphon">Antiphon: Day and night I cry to you, my God.</p>
+                <p class="psalm-number">Psalm 88</p>
+                <p>Lord my God, I call for help by day;*<br> I cry at night before you.<br>
+                Let my prayer come into your presence.*<br> O turn your ear to my cry.<br>
+                For my soul is filled with evils;*<br> my life is on the brink of the grave.<br>
+                I am reckoned as one in the tomb:*<br> I have reached the end of my strength,<br>
+                like one alone among the dead;*<br> like the slain lying in their graves;<br>
+                like those you remember no more,*<br> cut off, as they are, from your hand.<br>
+                You have laid me in the depths of the tomb,*<br> in places that are dark, in the depths.<br>
+                Your anger weighs down upon me:*<br> I am drowned beneath your waves.<br>
+                You have taken away my friends*<br> and made me hateful in their sight.<br>
+                Imprisoned, I cannot escape;*<br> my eyes are sunken with grief.<br>
+                I call to you, Lord, all the day long;*<br> to you I stretch out my hands.<br>
+                Will you work your wonders for the dead?*<br> Will the shades stand and praise you?<br>
+                Will your love be told in the grave*<br> or your faithfulness among the dead?<br>
+                Will your wonders be known in the dark*<br> or your justice in the land of oblivion?<br>
+                As for me, Lord, I call to you for help:*<br> in the morning my prayer comes before you.<br>
+                Lord, why do you reject me?*<br> Why do you hide your face?<br>
+                Wretched, close to death from my youth,*<br> I have borne your trials; I am numb.<br>
+                Your fury has swept down upon me;*<br> your terrors have utterly destroyed me.<br>
+                They surround me all the day like a flood,*<br> they assail me all together.<br>
+                Friend and neighbor you have taken away:*<br> my one companion is darkness.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Day and night I cry to you, my God.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">READING</h3>
+                <p class="reading-ref">Jeremiah 14:9a</p>
+                <p>You are in our midst, O Lord, your name we bear: do not forsake us, O Lord, our God!</p>
+
+                <h3 class="font-semibold mt-4 mb-2">RESPONSORY</h3>
+                <p class="responsory">Into your hands, Lord, I commend my spirit.<br>
+                — Into your hands, Lord, I commend my spirit.<br>
+                You have redeemed us, Lord God of truth.<br>
+                — I commend my spirit.<br>
+                Glory to the Father, and to the Son, and to the Holy Spirit,<br>
+                — Into your hands, Lord, I commend my spirit.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CANTICLE OF SIMEON</h3>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+                <p><strong>Lord,  now you let your servant go in peace;*<br></strong><br>
+                your word has been fulfilled:<br>
+                <strong>my own eyes have seen the salvation*<br></strong><br>
+                which you have prepared in the sight of every people:<br>
+                <strong>a light to reveal you to the nations*<br></strong><br>
+                and the glory of your people Israel.<br>
+                <strong>Glory to the Father, and to the Son,*<br> and to the Holy Spirit:</strong> as it was in the beginning, is now,*<br> and will be for ever. Amen.</p>
+                <p class="antiphon">Antiphon: Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">CONCLUDING PRAYER</h3>
+                <p class="prayer">All-powerful God keep us united with your Son in his death and burial so that we may rise to new life with him, who lives and reigns for ever and ever.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">BLESSING</h3>
+                <p>May,  the all-powerful Lord grant us a restful night and a peaceful death.<br>
+                — Amen.</p>
+
+                <h3 class="font-semibold mt-4 mb-2">MARIAN ANTIPHON</h3>
+                <p>Ave Regina Cælorum (Hail, O Queen of Heaven)</p>
+            </div>
+        </section>
+    </main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+    <div class="flex justify-around h-full items-center">
+        <!-- Home -->
+        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+            <span class="text-xs font-medium" data-translate="home"></span>
+        </a>
+        <!-- Lauds / Morning Prayer -->
+        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
+            <!-- Sunrise Icon -->
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+            </svg>
+            <span class="text-xs font-medium" data-translate="lauds"></span>
+        </a>
+        <!-- Calendar -->
+        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+            </svg>
+            <span class="text-xs font-medium" data-translate="calendar"></span>
+        </a>
+        <!-- Settings -->
+        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+            </svg>
+            <span class="text-xs font-medium" data-translate="settings"></span>
+        </a>
+    </div>
+</nav>
+
+    <script>
+    function toggleSection(day) {
+        const content = document.getElementById(day + '-content');
+        const link = document.getElementById(day + '-link');
+        const section = document.getElementById(day + '-section') || event.currentTarget;
+        
+        if (content.classList.contains('hidden')) {
+            // Hide all other sections
+            document.querySelectorAll('[id$="-content"]').forEach(el => {
+                if (el !== content) {
+                    el.classList.add('hidden');
+                    const otherLink = document.getElementById(el.id.replace('-content', '-link'));
+                    if (otherLink) otherLink.textContent = 'Tap to view';
+                }
+            });
+            
+            // Show this section
+            content.classList.remove('hidden');
+            link.textContent = 'Tap to hide';
+        } else {
+            content.classList.add('hidden');
+            link.textContent = 'Tap to view';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const dayMapping = {
+            0: 'sunday', 1: 'monday', 2: 'tuesday', 3: 'wednesday', 
+            4: 'thursday', 5: 'friday', 6: 'saturday'
+        };
+        
+        const currentDayIndex = new Date().getDay();
+        const currentDayId = dayMapping[currentDayIndex];
+        
+        const allSections = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+        allSections.forEach(day => {
+            const content = document.getElementById(day + '-content');
+            if (content) {
+                content.classList.add('hidden');
+                const link = document.getElementById(day + '-link');
+                if (link) link.textContent = 'Tap to view';
+            }
+        });
+        
+        const currentContent = document.getElementById(currentDayId + '-content');
+        if (currentContent) {
+            currentContent.classList.remove('hidden');
+            const currentLink = document.getElementById(currentDayId + '-link');
+            if (currentLink) currentLink.textContent = 'Tap to hide';
+        }
+    });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+</body>
+</html>
