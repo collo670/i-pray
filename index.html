@@ -50,6 +50,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Plausible Analytics -->
     <script defer data-domain="ipray.app" src="https://plausible.io/js/script.js"></script>
+    <!-- Fuse.js for enhanced search -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/index.css">
 </head>
@@ -79,7 +81,14 @@
         <div class="flex items-center">
             <!-- Search Bar -->
             <div class="search-container hidden md:block fixed md:relative top-16 left-0 right-0 md:top-auto md:left-auto md:right-auto bg-white md:bg-transparent p-4 md:p-0 z-50 md:z-auto shadow-lg md:shadow-none">
-                <input type="search" id="searchInput" placeholder="Search prayers..." 
+                <!-- Search Filters -->
+                <div class="search-filters mb-2">
+                    <button class="search-filter active" data-filter="type" data-value="all">All</button>
+                    <button class="search-filter" data-filter="type" data-value="liturgical">Liturgical</button>
+                    <button class="search-filter" data-filter="type" data-value="devotional">Devotional</button>
+                    <button class="search-filter" data-filter="type" data-value="document">Documents</button>
+                </div>
+                <input type="search" id="searchInput" placeholder="Search prayers, readings, saints..."
                        class="search-input" aria-label="Search prayers and readings">
                 <div id="searchResults" class="search-results"></div>
             </div>

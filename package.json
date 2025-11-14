@@ -5,6 +5,7 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.1.11",
     "@tailwindcss/postcss": "^4.1.11",
+    "fuse.js": "^7.0.0",
     "accepts": "^2.0.0",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
