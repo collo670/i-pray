@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catholic Breviary - Midday Psalms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a2e5c, #1a3a6c);
+            color: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3a5f8c;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            color: #e6c229;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e6c229;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(230, 194, 41, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.active {
+            background: rgba(230, 194, 41, 0.35);
+            box-shadow: 0 0 15px rgba(230, 194, 41, 0.4);
+        }
+        
+        .psalm-container {
+            background: rgba(15, 35, 70, 0.7);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+            border: 1px solid rgba(230, 194, 41, 0.2);
+        }
+        
+        .psalm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .psalm-title {
+            font-size: 1.8rem;
+            color: #e6c229;
+        }
+        
+        .psalm-date {
+            background: rgba(230, 194, 41, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .psalm-content {
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+        
+        .psalm-ref {
+            display: block;
+            color: #a8c5e5;
+            font-style: italic;
+            margin: 12px 0 8px;
+            font-size: 1.05rem;
+        }
+        
+        .psalm-text {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid #3a5f8c;
+        }
+        
+        .antiphon {
+            color: #e6c229;
+            font-style: italic;
+            margin: 20px 0 10px;
+            padding: 12px;
+            background: rgba(30, 50, 80, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid #e6c229;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a8c5e5;
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .psalm-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Catholic Breviary - Midday Psalms</h1>
+            <p class="subtitle">Complete set for all days of Week 1-4 (28 days) according to the Liturgy of the Hours</p>
+        </header>
+        
+        <div class="navigation" id="navigation"></div>
+        
+        <div class="psalm-container" id="psalm-container">
+            <!-- Psalm content will be loaded here -->
+        </div>
+        
+        <div class="footer">
+            <p>© Catholic Liturgy of the Hours | November 16, 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // Psalm data for all 28 days (Week 1-4)
+        const psalmData = [
+            // Week 1
+            {
+                day: "Monday Week 1",
+                antiphon: "The Lord is my light and my salvation; whom shall I fear?",
+                psalms: [
+                    {
+                        ref: "Psalm 119:1-2, 33-34, 35-36",
+                        text: "Blessed are they whose way is blameless, who walk in the law of the Lord. Blessed are they who observe his decrees, who seek him with all their heart... Teach me, O Lord, the way of your statutes, and I will observe it to the end. Give me discernment, that I may observe your law and keep it with all my heart. Lead me in the path of your commands, for in it I delight. Bend my heart to your decrees and not to greed."
+                    },
+                    {
+                        ref: "Psalm 120",
+                        text: "In my distress I called to the Lord, and he answered me... I am for peace; but when I speak, they are for war."
+                    },
+                    {
+                        ref: "Psalm 121",
+                        text: "I lift up my eyes to the mountains— from where will my help come? My help comes from the Lord, who made heaven and earth... The Lord will keep your going out and your coming in from this time on and forevermore."
+                    }
+                ]
+            },
+            {
+                day: "Tuesday Week 1",
+                antiphon: "The Lord will guard your coming and your going, both now and forever.",
+                psalms: [
+                    {
+                        ref: "Psalm 122",
+                        text: "I was glad when they said to me, 'Let us go to the house of the Lord.' Our feet are standing within your gates, O Jerusalem... Pray for the peace of Jerusalem: 'May those who love you prosper. May peace be within your walls, and security within your towers.'"
+                    },
+                    {
+                        ref: "Psalm 123",
+                        text: "To you I lift up my eyes, O you who are enthroned in the heavens! As the eyes of servants look to the hand of their master, as the eyes of a maid to the hand of her mistress, so our eyes look to the Lord our God, until he has mercy upon us."
+                    },
+                    {
+                        ref: "Psalm 124",
+                        text: "If it had not been the Lord who was on our side— let Israel now say— if it had not been the Lord who was on our side, when our enemies attacked us, then they would have swallowed us up alive."
+                    }
+                ]
+            },
+            {
+                day: "Wednesday Week 1",
+                antiphon: "The Lord is my strength and my shield; in him my heart trusts.",
+                psalms: [
+                    {
+                        ref: "Psalm 125",
+                        text: "Those who trust in the Lord are like Mount Zion, which cannot be moved, but abides forever. As the mountains surround Jerusalem, so the Lord surrounds his people, from this time on and forevermore."
+                    },
+                    {
+                        ref: "Psalm 126",
+                        text: "When the Lord restored the fortunes of Zion, we were like those who dream. Then our mouth was filled with laughter, and our tongue with shouts of joy... Those who go out weeping, bearing the seed for sowing, shall come home with shouts of joy, carrying their sheaves."
+                    },
+                    {
+                        ref: "Psalm 127",
+                        text: "Unless the Lord builds the house, those who build it labor in vain. Unless the Lord guards the city, the guard keeps watch in vain... Happy is the man who has his quiver full of them. They shall not be put to shame when they speak with their enemies in the gate."
+                    }
+                ]
+            },
+            {
+                day: "Thursday Week 1",
+                antiphon: "Happy are those who fear the Lord and walk in his ways.",
+                psalms: [
+                    {
+                        ref: "Psalm 128",
+                        text: "Happy is everyone who fears the Lord, who walks in his ways... Thus shall the man be blessed who fears the Lord. The Lord bless you from Zion. May you see the prosperity of Jerusalem all the days of your life."
+                    },
+                    {
+                        ref: "Psalm 129",
+                        text: "Often have they attacked me from my youth— let Israel now say— often have they attacked me from my youth, yet they have not prevailed against me."
+                    },
+                    {
+                        ref: "Psalm 130",
+                        text: "Out of the depths I cry to you, O Lord. Lord, hear my voice! Let your ears be attentive to the voice of my supplications... O Israel, hope in the Lord! For with the Lord there is steadfast love, and with him is great power to redeem."
+                    }
+                ]
+            },
+            {
+                day: "Friday Week 1",
+                antiphon: "Out of the depths I cry to you, O Lord; Lord, hear my voice.",
+                psalms: [
+                    {
+                        ref: "Psalm 131",
+                        text: "O Lord, my heart is not lifted up, my eyes are not raised too high; I do not occupy myself with things too great and too marvelous for me... O Israel, hope in the Lord from this time on and forevermore."
+                    },
+                    {
+                        ref: "Psalm 132",
+                        text: "O Lord, remember in David's favor all the hardships he endured... For the Lord has chosen Zion; he has desired it for his habitation: 'This is my resting place forever; here I will reside, for I have desired it.'"
+                    },
+                    {
+                        ref: "Psalm 133",
+                        text: "How very good and pleasant it is when kindred live together in unity! It is like the precious oil on the head, running down upon the beard, on the beard of Aaron, running down over the collar of his robes."
+                    }
+                ]
+            },
+            {
+                day: "Saturday Week 1",
+                antiphon: "How good it is when brothers dwell together in unity.",
+                psalms: [
+                    {
+                        ref: "Psalm 134",
+                        text: "Come, bless the Lord, all you servants of the Lord, who stand by night in the house of the Lord! Lift up your hands to the holy place, and bless the Lord... May the Lord, maker of heaven and earth, bless you from Zion."
+                    },
+                    {
+                        ref: "Psalm 135:1-3, 15-21",
+                        text: "Praise the Lord! Praise the name of the Lord; give praise, O servants of the Lord... O house of Israel, bless the Lord! O house of Aaron, bless the Lord! O house of Levi, bless the Lord! You that fear the Lord, bless the Lord!"
+                    },
+                    {
+                        ref: "Psalm 136",
+                        text: "O give thanks to the Lord, for he is good, for his steadfast love endures forever... Give thanks to the God of heaven, for his steadfast love endures forever."
+                    }
+                ]
+            },
+            {
+                day: "Sunday Week 1",
+                antiphon: "Give thanks to the Lord, for his love endures forever.",
+                psalms: [
+                    {
+                        ref: "Psalm 23",
+                        text: "The Lord is my shepherd, I shall not want. He makes me lie down in green pastures; he leads me beside still waters; he restores my soul... Surely goodness and mercy shall follow me all the days of my life, and I shall dwell in the house of the Lord my whole life long."
+                    },
+                    {
+                        ref: "Psalm 24",
+                        text: "The earth is the Lord's and all that is in it, the world, and those who live in it... Such is the company of those who seek him, who seek the face of the God of Jacob."
+                    },
+                    {
+                        ref: "Psalm 25",
+                        text: "To you, O Lord, I lift up my soul. O my God, in you I trust; do not let me be put to shame... Good and upright is the Lord; therefore he instructs sinners in the way."
+                    }
+                ]
+            },
+            
+            // Week 2
+            {
+                day: "Monday Week 2",
+                antiphon: "The Lord is my light and my salvation; whom shall I fear?",
+                psalms: [
+                    {
+                        ref: "Psalm 42",
+                        text: "As a deer longs for flowing streams, so my soul longs for you, O God... Why are you cast down, O my soul, and why are you disquieted within me? Hope in God; for I shall again praise him, my help and my God."
+                    },
+                    {
+                        ref: "Psalm 43",
+                        text: "Vindicate me, O God, and defend my cause against an ungodly people; from those who are deceitful and unjust deliver me... Why are you cast down, O my soul, and why are you disquieted within me? Hope in God; for I shall again praise him, my help and my God."
+                    },
+                    {
+                        ref: "Psalm 44",
+                        text: "We have heard with our ears, O God, our ancestors have told us, what deeds you performed in their days, in the days of old... Yet for your sake we are killed all day long; we are accounted as sheep to be slaughtered."
+                    }
+                ]
+            },
+            {
+                day: "Tuesday Week 2",
+                antiphon: "Send out your light and your truth; let them lead me.",
+                psalms: [
+                    {
+                        ref: "Psalm 45",
+                        text: "My heart overflows with a goodly theme; I address my verses to the king... Therefore God, your God, has anointed you with the oil of gladness beyond your companions."
+                    },
+                    {
+                        ref: "Psalm 46",
+                        text: "God is our refuge and strength, a very present help in trouble... The Lord of hosts is with us; the God of Jacob is our refuge."
+                    },
+                    {
+                        ref: "Psalm 47",
+                        text: "Clap your hands, all you peoples; shout to God with loud songs of joy... God has gone up with a shout, the Lord with the sound of a trumpet."
+                    }
+                ]
+            },
+            {
+                day: "Wednesday Week 2",
+                antiphon: "God is our refuge and strength, a very present help in trouble.",
+                psalms: [
+                    {
+                        ref: "Psalm 48",
+                        text: "Great is the Lord and greatly to be praised in the city of our God. His holy mountain... We have thought on your steadfast love, O God, in the midst of your temple."
+                    },
+                    {
+                        ref: "Psalm 49",
+                        text: "Hear this, all you peoples; give ear, all inhabitants of the world... Do not be afraid when some become rich, when the wealth of their houses increases."
+                    },
+                    {
+                        ref: "Psalm 50",
+                        text: "The mighty one, God the Lord, speaks and summons the earth from the rising of the sun to its setting... Offer to God a sacrifice of thanksgiving, and pay your vows to the Most High."
+                    }
+                ]
+            },
+            {
+                day: "Thursday Week 2",
+                antiphon: "Offer to God a sacrifice of thanksgiving.",
+                psalms: [
+                    {
+                        ref: "Psalm 51",
+                        text: "Have mercy on me, O God, according to your steadfast love; according to your abundant mercy blot out my transgressions... Create in me a clean heart, O God, and put a new and right spirit within me."
+                    },
+                    {
+                        ref: "Psalm 52",
+                        text: "Why do you boast, O mighty one, of mischief done against the godly? All day long you are plotting destruction... But I am like a green olive tree in the house of God. I trust in the steadfast love of God forever and ever."
+                    },
+                    {
+                        ref: "Psalm 53",
+                        text: "Fools say in their hearts, 'There is no God.' They are corrupt, they commit abominable acts; there is no one who does good... O that deliverance for Israel would come from Zion! When God restores the fortunes of his people, Jacob will rejoice; Israel will be glad."
+                    }
+                ]
+            },
+            {
+                day: "Friday Week 2",
+                antiphon: "Create in me a clean heart, O God, and put a new spirit within me.",
+                psalms: [
+                    {
+                        ref: "Psalm 54",
+                        text: "Save me, O God, by your name, and vindicate me by your might... For he has delivered me from every trouble, and my eye has looked in triumph on my enemies."
+                    },
+                    {
+                        ref: "Psalm 55",
+                        text: "Give ear to my prayer, O God; do not hide yourself from my supplication... But I call upon God, and the Lord will save me. Evening and morning and at noon I utter my complaint and moan, and he will hear my voice."
+                    },
+                    {
+                        ref: "Psalm 56",
+                        text: "Be gracious to me, O God, for people trample on me... This I know, that God is for me. In God, whose word I praise, in the Lord, whose word I praise, in God I trust; I am not afraid."
+                    }
+                ]
+            },
+            {
+                day: "Saturday Week 2",
+                antiphon: "In God I trust; I shall not be afraid.",
+                psalms: [
+                    {
+                        ref: "Psalm 57",
+                        text: "Be merciful to me, O God, be merciful to me, for in you my soul takes refuge... I will give thanks to you, O Lord, among the peoples; I will sing praises to you among the nations."
+                    },
+                    {
+                        ref: "Psalm 58",
+                        text: "Do you indeed decree what is right, you gods? Do you judge people fairly?... The righteous will rejoice when they see vengeance done; they will bathe their feet in the blood of the wicked."
+                    },
+                    {
+                        ref: "Psalm 59",
+                        text: "Deliver me from my enemies, O my God; protect me from those who rise up against me... But I will sing of your might; I will sing aloud of your steadfast love in the morning. For you have been a fortress for me and a refuge in the day of my distress."
+                    }
+                ]
+            },
+            {
+                day: "Sunday Week 2",
+                antiphon: "I will sing of your might; I will sing aloud of your steadfast love.",
+                psalms: [
+                    {
+                        ref: "Psalm 60",
+                        text: "O God, you have rejected us, broken our defenses; you have been angry; now restore us!... With God we shall do valiantly; it is he who will tread down our foes."
+                    },
+                    {
+                        ref: "Psalm 61",
+                        text: "Hear my cry, O God; listen to my prayer... So I will always sing praises to your name, as I pay my vows day after day."
+                    },
+                    {
+                        ref: "Psalm 62",
+                        text: "For God alone my soul waits in silence; from him comes my salvation... Those of low estate are but a breath, those of high estate are a delusion; in the balances they go up; they are together lighter than a breath."
+                    }
+                ]
+            },
+            
+            // Week 3
+            {
+                day: "Monday Week 3",
+                antiphon: "For God alone my soul waits in silence.",
+                psalms: [
+                    {
+                        ref: "Psalm 63",
+                        text: "O God, you are my God, I seek you, my soul thirsts for you... But those who seek to destroy my life shall go down into the depths of the earth."
+                    },
+                    {
+                        ref: "Psalm 64",
+                        text: "Hear my voice, O God, in my complaint; preserve my life from the dread enemy... The righteous will rejoice in the Lord and take refuge in him, and all the upright in heart will glory."
+                    },
+                    {
+                        ref: "Psalm 65",
+                        text: "Praise is due to you, O God, in Zion; and to you shall vows be performed... You visit the earth and water it, you greatly enrich it."
+                    }
+                ]
+            },
+            {
+                day: "Tuesday Week 3",
+                antiphon: "Praise is due to you, O God, in Zion.",
+                psalms: [
+                    {
+                        ref: "Psalm 66",
+                        text: "Make a joyful noise to God, all the earth... Come and hear, all you who fear God, and I will tell what he has done for me."
+                    },
+                    {
+                        ref: "Psalm 67",
+                        text: "May God be gracious to us and bless us and make his face to shine upon us... The earth has yielded its increase; God, our God, has blessed us."
+                    },
+                    {
+                        ref: "Psalm 68",
+                        text: "Let God rise up, let his enemies be scattered... O God, you have made provision for the poor."
+                    }
+                ]
+            },
+            {
+                day: "Wednesday Week 3",
+                antiphon: "Let God rise up, let his enemies be scattered.",
+                psalms: [
+                    {
+                        ref: "Psalm 69",
+                        text: "Save me, O God, for the waters have come up to my neck... But I am afflicted and in pain; let your salvation, O God, set me on high."
+                    },
+                    {
+                        ref: "Psalm 70",
+                        text: "Be pleased, O God, to deliver me. O Lord, make haste to help me!... Let all who seek you rejoice and be glad in you. Let those who love your salvation say evermore, 'God is great!'"
+                    },
+                    {
+                        ref: "Psalm 71",
+                        text: "In you, O Lord, I take refuge; let me never be put to shame... O God, from my youth you have taught me, and I still proclaim your wondrous deeds."
+                    }
+                ]
+            },
+            {
+                day: "Thursday Week 3",
+                antiphon: "In you, O Lord, I take refuge; let me never be put to shame.",
+                psalms: [
+                    {
+                        ref: "Psalm 72",
+                        text: "Give the king your justice, O God, and your righteousness to a king's son... May his name endure forever, his fame continue as long as the sun."
+                    },
+                    {
+                        ref: "Psalm 73",
+                        text: "Truly God is good to the upright, to those who are pure in heart... Whom have I in heaven but you? And there is nothing on earth that I desire besides you."
+                    },
+                    {
+                        ref: "Psalm 74",
+                        text: "O God, why do you cast us off forever? Why does your anger smoke against the sheep of your pasture?... Yet God my King is from of old, working salvation in the earth."
+                    }
+                ]
+            },
+            {
+                day: "Friday Week 3",
+                antiphon: "Whom have I in heaven but you? And there is nothing on earth that I desire besides you.",
+                psalms: [
+                    {
+                        ref: "Psalm 75",
+                        text: "We give thanks to you, O God; we give thanks; your name is near... For not from the east or from the west and not from the wilderness comes lifting up."
+                    },
+                    {
+                        ref: "Psalm 76",
+                        text: "In Judah God is known, his name is great in Israel... Surely the wrath of mortals praises you; the remainder of wrath you restrain."
+                    },
+                    {
+                        ref: "Psalm 77",
+                        text: "I cry aloud to God, aloud to God, that he may hear me... I will call to mind the deeds of the Lord; I will remember your wonders of old."
+                    }
+                ]
+            },
+            {
+                day: "Saturday Week 3",
+                antiphon: "I will call to mind the deeds of the Lord; I will remember your wonders of old.",
+                psalms: [
+                    {
+                        ref: "Psalm 78:1-39",
+                        text: "Give ear, O my people, to my teaching; incline your ears to the words of my mouth... Yet he was merciful; he forgave their iniquities and did not destroy them."
+                    },
+                    {
+                        ref: "Psalm 78:40-72",
+                        text: "How often they rebelled against him in the wilderness and grieved him in the desert!... He chose his servant David, and took him from the sheepfolds."
+                    },
+                    {
+                        ref: "Psalm 79",
+                        text: "O God, the nations have come into your inheritance; they have defiled your holy temple; they have laid Jerusalem in ruins... Do not remember against us the iniquities of our ancestors; let your compassion come speedily to meet us."
+                    }
+                ]
+            },
+            {
+                day: "Sunday Week 3",
+                antiphon: "Do not remember against us the iniquities of our ancestors; let your compassion come speedily to meet us.",
+                psalms: [
+                    {
+                        ref: "Psalm 80",
+                        text: "Give ear, O Shepherd of Israel, you who lead Joseph like a flock!... Restore us, O God; let your face shine, that we may be saved."
+                    },
+                    {
+                        ref: "Psalm 81",
+                        text: "Sing aloud to God our strength; shout for joy to the God of Jacob... But my people did not listen to my voice; Israel would not submit to me."
+                    },
+                    {
+                        ref: "Psalm 82",
+                        text: "God has taken his place in the divine council; in the midst of the gods he holds judgment... Rise up, O God, judge the earth; for all the nations belong to you!"
+                    }
+                ]
+            },
+            
+            // Week 4
+            {
+                day: "Monday Week 4",
+                antiphon: "Rise up, O God, judge the earth; for all the nations belong to you!",
+                psalms: [
+                    {
+                        ref: "Psalm 83",
+                        text: "O God, do not keep silence; do not hold your peace or be still, O God!... Fill their faces with shame, so that they may seek your name, O Lord."
+                    },
+                    {
+                        ref: "Psalm 84",
+                        text: "How lovely is your dwelling place, O Lord of hosts!... For a day in your courts is better than a thousand elsewhere. I would rather be a doorkeeper in the house of my God than live in the tents of wickedness."
+                    },
+                    {
+                        ref: "Psalm 85",
+                        text: "Lord, you were favorable to your land; you restored the fortunes of Jacob... Surely his salvation is at hand for those who fear him, that his glory may dwell in our land."
+                    }
+                ]
+            },
+            {
+                day: "Tuesday Week 4",
+                antiphon: "For a day in your courts is better than a thousand elsewhere.",
+                psalms: [
+                    {
+                        ref: "Psalm 86",
+                        text: "Incline your ear, O Lord, and answer me, for I am poor and needy... But you, O Lord, are a God merciful and gracious, slow to anger and abounding in steadfast love and faithfulness."
+                    },
+                    {
+                        ref: "Psalm 87",
+                        text: "On the holy mount stands the city he founded... The Lord records, as he registers the peoples, 'This one was born there.'"
+                    },
+                    {
+                        ref: "Psalm 88",
+                        text: "O Lord, God of my salvation, I cry out day and night before you... You have put me in the depths of the Pit, in the regions dark and deep."
+                    }
+                ]
+            },
+            {
+                day: "Wednesday Week 4",
+                antiphon: "You, O Lord, are a God merciful and gracious, slow to anger.",
+                psalms: [
+                    {
+                        ref: "Psalm 89:1-37",
+                        text: "I will sing of your steadfast love, O Lord, forever; with my mouth I will proclaim your faithfulness to all generations... Once and for all I have sworn by my holiness; I will not lie to David."
+                    },
+                    {
+                        ref: "Psalm 89:38-52",
+                        text: "But now you have spurned and rejected him; you are full of wrath against your anointed... Blessed be the Lord forever. Amen and Amen."
+                    },
+                    {
+                        ref: "Psalm 90",
+                        text: "Lord, you have been our dwelling place in all generations... So teach us to count our days that we may gain a wise heart."
+                    }
+                ]
+            },
+            {
+                day: "Thursday Week 4",
+                antiphon: "Lord, you have been our dwelling place in all generations.",
+                psalms: [
+                    {
+                        ref: "Psalm 91",
+                        text: "You who live in the shelter of the Most High, who abide in the shadow of the Almighty... Because you have made the Lord your refuge, the Most High your dwelling place, no evil shall befall you, no scourge come near your tent."
+                    },
+                    {
+                        ref: "Psalm 92",
+                        text: "It is good to give thanks to the Lord, to sing praises to your name, O Most High... The righteous flourish like the palm tree, and grow like a cedar in Lebanon."
+                    },
+                    {
+                        ref: "Psalm 93",
+                        text: "The Lord is king, he is robed in majesty; the Lord is robed, he is girded with strength... Your decrees are very sure; holiness befits your house, O Lord, forevermore."
+                    }
+                ]
+            },
+            {
+                day: "Friday Week 4",
+                antiphon: "The Lord is king, he is robed in majesty.",
+                psalms: [
+                    {
+                        ref: "Psalm 94",
+                        text: "O Lord, God of vengeance, O God of vengeance, shine forth!... If the Lord had not been my help, my soul would soon have lived in the land of silence."
+                    },
+                    {
+                        ref: "Psalm 95",
+                        text: "O come, let us sing to the Lord; let us make a joyful noise to the rock of our salvation!... O that today you would listen to his voice! Do not harden your hearts, as at Meribah, as on the day at Massah in the wilderness."
+                    },
+                    {
+                        ref: "Psalm 96",
+                        text: "O sing to the Lord a new song; sing to the Lord, all the earth... Say among the nations, 'The Lord is king! The world is firmly established; it shall never be moved.'"
+                    }
+                ]
+            },
+            {
+                day: "Saturday Week 4",
+                antiphon: "O come, let us sing to the Lord; let us make a joyful noise to the rock of our salvation!",
+                psalms: [
+                    {
+                        ref: "Psalm 97",
+                        text: "The Lord is king! Let the earth rejoice; let the many coastlands be glad!... Light dawns for the righteous, and joy for the upright in heart."
+                    },
+                    {
+                        ref: "Psalm 98",
+                        text: "O sing to the Lord a new song, for he has done marvelous things... Let the sea roar, and all that fills it; the world and those who live in it."
+                    },
+                    {
+                        ref: "Psalm 99",
+                        text: "The Lord is king; let the peoples tremble! He sits enthroned upon the cherubim; let the earth quake!... Extol the Lord our God, and worship at his holy mountain; for the Lord our God is holy."
+                    }
+                ]
+            },
+            {
+                day: "Sunday Week 4",
+                antiphon: "The Lord is king! Let the earth rejoice; let the many coastlands be glad!",
+                psalms: [
+                    {
+                        ref: "Psalm 100",
+                        text: "Make a joyful noise to the Lord, all the earth!... For the Lord is good; his steadfast love endures forever, and his faithfulness to all generations."
+                    },
+                    {
+                        ref: "Psalm 101",
+                        text: "I will sing of loyalty and of justice; to you, O Lord, I will sing... I will look with favor on the faithful in the land, so that they may live with me."
+                    },
+                    {
+                        ref: "Psalm 102",
+                        text: "Hear my prayer, O Lord; let my cry come to you... But you, O Lord, are enthroned forever; your name endures to all generations."
+                    }
+                ]
+            }
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            const navContainer = document.getElementById('navigation');
+            const psalmContainer = document.getElementById('psalm-container');
+            let currentDay = 0;
+            
+            // Create navigation buttons
+            psalmData.forEach((psalm, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                btn.textContent = psalm.day;
+                btn.dataset.index = index;
+                btn.addEventListener('click', () => showPsalm(index));
+                navContainer.appendChild(btn);
+            });
+            
+            // Show the first day by default
+            showPsalm(0);
+            
+            // Function to display psalm content
+            function showPsalm(index) {
+                currentDay = index;
+                const data = psalmData[index];
+                
+                // Update active button
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`.nav-btn[data-index="${index}"]`).classList.add('active');
+                
+                // Build HTML content
+                let content = `
+                    <div class="psalm-header">
+                        <div class="psalm-title">${data.day}</div>
+                        <div class="psalm-date">Midday Prayer</div>
+                    </div>
+                    <div class="antiphon">${data.antiphon}</div>
+                    <div class="psalm-content">
+                `;
+                
+                data.psalms.forEach(p => {
+                    content += `
+                        <div class="psalm-ref">${p.ref}</div>
+                        <div class="psalm-text">${p.text}</div>
+                    `;
+                });
+                
+                content += `</div>`;
+                psalmContainer.innerHTML = content;
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+</body>
+</html>

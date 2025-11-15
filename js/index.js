@@ -4,7 +4,7 @@ const translations = {
     en: {
         home: "Home",
         lauds: "Lauds",
-        midday: "Midday",
+        midday: "Midday prayer",
         vespers: "Vespers",
         calendar: "Calendar",
         settings: "Settings",
@@ -32,7 +32,7 @@ const translations = {
     sw: {
         home: "Nyumbani",
         lauds: "Masifu",
-        midday: "Saa Sita",
+        midday: "masifu ya Mchana",
         vespers: "Masifu ya Jioni",
         calendar: "Kalenda",
         settings: "Mipangilio",
