@@ -768,7 +768,7 @@ function getCurrentWeekAndDay() {
     // Reference Sunday for week 1
     // Using a known Sunday where we know it's week 1
     // Adjust this date to match when week 1 actually starts in your cycle
-    const referenceWeek1Sunday = new Date(2025, 7, 10); // August 10, 2025 (Sunday) - adjust as needed
+    const referenceWeek1Sunday = new Date(2025, 9, 19); // October 19, 2025 (Sunday) - adjust as needed
     referenceWeek1Sunday.setHours(0, 0, 0, 0);
     
     const msPerWeek = 7 * 24 * 60 * 60 * 1000;
