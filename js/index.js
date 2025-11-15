@@ -444,6 +444,10 @@ function initAccessibility() {
 const navItemsData = [
     // Scripture (Office of Readings) → Document/Text icon
     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'pages/ofisi ya masomo/index.html' },
+    // Midday Prayer → Sun icon
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'midday', color: 'text-orange-500', id: 'midday', link: '#' },
+    // Vespers / Evening Prayer → Moon icon
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'vespers', color: 'text-indigo-600', id: 'vespers', link: '#' },
     // Readings (Compline) → Moon icon
     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'pages/compline.html' },
     // Rosary → Heart (devotional)
@@ -453,11 +457,7 @@ const navItemsData = [
     // Morning Prayer → Sun icon (unchanged)
     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'pages/prayer.html' },
     // Way of the Cross → Cross (plus) icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'pages/via-cruce.html' },
-    // Midday Prayer → Sun icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'midday', color: 'text-orange-500', id: 'midday', link: '#' },
-    // Vespers / Evening Prayer → Moon icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'vespers', color: 'text-indigo-600', id: 'vespers', link: '#' }
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'pages/via-cruce.html' }
 ];
 
 function getCurrentWeekNumber() {
@@ -577,10 +577,10 @@ function hideLoadingOverlay() {
 function initNavigation() {
     const navGrid = document.getElementById('navGrid');
     if (!navGrid) return;
-    
+
     // Show skeleton loaders
     showSkeletonLoaders();
-    
+
     navGrid.innerHTML = '';
     navItemsData.forEach(item => {
         const navItem = document.createElement('a');
