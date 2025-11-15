@@ -4,6 +4,8 @@ const translations = {
     en: {
         home: "Home",
         lauds: "Lauds",
+        midday: "Midday",
+        vespers: "Vespers",
         calendar: "Calendar",
         settings: "Settings",
         prayers: "Prayers",
@@ -30,6 +32,8 @@ const translations = {
     sw: {
         home: "Nyumbani",
         lauds: "Masifu",
+        midday: "Saa Sita",
+        vespers: "Masifu ya Jioni",
         calendar: "Kalenda",
         settings: "Mipangilio",
         prayers: "Sala",
@@ -449,7 +453,11 @@ const navItemsData = [
     // Morning Prayer → Sun icon (unchanged)
     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'pages/prayer.html' },
     // Way of the Cross → Cross (plus) icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'pages/via-cruce.html' }
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'pages/via-cruce.html' },
+    // Midday Prayer → Sun icon
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'midday', color: 'text-orange-500', id: 'midday', link: '#' },
+    // Vespers / Evening Prayer → Moon icon
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'vespers', color: 'text-indigo-600', id: 'vespers', link: '#' }
 ];
 
 function getCurrentWeekNumber() {
@@ -576,14 +584,14 @@ function initNavigation() {
     navGrid.innerHTML = '';
     navItemsData.forEach(item => {
         const navItem = document.createElement('a');
-        // Only prevent default for Scripture
-        if (item.title === 'scripture') {
-            navItem.href = '#'; // Prevent default navigation
-        } else {
-            navItem.href = item.link;
-        }
+        // Set href - will be overridden for items with custom handlers
+        navItem.href = item.link;
         navItem.className = 'nav-item block p-6 rounded-2xl cursor-pointer card-hover bg-white transition-all duration-300 relative';
         navItem.setAttribute('data-title', item.title);
+        // Only prevent default for Scripture, Midday, and Vespers (they have custom handlers)
+        if (item.title === 'scripture' || item.title === 'midday' || item.title === 'vespers') {
+            navItem.href = '#'; // Prevent default navigation
+        }
         const isFavorite = FavoritesManager.isFavorite(item.id);
         navItem.innerHTML = `
             <button class="favorite-btn absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100 ${isFavorite ? 'active' : ''}" 
@@ -657,11 +665,33 @@ function initNavigation() {
                 window.location.href = targetPath;
             });
         }
+        // Special handling for Midday Prayer card
+        if (item.title === 'midday') {
+            navItem.addEventListener('click', function (e) {
+                e.preventDefault();
+                const { dayPrefix, week } = getCurrentWeekAndDay();
+                const fileName = getPrayerFileName(dayPrefix, week, 'saa-sita');
+                savePrayerAccess('midday', 'Sala ya Mchana', fileName);
+                window.location.href = `pages/${fileName}`;
+            });
+        }
+        // Special handling for Vespers card
+        if (item.title === 'vespers') {
+            navItem.addEventListener('click', function (e) {
+                e.preventDefault();
+                const { dayPrefix, week } = getCurrentWeekAndDay();
+                const fileName = getPrayerFileName(dayPrefix, week, 'jioni');
+                savePrayerAccess('vespers', 'Masifu ya Jioni', fileName);
+                window.location.href = `pages/${fileName}`;
+            });
+        }
         navGrid.appendChild(navItem);
-        // Save prayer access
-        navItem.addEventListener('click', () => {
-            savePrayerAccess(item.id, translations['en'][item.title], item.link);
-        });
+        // Save prayer access (only for items without custom handlers)
+        if (item.title !== 'scripture' && item.title !== 'midday' && item.title !== 'vespers') {
+            navItem.addEventListener('click', () => {
+                savePrayerAccess(item.id, translations['en'][item.title], item.link);
+            });
+        }
     });
     
     // Hide skeleton loaders after navigation is loaded
@@ -713,29 +743,75 @@ function loadFavorites() {
     }
 }
 
+// Helper function to get the correct file name based on day and week
+function getPrayerFileName(dayPrefix, week, suffix = '') {
+    const suffixPart = suffix ? `-${suffix}` : '';
+    return `${dayPrefix}${week}${suffixPart}.html`;
+}
+
+// Helper function to calculate current week and day
+// Weeks cycle: 1, 2, 3, 4 (repeating)
+// Weeks start on Sunday and end on Saturday
+// If today is Saturday of week 4, tomorrow (Sunday) will be week 1
+function getCurrentWeekAndDay() {
+    const day = new Date().getDay();
+    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+    
+    // Find the most recent Sunday (start of the current liturgical week)
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const daysSinceSunday = today.getDay(); // 0=Sunday, 6=Saturday
+    const currentSunday = new Date(today);
+    currentSunday.setDate(today.getDate() - daysSinceSunday);
+    currentSunday.setHours(0, 0, 0, 0);
+    
+    // Reference Sunday for week 1
+    // Using a known Sunday where we know it's week 1
+    // Adjust this date to match when week 1 actually starts in your cycle
+    const referenceWeek1Sunday = new Date(2025, 7, 10); // August 10, 2025 (Sunday) - adjust as needed
+    referenceWeek1Sunday.setHours(0, 0, 0, 0);
+    
+    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+    const weeksSinceRef = Math.floor((currentSunday - referenceWeek1Sunday) / msPerWeek);
+    
+    // Calculate week number (1, 2, 3, or 4) using modulo 4
+    // weeksSinceRef = 0 → week 1, 1 → week 2, 2 → week 3, 3 → week 4, 4 → week 1 (cycle repeats)
+    // Add 4 before modulo to handle negative numbers correctly, then add 1 to convert 0-3 to 1-4
+    const week = ((weeksSinceRef % 4) + 4) % 4 + 1;
+    
+    const dayPrefix = dayToPrefix[day];
+    return { dayPrefix, week };
+}
+
 // Masifu ya Asubuhi dynamic link
 const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
 if (masifuAsubuhiLink) {
     masifuAsubuhiLink.addEventListener('click', function() {
-        const day = new Date().getDay();
-        const dayToPrefix = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-        const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
-        // Find the most recent Sunday (start of the current liturgical week)
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const daysSinceSunday = today.getDay(); // 0=Sunday, 6=Saturday
-        const currentSunday = new Date(today);
-        currentSunday.setDate(today.getDate() - daysSinceSunday);
-        // Reference Sunday for week 2 (the start of the current cycle)
-        // Let's use a known Sunday date for week 2, e.g., August 3, 2025 (which is a Sunday)
-        const referenceWeek2Sunday = new Date(2025, 7, 3); // August is month 7 (0-based)
-        referenceWeek2Sunday.setHours(0,0,0,0);
-        const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-        const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
-        const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
-        const week = weekSequence[weekIndex];
-        const fileName = `${dayToPrefix[day]}${week}.html`;
+        const { dayPrefix, week } = getCurrentWeekAndDay();
+        const fileName = getPrayerFileName(dayPrefix, week);
         savePrayerAccess('lauds', 'Lauds', fileName);
+        window.location.href = `pages/${fileName}`;
+    });
+}
+
+// Sala ya Mchana (Saa Sita) dynamic link
+const saaSitaLink = document.getElementById('saaSitaLink');
+if (saaSitaLink) {
+    saaSitaLink.addEventListener('click', function() {
+        const { dayPrefix, week } = getCurrentWeekAndDay();
+        const fileName = getPrayerFileName(dayPrefix, week, 'saa-sita');
+        savePrayerAccess('midday', 'Sala ya Mchana', fileName);
+        window.location.href = `pages/${fileName}`;
+    });
+}
+
+// Masifu ya Jioni (Vespers) dynamic link
+const masifuJioniLink = document.getElementById('masifuJioniLink');
+if (masifuJioniLink) {
+    masifuJioniLink.addEventListener('click', function() {
+        const { dayPrefix, week } = getCurrentWeekAndDay();
+        const fileName = getPrayerFileName(dayPrefix, week, 'jioni');
+        savePrayerAccess('vespers', 'Masifu ya Jioni', fileName);
         window.location.href = `pages/${fileName}`;
     });
 }

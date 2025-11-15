@@ -1,0 +1,722 @@
+﻿<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masifu ya Jioni - ALHAMISI</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+﻿        /* Navigation Bar Styles - Responsive */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .dark-mode .navbar {
+            background-color: #1f2937;
+            border-bottom: 1px solid #374151;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            position: relative;
+        }
+
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Hamburger Menu - Responsive */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: transparent;
+            border: none;
+            transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Hamburger Animation to X */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Tablet & Mobile Menu (max-width: 768px) */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                width: 100%;
+                background-color: #222;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+                transform: translateY(-10px);
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .dark-mode .nav-links {
+                background-color: #1f2937;
+                border-top: 1px solid #374151;
+            }
+
+            .nav-links.active {
+                max-height: 500px;
+                opacity: 1;
+                transform: translateY(0);
+                padding: 16px 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                opacity: 0;
+                transform: translateX(-20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.08s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.12s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.16s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.24s; }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                padding: 14px 20px;
+                border-radius: 0;
+                width: 100%;
+                font-size: 0.9em;
+                transition: all 0.2s ease;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.08);
+                transform: translateX(4px);
+            }
+
+            .dark-mode .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Small Devices (max-width: 640px) */
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 10px 12px;
+            }
+
+            .nav-logo {
+                font-size: 1.1em;
+            }
+
+            .hamburger {
+                min-width: 42px;
+                min-height: 42px;
+                padding: 8px;
+            }
+
+            .hamburger div {
+                width: 23px;
+                height: 2.5px;
+                margin: 4px 0;
+            }
+
+            .nav-links a {
+                font-size: 0.85em;
+                padding: 12px 18px;
+            }
+        }
+
+        /* Extra Small Devices (max-width: 480px) */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 8px 10px;
+            }
+
+            .nav-logo {
+                font-size: 0.95em;
+            }
+
+            .hamburger {
+                min-width: 40px;
+                min-height: 40px;
+                padding: 6px;
+            }
+
+            .hamburger div {
+                width: 22px;
+                height: 2px;
+                margin: 3px 0;
+            }
+
+            .nav-links {
+                max-height: 400px;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+                padding: 12px 16px;
+            }
+        }
+
+        /* Touch-Friendly Mobile Enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            .hamburger {
+                min-height: 48px;
+                min-width: 48px;
+            }
+
+            .nav-links a {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links a:active {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
+
+    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ipray</a>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="../index.html">Nyumbani</a></li>
+                <li><a href="index.html#office-of-readings">Ofisi ya Masomo</a></li>
+                <li></li>
+                <li><a href="holy-rosary.html">Rozari Takatifu</a></li>
+                <li><a href="calendar.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+        
+        <h1>JUMA 1: ALHAMISI<br>MASIFU YA JIONI</h1>
+        
+<div class="prayer-section">
+            <p class="verse"><strong>Mungu, nisaidie.</strong></p>
+            <p class="verse">— Bwana, fanya haraka kunisaidia.</p>
+            <p class="verse"><strong>Atukuzwe Baba na Mwana na Roho Mtakatifu:</strong></p>
+            <p class="verse">— kama mwanzo, na sasa, na siku zote na milele. Amina.</p>
+        </div>
+        
+        <hr>
+        
+        <div class="prayer-section">
+            <h2>UTENZI</h2>
+            <p class="verse">Jua linapozama, tunakusifu, Ee Bwana;</p>
+            <p class="verse">mchana unapokwisha, tunakusifu, Ee Mungu wetu.</p>
+            <p class="verse">Kwa neema yako, tujalie amani,</p>
+            <p class="verse">na uwe na huruma kwa watu wako.</p>
+        </div>
+        
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. I<br>Ant. ya Kawaida: Bwana amewaambia Bwana wangu: 'Keti upande wangu wa kulia.'</p>
+            
+            <h2>Zab. 110</h2>
+            <p class="psalm-title">Bwana na Mfalme</p>
+            
+            <p class="verse">Bwana amewaambia Bwana wangu: * 'Keti upande wangu wa kulia, mpaka niwaweke adui zako chini ya miguu yako.'</p><p class="verse">Bwana atatoa fimbo ya ufalme kutoka Sayuni: * 'Tawala katikati ya adui zako.</p><p class="verse">Wakati wa nguvu zako, watoto wako watakuja kwa hiari, * kama dew kuanza asubuhi kutoka kwenye tumbo la asubuhi.'</p><p class="verse">Bwana ameaapa, na hatarejesha neno lake: * 'Wewe ni kuhani milele, kwa namna ya Melkizedeki.'</p><p class="verse">Bwana upande wako wa kulia * atavunja wafalme siku ya hasira yake.</p><p class="verse">Atahukumu mataifa, atajaza maeneo ya wafu; * atavunja vichwa vya wengi katika nchi kubwa.</p><p class="verse">Atakunywa kutoka kwenye mto njiani; * kwa hivyo atainua kichwa chake.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Bwana amewaambia Bwana wangu: 'Keti upande wangu wa kulia.'</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">ANT. II<br>Ant. ya Kawaida: Heri ya mtu aomchao Bwana, anayependa amri zake sana!</p>
+            
+            <h2>Zab. 111</h2>
+            <p class="psalm-title">Heri ya kumcha Bwana</p>
+            
+            <p class="verse">Heri ya mtu aomchao Bwana, * anayependa amri zake sana!</p><p class="verse">Watu wake watakuwa na nguvu duniani; * watoto wa waadilifu watabarikiwa.</p><p class="verse">Utajiri na ukuu viko ndani ya nyumba yake; * na uadilifu wake unaendelea milele.</p><p class="verse">Nuru inaangaza kwa waadilifu katika giza; * yeye ni mwenye huruma, mwenye rehema, na waadilifu.</p><p class="verse">Mtu mwema ana rehema na hutoa; * anahukumu mambo yake kwa haki.</p><p class="verse">Hata milele hatatetemeka; * waadilifu watakumbukwa milele.</p><p class="verse">Hataogopa habari mbaya; * moyo wake umeimarika, akitegemea Bwana.</p><p class="verse">Moyo wake umeimarika, hataogopa, * mpaka aone adui zake.</p><p class="verse">Ametoa kwa maskini; * uadilifu wake unaendelea milele;</p><p class="verse">fimbo yake itainuliwa kwa utukufu.</p><p class="verse">Mtu mwovu ataona na kuudhiwa; * atalisha meno yake na kuyeyuka; matamanio ya watu mwovu yatapotea.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Heri ya mtu aomchao Bwana, anayependa amri zake sana!</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">Ant. ya Kawaida: Mungu amemwinua maskini kutoka kwenye mavumbi.</p>
+            
+            <h2>WIMBO: 1Tim. 3:16</h2>
+            <p class="psalm-title">Siri ya ujamaa</p>
+            
+            <p class="verse">Hakika, ukuu wa ufichuo wa ujamaa ni ukuu: * Kristo alionekana katika mwili, akithibitishwa katika roho.</p><p class="verse">Akaonekana kwa malaika, * akihubiriwa kwa mataifa, akiaminiwa ulimwenguni, akichukuliwa juu katika utukufu.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Mungu amemwinua maskini kutoka kwenye mavumbi.</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <h2>SOMO FUPI</h2>
+            <div class="reading">
+                <p class="verse">1Pet. 5:8-9a</p>
+                <p class="verse">Kuwa na uangalifu! Adui yenu, shetani, huzunguka kama simba mwenye njaa, akitafuta nani amweze kumeza. Msimkabili kwa imani thabiti.</p>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="prayer-section">
+            <h2>KIITIKIZANO</h2>
+            <p class="leader">K. Utuokoe, Ee Bwana, kwa ajili ya jina lako.</p>
+            <p class="response">W. Utuokoe, Ee Bwana, kwa ajili ya jina lako.</p>
+            <p class="leader">K. Uwe na huruma kwa watu wako.</p>
+            <p class="response">W. Kwa ajili ya jina lako.</p>
+            <p class="leader">K. Atukuzwe Baba na Mwana na Roho Mtakatifu.</p>
+            <p class="response">W. Utuokoe, Ee Bwana, kwa ajili ya jina lako.</p>
+        </div>
+        
+        <hr>
+        
+        <div class="prayer-section">
+            <p class="antiphon">Ant. ya Kawaida: Mungu amemwinua maskini kutoka kwenye mavumbi.</p>
+            
+            <h2>WIMBO WA MARIA (MAGNIFICAT)</h2>
+            <p class="verse">Nafsi yangu inamtukuza Bwana, * na roho yangu inafurahi kwa Mungu Mwokozi wangu,</p>
+            <p class="verse">kwa maana ameangalia unyonge wa mtumishi wake. * Tazama, tangu sasa mataifa yote yataniita mwenye heri,</p>
+            <p class="verse">kwa maana Mwenyezi Mungu amenifanyia makuu. * Jina lake ni takatifu,</p>
+            <p class="verse">na huruma yake ni kwa wale wanaomcha * kutoka kizazi hadi kizazi.</p>
+            <p class="verse">Ameonyesha nguvu za mkono wake; * amewavunja wenye kiburi katika nia za mioyo yao.</p>
+            <p class="verse">Ameushuka wenye uweza kutoka viti vyao, * na amewainua wanyonge.</p>
+            <p class="verse">Amejaza wenye njaa mema, * na amewaondoa matajiri wakiwa wazi mikono.</p>
+            <p class="verse">Ameisaidia Israeli mtumishi wake, * akikumbuka huruma yake,</p>
+            <p class="verse">kama alivyoahidi baba zetu, * Ibrahimu na uzao wake milele.</p>
+            <p class="verse">Atukuzwe Baba na Mwana na Roho Mtakatifu, * kama mwanzo, na sasa, na siku zote na milele. Amina.</p>
+            
+            <p class="antiphon">Ant. ya Kawaida: Mungu amemwinua maskini kutoka kwenye mavumbi.</p>
+        </div>
+
+        <hr>
+        
+        <div class="prayer-section">
+            <h2>MAOMBI</h2>
+            <p class="leader">Tumsifu Kristo ambaye alituokoa kwa damu yake, na kutuunganisha na Mungu.</p>
+            <p class="response">W. Utujalie neema yako, Ee Bwana.</p>
+            
+            <div class="intercession">
+                <p>Twakusifu wewe Bwana,</p>
+                <p class="intercession-response">— na tunakushukuru kwa baraka zako. (W.)</p>
+                
+                <p>Utujalie amani na utulivu;</p>
+                <p class="intercession-response">— utujalie raha na faraja. (W.)</p>
+                
+                <p>Uwe nao wote wanaohitaji sala zetu,</p>
+                <p class="intercession-response">— na uwajalie mahitaji yao yote. (W.)</p>
+                
+                <p>Utulinde usiku huu,</p>
+                <p class="intercession-response">— na utupe usingizi wa amani. (W.)</p>
+            </div>
+            
+            <h3>Baba Yetu</h3>
+            <p>Baba yetu uliye mbinguni, jina lako litukuzwe
+                ufalme wako ufike, utakalo lifanyike duniani kama mbinguni
+                utupe leo mkate wetu wa kila siku, Utusamehe makosa yetu,
+                kama tunavyowasamehe waliotukosea.
+                usitutie katika vishawishi, lakini utuokoe maovuni.</p>
+            
+            <h2>SALA</h2>
+            <p>Ee Bwana, uwe mwanzo na mwisho wa yote tunayofanya na tunayosema. Kwa neema yako utusaidie katika matendo yetu, na uyakamilishe hayo kwa uwezo wako. (Tunaomba hayo) kwa njia ya Bwana wetu. (Kwa njia ya Kristo Bwana wetu.)</p>
+        </div>
+
+         <div>
+            <h3>Mwisho</h3>
+            <p>K. Bwana atubariki, atukinge na movu yote, na atufikishe kwenye uzima wa milele.</p>
+             <p>W. Amina.</p>
+        </div>
+    </div>
+    
+    
+    <script>
+        // Enhanced mobile menu toggle with smooth animations
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+
+            // Toggle active classes
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            // Add haptic feedback on mobile devices
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            // Enhanced accessibility
+            const isOpen = navLinks.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            navLinks.setAttribute('aria-hidden', !isOpen);
+
+            // Focus management for accessibility
+            if (isOpen) {
+                // Focus first menu item when opening
+                setTimeout(() => {
+                    const firstLink = navLinks.querySelector('a');
+                    if (firstLink) firstLink.focus();
+                }, 100);
+            }
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.querySelector('.toggle-btn');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.textContent = 'Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                btn.textContent = 'Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.toggle-btn').textContent = 'Light Mode';
+        }
+
+        // Translations
+        const translations = {
+            en: {
+                home: "Home",
+                lauds: "Lauds",
+                calendar: "Calendar",
+                settings: "Settings"
+            },
+            sw: {
+                home: "Nyumbani",
+                lauds: "Masifu",
+                calendar: "Kalenda",
+                settings: "Mipangilio"
+            }
+        };
+
+        // Language Management
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Toggle translation function
+        window.toggleTranslation = function() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const newLang = currentLang === 'en' ? 'sw' : 'en';
+            setLanguage(newLang);
+        };
+
+
+        // Save prayer access for history
+        function savePrayerAccess(prayerId, title, url) {
+            // Simple localStorage-based history (since we don't have IndexedDB in these pages)
+            const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+            const newAccess = {
+                id: prayerId,
+                title: title,
+                url: url,
+                lastAccessed: new Date().toISOString()
+            };
+
+            // Remove existing entry if present
+            const filteredHistory = history.filter(item => item.id !== prayerId);
+            filteredHistory.unshift(newAccess);
+
+            // Keep only last 10 entries
+            localStorage.setItem('prayerHistory', JSON.stringify(filteredHistory.slice(0, 10)));
+        }
+
+        // Keyboard navigation support for mobile menu
+        document.addEventListener('keydown', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    toggleMenu();
+                }
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (navLinks.classList.contains('active') &&
+                !navLinks.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                toggleMenu();
+            }
+        });
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Set initial language
+            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(preferredLang);
+
+            // Add translation toggle listener if button exists
+            const translationToggle = document.getElementById('translationToggle');
+            if (translationToggle) {
+                translationToggle.addEventListener('click', toggleTranslation);
+            }
+        });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

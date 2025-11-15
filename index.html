@@ -16,17 +16,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="ipray">
     <link rel="apple-touch-icon" href="/i-pray/assets/images/icon-192x192.png">
-    <!-- Tailwind CSS via CDN with preconnect for faster loading -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <!-- Custom Tailwind Config -->
+    <!-- Tailwind CSS via CDN (will use compiled version at dist/output.css after running: npm run build) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
                         'secondary': '#DB2777',
                         'accent': '#F59E0B',
                         'liturgical-purple': '#4A1E8A',
@@ -37,6 +33,29 @@
                     },
                     backgroundImage: {
                         'vintage-texture': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    },
+                    screens: {
+                        'xs': '475px',
+                        '3xl': '1600px',
+                    },
+                    animation: {
+                        'hamburger-to-x': 'hamburger-to-x 0.3s ease-in-out',
+                        'mobile-menu-slide': 'mobile-menu-slide 0.3s ease-in-out',
+                    },
+                    keyframes: {
+                        'hamburger-to-x': {
+                            '0%': { transform: 'rotate(0deg) translate(0, 0)' },
+                            '50%': { opacity: '0' },
+                            '100%': { transform: 'rotate(45deg) translate(-5px, 6px)' },
+                        },
+                        'mobile-menu-slide': {
+                            '0%': { maxHeight: '0', opacity: '0' },
+                            '100%': { maxHeight: '500px', opacity: '1' },
+                        }
+                    },
+                    transitionProperty: {
+                        'max-height': 'max-height',
+                        'transform': 'transform',
                     }
                 }
             }
