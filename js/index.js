@@ -654,13 +654,16 @@ function initNavigation() {
                 };
 
                 const folder = weekFolderMap[week];
+                console.log('Office of Readings - Today:', today.toISOString(), 'WeekdayIndex:', today.getDay(), 'Weekday:', weekday, 'CurrentSunday:', currentSunday.toISOString(), 'ReferenceSunday:', referenceSunday.toISOString(), 'WeeksDiff:', weeksDiff, 'Week:', week, 'Folder:', folder); // Enhanced debugging
                 if (!folder) {
+                    console.error('Office of Readings - Folder not found for week:', week);
                     alert('Office of Readings for this week is not available.');
                     return;
                 }
 
-                // Build the path to ofisi ya masomo/{folder}/{weekday}.html
-                const targetPath = `ofisi ya masomo/${folder}/${weekday}.html`;
+                // Build the path to pages/ofisi ya masomo/{folder}/{weekday}.html
+                const targetPath = `pages/ofisi ya masomo/${folder}/${weekday}.html`;
+                console.log('Office of Readings - TargetPath:', targetPath); // Enhanced debugging
                 // Navigate
                 window.location.href = targetPath;
             });
@@ -1011,10 +1014,12 @@ async function fetchDailyReadings() {
                 const shortMonth = shortMonths[monthIndex];
                 const longMonth = longMonths[monthIndex];
                 const fileName = `${day} ${shortMonth}.html`;
-                
+
+                // Check if running locally or on GitHub Pages
+                const baseUrl = window.location.hostname === "collo670.github.io" ? "/i-pray" : "";
                 // Navigate to the daily reading file in the current month's folder
-                const readingPath = `assets/${longMonth}/${fileName}`;
-                console.log('Attempting to load:', readingPath); // For debugging
+                const readingPath = `${baseUrl}/assets/months/${longMonth}/${fileName}`;
+                console.log('Daily Readings - Today:', today.toISOString(), 'MonthIndex:', monthIndex, 'LongMonth:', longMonth, 'FileName:', fileName, 'ReadingPath:', readingPath); // Enhanced debugging
                 window.location.href = readingPath;
             } catch (error) {
                 console.error('Error fetching daily readings:', error);

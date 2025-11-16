@@ -19,13 +19,13 @@ const DailyReadings = {
         const monthIndex = today.getMonth();
         const shortMonth = shortMonths[monthIndex];
         const longMonth = longMonths[monthIndex];
-        
+
         // Format filename to match actual files (with space)
         const fileName = `${day} ${shortMonth}.html`;
-        
+
         // Check if running locally or on GitHub Pages
         const baseUrl = window.location.hostname === "collo670.github.io" ? "/i-pray" : "";
-        return `${baseUrl}/assets/${longMonth}/${fileName}`;
+        return `${baseUrl}/assets/months/${longMonth}/${fileName}`;
     },
 
     // Create the daily readings card
@@ -41,7 +41,7 @@ const DailyReadings = {
         readingsCard.addEventListener('click', () => {
             try {
                 const readingPath = this.getTodayReadingPath();
-                console.log('Attempting to load readings from:', readingPath);
+                console.log('Daily Readings Module - ReadingPath:', readingPath);
                 window.location.href = readingPath;
             } catch (error) {
                 console.error('Error loading daily readings:', error);
