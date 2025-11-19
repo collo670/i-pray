@@ -398,8 +398,47 @@ html {
     color: white;
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
-    text-transform: capitalize;
-    margin-left: 0.5rem;
+
+/* Center page containers by default and keep long textual blocks left-aligned for readability */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+
+.prayer-section {
+    margin: 30px 0;
+}
+
+.verse {
+    margin-left: 20px;
+}
+
+.response {
+    font-style: italic;
+    margin-left: 20px;
+}
+
+.intercession {
+    margin-left: 20px;
+}
+
+.intercession-response {
+    margin-left: 40px;
+    font-style: italic;
+}
+
+.reading {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-left: 4px solid #8B0000;
+}
+
+.dark-mode .reading {
+    background-color: #333;
+    border-left-color: #FFA07A;
 }
 
 /* Search History Styles */
