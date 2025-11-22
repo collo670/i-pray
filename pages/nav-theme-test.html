@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nav & Theme Test</title>
+  <link rel="stylesheet" href="../css/index.css">
+  <style>
+    body { padding-top: 72px; }
+    .container { max-width: 720px; margin: 1.5rem auto; padding: 1rem; }
+    .notice { background:#fff8c4; padding:8px 12px; border-radius:6px; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">ipray - test</a>
+
+      <div class="hamburger" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#">Nyumbani</a></li>
+        <li><a href="#">Ofisi ya Masomo</a></li>
+        <li><a href="#">Rozari Takatifu</a></li>
+        <li><a href="#">Kalenda</a></li>
+        <li><a href="#">Mipangilio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="notice">This page is a lightweight test harness for the shared `nav-theme.js`.
+      Open devtools in mobile emulation (<=768px) to test the hamburger and dark-mode behavior.
+    </div>
+
+    <div class="toggle-container">
+      <button class="toggle-btn">Dark Mode</button>
+    </div>
+
+    <h1>Navigation & Dark Mode Test</h1>
+    <p>Use the hamburger (small screens) to open the menu. Click links to verify the menu closes. Toggle dark mode and reload to verify persistence.</p>
+
+    <hr>
+
+    <p>Console: watch for errors. The shared script exposes global functions `toggleMenu()` and `toggleDarkMode()` for compatibility with existing pages.</p>
+  </div>
+
+  <script src="../js/nav-theme.js"></script>
+</body>
+</html>
