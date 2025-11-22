@@ -73,8 +73,9 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/index.css">
-    <!-- Google Sign-In -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
 </head>
 <!-- Install Button -->
 <div id="installContainer" class="px-6 py-2">
@@ -131,18 +132,15 @@
                         </div>
                     </div>
                     <div class="mt-6">
-                        <div id="g_id_onload"
-                             data-client_id="YOUR_GOOGLE_CLIENT_ID"
-                             data-callback="handleCredentialResponse">
-                        </div>
-                        <div class="g_id_signin"
-                             data-type="standard"
-                             data-size="large"
-                             data-theme="outline"
-                             data-text="sign_in_with"
-                             data-shape="rectangular"
-                             data-logo_alignment="left">
-                        </div>
+                        <button id="googleSignInBtn" class="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Sign in with Google
+                        </button>
                     </div>
                 </div>
             </form>
@@ -172,8 +170,23 @@
     <script src="js/mobile-navigation.js"></script>
     <!-- Main JavaScript -->
     <script src="js/index.js"></script>
-    <!-- Login Validation Script -->
+    <!-- Firebase Authentication Script -->
     <script>
+        // Firebase configuration - Replace with your actual config from Firebase Console
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+
         document.addEventListener('DOMContentLoaded', function() {
             const loginForm = document.getElementById('loginForm');
             const usernameInput = document.getElementById('username');
@@ -182,6 +195,7 @@
             const passwordError = document.getElementById('passwordError');
             const errorMessage = document.getElementById('errorMessage');
             const loginBtn = document.getElementById('loginBtn');
+            const googleSignInBtn = document.getElementById('googleSignInBtn');
 
             function showError(element, message) {
                 element.textContent = message;
@@ -205,34 +219,50 @@
             usernameInput.addEventListener('blur', () => validateField(usernameInput, usernameError));
             passwordInput.addEventListener('blur', () => validateField(passwordInput, passwordError));
 
-            loginForm.addEventListener('submit', function(e) {
+            // Email/Password Login
+            loginForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
 
                 const isUsernameValid = validateField(usernameInput, usernameError);
                 const isPasswordValid = validateField(passwordInput, passwordError);
 
                 if (isUsernameValid && isPasswordValid) {
-                    // Simulate login check (replace with actual authentication)
                     loginBtn.disabled = true;
                     loginBtn.textContent = 'Signing In...';
 
-                    // Mock login failure for demonstration
-                    setTimeout(() => {
+                    try {
+                        await auth.signInWithEmailAndPassword(usernameInput.value, passwordInput.value);
+                        window.location.href = 'index.html';
+                    } catch (error) {
                         loginBtn.disabled = false;
                         loginBtn.textContent = 'Sign In';
-                        errorMessage.classList.remove('hidden');
-                    }, 1000);
+                        showError(errorMessage, error.message);
+                    }
+                }
+            });
+
+            // Google Sign-In
+            googleSignInBtn.addEventListener('click', async function() {
+                try {
+                    googleSignInBtn.disabled = true;
+                    googleSignInBtn.textContent = 'Signing In...';
+                    await auth.signInWithPopup(googleProvider);
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    googleSignInBtn.disabled = false;
+                    googleSignInBtn.textContent = 'Sign in with Google';
+                    showError(errorMessage, error.message);
+                }
+            });
+
+            // Check if user is already logged in
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in, redirect to index
+                    window.location.href = 'index.html';
                 }
             });
         });
-
-        // Google Sign-In callback
-        function handleCredentialResponse(response) {
-            // In a real application, send the JWT to your server for validation
-            console.log('Google Sign-In successful', response);
-            // For demo purposes, redirect to index.html after successful sign-in
-            window.location.href = 'index.html';
-        }
     </script>
 </body>
 </html>
