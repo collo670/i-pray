@@ -9,27 +9,20 @@
     <!-- PWA Configuration -->
     <link rel="manifest" href="/ipray/manifest.json">
     <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)">
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class', // Enable class-based dark mode
-            theme: {
-                extend: {
-                    colors: {
-                        'liturgical-purple': '#4A1E8A',
-                        'liturgical-white': '#F8F9FA',
-                        'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <body class="min-h-screen bg-gradient-vintage dark:bg-gray-900 dark:text-white transition-colors duration-300">
     <div id="app">

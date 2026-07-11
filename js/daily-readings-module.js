@@ -31,10 +31,10 @@ const DailyReadings = {
     // Create the daily readings card
     createReadingsCard(translations, lang) {
         const readingsCard = document.createElement('div');
-        readingsCard.className = 'rounded-2xl p-6 bg-white shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
+        readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
         readingsCard.innerHTML = `
-            <h3 class="text-xl font-bold text-purple-600">${translations[lang].dailyReadings}</h3>
-            <p class="text-xs font-medium text-gray-500 mt-2">${translations[lang].tapToView}</p>
+            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-300">${translations[lang].dailyReadings}</h3>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">${translations[lang].tapToView}</p>
         `;
         
         // Add click handler

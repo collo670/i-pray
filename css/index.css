@@ -1,9 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
 :root {
     --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%);
+
+    /* Design tokens */
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+
+    --surface-0: #ffffff;
+    --surface-1: #f8f7fb;
+    --surface-2: #f1eef8;
+    --text-primary: #1f1b2e;
+    --text-secondary: #5b5468;
+    --border-subtle: rgba(76, 29, 149, 0.12);
+
+    --brand-purple: #6d28d9;
+    --brand-pink: #db2777;
+    --brand-gradient: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 100%);
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.75rem;
+
+    --shadow-sm: 0 1px 3px rgba(31, 27, 46, 0.08);
+    --shadow-md: 0 8px 24px -8px rgba(31, 27, 46, 0.16);
+    --shadow-lg: 0 20px 40px -12px rgba(31, 27, 46, 0.22);
+
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.4);
 }
+
+body.dark-mode,
+:root.dark {
+    --surface-0: #14111f;
+    --surface-1: #1b1729;
+    --surface-2: #241f35;
+    --text-primary: #f2eefb;
+    --text-secondary: #b8b0cc;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(20, 17, 31, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
 body {
-    font-family: 'Cinzel Decorative', serif;
-    transition: all 0.3s ease;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
 }
 .text-small { font-size: 0.875rem; }
 .text-large { font-size: 1.25rem; }
@@ -12,21 +61,25 @@ body {
 .bg-gradient-vintage {
     background: var(--primary-color);
 }
+:root.dark .bg-gradient-vintage {
+    background: linear-gradient(135deg, #0b1a10 0%, #1b1626 50%, #0f1a24 100%);
+}
 .card {
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--surface-0);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 .card-highlighted {
-    background-color: #e0e0e0;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--surface-2);
+    box-shadow: var(--shadow-md);
 }
 .card-hover {
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-lg);
 }
 .season-border {
     border-style: dashed;
@@ -39,21 +92,26 @@ body {
     position: relative;
     z-index: 10;
 }
-.bg-purple-100 { background-color: rgba(237, 233, 254, 0.8); }
-.bg-white-100 { background-color: rgba(255, 255, 255, 0.8); }
-.bg-red-100 { background-color: rgba(254, 226, 226, 0.8); }
-.bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-.bg-gold-100 { background-color: rgba(254, 249, 195, 0.8); }
-.border-purple-200 { border-color: #e9d5ff; }
-.border-white-200 { border-color: #e5e7eb; }
-.border-red-200 { border-color: #fecaca; }
-.border-green-200 { border-color: #bbf7d0; }
-.border-gold-200 { border-color: #fef08a; }
-.text-purple-800 { color: #7c06ea; }
-.text-white-800 { color: #f9fafb; }
-.text-red-800 { color: #991b1b; }
-.text-green-800 { color: #166534; }
-.text-gold-800 { color: #854d0e; }
+/* These duplicate Tailwind utility class names for pages that don't run the
+   Tailwind build (the liturgy pages under /pages). Scoped to :root:not(.dark)
+   so pages that DO load Tailwind (index/login/signup/settings) let Tailwind's
+   own `dark:` variants win once dark mode is active, instead of being
+   permanently shadowed by these unconditional overrides. */
+:root:not(.dark) .bg-purple-100 { background-color: rgba(237, 233, 254, 0.8); }
+:root:not(.dark) .bg-white-100 { background-color: rgba(255, 255, 255, 0.8); }
+:root:not(.dark) .bg-red-100 { background-color: rgba(254, 226, 226, 0.8); }
+:root:not(.dark) .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
+:root:not(.dark) .bg-gold-100 { background-color: rgba(254, 249, 195, 0.8); }
+:root:not(.dark) .border-purple-200 { border-color: #e9d5ff; }
+:root:not(.dark) .border-white-200 { border-color: #e5e7eb; }
+:root:not(.dark) .border-red-200 { border-color: #fecaca; }
+:root:not(.dark) .border-green-200 { border-color: #bbf7d0; }
+:root:not(.dark) .border-gold-200 { border-color: #fef08a; }
+:root:not(.dark) .text-purple-800 { color: #7c06ea; }
+:root:not(.dark) .text-white-800 { color: #f9fafb; }
+:root:not(.dark) .text-red-800 { color: #991b1b; }
+:root:not(.dark) .text-green-800 { color: #166534; }
+:root:not(.dark) .text-gold-800 { color: #854d0e; }
 @media (max-width: 640px) {
     .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
 
@@ -402,14 +460,16 @@ html {
 
 /* Center page containers by default and keep long textual blocks left-aligned for readability */
 .container {
-    max-width: 800px;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 32px 24px 64px;
     text-align: left;
+    line-height: 1.75;
+    font-size: 1.05rem;
 }
 
 .prayer-section {
-    margin: 30px 0;
+    margin: 36px 0;
 }
 
 .verse {
@@ -419,6 +479,7 @@ html {
 .response {
     font-style: italic;
     margin-left: 20px;
+    color: var(--text-secondary);
 }
 
 .intercession {
@@ -428,18 +489,27 @@ html {
 .intercession-response {
     margin-left: 40px;
     font-style: italic;
+    color: var(--text-secondary);
 }
 
 .reading {
-    margin: 20px 0;
-    padding: 15px;
-    background-color: #f8f8f8;
+    margin: 24px 0;
+    padding: 18px 20px;
+    background-color: var(--surface-1);
     border-left: 4px solid #8B0000;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
 }
 
 .dark-mode .reading {
-    background-color: #333;
+    background-color: var(--surface-2);
     border-left-color: #FFA07A;
+}
+
+.container hr {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 32px 0;
 }
 
 /* Search History Styles */
@@ -693,19 +763,30 @@ header[role="banner"] {
     margin: 8px 16px 0 16px !important;
 }
 
+:root.dark header[role="banner"] {
+    background: rgba(30, 27, 46, 0.85) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 /* Navigation Bar Styles */
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #222;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    top: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    background: linear-gradient(135deg, rgba(76, 29, 149, 0.92) 0%, rgba(157, 23, 105, 0.92) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-lg);
     z-index: 1000;
 }
 
 .dark-mode .navbar {
-    background-color: #222;
+    background: linear-gradient(135deg, rgba(46, 20, 89, 0.92) 0%, rgba(90, 15, 60, 0.92) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .nav-container {
@@ -714,15 +795,17 @@ header[role="banner"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 12px 20px;
     position: relative;
 }
 
 .nav-logo {
     color: white;
-    font-weight: bold;
+    font-family: var(--font-display);
+    font-weight: 700;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    letter-spacing: 0.02em;
 }
 
 .nav-links {
@@ -730,29 +813,32 @@ header[role="banner"] {
     list-style: none;
     margin: 0;
     padding: 0;
+    gap: 4px;
 }
 
 .nav-links li {
     position: relative;
-    margin-left: 20px;
+    margin-left: 4px;
 }
 
 .nav-links a {
-    color: white;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     font-size: 0.9em;
-    transition: all 0.3s;
-    padding: 8px 12px;
-    border-radius: 3px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
     display: block;
 }
 
 .nav-links a:hover {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.16);
+    color: white;
 }
 
 .dark-mode .nav-links a:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 /* Bottom navigation height */
@@ -807,7 +893,10 @@ nav[role="navigation"][aria-label="Main Navigation"] {
         left: 0;
         right: 0;
         width: 100%;
-        background-color: #222;
+        margin-top: 8px;
+        background: linear-gradient(135deg, rgba(76, 29, 149, 0.97) 0%, rgba(157, 23, 105, 0.97) 100%);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         flex-direction: column;
         align-items: center;
         padding: 10px 0;
@@ -816,13 +905,13 @@ nav[role="navigation"][aria-label="Main Navigation"] {
         transition: all 0.3s ease;
         opacity: 0;
         transform: translateY(-10px);
-        border-radius: 0 0 0.75rem 0.75rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
     }
 
     .dark-mode .nav-links {
-        background-color: #1f2937;
-        border-top: 1px solid #374151;
+        background: linear-gradient(135deg, rgba(46, 20, 89, 0.97) 0%, rgba(90, 15, 60, 0.97) 100%);
+        border-top: none;
     }
 
     .nav-links.active {
@@ -923,6 +1012,11 @@ nav[role="navigation"][aria-label="Main Navigation"] {
     position: fixed !important;
     z-index: 40 !important;
     margin: 0 16px 8px 16px !important;
+}
+
+:root.dark nav[role="navigation"][aria-label="Main Navigation"] {
+    background: rgba(30, 27, 46, 0.85) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Enhanced Card States */

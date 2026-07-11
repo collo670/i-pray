@@ -16,56 +16,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="ipray">
     <link rel="apple-touch-icon" href="/i-pray/assets/images/icon-192x192.png">
-    <!-- Tailwind CSS via CDN (will use compiled version at dist/output.css after running: npm run build) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-purple': '#4A1E8A',
-                        'liturgical-white': '#F8F9FA',
-                        'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
-                        'liturgical-gold': '#FFD700',
-                    },
-                    backgroundImage: {
-                        'vintage-texture': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-                    },
-                    screens: {
-                        'xs': '475px',
-                        '3xl': '1600px',
-                    },
-                    animation: {
-                        'hamburger-to-x': 'hamburger-to-x 0.3s ease-in-out',
-                        'mobile-menu-slide': 'mobile-menu-slide 0.3s ease-in-out',
-                    },
-                    keyframes: {
-                        'hamburger-to-x': {
-                            '0%': { transform: 'rotate(0deg) translate(0, 0)' },
-                            '50%': { opacity: '0' },
-                            '100%': { transform: 'rotate(45deg) translate(-5px, 6px)' },
-                        },
-                        'mobile-menu-slide': {
-                            '0%': { maxHeight: '0', opacity: '0' },
-                            '100%': { maxHeight: '500px', opacity: '1' },
-                        }
-                    },
-                    transitionProperty: {
-                        'max-height': 'max-height',
-                        'transform': 'transform',
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="dist/output.css">
     <!-- Google Fonts & Font Awesome with preconnect for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Plausible Analytics -->
     <script defer data-domain="ipray.app" src="https://plausible.io/js/script.js"></script>
@@ -73,6 +29,16 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/index.css">
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <!-- Install Button -->
 <div id="installContainer" class="px-6 py-2">
@@ -80,24 +46,32 @@
     Install ipray App
   </button>
 </div>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+<body class="min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="loading-spinner"></div>
     </div>
     <div id="app" class="relative z-10 page-content">
         <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm" role="banner">
     <div class="header-content">
         <div>
             <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 ipray
             </h1>
-            <p id="appSubtitle" class="text-sm text-gray-600">
+            <p id="appSubtitle" class="text-sm text-gray-600 dark:text-gray-400">
                 Your Prayer Companion
             </p>
         </div>
         <div class="flex items-center">
+            <button id="darkModeQuickToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 ml-2" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <svg id="darkModeIconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <svg id="darkModeIconMoon" class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
             <!-- Search Bar -->
             <div class="search-container hidden md:block fixed md:relative top-16 left-0 right-0 md:top-auto md:left-auto md:right-auto bg-white md:bg-transparent p-4 md:p-0 z-50 md:z-auto shadow-lg md:shadow-none">
                 <!-- Search Filters -->
@@ -140,37 +114,37 @@
         <div class="flex justify-center mb-4">
             <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season" loading="lazy" decoding="async">
         </div>
-        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 season-border" aria-live="polite" aria-label="Liturgical Information">
+        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-gray-800 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-gray-700 season-border" aria-live="polite" aria-label="Liturgical Information">
             <div class="text-center">
-                <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 bg-white/60">
+                <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-200 bg-white/60 dark:bg-black/20">
                     <span id="season">ordinary</span> <span id="liturgicalYear">2023</span>
                 </div>
-                <h2 class="text-3xl font-bold mb-2 text-gray-800">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100">
                     <span id="currentDate">Loading...</span>
                 </h2>
-                <p id="saintOfDay" class="text-md text-gray-700 font-medium mb-1 hidden"></p>
+                <p id="saintOfDay" class="text-md text-gray-700 dark:text-gray-300 font-medium mb-1 hidden"></p>
                 <div class="mt-2">
-                    <button id="toggleUpcomingFeasts" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none">
+                    <button id="toggleUpcomingFeasts" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
                         <p id=feast>Tap to see upcoming feasts </p>
                     </button>
                     <div id="upcomingFeastsList" class="mt-3 text-left hidden"></div>
                 </div>
-                <p id="feastDay" class="text-xl text-purple-800 font-medium hidden">
+                <p id="feastDay" class="text-xl text-purple-800 dark:text-purple-300 font-medium hidden">
                     Feast of All Saints
                 </p>
                 <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
-                    <p id="liturgicalQuote" class="text-sm text-gray-600">
+                    <p id="liturgicalQuote" class="text-sm text-gray-600 dark:text-gray-400">
                         May your prayers today bring you closer to God's grace and peace.
                     </p>
                     <div class="mt-4">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-medium text-gray-700">Prayer Streak</span>
-                            <span id="streakCount" class="text-sm font-bold text-purple-600">0 days</span>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Prayer Streak</span>
+                            <span id="streakCount" class="text-sm font-bold text-purple-600 dark:text-purple-300">0 days</span>
                         </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                             <div id="streakProgress" class="bg-purple-600 h-2 rounded-full" style="width: 0%"></div>
                         </div>
-                        <button id="markPrayedBtn" class="mt-2 text-sm text-blue-600 hover:underline">Mark Today's Prayer as Completed</button>
+                        <button id="markPrayedBtn" class="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:underline">Mark Today's Prayer as Completed</button>
                     </div>
                 </div>
             </div>
@@ -184,41 +158,41 @@
         </div>
         
         <!-- Favorites Section -->
-        <div id="favoritesSection" class="bg-white shadow-md rounded-lg p-6 hidden">
+        <div id="favoritesSection" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 hidden">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800">⭐ Favorites</h2>
-                <button id="clearFavorites" class="text-sm text-gray-500 hover:text-gray-700">Clear All</button>
+                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">⭐ Favorites</h2>
+                <button id="clearFavorites" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Clear All</button>
             </div>
             <div id="favoritesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Favorites will be populated here -->
             </div>
         </div>
-        
+
         <!-- Prayer content with TTS -->
-        <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4">
             <div class="flex items-center justify-between space-x-4">
                 <div class="flex items-center space-x-4">
                     <img src="assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full" loading="lazy" decoding="async">
-                    <h2 class="text-xl font-semibold text-gray-800">Pray To Carmen Hernandez</h2>
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Pray To Carmen Hernandez</h2>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <button id="favoriteCarmen" class="text-gray-500 hover:text-yellow-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Add to favorites">
+                    <button id="favoriteCarmen" class="text-gray-500 dark:text-gray-400 hover:text-yellow-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Add to favorites">
                         <i class="far fa-star w-5 h-5" aria-hidden="true"></i>
                     </button>
-                    <button id="shareCarmen" class="text-gray-500 hover:text-blue-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Share prayer">
+                    <button id="shareCarmen" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Share prayer">
                         <i class="fas fa-share w-5 h-5" aria-hidden="true"></i>
                     </button>
-                    <button id="ttsButton" class="text-gray-500 hover:text-green-600 transition-colors duration-300 p-2 rounded-full bg-gray-100" aria-label="Listen to the prayer">
+                    <button id="ttsButton" class="text-gray-500 dark:text-gray-400 hover:text-green-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Listen to the prayer">
                         <i class="fas fa-volume-up w-5 h-5" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
             <div class="mt-3 text-center">
-                <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 hover:underline focus:outline-none" data-translate="tapToViewPrayer">
+                <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" data-translate="tapToViewPrayer">
                     Tap to view prayer
                 </button>
             </div>
-            <div id="prayerText" class="mt-4 hidden text-gray-700 leading-relaxed text-sm border-t border-gray-200 pt-4">
+            <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed text-sm border-t border-gray-200 dark:border-gray-700 pt-4">
                 <p id="prayerMain"><strong>Oh Lord</strong>,
                 that by electing the servant of God Carmen Hernández
                 as co-initiator of the Neocatechumenal Way,
@@ -234,19 +208,16 @@
             </div>
             <audio id="prayerAudio" controls class="w-full mt-4 hidden"></audio>
         </div>
-            <!-- Navigation items populated by JavaScript -->
-        </div>
         <!-- Offline Prayer History and Favorites -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <div id="prayerHistory" class="bg-white shadow-md rounded-lg p-6"></div>
-            <div id="prayerFavorites" class="bg-white shadow-md rounded-lg p-6"></div>
+            <div id="prayerHistory" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"></div>
+            <div id="prayerFavorites" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"></div>
         </div>
-                </div>
-            </div>
+    </div>
         </main>
         <!-- Social & Support (Bottom) -->
-        <section class="mx-6 mb-24 bg-white shadow-md rounded-lg p-6">
-            <h3 class="text-lg font-bold mb-4">Connect & Support</h3>
+        <section class="mx-6 mb-24 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Connect & Support</h3>
             <div class="grid grid-cols-4 gap-3 mb-4">
                 <a href="https://facebook.com" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
@@ -281,24 +252,24 @@
                     <span class="text-xxs">Donate</span>
                 </a>
             </div>
-            <div class="pt-4 border-t border-gray-200 text-center">
-                <p class="text-sm text-gray-600">
+            <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
                     <span id="copyrightYear"></span> <span data-translate="copyright">ipray App. All rights reserved.</span>
                 </p>
             </div>
         </section>
 <!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
     <div class="flex justify-around h-full items-center">
         <!-- Home -->
-        <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
+        <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400" data-translate="home">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
             <span class="text-xs font-medium" data-translate="home">Home</span>
         </a>
         <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
+        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-translate="lauds">
             <!-- Sunrise Icon -->
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
@@ -306,14 +277,14 @@
             <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
         </a>
         <!-- Calendar -->
-        <a href="pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
+        <a href="pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-translate="calendar">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
             </svg>
             <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
         </a>
         <!-- Settings -->
-        <a href="pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
+        <a href="pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-translate="settings">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
             </svg>
@@ -322,8 +293,8 @@
     </div>
 </nav>
         <!-- Accessibility Menu -->
-        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white shadow-lg rounded-lg p-4 z-50 hidden" role="dialog" aria-labelledby="accessibilityMenu">
-            <h4 class="font-bold mb-2 text-gray-800">Accessibility</h4>
+        <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 z-50 hidden" role="dialog" aria-labelledby="accessibilityMenu">
+            <h4 class="font-bold mb-2 text-gray-800 dark:text-gray-100">Accessibility</h4>
             <div class="space-y-2">
                 <button id="highContrastToggle" class="flex items-center w-full p-2 rounded hover:bg-gray-100">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -380,5 +351,15 @@
     <script src="js/mobile-navigation.js"></script>
     <!-- Main JavaScript -->
     <script src="js/index.js"></script>
+    <script>
+        (function () {
+            var btn = document.getElementById('darkModeQuickToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+            });
+        })();
+    </script>
 </body>
 </html>

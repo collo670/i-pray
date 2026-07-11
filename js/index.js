@@ -586,7 +586,7 @@ function initNavigation() {
         const navItem = document.createElement('a');
         // Set href - will be overridden for items with custom handlers
         navItem.href = item.link;
-        navItem.className = 'nav-item block p-6 rounded-2xl cursor-pointer card-hover bg-white transition-all duration-300 relative';
+        navItem.className = 'nav-item block p-6 rounded-2xl cursor-pointer card-hover bg-white dark:bg-gray-800 transition-all duration-300 relative';
         navItem.setAttribute('data-title', item.title);
         // Only prevent default for Scripture, Midday, and Vespers (they have custom handlers)
         if (item.title === 'scripture' || item.title === 'midday' || item.title === 'vespers') {
@@ -603,12 +603,12 @@ function initNavigation() {
                 </svg>
             </button>
             <div class="flex flex-col items-center text-center">
-                <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100">
+                <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
                     <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         ${item.icon}
                     </svg>
                 </div>
-                <h3 class="font-semibold text-lg text-gray-800" data-translate="${item.title}">
+                <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-100" data-translate="${item.title}">
                     ${translations['en'][item.title]}
                 </h3>
             </div>
@@ -998,10 +998,10 @@ async function fetchDailyReadings() {
         const baseUrl = window.location.hostname === "collo670.github.io" ? "/i-pray" : "";
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         const readingsCard = document.createElement('div');
-        readingsCard.className = 'rounded-2xl p-6 bg-white shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
+        readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
         readingsCard.innerHTML = `
-            <h3 class="text-xl font-bold text-purple-600">${translations[lang].dailyReadings}</h3>
-            <p class="text-xs font-medium text-gray-500 mt-2">${translations[lang].tapToView}</p>
+            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-300">${translations[lang].dailyReadings}</h3>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">${translations[lang].tapToView}</p>
         `;
         // Click: Fetch and display daily readings
         readingsCard.addEventListener('click', async () => {
@@ -1246,12 +1246,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     container.className = 'space-y-2';
                     items.forEach(e => {
                         const el = document.createElement('div');
-                        el.className = 'flex items-center p-2 bg-white/70 rounded-lg shadow-sm';
+                        el.className = 'flex items-center p-2 bg-white/70 dark:bg-black/20 rounded-lg shadow-sm';
                         el.innerHTML = `
-                            <span class="text-xs font-medium w-16 text-gray-600">${e.date}</span>
+                            <span class="text-xs font-medium w-16 text-gray-600 dark:text-gray-300">${e.date}</span>
                             <div class="flex-1">
-                                <div class="font-medium text-gray-800">${e.name}</div>
-                                <div class="text-xs text-gray-600">${e.type}</div>
+                                <div class="font-medium text-gray-800 dark:text-gray-100">${e.name}</div>
+                                <div class="text-xs text-gray-600 dark:text-gray-300">${e.type}</div>
                             </div>
                         `;
                         container.appendChild(el);
@@ -1431,16 +1431,16 @@ function loadFavorites() {
 function displayPrayerHistory(history) {
     const historyEl = document.getElementById('prayerHistory');
     if (!historyEl) return;
-    historyEl.innerHTML = '<h3 class="text-lg font-bold mb-4">Recent Prayers</h3>';
+    historyEl.innerHTML = '<h3 class="text-lg font-bold mb-4 dark:text-gray-100">Recent Prayers</h3>';
     if (history.length === 0) {
-        historyEl.innerHTML += '<p class="text-gray-500">No recent prayers</p>';
+        historyEl.innerHTML += '<p class="text-gray-500 dark:text-gray-400">No recent prayers</p>';
         return;
     }
     history.forEach(prayer => {
         const item = document.createElement('a');
         item.href = prayer.url;
-        item.className = 'block p-3 bg-white rounded-lg shadow-sm mb-2 hover:bg-gray-50';
-        item.innerHTML = `<div class="font-medium">${prayer.title}</div><div class="text-sm text-gray-500">${new Date(prayer.lastAccessed).toLocaleDateString()}</div>`;
+        item.className = 'block p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm mb-2 hover:bg-gray-50 dark:hover:bg-gray-600';
+        item.innerHTML = `<div class="font-medium dark:text-gray-100">${prayer.title}</div><div class="text-sm text-gray-500 dark:text-gray-400">${new Date(prayer.lastAccessed).toLocaleDateString()}</div>`;
         historyEl.appendChild(item);
     });
 }
@@ -1448,16 +1448,16 @@ function displayPrayerHistory(history) {
 function displayFavorites(favorites) {
     const favEl = document.getElementById('prayerFavorites');
     if (!favEl) return;
-    favEl.innerHTML = '<h3 class="text-lg font-bold mb-4">Favorite Prayers</h3>';
+    favEl.innerHTML = '<h3 class="text-lg font-bold mb-4 dark:text-gray-100">Favorite Prayers</h3>';
     if (favorites.length === 0) {
-        favEl.innerHTML += '<p class="text-gray-500">No favorites yet</p>';
+        favEl.innerHTML += '<p class="text-gray-500 dark:text-gray-400">No favorites yet</p>';
         return;
     }
     favorites.forEach(prayer => {
         const item = document.createElement('a');
         item.href = prayer.url;
-        item.className = 'block p-3 bg-white rounded-lg shadow-sm mb-2 hover:bg-gray-50';
-        item.innerHTML = `<div class="font-medium">${prayer.title}</div>`;
+        item.className = 'block p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm mb-2 hover:bg-gray-50 dark:hover:bg-gray-600';
+        item.innerHTML = `<div class="font-medium dark:text-gray-100">${prayer.title}</div>`;
         favEl.appendChild(item);
     });
 }
