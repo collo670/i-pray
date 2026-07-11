@@ -7,8 +7,8 @@
     <meta name="description" content="iPray app settings and preferences">
     <link rel="stylesheet" href="../css/index.css">
     <!-- PWA Configuration -->
-    <link rel="manifest" href="/ipray/manifest.json">
-    <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#7c3aed">
     <!-- Tailwind CSS: locally built (npm run build) -->
     <link rel="stylesheet" href="../dist/output.css">
     <!-- Fonts & Icons -->
@@ -28,7 +28,7 @@
 <body class="min-h-screen bg-gradient-vintage dark:bg-gray-900 dark:text-white transition-colors duration-300">
     <div id="app">
         <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm" role="banner">
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
@@ -38,6 +38,12 @@
                         settings
                     </p>
                 </div>
+                <a href="../index.html" class="flex items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Back to home">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span class="text-sm font-medium" data-translate="home">Home</span>
+                </a>
             </div>
         </header>
         <!-- Main Content -->
@@ -88,27 +94,27 @@
                         <span data-translate="languageSettings">Language Settings</span>
                     </h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="en">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="en">
                             <span class="mr-2">🇺🇸</span>
                             <span>English</span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="sw">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="sw">
                             <span class="mr-2">🇹🇿</span>
                             <span>Swahili</span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="es">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="es">
                             <span class="mr-2">🇪🇸</span>
                             <span>Spanish</span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="fr">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="fr">
                             <span class="mr-2">🇫🇷</span>
                             <span>French</span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="pt">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="pt">
                             <span class="mr-2">🇵🇹</span>
                             <span>Portuguese</span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border hover:border-primary" data-lang="it">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="it">
                             <span class="mr-2">🇮🇹</span>
                             <span>Italian</span>
                         </button>
@@ -130,7 +136,7 @@
                                 <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="startDayWithPrayer">Start your day with prayer</p>
                             </div>
                             <div class="flex items-center">
-                                <input type="time" value="06:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3" aria-label="Set morning prayer reminder time">
+                                <input type="time" value="06:00" class="bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-2 py-1 mr-3" aria-label="Set morning prayer reminder time">
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" checked class="sr-only peer" aria-label="Toggle morning prayer reminder">
                                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
@@ -143,7 +149,7 @@
                                 <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="noonPrayer">Noon prayer tradition</p>
                             </div>
                             <div class="flex items-center">
-                                <input type="time" value="12:00" class="bg-white dark:bg-gray-600 rounded px-2 py-1 mr-3" aria-label="Set angelus reminder time">
+                                <input type="time" value="12:00" class="bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-2 py-1 mr-3" aria-label="Set angelus reminder time">
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" checked class="sr-only peer" aria-label="Toggle angelus reminder">
                                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
@@ -184,7 +190,7 @@
                                 <h3 class="font-medium" data-translate="textSize">Text Size</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="adjustPreference">Adjust to your preference</p>
                             </div>
-                            <select id="textSizeSelect" class="bg-white dark:bg-gray-600 rounded px-2 py-1" aria-label="Select text size">
+                            <select id="textSizeSelect" class="bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-2 py-1" aria-label="Select text size">
                                 <option value="small">Small</option>
                                 <option value="normal">Normal</option>
                                 <option value="large">Large</option>
@@ -271,26 +277,35 @@
             </div>
         </main>
        <!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
     <div class="flex justify-around h-full items-center">
         <!-- Home -->
-        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
-            
+        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
             <span class="text-xs font-medium" data-translate="home">Home</span>
         </a>
         <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
-            
+        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer">
+            <!-- Sunrise Icon -->
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+            </svg>
             <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
         </a>
         <!-- Calendar -->
-        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
-            
+        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+            </svg>
             <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
         </a>
-        <!-- Settings -->
-        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
-            
+        <!-- Settings (current page) -->
+        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400" aria-current="page">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+            </svg>
             <span class="text-xs font-medium" data-translate="settings">Settings</span>
         </a>
     </div>

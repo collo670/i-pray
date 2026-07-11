@@ -145,6 +145,34 @@ function setupEventListeners() {
     document.getElementById('clearCacheBtn').addEventListener('click', clearCache);
     document.getElementById('exportDataBtn').addEventListener('click', exportData);
     document.getElementById('checkUpdatesBtn').addEventListener('click', checkForUpdates);
+
+    // Lauds link in the bottom nav (same week/day cycle as js/index.js)
+    const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
+    if (masifuAsubuhiLink) {
+        masifuAsubuhiLink.addEventListener('click', function() {
+            const { dayPrefix, week } = getCurrentWeekAndDay();
+            window.location.href = `${dayPrefix}${week}.html`;
+        });
+    }
+}
+
+function getCurrentWeekAndDay() {
+    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const currentSunday = new Date(today);
+    currentSunday.setDate(today.getDate() - today.getDay());
+    currentSunday.setHours(0, 0, 0, 0);
+
+    // Reference Sunday for week 1 of the 4-week cycle (keep in sync with js/index.js)
+    const referenceWeek1Sunday = new Date(2025, 9, 19);
+    referenceWeek1Sunday.setHours(0, 0, 0, 0);
+
+    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+    const weeksSinceRef = Math.floor((currentSunday - referenceWeek1Sunday) / msPerWeek);
+    const week = ((weeksSinceRef % 4) + 4) % 4 + 1;
+
+    return { dayPrefix: dayToPrefix[today.getDay()], week };
 }
 
 function setTheme(theme) {
