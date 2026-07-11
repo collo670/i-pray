@@ -7,12 +7,16 @@
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-display: 'Cormorant Garamond', Georgia, serif;
 
-    --surface-0: #ffffff;
-    --surface-1: #f8f7fb;
-    --surface-2: #f1eef8;
-    --text-primary: #1f1b2e;
-    --text-secondary: #5b5468;
-    --border-subtle: rgba(76, 29, 149, 0.12);
+    /* Blend of the index background gradient stops
+       (#035313 + #e7d7dc + #62acdd → #6f9d99) */
+    --index-blend: #6f9d99;
+
+    --surface-0: #f7faf9;
+    --surface-1: #edf3f2;
+    --surface-2: #e2ecea;
+    --text-primary: #1b2422;
+    --text-secondary: #52645f;
+    --border-subtle: rgba(111, 157, 153, 0.28);
 
     --brand-purple: #6d28d9;
     --brand-pink: #db2777;
@@ -23,24 +27,45 @@
     --radius-lg: 1.25rem;
     --radius-xl: 1.75rem;
 
-    --shadow-sm: 0 1px 3px rgba(31, 27, 46, 0.08);
-    --shadow-md: 0 8px 24px -8px rgba(31, 27, 46, 0.16);
-    --shadow-lg: 0 20px 40px -12px rgba(31, 27, 46, 0.22);
+    --shadow-sm: 0 1px 3px rgba(27, 36, 34, 0.08);
+    --shadow-md: 0 8px 24px -8px rgba(27, 36, 34, 0.16);
+    --shadow-lg: 0 20px 40px -12px rgba(27, 36, 34, 0.22);
 
-    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-bg: rgba(247, 250, 249, 0.72);
     --glass-border: rgba(255, 255, 255, 0.4);
 }
 
 body.dark-mode,
 :root.dark {
-    --surface-0: #14111f;
-    --surface-1: #1b1729;
-    --surface-2: #241f35;
-    --text-primary: #f2eefb;
-    --text-secondary: #b8b0cc;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(20, 17, 31, 0.75);
+    /* Blend of the dark index gradient stops
+       (#0b1a10 + #1b1626 + #0f1a24 → #12191e) */
+    --index-blend: #12191e;
+
+    --surface-0: #12191e;
+    --surface-1: #1a232a;
+    --surface-2: #232e37;
+    --text-primary: #eaf2f0;
+    --text-secondary: #a7bab6;
+    --border-subtle: rgba(167, 186, 182, 0.14);
+    --glass-bg: rgba(18, 25, 30, 0.75);
     --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Retint Tailwind's gray ramp toward the index-background blends so
+   bg-gray-* / dark:bg-gray-* / text-gray-* utilities match the theme:
+   light shades tint toward #6f9d99, deep shades toward #12191e. */
+:root {
+    --color-gray-50: #f5f9f8;
+    --color-gray-100: #eaf1ef;
+    --color-gray-200: #d6e2df;
+    --color-gray-300: #b8c9c5;
+    --color-gray-400: #90a6a2;
+    --color-gray-500: #6f8a86;
+    --color-gray-600: #566e6a;
+    --color-gray-700: #2c3843;
+    --color-gray-800: #1a232a;
+    --color-gray-900: #12191e;
+    --color-gray-950: #0c1114;
 }
 
 body {
