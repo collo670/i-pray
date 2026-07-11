@@ -1,9 +1,10 @@
-const CACHE_NAME = 'ipray-v202509231746';
+const CACHE_NAME = 'ipray-v202607111000';
 // Define critical assets that should be cached immediately for faster initial load
 const CRITICAL_ASSETS = [
   '/i-pray/',
   '/i-pray/index.html',
   '/i-pray/js/index.js',
+  '/i-pray/js/logo-loader.js',
   '/i-pray/css/index.css',
   '/i-pray/manifest.json',
   '/i-pray/js/translation.js',
@@ -92,6 +93,7 @@ const urlsToCache = [
   '/i-pray/pages/prayer.html',
   '/i-pray/pages/sacraments.html',
   '/i-pray/js/service-worker.js',
+  '/i-pray/js/logo-loader.js',
   '/i-pray/pages/settings.html',
   '/i-pray/tailwind.config.js',
   '/i-pray/assets/months/august/10aug.html',
