@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 :root {
     --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%);
 }
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     transition: all 0.3s ease;
 }
 /* Dynamic Theme Classes */
