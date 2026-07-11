@@ -1026,11 +1026,11 @@ async function fetchDailyReadings() {
                 alert('Unable to load daily readings. Please try again later.');
             }
         });
-        // Insert before navGrid
-        const homeView = document.getElementById('homeView');
-        const navGrid = document.getElementById('navGrid');
-        if (homeView && navGrid) {
-            homeView.insertBefore(readingsCard, navGrid);
+        // Insert into the dedicated slot in homeView
+        const dailyReadingsSlot = document.getElementById('dailyReadingsSlot');
+        if (dailyReadingsSlot) {
+            dailyReadingsSlot.innerHTML = '';
+            dailyReadingsSlot.appendChild(readingsCard);
         }
     } catch (error) {
         console.error('Failed to fetch readings:', error);

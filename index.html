@@ -85,25 +85,17 @@
                        class="search-input" aria-label="Search prayers and readings">
                 <div id="searchResults" class="search-results"></div>
             </div>
-            <a href="pages/calendar.html" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Calendar">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </a>
-            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2" title="Accessibility Options" aria-expanded="false" aria-controls="accessibilityMenu">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-            </button>
             <!-- Mobile Search Button -->
             <button id="mobileSearchBtn" class="p-2 rounded-full bg-gray-200 ml-2 md:hidden" aria-label="Search" title="Search">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </button>
-            <button id="translationToggle" class="p-2 rounded-full bg-gray-200 ml-2 font-medium text-sm" title="Translate to Swahili">
-                EN
+            <!-- Options -->
+            <button id="optionsToggle" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Options" title="Options" aria-expanded="false" aria-controls="optionsPanel">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
             </button>
         </div>
     </div>
@@ -149,76 +141,122 @@
                 </div>
             </div>
         </div>
-        <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <!-- Navigation items populated by JavaScript -->
-        </div>
-        <!-- Skeleton Loaders -->
-        <div id="navGridSkeleton" class="grid grid-cols-2 md:grid-cols-4 gap-6" style="display: none;">
-            <!-- Skeleton cards will be inserted here -->
-        </div>
-        
-        <!-- Favorites Section -->
-        <div id="favoritesSection" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 hidden">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">⭐ Favorites</h2>
-                <button id="clearFavorites" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Clear All</button>
-            </div>
-            <div id="favoritesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Favorites will be populated here -->
-            </div>
-        </div>
+        <!-- Daily Readings card is injected here by js/index.js -->
+        <div id="dailyReadingsSlot"></div>
 
-        <!-- Prayer content with TTS -->
-        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4">
-            <div class="flex items-center justify-between space-x-4">
-                <div class="flex items-center space-x-4">
-                    <img src="assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full" loading="lazy" decoding="async">
-                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Pray To Carmen Hernandez</h2>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button id="favoriteCarmen" class="text-gray-500 dark:text-gray-400 hover:text-yellow-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Add to favorites">
-                        <i class="far fa-star w-5 h-5" aria-hidden="true"></i>
-                    </button>
-                    <button id="shareCarmen" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Share prayer">
-                        <i class="fas fa-share w-5 h-5" aria-hidden="true"></i>
-                    </button>
-                    <button id="ttsButton" class="text-gray-500 dark:text-gray-400 hover:text-green-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Listen to the prayer">
-                        <i class="fas fa-volume-up w-5 h-5" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="mt-3 text-center">
-                <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" data-translate="tapToViewPrayer">
-                    Tap to view prayer
-                </button>
-            </div>
-            <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed text-sm border-t border-gray-200 dark:border-gray-700 pt-4">
-                <p id="prayerMain"><strong>Oh Lord</strong>,
-                that by electing the servant of God Carmen Hernández
-                as co-initiator of the Neocatechumenal Way,
-                granted her a great love for Jesus Christ and the Church,
-                for Holy Scripture and for liturgical prayer,
-                a burning zeal for the itinerant announcement of the Gospel
-                and fidelity to you in the trials of the cross;
-                grant that I, through her intercession,
-                may be faithful to the baptism I have received
-                and, if it is your will, also grant the grace I ask of you.
-                Through Jesus Christ, our Lord. Amen</p>
-                <p id="prayerFinal"><strong>Final:</strong> Our Father. Hail Mary. Glory be. ...</p>
-            </div>
-            <audio id="prayerAudio" controls class="w-full mt-4 hidden"></audio>
-        </div>
-        <!-- Offline Prayer History and Favorites -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <div id="prayerHistory" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"></div>
-            <div id="prayerFavorites" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"></div>
-        </div>
+        <!-- Options trigger: opens the Options panel with prayer navigation, favorites, history and more -->
+        <button id="openOptionsBtn" class="w-full flex items-center justify-center gap-2 rounded-2xl p-4 bg-white dark:bg-gray-800 shadow-md card-hover text-gray-800 dark:text-gray-100 font-semibold" aria-haspopup="dialog" aria-controls="optionsPanel">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span data-translate="options">Options</span>
+        </button>
     </div>
         </main>
-        <!-- Social & Support (Bottom) -->
-        <section class="mx-6 mb-24 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
-            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Connect & Support</h3>
-            <div class="grid grid-cols-4 gap-3 mb-4">
+
+        <!-- Options Panel (modal): prayer navigation, favorites, history, Carmen prayer, connect & support, accessibility & translation -->
+        <div id="optionsPanel" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="optionsPanelTitle">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-gray-50 dark:bg-gray-900 rounded-t-2xl z-10">
+                    <h2 id="optionsPanelTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100">Options</h2>
+                    <button id="closeOptionsPanel" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close options">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-6 space-y-8">
+                    <!-- Quick links: Calendar, Accessibility, Translate -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a href="pages/calendar.html" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100" aria-label="Calendar">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span data-translate="calendar">Calendar</span>
+                        </a>
+                        <button id="accessibilityToggle" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100" title="Accessibility Options" aria-expanded="false" aria-controls="accessibilityMenu">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <span>Accessibility</span>
+                        </button>
+                        <button id="translationToggle" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 font-medium text-sm text-gray-800 dark:text-gray-100" title="Translate to Swahili">
+                            EN
+                        </button>
+                    </div>
+
+                    <!-- Prayer Navigation -->
+                    <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Navigation items populated by JavaScript -->
+                    </div>
+                    <!-- Skeleton Loaders -->
+                    <div id="navGridSkeleton" class="grid grid-cols-2 md:grid-cols-4 gap-6" style="display: none;">
+                        <!-- Skeleton cards will be inserted here -->
+                    </div>
+
+                    <!-- Favorites Section -->
+                    <div id="favoritesSection" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">⭐ Favorites</h2>
+                            <button id="clearFavorites" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Clear All</button>
+                        </div>
+                        <div id="favoritesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Favorites will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Prayer content with TTS -->
+                    <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+                        <div class="flex items-center justify-between space-x-4">
+                            <div class="flex items-center space-x-4">
+                                <img src="assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full" loading="lazy" decoding="async">
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Pray To Carmen Hernandez</h2>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button id="favoriteCarmen" class="text-gray-500 dark:text-gray-400 hover:text-yellow-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Add to favorites">
+                                    <i class="far fa-star w-5 h-5" aria-hidden="true"></i>
+                                </button>
+                                <button id="shareCarmen" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Share prayer">
+                                    <i class="fas fa-share w-5 h-5" aria-hidden="true"></i>
+                                </button>
+                                <button id="ttsButton" class="text-gray-500 dark:text-gray-400 hover:text-green-600 transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-700" aria-label="Listen to the prayer">
+                                    <i class="fas fa-volume-up w-5 h-5" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <button id="togglePrayerBtn" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" data-translate="tapToViewPrayer">
+                                Tap to view prayer
+                            </button>
+                        </div>
+                        <div id="prayerText" class="mt-4 hidden text-gray-700 dark:text-gray-300 leading-relaxed text-sm border-t border-gray-200 dark:border-gray-700 pt-4">
+                            <p id="prayerMain"><strong>Oh Lord</strong>,
+                            that by electing the servant of God Carmen Hernández
+                            as co-initiator of the Neocatechumenal Way,
+                            granted her a great love for Jesus Christ and the Church,
+                            for Holy Scripture and for liturgical prayer,
+                            a burning zeal for the itinerant announcement of the Gospel
+                            and fidelity to you in the trials of the cross;
+                            grant that I, through her intercession,
+                            may be faithful to the baptism I have received
+                            and, if it is your will, also grant the grace I ask of you.
+                            Through Jesus Christ, our Lord. Amen</p>
+                            <p id="prayerFinal"><strong>Final:</strong> Our Father. Hail Mary. Glory be. ...</p>
+                        </div>
+                        <audio id="prayerAudio" controls class="w-full mt-4 hidden"></audio>
+                    </div>
+
+                    <!-- Offline Prayer History and Favorites -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="prayerHistory" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"></div>
+                        <div id="prayerFavorites" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"></div>
+                    </div>
+
+                    <!-- Social & Support -->
+                    <section class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+                        <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Connect & Support</h3>
+                        <div class="grid grid-cols-4 gap-3 mb-4">
                 <a href="https://facebook.com" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -258,6 +296,9 @@
                 </p>
             </div>
         </section>
+                </div>
+            </div>
+        </div>
 <!-- Bottom Navigation -->
 <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
     <div class="flex justify-around h-full items-center">
@@ -358,6 +399,42 @@
             btn.addEventListener('click', function () {
                 var isDark = document.documentElement.classList.toggle('dark');
                 localStorage.setItem('darkMode', isDark);
+            });
+        })();
+    </script>
+    <!-- Options Panel toggle -->
+    <script>
+        (function () {
+            var panel = document.getElementById('optionsPanel');
+            var openBtns = [document.getElementById('optionsToggle'), document.getElementById('openOptionsBtn')];
+            var closeBtn = document.getElementById('closeOptionsPanel');
+            if (!panel) return;
+
+            function openPanel() {
+                panel.classList.remove('hidden');
+                panel.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+                var toggle = document.getElementById('optionsToggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'true');
+            }
+
+            function closePanel() {
+                panel.classList.add('hidden');
+                panel.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+                var toggle = document.getElementById('optionsToggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            }
+
+            openBtns.forEach(function (btn) {
+                if (btn) btn.addEventListener('click', openPanel);
+            });
+            if (closeBtn) closeBtn.addEventListener('click', closePanel);
+            panel.addEventListener('click', function (e) {
+                if (e.target === panel) closePanel();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !panel.classList.contains('hidden')) closePanel();
             });
         })();
     </script>
