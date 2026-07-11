@@ -95,8 +95,27 @@ h1, h2, h3 {
 .theme-red    { --primary-color: #C41E3A; --color-primary: #C41E3A; }
 .bg-gradient-vintage {
     background: var(--primary-color);
+    min-height: 100vh;
+    min-height: 100dvh;
 }
 :root.dark .bg-gradient-vintage {
+    background: linear-gradient(135deg, #0b1a10 0%, #1b1626 50%, #0f1a24 100%);
+}
+/* Index page only: paint the gradient on a fixed full-viewport layer so it
+   always covers the whole screen on mobile (dynamic address bars break 100vh,
+   and iOS Safari ignores background-attachment: fixed). */
+body.page-index.bg-gradient-vintage,
+:root.dark body.page-index.bg-gradient-vintage {
+    background: transparent;
+}
+body.page-index::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--primary-color);
+}
+:root.dark body.page-index::before {
     background: linear-gradient(135deg, #0b1a10 0%, #1b1626 50%, #0f1a24 100%);
 }
 .card {
@@ -262,7 +281,8 @@ h1, h2, h3 {
         border: 2px solid #000000;
     }
 
-    .bg-gradient-vintage {
+    .bg-gradient-vintage,
+    body.page-index::before {
         background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
     }
 }
