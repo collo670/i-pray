@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Liturgy of the Hours - ipray</title>
     <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="description" content="Midday Prayer and Vespers (Evening Prayer) for every day, complete with saint memorials, feasts and solemnities">
+    <meta name="description" content="Office of Readings, Midday Prayer and Vespers (Evening Prayer) for every day, complete with saint memorials, feasts and solemnities">
     <meta name="theme-color" content="#f7faf9">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7faf9">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12191e">
@@ -19,7 +19,7 @@
         .office-content { font-size: 1.0625rem; line-height: 1.75; color: #374151; }
         .dark .office-content { color: #d1d5db; }
         .office-content .v { margin: 0; }
-        .office-content .v.gb { margin-top: 0.9em; }
+        .office-content .gb { margin-top: 0.9em; }
         .office-content .vi { padding-left: 1.25rem; }
         .office-content .p, .office-content .pi { margin: 0.6em 0; }
         .office-content table { width: 100%; border-collapse: collapse; }
@@ -94,8 +94,9 @@
             <!-- Hour switch: Midday / Vespers -->
             <div class="flex justify-center mb-4">
                 <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose the hour">
-                    <button id="tabSext" class="px-5 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Midday</button>
-                    <button id="tabVespers" class="px-5 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Vespers</button>
+                    <button id="tabReadings" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Readings</button>
+                    <button id="tabSext" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Midday</button>
+                    <button id="tabVespers" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Vespers</button>
                 </div>
             </div>
 
@@ -223,6 +224,12 @@
             var CACHE_PREFIX = 'officeHtml-';
 
             var HOURS = {
+                readings: {
+                    page: 'readings',
+                    title: 'Office of Readings',
+                    titleSw: 'Ofisi ya Masomo',
+                    subtitle: 'Matins · The Office of Readings'
+                },
                 sext: {
                     page: 'sext',
                     title: 'Midday Prayer',
@@ -244,12 +251,15 @@
             var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
 
             var params = new URLSearchParams(window.location.search);
-            var hourKey = params.get('hour') === 'vespers' ? 'vespers' : 'sext';
+            var hourKey = HOURS[params.get('hour')] ? params.get('hour') : 'sext';
 
             var titleEl = document.getElementById('hourTitle');
             var subtitleEl = document.getElementById('hourSubtitle');
-            var tabSext = document.getElementById('tabSext');
-            var tabVespers = document.getElementById('tabVespers');
+            var TABS = {
+                readings: document.getElementById('tabReadings'),
+                sext: document.getElementById('tabSext'),
+                vespers: document.getElementById('tabVespers')
+            };
             var datePicker = document.getElementById('datePicker');
             var prevBtn = document.getElementById('prevDay');
             var nextBtn = document.getElementById('nextDay');
@@ -298,12 +308,12 @@
                 titleEl.textContent = lang === 'sw' ? h.titleSw : h.title;
                 subtitleEl.textContent = h.subtitle;
                 document.title = h.title + ' - ipray';
-                [tabSext, tabVespers].forEach(function (tab, i) {
-                    var active = (i === 0) === (hourKey === 'sext');
-                    tab.className = 'px-5 py-2 rounded-full text-sm font-semibold transition-colors ' + (active
+                Object.keys(TABS).forEach(function (key) {
+                    var active = key === hourKey;
+                    TABS[key].className = 'px-4 py-2 rounded-full text-sm font-semibold transition-colors ' + (active
                         ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
                         : 'text-gray-600 dark:text-gray-300');
-                    tab.setAttribute('aria-selected', String(active));
+                    TABS[key].setAttribute('aria-selected', String(active));
                 });
             }
 
@@ -462,8 +472,9 @@
                 load(currentDate);
             }
 
-            tabSext.addEventListener('click', function () { switchHour('sext'); });
-            tabVespers.addEventListener('click', function () { switchHour('vespers'); });
+            Object.keys(TABS).forEach(function (key) {
+                TABS[key].addEventListener('click', function () { switchHour(key); });
+            });
             prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
             nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
             todayBtn.addEventListener('click', function () { load(today); });

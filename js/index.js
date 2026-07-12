@@ -430,7 +430,7 @@ function initAccessibility() {
 // ---------------------------------------------------------------------------
 const PRAYER_MENU = [
     { id: 'lauds', key: 'morningPrayer', icon: 'fa-sun', iconColor: 'text-yellow-500', type: 'hours', suffix: '' },
-    { id: 'scripture', key: 'officeOfReadings', icon: 'fa-book-open', iconColor: 'text-orange-500', type: 'office' },
+    { id: 'scripture', key: 'officeOfReadings', icon: 'fa-book-open', iconColor: 'text-orange-500', link: 'pages/prayer-hour.html?hour=readings' },
     { id: 'midday', key: 'middayPrayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', link: 'pages/prayer-hour.html?hour=sext' },
     { id: 'vespers', key: 'eveningPrayer', icon: 'fa-moon', iconColor: 'text-indigo-500', link: 'pages/prayer-hour.html?hour=vespers' },
     { id: 'readings', key: 'nightPrayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
@@ -440,31 +440,10 @@ const PRAYER_MENU = [
     { id: 'carmen-page', key: 'carmenPrayer', icon: 'fa-heart', iconColor: 'text-purple-500', link: 'pages/carmen.html' }
 ];
 
-// Map Ordinary Time week numbers to the Office of Readings folders available
-const OFFICE_WEEK_FOLDERS = {
-    21: 'ishirini_na_moja', 22: 'ishirini_na_mbili', 23: 'ishirini_na_tatu',
-    24: 'ishirini_na_nne', 25: 'ishirini_na_tano', 26: 'ishirini_na_sita',
-    27: 'ishirini_na_saba', 28: 'ishirini_na_nane', 29: 'ishirini_na_tisa',
-    30: 'thelathini', 31: 'thelathini_na_moja', 32: 'thelathini_na_mbili',
-    33: 'thelathini_na_tatu', 34: 'thelathini_na_nne'
-};
-
-function getOfficeOfReadingsLink() {
-    const info = getLiturgicalToday();
-    const folder = info.season === 'Ordinary Time' ? OFFICE_WEEK_FOLDERS[info.weekNum] : null;
-    if (!folder) return 'pages/ofisi ya masomo/index.html';
-    const dayNames = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-    const weekday = dayNames[new Date().getDay()];
-    return `pages/ofisi ya masomo/${folder}/${weekday}.html`;
-}
-
 function resolvePrayerLink(item) {
     if (item.type === 'hours') {
         const { dayPrefix, week } = getCurrentWeekAndDay();
         return `pages/${getPrayerFileName(dayPrefix, week, item.suffix)}`;
-    }
-    if (item.type === 'office') {
-        return getOfficeOfReadingsLink();
     }
     return item.link;
 }
