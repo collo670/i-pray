@@ -27,7 +27,18 @@ const translations = {
         tapToView: "Tap to view",
         dailyReadings: "Daily Readings",
         installApp: "Install ipray App",
-        copyright: "iPray App. All rights reserved."
+        copyright: "iPray App. All rights reserved.",
+        options: "Options",
+        morningPrayer: "Morning Prayer",
+        officeOfReadings: "Office of Readings",
+        middayPrayer: "Midday Prayer",
+        eveningPrayer: "Evening Prayer",
+        nightPrayer: "Night Prayer",
+        holyRosary: "Holy Rosary",
+        stationsOfCross: "Stations of the Cross",
+        otherPrayers: "Other Prayers",
+        carmenPrayer: "Prayer to Carmen Hernández",
+        psalterWeek: "Psalter Week"
     },
     sw: {
         home: "Nyumbani",
@@ -55,36 +66,21 @@ const translations = {
         tapToView: "Gusa kuona",
         dailyReadings: "Masomo ya Kila Siku",
         installApp: "Sakinisha App ya ipray",
-        copyright: "App ya iPray. Haki zote zimehifadhiwa."
+        copyright: "App ya iPray. Haki zote zimehifadhiwa.",
+        options: "Chaguo",
+        morningPrayer: "Masifu ya Asubuhi",
+        officeOfReadings: "Ofisi ya Masomo",
+        middayPrayer: "Sala ya Mchana",
+        eveningPrayer: "Masifu ya Jioni",
+        nightPrayer: "Sala ya Usiku",
+        holyRosary: "Rozari Takatifu",
+        stationsOfCross: "Njia ya Msalaba",
+        otherPrayers: "Sala Nyingine",
+        carmenPrayer: "Sala kwa Carmen Hernández",
+        psalterWeek: "Juma la Zaburi"
     }
 };
 
-// Liturgical Feasts Data (fixed-date) copied from calendar for consistency
-const LITURGICAL_FEASTS = {
-    0:[{date:1,name:"Mary, Mother of God",type:"Solemnity",color:"white"},{date:2,name:"Basil the Great and Gregory Nazianzen",type:"Memorial",color:"white"},{date:3,name:"Most Holy Name of Jesus",type:"Optional Memorial",color:"white"},{date:4,name:"Elizabeth Ann Seton",type:"Memorial",color:"white",country:"US"},{date:5,name:"John Neumann",type:"Memorial",color:"white",country:"US"},{date:6,name:"Epiphany",type:"Solemnity",color:"white"},{date:7,name:"Raymond of Penyafort",type:"Optional Memorial",color:"white"},{date:13,name:"Hilary of Poitiers",type:"Optional Memorial",color:"white"},{date:17,name:"Anthony of Egypt",type:"Memorial",color:"white"},{date:20,name:"Vincent, deacon and martyr",type:"Optional Memorial",color:"red"},{date:21,name:"Agnes, virgin and martyr",type:"Memorial",color:"red"},{date:22,name:"Vincent, deacon and martyr",type:"Optional Memorial",color:"red"},{date:23,name:"Marianne Cope",type:"Optional Memorial",color:"white",country:"US"},{date:24,name:"Francis de Sales",type:"Memorial",color:"white"},{date:25,name:"Conversion of Paul, Apostle",type:"Feast",color:"white"},{date:26,name:"Timothy and Titus",type:"Memorial",color:"white"},{date:27,name:"Angela Merici",type:"Optional Memorial",color:"white"},{date:28,name:"Thomas Aquinas",type:"Memorial",color:"white"},{date:31,name:"John Bosco",type:"Memorial",color:"white"}],
-    1:[{date:2,name:"Presentation of the Lord",type:"Feast",color:"white"},{date:3,name:"Blase, bishop and martyr",type:"Optional Memorial",color:"red"},{date:4,name:"Agatha, virgin and martyr",type:"Memorial",color:"red"},{date:6,name:"Paul Miki and companions",type:"Memorial",color:"red"},{date:8,name:"Josephine Bakhita",type:"Optional Memorial",color:"white"},{date:10,name:"Scholastica",type:"Memorial",color:"white"},{date:11,name:"Our Lady of Lourdes",type:"Optional Memorial",color:"white"},{date:14,name:"Cyril and Methodius",type:"Memorial",color:"white"},{date:21,name:"Peter Damian",type:"Optional Memorial",color:"white"},{date:22,name:"Chair of Peter",type:"Feast",color:"white"},{date:23,name:"Polycarp",type:"Memorial",color:"red"}],
-    2:[{date:3,name:"Katharine Drexel",type:"Optional Memorial",color:"white",country:"US"},{date:4,name:"Casimir",type:"Optional Memorial",color:"white"},{date:7,name:"Perpetua and Felicity",type:"Memorial",color:"red"},{date:8,name:"John of God",type:"Optional Memorial",color:"white"},{date:9,name:"Frances of Rome",type:"Optional Memorial",color:"white"},{date:17,name:"Patrick",type:"Optional Memorial",color:"green"},{date:18,name:"Cyril of Jerusalem",type:"Optional Memorial",color:"white"},{date:19,name:"Joseph, Husband of Mary",type:"Solemnity",color:"white"},{date:23,name:"Turibius of Mogrovejo",type:"Optional Memorial",color:"white"},{date:25,name:"Annunciation of the Lord",type:"Solemnity",color:"white"}],
-    3:[{date:2,name:"Francis of Paola",type:"Optional Memorial",color:"white"},{date:4,name:"Isidore",type:"Optional Memorial",color:"white"},{date:5,name:"Vincent Ferrer",type:"Optional Memorial",color:"white"},{date:7,name:"John Baptist de la Salle",type:"Memorial",color:"white"},{date:11,name:"Stanislaus",type:"Memorial",color:"red"},{date:13,name:"Martin I",type:"Optional Memorial",color:"red"},{date:21,name:"Anselm of Canterbury",type:"Optional Memorial",color:"white"},{date:23,name:"George or Adalbert",type:"Optional Memorial",color:"red"},{date:24,name:"Fidelis of Sigmaringen",type:"Optional Memorial",color:"red"},{date:25,name:"Mark the Evangelist",type:"Feast",color:"white"},{date:28,name:"Peter Chanel or Louis de Montfort",type:"Optional Memorial",color:"red"},{date:29,name:"Catherine of Siena",type:"Memorial",color:"white"},{date:30,name:"Pius V",type:"Optional Memorial",color:"white"}],
-    4:[{date:1,name:"Joseph the Worker",type:"Optional Memorial",color:"white"},{date:2,name:"Athanasius",type:"Memorial",color:"white"},{date:3,name:"Philip and James, Apostles",type:"Feast",color:"white"},{date:10,name:"Damien de Veuster",type:"Optional Memorial",color:"white",country:"US"},{date:13,name:"Our Lady of Fatima",type:"Optional Memorial",color:"white"},{date:14,name:"Matthias the Apostle",type:"Feast",color:"white"},{date:15,name:"Isidore the Farmer",type:"Optional Memorial",color:"white",country:"US"},{date:18,name:"John I",type:"Optional Memorial",color:"red"},{date:20,name:"Bernardine of Siena",type:"Optional Memorial",color:"white"},{date:21,name:"Christopher Magallanes and companions",type:"Optional Memorial",color:"red"},{date:22,name:"Rita of Cascia",type:"Optional Memorial",color:"white"},{date:24,name:"Bede or Gregory VII or Mary Magdalene de Pazzi",type:"Optional Memorial",color:"white"},{date:25,name:"Philip Neri",type:"Memorial",color:"white"},{date:26,name:"Augustine of Canterbury",type:"Optional Memorial",color:"white"},{date:31,name:"Visitation of the Blessed Virgin Mary",type:"Feast",color:"white"}],
-    5:[{date:1,name:"Justin Martyr",type:"Memorial",color:"red"},{date:3,name:"Charles Lwanga and companions",type:"Memorial",color:"red"},{date:5,name:"Boniface",type:"Memorial",color:"red"},{date:9,name:"Ephrem",type:"Optional Memorial",color:"white"},{date:11,name:"Barnabas the Apostle",type:"Memorial",color:"white"},{date:13,name:"Anthony of Padua",type:"Memorial",color:"white"},{date:19,name:"Romuald",type:"Optional Memorial",color:"white"},{date:21,name:"Aloysius Gonzaga",type:"Memorial",color:"white"},{date:22,name:"Paulinus or John Fisher and Thomas More",type:"Optional Memorial",color:"red"},{date:24,name:"Birth of John the Baptist",type:"Solemnity",color:"white"},{date:28,name:"Irenaeus",type:"Memorial",color:"red"},{date:29,name:"Peter and Paul, Apostles",type:"Solemnity",color:"white"},{date:30,name:"First Martyrs of the Church of Rome",type:"Optional Memorial",color:"red"}],
-    6:[{date:1,name:"Junípero Serra",type:"Optional Memorial",color:"white",country:"US"},{date:3,name:"Thomas the Apostle",type:"Feast",color:"white"},{date:5,name:"Anthony Zaccaria or Elizabeth of Portugal",type:"Optional Memorial",color:"white"},{date:6,name:"Maria Goretti",type:"Optional Memorial",color:"red"},{date:9,name:"Augustine Zhao Rong and companions",type:"Optional Memorial",color:"red"},{date:11,name:"Benedict",type:"Memorial",color:"white"},{date:13,name:"Henry",type:"Optional Memorial",color:"white"},{date:14,name:"Camillus de Lellis or Kateri Tekakwitha",type:"Optional Memorial",color:"white"},{date:15,name:"Bonaventure",type:"Memorial",color:"white"},{date:16,name:"Our Lady of Mount Carmel",type:"Optional Memorial",color:"white"},{date:18,name:"Camillus de Lellis",type:"Optional Memorial",color:"white",country:"US"},{date:20,name:"Apollinaris",type:"Optional Memorial",color:"red"},{date:21,name:"Lawrence of Brindisi",type:"Optional Memorial",color:"white"},{date:22,name:"Mary Magdalene",type:"Feast",color:"white"},{date:25,name:"James, Apostle",type:"Feast",color:"red"},{date:26,name:"Joachim and Anne",type:"Memorial",color:"white"},{date:29,name:"Martha",type:"Memorial",color:"white"},{date:30,name:"Peter Chrysologus",type:"Optional Memorial",color:"white"},{date:31,name:"Ignatius of Loyola",type:"Memorial",color:"white"}],
-    7:[{date:1,name:"Alphonsus Maria de Liguori",type:"Memorial",color:"white"},{date:4,name:"Jean Vianney",type:"Memorial",color:"white"},{date:5,name:"Dedication of Mary Major",type:"Optional Memorial",color:"white"},{date:6,name:"Transfiguration of the Lord",type:"Feast",color:"white"},{date:7,name:"Sixtus II or Cajetan",type:"Optional Memorial",color:"red"},{date:8,name:"Dominic",type:"Memorial",color:"white"},{date:9,name:"Teresa Benedicta of the Cross",type:"Optional Memorial",color:"red"},{date:10,name:"Lawrence, deacon and martyr",type:"Feast",color:"red"},{date:11,name:"Clare",type:"Memorial",color:"white"},{date:12,name:"Jane Frances de Chantal",type:"Optional Memorial",color:"white"},{date:13,name:"Pontian and Hippolytus",type:"Optional Memorial",color:"red"},{date:14,name:"Maximilian Kolbe",type:"Memorial",color:"red"},{date:15,name:"Assumption of the Blessed Virgin Mary",type:"Solemnity",color:"white"},{date:16,name:"Stephen of Hungary",type:"Optional Memorial",color:"white"},{date:19,name:"John Eudes",type:"Optional Memorial",color:"white"},{date:20,name:"Bernard of Clairvaux",type:"Memorial",color:"white"},{date:21,name:"Pius X",type:"Memorial",color:"white"},{date:22,name:"Queenship of Blessed Virgin Mary",type:"Memorial",color:"white"},{date:23,name:"Rose of Lima",type:"Optional Memorial",color:"white"},{date:24,name:"Bartholomew the Apostle",type:"Feast",color:"white"},{date:25,name:"Louis or Joseph of Calasanz",type:"Optional Memorial",color:"white"},{date:27,name:"Monica",type:"Memorial",color:"white"},{date:28,name:"Augustine of Hippo",type:"Memorial",color:"white"},{date:29,name:"Beheading of John the Baptist",type:"Memorial",color:"red"}],
-    8:[{date:3,name:"Gregory the Great",type:"Memorial",color:"white"},{date:8,name:"Birth of the Blessed Virgin Mary",type:"Feast",color:"white"},{date:9,name:"Peter Claver",type:"Memorial",color:"white",country:"US"},{date:12,name:"Holy Name of the Blessed Virgin Mary",type:"Optional Memorial",color:"white"},{date:13,name:"John Chrysostom",type:"Memorial",color:"white"},{date:14,name:"Exaltation of the Holy Cross",type:"Feast",color:"red"},{date:15,name:"Our Lady of Sorrows",type:"Memorial",color:"white"},{date:16,name:"Cornelius and Cyprian",type:"Memorial",color:"red"},{date:17,name:"Robert Bellarmine",type:"Optional Memorial",color:"white"},{date:19,name:"Januarius",type:"Optional Memorial",color:"red"},{date:20,name:"Andrew Kim and companions",type:"Memorial",color:"red"},{date:21,name:"Matthew the Evangelist",type:"Feast",color:"white"},{date:23,name:"Padre Pio",type:"Memorial",color:"white"},{date:26,name:"Cosmas and Damian",type:"Optional Memorial",color:"red"},{date:27,name:"Vincent de Paul",type:"Memorial",color:"white"},{date:28,name:"Wenceslaus or Lawrence Ruiz and companions",type:"Optional Memorial",color:"red"},{date:29,name:"Michael, Gabriel, and Raphael",type:"Feast",color:"white"},{date:30,name:"Jerome",type:"Memorial",color:"white"}],
-    9:[{date:1,name:"Thérèse of the Child Jesus",type:"Memorial",color:"white"},{date:2,name:"Guardian Angels",type:"Memorial",color:"white"},{date:3,name:"Francis of Assisi",type:"Memorial",color:"white"},{date:5,name:"Francis Xavier Seelos",type:"Optional Memorial",color:"white",country:"US"},{date:6,name:"Bruno or Marie-Rose Durocher",type:"Optional Memorial",color:"white"},{date:7,name:"Our Lady of the Rosary",type:"Memorial",color:"white"},{date:9,name:"Denis or John Leonardi",type:"Optional Memorial",color:"red"},{date:11,name:"John XXIII",type:"Optional Memorial",color:"white"},{date:14,name:"Callistus I",type:"Optional Memorial",color:"red"},{date:15,name:"Teresa of Jesus",type:"Memorial",color:"white"},{date:16,name:"Hedwig or Margaret Mary Alacoque",type:"Optional Memorial",color:"white"},{date:17,name:"Ignatius of Antioch",type:"Memorial",color:"red"},{date:18,name:"Luke the Evangelist",type:"Feast",color:"white"},{date:19,name:"Jean de Brébeuf and companions",type:"Memorial",color:"red",country:"US"},{date:20,name:"Paul of the Cross",type:"Optional Memorial",color:"white"},{date:22,name:"John Paul II",type:"Optional Memorial",color:"white"},{date:23,name:"John of Capistrano",type:"Optional Memorial",color:"white"},{date:24,name:"Anthony Mary Claret",type:"Optional Memorial",color:"white"},{date:28,name:"Simon and Jude",type:"Feast",color:"white"}],
-    10:[{date:1,name:"All Saints",type:"Solemnity",color:"white"},{date:2,name:"Commemoration of All Souls",type:"Solemnity",color:"white"},{date:3,name:"Martin de Porres",type:"Optional Memorial",color:"white"},{date:4,name:"Charles Borromeo",type:"Memorial",color:"white"},{date:9,name:"Dedication of the Lateran Basilica",type:"Feast",color:"white"},{date:10,name:"Leo the Great",type:"Memorial",color:"white"},{date:11,name:"Martin of Tours",type:"Memorial",color:"white"},{date:12,name:"Josaphat",type:"Memorial",color:"red"},{date:13,name:"Frances Xavier Cabrini",type:"Memorial",color:"white",country:"US"},{date:15,name:"Albert the Great",type:"Optional Memorial",color:"white"},{date:16,name:"Margaret of Scotland or Gertrude",type:"Optional Memorial",color:"white"},{date:17,name:"Elizabeth of Hungary",type:"Memorial",color:"white"},{date:18,name:"Rose Philippine Duchesne",type:"Optional Memorial",color:"white",country:"US"},{date:21,name:"Presentation of the Blessed Virgin Mary",type:"Memorial",color:"white"},{date:22,name:"Cecilia",type:"Memorial",color:"red"},{date:23,name:"Clement I or Columban or Miguel Pro",type:"Optional Memorial",color:"red"},{date:24,name:"Andrew Dung-Lac and companions",type:"Memorial",color:"red"},{date:25,name:"Catherine of Alexandria",type:"Optional Memorial",color:"red"},{date:30,name:"Andrew the Apostle",type:"Feast",color:"white"}],
-    11:[{date:3,name:"Francis Xavier",type:"Memorial",color:"white"},{date:4,name:"John Damascene",type:"Optional Memorial",color:"white"},{date:6,name:"Nicholas",type:"Optional Memorial",color:"white"},{date:7,name:"Ambrose",type:"Memorial",color:"white"},{date:8,name:"Immaculate Conception",type:"Solemnity",color:"white"},{date:9,name:"Juan Diego",type:"Optional Memorial",color:"white"},{date:11,name:"Damasus I",type:"Optional Memorial",color:"white"},{date:12,name:"Our Lady of Guadalupe",type:"Memorial",color:"white",country:"US"},{date:13,name:"Lucy",type:"Memorial",color:"red"},{date:14,name:"John of the Cross",type:"Memorial",color:"white"},{date:21,name:"Peter Canisius",type:"Optional Memorial",color:"white"},{date:23,name:"John of Kanty",type:"Optional Memorial",color:"white"},{date:25,name:"Nativity of the Lord",type:"Solemnity",color:"white"},{date:26,name:"Stephen, First Martyr",type:"Feast",color:"red"},{date:27,name:"John the Apostle",type:"Feast",color:"white"},{date:28,name:"Holy Innocents",type:"Feast",color:"red"},{date:29,name:"Thomas Becket",type:"Optional Memorial",color:"red"},{date:31,name:"Sylvester I",type:"Optional Memorial",color:"white"}]
-};
-
-function calculateEasterForFeasts(year) {
-    const a = year % 19, b = Math.floor(year / 100), c = year % 100;
-    const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
-    const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
-    const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
-    const m = Math.floor((a + 11 * h + 22 * l) / 451);
-    const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
-    const day = ((h + l - 7 * m + 114) % 31) + 1;
-    return new Date(year, month, day);
-}
 
 function getLiturgicalInfoForToday(date = new Date()) {
     const month = date.getMonth();
@@ -151,19 +147,13 @@ function setLanguage(lang) {
         toggleBtn.textContent = lang === 'en' ? 'SW' : 'EN';
         toggleBtn.title = lang === 'en' ? 'Translate to Swahili' : 'Translate to English';
     }
-    document.getElementById('appSubtitle').textContent = lang === 'sw' ? "Msaidizi wako Wa Sala" : "Your Prayer Companion";
-    const season = document.getElementById('season').textContent.trim();
-    updateLiturgicalQuote(season, lang);
-   
-    // Update dynamic liturgical content
-    const feastEl = document.getElementById('feastDay');
-    if (feastEl && !feastEl.classList.contains('hidden')) {
-        const info = getLiturgicalInfoForToday();
-        if (info.feast) {
-            feastEl.textContent = lang === 'sw' ? translateFeastName(info.feast) : info.feast;
-        }
-    }
-   
+    const subtitle = document.getElementById('appSubtitle');
+    if (subtitle) subtitle.textContent = lang === 'sw' ? "Msaidizi wako Wa Sala" : "Your Prayer Companion";
+
+    // Re-render the liturgical card and prayer menus in the selected language
+    calculateLiturgicalDay(lang);
+    renderPrayerMenus();
+
     const saintEl = document.getElementById('saintOfDay');
     if (saintEl && !saintEl.classList.contains('hidden')) {
         const info = getLiturgicalInfoForToday();
@@ -173,13 +163,6 @@ function setLanguage(lang) {
                 : `Saint of the Day: ${info.feast}`;
         }
     }
-   
-    // Update date format
-    const today = new Date();
-    document.getElementById('currentDate').textContent = today.toLocaleDateString(
-        lang === 'sw' ? 'sw' : 'en-US',
-        { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-    );
 
     // Update prayer text
     const prayerMain = document.getElementById('prayerMain');
@@ -440,37 +423,80 @@ function initAccessibility() {
     setTextSize(textSize);
 }
 
-// Navigation
-const navItemsData = [
-    // Scripture (Office of Readings) → Document/Text icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />`, title: 'scripture', color: 'text-orange-600', id: 'scripture', link: 'pages/ofisi ya masomo/index.html' },
-    // Midday Prayer → Sun icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'midday', color: 'text-orange-500', id: 'midday', link: '#' },
-    // Vespers / Evening Prayer → Moon icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'vespers', color: 'text-indigo-600', id: 'vespers', link: '#' },
-    // Readings (Compline) → Moon icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`, title: 'readings', color: 'text-blue-600', id: 'readings', link: 'pages/compline.html' },
-    // Rosary → Heart (devotional)
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />`, title: 'rosary', color: 'text-red-600', id: 'rosary', link: 'pages/holy-rosary.html' },
-    // Prayer Requests → Community/users icon (unchanged)
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'pages/carmen.html' },
-    // Morning Prayer → Sun icon (unchanged)
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'pages/prayer.html' },
-    // Way of the Cross → Cross (plus) icon
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'pages/via-cruce.html' }
+
+// ---------------------------------------------------------------------------
+// Prayer menu: single source for the Prayers bottom sheet and the Options
+// panel dropdown. Items with `type` get their link computed for today.
+// ---------------------------------------------------------------------------
+const PRAYER_MENU = [
+    { id: 'lauds', key: 'morningPrayer', icon: 'fa-sun', iconColor: 'text-yellow-500', type: 'hours', suffix: '' },
+    { id: 'scripture', key: 'officeOfReadings', icon: 'fa-book-open', iconColor: 'text-orange-500', type: 'office' },
+    { id: 'midday', key: 'middayPrayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', type: 'hours', suffix: 'saa-sita' },
+    { id: 'vespers', key: 'eveningPrayer', icon: 'fa-moon', iconColor: 'text-indigo-500', type: 'hours', suffix: 'jioni' },
+    { id: 'readings', key: 'nightPrayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
+    { id: 'rosary', key: 'holyRosary', icon: 'fa-hands-praying', iconColor: 'text-red-500', link: 'pages/holy-rosary.html' },
+    { id: 'sacraments', key: 'stationsOfCross', icon: 'fa-cross', iconColor: 'text-pink-500', link: 'pages/via-cruce.html' },
+    { id: 'morning', key: 'otherPrayers', icon: 'fa-book', iconColor: 'text-green-600', link: 'pages/prayer.html' },
+    { id: 'carmen-page', key: 'carmenPrayer', icon: 'fa-heart', iconColor: 'text-purple-500', link: 'pages/carmen.html' }
 ];
 
-function getCurrentWeekNumber() {
-    const today = new Date();
-    const currentSunday = new Date(today);
-    currentSunday.setDate(today.getDate() - today.getDay());
-    currentSunday.setHours(0, 0, 0, 0);
-    // Week 18 starts on Sunday, August 3, 2025
-    const referenceSunday = new Date(2025, 7, 3); // August = 7 (0-based)
-    referenceSunday.setHours(0, 0, 0, 0);
-    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-    const weeksSinceRef = Math.round((currentSunday - referenceSunday) / msPerWeek);
-    return 18 + weeksSinceRef;
+// Map Ordinary Time week numbers to the Office of Readings folders available
+const OFFICE_WEEK_FOLDERS = {
+    21: 'ishirini_na_moja', 22: 'ishirini_na_mbili', 23: 'ishirini_na_tatu',
+    24: 'ishirini_na_nne', 25: 'ishirini_na_tano', 26: 'ishirini_na_sita',
+    27: 'ishirini_na_saba', 28: 'ishirini_na_nane', 29: 'ishirini_na_tisa',
+    30: 'thelathini', 31: 'thelathini_na_moja', 32: 'thelathini_na_mbili',
+    33: 'thelathini_na_tatu', 34: 'thelathini_na_nne'
+};
+
+function getOfficeOfReadingsLink() {
+    const info = getLiturgicalToday();
+    const folder = info.season === 'Ordinary Time' ? OFFICE_WEEK_FOLDERS[info.weekNum] : null;
+    if (!folder) return 'pages/ofisi ya masomo/index.html';
+    const dayNames = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+    const weekday = dayNames[new Date().getDay()];
+    return `pages/ofisi ya masomo/${folder}/${weekday}.html`;
+}
+
+function resolvePrayerLink(item) {
+    if (item.type === 'hours') {
+        const { dayPrefix, week } = getCurrentWeekAndDay();
+        return `pages/${getPrayerFileName(dayPrefix, week, item.suffix)}`;
+    }
+    if (item.type === 'office') {
+        return getOfficeOfReadingsLink();
+    }
+    return item.link;
+}
+
+function renderPrayerMenus() {
+    const lang = localStorage.getItem('preferredLanguage') || 'en';
+    const containers = [
+        document.getElementById('prayersSheetList'),
+        document.getElementById('optionsPrayerList')
+    ].filter(Boolean);
+
+    containers.forEach(container => {
+        container.innerHTML = '';
+        PRAYER_MENU.forEach(item => {
+            const label = translations[lang][item.key] || translations.en[item.key];
+            const link = resolvePrayerLink(item);
+            const a = document.createElement('a');
+            a.href = link;
+            a.className = 'prayer-menu-item';
+            a.innerHTML = `
+                <span class="prayer-menu-icon"><i class="fas ${item.icon} ${item.iconColor}" aria-hidden="true"></i></span>
+                <span class="prayer-menu-label" data-translate="${item.key}">${label}</span>
+                <svg class="w-4 h-4 prayer-menu-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            `;
+            a.addEventListener('click', () => {
+                savePrayerAccess(item.id, translations.en[item.key], link);
+            });
+            container.appendChild(a);
+        });
+    });
 }
 
 // Favorites Management
@@ -574,135 +600,6 @@ function hideLoadingOverlay() {
     }
 }
 
-function initNavigation() {
-    const navGrid = document.getElementById('navGrid');
-    if (!navGrid) return;
-
-    // Show skeleton loaders
-    showSkeletonLoaders();
-
-    navGrid.innerHTML = '';
-    navItemsData.forEach(item => {
-        const navItem = document.createElement('a');
-        // Set href - will be overridden for items with custom handlers
-        navItem.href = item.link;
-        navItem.className = 'nav-item block p-6 rounded-2xl cursor-pointer card-hover bg-white dark:bg-gray-800 transition-all duration-300 relative';
-        navItem.setAttribute('data-title', item.title);
-        // Only prevent default for Scripture, Midday, and Vespers (they have custom handlers)
-        if (item.title === 'scripture' || item.title === 'midday' || item.title === 'vespers') {
-            navItem.href = '#'; // Prevent default navigation
-        }
-        const isFavorite = FavoritesManager.isFavorite(item.id);
-        navItem.innerHTML = `
-            <button class="favorite-btn absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100 ${isFavorite ? 'active' : ''}" 
-                    data-favorite-id="${item.id}" 
-                    aria-label="Add to favorites"
-                    onclick="event.stopPropagation(); FavoritesManager.${isFavorite ? 'remove' : 'add'}Favorite('${item.id}', '${translations['en'][item.title]}', '${item.link}')">
-                <svg class="w-5 h-5" fill="${isFavorite ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
-                </svg>
-            </button>
-            <div class="flex flex-col items-center text-center">
-                <div class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-                    <svg class="w-8 h-8 ${item.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        ${item.icon}
-                    </svg>
-                </div>
-                <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-100" data-translate="${item.title}">
-                    ${translations['en'][item.title]}
-                </h3>
-            </div>
-        `;
-        // Special handling for Scripture card (Office of Readings)
-        if (item.title === 'scripture') {
-            navItem.addEventListener('click', function (e) {
-                e.preventDefault();
-                // Determine today's weekday in Swahili filenames
-                const dayNames = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-                const today = new Date();
-                const weekday = dayNames[today.getDay()];
-
-                // Compute Ordinary Time week number using a fixed reference Sunday.
-                // Use the same approach as existing code: base on a known Sunday and count weeks.
-                // Reference Sunday for week 24: September 14, 2025 (0-based month: 8)
-                const currentDay = today.getDay(); // 0 = Sun
-                const currentSunday = new Date(today);
-                currentSunday.setHours(0,0,0,0);
-                currentSunday.setDate(today.getDate() - currentDay);
-                const referenceSunday = new Date(2025, 8, 14);
-                referenceSunday.setHours(0,0,0,0);
-                const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-                const weeksDiff = Math.floor((currentSunday - referenceSunday) / msPerWeek);
-                const week = 24 + weeksDiff; // yields an Ordinary Time week number
-
-                // Map week number to the corresponding folder name
-                const weekFolderMap = {
-                    21: 'ishirini_na_moja',
-                    22: 'ishirini_na_mbili',
-                    23: 'ishirini_na_tatu',
-                    24: 'ishirini_na_nne',
-                    25: 'ishirini_na_tano',
-                    26: 'ishirini_na_sita',
-                    27: 'ishirini_na_saba',
-                    28: 'ishirini_na_nane',
-                    29: 'ishirini_na_tisa',
-                    30: 'thelathini',
-                    31: 'thelathini_na_moja',
-                    32: 'thelathini_na_mbili',
-                    33: 'thelathini_na_tatu',
-                    34: 'thelathini_na_nne'
-                };
-
-                const folder = weekFolderMap[week];
-                console.log('Office of Readings - Today:', today.toISOString(), 'WeekdayIndex:', today.getDay(), 'Weekday:', weekday, 'CurrentSunday:', currentSunday.toISOString(), 'ReferenceSunday:', referenceSunday.toISOString(), 'WeeksDiff:', weeksDiff, 'Week:', week, 'Folder:', folder); // Enhanced debugging
-                if (!folder) {
-                    console.error('Office of Readings - Folder not found for week:', week);
-                    alert('Office of Readings for this week is not available.');
-                    return;
-                }
-
-                // Build the path to pages/ofisi ya masomo/{folder}/{weekday}.html
-                const targetPath = `pages/ofisi ya masomo/${folder}/${weekday}.html`;
-                console.log('Office of Readings - TargetPath:', targetPath); // Enhanced debugging
-                // Navigate
-                window.location.href = targetPath;
-            });
-        }
-        // Special handling for Midday Prayer card
-        if (item.title === 'midday') {
-            navItem.addEventListener('click', function (e) {
-                e.preventDefault();
-                const { dayPrefix, week } = getCurrentWeekAndDay();
-                const fileName = getPrayerFileName(dayPrefix, week, 'saa-sita');
-                savePrayerAccess('midday', 'Sala ya Mchana', fileName);
-                window.location.href = `pages/${fileName}`;
-            });
-        }
-        // Special handling for Vespers card
-        if (item.title === 'vespers') {
-            navItem.addEventListener('click', function (e) {
-                e.preventDefault();
-                const { dayPrefix, week } = getCurrentWeekAndDay();
-                const fileName = getPrayerFileName(dayPrefix, week, 'jioni');
-                savePrayerAccess('vespers', 'Masifu ya Jioni', fileName);
-                window.location.href = `pages/${fileName}`;
-            });
-        }
-        navGrid.appendChild(navItem);
-        // Save prayer access (only for items without custom handlers)
-        if (item.title !== 'scripture' && item.title !== 'midday' && item.title !== 'vespers') {
-            navItem.addEventListener('click', () => {
-                savePrayerAccess(item.id, translations['en'][item.title], item.link);
-            });
-        }
-    });
-    
-    // Hide skeleton loaders after navigation is loaded
-    setTimeout(() => {
-        hideSkeletonLoaders();
-    }, 300);
-}
-
 // Load and display favorites
 function loadFavorites() {
     const favorites = FavoritesManager.getFavorites();
@@ -757,32 +654,22 @@ function getPrayerFileName(dayPrefix, week, suffix = '') {
 // Weeks start on Sunday and end on Saturday
 // If today is Saturday of week 4, tomorrow (Sunday) will be week 1
 function getCurrentWeekAndDay() {
-    const day = new Date().getDay();
-    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-    
-    // Find the most recent Sunday (start of the current liturgical week)
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const daysSinceSunday = today.getDay(); // 0=Sunday, 6=Saturday
-    const currentSunday = new Date(today);
-    currentSunday.setDate(today.getDate() - daysSinceSunday);
-    currentSunday.setHours(0, 0, 0, 0);
-    
-    // Reference Sunday for week 1
-    // Using a known Sunday where we know it's week 1
-    // Adjust this date to match when week 1 actually starts in your cycle
-    const referenceWeek1Sunday = new Date(2025, 9, 19); // October 19, 2025 (Sunday) - adjust as needed
-    referenceWeek1Sunday.setHours(0, 0, 0, 0);
-    
-    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-    const weeksSinceRef = Math.floor((currentSunday - referenceWeek1Sunday) / msPerWeek);
-    
-    // Calculate week number (1, 2, 3, or 4) using modulo 4
-    // weeksSinceRef = 0 → week 1, 1 → week 2, 2 → week 3, 3 → week 4, 4 → week 1 (cycle repeats)
-    // Add 4 before modulo to handle negative numbers correctly, then add 1 to convert 0-3 to 1-4
+    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+    const dayPrefix = dayToPrefix[now.getDay()];
+
+    // Psalter week follows the liturgical week number (week 1 → 1, week 5 → 1, ...)
+    const info = getLiturgicalToday(now);
+    if (info.psalterWeek) {
+        return { dayPrefix, week: info.psalterWeek };
+    }
+
+    // Fallback (Christmas season / days after Ash Wednesday): rolling 4-week
+    // cycle from a known Week-1 Sunday (October 19, 2025)
+    const currentSunday = litSundayOf(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
+    const referenceWeek1Sunday = new Date(2025, 9, 19);
+    const weeksSinceRef = Math.floor((currentSunday - referenceWeek1Sunday) / MS_PER_WEEK);
     const week = ((weeksSinceRef % 4) + 4) % 4 + 1;
-    
-    const dayPrefix = dayToPrefix[day];
     return { dayPrefix, week };
 }
 
@@ -819,9 +706,10 @@ if (masifuJioniLink) {
     });
 }
 
-// Update liturgical quote
+// Update liturgical quote (element may be absent in the redesigned home)
 function updateLiturgicalQuote(season, lang) {
     const quoteElement = document.getElementById('liturgicalQuote');
+    if (!quoteElement) return;
     let quoteKey = 'quoteOrdinary';
     if (season === 'Advent') quoteKey = 'quoteAdvent';
     else if (season === 'Christmas') quoteKey = 'quoteChristmas';
@@ -830,124 +718,63 @@ function updateLiturgicalQuote(season, lang) {
     quoteElement.textContent = translations[lang || 'en'][quoteKey];
 }
 
-// Liturgical Calendar Logic
+// Liturgical Calendar Logic: fills the liturgical date card dynamically
 function calculateLiturgicalDay(lang = 'en') {
     const today = new Date();
-    const year = today.getFullYear();
-    function calculateEaster(year) {
-        const a = year % 19;
-        const b = Math.floor(year / 100);
-        const c = year % 100;
-        const d = Math.floor(b / 4);
-        const e = b % 4;
-        const f = Math.floor((b + 8) / 25);
-        const g = Math.floor((b - f + 1) / 3);
-        const h = (19 * a + b - d - g + 15) % 30;
-        const i = Math.floor(c / 4);
-        const k = c % 4;
-        const l = (32 + 2 * e + 2 * i - h - k) % 7;
-        const m = Math.floor((a + 11 * h + 22 * l) / 451);
-        const month = Math.floor((h + l - 7 * m + 114) / 31);
-        const day = ((h + l - 7 * m + 114) % 31) + 1;
-        return new Date(year, month - 1, day);
+    const info = getLiturgicalToday(today, lang);
+    const feastInfo = getLiturgicalInfoForToday(today);
+
+    // Solemnities and feasts take their own liturgical colour
+    let color = info.color;
+    if (feastInfo.feast && (feastInfo.feastType === 'Solemnity' || feastInfo.feastType === 'Feast')) {
+        color = feastInfo.color;
     }
-    const easter = calculateEaster(year);
-    const christmas = new Date(year, 11, 25);
-    const ashWednesday = new Date(easter);
-    ashWednesday.setDate(easter.getDate() - 46);
-    const pentecost = new Date(easter);
-    pentecost.setDate(easter.getDate() + 49);
-    const adventStart = new Date(year, 11, 25);
-    while (adventStart.getDay() !== 0) {
-        adventStart.setDate(adventStart.getDate() - 1);
-    }
-    adventStart.setDate(adventStart.getDate() - 21);
-    let season = 'Ordinary Time';
-    let feast = null;
-    let seasonImage = 'assets/images/maria mdogo.png';
-    let liturgicalColor = 'green';
-    if (today.getMonth() === 11 && today.getDate() === 25) {
-        season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
-        feast = 'Nativity of the Lord';
-        liturgicalColor = 'white';
-    } else if (today.getMonth() === 0 && today.getDate() === 1) {
-        season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
-        feast = 'Mary, Mother of God';
-        liturgicalColor = 'white';
-    } else if (today.getMonth() === 0 && today.getDate() === 6) {
-        season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
-        feast = 'Epiphany of the Lord';
-        liturgicalColor = 'white';
-    } else if (today >= adventStart && today < christmas) {
-        season = 'Advent';
-        seasonImage = 'assets/images/maria mdogo.png';
-        liturgicalColor = 'purple';
-    } else if (today >= christmas && today < new Date(year, 0, 8)) {
-        season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
-        liturgicalColor = 'white';
-    } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
-        season = 'Ordinary Time';
-        seasonImage = 'assets/images/maria mdogo.png';
-        liturgicalColor = 'green';
-    } else if (today >= ashWednesday && today < easter) {
-        season = 'Lent';
-        seasonImage = 'assets/images/maria mdogo.png';
-        liturgicalColor = 'purple';
-    } else if (today >= easter && today < pentecost) {
-        season = 'Easter';
-        seasonImage = 'assets/images/maria mdogo.png';
-        liturgicalColor = 'white';
-    } else if (today >= pentecost && today < adventStart) {
-        season = 'Ordinary Time';
-        seasonImage = 'assets/maria mdogo.png';
-        liturgicalColor = 'green';
-    }
-    if (today.getDate() === 2 && today.getMonth() === 2) {
-        feast = 'Presentation of the Lord';
-        liturgicalColor = 'white';
-    } else if (today.getDate() === 25 && today.getMonth() === 3) {
-        feast = 'Annunciation of the Lord';
-        liturgicalColor = 'white';
-    } else if (today.getDate() === 24 && today.getMonth() === 5) {
-        feast = 'Nativity of St. John the Baptist';
-        liturgicalColor = 'white';
-    } else if (today.getDate() === 29 && today.getMonth() === 8) {
-        feast = 'Sts. Michael, Gabriel, and Raphael';
-        liturgicalColor = 'white';
-    } else if (today.getDate() === 1 && today.getMonth() === 10) {
-        feast = 'All Saints';
-        liturgicalColor = 'white';
-    } else if (today.getDate() === 2 && today.getMonth() === 10) {
-        feast = 'All Souls';
-        liturgicalColor = 'purple';
-    }
-    document.getElementById('season').textContent = season;
-    document.getElementById('liturgicalYear').textContent = year;
-    document.getElementById('currentDate').textContent = today.toLocaleDateString(
+
+    const seasonNamesSw = {
+        'Ordinary Time': 'Kipindi cha Mwaka',
+        'Advent': 'Majilio',
+        'Christmas': 'Noeli',
+        'Lent': 'Kwaresima',
+        'Easter': 'Pasaka'
+    };
+    const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    };
+
+    setText('season', lang === 'sw' ? (seasonNamesSw[info.season] || info.season) : info.season);
+    setText('liturgicalYear', today.getFullYear());
+    setText('liturgicalDay', info.weekdayName);
+    setText('liturgicalWeek', info.dayLabel);
+    setText('currentDate', today.toLocaleDateString(
         lang === 'sw' ? 'sw' : 'en-US',
-        { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-    );
-    const card = document.getElementById('liturgicalCard');
-    card.classList.remove('bg-purple-100', 'bg-white-100', 'bg-red-100', 'bg-green-100', 'bg-gold-100',
-                        'border-purple-200', 'border-white-200', 'border-red-200', 'border-green-200', 'border-gold-200');
-    card.classList.add(`bg-${liturgicalColor}-100`, `border-${liturgicalColor}-200`);
-    const seasonBadge = document.getElementById('seasonBadge');
-    seasonBadge.classList.remove('text-purple-800', 'text-white-800', 'text-red-800', 'text-green-800', 'text-gold-800');
-    seasonBadge.classList.add(`text-${liturgicalColor}-800`);
-    const feastElement = document.getElementById('feastDay');
-    if (feast) {
-        feastElement.textContent = lang === 'sw' ? translateFeastName(feast) : feast;
-        feastElement.classList.remove('hidden');
-        feastElement.classList.remove('text-purple-800', 'text-white-800', 'text-red-800', 'text-green-800', 'text-gold-800');
-        feastElement.classList.add(`text-${liturgicalColor}-800`);
-    } else {
-        feastElement.classList.add('hidden');
+        { year: 'numeric', month: 'long', day: 'numeric' }
+    ));
+
+    const psalterEl = document.getElementById('psalterWeek');
+    if (psalterEl) {
+        if (info.psalterWeek) {
+            const roman = ['I', 'II', 'III', 'IV'][info.psalterWeek - 1];
+            psalterEl.textContent = `${translations[lang].psalterWeek} ${roman}`;
+            psalterEl.classList.remove('hidden');
+        } else {
+            psalterEl.classList.add('hidden');
+        }
     }
-    updateLiturgicalQuote(season, lang);
+
+    const card = document.getElementById('liturgicalCard');
+    if (card) card.dataset.color = color;
+
+    const feastElement = document.getElementById('feastDay');
+    if (feastElement) {
+        if (feastInfo.feast) {
+            feastElement.textContent = lang === 'sw' ? translateFeastName(feastInfo.feast) : feastInfo.feast;
+            feastElement.classList.remove('hidden');
+        } else {
+            feastElement.classList.add('hidden');
+        }
+    }
+    updateLiturgicalQuote(info.season, lang);
 }
 
 // Fetch Saint of the Day
@@ -1210,13 +1037,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize navigation and features
-    initNavigation();
+    renderPrayerMenus();
     initAccessibility();
     initPrayerDB();
     const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
     calculateLiturgicalDay(preferredLang);
-    fetchSaintOfTheDay();
-    fetchDailyReadings();
     setupPrayerReminders();
     registerServiceWorker();
     // Populate Saint of the Day just below the date
@@ -1286,12 +1111,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const translationToggle = document.getElementById('translationToggle');
     if (translationToggle) {
         translationToggle.addEventListener('click', toggleTranslation);
-    }
-    // Prayer streak
-    updateStreakDisplay();
-    const markPrayedBtn = document.getElementById('markPrayedBtn');
-    if (markPrayedBtn) {
-        markPrayedBtn.addEventListener('click', markPrayerCompleted);
     }
     // Search
     const searchInput = document.getElementById('searchInput');
@@ -1488,10 +1307,13 @@ function markPrayerCompleted() {
 }
 
 function updateStreakDisplay() {
+    const streakCount = document.getElementById('streakCount');
+    const streakProgress = document.getElementById('streakProgress');
+    if (!streakCount || !streakProgress) return;
     const streak = getPrayerStreak();
-    document.getElementById('streakCount').textContent = `${streak} days`;
+    streakCount.textContent = `${streak} days`;
     const progress = Math.min(streak / 7 * 100, 100); // Weekly goal
-    document.getElementById('streakProgress').style.width = `${progress}%`;
+    streakProgress.style.width = `${progress}%`;
 }
 
 // Search and Filtering
@@ -1538,7 +1360,9 @@ function enhanceSmallTextAccessibility() {
             const color = style.color;
             const bgColor = getBackgroundColor(el);
             const contrast = calculateContrast(color, bgColor);
-            if (contrast < 4.5) {
+            // contrast is null when a colour can't be evaluated reliably
+            // (oklch/oklab from Tailwind 4, or semi-transparent backgrounds)
+            if (contrast !== null && contrast < 4.5) {
                 // Enhance contrast by setting high contrast colors
                 el.style.color = '#000000';
                 el.style.backgroundColor = '#ffffff';
@@ -1568,18 +1392,29 @@ function getBackgroundColor(el) {
     return bg || '#ffffff'; // default to white
 }
 
+// Parse an rgb()/rgba() colour into [r, g, b]; returns null for other colour
+// formats (oklch, named colours) or semi-transparent colours, where the real
+// rendered contrast cannot be computed here.
+function parseRgbColor(color) {
+    const m = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)$/.exec(color);
+    if (!m) return null;
+    if (m[4] !== undefined && parseFloat(m[4]) < 1) return null;
+    return [+m[1], +m[2], +m[3]];
+}
+
 function calculateContrast(color1, color2) {
     const l1 = getLuminance(color1);
     const l2 = getLuminance(color2);
+    if (l1 === null || l2 === null) return null;
     return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
 }
 
 function getLuminance(color) {
-    const rgb = color.match(/\d+/g);
-    if (!rgb || rgb.length < 3) return 0.5; // neutral luminance
-    const r = parseInt(rgb[0]) / 255;
-    const g = parseInt(rgb[1]) / 255;
-    const b = parseInt(rgb[2]) / 255;
+    const rgb = parseRgbColor(color);
+    if (!rgb) return null;
+    const r = rgb[0] / 255;
+    const g = rgb[1] / 255;
+    const b = rgb[2] / 255;
     const toLinear = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
     return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
 }

@@ -169,11 +169,6 @@ body.page-index::before {
 @media (max-width: 640px) {
     .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
 
-    /* Responsive floating header on mobile */
-    header[role="banner"] {
-        margin: 4px 8px 0 8px !important;
-    }
-
     /* Responsive floating navigation on mobile */
     nav[role="navigation"][aria-label="Main Navigation"] {
         margin: 0 8px 4px 8px !important;
@@ -402,9 +397,17 @@ body.page-index::before {
     animation: fadeIn 0.3s ease-out;
 }
 
+/* Fade only (no transform): a retained transform would turn this wrapper into
+   the containing block for position:fixed children (bottom nav, sheets),
+   detaching them from the viewport. */
+@keyframes fadeInContent {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .page-content {
     opacity: 0;
-    animation: fadeIn 0.4s ease-out forwards;
+    animation: fadeInContent 0.4s ease-out forwards;
 }
 
 /* Smooth scroll behavior */
@@ -418,6 +421,11 @@ html {
     margin: 0 0.5rem;
 }
 
+/* Search panel lives inside the app bar and expands it downward */
+.app-bar .search-container {
+    margin: 0.75rem 0 0.25rem;
+}
+
 .search-input {
     width: 100%;
     max-width: 300px;
@@ -426,6 +434,13 @@ html {
     border-radius: 0.5rem;
     font-size: 0.875rem;
     transition: all 0.2s ease;
+}
+
+.app-bar .search-input {
+    max-width: none;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    border-color: var(--border-subtle);
 }
 
 .search-input:focus {
@@ -805,22 +820,40 @@ button[aria-busy="true"]::after {
     display: none;
 }
 
-/* Floating Header Effect */
-header[role="banner"] {
-    background: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    position: relative !important;
-    z-index: 30 !important;
-    margin: 8px 16px 0 16px !important;
+/* App Bar: full-width, non-floating header. Sits directly below the device
+   status bar (iOS safe area) and stays fixed to the top while scrolling. */
+.app-bar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 30;
+    padding: calc(env(safe-area-inset-top, 0px) + 0.625rem) 1.25rem 0.625rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 1px 8px rgba(27, 36, 34, 0.06);
 }
 
-:root.dark header[role="banner"] {
-    background: rgba(30, 27, 46, 0.85) !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
+.app-bar-brand h1 {
+    line-height: 1.2;
+}
+
+.app-bar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.app-bar-btn:active {
+    transform: scale(0.92);
 }
 
 /* Navigation Bar Styles */
@@ -1102,5 +1135,201 @@ nav[role="navigation"][aria-label="Main Navigation"] {
     }
     100% {
         left: 100%;
+    }
+}
+/* ---------------------------------------------------------------------------
+   Liturgical Date Card
+   Accent colour follows the liturgical colour set via data-color by index.js
+   --------------------------------------------------------------------------- */
+.liturgical-card {
+    border-radius: var(--radius-xl);
+    padding: 2rem 1.5rem;
+    background: var(--lit-bg, var(--glass-bg));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-top: 4px solid var(--lit-accent, #2E7D32);
+    box-shadow: var(--shadow-md);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* --lit-bg values match the old seasonal card tints (bg-green-100 & co.) */
+.liturgical-card[data-color="green"]  { --lit-accent: #2E7D32; --lit-soft: rgba(46, 125, 50, 0.14);  --lit-text: #1b5e20; --lit-bg: rgba(220, 252, 231, 0.8); }
+.liturgical-card[data-color="purple"] { --lit-accent: #6d28d9; --lit-soft: rgba(109, 40, 217, 0.14); --lit-text: #5b21b6; --lit-bg: rgba(237, 233, 254, 0.8); }
+.liturgical-card[data-color="white"]  { --lit-accent: #c9a227; --lit-soft: rgba(201, 162, 39, 0.16); --lit-text: #92700c; --lit-bg: rgba(255, 255, 255, 0.8); }
+.liturgical-card[data-color="red"]    { --lit-accent: #C41E3A; --lit-soft: rgba(196, 30, 58, 0.13);  --lit-text: #9f1230; --lit-bg: rgba(254, 226, 226, 0.8); }
+.liturgical-card[data-color="gold"]   { --lit-accent: #b45309; --lit-soft: rgba(180, 83, 9, 0.14);   --lit-text: #92400e; --lit-bg: rgba(254, 249, 195, 0.8); }
+
+/* Dark mode keeps the dark glass surface regardless of season */
+:root.dark .liturgical-card { --lit-bg: var(--glass-bg); }
+
+:root.dark .liturgical-card[data-color="green"]  { --lit-text: #81c784; }
+:root.dark .liturgical-card[data-color="purple"] { --lit-text: #b39ddb; }
+:root.dark .liturgical-card[data-color="white"]  { --lit-text: #e6cc6e; }
+:root.dark .liturgical-card[data-color="red"]    { --lit-text: #ef9a9a; }
+:root.dark .liturgical-card[data-color="gold"]   { --lit-text: #fbbf24; }
+
+.season-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 9999px;
+    /* Keep >= 14px: enhanceSmallTextAccessibility() rewrites smaller text
+       and cannot evaluate this badge's semi-transparent background */
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--lit-soft);
+    color: var(--lit-text);
+    margin-bottom: 1rem;
+}
+
+.liturgical-day {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+}
+
+.liturgical-week {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--lit-text);
+    margin-top: 0.4rem;
+}
+
+.liturgical-date {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 0.3rem;
+}
+
+.psalter-chip {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+}
+
+.feast-day {
+    margin-top: 0.75rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--lit-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Prayer Menu: simple list used in the Prayers sheet and the Options dropdown
+   --------------------------------------------------------------------------- */
+.prayer-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem 0;
+}
+
+.prayer-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.8rem 1.25rem;
+    min-height: 48px;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.15s ease;
+}
+
+.prayer-menu-item:last-child {
+    border-bottom: none;
+}
+
+.prayer-menu-item:hover,
+.prayer-menu-item:active {
+    background-color: var(--surface-1);
+}
+
+.prayer-menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    background: var(--surface-2);
+    flex-shrink: 0;
+}
+
+.prayer-menu-label {
+    flex: 1;
+}
+
+.prayer-menu-chevron {
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Prayers Bottom Sheet (opened from the bottom navigation)
+   --------------------------------------------------------------------------- */
+.sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.sheet-overlay.open {
+    opacity: 1;
+}
+
+.sheet-overlay.hidden {
+    display: none;
+}
+
+.sheet-panel {
+    width: 100%;
+    max-width: 32rem;
+    max-height: 80vh;
+    max-height: 80dvh;
+    overflow-y: auto;
+    background: var(--surface-0);
+    border-radius: 1.5rem 1.5rem 0 0;
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0.24, 1);
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.sheet-overlay.open .sheet-panel {
+    transform: translateY(0);
+}
+
+.sheet-handle {
+    width: 2.5rem;
+    height: 0.3rem;
+    border-radius: 9999px;
+    background: var(--color-gray-300, #b8c9c5);
+    margin: 0.6rem auto 0.9rem;
+}
+
+/* Centered dialog on larger screens */
+@media (min-width: 768px) {
+    .sheet-overlay {
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .sheet-panel {
+        border-radius: 1.5rem;
     }
 }

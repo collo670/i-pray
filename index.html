@@ -6,9 +6,9 @@
     <title>ipray - Your prayer Companion</title>
     <link rel="icon" href="/i-pray/assets/images/favicon.ico.jpg" type="image/x-icon">
     <meta name="description" content="A Catholic liturgical companion app for daily prayer and worship">
-    <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)">
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)">
+    <meta name="theme-color" content="#f7faf9">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7faf9">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12191e">
     <!-- Web App Manifest -->
     <link rel="manifest" href="/i-pray/manifest.json">
     <!-- iOS PWA Settings -->
@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Plausible Analytics -->
     <script defer data-domain="ipray.app" src="https://plausible.io/js/script.js"></script>
-    <!-- Fuse.js for enhanced search -->
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/index.css">
     <!-- Apply saved theme before paint to avoid flash -->
@@ -41,128 +39,124 @@
     </script>
     <script src="js/logo-loader.js"></script>
 </head>
-<!-- Install Button -->
-<div id="installContainer" class="px-6 py-2">
-  <button id="installButton" class="hidden w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg text-center" data-translate="installApp">
-    Install ipray App
-  </button>
-</div>
 <body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
     <div id="app" class="relative z-10 page-content">
-        <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm" role="banner">
-    <div class="header-content">
-        <div>
-            <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                ipray
-            </h1>
-            <p id="appSubtitle" class="text-sm text-gray-600 dark:text-gray-400">
-                Your Prayer Companion
-            </p>
-        </div>
-        <div class="flex items-center">
-            <button id="darkModeQuickToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 ml-2" aria-label="Toggle dark mode" title="Toggle dark mode">
-                <svg id="darkModeIconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <svg id="darkModeIconMoon" class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-            </button>
-            <!-- Search Bar -->
-            <div class="search-container hidden md:block fixed md:relative top-16 left-0 right-0 md:top-auto md:left-auto md:right-auto bg-white md:bg-transparent p-4 md:p-0 z-50 md:z-auto shadow-lg md:shadow-none">
-                <!-- Search Filters -->
-                <div class="search-filters mb-2">
-                    <button class="search-filter active" data-filter="type" data-value="all">All</button>
-                    <button class="search-filter" data-filter="type" data-value="liturgical">Liturgical</button>
-                    <button class="search-filter" data-filter="type" data-value="devotional">Devotional</button>
-                    <button class="search-filter" data-filter="type" data-value="document">Documents</button>
-                </div>
-                <input type="search" id="searchInput" placeholder="Search prayers, readings, saints..."
-                       class="search-input" aria-label="Search prayers and readings">
-                <div id="searchResults" class="search-results"></div>
-            </div>
-            <!-- Mobile Search Button -->
-            <button id="mobileSearchBtn" class="p-2 rounded-full bg-gray-200 ml-2 md:hidden" aria-label="Search" title="Search">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </button>
-            <!-- Options -->
-            <button id="optionsToggle" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Options" title="Options" aria-expanded="false" aria-controls="optionsPanel">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-    </div>
-</header>
-<main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6" role="main">
-    <div id="homeView" class="space-y-8">
-        <!-- Liturgical Season Image (static, styled by CSS) -->
-        <div class="flex justify-center mb-4">
-            <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season" loading="lazy" decoding="async">
-        </div>
-        <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 dark:bg-gray-800 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 dark:border-gray-700 season-border" aria-live="polite" aria-label="Liturgical Information">
-            <div class="text-center">
-                <div id="seasonBadge" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 text-purple-800 dark:text-purple-200 bg-white/60 dark:bg-black/20">
-                    <span id="season">ordinary</span> <span id="liturgicalYear">2023</span>
-                </div>
-                <h2 class="text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100">
-                    <span id="currentDate">Loading...</span>
-                </h2>
-                <p id="saintOfDay" class="text-md text-gray-700 dark:text-gray-300 font-medium mb-1 hidden"></p>
-                <div class="mt-2">
-                    <button id="toggleUpcomingFeasts" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
-                        <p id=feast>Tap to see upcoming feasts </p>
-                    </button>
-                    <div id="upcomingFeastsList" class="mt-3 text-left hidden"></div>
-                </div>
-                <p id="feastDay" class="text-xl text-purple-800 dark:text-purple-300 font-medium hidden">
-                    Feast of All Saints
-                </p>
-                <div class="mt-6 pt-6 border-t border-dashed border-opacity-30 border-current">
-                    <p id="liturgicalQuote" class="text-sm text-gray-600 dark:text-gray-400">
-                        May your prayers today bring you closer to God's grace and peace.
+        <!-- App Bar: full-width, sits below the device status bar (safe area), fixed while scrolling -->
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="app-bar-brand">
+                    <h1 id="appTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        ipray
+                    </h1>
+                    <p id="appSubtitle" class="text-xs text-gray-600 dark:text-gray-400">
+                        Your Prayer Companion
                     </p>
-                    <div class="mt-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Prayer Streak</span>
-                            <span id="streakCount" class="text-sm font-bold text-purple-600 dark:text-purple-300">0 days</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <!-- Dark mode toggle -->
+                    <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                        <svg id="darkModeIconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="darkModeIconMoon" class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    <!-- Options (More) -->
+                    <button id="optionsToggle" class="app-bar-btn" aria-label="Options" title="Options" aria-expanded="false" aria-controls="optionsPanel">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Install Button -->
+        <div id="installContainer" class="px-6 py-2 hidden">
+            <button id="installButton" class="hidden w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg text-center" data-translate="installApp">
+                Install ipray App
+            </button>
+        </div>
+
+        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <div id="homeView" class="space-y-6">
+                <!-- Liturgical Season Image -->
+                <div class="flex justify-center">
+                    <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season" loading="lazy" decoding="async">
+                </div>
+
+                <!-- Liturgical Date Card (populated dynamically from the liturgical calendar) -->
+                <div id="liturgicalCard" class="liturgical-card" data-color="green" aria-live="polite" aria-label="Liturgical Information">
+                    <div class="text-center">
+                        <div id="seasonBadge" class="season-badge">
+                            <span id="season">Ordinary Time</span> · <span id="liturgicalYear">2026</span>
                         </div>
-                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div id="streakProgress" class="bg-purple-600 h-2 rounded-full" style="width: 0%"></div>
+                        <h2 id="liturgicalDay" class="liturgical-day">Sunday</h2>
+                        <p id="liturgicalWeek" class="liturgical-week">15th Sunday in Ordinary Time</p>
+                        <p id="currentDate" class="liturgical-date">Loading...</p>
+                        <span id="psalterWeek" class="psalter-chip hidden"></span>
+                        <p id="feastDay" class="feast-day hidden"></p>
+                        <p id="saintOfDay" class="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2 hidden"></p>
+                        <div class="mt-4">
+                            <button id="toggleUpcomingFeasts" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
+                                <span id="feast" data-translate="feast">Tap to see upcoming feasts</span>
+                            </button>
+                            <div id="upcomingFeastsList" class="mt-3 text-left hidden"></div>
                         </div>
-                        <button id="markPrayedBtn" class="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:underline">Mark Today's Prayer as Completed</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Daily Readings card is injected here by js/index.js -->
-        <div id="dailyReadingsSlot"></div>
 
-        <!-- Options trigger: opens the Options panel with prayer navigation, favorites, history and more -->
-        <button id="openOptionsBtn" class="w-full flex items-center justify-center gap-2 rounded-2xl p-4 bg-white dark:bg-gray-800 shadow-md card-hover text-gray-800 dark:text-gray-100 font-semibold" aria-haspopup="dialog" aria-controls="optionsPanel">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <span data-translate="options">Options</span>
-        </button>
-    </div>
+                <!-- Daily Readings Card: opens the Mass readings viewer for any day -->
+                <a id="dailyReadingsCard" href="pages/daily-readings.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-label="Daily Mass Readings">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Daily Readings</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Mass readings for every day, in the order of the Mass</p>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </a>
+            </div>
         </main>
 
-        <!-- Options Panel (modal): prayer navigation, favorites, history, Carmen prayer, connect & support, accessibility & translation -->
+        <!-- Prayers Bottom Sheet: opened from the Prayers button in the bottom navigation -->
+        <div id="prayersSheet" class="sheet-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="prayersSheetTitle">
+            <div class="sheet-panel">
+                <div class="sheet-handle" aria-hidden="true"></div>
+                <div class="flex items-center justify-between px-5 pb-2">
+                    <h2 id="prayersSheetTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100" data-translate="prayers">Prayers</h2>
+                    <button id="closePrayersSheet" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close prayers menu">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <nav id="prayersSheetList" class="prayer-menu" aria-label="All prayers">
+                    <!-- Prayer menu items populated by JavaScript -->
+                </nav>
+            </div>
+        </div>
+
+        <!-- Options Panel (modal): prayer list, favorites, history, Carmen prayer, connect & support, accessibility & translation -->
         <div id="optionsPanel" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="optionsPanelTitle">
             <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-gray-50 dark:bg-gray-900 rounded-t-2xl z-10">
-                    <h2 id="optionsPanelTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100">Options</h2>
+                    <h2 id="optionsPanelTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100" data-translate="options">Options</h2>
                     <button id="closeOptionsPanel" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close options">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
-                <div class="p-6 space-y-8">
+                <div class="p-6 space-y-6">
                     <!-- Quick links: Calendar, Accessibility, Translate -->
                     <div class="flex flex-wrap items-center gap-3">
                         <a href="pages/calendar.html" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100" aria-label="Calendar">
@@ -183,13 +177,20 @@
                         </button>
                     </div>
 
-                    <!-- Prayer Navigation -->
-                    <div id="navGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <!-- Navigation items populated by JavaScript -->
-                    </div>
-                    <!-- Skeleton Loaders -->
-                    <div id="navGridSkeleton" class="grid grid-cols-2 md:grid-cols-4 gap-6" style="display: none;">
-                        <!-- Skeleton cards will be inserted here -->
+                    <!-- Prayer dropdown: simple expandable list of all prayers -->
+                    <div class="bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden">
+                        <button id="optionsPrayerToggle" class="w-full flex items-center justify-between p-4 text-left font-semibold text-gray-800 dark:text-gray-100" aria-expanded="true" aria-controls="optionsPrayerList">
+                            <span class="flex items-center gap-3">
+                                <i class="fas fa-hands-praying text-purple-600 dark:text-purple-400" aria-hidden="true"></i>
+                                <span data-translate="prayers">Prayers</span>
+                            </span>
+                            <svg class="w-5 h-5 dropdown-chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <nav id="optionsPrayerList" class="prayer-menu border-t border-gray-200 dark:border-gray-700" aria-label="All prayers">
+                            <!-- Prayer menu items populated by JavaScript -->
+                        </nav>
                     </div>
 
                     <!-- Favorites Section -->
@@ -254,82 +255,83 @@
                     <section class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
                         <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Connect & Support</h3>
                         <div class="grid grid-cols-4 gap-3 mb-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-                        </svg>
-                    </div>
-                    <span class="text-xxs">Facebook</span>
-                </a>
-                <a href="https://wa.me/255742101013" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                        </svg>
-                    </div>
-                    <span class="text-xxs">WhatsApp</span>
-                </a>
-                <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <span class="text-xxs">Email</span>
-                </a>
-                <a href="https://donate.ipray.app" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </div>
-                    <span class="text-xxs">Donate</span>
-                </a>
-            </div>
-            <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    <span id="copyrightYear"></span> <span data-translate="copyright">ipray App. All rights reserved.</span>
-                </p>
-            </div>
-        </section>
+                            <a href="https://facebook.com" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-xxs">Facebook</span>
+                            </a>
+                            <a href="https://wa.me/255742101013" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-1">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                    </svg>
+                                </div>
+                                <span class="text-xxs">WhatsApp</span>
+                            </a>
+                            <a href="mailto:support@ipray.app" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white mb-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <span class="text-xxs">Email</span>
+                            </a>
+                            <a href="https://donate.ipray.app" target="_blank" rel="noopener" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white mb-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                </div>
+                                <span class="text-xxs">Donate</span>
+                            </a>
+                        </div>
+                        <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <span id="copyrightYear"></span> <span data-translate="copyright">ipray App. All rights reserved.</span>
+                            </p>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
-<!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
-    <div class="flex justify-around h-full items-center">
-        <!-- Home -->
-        <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400" data-translate="home">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="home">Home</span>
-        </a>
-        <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-translate="lauds">
-            <!-- Sunrise Icon -->
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
-        </a>
-        <!-- Calendar -->
-        <a href="pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-translate="calendar">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
-        </a>
-        <!-- Settings -->
-        <a href="pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-translate="settings">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="settings">Settings</span>
-        </a>
-    </div>
-</nav>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <!-- Home -->
+                <a href="index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <!-- Prayers: opens the prayers menu with access to all prayers -->
+                <button id="prayersNavBtn" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" aria-haspopup="dialog" aria-controls="prayersSheet">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m-5-11h10M9 4h6" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
+                </button>
+                <!-- Calendar -->
+                <a href="pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <!-- Settings -->
+                <a href="pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
+
         <!-- Accessibility Menu -->
         <div id="accessibilityMenu" class="fixed top-16 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 z-50 hidden" role="dialog" aria-labelledby="accessibilityMenu">
             <h4 class="font-bold mb-2 text-gray-800 dark:text-gray-100">Accessibility</h4>
@@ -375,10 +377,8 @@
     </div>
     <!-- Main JavaScript -->
     <script src="js/daily-readings.js"></script>
-        <!-- Daily Readings Module -->
+    <!-- Daily Readings Module -->
     <script src="js/daily-readings-module.js"></script>
-    <!-- Search Functionality -->
-    <script src="js/search.js"></script>
     <!-- Image Optimization -->
     <script src="js/image-optimizer.js"></script>
     <!-- Loading States -->
@@ -388,6 +388,7 @@
     <!-- Mobile Navigation -->
     <script src="js/mobile-navigation.js"></script>
     <!-- Main JavaScript -->
+    <script src="js/liturgical-calendar.js"></script>
     <script src="js/index.js"></script>
     <script>
         (function () {
@@ -403,7 +404,7 @@
     <script>
         (function () {
             var panel = document.getElementById('optionsPanel');
-            var openBtns = [document.getElementById('optionsToggle'), document.getElementById('openOptionsBtn')];
+            var openBtn = document.getElementById('optionsToggle');
             var closeBtn = document.getElementById('closeOptionsPanel');
             if (!panel) return;
 
@@ -411,27 +412,68 @@
                 panel.classList.remove('hidden');
                 panel.classList.add('flex');
                 document.body.classList.add('overflow-hidden');
-                var toggle = document.getElementById('optionsToggle');
-                if (toggle) toggle.setAttribute('aria-expanded', 'true');
+                if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
             }
 
             function closePanel() {
                 panel.classList.add('hidden');
                 panel.classList.remove('flex');
                 document.body.classList.remove('overflow-hidden');
-                var toggle = document.getElementById('optionsToggle');
-                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
             }
 
-            openBtns.forEach(function (btn) {
-                if (btn) btn.addEventListener('click', openPanel);
-            });
+            if (openBtn) openBtn.addEventListener('click', openPanel);
             if (closeBtn) closeBtn.addEventListener('click', closePanel);
             panel.addEventListener('click', function (e) {
                 if (e.target === panel) closePanel();
             });
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && !panel.classList.contains('hidden')) closePanel();
+            });
+        })();
+    </script>
+    <!-- Prayers bottom sheet toggle -->
+    <script>
+        (function () {
+            var sheet = document.getElementById('prayersSheet');
+            var openBtn = document.getElementById('prayersNavBtn');
+            var closeBtn = document.getElementById('closePrayersSheet');
+            if (!sheet) return;
+
+            function openSheet() {
+                sheet.classList.remove('hidden');
+                requestAnimationFrame(function () { sheet.classList.add('open'); });
+                document.body.classList.add('overflow-hidden');
+            }
+
+            function closeSheet() {
+                sheet.classList.remove('open');
+                document.body.classList.remove('overflow-hidden');
+                setTimeout(function () { sheet.classList.add('hidden'); }, 250);
+            }
+
+            if (openBtn) openBtn.addEventListener('click', openSheet);
+            if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+            sheet.addEventListener('click', function (e) {
+                if (e.target === sheet) closeSheet();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !sheet.classList.contains('hidden')) closeSheet();
+            });
+        })();
+    </script>
+    <!-- Options prayer dropdown toggle -->
+    <script>
+        (function () {
+            var toggle = document.getElementById('optionsPrayerToggle');
+            var list = document.getElementById('optionsPrayerList');
+            if (!toggle || !list) return;
+            toggle.addEventListener('click', function () {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', String(!expanded));
+                list.classList.toggle('hidden', expanded);
+                var chevron = toggle.querySelector('.dropdown-chevron');
+                if (chevron) chevron.style.transform = expanded ? 'rotate(-90deg)' : '';
             });
         })();
     </script>
