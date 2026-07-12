@@ -77,10 +77,31 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
+body.page-index {
+    font-size: 1.12rem;
+    line-height: 1.75;
+}
+
+body.page-index h1,
+body.page-index h2,
+body.page-index h3 {
     font-family: var(--font-display);
     letter-spacing: 0.01em;
 }
+
+body.page-index h1 { font-size: 1.9rem; }
+body.page-index h2 { font-size: 1.5rem; }
+body.page-index h3 { font-size: 1.3rem; }
+body.page-index .app-bar-brand h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.1;
+}
+
+body.page-index .text-xs { font-size: 0.9rem !important; }
+body.page-index .text-sm { font-size: 1rem !important; }
+body.page-index .text-base { font-size: 1.1rem !important; }
+body.page-index .text-lg { font-size: 1.2rem !important; }
+body.page-index .text-xl { font-size: 1.35rem !important; }
 .text-small { font-size: 0.875rem; }
 .text-large { font-size: 1.25rem; }
 .text-xlarge { font-size: 1.5rem; }
@@ -820,20 +841,34 @@ button[aria-busy="true"]::after {
     display: none;
 }
 
-/* App Bar: full-width, non-floating header. Sits directly below the device
-   status bar (iOS safe area) and stays fixed to the top while scrolling. */
+/* App Bar: full-width, non-floating header. The colored bar extends into the
+   safe-area region on mobile devices, while the visible content starts below
+   the status bar. */
 .app-bar {
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 30;
+    position: relative;
+    isolation: isolate;
     padding: calc(env(safe-area-inset-top, 0px) + 0.625rem) 1.25rem 0.625rem;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.app-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: calc(100% + env(safe-area-inset-top, 0px));
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-subtle);
     border-radius: 0 0 1rem 1rem;
     box-shadow: 0 1px 8px rgba(27, 36, 34, 0.06);
+    z-index: -1;
 }
 
 .app-bar-brand h1 {
@@ -1148,7 +1183,7 @@ nav[role="navigation"][aria-label="Main Navigation"] {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
-    border-top: 4px solid var(--lit-accent, #2E7D32);
+    border-top: 1px solid var(--glass-border);
     box-shadow: var(--shadow-md);
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
