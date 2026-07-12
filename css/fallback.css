@@ -78,7 +78,21 @@ body {
     transition: transform 0.3s ease;
 }
 .bottom-nav {
-    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+    padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+}
+
+@media (max-width: 768px) {
+    .bottom-nav a,
+    nav[role="navigation"] a,
+    nav.fixed.bottom-0.left-0.right-0 a {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0.2rem 0.1rem;
+    }
 }
 /* Loading Spinner for Prayer Wall */
 .spinner {
