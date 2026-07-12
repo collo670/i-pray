@@ -19,6 +19,7 @@
             this.setupBottomNavHide();
             this.setupQuickActions();
             this.addHapticFeedback();
+            this.showBottomNav();
         },
         
         isMobile: function() {
@@ -89,48 +90,33 @@
         // Hide/show bottom nav on scroll
         setupBottomNavHide: function() {
             if (!this.bottomNav) return;
-            
-            let lastScrollTop = 0;
-            let scrollTimeout;
-            
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                clearTimeout(scrollTimeout);
-                
-                // Show nav when scrolling stops
-                scrollTimeout = setTimeout(() => {
-                    this.showBottomNav();
-                }, 500);
-                
-                // Hide nav when scrolling down, show when scrolling up
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    // Scrolling down
-                    this.hideBottomNav();
-                } else {
-                    // Scrolling up
-                    this.showBottomNav();
-                }
-                
-                lastScrollTop = scrollTop;
-            }, { passive: true });
+            this.showBottomNav();
         },
         
         showBottomNav: function() {
-            if (!this.bottomNav || this.isBottomNavVisible) return;
+            if (!this.bottomNav) return;
             
             this.bottomNav.style.transform = 'translateY(0)';
             this.bottomNav.style.opacity = '1';
+            this.bottomNav.style.visibility = 'visible';
+            this.bottomNav.style.position = 'fixed';
+            this.bottomNav.style.bottom = '0';
+            this.bottomNav.style.left = '0';
+            this.bottomNav.style.right = '0';
             this.isBottomNavVisible = true;
         },
         
         hideBottomNav: function() {
-            if (!this.bottomNav || !this.isBottomNavVisible) return;
+            if (!this.bottomNav) return;
             
-            const navHeight = this.bottomNav.offsetHeight;
-            this.bottomNav.style.transform = `translateY(${navHeight}px)`;
-            this.bottomNav.style.opacity = '0.8';
-            this.isBottomNavVisible = false;
+            this.bottomNav.style.transform = 'translateY(0)';
+            this.bottomNav.style.opacity = '1';
+            this.bottomNav.style.visibility = 'visible';
+            this.bottomNav.style.position = 'fixed';
+            this.bottomNav.style.bottom = '0';
+            this.bottomNav.style.left = '0';
+            this.bottomNav.style.right = '0';
+            this.isBottomNavVisible = true;
         },
         
         // Quick action buttons (long press)
