@@ -13,6 +13,44 @@
     <link rel="stylesheet" href="../dist/output.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">
+    <style>
+        /* Universalis office markup (.v verse lines, .vi continuations, table.each
+           section headings, rubrics…) restyled to flow with the app layout. */
+        .office-content { font-size: 1.0625rem; line-height: 1.75; color: #374151; }
+        .dark .office-content { color: #d1d5db; }
+        .office-content .v { margin: 0; }
+        .office-content .v.gb { margin-top: 0.9em; }
+        .office-content .vi { padding-left: 1.25rem; }
+        .office-content .p, .office-content .pi { margin: 0.6em 0; }
+        .office-content table { width: 100%; border-collapse: collapse; }
+        .office-content table.each { margin: 2rem 0 0.75rem; }
+        .office-content table.each th { font-weight: 400; }
+        .office-content table.each th[align="left"] {
+            display: inline-block; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: #7c3aed; background: rgba(124, 58, 237, 0.10);
+            border-radius: 9999px; padding: 0.3rem 0.85rem;
+        }
+        .dark .office-content table.each th[align="left"] { color: #c4b5fd; background: rgba(124, 58, 237, 0.28); }
+        .office-content table.each th[align="right"] { font-size: 0.85rem; font-style: italic; color: #6b7280; text-align: right; }
+        .dark .office-content table.each th[align="right"] { color: #9ca3af; }
+        .office-content th:empty, .office-content td:empty { display: none; }
+        .office-content td[align="right"] { font-size: 0.85rem; font-style: italic; color: #6b7280; text-align: right; padding-top: 0.35rem; }
+        .dark .office-content td[align="right"] { color: #9ca3af; }
+        .office-content h4 { margin: 1.25rem 0 0.75rem; font-size: 1rem; font-weight: 700; color: #1f2937; }
+        .dark .office-content h4 { color: #f3f4f6; }
+        .office-content hr.shortrule { border: 0; border-top: 1px dashed #d1d5db; width: 4rem; margin: 1.75rem auto 0; }
+        .office-content > hr.shortrule:first-child { display: none; }
+        .dark .office-content hr.shortrule { border-top-color: #4b5563; }
+        .office-content .rubric { font-size: 0.875rem; font-style: italic; color: #b91c1c; margin: 0.75rem 0; }
+        .dark .office-content .rubric { color: #f87171; }
+        .office-content .boldrubric { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; color: #b91c1c; }
+        .dark .office-content .boldrubric { color: #f87171; }
+        .office-content .audioclip { margin: 1.25rem 0; text-align: center; font-size: 0.75rem; }
+        .office-content .audioclip audio { width: 100%; max-width: 24rem; }
+        .office-content a { color: #7c3aed; text-decoration: underline; }
+        .dark .office-content a { color: #a78bfa; }
+    </style>
     <!-- Apply saved theme before paint to avoid flash -->
     <script>
         (function () {
@@ -99,7 +137,8 @@
                 </div>
             </div>
 
-            <!-- The office itself, embedded from Universalis for the chosen day -->
+            <!-- The office itself, fetched from Universalis and rendered natively
+                 in the app layout; the iframe is only a fallback if fetching fails. -->
             <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden">
                 <div id="hourLoading" class="text-center py-12">
                     <div class="inline-block w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
@@ -109,6 +148,7 @@
                     <p class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
                     <p id="windowNote" class="text-sm text-gray-500 dark:text-gray-400"></p>
                 </div>
+                <div id="officeContent" class="office-content hidden p-5 sm:p-7"></div>
                 <iframe id="hourFrame" title="Liturgy of the Hours" class="w-full hidden" style="height: 75vh; border: 0;" referrerpolicy="no-referrer"></iframe>
             </div>
 
@@ -170,6 +210,18 @@
             var WINDOW_BACK_DAYS = 3;
             var WINDOW_AHEAD_DAYS = 9;
 
+            // Universalis sends no CORS headers, so the page is fetched through
+            // a public CORS proxy (trying each in turn) and the office content
+            // is extracted and rendered natively in the app layout. If every
+            // proxy fails, the iframe below is used as a fallback.
+            var PROXIES = [
+                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+            ];
+            var FETCH_TIMEOUT_MS = 12000;
+            var CACHE_PREFIX = 'officeHtml-';
+
             var HOURS = {
                 sext: {
                     page: 'sext',
@@ -214,7 +266,10 @@
             var unavailableEl = document.getElementById('hourUnavailable');
             var windowNote = document.getElementById('windowNote');
             var frame = document.getElementById('hourFrame');
+            var officeEl = document.getElementById('officeContent');
             var externalLink = document.getElementById('externalLink');
+            var loadToken = 0;
+            var fallbackToken = -1;
 
             var lang = 'en';
             try {
@@ -275,6 +330,74 @@
                 }
             }
 
+            // Pull the office out of the fetched Universalis page and strip
+            // everything that should not run or render inside the app.
+            function cleanOffice(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var inner = doc.getElementById('innertexst') || doc.getElementById('texts');
+                if (!inner || !inner.querySelector('.v, .p')) return null;
+                inner.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
+                    n.parentNode.removeChild(n);
+                });
+                inner.querySelectorAll('*').forEach(function (n) {
+                    for (var i = n.attributes.length - 1; i >= 0; i--) {
+                        if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+                    }
+                });
+                inner.querySelectorAll('a[href]').forEach(function (a) {
+                    var href = a.getAttribute('href');
+                    if (href && href.charAt(0) === '/') a.setAttribute('href', 'https://universalis.com' + href);
+                    a.setAttribute('target', '_blank');
+                    a.setAttribute('rel', 'noopener');
+                });
+                return inner.innerHTML;
+            }
+
+            function showOffice(htmlStr) {
+                officeEl.innerHTML = htmlStr;
+                loadingEl.classList.add('hidden');
+                frame.classList.add('hidden');
+                officeEl.classList.remove('hidden');
+            }
+
+            function fetchThroughProxies(url, token, onOk, onFail) {
+                var i = 0;
+                (function tryNext() {
+                    if (token !== loadToken) return;
+                    if (i >= PROXIES.length) { onFail(); return; }
+                    var proxied = PROXIES[i++](url);
+                    var ctrl = window.AbortController ? new AbortController() : null;
+                    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
+                    fetch(proxied, ctrl ? { signal: ctrl.signal } : {})
+                        .then(function (r) {
+                            if (!r.ok) throw new Error('HTTP ' + r.status);
+                            return r.text();
+                        })
+                        .then(function (text) {
+                            clearTimeout(timer);
+                            if (token !== loadToken) return;
+                            var cleaned = cleanOffice(text);
+                            if (!cleaned) throw new Error('no office content');
+                            onOk(cleaned);
+                        })
+                        .catch(function () {
+                            clearTimeout(timer);
+                            tryNext();
+                        });
+                })();
+            }
+
+            // Drop cached offices for dates that have slid out of the window.
+            function pruneCache() {
+                var oldest = stampOf(minDate);
+                for (var i = localStorage.length - 1; i >= 0; i--) {
+                    var k = localStorage.key(i);
+                    if (k && k.indexOf(CACHE_PREFIX) === 0 && k.slice(k.lastIndexOf('-') + 1) < oldest) {
+                        localStorage.removeItem(k);
+                    }
+                }
+            }
+
             function load(date) {
                 currentDate = startOfDay(date);
                 datePicker.value = isoOf(currentDate);
@@ -285,9 +408,11 @@
 
                 var url = 'https://universalis.com/' + stampOf(currentDate) + '/' + HOURS[hourKey].page + '.htm';
                 externalLink.href = url;
+                var token = ++loadToken;
 
                 if (+currentDate < +minDate || +currentDate > +maxDate) {
                     frame.classList.add('hidden');
+                    officeEl.classList.add('hidden');
                     loadingEl.classList.add('hidden');
                     windowNote.textContent = (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
                         + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.';
@@ -297,12 +422,32 @@
 
                 unavailableEl.classList.add('hidden');
                 frame.classList.add('hidden');
+                officeEl.classList.add('hidden');
                 loadingEl.classList.remove('hidden');
-                frame.src = url;
+
+                var cacheKey = CACHE_PREFIX + hourKey + '-' + stampOf(currentDate);
+                var cached = null;
+                try { cached = localStorage.getItem(cacheKey); } catch (e) {}
+                if (cached) {
+                    showOffice(cached);
+                    return;
+                }
+
+                fetchThroughProxies(url, token, function (cleaned) {
+                    try {
+                        pruneCache();
+                        localStorage.setItem(cacheKey, cleaned);
+                    } catch (e) {}
+                    showOffice(cleaned);
+                }, function () {
+                    if (token !== loadToken) return;
+                    fallbackToken = token;
+                    frame.src = url;
+                });
             }
 
             frame.addEventListener('load', function () {
-                if (!frame.src) return;
+                if (!frame.src || fallbackToken !== loadToken) return;
                 loadingEl.classList.add('hidden');
                 frame.classList.remove('hidden');
             });
