@@ -132,23 +132,6 @@ body {
     color: var(--text);
 }
 
-.reading-block,
-.response {
-    padding: 18px 20px;
-    margin: 16px 0;
-    border-radius: 14px;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
-}
-
-.reading-block {
-    background: var(--panel-soft);
-    border-left: 4px solid var(--accent-3);
-}
-
-.response {
-    background: #fff8ed;
-    border-left: 4px solid var(--accent-2);
-}
 
 .citation {
     color: var(--muted);
