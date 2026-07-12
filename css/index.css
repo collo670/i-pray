@@ -359,7 +359,7 @@ body.page-index::before {
 }
 
 .progress-fill {
-    transition: width 0.3s ease;
+    transition: width 0.2s ease;
 }
 
 /* Skeleton Loader Components */
@@ -905,6 +905,24 @@ header[role="banner"]::before {
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: var(--radius-lg);
     z-index: 1000;
+}
+
+/* Extends the navbar's own background up behind the mobile status bar /
+   notch (env(safe-area-inset-top)) so the brand color shows through there
+   instead of the page background. Purely decorative: absolutely positioned
+   and out of flow, so it never affects the navbar's own size/position or
+   the page layout below it. Resolves to a 0-height no-op on devices/browsers
+   without a safe area (e.g. desktop). */
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    right: -0.5rem;
+    height: env(safe-area-inset-top, 0px);
+    background: inherit;
+    z-index: -1;
+    pointer-events: none;
 }
 
 .dark-mode .navbar {
