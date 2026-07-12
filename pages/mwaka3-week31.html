@@ -3,53 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kipindi cha Mwaka - Wiki 31</title>
-    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="theme-color" content="#7C3AED">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#7C3AED',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-green': '#2E7D32'
-                    }
-                }
+    <title>Mwaka Sehemu 3 - Week 31 - i-pray</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color:  #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .dark-mode .navbar {
+            background-color:  #222;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
             }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cormorant Garamond', Georgia, serif; background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%); }
-        .card { background-color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1rem; padding: 1.5rem; margin-top: 1rem; }
-        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -6px rgba(0,0,0,0.12), 0 6px 8px -6px rgba(0,0,0,0.06); }
-        .season-border { border-style: dashed; border-width: 1px; border-color: #bbf7d0; }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
     </style>
-    <meta name="description" content="Wiki ya Mwaka Sehemu 3 - Wiki 31">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script src="../js/logo-loader.js"></script>
-</head>
-<body class="min-h-screen" style="text-align: justify;">
-    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-purple-600">Wiki 31</h1>
-                <p class="text-sm text-gray-600">Jumapili 31 - Jumamosi 31</p><br><br>
-            </div>
-            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all" title="Nyumbani">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </a>
-        </div>
-    </header>
-    <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+    <script src="../js/nav-theme.js"></script>
 
-        <section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
+    <meta name="description" content="Office of Readings readings for Mwaka Sehemu 3 Week 31."></head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/i-pray/index.html" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="/i-pray/index.html">Nyumbani</a></li>
+                <li><a href="/i-pray/asubuhi.html">Masifu ya Asubuhi</a></li>
+                <li><a href="/i-pray/jioni.html">Masifu ya Jioni</a></li>
+                <li><a href="/i-pray/somo.html">Somo la Kila Siku</a></li>
+                <li><a href="/i-pray/takwimu.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+
+        <!-- original main content follows -->
+<section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
             <h2 class="text-xl font-bold text-green-800 mb-3">Jumapili ya 31</h2>
             <a id="jumapili-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
             <div id="jumapili-content">
@@ -110,7 +325,7 @@
                 <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA TANO <br> <br>SOMO LA KWANZA: Eze 47,1-12 <br> <br>Kiitikizano: <br>Eze 47,1.9; Yn 4,14 <br> <br>K. Niliona maji yalitoka chini ya kizingiti cha nyumba; * na kila mtu ataishi popote utakapofikilia <br>mto huo. <br>W. Maji yale nitakayompa mimi yatakuwa ndani yake chemchemi ikibubujikia uzima wa milele; <br>K. na kila mtu ataishi popote utakapofikilia mto huo. <br> <br>SOMO LA PILI: <br>Toka “Maelezo juu ya zaburi” ya Mt. Ilario, askofu. <br> <br>Mto na vijito vyake vyaufurahisha mji wa Mungu <br> <br>“Mto wa Mungu umejaa maji; wawaruzuku watu nafaka. Ndivyo uitengenezavyo ardhi” (Zab <br>65,9). <br>Mfano wa mto ni dhahiri. Naam, asema nabii: “Mto na vijito vyake vyaufurahisha mji wa <br>Mungu” (Zab 46,4). Bwana mwenyewe asema katika injili: “Yeyote atakayekunywa maji yale <br>nitakayompa mimi, yatakuwa ndani yake chemchemi ya maji, yakibubujikia uzima wa milele”(Yn <br>4,14). Na bado: “Aniaminiye mimi, kama vile Maandiko yalivyonena, mito ya maji yaliyo hai <br>itatoka ndnai yake. Na neno hilo alilisema katika habari ya Roho, ambaye wale wamwaminio <br>watampokea baadaye” (Yn 7,38-39). Basi, mto huu wa Mungu umejaa maji. Naam, tumejaa vipaji <br>vya Roho Mtakatifu na toka chemchemi ile ya uzima, unamiminika kwetu mto unaojaa maji ya <br>Mungu. Na tulikuwa tayari na chakula. Ni kipi chakula hiki? Bila shaka kile kinachotutayarisha <br>kushiriki uzima wa milele wa Mungu. Ni mwilie mtakatifu tunaoupokea katika komunio. Komunio <br>hii yatutayarisha tena kwa ile ya mwili mtakatifu, ulio Kanisa mshindi. Hayo yadokezwa na zaburi <br>hii isemayo: “Wewe unakuza ngano kwa watu. Hivyo unaandaa ardhi”, kwa sababu kwa chakula <br>kile hatukombolewi tu wakati huu, bali pia twaandaliwa kwa wakati ujao. <br>Tukizaliwa upya kwa njia ya sakramenti ya ubatizo, twasikia furaha kuu tuonjapo kabla ndani <br>yetu sisi wenyewe malimbuko ya Roho Mtakatifu, pamoja na kujua mafumbo, elimu ya ufunuo, <br>neno la hekima, uimara wa tumaini, karama za uponyaji na uwezo juu ya shetani. <br>Hayo yote yaingia kwetu kama mchiririko, na, yakianza pole pole, mwishowe yazaa matunda <br>tele. <br> <br>Kiitikizano: <br>Zab 36,9-10; 65,4<br> <br> <br>K. Watushibisha kwa unono wa nyumba yako, ee Bwana; watunywesha mto wa furaha zako. * <br>Maana kwako wewe iko chemchemi ya uzima, katika nuru yako tutaona nuru. <br>W. Tutashiba wema wa nyumba yako. <br>K. Maana kwako wewe iko chemchemi ya uzima, katika nuru yako tutaona nuru. <br> <br> <br> <br> <br> <br> <br> <br> <br> </p><p class="text-gray-700 leading-relaxed">Kipindi cha kawaida Ofisi ya masomo -211 <br>JUMA LA ISHIRINI NA SITA. KIPINDI CHA KAWAIDA</p><br><br>
             </div>
         </section>
-    </main>
+
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
             <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">

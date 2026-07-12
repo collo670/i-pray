@@ -4,104 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mwaka Sehemu 2 - Week 11 - i-pray</title>
-    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="description" content="Weekly readings for Mwaka Sehemu 2 Week 11">
-    <link rel="manifest" href="/ipray/manifest.json">
-    <meta name="theme-color" content="#7C3AED">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/ipray/assets/icons/icon-152x152.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#7C3AED',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-purple': '#4A1E8A',
-                        'liturgical-white': '#F8F9FA',
-                        'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
-                        'liturgical-gold': '#FFD700',
-                    },
-                    backgroundImage: {
-                        'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #7C3AED;
-            --current-theme: 'light';
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
             transition: all 0.3s ease;
         }
-        .theme-purple { --primary-color: #4A1E8A; }
-        .theme-red { --primary-color: #C41E3A; }
-        .theme-green { --primary-color: #2E7D32; }
-        .high-contrast { filter: contrast(1.5); }
-        .text-large { font-size: 1.25rem; }
-        .text-xxs { font-size: 0.7rem; }
-        .bg-gradient-vintage {
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
         }
-        .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color:  #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
         }
-        .card-hover {
-            transition: all 0.3s ease;
+        
+        .dark-mode .navbar {
+            background-color:  #222;
         }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .season-border {
-            border-style: dashed;
-            border-width: 1px;
-        }
-        .header-content {
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
             position: relative;
-            z-index: 10;
         }
-        .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
-        .border-green-200 { border-color: #bbf7d0; }
-        .text-green-800 { color: #166534; }
-        @media (max-width: 640px) {
-            .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
         }
     </style>
     <script src="../js/logo-loader.js"></script>
-</head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
+    <script src="../js/nav-theme.js"></script>
 
-    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div class="header-content">
-            <div>
-                <h1 class="text-2xl font-bold text-purple-600">Mwaka Sehemu 2 - Week 11</h1>
-                <p class="text-sm text-gray-600">Ordinary Time</p>
+    <meta name="description" content="Office of Readings readings for Mwaka Sehemu 2 Week 11."></head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/i-pray/index.html" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
-            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/i-pray/index.html">Nyumbani</a></li>
+                <li><a href="/i-pray/asubuhi.html">Masifu ya Asubuhi</a></li>
+                <li><a href="/i-pray/jioni.html">Masifu ya Jioni</a></li>
+                <li><a href="/i-pray/somo.html">Somo la Kila Siku</a></li>
+                <li><a href="/i-pray/takwimu.html">Kalenda</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
 
-        <div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
+        <!-- original main content follows -->
+<div class="rounded-3xl p-8 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-8">
 
             <section>
                 <h2 class="text-xl font-bold text-green-800 mb-3">Jumapili ya Kumi na Moja</h2>
@@ -269,7 +432,6 @@
             </section>
 
         </div>
-    </main>
 
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
@@ -287,13 +449,58 @@
             </a>
             <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 2.924 1.756 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-2.924-1.756 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 </svg>
                 <span class="text-xs font-medium">Settings</span>
             </a>
         </div>
     </nav>
-
+    <script>
+    function toggleSection(day) {
+        const content = document.getElementById(day + '-content');
+        const link = document.getElementById(day + '-link');
+        const section = document.getElementById(day + '-section') || event.currentTarget;
+        
+        if (content.classList.contains('hidden')) {
+            document.querySelectorAll('[id$="-content"]').forEach(el => {
+                if (el !== content) {
+                    el.classList.add('hidden');
+                    const otherLink = document.getElementById(el.id.replace('-content', '-link'));
+                    if (otherLink) otherLink.textContent = 'Tap to view';
+                }
+            });
+            content.classList.remove('hidden');
+            link.textContent = 'Tap to hide';
+        } else {
+            content.classList.add('hidden');
+            link.textContent = 'Tap to view';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const dayMapping = {
+            0: 'jumapili', 1: 'jumatatu', 2: 'jumanne', 3: 'jumatano', 
+            4: 'alhamisi', 5: 'ijumaa', 6: 'jumamosi'
+        };
+        const currentDayIndex = new Date().getDay();
+        const currentDayId = dayMapping[currentDayIndex];
+        const allSections = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+        allSections.forEach(day => {
+            const content = document.getElementById(day + '-content');
+            if (content) {
+                content.classList.add('hidden');
+                const link = document.getElementById(day + '-link');
+                if (link) link.textContent = 'Tap to view';
+            }
+        });
+        const currentContent = document.getElementById(currentDayId + '-content');
+        if (currentContent) {
+            currentContent.classList.remove('hidden');
+            const currentLink = document.getElementById(currentDayId + '-link');
+            if (currentLink) currentLink.textContent = 'Tap to hide';
+        }
+    });
+    </script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {

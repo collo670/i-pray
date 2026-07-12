@@ -1,106 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>kawaida</title>
-
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Custom Tailwind Config (from uploaded file) -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'primary': '#7C3AED',
-            'secondary': '#DB2777',
-            'accent': '#F59E0B',
-            'liturgical-purple': '#4A1E8A',
-            'liturgical-white': '#F8F9FA',
-            'liturgical-red': '#C41E3A',
-            'liturgical-green': '#2E7D32',
-            'liturgical-gold': '#FFD700',
-          },
-          backgroundImage: {
-            'vintage-texture': 'url("image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Office of Readings for Mwaka Sehemu 3.">
+    <title>Mwaka Sehemu 3 - i-pray</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
         }
-      }
-    };
-  </script>
-
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-  <!-- Reuse styles from the uploaded file -->
-  <style>
-    :root {
-      --primary-color: #7C3AED;
-      --current-theme: 'light';
-    }
-    body {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      transition: all 0.3s ease;
-    }
-    .bg-gradient-vintage {
-      background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-    }
-    .dark .bg-gradient-vintage {
-      background: linear-gradient(135deg, #4c1d95 0%, #7c2d12 50%, #075985 100%);
-    }
-    .canvas-container {
-      max-width: 1024px;
-      margin: 0 auto;
-    }
-    canvas {
-      width: 100% !important;
-      height: auto !important;
-      display: block;
-      margin: 0 auto;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-    @media (prefers-color-scheme: dark) {
-      body {
-        color: white;
-      }
-    }
-    @media (max-width: 640px) {
-      .bottom-nav {
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-    }
-  </style>
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color:  #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .dark-mode .navbar {
+            background-color:  #222;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
+    </style>
     <script src="../js/logo-loader.js"></script>
+    <script src="../js/nav-theme.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-vintage dark:text-white transition-colors duration-300" data-src="PDFS/MwakaSehemu3.pdf" style="text-align: justify;" style="text-align: justify;">
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/i-pray/index.html" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="/i-pray/index.html">Nyumbani</a></li>
+                <li><a href="/i-pray/asubuhi.html">Masifu ya Asubuhi</a></li>
+                <li><a href="/i-pray/jioni.html">Masifu ya Jioni</a></li>
+                <li><a href="/i-pray/somo.html">Somo la Kila Siku</a></li>
+                <li><a href="/i-pray/takwimu.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
 
-  <!-- Dark Mode Sync -->
-  <script>
-    const savedMode = localStorage.getItem('themeMode') || 'light';
-    document.body.classList.toggle('dark', savedMode === 'dark');
-    document.documentElement.classList.toggle('dark', savedMode === 'dark');
-  </script>
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
 
-  <!-- Navigation Bar -->
-  <nav class="fixed top-0 left-0 right-0 bg-[#202847] shadow z-50 backdrop-blur-sm">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="text-lg font-semibold text-white">KIPINDI CHA KAWAIDA 21-34</div>
-      <div class="space-x-4">
-        <a href="../index.html" class="text-gray-300 hover:text-white">Home</a>
-        <a href="#" class="text-gray-300 hover:text-white"></a>
-        <a href="#" class="text-gray-300 hover:text-white"></a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Spacing for fixed nav -->
-  <div class="pt-20"></div>
-
-  <!-- Controls -->
+        <!-- original main content follows -->
   <div class="mb-4 text-center">
     <div class="inline-flex flex-wrap justify-center gap-2 px-4">
       <button id="prevPage" class="px-3 py-1 bg-primary text-white rounded hover:bg-purple-700 transition">Previous</button>
@@ -227,9 +390,136 @@
     });
   }
 </script>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
+        <div class="flex justify-around h-full items-center">
+            <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs font-medium">Calendar</span>
+            </a>
+            <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 2.924 1.756 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-2.924-1.756 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+    function toggleSection(day) {
+        const content = document.getElementById(day + '-content');
+        const link = document.getElementById(day + '-link');
+        const section = document.getElementById(day + '-section') || event.currentTarget;
+        
+        if (content.classList.contains('hidden')) {
+            document.querySelectorAll('[id$="-content"]').forEach(el => {
+                if (el !== content) {
+                    el.classList.add('hidden');
+                    const otherLink = document.getElementById(el.id.replace('-content', '-link'));
+                    if (otherLink) otherLink.textContent = 'Tap to view';
+                }
+            });
+            content.classList.remove('hidden');
+            link.textContent = 'Tap to hide';
+        } else {
+            content.classList.add('hidden');
+            link.textContent = 'Tap to view';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const dayMapping = {
+            0: 'jumapili', 1: 'jumatatu', 2: 'jumanne', 3: 'jumatano', 
+            4: 'alhamisi', 5: 'ijumaa', 6: 'jumamosi'
+        };
+        const currentDayIndex = new Date().getDay();
+        const currentDayId = dayMapping[currentDayIndex];
+        const allSections = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+        allSections.forEach(day => {
+            const content = document.getElementById(day + '-content');
+            if (content) {
+                content.classList.add('hidden');
+                const link = document.getElementById(day + '-link');
+                if (link) link.textContent = 'Tap to view';
+            }
+        });
+        const currentContent = document.getElementById(currentDayId + '-content');
+        if (currentContent) {
+            currentContent.classList.remove('hidden');
+            const currentLink = document.getElementById(currentDayId + '-link');
+            if (currentLink) currentLink.textContent = 'Tap to hide';
+        }
+    });
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+
+    <!-- Text size control -->
+    <style>
+        body.text-small { font-size: 0.875rem; }
+        body.text-large { font-size: 1.25rem; }
+        body.text-xlarge { font-size: 1.5rem; }
+        #textSizeCycleBtn {
+            position: fixed;
+            bottom: 1.25rem;
+            right: 1rem;
+            z-index: 1200;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: #4b5563;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #textSizeCycleBtn:hover { background: #374151; }
+    </style>
+    <button id="textSizeCycleBtn" type="button" aria-label="Adjust text size" title="Adjust text size (Normal / Large / Extra Large)">A</button>
+    <script>
+        (function () {
+            var order = ['normal', 'large', 'xlarge'];
+            var labels = { small: 'A', normal: 'A', large: 'A+', xlarge: 'A++' };
+            var btn = document.getElementById('textSizeCycleBtn');
+            function apply(size) {
+                document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
+                if (size !== 'normal') document.body.classList.add('text-' + size);
+                btn.textContent = labels[size] || 'A';
+                try { localStorage.setItem('textSize', size); } catch (e) {}
+            }
+            var current = 'normal';
+            try { current = localStorage.getItem('textSize') || 'normal'; } catch (e) {}
+            apply(current);
+            btn.addEventListener('click', function () {
+                current = order[(order.indexOf(current) + 1) % order.length];
+                apply(current);
+            });
+        })();
+    </script>
 </body>
 </html>
-
-
-
-

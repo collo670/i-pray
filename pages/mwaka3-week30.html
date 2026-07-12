@@ -3,53 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kipindi cha Mwaka - Wiki 30</title>
-    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="theme-color" content="#7C3AED">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#7C3AED',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-green': '#2E7D32'
-                    }
-                }
+    <title>Mwaka Sehemu 3 - Week 30 - i-pray</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color:  #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .dark-mode .navbar {
+            background-color:  #222;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
             }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cormorant Garamond', Georgia, serif; background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%); }
-        .card { background-color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1rem; padding: 1.5rem; margin-top: 1rem; }
-        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -6px rgba(0,0,0,0.12), 0 6px 8px -6px rgba(0,0,0,0.06); }
-        .season-border { border-style: dashed; border-width: 1px; border-color: #bbf7d0; }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
     </style>
-    <meta name="description" content="Wiki ya Mwaka Sehemu 3 - Wiki 30">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script src="../js/logo-loader.js"></script>
-</head>
-<body class="min-h-screen" style="text-align: justify;">
-    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-purple-600">Wiki 30</h1>
-                <p class="text-sm text-gray-600">Jumapili 30 - Jumamosi 30</p><br><br>
-            </div>
-            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all" title="Nyumbani">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </a>
-        </div>
-    </header>
-    <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+    <script src="../js/nav-theme.js"></script>
 
-        <section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
+    <meta name="description" content="Office of Readings readings for Mwaka Sehemu 3 Week 30."></head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/i-pray/index.html" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="/i-pray/index.html">Nyumbani</a></li>
+                <li><a href="/i-pray/asubuhi.html">Masifu ya Asubuhi</a></li>
+                <li><a href="/i-pray/jioni.html">Masifu ya Jioni</a></li>
+                <li><a href="/i-pray/somo.html">Somo la Kila Siku</a></li>
+                <li><a href="/i-pray/takwimu.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+
+        <!-- original main content follows -->
+<section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
             <h2 class="text-xl font-bold text-green-800 mb-3">Jumapili ya 30</h2>
             <a id="jumapili-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
             <div id="jumapili-content">
@@ -110,7 +325,7 @@
                 <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA NNE <br> <br>SOMO LA KWANZA: Eze 18,1-13.20-32 <br> <br>Kiitikizano: <br>Yer 31,29; Eze 18,20.30.20 <br> <br>K. Siku zile hawatasema tena: Baba za watu wameluka zabibu kali, na meno ya watoto wa <br>yametiwa ganzi. * Yule aliyetenda dhambi, wala si wengine, apaswa kufa <br>W. Mimi nitamhukumu kila mmoja kwa kadiri ya njia zake: mwana hatauchukua uovu wa baba <br>yake, wala baba hatauchukua uovu wa mwanawe. <br>K. Yule aliyetenda dhambi, wala si wengine apaswa kufa. <br> <br>SOMO LA PILI: <br>Toka “Hotuba juu ya wachungaji” ya Mt. Augustino, askofu. <br> <br>Tolea msaada wa faraja <br> <br>Imesemwa katika Maandiko: “Yeye ambaye Bwana ampenda, humrudi” (Ebr 12,6), nawe <br>wasema: Labda chachari litakuwepo. Lakini, kumbuka vizuri kwamba ikiwa mmoja hapati pigo la <br>adhabu, aondolewa miongoni mwa watoto. Kwa hiyo, utasema, yeye humpiga hasa kila mtoto? <br>Kweli, yeye amrudi kila mtoto, kama alivyompiga hata Mwanawe. Yule Mwana wa pekee, <br>aliyezaliwa toka kwa Baba, alikuwa Neno sawa na Baba katika maumbile ya kimungu, yule ambaye <br>kwa njia yake vitu vyote vimeumbwa. Ila, yeye hakutoa sababu yo yote ya kupigwa. Hata hivyo <br>alivika mwili kwa lengo hili, asibaki bila pigo. Sasa, yule anayempiga Mwana wa pekee, ingawa <br>bila dhambi, je ataacha bila mateso mwana mwa wa kupokelewa na mdhambi? Mtume asema <br>kwamba sisi tumeitwa kwa kupokelewa. Tulipata hali ya kupokelewa kama wana ili kuwa warithi <br>pamoja Mzaliwa pekee, na ili kuwa pamoja naye urithi wake: “Uniombe, nami nitakupa mataifa <br>kuwa urithi wako” (Zab 2,8). Yeye alitupatia mfano kwa mateso yake. </p><p class="text-gray-700 leading-relaxed">202 - Ofisi ya Masomo Kipindi cha kawaida <br>Lakini, hakika, mdhaifu ili kutoshindwa mbele vishawishi vijavyo, hapaswi kudanganywa <br>kwa matumaini ya bandia, wala kudhiliwa na matarajio ya kuogofya. Wapaswa kumwambia: <br>“Jiandae kwa kishawishi”(YbS 2,1). Yeye labda ataanza kusisita, kutetemeka, kurudi nyuma. Lakini <br>pia ukweli huu mwingine wapaswa kumwambia: “Mungu ni mwaminifu, wala hatawaacha <br>mjaribiwe kupita mwezavyo” (I Kor 10,13). <br>Kule kuahidi na kutarajia mateso yajayo, ni kumpa nguvu yule aliye mdhaifu. Lakini ikiwa <br>mmoja anaogopa sana na kwa hiyo ameshtuka, umwahidi huruma ya Mungu. Kwa hayo, bila shaka <br>hutamhakikishia kutopata vishawishi, bali utamsadikisha kwamba Mungu haruhusu ya kuwa sisi <br>tujaribiwe kupita nguvu zetu. Ni kama ungemfungia vitambaa yule aliyevunjika. Naam, wapo watu <br>fulani ambao, waliposikia kwamba dhiki zitakuja, wanajiandaa zaidi na kama wanayo kiu ya <br>kikombe hiki. Waangalia kitu kidogo dawa ya waumini, na wanataka utukufu wa mashahidi. <br>Lakini yupi yule ambaye asikiapo kusema juu ya majaribio yaliyowekewa kwa mkristo, tena <br>yale ambayo hakuna mwingine awezaye kung’amua, isipokuwa yule atakaye kuwa mkristo kweli, <br>anaduwaa na, ayaonapo kumkaribia, anakufa moyo na ayumbayumba. Kwa huyo, umtolee vitambaa <br>vya faraja na uyafunge yale yaliyovunjika. Usema: Usiogope, hatakuacha katika kishawishi yule <br>uliyemwamini. Mungu ni mwaminifu, wala hatakubali kwamba wewe ujaribiwe kupita nguvu zako. <br>Huu sio msemo wangu. Ayafanya Mtume anayeongeza bado: Je, mwataka uthibitisho wa kwamba <br>Kristo anena ndani yangu? (2 Kor 13,3). Basi unaposikia maneno haya, unayasikiliza toka Kristo <br>mwenyewe, unayasikia toka mchungaji yule anayelisha Israeli. Yaani, Israeli ameambiwa hivi: <br>umewanywesha machozi kwa kipimo (Zab 80,5). Hayo asemayo Mtume: “Haruhusu kwamba <br>mjaribiwe kupita mwezavyo”, ayasema pia nabii na maneno: “Kwa kipimo”. <br>Kutotaka tu kumwacha yule anayekukanya na kukushauri, kunakuogofya na kukushauri, <br>kunakupiga na kukuponya. <br> <br>Kiitikizano: <br>Zab 44,22; Rum 8,37; Zab 44,10.11<br> <br> <br>K. Kwa ajili yako tunauawa mchana kutwa; tunafanywa kondoo waendao kuchinjwa. * lakini sisi <br>tu zaidi ya washindi, kwa yeye aliyetupenda. <br>W. Waturudisha nyuma, tukampa mtesi kisogo, umetutawanya kati ya mataifa. <br>K. Lakini sisi ni zaidi ya washindi, kwa yule aliyetupenda. <br> <br> <br> <br>JUMA LA ISHIRINI NA TANO. KIPINDI CHA KAWAIDA</p><br><br>
             </div>
         </section>
-    </main>
+
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
             <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
@@ -192,5 +407,54 @@
     });
   }
 </script>
+
+    <!-- Text size control -->
+    <style>
+        body.text-small { font-size: 0.875rem; }
+        body.text-large { font-size: 1.25rem; }
+        body.text-xlarge { font-size: 1.5rem; }
+        #textSizeCycleBtn {
+            position: fixed;
+            bottom: 1.25rem;
+            right: 1rem;
+            z-index: 1200;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: #4b5563;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #textSizeCycleBtn:hover { background: #374151; }
+    </style>
+    <button id="textSizeCycleBtn" type="button" aria-label="Adjust text size" title="Adjust text size (Normal / Large / Extra Large)">A</button>
+    <script>
+        (function () {
+            var order = ['normal', 'large', 'xlarge'];
+            var labels = { small: 'A', normal: 'A', large: 'A+', xlarge: 'A++' };
+            var btn = document.getElementById('textSizeCycleBtn');
+            function apply(size) {
+                document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
+                if (size !== 'normal') document.body.classList.add('text-' + size);
+                btn.textContent = labels[size] || 'A';
+                try { localStorage.setItem('textSize', size); } catch (e) {}
+            }
+            var current = 'normal';
+            try { current = localStorage.getItem('textSize') || 'normal'; } catch (e) {}
+            apply(current);
+            btn.addEventListener('click', function () {
+                current = order[(order.indexOf(current) + 1) % order.length];
+                apply(current);
+            });
+        })();
+    </script>
 </body>
 </html>

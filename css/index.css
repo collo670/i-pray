@@ -844,7 +844,8 @@ button[aria-busy="true"]::after {
 /* App Bar: full-width, non-floating header. The colored bar extends into the
    safe-area region on mobile devices, while the visible content starts below
    the status bar. */
-.app-bar {
+.app-bar,
+header[role="banner"] {
     position: sticky;
     top: 0;
     width: 100%;
@@ -857,7 +858,8 @@ button[aria-busy="true"]::after {
     -webkit-backdrop-filter: none;
 }
 
-.app-bar::before {
+.app-bar::before,
+header[role="banner"]::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
@@ -964,9 +966,22 @@ button[aria-busy="true"]::after {
     background-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Bottom navigation height */
-nav[role="navigation"][aria-label="Main Navigation"] {
-    height: 4.5rem;
+/* Bottom navigation height and shared layout */
+nav[role="navigation"][aria-label="Main Navigation"],
+.bottom-nav {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 4.5rem !important;
+    padding: 0.75rem 1.25rem calc(env(safe-area-inset-bottom, 0px) + 0.75rem) !important;
+    z-index: 40 !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-top: 1px solid var(--border-subtle) !important;
+    box-shadow: 0 -1px 8px rgba(27, 36, 34, 0.06) !important;
 }
 
 /* Enhanced Mobile Navigation with Tailwind */

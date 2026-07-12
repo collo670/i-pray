@@ -28,17 +28,13 @@ function setLanguage(lang) {
 }
 
 function loadPreferences() {
-    const savedTheme = localStorage.getItem('appTheme') || 'default';
-    setTheme(savedTheme);
-
     const darkMode = localStorage.getItem('darkMode') === 'true';
-    document.getElementById('darkModeToggle').checked = darkMode;
-    if (darkMode) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
+    applyDarkMode(darkMode);
+
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.checked = darkMode;
     }
-    updateThemeIcon(darkMode);
 
     const highContrast = localStorage.getItem('highContrast') === 'true';
     document.getElementById('highContrastToggle').checked = highContrast;
@@ -71,39 +67,44 @@ function loadPreferences() {
 }
 
 function updateThemeIcon(isDark) {
+    const quickSunIcon = document.getElementById('darkModeIconSun');
+    const quickMoonIcon = document.getElementById('darkModeIconMoon');
     const themeIcon = document.getElementById('themeIcon');
+
+    if (quickSunIcon && quickMoonIcon) {
+        quickSunIcon.classList.toggle('hidden', !isDark);
+        quickMoonIcon.classList.toggle('hidden', isDark);
+    }
+
     if (!themeIcon) return;
     themeIcon.innerHTML = isDark ?
         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />' :
         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
 }
 
+function applyDarkMode(isDark) {
+    document.documentElement.classList.toggle('dark', isDark);
+    document.body.classList.toggle('dark', isDark);
+    localStorage.setItem('darkMode', String(isDark));
+    updateThemeIcon(isDark);
+    updateManifestThemeColor();
+}
+
 function setupEventListeners() {
-    document.querySelectorAll('.theme-option').forEach(option => {
-        option.addEventListener('click', function() {
-            const theme = this.dataset.theme;
-            setTheme(theme);
-            localStorage.setItem('appTheme', theme);
+    const quickToggle = document.getElementById('darkModeQuickToggle');
+    if (quickToggle) {
+        quickToggle.addEventListener('click', function() {
+            const isDark = !document.documentElement.classList.contains('dark');
+            applyDarkMode(isDark);
         });
-    });
+    }
 
-    document.getElementById('darkModeToggle').addEventListener('change', function() {
-        const isDark = this.checked;
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        localStorage.setItem('darkMode', isDark);
-        updateThemeIcon(isDark);
-        updateManifestThemeColor();
-    });
-
-    document.getElementById('resetTheme').addEventListener('click', function() {
-        setTheme('default');
-        localStorage.setItem('appTheme', 'default');
-        updateManifestThemeColor();
-    });
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('change', function() {
+            applyDarkMode(this.checked);
+        });
+    }
 
     document.querySelectorAll('.language-option').forEach(option => {
         option.addEventListener('click', function() {
@@ -173,17 +174,6 @@ function getCurrentWeekAndDay() {
     const week = ((weeksSinceRef % 4) + 4) % 4 + 1;
 
     return { dayPrefix: dayToPrefix[today.getDay()], week };
-}
-
-function setTheme(theme) {
-    document.body.classList.remove('theme-purple', 'theme-white', 'theme-green', 'theme-red');
-    if (theme !== 'default') {
-        document.body.classList.add(`theme-${theme}`);
-    }
-    document.querySelectorAll('.theme-option').forEach(option => {
-        option.classList.toggle('border-primary', option.dataset.theme === theme);
-    });
-    updateManifestThemeColor();
 }
 
 function updateManifestThemeColor() {

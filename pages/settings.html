@@ -25,25 +25,33 @@
     </script>
     <script src="../js/logo-loader.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-vintage dark:bg-gray-900 dark:text-white transition-colors duration-300">
-    <div id="app">
-        <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm" role="banner">
-            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-                <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+<body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 dark:text-white transition-colors duration-300">
+    <div id="app" class="relative z-10 page-content">
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="app-bar-brand">
+                    <h1 id="appTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400" id="pageSubtitle" data-translate="settings">
+                    <p class="text-xs text-gray-600 dark:text-gray-400" id="pageSubtitle" data-translate="settings">
                         settings
                     </p>
                 </div>
-                <a href="../index.html" class="flex items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Back to home">
-                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    <span class="text-sm font-medium" data-translate="home">Home</span>
-                </a>
+                <div class="flex items-center gap-1">
+                    <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                        <svg id="darkModeIconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="darkModeIconMoon" class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </a>
+                </div>
             </div>
         </header>
         <!-- Main Content -->
@@ -51,42 +59,6 @@
             
             <!-- Settings Sections -->
             <div class="space-y-8">
-                <!-- App Theme -->
-                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-                    <h2 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-palette mr-2 text-primary"></i>
-                        <span data-translate="appTheme">App Theme</span>
-                    </h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="default" aria-label="Select default theme">
-                            <div class="w-full h-12 rounded mb-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
-                            <span data-translate="default">Default</span>
-                        </button>
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="purple" aria-label="Select Advent/Lent theme">
-                            <div class="w-full h-12 rounded mb-2 bg-liturgical-purple"></div>
-                            <span data-translate="adventLent">Advent/Lent</span>
-                        </button>
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="white" aria-label="Select Christmas/Easter theme">
-                            <div class="w-full h-12 rounded mb-2 bg-liturgical-white border border-gray-300"></div>
-                            <span data-translate="christmasEaster">Christmas/Easter</span>
-                        </button>
-                        <button class="theme-option p-4 rounded-lg border-2 border-transparent hover:border-primary" data-theme="green" aria-label="Select Ordinary Time theme">
-                            <div class="w-full h-12 rounded mb-2 bg-liturgical-green"></div>
-                            <span data-translate="ordinaryTime">Ordinary Time</span>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <div>
-                            <label class="inline-flex items-center">
-                                <input type="checkbox" id="darkModeToggle" class="rounded text-primary" aria-label="Toggle dark mode">
-                                <span class="ml-2" data-translate="darkMode">Dark Mode</span>
-                            </label>
-                        </div>
-                        <button id="resetTheme" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary">
-                            <span data-translate="resetDefault">Reset to Default</span>
-                        </button>
-                    </div>
-                </section>
                 <!-- Language Settings -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">

@@ -3,53 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kipindi cha Mwaka - Wiki 33</title>
-    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
-    <meta name="theme-color" content="#7C3AED">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#7C3AED',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-green': '#2E7D32'
-                    }
-                }
+    <title>Mwaka Sehemu 3 - Week 33 - i-pray</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Space for fixed nav */
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color:  #222;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .dark-mode .navbar {
+            background-color:  #222;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            
+            .dark-mode .nav-links {
+                background-color: #222;
+            }
+            
+            .nav-links.active {
+                max-height: 500px; /* Adjust based on content */
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+            
+            .nav-links li:hover {
+                background-color: rgba(0,0,0,0.1);
             }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cormorant Garamond', Georgia, serif; background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%); }
-        .card { background-color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1rem; padding: 1.5rem; margin-top: 1rem; }
-        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -6px rgba(0,0,0,0.12), 0 6px 8px -6px rgba(0,0,0,0.06); }
-        .season-border { border-style: dashed; border-width: 1px; border-color: #bbf7d0; }
+        
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dark-mode .toggle-btn {
+            background: #FFA07A;
+            color: #222;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
     </style>
-    <meta name="description" content="Wiki ya Mwaka Sehemu 3 - Wiki 33">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script src="../js/logo-loader.js"></script>
-</head>
-<body class="min-h-screen" style="text-align: justify;">
-    <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-purple-600">Wiki 33</h1>
-                <p class="text-sm text-gray-600">Jumapili 33 - Jumamosi 33</p><br><br>
-            </div>
-            <a href="/i-pray/index.html" class="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all" title="Nyumbani">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </a>
-        </div>
-    </header>
-    <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
+    <script src="../js/nav-theme.js"></script>
 
-        <section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
+    <meta name="description" content="Office of Readings readings for Mwaka Sehemu 3 Week 33."></head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/i-pray/index.html" class="nav-logo">ipray</a>
+            
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="/i-pray/index.html">Nyumbani</a></li>
+                <li><a href="/i-pray/asubuhi.html">Masifu ya Asubuhi</a></li>
+                <li><a href="/i-pray/jioni.html">Masifu ya Jioni</a></li>
+                <li><a href="/i-pray/somo.html">Somo la Kila Siku</a></li>
+                <li><a href="/i-pray/takwimu.html">Kalenda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+
+        <!-- original main content follows -->
+<section class="collapsed-section card card-hover season-border" id="jumapili-section" onclick="toggleSection('jumapili')">
             <h2 class="text-xl font-bold text-green-800 mb-3">Jumapili ya 33</h2>
             <a id="jumapili-link" class="block text-sm text-purple-600 mb-2 cursor-pointer">Tap to view</a>
             <div id="jumapili-content">
@@ -110,7 +325,7 @@
                 <p class="text-gray-700 leading-relaxed">YA ISHIRINI NA SABA <br> <br>SOMO LA KWANZA: I Tim 6,11-21 <br> <br>Kiitikizano: <br> Kol 2,6-7; Mt 6,19-20<br> <br> <br>K. Enendeni katika Bwana Yyesu Kristo, kama mlivyofundishwa, * mkizidi kutoa shukrani. <br>W. Msijiwekee hazina duniani, bali jiwekeeni hazina mbinguni, <br>K. mkizidi kutoa shukrani. <br> <br>SOMO LA PILI: <br>Toka “Homilia juu ya injili” za Mt. Gregorio Mkuu, askofu. <br> <br>Hisia ya uwajibikaji katika huduma <br> <br>Tusikie anachosema Bwana katika kutuma wahubiri: “Mavuno ni mengi, lakini watenda kazi ni <br>wachache! Basi, mwombeni Bwana wa mavuno, apeleke watenda kazi katika mavuno yake!”(Mt 9, <br>37-38). <br>Kwa mvuno mengi wafanya kazi ni wachache; hatuwezi kusema juu ya uhaba huu, bila huzuni <br>kubwa, kwa sababu wapo watu ambao wangesikiliza neno jema, lakini hawapo wahubiri. Tazama, <br>ulimwengu umejaa mapadre, na hata hivyo wapo wachache wafanyao kazi katika mavuno ya <br>Bwana; tulipokea huduma ya kikuhani, ila hatutekelezi matendo yanayodaiwa na huduma hiyo. <br>Fikirini kwa makini, ndugu wapendwa sana, juu ya yale yaliyoandikwa: “Mwombeni Bwana <br>wa mavuno, apeleke watenda kazi katika mavuno yake”. Mtuombee sisi, ili tuweze kuwatendea <br>ifaavyo, ili ulimi usibaki umekwama katika kushauri na ukimya wetu usituhukumu mbele ya <br>hakimu mwenye haki sisi tuliopokea huduma ya wahubiri. Naam, mara nyingi, lugha ya wahubiri <br>yapoteza urahisi wake kwa sababu ya makosa yao; ila mara nyingi waondolewa uwezekano wa <br>mahubiri toka viongozi kwa sababu ya waumini. <br>Lugha ya wahubiri yazuiliwa na ubaya wao, kulingana na yale asemayo mtunga zaburi: “Mtu <br>asiye na haki Mungu amwambia: Una nini wewe kuitangaza sheria zangu?” (Zab 50,16). </p><p class="text-gray-700 leading-relaxed">226 - Ofisi ya Masomo Kipindi cha kawaida <br>Mara nyingine, sauti ya wahubiri yazuiliwa kwa hatia na waumini, kama Bwana <br>anavyomwambia Ezekieli: “Nami nitaufanya ulimi wako ugandamane na kaakaa lako, hata utakuwa <br>bubu. Wala hutakuwa mwonyaji kwao, kwa kuwa wao ni nyumba yenye kuasi”(Eze 3,26). Ni kama <br>kusema: Unaondolewa na neno la mahubiri, kwa sababu watu hawastahili kusikiliza wosia wa <br>ukweli, watu hawa ambao katika vitendo vyao ni waasi kwangu. Si rahisi daima kujua kwa kosa la <br>nani mhubiri aondokewa na neno. Lakini yajulikana kwa hakika yote kwamba kimya ya mchungaji <br>yamdhuru yeye mwenyewe, na daima waumini waliopo chini yake. <br>Yapo mambo mengine, ndugu wapendwa, yanayonihuzunisha sana juu ya namna ya kuishi ya <br>wachungaji. Na, ili isionekane ya kuchukia nitakayosema, najishitaki wakati ule ule mimi <br>mwenyewe, ijapo nipo kwenye nafasi hii, si kwa kuchagua kwangu, bali nikilazimishwa na nyakati <br>mbaya tunamoishi. Tumeshikwa na mambo ya dunia, na ni tofauti yale tuliyokabidhiwa na huduma <br>ya kikuhani, na yale tunayoonyesha kwa vitendo. Sisi twaacha huduma ya kuhubiri na twaitwa <br>maaskofu, ila labda kwa laana yetu, kwa kuwa tunayo cheo cha heshima, wala si tabia. Wale <br>tuliokabidhiwa wamwacha Mungu, nasi twanyamaza. Walalia dhambi zao, nasi hatunyoshi mkono <br>ili kuwasahihisha. Lakini, vipi itawezekana kwamba sisi twayakosoa maisha ya wengine na <br>kuyasahau yetu? Wote waelekea kwenye mambo ya hapa, twapoteza hisia ya ndani kwa kiasi <br>tunaposhughulikia zaidi mambo ya nje. Kwa haki Kanisa takatifu lasema juu ya viungo vyake <br>vinavyougua: “Waliniweka niwe mlinzi wa shamba la mizabibu, bali shamba langu mwenyewe <br>sikulilinda” (Wim 1,6). Tumewekwa kuwa walinzi wa mashamba ya mizabibu, na hatulindi kweli <br>shamba la mizabibu, kwa sababu, tukishughulikia vitendo vya kigeni, twapuuzia huduma ambayo <br>tungepaswa kutekeleza. <br> <br>Kiitikizano: <br>Lk 10,2; Zab 62,8<br> <br> <br>K. Mavuno ni mengi, lakini watenda kazi ni wachache; basi mwombeni Bwana wa mavuno, * <br>apeleke watenda kazi katika mavuno yake. <br>W. Enyi watu, mtumainini siku zote, ifunueni mioyo yenu mbele zake, <br>K. apeleke watenda kazi katika mavuno yake. <br> <br> <br> <br>JUMA LA ISHIRINI NA NANE. KIPINDI CHA KAWAIDA</p><br><br>
             </div>
         </section>
-    </main>
+
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg z-40" style="height: 4.5rem;">
         <div class="flex justify-around h-full items-center">
             <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600">
