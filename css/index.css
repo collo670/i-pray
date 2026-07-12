@@ -1540,3 +1540,35 @@ nav.fixed.bottom-0.left-0.right-0 {
         border-radius: 1.5rem;
     }
 }
+
+/* ---------------------------------------------------------------------------
+   Top Sheet variant: same overlay, but the panel drops down from the top
+   nav bar instead of rising from the bottom (used by the Options button
+   in the app bar)
+   --------------------------------------------------------------------------- */
+.sheet-overlay.sheet-from-top {
+    align-items: flex-start;
+}
+
+.sheet-overlay.sheet-from-top .sheet-panel {
+    border-radius: 0 0 1.5rem 1.5rem;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 0.25rem);
+    padding-bottom: 1rem;
+    transform: translateY(-100%);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.sheet-overlay.sheet-from-top.open .sheet-panel {
+    transform: translateY(0);
+}
+
+/* The grab handle sits at the bottom edge of a top sheet */
+.sheet-overlay.sheet-from-top .sheet-handle {
+    margin: 0.9rem auto 0.35rem;
+}
+
+@media (min-width: 768px) {
+    .sheet-overlay.sheet-from-top {
+        padding: 0 1rem 1rem;
+    }
+}

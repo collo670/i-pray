@@ -145,10 +145,11 @@
             </div>
         </div>
 
-        <!-- Options Panel (modal): prayer list, favorites, history, Carmen prayer, connect & support, accessibility & translation -->
-        <div id="optionsPanel" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="optionsPanelTitle">
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-gray-50 dark:bg-gray-900 rounded-t-2xl z-10">
+        <!-- Options Top Sheet: opened from the Options button in the app bar; expands down
+             from the top nav bar, mirroring the Prayers bottom sheet -->
+        <div id="optionsPanel" class="sheet-overlay sheet-from-top hidden" role="dialog" aria-modal="true" aria-labelledby="optionsPanelTitle">
+            <div class="sheet-panel">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-gray-50 dark:bg-gray-900 z-10">
                     <h2 id="optionsPanelTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100" data-translate="options">Options</h2>
                     <button id="closeOptionsPanel" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close options">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -295,6 +296,7 @@
                         </div>
                     </section>
                 </div>
+                <div class="sheet-handle" aria-hidden="true"></div>
             </div>
         </div>
 
@@ -400,7 +402,7 @@
             });
         })();
     </script>
-    <!-- Options Panel toggle -->
+    <!-- Options top sheet toggle: slides down from the app bar, mirroring the prayers sheet -->
     <script>
         (function () {
             var panel = document.getElementById('optionsPanel');
@@ -410,16 +412,16 @@
 
             function openPanel() {
                 panel.classList.remove('hidden');
-                panel.classList.add('flex');
+                requestAnimationFrame(function () { panel.classList.add('open'); });
                 document.body.classList.add('overflow-hidden');
                 if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
             }
 
             function closePanel() {
-                panel.classList.add('hidden');
-                panel.classList.remove('flex');
+                panel.classList.remove('open');
                 document.body.classList.remove('overflow-hidden');
                 if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+                setTimeout(function () { panel.classList.add('hidden'); }, 250);
             }
 
             if (openBtn) openBtn.addEventListener('click', openPanel);

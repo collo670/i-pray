@@ -4,80 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Stations of the Cross - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
     <meta name="description" content="Pray the Stations of the Cross with guided meditation and prayers">
-    
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-purple': '#4A1E8A',
-                        'liturgical-white': '#F8F9FA',
-                        'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
-                        'liturgical-gold': '#FFD700',
-                    },
-                    backgroundImage: {
-                        'vintage-texture': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts & Font Awesome with preconnect for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta name="theme-color" content="#f7faf9">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7faf9">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12191e">
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">
-
     <style>
-        
-        body {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            background-color: #ffffff;
-            color: #1a1a1a;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .bg-gradient-vintage {
-            background: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%);
-        }
-        
-        /* Light primary gradient only */
-        
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        @media (max-width: 640px) {
-            .bottom-nav {
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-        }
-        
         .station-number {
             display: flex;
             justify-content: center;
@@ -89,425 +25,376 @@
             color: white;
             font-weight: bold;
             margin-right: 12px;
+            flex-shrink: 0;
         }
-        
+
         .prayer-text {
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        
-        .divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, #7C3AED, transparent);
-            margin: 20px 0;
-        }
-        
-        /* Header slide up animation */
-        .header-slide-up {
-            transform: translateY(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .header-slide-down {
-            transform: translateY(0);
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        /* Customizable image size variables */
-        :root {
-            /* Base image dimensions - modify these values to change image sizes */
-            --station-image-min-height: 200px;
-            --station-image-max-height: 300px;
-            --station-image-border-radius: 10px;
-            --station-image-margin: 16px;
-            
-            /* Mobile responsive sizes */
-            --station-image-mobile-min-height: 150px;
-            --station-image-mobile-max-height: 250px;
-            
-            /* Tablet responsive sizes */
-            --station-image-tablet-min-height: 250px;
-            --station-image-tablet-max-height: 350px;
-            
-            /* Desktop responsive sizes */
-            --station-image-desktop-min-height: 200px;
-            --station-image-desktop-max-height: 300px;
-        }
-        
-        /* Responsive image container */
+
         .station-image-container {
             width: 100%;
-            margin: var(--station-image-margin) 0;
+            margin: 1rem 0;
             border-radius: 12px;
             overflow: hidden;
-            border: 2px solid #e5e7eb;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            position: relative;
+            border: 1px solid var(--border-subtle, #e5e7eb);
+            background: var(--surface-1, #f3f4f6);
         }
-        
-        
+
+        .station-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
     </style>
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <script src="../js/logo-loader.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-vintage transition-colors duration-300">
-    <div id="app" class="relative z-10">
-        <!-- Updated Header -->
-<header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
-    <div class="header-content">
-        <div>
-            <h1 id="appTitle" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                ipray
-            </h1>
-            <p id="appSubtitle" class="text-sm text-gray-600">
-                Stations of the Cross
-            </p>
-        </div>
-        <div class="flex items-center">
-
-            <a href="calendar.html" class="p-2 rounded-full bg-gray-200 ml-2" aria-label="Calendar">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </a>
-            <button id="accessibilityToggle" class="p-2 rounded-full bg-gray-200 ml-2" title="Accessibility Options" aria-expanded="false" aria-controls="accessibilityMenu">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-            </button>
-            <button id="translationToggle" class="p-2 rounded-full bg-gray-200 ml-2 font-medium text-sm" title="Translate to Swahili">
-                EN
-            </button>
-        </div>
-    </div>
-</header>
-
-        <!-- Main Content -->
-        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
-            <div class="space-y-6">
-                <div class="flex items-center justify-between">
-                   
-                    <h2 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                        Way of the Cross
-                    </h2>
+<body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
+    <div id="app" class="relative z-10 page-content">
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="flex items-center gap-2">
+                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </a>
+                    <div class="app-bar-brand">
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Stations of the Cross
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Way of the Cross · Via Crucis</p>
+                    </div>
                 </div>
+                <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
 
-                <div class="rounded-2xl p-8 bg-white shadow-xl">
-                    <!-- Introduction -->
-                    <div class="text-center mb-10">
-                        <div class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-red-100">
-                            
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc1-1.png" alt="Station 2: Jesus Accepts His Cross" loading="lazy" width="1000" height="500" loading="lazy" decoding="async">
-                            </div>
+        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <div class="space-y-6">
+                <!-- Introduction -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="text-center">
+                        <div class="station-image-container">
+                            <img class="station-image" src="../assets/images/via_cruces/Doc1-1.png" alt="The Way of the Cross" width="1000" height="500" loading="lazy" decoding="async">
                         </div>
-                        <br>
-                        <h3 class="text-2xl font-bold mb-4 text-gray-800">Stations of the Cross</h3>
-                        <p class="text-gray-600 mb-6">A devotion commemorating Christ's Passion and death. Traditionally prayed during Lent, especially on Fridays.</p>
-                        
-                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                            <h4 class="font-semibold text-blue-800 mb-2">Plenary Indulgence</h4>
-                            <p class="text-sm text-gray-700">
+                        <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Stations of the Cross</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">A devotion commemorating Christ's Passion and death. Traditionally prayed during Lent, especially on Fridays.</p>
+
+                        <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-left">
+                            <h4 class="font-semibold text-blue-800 dark:text-blue-300 mb-2">Plenary Indulgence</h4>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
                                 Under the usual conditions*, a Plenary Indulgence is granted to the faithful who make the pious exercise of the Way of the Cross. Those who are impeded can gain the same indulgence if they spend at least one half an hour in pious reading and meditation on the Passion and Death of our Lord Jesus Christ.
                             </p>
-                            <p class="text-xs mt-2 text-gray-600">
+                            <p class="text-xs mt-2 text-gray-600 dark:text-gray-400">
                                 *Receive Holy Communion and the Sacrament of Penance within eight days and recite prayers for the Intentions of the Holy Father.
                             </p>
                         </div>
                     </div>
-                    
-                    <!-- Stations List -->
-                    <div class="space-y-8">
-                        <!-- Station 1 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">1</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Pilate Condemns Jesus to Die</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc1-2.png" alt="Station 1: Pilate Condemns Jesus to Die" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how Jesus Christ, after being scourged and crowned with thorns, was unjustly condemned by Pilate to die on the cross.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My adorable Jesus, it was not Pilate; no, it was my sins that condemned You to die. I beseech You, by the merits of this sorrowful journey, to assist my soul on its journey to eternity. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 1 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">1</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Pilate Condemns Jesus to Die</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc1-2.png" alt="Station 1: Pilate Condemns Jesus to Die" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how Jesus Christ, after being scourged and crowned with thorns, was unjustly condemned by Pilate to die on the cross.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My adorable Jesus, it was not Pilate; no, it was my sins that condemned You to die. I beseech You, by the merits of this sorrowful journey, to assist my soul on its journey to eternity. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 2 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">2</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Accepts His Cross</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc 2-1.png" alt="Station 2: Jesus Accepts His Cross" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider Jesus as He walked this road with the cross on His shoulders, thinking of us, and offering to His Father in our behalf, the death He was about to suffer.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My most beloved Jesus, I embrace all the sufferings You have destined for me until death. I beg You, by all You suffered in carrying Your cross, to help me carry mine with Your perfect peace and resignation. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 3 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">3</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Falls for the First Time</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc5-1.png" alt="Station 3: Jesus Falls for the First Time" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider the first fall of Jesus. Loss of blood from the scourging and crowning with thorns had so weakened Him that He could hardly walk, and yet He had to carry that great load upon His shoulders. As the soldiers struck Him cruelly, He fell several times under the heavy cross.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My beloved Jesus, it was not the weight of the cross but the weight of my sins that made You suffer so much. By the merits of this first fall, save me from falling into mortal sin. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 4 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">4</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Meets His Afflicted Mother</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc7-1.png" alt="Station 4: Jesus Meets His Afflicted Mother" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how the Son met His Mother on His way to Calvary. Jesus and Mary gazed at each other and their looks became as so many arrows to wound those hearts which loved each other so tenderly.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My most loving Jesus, by the pain You suffered in this meeting grant me the grace of being truly devoted to Your most holy Mother. And you, my Queen, who were overwhelmed with sorrow, obtain for me by your prayers a tender and a lasting remembrance of the passion of your divine Son. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 5 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">5</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Simon Helps Jesus Carry His Cross</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc9-1.png" alt="Station 5: Simon Helps Jesus Carry His Cross" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how weak and weary Jesus was. At each step He was at the point of expiring. Fearing that He would die on the way when they wished Him to die the infamous death of the cross, they forced Simon of Cyrene to help carry the cross after our Lord.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My beloved Jesus I will not refuse the cross as Simon did. I accept it and embrace it. I accept in particular the death that is destined for me with all the pains that may accompany it. I unite it to Your death and I offer it to You. You have died for love of me; I will die for love of You and to please You. Help me by Your grace. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 6 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">6</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Veronica Offers Her Veil to Jesus</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc11-1.png" alt="Station 6: Veronica Offers Her Veil to Jesus" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider the compassion of the holy woman, Veronica. Seeing Jesus in such distress, His face bathed in sweat and blood, she presented Him with her veil. Jesus wiped His face, and left upon the cloth the image of His sacred countenance.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My beloved Jesus, Your face was beautiful before You began this journey; but, now, it no longer appears beautiful and is disfigured with wounds and blood. Alas, my soul also was once beautiful when it received Your grace in Baptism, but I have since disfigured it with my sins. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 7 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">7</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Falls the Second Time</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc13-1.png" alt="Station 7: Jesus Falls the Second Time" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how the second fall of Jesus under His cross renews the pain in all the wounds of the head and members of our afflicted Lord.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My most gentle Jesus, how many times You have forgiven me, and how many times I have fallen again and begun again to offend You! By the merits of this second fall, give me the grace to persevere in Your love until death. Grant, that in all my temptations, I may always have recourse to You. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 8 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">8</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Speaks to the Women</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc15-1.png" alt="Station 8: Jesus Speaks to the Women" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how the women wept with compassion seeing Jesus so distressed and dripping with blood as He walked along. Jesus said to them, "Weep not so much for me, but rather for your children."
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My Jesus, laden with sorrows, I weep for the sins which I have committed against You because of the punishment I deserve for them; and, still more, because of the displeasure they have caused You who have loved me with an infinite love. It is Your love, more than the fear of hell, which makes me weep for my sins. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 9 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">9</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Falls the Third Time</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc14-1.png" alt="Station 9: Jesus Falls the Third Time" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how Jesus Christ fell for the third time. He was extremely weak and the cruelty of His executioners was excessive; they tried to hasten His steps though He hardly had strength to move.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My outraged Jesus, by the weakness You suffered in going to Calvary, give me enough strength to overcome all human respect and all my evil passions which have led me to despise Your friendship. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 10 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">10</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus is Stripped of His Garments</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc12-1.png" alt="Station 10: Jesus is Stripped of His Garments" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how Jesus was violently stripped of His clothes by His executioners. The inner garments adhered to His lacerated flesh and the soldiers tore them off so roughly that the skin came with them. Have pity for your Savior so cruelly treated and tell Him:
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My innocent Jesus, by the torment You suffered in being stripped of Your garments, help me to strip myself of all attachment for the things of earth, that I may place all my love in You who are so worthy of my love. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 11 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">11</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus is Nailed to the Cross</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc10-1.png" alt="Station 11: Jesus is Nailed to the Cross" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider Jesus, thrown down upon the cross, He stretched out His arms and offered to His eternal Father the sacrifice of His life for our salvation. They nailed His hands and feet, and then, raising the cross, left Him to die in anguish.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My despised Jesus, nail my heart to the cross that it may always remain there to love You and never leave You again. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 12 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">12</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus Dies Upon the Cross</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc8-1.png" alt="Station 12: Jesus Dies Upon the Cross" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how your Jesus, after three hours of agony on the cross, is finally overwhelmed with suffering and, abandoning Himself to the weight of His body, bows His head and dies.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My dying Jesus, I devoutly kiss the cross on which You would die for love of me. I deserve, because of my sins, to die a terrible death; but Your death is my hope. By the merits of Your death, give me the grace to die embracing Your feet and burning with love for You. I yield my soul into Your hands. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 13 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">13</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus is Taken Down From the Cross</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc6-1.png" alt="Station 13: Jesus is Taken Down From the Cross" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how, after our Lord had died, He was taken down from the cross by two of His disciples, Joseph and Nicodemus, and placed in the arms of His afflicted Mother. She received Him with unutterable tenderness and pressed Him close to her bosom.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        O Mother of Sorrows, for the love of Your Son, accept me as Your servant and pray to Him for me, And You, my Redeemer, since you have died for me, allow me to love You, for I desire only You and nothing more. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Station 14 -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="flex items-center mb-3">
+                        <div class="station-number">14</div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Jesus is Placed in the Sepulcher</h4>
+                    </div>
+                    <div class="station-image-container">
+                        <img class="station-image" src="../assets/images/via_cruces/Doc4-1.png" alt="Station 14: Jesus is Placed in the Sepulcher" width="500" height="500" loading="lazy" decoding="async">
+                    </div>
+                    <p class="prayer-text text-gray-600 dark:text-gray-400 mb-4">
+                        Consider how the disciples carried the body of Jesus to its burial, while His holy Mother went with them and arranged it in the sepulcher with her own hands. They then closed the tomb and all departed.
+                    </p>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        Oh, my buried Jesus, I kiss the stone that closes You in. But You gloriously did rise again on the third day. I beg You by Your resurrection that I may be raised gloriously on the last day, to be united with You in heaven, to praise You and love You forever. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
+                    </p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">(Our Father, Hail Mary, Glory Be)</p>
+                </div>
+
+                <!-- Divine Praises -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <h4 class="font-semibold text-purple-800 dark:text-purple-300 mb-3">Divine Praises</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be God.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be His Holy Name.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be Jesus Christ, true God and true man.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be the name of Jesus.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be His Most Sacred Heart.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be His Most Precious Blood.</p>
                         </div>
-                        
-                        <!-- Station 2 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">2</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Accepts His Cross</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc 2-1.png" alt="Station 2: Jesus Accepts His Cross" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider Jesus as He walked this road with the cross on His shoulders, thinking of us, and offering to His Father in our behalf, the death He was about to suffer.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My most beloved Jesus, I embrace all the sufferings You have destined for me until death. I beg You, by all You suffered in carrying Your cross, to help me carry mine with Your perfect peace and resignation. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 3 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">3</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Falls for the First Time</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc5-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider the first fall of Jesus. Loss of blood from the scourging and crowning with thorns had so weakened Him that He could hardly walk, and yet He had to carry that great load upon His shoulders. As the soldiers struck Him cruelly, He fell several times under the heavy cross.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My beloved Jesus, it was not the weight of the cross but the weight of my sins that made You suffer so much. By the merits of this first fall, save me from falling into mortal sin. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 4 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">4</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Meets His Afflicted Mother</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc7-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how the Son met His Mother on His way to Calvary. Jesus and Mary gazed at each other and their looks became as so many arrows to wound those hearts which loved each other so tenderly.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My most loving Jesus, by the pain You suffered in this meeting grant me the grace of being truly devoted to Your most holy Mother. And you, my Queen, who were overwhelmed with sorrow, obtain for me by your prayers a tender and a lasting remembrance of the passion of your divine Son. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 5 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">5</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Simon Helps Jesus Carry His Cross</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc9-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how weak and weary Jesus was. At each step He was at the point of expiring. Fearing that He would die on the way when they wished Him to die the infamous death of the cross, they forced Simon of Cyrene to help carry the cross after our Lord.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My beloved Jesus I will not refuse the cross as Simon did. I accept it and embrace it. I accept in particular the death that is destined for me with all the pains that may accompany it. I unite it to Your death and I offer it to You. You have died for love of me; I will die for love of You and to please You. Help me by Your grace. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 6 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">6</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Veronica Offers Her Veil to Jesus</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc11-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider the compassion of the holy woman, Veronica. Seeing Jesus in such distress, His face bathed in sweat and blood, she presented Him with her veil. Jesus wiped His face, and left upon the cloth the image of His sacred countenance.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My beloved Jesus, Your face was beautiful before You began this journey; but, now, it no longer appears beautiful and is disfigured with wounds and blood. Alas, my soul also was once beautiful when it received Your grace in Baptism, but I have since disfigured it with my sins. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 7 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">7</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Falls the Second Time</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc13-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how the second fall of Jesus under His cross renews the pain in all the wounds of the head and members of our afflicted Lord.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My most gentle Jesus, how many times You have forgiven me, and how many times I have fallen again and begun again to offend You! By the merits of this second fall, give me the grace to persevere in Your love until death. Grant, that in all my temptations, I may always have recourse to You. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 8 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">8</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Speaks to the Women</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc15-1.png" alt="Station 8: Jesus Speaks to the Women" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how the women wept with compassion seeing Jesus so distressed and dripping with blood as He walked along. Jesus said to them, "Weep not so much for me, but rather for your children."
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My Jesus, laden with sorrows, I weep for the sins which I have committed against You because of the punishment I deserve for them; and, still more, because of the displeasure they have caused You who have loved me with an infinite love. It is Your love, more than the fear of hell, which makes me weep for my sins. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 9 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">9</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Falls the Third Time</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc14-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how Jesus Christ fell for the third time. He was extremely weak and the cruelty of His executioners was excessive; they tried to hasten His steps though He hardly had strength to move.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My outraged Jesus, by the weakness You suffered in going to Calvary, give me enough strength to overcome all human respect and all my evil passions which have led me to despise Your friendship. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 10 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">10</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus is Stripped of His Garments</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc12-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how Jesus was violently stripped of His clothes by His executioners. The inner garments adhered to His lacerated flesh and the soldiers tore them off so roughly that the skin came with them. Have pity for your Savior so cruelly treated and tell Him:
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My innocent Jesus, by the torment You suffered in being stripped of Your garments, help me to strip myself of all attachment for the things of earth, that I may place all my love in You who are so worthy of my love. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 11 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">11</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus is Nailed to the Cross</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc10-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider Jesus, thrown down upon the cross, He stretched out His arms and offered to His eternal Father the sacrifice of His life for our salvation. They nailed His hands and feet, and then, raising the cross, left Him to die in anguish.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My despised Jesus, nail my heart to the cross that it may always remain there to love You and never leave You again. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 12 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">12</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus Dies Upon the Cross</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc8-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how your Jesus, after three hours of agony on the cross, is finally overwhelmed with suffering and, abandoning Himself to the weight of His body, bows His head and dies.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                My dying Jesus, I devoutly kiss the cross on which You would die for love of me. I deserve, because of my sins, to die a terrible death; but Your death is my hope. By the merits of Your death, give me the grace to die embracing Your feet and burning with love for You. I yield my soul into Your hands. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 13 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">13</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus is Taken Down From the Cross</h4>
-                            </div>
-                            <div class="station-image-container">
-                                <img class="station-image" src="../assets/images/via_cruces/Doc6-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how, after our Lord had died, He was taken down from the cross by two of His disciples, Joseph and Nicodemus, and placed in the arms of His afflicted Mother. She received Him with unutterable tenderness and pressed Him close to her bosom.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                O Mother of Sorrows, for the love of Your Son, accept me as Your servant and pray to Him for me, And You, my Redeemer, since you have died for me, allow me to love You, for I desire only You and nothing more. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
-                        </div>
-                        
-                        <!-- Station 14 -->
-                        <div class="border-l-4 border-primary pl-4">
-                            <div class="flex items-center mb-3">
-                                <div class="station-number">14</div>
-                                <h4 class="text-lg font-semibold text-gray-800">Jesus is Placed in the Sepulcher</h4>
-                            </div>
-                            <div class="station-image-container">
-                               <img class="station-image" src="../assets/images/via_cruces/Doc4-1.png" alt="Station 3: Jesus Falls for the First Time" loading="lazy" width="500" height="500" loading="lazy" decoding="async">
-                            </div>
-                            <p class="prayer-text text-gray-600 mb-4">
-                                Consider how the disciples carried the body of Jesus to its burial, while His holy Mother went with them and arranged it in the sepulcher with her own hands. They then closed the tomb and all departed.
-                            </p>
-                            <p class="prayer-text italic text-gray-700">
-                                Oh, my buried Jesus, I kiss the stone that closes You in. But You gloriously did rise again on the third day. I beg You by Your resurrection that I may be raised gloriously on the last day, to be united with You in heaven, to praise You and love You forever. I love You, Jesus, my love, above all things. I repent with my whole heart for ever having offended You. Never permit me to separate myself from You again. Grant that I may love You always and then do with me as You will.
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500">(Our Father, Hail Mary, Glory Be)</p>
+                        <div>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be Jesus in the Most Holy Sacrament of the Altar.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be the Holy Spirit, the Paraclete.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be the great Mother of God, Mary most holy.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be her holy and Immaculate Conception.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be her Glorious Assumption.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be the name of Mary, Virgin and Mother.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be Saint Joseph, her most chaste spouse.</p>
+                            <p class="prayer-text text-gray-700 dark:text-gray-300 mb-2">Blessed be God in His angels and in His Saints.</p>
                         </div>
                     </div>
-                    
-                    <!-- Closing Prayers -->
-                    <div class="mt-12">
-                        <div class="divider"></div>
-                        
-                        <div class="bg-purple-50 p-6 rounded-xl mb-8">
-                            <h4 class="font-semibold text-purple-800 mb-3">Divine Praises</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be God.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be His Holy Name.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be Jesus Christ, true God and true man.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be the name of Jesus.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be His Most Sacred Heart.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be His Most Precious Blood.</p>
-                                </div>
-                                <div>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be Jesus in the Most Holy Sacrament of the Altar.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be the Holy Spirit, the Paraclete.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be the great Mother of God, Mary most holy.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be her holy and Immaculate Conception.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be her Glorious Assumption.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be the name of Mary, Virgin and Mother.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be Saint Joseph, her most chaste spouse.</p>
-                                    <p class="prayer-text text-gray-700 mb-2">Blessed be God in His angels and in His Saints.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-blue-50 p-6 rounded-xl">
-                            <h4 class="font-semibold text-blue-800 mb-3">Prayer to Jesus Christ Crucified</h4>
-                            <p class="prayer-text italic text-gray-700">
-                                My good and dear Jesus, I kneel before You, asking You most earnestly to engrave upon my heart a deep and lively faith, hope, and charity, with true repentance for my sins, and a firm resolve to make amends. As I reflect upon Your five wounds, and dwell upon them with deep compassion and grief, I recall, good Jesus, the words the Prophet David spoke long ago concerning Yourself: "They pierced My hands and My feet; they have numbered all My bones."
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8 pt-6 border-t border-dashed border-gray-300">
-                        <p class="text-sm italic text-gray-600 text-center">
+                </div>
+
+                <!-- Prayer to Jesus Christ Crucified -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <h4 class="font-semibold text-blue-800 dark:text-blue-300 mb-3">Prayer to Jesus Christ Crucified</h4>
+                    <p class="prayer-text italic text-gray-700 dark:text-gray-300">
+                        My good and dear Jesus, I kneel before You, asking You most earnestly to engrave upon my heart a deep and lively faith, hope, and charity, with true repentance for my sins, and a firm resolve to make amends. As I reflect upon Your five wounds, and dwell upon them with deep compassion and grief, I recall, good Jesus, the words the Prophet David spoke long ago concerning Yourself: "They pierced My hands and My feet; they have numbered all My bones."
+                    </p>
+                    <div class="mt-6 pt-4 border-t border-dashed border-gray-300 dark:border-gray-600">
+                        <p class="text-sm italic text-gray-600 dark:text-gray-400 text-center">
                             "At the cross her station keeping, Stood the mournful Mother weeping, Close to Jesus to the last."
                         </p>
                     </div>
@@ -515,75 +402,46 @@
             </div>
         </main>
 
-<!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
-    <div class="flex justify-around h-full items-center">
-        <!-- Home -->
-        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="home">Home</span>
-        </a>
-        <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
-            <!-- Sunrise Icon -->
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
-        </a>
-        <!-- Calendar -->
-        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
-        </a>
-        <!-- Settings -->
-        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="settings">Settings</span>
-        </a>
-    </div>
-</nav>
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <a href="daily-readings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span class="text-xs font-medium">Readings</span>
+                </a>
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <script>
-        // Header scroll functionality
-        let lastScrollTop = 0;
-        let isHeaderVisible = true;
-        
-        function handleScroll() {
-            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const header = document.getElementById('mainHeader');
-            
-            if (currentScrollTop > lastScrollTop && currentScrollTop > 100) {
-                // Scrolling down and past 100px - hide header
-                if (isHeaderVisible) {
-                    header.classList.remove('header-slide-down');
-                    header.classList.add('header-slide-up');
-                    isHeaderVisible = false;
-                }
-            } else if (currentScrollTop < lastScrollTop || currentScrollTop <= 100) {
-                // Scrolling up or near top - show header
-                if (!isHeaderVisible) {
-                    header.classList.remove('header-slide-up');
-                    header.classList.add('header-slide-down');
-                    isHeaderVisible = true;
-                }
-            }
-            
-            lastScrollTop = currentScrollTop;
-        }
-        
-        // Initialize on DOM load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add scroll listener
-            window.addEventListener('scroll', handleScroll, { passive: true });
-        });
+        (function () {
+            var btn = document.getElementById('darkModeQuickToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+            });
+        })();
     </script>
 </body>
 </html>

@@ -426,7 +426,7 @@ window.initTranslation = function() {
             }
         }, 1000);
     }
-}
+};
 
 // Self-executing function to ensure script runs regardless of where it's loaded from
 (function() {
