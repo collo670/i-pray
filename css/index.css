@@ -329,7 +329,7 @@ body.page-index::before {
 }
 
 .animate-pulse {
-    animation: pulse-skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse-skeleton 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Skeleton Loader Styles */
@@ -359,7 +359,7 @@ body.page-index::before {
 }
 
 .progress-fill {
-    transition: width 0.2s ease;
+    transition: width 0.1s ease;
 }
 
 /* Skeleton Loader Components */
@@ -728,7 +728,7 @@ img[loading="lazy"].loaded {
 .image-placeholder {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
-    animation: skeleton-loading 1.5s ease-in-out infinite;
+    animation: skeleton-loading 0.5s ease-in-out infinite;
 }
 
 /* Responsive image containers */
