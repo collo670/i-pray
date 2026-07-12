@@ -124,15 +124,6 @@ function getUpcomingFeasts(nextCount = 5) {
         }));
 }
 
-function togglePrayer() {
-    const prayerText = document.getElementById('prayerText');
-    const toggleBtn = document.getElementById('togglePrayerBtn');
-    prayerText.classList.toggle('hidden');
-    if (!prayerText.classList.contains('hidden')) {
-        toggleBtn.classList.add('hidden'); // Hide "Tap to view" after expanding
-    }
-}
-
 // Language Management
 function setLanguage(lang) {
     localStorage.setItem('preferredLanguage', lang);
@@ -450,13 +441,10 @@ function resolvePrayerLink(item) {
 
 function renderPrayerMenus() {
     const lang = localStorage.getItem('preferredLanguage') || 'en';
-    const containers = [
-        document.getElementById('prayersSheetList'),
-        document.getElementById('optionsPrayerList')
-    ].filter(Boolean);
 
-    containers.forEach(container => {
-        container.innerHTML = '';
+    const sheetList = document.getElementById('prayersSheetList');
+    if (sheetList) {
+        sheetList.innerHTML = '';
         PRAYER_MENU.forEach(item => {
             const label = translations[lang][item.key] || translations.en[item.key];
             const link = resolvePrayerLink(item);
@@ -473,9 +461,32 @@ function renderPrayerMenus() {
             a.addEventListener('click', () => {
                 savePrayerAccess(item.id, translations.en[item.key], link);
             });
-            container.appendChild(a);
+            sheetList.appendChild(a);
         });
-    });
+    }
+
+    // Options panel: each prayer as a circular icon (no rows/labels-as-list), wrapping horizontally and vertically
+    const optionsList = document.getElementById('optionsPrayerList');
+    if (optionsList) {
+        optionsList.innerHTML = '';
+        PRAYER_MENU.forEach(item => {
+            const label = translations[lang][item.key] || translations.en[item.key];
+            const link = resolvePrayerLink(item);
+            const a = document.createElement('a');
+            a.href = link;
+            a.className = 'options-quicklink';
+            a.title = label;
+            a.setAttribute('aria-label', label);
+            a.innerHTML = `
+                <span class="options-quicklink-icon"><i class="fas ${item.icon} ${item.iconColor}" aria-hidden="true"></i></span>
+                <span class="options-quicklink-label" data-translate="${item.key}">${label}</span>
+            `;
+            a.addEventListener('click', () => {
+                savePrayerAccess(item.id, translations.en[item.key], link);
+            });
+            optionsList.appendChild(a);
+        });
+    }
 }
 
 // Favorites Management
@@ -1078,11 +1089,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setTextSize(size);
         }
     });
-    // Add event listener for "Tap to view" on Carmen's prayer card
-    const toggleBtn = document.getElementById('togglePrayerBtn');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', togglePrayer);
-    }
     // Footer year
     const cy = document.getElementById('copyrightYear');
     if (cy) { cy.textContent = new Date().getFullYear(); }
@@ -1096,55 +1102,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             filterNavItems(e.target.value);
-        });
-    }
-    // Favorite Carmen prayer
-    const favoriteCarmen = document.getElementById('favoriteCarmen');
-    if (favoriteCarmen) {
-        favoriteCarmen.addEventListener('click', () => {
-            toggleFavorite('carmen', 'Pray To Carmen Hernandez', '#');
-            const icon = favoriteCarmen.querySelector('i');
-            icon.classList.toggle('far');
-            icon.classList.toggle('fas');
-        });
-    }
-    // Share Carmen prayer
-    const shareCarmen = document.getElementById('shareCarmen');
-    if (shareCarmen) {
-        shareCarmen.addEventListener('click', () => {
-            sharePrayer('Pray To Carmen Hernandez', 'Join me in praying to Carmen Hernandez for intercession.');
-        });
-    }
-    // Save access for Carmen prayer when viewed
-    const togglePrayerBtn = document.getElementById('togglePrayerBtn');
-    if (togglePrayerBtn) {
-        togglePrayerBtn.addEventListener('click', () => {
-            savePrayerAccess('carmen', 'Pray To Carmen Hernandez', '#');
-        });
-    }
-    // TTS button behavior
-    const ttsButton = document.getElementById('ttsButton');
-    if (ttsButton) {
-        ttsButton.addEventListener('click', () => {
-            const prayerTextEl = document.getElementById('prayerText');
-            if (prayerTextEl.classList.contains('hidden')) {
-                togglePrayer(); // Show the text if hidden
-            }
-            const prayer = prayerTextEl.textContent.trim();
-            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
-            const langCode = preferredLang === 'sw' ? 'sw-TZ' : 'en-US';
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(prayer);
-                utterance.lang = langCode;
-                speechSynthesis.speak(utterance);
-            } else {
-                const audioEl = document.getElementById('prayerAudio');
-                if (audioEl) {
-                    audioEl.src = 'https://cdn.pixabay.com/audio/2023/11/17/audio_8247071d34.mp3'; // Placeholder fallback
-                    audioEl.classList.remove('hidden');
-                    audioEl.play().catch(() => {});
-                }
-            }
         });
     }
     // Enhance accessibility for small text

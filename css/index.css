@@ -1499,6 +1499,53 @@ nav.fixed.bottom-0.left-0.right-0 {
 }
 
 /* ---------------------------------------------------------------------------
+   Options panel quick links: Calendar, Accessibility, Translate and every
+   prayer rendered as circular icons that wrap horizontally and vertically
+   in a single grid, instead of stacked list rows.
+   --------------------------------------------------------------------------- */
+.options-quicklinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem 0.9rem;
+}
+
+/* The prayer items are injected into this nav; display:contents lets them
+   flow directly into the .options-quicklinks flex-wrap grid alongside the
+   Calendar/Accessibility/Translate buttons. */
+.prayer-menu-grid {
+    display: contents;
+}
+
+.options-quicklink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    width: 4.25rem;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.options-quicklink-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background: var(--surface-2);
+    flex-shrink: 0;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.options-quicklink-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+/* ---------------------------------------------------------------------------
    Prayers Bottom Sheet (opened from the bottom navigation)
    --------------------------------------------------------------------------- */
 .sheet-overlay {
