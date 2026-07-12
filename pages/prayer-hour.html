@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Liturgy of the Hours - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Midday Prayer and Vespers (Evening Prayer) for every day, complete with saint memorials, feasts and solemnities">
+    <meta name="theme-color" content="#f7faf9">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7faf9">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12191e">
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+</head>
+<body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
+    <div id="app" class="relative z-10 page-content">
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="flex items-center gap-2">
+                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </a>
+                    <div class="app-bar-brand">
+                        <h1 id="hourTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Liturgy of the Hours
+                        </h1>
+                        <p id="hourSubtitle" class="text-xs text-gray-600 dark:text-gray-400">Prayer of the Church</p>
+                    </div>
+                </div>
+                <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <!-- Hour switch: Midday / Vespers -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose the hour">
+                    <button id="tabSext" class="px-5 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Midday</button>
+                    <button id="tabVespers" class="px-5 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Vespers</button>
+                </div>
+            </div>
+
+            <!-- Date navigation (Universalis free pages cover a sliding window around today) -->
+            <div class="rounded-2xl p-4 bg-white dark:bg-gray-800 shadow-lg mb-6">
+                <div class="flex items-center justify-between gap-2">
+                    <button id="prevDay" class="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-40" aria-label="Previous day">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 text-center">
+                        <input type="date" id="datePicker" class="w-full max-w-[13rem] mx-auto text-center font-semibold bg-transparent text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" aria-label="Choose a date">
+                    </div>
+                    <button id="nextDay" class="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-40" aria-label="Next day">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="text-center mt-3">
+                    <button id="todayBtn" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline focus:outline-none hidden">
+                        Back to today
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liturgical day banner: day, psalter week, celebration of the day -->
+            <div id="dayBanner" class="liturgical-card mb-6" data-color="green">
+                <div class="text-center">
+                    <p id="bannerDate" class="text-sm text-gray-600 dark:text-gray-400 mb-1"></p>
+                    <div id="bannerDay" class="text-lg font-bold text-gray-800 dark:text-gray-100"></div>
+                    <span id="bannerPsalter" class="psalter-chip hidden"></span>
+                    <div id="bannerCelebration" class="mt-3 pt-3 border-t border-dashed border-gray-300 dark:border-gray-600 hidden">
+                        <p id="celebrationRank" class="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400"></p>
+                        <p id="celebrationName" class="text-base font-bold text-gray-800 dark:text-gray-100 mt-1"></p>
+                        <p id="celebrationNote" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1 hidden">The office below carries the proper texts of this celebration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The office itself, embedded from Universalis for the chosen day -->
+            <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden">
+                <div id="hourLoading" class="text-center py-12">
+                    <div class="inline-block w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
+                </div>
+                <div id="hourUnavailable" class="p-6 text-center hidden">
+                    <p class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
+                    <p id="windowNote" class="text-sm text-gray-500 dark:text-gray-400"></p>
+                </div>
+                <iframe id="hourFrame" title="Liturgy of the Hours" class="w-full hidden" style="height: 75vh; border: 0;" referrerpolicy="no-referrer"></iframe>
+            </div>
+
+            <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+                Texts served by <a id="externalLink" class="underline" target="_blank" rel="noopener" href="https://universalis.com">Universalis</a> — open there for the full-page version.
+            </p>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <a href="daily-readings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span class="text-xs font-medium">Readings</span>
+                </a>
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Shared liturgical calendar engine (day label, psalter week, celebrations) -->
+    <script src="../js/liturgical-calendar.js"></script>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('darkModeQuickToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            // Universalis' free pages cover a sliding window around today
+            // (a few days back, just over a week ahead); outside it they
+            // redirect, so navigation is clamped to this window.
+            var WINDOW_BACK_DAYS = 3;
+            var WINDOW_AHEAD_DAYS = 9;
+
+            var HOURS = {
+                sext: {
+                    page: 'sext',
+                    title: 'Midday Prayer',
+                    titleSw: 'Sala ya Mchana',
+                    subtitle: 'Sext · Prayer During the Day'
+                },
+                vespers: {
+                    page: 'vespers',
+                    title: 'Vespers',
+                    titleSw: 'Masifu ya Jioni',
+                    subtitle: 'Evening Prayer of the Church'
+                }
+            };
+            var RANK_LABELS = {
+                en: { 'Triduum': 'Sacred Triduum', 'Solemnity': 'Solemnity', 'Feast': 'Feast', 'Special': 'Liturgical Day', 'Memorial': 'Memorial', 'Optional Memorial': 'Optional Memorial' },
+                sw: { 'Triduum': 'Siku Kuu Tatu Takatifu', 'Solemnity': 'Sherehe', 'Feast': 'Sikukuu', 'Special': 'Siku Maalum', 'Memorial': 'Kumbukumbu', 'Optional Memorial': 'Kumbukumbu ya Hiari' }
+            };
+            var COLOR_MAP = { white: 'white', red: 'red', green: 'green', purple: 'purple', rose: 'purple', gold: 'gold' };
+            var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
+
+            var params = new URLSearchParams(window.location.search);
+            var hourKey = params.get('hour') === 'vespers' ? 'vespers' : 'sext';
+
+            var titleEl = document.getElementById('hourTitle');
+            var subtitleEl = document.getElementById('hourSubtitle');
+            var tabSext = document.getElementById('tabSext');
+            var tabVespers = document.getElementById('tabVespers');
+            var datePicker = document.getElementById('datePicker');
+            var prevBtn = document.getElementById('prevDay');
+            var nextBtn = document.getElementById('nextDay');
+            var todayBtn = document.getElementById('todayBtn');
+            var banner = document.getElementById('dayBanner');
+            var bannerDate = document.getElementById('bannerDate');
+            var bannerDay = document.getElementById('bannerDay');
+            var bannerPsalter = document.getElementById('bannerPsalter');
+            var celebrationBox = document.getElementById('bannerCelebration');
+            var celebrationRank = document.getElementById('celebrationRank');
+            var celebrationName = document.getElementById('celebrationName');
+            var celebrationNote = document.getElementById('celebrationNote');
+            var loadingEl = document.getElementById('hourLoading');
+            var unavailableEl = document.getElementById('hourUnavailable');
+            var windowNote = document.getElementById('windowNote');
+            var frame = document.getElementById('hourFrame');
+            var externalLink = document.getElementById('externalLink');
+
+            var lang = 'en';
+            try {
+                if (localStorage.getItem('preferredLanguage') === 'sw') lang = 'sw';
+            } catch (e) {}
+
+            var today = startOfDay(new Date());
+            var minDate = addDays(today, -WINDOW_BACK_DAYS);
+            var maxDate = addDays(today, WINDOW_AHEAD_DAYS);
+            var currentDate = today;
+
+            function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+            function addDays(d, n) { var c = new Date(d); c.setDate(c.getDate() + n); return c; }
+            function stampOf(d) {
+                return '' + d.getFullYear()
+                    + String(d.getMonth() + 1).padStart(2, '0')
+                    + String(d.getDate()).padStart(2, '0');
+            }
+            function isoOf(d) { var s = stampOf(d); return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6); }
+            function fmt(d) {
+                return d.toLocaleDateString(lang === 'sw' ? 'sw' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            function applyHourChrome() {
+                var h = HOURS[hourKey];
+                titleEl.textContent = lang === 'sw' ? h.titleSw : h.title;
+                subtitleEl.textContent = h.subtitle;
+                document.title = h.title + ' - ipray';
+                [tabSext, tabVespers].forEach(function (tab, i) {
+                    var active = (i === 0) === (hourKey === 'sext');
+                    tab.className = 'px-5 py-2 rounded-full text-sm font-semibold transition-colors ' + (active
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300');
+                    tab.setAttribute('aria-selected', String(active));
+                });
+            }
+
+            function renderBanner(date) {
+                var info = getLiturgicalToday(date, lang);
+                var celebration = getCelebrationForDate(date);
+                bannerDate.textContent = fmt(date);
+                bannerDay.textContent = info.dayLabel;
+                banner.setAttribute('data-color', COLOR_MAP[(celebration && celebration.color) || info.color] || 'green');
+                if (info.psalterWeek) {
+                    bannerPsalter.textContent = (lang === 'sw' ? 'Juma la Zaburi ' : 'Psalter Week ') + (ROMAN[info.psalterWeek] || info.psalterWeek);
+                    bannerPsalter.classList.remove('hidden');
+                } else {
+                    bannerPsalter.classList.add('hidden');
+                }
+                if (celebration) {
+                    celebrationRank.textContent = RANK_LABELS[lang][celebration.type] || celebration.type;
+                    celebrationName.textContent = celebration.name;
+                    var isMajor = celebration.type === 'Solemnity' || celebration.type === 'Feast' || celebration.type === 'Triduum';
+                    celebrationNote.classList.toggle('hidden', !isMajor);
+                    celebrationBox.classList.remove('hidden');
+                } else {
+                    celebrationBox.classList.add('hidden');
+                }
+            }
+
+            function load(date) {
+                currentDate = startOfDay(date);
+                datePicker.value = isoOf(currentDate);
+                prevBtn.disabled = +currentDate <= +minDate;
+                nextBtn.disabled = +currentDate >= +maxDate;
+                todayBtn.classList.toggle('hidden', +currentDate === +today);
+                renderBanner(currentDate);
+
+                var url = 'https://universalis.com/' + stampOf(currentDate) + '/' + HOURS[hourKey].page + '.htm';
+                externalLink.href = url;
+
+                if (+currentDate < +minDate || +currentDate > +maxDate) {
+                    frame.classList.add('hidden');
+                    loadingEl.classList.add('hidden');
+                    windowNote.textContent = (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
+                        + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.';
+                    unavailableEl.classList.remove('hidden');
+                    return;
+                }
+
+                unavailableEl.classList.add('hidden');
+                frame.classList.add('hidden');
+                loadingEl.classList.remove('hidden');
+                frame.src = url;
+            }
+
+            frame.addEventListener('load', function () {
+                if (!frame.src) return;
+                loadingEl.classList.add('hidden');
+                frame.classList.remove('hidden');
+            });
+
+            function switchHour(key) {
+                if (key === hourKey) return;
+                hourKey = key;
+                var qs = new URLSearchParams(window.location.search);
+                qs.set('hour', key);
+                history.replaceState(null, '', window.location.pathname + '?' + qs);
+                applyHourChrome();
+                load(currentDate);
+            }
+
+            tabSext.addEventListener('click', function () { switchHour('sext'); });
+            tabVespers.addEventListener('click', function () { switchHour('vespers'); });
+            prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
+            nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
+            todayBtn.addEventListener('click', function () { load(today); });
+            datePicker.min = isoOf(minDate);
+            datePicker.max = isoOf(maxDate);
+            datePicker.addEventListener('change', function () {
+                if (!datePicker.value) return;
+                var p = datePicker.value.split('-');
+                load(new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])));
+            });
+
+            applyHourChrome();
+            load(today);
+        })();
+    </script>
+</body>
+</html>

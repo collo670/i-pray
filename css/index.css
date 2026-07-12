@@ -187,47 +187,9 @@ body.page-index::before {
 :root:not(.dark) .text-red-800 { color: #991b1b; }
 :root:not(.dark) .text-green-800 { color: #166534; }
 :root:not(.dark) .text-gold-800 { color: #854d0e; }
-@media (max-width: 640px) {
-    .bottom-nav {
-        padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
-    }
-
-    /* Responsive floating navigation on mobile */
-    nav[role="navigation"][aria-label="Main Navigation"],
-    .bottom-nav {
-        position: fixed !important;
-        left: 0.5rem !important;
-        right: 0.5rem !important;
-        margin: 0 !important;
-        width: auto !important;
-        max-width: calc(100% - 1rem) !important;
-        min-width: unset !important;
-        box-sizing: border-box;
-        height: auto !important;
-        padding: 0.75rem 0.75rem max(env(safe-area-inset-bottom), 0.75rem) !important;
-        border-radius: 1rem;
-    }
-
-    .bottom-nav > div {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: space-between;
-    }
-
-    .bottom-nav a,
-    .bottom-nav button {
-        min-width: 0;
-        flex: 1 1 0;
-        padding: 0.5rem 0.35rem !important;
-    }
-
-    .bottom-nav a span,
-    .bottom-nav button span {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
+/* Bottom nav responsive layout lives in the shared block further down
+   ("Bottom navigation height and shared layout") — keep a single source of
+   truth so mobile and desktop don't fight over !important rules. */
 .season-img {
     width: 100px;
     height: 100px;
@@ -588,7 +550,8 @@ html {
 .container {
     max-width: 760px;
     margin: 0 auto;
-    padding: 32px 24px 64px;
+    /* Bottom padding must clear the fixed bottom nav (~4.25rem) + safe area */
+    padding: 32px 24px calc(96px + env(safe-area-inset-bottom, 0px));
     text-align: left;
     line-height: 1.75;
     font-size: 1.05rem;
@@ -1010,10 +973,20 @@ nav.fixed.bottom-0.left-0.right-0 {
     right: 0 !important;
     bottom: 0 !important;
     top: auto !important;
-    width: 100% !important;
+    /* Floating pill: width comes from left/right 0 minus the side margins
+       (width: 100% would overflow past the right edge). Margins absorb the
+       safe areas — home-indicator clearance at the bottom, notch clearance
+       left/right in landscape — so the padding must not re-add them. */
+    width: auto !important;
+    box-sizing: border-box !important;
     min-height: 4.25rem !important;
     height: auto !important;
-    padding: 0.6rem 0.65rem calc(env(safe-area-inset-bottom, 0px) + 0.6rem) !important;
+    margin: 0
+            max(1rem, env(safe-area-inset-right, 0px))
+            calc(0.5rem + env(safe-area-inset-bottom, 0px))
+            max(1rem, env(safe-area-inset-left, 0px)) !important;
+    padding: 0.5rem 0.65rem !important;
+    border-radius: 1rem !important;
     z-index: 40 !important;
     background: var(--glass-bg) !important;
     backdrop-filter: blur(14px) !important;
@@ -1032,10 +1005,13 @@ nav[role="navigation"][aria-label="Main Navigation"] > div,
 .bottom-nav > div,
 nav.fixed.bottom-0.left-0.right-0 > div {
     display: flex !important;
-    align-items: center !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
     justify-content: space-around !important;
     gap: 0.2rem !important;
     width: 100% !important;
+    max-width: 30rem !important; /* keep items grouped on tablets/desktop */
+    margin: 0 auto !important;
     height: 100% !important;
     flex: 1 !important;
 }
@@ -1048,8 +1024,9 @@ nav.fixed.bottom-0.left-0.right-0 a,
 nav.fixed.bottom-0.left-0.right-0 button {
     flex: 1 1 0 !important;
     min-width: 0 !important;
-    max-width: 5.25rem !important;
-    padding: 0.25rem 0.2rem !important;
+    max-width: 6rem !important;
+    min-height: 44px !important; /* WCAG/iOS minimum touch target */
+    padding: 0.3rem 0.2rem !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -1060,20 +1037,44 @@ nav.fixed.bottom-0.left-0.right-0 button {
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    text-decoration: none !important;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Colour fallbacks for the nav's Tailwind utility classes on pages that don't
+   load Tailwind (the self-contained mwaka liturgy pages). Values mirror the
+   themed gray ramp above so both kinds of pages look identical. */
+.bottom-nav .text-purple-600 { color: #9333ea; }
+.bottom-nav .text-gray-500 { color: var(--color-gray-500); }
+.bottom-nav .text-gray-600 { color: var(--color-gray-600); }
+.dark-mode .bottom-nav .text-gray-500,
+.dark-mode .bottom-nav .text-gray-600,
+:root.dark .bottom-nav .text-gray-500,
+:root.dark .bottom-nav .text-gray-600 {
+    color: var(--color-gray-400);
+}
+.dark-mode .bottom-nav .text-purple-600,
+:root.dark .bottom-nav .text-purple-600 { color: #c084fc; }
+
+/* The floating text-size button on liturgy pages must sit above the nav,
+   not on top of it. */
+#textSizeCycleBtn {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 nav[role="navigation"][aria-label="Main Navigation"] svg,
 .bottom-nav svg,
 nav.fixed.bottom-0.left-0.right-0 svg {
-    width: 1.1rem !important;
-    height: 1.1rem !important;
+    width: 1.35rem !important;
+    height: 1.35rem !important;
     flex-shrink: 0 !important;
 }
 
 nav[role="navigation"][aria-label="Main Navigation"] span,
 .bottom-nav span,
 nav.fixed.bottom-0.left-0.right-0 span {
-    font-size: 0.65rem !important;
+    font-size: 0.68rem !important;
     line-height: 1.1 !important;
     margin-top: 0.2rem !important;
     white-space: nowrap !important;
@@ -1085,7 +1086,11 @@ nav.fixed.bottom-0.left-0.right-0 span {
     nav[role="navigation"][aria-label="Main Navigation"],
     .bottom-nav,
     nav.fixed.bottom-0.left-0.right-0 {
-        padding: 0.45rem 0.35rem calc(env(safe-area-inset-bottom, 0px) + 0.45rem) !important;
+        margin: 0
+                max(0.5rem, env(safe-area-inset-right, 0px))
+                calc(0.375rem + env(safe-area-inset-bottom, 0px))
+                max(0.5rem, env(safe-area-inset-left, 0px)) !important;
+        padding: 0.4rem 0.35rem !important;
     }
 
     nav[role="navigation"][aria-label="Main Navigation"] a,
@@ -1094,14 +1099,41 @@ nav.fixed.bottom-0.left-0.right-0 span {
     .bottom-nav button,
     nav.fixed.bottom-0.left-0.right-0 a,
     nav.fixed.bottom-0.left-0.right-0 button {
-        max-width: 4.2rem !important;
-        padding: 0.2rem 0.1rem !important;
+        max-width: 4.6rem !important;
+        padding: 0.25rem 0.1rem !important;
+    }
+
+    nav[role="navigation"][aria-label="Main Navigation"] svg,
+    .bottom-nav svg,
+    nav.fixed.bottom-0.left-0.right-0 svg {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
     }
 
     nav[role="navigation"][aria-label="Main Navigation"] span,
     .bottom-nav span,
     nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: 0.58rem !important;
+        font-size: 0.62rem !important;
+    }
+}
+
+/* Very narrow screens (Galaxy Fold cover display, ~280px): tighten further
+   so four items still fit without wrapping or clipping. */
+@media (max-width: 320px) {
+    nav[role="navigation"][aria-label="Main Navigation"] a,
+    nav[role="navigation"][aria-label="Main Navigation"] button,
+    .bottom-nav a,
+    .bottom-nav button,
+    nav.fixed.bottom-0.left-0.right-0 a,
+    nav.fixed.bottom-0.left-0.right-0 button {
+        max-width: none !important;
+        padding: 0.2rem 0.05rem !important;
+    }
+
+    nav[role="navigation"][aria-label="Main Navigation"] span,
+    .bottom-nav span,
+    nav.fixed.bottom-0.left-0.right-0 span {
+        font-size: 0.56rem !important;
     }
 }
 
@@ -1259,21 +1291,25 @@ nav.fixed.bottom-0.left-0.right-0 span {
     }
 }
 
-/* Floating Bottom Navigation Effect */
-nav[role="navigation"][aria-label="Main Navigation"] {
+/* Floating Bottom Navigation Effect — visual skin only. Geometry (position,
+   margins, safe areas, sizing) lives in the shared block above; keep it there
+   so the two never disagree. */
+nav[role="navigation"][aria-label="Main Navigation"],
+.bottom-nav,
+nav.fixed.bottom-0.left-0.right-0 {
     background: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1) !important;
-    border-radius: 16px !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-bottom: none !important;
-    position: fixed !important;
-    z-index: 40 !important;
-    margin: 0 16px 8px 16px !important;
 }
 
-:root.dark nav[role="navigation"][aria-label="Main Navigation"] {
+:root.dark nav[role="navigation"][aria-label="Main Navigation"],
+:root.dark .bottom-nav,
+:root.dark nav.fixed.bottom-0.left-0.right-0,
+.dark-mode nav[role="navigation"][aria-label="Main Navigation"],
+.dark-mode .bottom-nav,
+.dark-mode nav.fixed.bottom-0.left-0.right-0 {
     background: rgba(30, 27, 46, 0.85) !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
 }

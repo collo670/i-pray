@@ -98,7 +98,7 @@
 
             <!-- Error state -->
             <div id="readingsError" class="rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg text-center hidden">
-                <p class="text-gray-700 dark:text-gray-300 mb-4">Unable to load the readings for this day. Please check your connection and try again.</p>
+                <p id="readingsErrorText" class="text-gray-700 dark:text-gray-300 mb-4">Unable to load the readings for this day. Please check your connection and try again.</p>
                 <button id="retryBtn" class="px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold">Retry</button>
             </div>
 
@@ -109,7 +109,7 @@
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" style="height: 4.5rem;" role="navigation" aria-label="Main Navigation">
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
             <div class="flex justify-around h-full items-center">
                 <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -164,6 +164,10 @@
             ];
             var FETCH_TIMEOUT_MS = 15000;
             var CACHE_PREFIX = 'massReadings-';
+            // Universalis' free feed covers a sliding window around today;
+            // outside it the request redirects, so navigation is clamped.
+            var WINDOW_BACK_DAYS = 3;
+            var WINDOW_AHEAD_DAYS = 9;
 
             var datePicker = document.getElementById('datePicker');
             var prevBtn = document.getElementById('prevDay');
@@ -172,6 +176,7 @@
             var retryBtn = document.getElementById('retryBtn');
             var loadingEl = document.getElementById('readingsLoading');
             var errorEl = document.getElementById('readingsError');
+            var errorText = document.getElementById('readingsErrorText');
             var container = document.getElementById('readingsContainer');
             var banner = document.getElementById('dayBanner');
             var dayTitleEl = document.getElementById('liturgicalDayTitle');
@@ -182,6 +187,14 @@
             var currentStamp = null;
             var pendingScript = null;
             var pendingTimer = null;
+
+            function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+            function addDays(d, n) { var c = new Date(d); c.setDate(c.getDate() + n); return c; }
+            var windowMin = addDays(startOfDay(new Date()), -WINDOW_BACK_DAYS);
+            var windowMax = addDays(startOfDay(new Date()), WINDOW_AHEAD_DAYS);
+            function fmtDay(d) {
+                return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            }
 
             function stampOf(date) {
                 var m = String(date.getMonth() + 1).padStart(2, '0');
@@ -277,6 +290,8 @@
                 currentStamp = stampOf(date);
                 datePicker.value = isoOf(date);
                 todayBtn.classList.toggle('hidden', currentStamp === stampOf(new Date()));
+                prevBtn.disabled = +startOfDay(date) <= +windowMin;
+                nextBtn.disabled = +startOfDay(date) >= +windowMax;
                 cleanupPending();
 
                 var cached = null;
@@ -289,6 +304,16 @@
                         return;
                     } catch (e) {}
                 }
+
+                // Outside the feed's window nothing can be fetched: say so
+                // immediately instead of waiting for the request to time out
+                if (+startOfDay(date) < +windowMin || +startOfDay(date) > +windowMax) {
+                    errorText.textContent = 'Readings are available from ' + fmtDay(windowMin)
+                        + ' to ' + fmtDay(windowMax) + '. Please choose a date in that range.';
+                    setState('error');
+                    return;
+                }
+                errorText.textContent = 'Unable to load the readings for this day. Please check your connection and try again.';
 
                 setState('loading');
                 var stamp = currentStamp;
@@ -318,6 +343,8 @@
                 try { localStorage.removeItem(CACHE_PREFIX + currentStamp); } catch (e) {}
                 load(currentDate);
             });
+            datePicker.min = isoOf(windowMin);
+            datePicker.max = isoOf(windowMax);
             datePicker.addEventListener('change', function () {
                 if (!datePicker.value) return;
                 var parts = datePicker.value.split('-');

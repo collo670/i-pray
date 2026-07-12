@@ -914,9 +914,6 @@
   .border-red-500 {
     border-color: var(--color-red-500);
   }
-  .border-transparent {
-    border-color: transparent;
-  }
   .border-yellow-500 {
     border-color: var(--color-yellow-500);
   }
@@ -967,15 +964,6 @@
   }
   .bg-green-600 {
     background-color: var(--color-green-600);
-  }
-  .bg-liturgical-green {
-    background-color: var(--color-liturgical-green);
-  }
-  .bg-liturgical-purple {
-    background-color: var(--color-liturgical-purple);
-  }
-  .bg-liturgical-white {
-    background-color: var(--color-liturgical-white);
   }
   .bg-pink-100 {
     background-color: var(--color-pink-100);
@@ -1103,6 +1091,9 @@
   .fill-current {
     fill: currentcolor;
   }
+  .p-1 {
+    padding: calc(var(--spacing) * 1);
+  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -1157,6 +1148,9 @@
   .py-12 {
     padding-block: calc(var(--spacing) * 12);
   }
+  .pt-3 {
+    padding-top: calc(var(--spacing) * 3);
+  }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
   }
@@ -1165,9 +1159,6 @@
   }
   .pt-16 {
     padding-top: calc(var(--spacing) * 16);
-  }
-  .pt-20 {
-    padding-top: calc(var(--spacing) * 20);
   }
   .pb-0 {
     padding-bottom: calc(var(--spacing) * 0);
@@ -1755,13 +1746,6 @@
       }
     }
   }
-  .hover\:text-primary {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-primary);
-      }
-    }
-  }
   .hover\:text-purple-800 {
     &:hover {
       @media (hover: hover) {
@@ -1847,6 +1831,11 @@
     &:active {
       --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
+  .disabled\:opacity-40 {
+    &:disabled {
+      opacity: 40%;
     }
   }
   .sm\:inline {

@@ -431,8 +431,8 @@ function initAccessibility() {
 const PRAYER_MENU = [
     { id: 'lauds', key: 'morningPrayer', icon: 'fa-sun', iconColor: 'text-yellow-500', type: 'hours', suffix: '' },
     { id: 'scripture', key: 'officeOfReadings', icon: 'fa-book-open', iconColor: 'text-orange-500', type: 'office' },
-    { id: 'midday', key: 'middayPrayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', type: 'hours', suffix: 'saa-sita' },
-    { id: 'vespers', key: 'eveningPrayer', icon: 'fa-moon', iconColor: 'text-indigo-500', type: 'hours', suffix: 'jioni' },
+    { id: 'midday', key: 'middayPrayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', link: 'pages/prayer-hour.html?hour=sext' },
+    { id: 'vespers', key: 'eveningPrayer', icon: 'fa-moon', iconColor: 'text-indigo-500', link: 'pages/prayer-hour.html?hour=vespers' },
     { id: 'readings', key: 'nightPrayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
     { id: 'rosary', key: 'holyRosary', icon: 'fa-hands-praying', iconColor: 'text-red-500', link: 'pages/holy-rosary.html' },
     { id: 'sacraments', key: 'stationsOfCross', icon: 'fa-cross', iconColor: 'text-pink-500', link: 'pages/via-cruce.html' },
