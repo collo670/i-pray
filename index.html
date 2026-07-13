@@ -129,6 +129,24 @@
                         </svg>
                     </div>
                 </a>
+
+                <!-- Daily Prayers Card: opens a menu of the Liturgy of the Hours prayers -->
+                <button type="button" id="dailyPrayersCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="dailyPrayersSheet" aria-label="Daily Prayers">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-5-11h10M9 4h6" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni</p>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </button>
             </div>
         </main>
 
@@ -145,6 +163,25 @@
                     </button>
                 </div>
                 <nav id="prayersSheetList" class="prayer-menu" aria-label="All prayers">
+                    <!-- Prayer menu items populated by JavaScript -->
+                </nav>
+            </div>
+        </div>
+
+        <!-- Daily Prayers Sheet: opened from the Daily Prayers card, links to the same
+             Liturgy of the Hours pages as the Prayers bottom sheet -->
+        <div id="dailyPrayersSheet" class="sheet-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="dailyPrayersSheetTitle">
+            <div class="sheet-panel">
+                <div class="sheet-handle" aria-hidden="true"></div>
+                <div class="flex items-center justify-between px-5 pb-2">
+                    <h2 id="dailyPrayersSheetTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h2>
+                    <button id="closeDailyPrayersSheet" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close daily prayers menu">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <nav id="dailyPrayersSheetList" class="prayer-menu" aria-label="Daily prayers">
                     <!-- Prayer menu items populated by JavaScript -->
                 </nav>
             </div>
@@ -352,6 +389,36 @@
             var sheet = document.getElementById('prayersSheet');
             var openBtn = document.getElementById('prayersNavBtn');
             var closeBtn = document.getElementById('closePrayersSheet');
+            if (!sheet) return;
+
+            function openSheet() {
+                sheet.classList.remove('hidden');
+                requestAnimationFrame(function () { sheet.classList.add('open'); });
+                document.body.classList.add('overflow-hidden');
+            }
+
+            function closeSheet() {
+                sheet.classList.remove('open');
+                document.body.classList.remove('overflow-hidden');
+                setTimeout(function () { sheet.classList.add('hidden'); }, 250);
+            }
+
+            if (openBtn) openBtn.addEventListener('click', openSheet);
+            if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+            sheet.addEventListener('click', function (e) {
+                if (e.target === sheet) closeSheet();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !sheet.classList.contains('hidden')) closeSheet();
+            });
+        })();
+    </script>
+    <!-- Daily Prayers sheet toggle -->
+    <script>
+        (function () {
+            var sheet = document.getElementById('dailyPrayersSheet');
+            var openBtn = document.getElementById('dailyPrayersCard');
+            var closeBtn = document.getElementById('closeDailyPrayersSheet');
             if (!sheet) return;
 
             function openSheet() {

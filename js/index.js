@@ -26,6 +26,7 @@ const translations = {
         tapToViewPrayer: "Tap to view prayer",
         tapToView: "Tap to view",
         dailyReadings: "Daily Readings",
+        dailyPrayers: "Daily Prayers",
         installApp: "Install ipray App",
         copyright: "iPray App. All rights reserved.",
         options: "Options",
@@ -66,6 +67,7 @@ const translations = {
         tapToViewPrayer: "Gusa kuona sala",
         tapToView: "Gusa kuona",
         dailyReadings: "Masomo ya Kila Siku",
+        dailyPrayers: "Sala za Kanisa",
         installApp: "Sakinisha App ya ipray",
         copyright: "App ya iPray. Haki zote zimehifadhiwa.",
         options: "Chaguo",
@@ -106,6 +108,7 @@ const translations = {
         tapToViewPrayer: "Toca para ver la oración",
         tapToView: "Toca para ver",
         dailyReadings: "Lecturas Diarias",
+        dailyPrayers: "Oraciones Diarias",
         installApp: "Instalar la App ipray",
         copyright: "App iPray. Todos los derechos reservados.",
         options: "Opciones",
@@ -146,6 +149,7 @@ const translations = {
         tapToViewPrayer: "Tocca per vedere la preghiera",
         tapToView: "Tocca per vedere",
         dailyReadings: "Letture Quotidiane",
+        dailyPrayers: "Preghiere Quotidiane",
         installApp: "Installa l'app ipray",
         copyright: "App iPray. Tutti i diritti riservati.",
         options: "Opzioni",
@@ -186,6 +190,7 @@ const translations = {
         tapToViewPrayer: "Touchez pour voir la prière",
         tapToView: "Touchez pour voir",
         dailyReadings: "Lectures Quotidiennes",
+        dailyPrayers: "Prières Quotidiennes",
         installApp: "Installer l'application ipray",
         copyright: "Application iPray. Tous droits réservés.",
         options: "Options",
@@ -226,6 +231,7 @@ const translations = {
         tapToViewPrayer: "Toque para ver a oração",
         tapToView: "Toque para ver",
         dailyReadings: "Leituras Diárias",
+        dailyPrayers: "Orações Diárias",
         installApp: "Instalar o App ipray",
         copyright: "App iPray. Todos os direitos reservados.",
         options: "Opções",
@@ -601,8 +607,35 @@ function resolvePrayerLink(item) {
     return item.link;
 }
 
+// The four Liturgy of the Hours prayers shown in the Daily Prayers card,
+// same ids/links as the bottom nav's Prayers sheet.
+const DAILY_PRAYERS_MENU = PRAYER_MENU.filter(item => ['lauds', 'scripture', 'midday', 'vespers'].includes(item.id));
+
 function renderPrayerMenus() {
     const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+    const dailyPrayersList = document.getElementById('dailyPrayersSheetList');
+    if (dailyPrayersList) {
+        dailyPrayersList.innerHTML = '';
+        DAILY_PRAYERS_MENU.forEach(item => {
+            const label = translations[lang][item.key] || translations.en[item.key];
+            const link = resolvePrayerLink(item);
+            const a = document.createElement('a');
+            a.href = link;
+            a.className = 'prayer-menu-item';
+            a.innerHTML = `
+                <span class="prayer-menu-icon"><i class="fas ${item.icon} ${item.iconColor}" aria-hidden="true"></i></span>
+                <span class="prayer-menu-label" data-translate="${item.key}">${label}</span>
+                <svg class="w-4 h-4 prayer-menu-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            `;
+            a.addEventListener('click', () => {
+                savePrayerAccess(item.id, translations.en[item.key], link);
+            });
+            dailyPrayersList.appendChild(a);
+        });
+    }
 
     const sheetList = document.getElementById('prayersSheetList');
     if (sheetList) {
