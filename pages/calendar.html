@@ -28,18 +28,9 @@
     </script>
 
     <style>
-        :root {
-            --primary-color: #7C3AED;
-        }
-
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
             transition: 0.3s ease;
-            background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
-        }
-
-        html.dark body {
-            background: #111827;
         }
 
         .card-hover {
@@ -91,7 +82,7 @@
     </style>
     <script src="../js/logo-loader.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-vintage dark:text-gray-100">
+<body class="min-h-screen bg-gradient-vintage dark:bg-gray-900 dark:text-gray-100">
 
     <div id="app" class="relative z-10">
 
@@ -124,14 +115,10 @@
             </section>
 
             <!-- Prayer Weeks -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="mb-8">
                 <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800 rounded-xl card-hover">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3" data-translate="morningPrayer">Morning Prayer</h3>
                     <div class="text-3xl font-bold text-purple-600 dark:text-purple-400" id="morningWeek"></div>
-                </div>
-                <div class="p-6 bg-gradient-to-r from-green-50 to-teal-50 dark:from-gray-800 dark:to-gray-800 rounded-xl card-hover">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3" data-translate="officeOfReadings">Office of Readings</h3>
-                    <div class="text-3xl font-bold text-green-600 dark:text-green-400" id="readingsWeek"></div>
                 </div>
             </div>
 
@@ -140,9 +127,9 @@
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100" id="monthTitle">This Month</h3>
                     <div class="flex items-center gap-2">
-                        <button id="prevMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Previous month">&lsaquo;</button>
-                        <button id="todayBtn" class="px-3 h-9 rounded-full bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium" data-translate="today">Today</button>
-                        <button id="nextMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Next month">&rsaquo;</button>
+                        <button id="prevMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-primary/10 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Previous month">&lsaquo;</button>
+                        <button id="todayBtn" class="px-3 h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-medium" data-translate="today">Today</button>
+                        <button id="nextMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-primary/10 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Next month">&rsaquo;</button>
                     </div>
                 </div>
                 <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-center text-sm font-medium">
@@ -218,7 +205,7 @@
                     <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
                 </a>
                 <!-- Calendar -->
-                <a href="../pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                <a href="../pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-primary dark:text-primary">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
                     </svg>
@@ -244,7 +231,7 @@
             </div>
             <div class="flex gap-2">
                 <button id="dismissInstall" class="px-3 py-1 rounded-lg border border-gray-300">Later</button>
-                <button id="installBtn" class="px-3 py-1 rounded-lg bg-purple-600 text-white">Install</button>
+                <button id="installBtn" class="px-3 py-1 rounded-lg bg-primary text-white">Install</button>
             </div>
         </div>
     </div>
@@ -257,7 +244,6 @@
                 seasonAndSaint: 'Liturgical Season & Saint of the day',
                 upcomingFeasts: 'Upcoming Feasts & Solemnities',
                 morningPrayer: 'Morning Prayer',
-                officeOfReadings: 'Office of Readings',
                 liturgicalColors: 'Liturgical Colors',
                 colorPurple: 'Purple: Advent, Lent',
                 colorWhite: 'White: Christmas, Easter',
@@ -275,14 +261,14 @@
                 home: 'Home',
                 prayers: 'Prayers',
                 calendar: 'Calendar',
-                settings: 'Settings'
+                settings: 'Settings',
+                seasons: { 'Ordinary Time': 'Ordinary Time', 'Advent': 'Advent', 'Christmas': 'Christmas', 'Lent': 'Lent', 'Easter': 'Easter' }
             },
             sw: {
                 liturgicalCalendar: 'Kalenda ya Kiliturujia',
                 seasonAndSaint: 'Msimu wa Kiliturujia & Mtakatifu wa leo',
                 upcomingFeasts: 'Sherehe Zinazokuja',
                 morningPrayer: 'Masifu ya Asubuhi',
-                officeOfReadings: 'Ofisi ya Masomo',
                 liturgicalColors: 'Rangi za Kiliturujia',
                 colorPurple: 'Zambarau: Majilio, Kwaresima',
                 colorWhite: 'Nyeupe: Noeli, Pasaka',
@@ -300,14 +286,14 @@
                 home: 'Nyumbani',
                 prayers: 'Sala',
                 calendar: 'Kalenda',
-                settings: 'Mipangilio'
+                settings: 'Mipangilio',
+                seasons: { 'Ordinary Time': 'Majira ya Kawaida', 'Advent': 'Majilio', 'Christmas': 'Noeli', 'Lent': 'Kwaresima', 'Easter': 'Pasaka' }
             },
             es: {
                 liturgicalCalendar: 'Calendario Litúrgico',
                 seasonAndSaint: 'Tiempo Litúrgico y Santo del día',
                 upcomingFeasts: 'Próximas Fiestas y Solemnidades',
                 morningPrayer: 'Oración de la Mañana',
-                officeOfReadings: 'Oficio de Lectura',
                 liturgicalColors: 'Colores Litúrgicos',
                 colorPurple: 'Morado: Adviento, Cuaresma',
                 colorWhite: 'Blanco: Navidad, Pascua',
@@ -325,14 +311,14 @@
                 home: 'Inicio',
                 prayers: 'Oraciones',
                 calendar: 'Calendario',
-                settings: 'Ajustes'
+                settings: 'Ajustes',
+                seasons: { 'Ordinary Time': 'Tiempo Ordinario', 'Advent': 'Adviento', 'Christmas': 'Navidad', 'Lent': 'Cuaresma', 'Easter': 'Pascua' }
             },
             it: {
                 liturgicalCalendar: 'Calendario Liturgico',
                 seasonAndSaint: 'Tempo Liturgico e Santo del giorno',
                 upcomingFeasts: 'Prossime Feste e Solennità',
                 morningPrayer: 'Lodi Mattutine',
-                officeOfReadings: 'Ufficio delle Letture',
                 liturgicalColors: 'Colori Liturgici',
                 colorPurple: 'Viola: Avvento, Quaresima',
                 colorWhite: 'Bianco: Natale, Pasqua',
@@ -350,14 +336,14 @@
                 home: 'Home',
                 prayers: 'Preghiere',
                 calendar: 'Calendario',
-                settings: 'Impostazioni'
+                settings: 'Impostazioni',
+                seasons: { 'Ordinary Time': 'Tempo Ordinario', 'Advent': 'Avvento', 'Christmas': 'Natale', 'Lent': 'Quaresima', 'Easter': 'Pasqua' }
             },
             fr: {
                 liturgicalCalendar: 'Calendrier Liturgique',
                 seasonAndSaint: 'Temps Liturgique et Saint du jour',
                 upcomingFeasts: 'Fêtes et Solennités à venir',
                 morningPrayer: 'Laudes',
-                officeOfReadings: 'Office des Lectures',
                 liturgicalColors: 'Couleurs Liturgiques',
                 colorPurple: 'Violet : Avent, Carême',
                 colorWhite: 'Blanc : Noël, Pâques',
@@ -375,14 +361,14 @@
                 home: 'Accueil',
                 prayers: 'Prières',
                 calendar: 'Calendrier',
-                settings: 'Paramètres'
+                settings: 'Paramètres',
+                seasons: { 'Ordinary Time': 'Temps Ordinaire', 'Advent': 'Avent', 'Christmas': 'Noël', 'Lent': 'Carême', 'Easter': 'Pâques' }
             },
             pt: {
                 liturgicalCalendar: 'Calendário Litúrgico',
                 seasonAndSaint: 'Tempo Litúrgico e Santo do dia',
                 upcomingFeasts: 'Próximas Festas e Solenidades',
                 morningPrayer: 'Laudes',
-                officeOfReadings: 'Ofício das Leituras',
                 liturgicalColors: 'Cores Litúrgicas',
                 colorPurple: 'Roxo: Advento, Quaresma',
                 colorWhite: 'Branco: Natal, Páscoa',
@@ -400,7 +386,8 @@
                 home: 'Início',
                 prayers: 'Orações',
                 calendar: 'Calendário',
-                settings: 'Configurações'
+                settings: 'Configurações',
+                seasons: { 'Ordinary Time': 'Tempo Comum', 'Advent': 'Advento', 'Christmas': 'Natal', 'Lent': 'Quaresma', 'Easter': 'Páscoa' }
             }
         };
 
@@ -410,6 +397,11 @@
 
         function t(key) {
             return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+        }
+
+        function translateSeason(season) {
+            const seasons = translations[currentLang] && translations[currentLang].seasons;
+            return (seasons && seasons[season]) || season;
         }
 
         function setLanguage(lang) {
@@ -759,15 +751,6 @@
             return ((baseWeek - 1 + diffWeeks) % 4 + 4) % 4 + 1;
         }
 
-        // Office of Readings: weeks 17–34 sequential cycle, changes every Sunday
-        function getOfficeReadingsWeek() {
-            const startOfWeek = getStartOfWeek();
-            const baseDate = new Date(2025, 7, 10); // Sunday before Aug 11, 2025 = week 19
-            const baseWeek = 19;
-            const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
-            return ((baseWeek - 17 + diffWeeks) % 18 + 18) % 18 + 17;
-        }
-
         // ========== Liturgical Season ==========
         function getSeason(d) {
             const day = stripTime(d);
@@ -848,7 +831,7 @@
                 }
 
                 if (i === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
-                    cell.classList.add('ring-2', 'ring-purple-500', 'font-bold');
+                    cell.classList.add('ring-2', 'ring-primary', 'font-bold');
                 }
 
                 const num = document.createElement('div');
@@ -879,7 +862,7 @@
             document.getElementById('dayDetailsDate').textContent =
                 date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
             const { season } = getSeason(date);
-            document.getElementById('dayDetailsSeason').textContent = season;
+            document.getElementById('dayDetailsSeason').textContent = translateSeason(season);
 
             const feasts = getFeastsFor(year, month, day);
             const container = document.getElementById('dayDetailsFeasts');
@@ -899,7 +882,7 @@
                     <div class="flex-1">
                         <div class="font-medium text-gray-800 dark:text-white">${f.name}</div>
                         <div class="text-sm text-gray-600 dark:text-gray-300">${f.type}</div>
-                        ${saintPage ? `<a href="${saintPage}" class="text-sm text-purple-600 dark:text-purple-400 hover:underline">${t('readAboutSaint')}</a>` : ''}
+                        ${saintPage ? `<a href="${saintPage}" class="text-sm text-primary hover:underline">${t('readAboutSaint')}</a>` : ''}
                     </div>
                 `;
                 container.appendChild(el);
@@ -952,13 +935,12 @@
                 now.toLocaleDateString(locale, { weekday: 'short', month: 'short', day: 'numeric' });
 
             const info = getLiturgicalInfo();
-            document.getElementById('todaySeason').textContent = info.season;
+            document.getElementById('todaySeason').textContent = translateSeason(info.season);
             document.getElementById('todayFeast').textContent =
                 info.feast ? `${info.feast}${info.feastType ? ' · ' + info.feastType : ''}` : t('noFeastToday');
             document.getElementById('todayColor').className = `liturgical-color ${info.color}`;
 
             document.getElementById('morningWeek').textContent = `${t('week')} ${getMorningPrayerWeek()}`;
-            document.getElementById('readingsWeek').textContent = `${t('week')} ${getOfficeReadingsWeek()}`;
 
             renderCalendar();
 

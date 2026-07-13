@@ -38,7 +38,8 @@ const translations = {
         stationsOfCross: "Stations of the Cross",
         otherPrayers: "Other Prayers",
         carmenPrayer: "Prayer to Carmen Hernández",
-        psalterWeek: "Psalter Week"
+        psalterWeek: "Psalter Week",
+        subtitle: "Your Prayer Companion"
     },
     sw: {
         home: "Nyumbani",
@@ -77,7 +78,168 @@ const translations = {
         stationsOfCross: "Njia ya Msalaba",
         otherPrayers: "Sala Nyingine",
         carmenPrayer: "Sala kwa Carmen Hernández",
-        psalterWeek: "Juma la Zaburi"
+        psalterWeek: "Juma la Zaburi",
+        subtitle: "Msaidizi wako Wa Sala"
+    },
+    es: {
+        home: "Inicio",
+        lauds: "Laudes",
+        midday: "Oración del Mediodía",
+        vespers: "Vísperas",
+        calendar: "Calendario",
+        settings: "Ajustes",
+        prayers: "Oraciones",
+        readings: "Completas",
+        rosary: "Santo Rosario",
+        requests: "Peticiones de Oración",
+        scripture: "Oficio de Lectura",
+        sacraments: "Vía Crucis",
+        saint: "Santo del Día",
+        quoteAdvent: "¡Preparad el camino del Señor!",
+        quoteChristmas: "¡Gloria a Dios en las alturas!",
+        quoteLent: "¡Convertíos y creed en el Evangelio!",
+        quoteEaster: "¡Cristo ha resucitado! ¡Aleluya!",
+        feast: "Toca para ver las próximas fiestas",
+        quoteOrdinary: "Que tus oraciones de hoy te acerquen más a la gracia y la paz de Dios.",
+        prayerMain: "<strong>Oh Señor</strong>, que al elegir a la sierva de Dios Carmen Hernández como co-iniciadora del Camino Neocatecumenal, le concediste un gran amor por Jesucristo y la Iglesia, por la Sagrada Escritura y por la oración litúrgica, un celo ardiente por el anuncio itinerante del Evangelio y fidelidad a ti en las pruebas de la cruz; concédeme, por su intercesión, ser fiel al bautismo que he recibido y, si es tu voluntad, concédeme también la gracia que te pido. Por Jesucristo, nuestro Señor. Amén",
+        prayerFinal: "<strong>Final:</strong> Padre nuestro. Ave María. Gloria al Padre. ...",
+        tapToViewPrayer: "Toca para ver la oración",
+        tapToView: "Toca para ver",
+        dailyReadings: "Lecturas Diarias",
+        installApp: "Instalar la App ipray",
+        copyright: "App iPray. Todos los derechos reservados.",
+        options: "Opciones",
+        morningPrayer: "Oración de la Mañana",
+        officeOfReadings: "Oficio de Lectura",
+        middayPrayer: "Oración del Mediodía",
+        eveningPrayer: "Vísperas",
+        nightPrayer: "Completas",
+        holyRosary: "Santo Rosario",
+        stationsOfCross: "Vía Crucis",
+        otherPrayers: "Otras Oraciones",
+        carmenPrayer: "Oración a Carmen Hernández",
+        psalterWeek: "Semana del Salterio",
+        subtitle: "Tu Compañero de Oración"
+    },
+    it: {
+        home: "Home",
+        lauds: "Lodi",
+        midday: "Ora Media",
+        vespers: "Vespri",
+        calendar: "Calendario",
+        settings: "Impostazioni",
+        prayers: "Preghiere",
+        readings: "Compieta",
+        rosary: "Santo Rosario",
+        requests: "Richieste di Preghiera",
+        scripture: "Ufficio delle Letture",
+        sacraments: "Via Crucis",
+        saint: "Santo del Giorno",
+        quoteAdvent: "Preparate la via del Signore!",
+        quoteChristmas: "Gloria a Dio nell'alto dei cieli!",
+        quoteLent: "Convertitevi e credete al Vangelo!",
+        quoteEaster: "Cristo è risorto! Alleluia!",
+        feast: "Tocca per vedere le prossime feste",
+        quoteOrdinary: "Che le tue preghiere di oggi ti avvicinino alla grazia e alla pace di Dio.",
+        prayerMain: "<strong>O Signore</strong>, che scegliendo la serva di Dio Carmen Hernández come co-iniziatrice del Cammino Neocatecumenale, le hai concesso un grande amore per Gesù Cristo e la Chiesa, per la Sacra Scrittura e per la preghiera liturgica, uno zelo ardente per l'annuncio itinerante del Vangelo e fedeltà a te nelle prove della croce; concedimi, per sua intercessione, di essere fedele al battesimo che ho ricevuto e, se è tua volontà, concedimi anche la grazia che ti chiedo. Per Cristo nostro Signore. Amen",
+        prayerFinal: "<strong>Finale:</strong> Padre nostro. Ave Maria. Gloria al Padre. ...",
+        tapToViewPrayer: "Tocca per vedere la preghiera",
+        tapToView: "Tocca per vedere",
+        dailyReadings: "Letture Quotidiane",
+        installApp: "Installa l'app ipray",
+        copyright: "App iPray. Tutti i diritti riservati.",
+        options: "Opzioni",
+        morningPrayer: "Lodi Mattutine",
+        officeOfReadings: "Ufficio delle Letture",
+        middayPrayer: "Ora Media",
+        eveningPrayer: "Vespri",
+        nightPrayer: "Compieta",
+        holyRosary: "Santo Rosario",
+        stationsOfCross: "Via Crucis",
+        otherPrayers: "Altre Preghiere",
+        carmenPrayer: "Preghiera a Carmen Hernández",
+        psalterWeek: "Settimana del Salterio",
+        subtitle: "Il Tuo Compagno di Preghiera"
+    },
+    fr: {
+        home: "Accueil",
+        lauds: "Laudes",
+        midday: "Prière de Midi",
+        vespers: "Vêpres",
+        calendar: "Calendrier",
+        settings: "Paramètres",
+        prayers: "Prières",
+        readings: "Complies",
+        rosary: "Saint Rosaire",
+        requests: "Demandes de Prière",
+        scripture: "Office des Lectures",
+        sacraments: "Chemin de Croix",
+        saint: "Saint du Jour",
+        quoteAdvent: "Préparez le chemin du Seigneur !",
+        quoteChristmas: "Gloire à Dieu au plus haut des cieux !",
+        quoteLent: "Convertissez-vous et croyez à l'Évangile !",
+        quoteEaster: "Le Christ est ressuscité ! Alléluia !",
+        feast: "Touchez pour voir les prochaines fêtes",
+        quoteOrdinary: "Que vos prières d'aujourd'hui vous rapprochent de la grâce et de la paix de Dieu.",
+        prayerMain: "<strong>Ô Seigneur</strong>, qui en choisissant la servante de Dieu Carmen Hernández comme co-initiatrice du Chemin Néocatéchuménal, lui as accordé un grand amour pour Jésus-Christ et l'Église, pour la Sainte Écriture et pour la prière liturgique, un zèle ardent pour l'annonce itinérante de l'Évangile et la fidélité envers toi dans les épreuves de la croix ; accorde-moi, par son intercession, d'être fidèle au baptême que j'ai reçu et, si telle est ta volonté, accorde-moi aussi la grâce que je te demande. Par Jésus-Christ notre Seigneur. Amen",
+        prayerFinal: "<strong>Final :</strong> Notre Père. Je vous salue Marie. Gloire au Père. ...",
+        tapToViewPrayer: "Touchez pour voir la prière",
+        tapToView: "Touchez pour voir",
+        dailyReadings: "Lectures Quotidiennes",
+        installApp: "Installer l'application ipray",
+        copyright: "Application iPray. Tous droits réservés.",
+        options: "Options",
+        morningPrayer: "Laudes",
+        officeOfReadings: "Office des Lectures",
+        middayPrayer: "Prière de Midi",
+        eveningPrayer: "Vêpres",
+        nightPrayer: "Complies",
+        holyRosary: "Saint Rosaire",
+        stationsOfCross: "Chemin de Croix",
+        otherPrayers: "Autres Prières",
+        carmenPrayer: "Prière à Carmen Hernández",
+        psalterWeek: "Semaine du Psautier",
+        subtitle: "Votre Compagnon de Prière"
+    },
+    pt: {
+        home: "Início",
+        lauds: "Laudes",
+        midday: "Oração do Meio-Dia",
+        vespers: "Vésperas",
+        calendar: "Calendário",
+        settings: "Configurações",
+        prayers: "Orações",
+        readings: "Completas",
+        rosary: "Santo Rosário",
+        requests: "Pedidos de Oração",
+        scripture: "Ofício das Leituras",
+        sacraments: "Via-Sacra",
+        saint: "Santo do Dia",
+        quoteAdvent: "Preparai o caminho do Senhor!",
+        quoteChristmas: "Glória a Deus nas alturas!",
+        quoteLent: "Convertei-vos e crede no Evangelho!",
+        quoteEaster: "Cristo ressuscitou! Aleluia!",
+        feast: "Toque para ver as próximas festas",
+        quoteOrdinary: "Que suas orações de hoje o aproximem da graça e da paz de Deus.",
+        prayerMain: "<strong>Ó Senhor</strong>, que ao eleger a serva de Deus Carmen Hernández como co-iniciadora do Caminho Neocatecumenal, concedeste a ela um grande amor por Jesus Cristo e pela Igreja, pela Sagrada Escritura e pela oração litúrgica, um zelo ardente pelo anúncio itinerante do Evangelho e fidelidade a ti nas provações da cruz; concede-me, por sua intercessão, ser fiel ao batismo que recebi e, se for tua vontade, concede-me também a graça que te peço. Por Jesus Cristo, nosso Senhor. Amém",
+        prayerFinal: "<strong>Final:</strong> Pai Nosso. Ave Maria. Glória ao Pai. ...",
+        tapToViewPrayer: "Toque para ver a oração",
+        tapToView: "Toque para ver",
+        dailyReadings: "Leituras Diárias",
+        installApp: "Instalar o App ipray",
+        copyright: "App iPray. Todos os direitos reservados.",
+        options: "Opções",
+        morningPrayer: "Oração da Manhã",
+        officeOfReadings: "Ofício das Leituras",
+        middayPrayer: "Oração do Meio-Dia",
+        eveningPrayer: "Vésperas",
+        nightPrayer: "Completas",
+        holyRosary: "Santo Rosário",
+        stationsOfCross: "Via-Sacra",
+        otherPrayers: "Outras Orações",
+        carmenPrayer: "Oração a Carmen Hernández",
+        psalterWeek: "Semana do Saltério",
+        subtitle: "Seu Companheiro de Oração"
     }
 };
 
@@ -126,6 +288,7 @@ function getUpcomingFeasts(nextCount = 5) {
 
 // Language Management
 function setLanguage(lang) {
+    if (!translations[lang]) lang = 'en';
     localStorage.setItem('preferredLanguage', lang);
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
@@ -139,7 +302,7 @@ function setLanguage(lang) {
         toggleBtn.title = lang === 'en' ? 'Translate to Swahili' : 'Translate to English';
     }
     const subtitle = document.getElementById('appSubtitle');
-    if (subtitle) subtitle.textContent = lang === 'sw' ? "Msaidizi wako Wa Sala" : "Your Prayer Companion";
+    if (subtitle) subtitle.textContent = translations[lang].subtitle || translations.en.subtitle;
 
     // Re-render the liturgical card and prayer menus in the selected language
     calculateLiturgicalDay(lang);
@@ -149,9 +312,8 @@ function setLanguage(lang) {
     if (saintEl && !saintEl.classList.contains('hidden')) {
         const info = getLiturgicalInfoForToday();
         if (info.feast) {
-            saintEl.textContent = lang === 'sw'
-                ? `Mtakatifu wa Leo: ${translateFeastName(info.feast)}`
-                : `Saint of the Day: ${info.feast}`;
+            const feastName = lang === 'sw' ? translateFeastName(info.feast) : info.feast;
+            saintEl.textContent = `${translations[lang].saint}: ${feastName}`;
         }
     }
 
@@ -720,24 +882,25 @@ function calculateLiturgicalDay(lang = 'en') {
         color = feastInfo.color;
     }
 
-    const seasonNamesSw = {
-        'Ordinary Time': 'Kipindi cha Mwaka',
-        'Advent': 'Majilio',
-        'Christmas': 'Noeli',
-        'Lent': 'Kwaresima',
-        'Easter': 'Pasaka'
+    const seasonNames = {
+        sw: { 'Ordinary Time': 'Kipindi cha Mwaka', 'Advent': 'Majilio', 'Christmas': 'Noeli', 'Lent': 'Kwaresima', 'Easter': 'Pasaka' },
+        es: { 'Ordinary Time': 'Tiempo Ordinario', 'Advent': 'Adviento', 'Christmas': 'Navidad', 'Lent': 'Cuaresma', 'Easter': 'Pascua' },
+        it: { 'Ordinary Time': 'Tempo Ordinario', 'Advent': 'Avvento', 'Christmas': 'Natale', 'Lent': 'Quaresima', 'Easter': 'Pasqua' },
+        fr: { 'Ordinary Time': 'Temps Ordinaire', 'Advent': 'Avent', 'Christmas': 'Noël', 'Lent': 'Carême', 'Easter': 'Pâques' },
+        pt: { 'Ordinary Time': 'Tempo Comum', 'Advent': 'Advento', 'Christmas': 'Natal', 'Lent': 'Quaresma', 'Easter': 'Páscoa' }
     };
     const setText = (id, text) => {
         const el = document.getElementById(id);
         if (el) el.textContent = text;
     };
 
-    setText('season', lang === 'sw' ? (seasonNamesSw[info.season] || info.season) : info.season);
+    setText('season', (seasonNames[lang] && seasonNames[lang][info.season]) || info.season);
     setText('liturgicalYear', today.getFullYear());
     setText('liturgicalDay', info.weekdayName);
     setText('liturgicalWeek', info.dayLabel);
+    const dateLocales = { en: 'en-US', sw: 'sw', es: 'es-ES', it: 'it-IT', fr: 'fr-FR', pt: 'pt-PT' };
     setText('currentDate', today.toLocaleDateString(
-        lang === 'sw' ? 'sw' : 'en-US',
+        dateLocales[lang] || 'en-US',
         { year: 'numeric', month: 'long', day: 'numeric' }
     ));
 
@@ -1039,9 +1202,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (saintEl) {
         const info = getLiturgicalInfoForToday();
         if (info.feast) {
-            saintEl.textContent = preferredLang === 'sw'
-                ? `Mtakatifu wa Leo: ${translateFeastName(info.feast)}`
-                : `Saint of the Day: ${info.feast}`;
+            const langData = translations[preferredLang] ? preferredLang : 'en';
+            const feastName = langData === 'sw' ? translateFeastName(info.feast) : info.feast;
+            saintEl.textContent = `${translations[langData].saint}: ${feastName}`;
             saintEl.classList.remove('hidden');
         }
     }
