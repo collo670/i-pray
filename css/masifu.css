@@ -1,0 +1,314 @@
+/* ---------------------------------------------------------------------------
+   Masifu ya Asubuhi — modern prayer layout
+   Shared by the 28 psalter morning-prayer pages + antifona.html.
+   Keeps the original light/dark palette:
+     light: bg #fff, text #333, accent #8B0000
+     dark:  bg #111827, text #eee, accent #FFA07A
+   Works together with js/masifu.js (seasonal antiphons + text size).
+--------------------------------------------------------------------------- */
+
+:root {
+    --masifu-scale: 1;
+}
+
+body.masifu-modern {
+    /* Responsive base size that scales with the device, multiplied by the
+       user-chosen text scale (A− / A / A+ controls). */
+    font-size: calc(clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem) * var(--masifu-scale));
+    line-height: 1.7;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+body.masifu-modern .container {
+    max-width: 46rem;
+    padding: 1.25rem 1rem 6.5rem;
+}
+
+@media (min-width: 640px) {
+    body.masifu-modern .container {
+        padding: 1.5rem 1.5rem 6.5rem;
+    }
+}
+
+body.masifu-modern img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ---- Page header ---------------------------------------------------- */
+
+body.masifu-modern h1 {
+    font-size: 1.6em;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    margin: 0.75rem 0 0.5rem;
+}
+
+body.masifu-modern h2 {
+    font-size: 1.2em;
+    letter-spacing: 0.04em;
+    margin: 0.25rem 0 0.75rem;
+}
+
+body.masifu-modern h3 {
+    font-size: 1.1em;
+}
+
+/* Season badge (inserted by js/masifu.js under the H1) */
+.masifu-season-badge {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 1.25rem;
+}
+
+.masifu-season-badge span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-size: 0.82em;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.3em 0.9em;
+    border-radius: 999px;
+    border: 1px solid rgba(139, 0, 0, 0.35);
+    color: #8B0000;
+    background: rgba(139, 0, 0, 0.05);
+}
+
+body.dark-mode .masifu-season-badge span {
+    border-color: rgba(255, 160, 122, 0.4);
+    color: #FFA07A;
+    background: rgba(255, 160, 122, 0.08);
+}
+
+.masifu-season-badge .dot {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: currentColor;
+    flex: none;
+}
+
+.masifu-season-badge .dot.green { background: #2e7d32; }
+.masifu-season-badge .dot.purple { background: #6a1b9a; }
+.masifu-season-badge .dot.white { background: #d4af37; }
+.masifu-season-badge .dot.red { background: #b71c1c; }
+
+/* ---- Prayer sections as cards ---------------------------------------- */
+
+body.masifu-modern .prayer-section {
+    border: 1px solid rgba(139, 0, 0, 0.15);
+    border-radius: 14px;
+    padding: 1.1rem 1.15rem;
+    margin: 1.15rem 0;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+body.masifu-modern.dark-mode .prayer-section {
+    background: #1f2937;
+    border-color: rgba(255, 160, 122, 0.22);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Cards already separate the sections */
+body.masifu-modern .container > hr {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    body.masifu-modern .prayer-section {
+        padding: 0.9rem 0.85rem;
+        border-radius: 12px;
+    }
+
+    body.masifu-modern .verse,
+    body.masifu-modern .response,
+    body.masifu-modern .intercession {
+        margin-left: 0.75rem;
+    }
+
+    body.masifu-modern .intercession-response {
+        margin-left: 1.5rem;
+    }
+}
+
+/* ---- Antiphons -------------------------------------------------------- */
+
+body.masifu-modern .antiphon {
+    background: rgba(139, 0, 0, 0.06);
+    border-left: 3px solid #8B0000;
+    border-radius: 0 10px 10px 0;
+    padding: 0.6rem 0.85rem;
+    margin: 0.9rem 0;
+}
+
+body.masifu-modern.dark-mode .antiphon {
+    background: rgba(255, 160, 122, 0.09);
+    border-left-color: #FFA07A;
+}
+
+/* "ANT. I / II / III" heading line */
+body.masifu-modern .antiphon.ant-heading {
+    background: none;
+    border-left: none;
+    border-radius: 0;
+    padding: 0 0.1rem;
+    margin: 0.9rem 0 0.35rem;
+    font-size: 0.82em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+/* Antiphon variants for other liturgical seasons (hidden until revealed) */
+.ant-group .ant-alt {
+    display: none;
+}
+
+.ant-group.show-all .ant-alt {
+    display: block;
+    opacity: 0.78;
+    border-left-style: dashed;
+}
+
+/* Toggle: reveal/hide the other seasons' antiphons */
+.ant-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.78em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #8B0000;
+    opacity: 0.75;
+    padding: 0.25em 0.4em;
+    margin: -0.35rem 0 0.35rem;
+    border-radius: 6px;
+}
+
+.ant-toggle:hover,
+.ant-toggle:focus-visible {
+    opacity: 1;
+    background: rgba(139, 0, 0, 0.07);
+}
+
+body.dark-mode .ant-toggle {
+    color: #FFA07A;
+}
+
+body.dark-mode .ant-toggle:hover,
+body.dark-mode .ant-toggle:focus-visible {
+    background: rgba(255, 160, 122, 0.1);
+}
+
+.ant-toggle .chev {
+    transition: transform 0.2s ease;
+    font-size: 0.9em;
+}
+
+.ant-toggle[aria-expanded="true"] .chev {
+    transform: rotate(180deg);
+}
+
+/* ---- Readings --------------------------------------------------------- */
+
+body.masifu-modern .reading {
+    border-radius: 0 10px 10px 0;
+}
+
+/* ---- Dark mode toggle button ------------------------------------------ */
+
+body.masifu-modern .toggle-container {
+    margin-bottom: 0.5rem;
+}
+
+body.masifu-modern .toggle-btn {
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-family: inherit;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* ---- Text size controls (A− / A / A+) --------------------------------- */
+
+.masifu-textctl {
+    position: fixed;
+    bottom: max(1.1rem, env(safe-area-inset-bottom, 0px) + 0.75rem);
+    right: 1rem;
+    z-index: 1200;
+    display: flex;
+    align-items: stretch;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(34, 34, 34, 0.92);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+body.dark-mode .masifu-textctl {
+    background: rgba(255, 160, 122, 0.95);
+}
+
+.masifu-textctl button {
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-family: inherit;
+    font-weight: 700;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+body.dark-mode .masifu-textctl button {
+    color: #222;
+}
+
+.masifu-textctl button:hover,
+.masifu-textctl button:focus-visible {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .masifu-textctl button:hover,
+body.dark-mode .masifu-textctl button:focus-visible {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.masifu-textctl button[disabled] {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.masifu-textctl .tc-dec,
+.masifu-textctl .tc-inc {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.masifu-textctl .tc-reset {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    min-width: 52px;
+}
+
+body.dark-mode .masifu-textctl .tc-reset {
+    border-color: rgba(0, 0, 0, 0.15);
+}

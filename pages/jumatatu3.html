@@ -641,6 +641,7 @@
     </style>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/masifu.css">
     <script src="../js/logo-loader.js"></script>
 </head>
 <body>
@@ -1100,54 +1101,7 @@
 
 
 
-    <!-- Text size control -->
-    <style>
-        body.text-small { font-size: 0.875rem; }
-        body.text-large { font-size: 1.25rem; }
-        body.text-xlarge { font-size: 1.5rem; }
-        #textSizeCycleBtn {
-            position: fixed;
-            bottom: 1.25rem;
-            right: 1rem;
-            z-index: 1200;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            background: #4b5563;
-            color: #fff;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 700;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #textSizeCycleBtn:hover { background: #374151; }
-    </style>
-    <button id="textSizeCycleBtn" type="button" aria-label="Adjust text size" title="Adjust text size (Normal / Large / Extra Large)">A</button>
-    <script>
-        (function () {
-            var order = ['normal', 'large', 'xlarge'];
-            var labels = { small: 'A', normal: 'A', large: 'A+', xlarge: 'A++' };
-            var btn = document.getElementById('textSizeCycleBtn');
-            function apply(size) {
-                document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
-                if (size !== 'normal') document.body.classList.add('text-' + size);
-                btn.textContent = labels[size] || 'A';
-                try { localStorage.setItem('textSize', size); } catch (e) {}
-            }
-            var current = 'normal';
-            try { current = localStorage.getItem('textSize') || 'normal'; } catch (e) {}
-            apply(current);
-            btn.addEventListener('click', function () {
-                current = order[(order.indexOf(current) + 1) % order.length];
-                apply(current);
-            });
-        })();
-    </script>
+    <script src="../js/masifu.js" defer></script>
 </body>
 </html>
 
