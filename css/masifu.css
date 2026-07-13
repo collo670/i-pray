@@ -7,19 +7,23 @@
    Works together with js/masifu.js (seasonal antiphons + text size).
 --------------------------------------------------------------------------- */
 
-:root {
-    --masifu-scale: 1;
-}
-
 body.masifu-modern {
-    /* Responsive base size that scales with the device, multiplied by the
-       user-chosen text scale (A− / A / A+ controls). */
-    font-size: calc(clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem) * var(--masifu-scale));
+    /* Responsive base size that scales with the device. The user-chosen
+       text scale (A− / A / A+ controls, js/masifu.js) is applied to the
+       root <html> font-size instead, so this rem-based value — and every
+       other rem measurement on the page, including .container's — grows
+       and shrinks along with it. */
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);
     line-height: 1.7;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     overflow-wrap: break-word;
     word-wrap: break-word;
+    color: #1a1a1a;
+}
+
+body.masifu-modern.dark-mode {
+    color: #eee;
 }
 
 body.masifu-modern .container {

@@ -306,7 +306,12 @@
 
         function apply() {
             scale = Math.round(scale * 10) / 10;
-            document.documentElement.style.setProperty('--masifu-scale', scale);
+            // Scale the root font-size (not just body's) so every rem-based
+            // rule in the page — including .container's fixed 1.05rem from
+            // css/index.css — grows and shrinks with it. Scaling only body's
+            // font-size left the psalm text untouched because .container sets
+            // its own explicit rem value that ignores the body's size.
+            document.documentElement.style.fontSize = (scale * 100) + '%';
             reset.textContent = Math.round(scale * 100) + '%';
             reset.title = 'Rejesha 100%';
             dec.disabled = scale <= SCALE_MIN;
