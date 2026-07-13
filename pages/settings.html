@@ -66,34 +66,51 @@
                         <span data-translate="languageSettings">Language Settings</span>
                     </h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="en">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="en" lang="en">
                             <span class="mr-2">🇺🇸</span>
-                            <span>English</span>
+                            <span class="text-left"><span class="block font-medium">English</span></span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="sw">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="sw" lang="sw">
                             <span class="mr-2">🇹🇿</span>
-                            <span>Swahili</span>
+                            <span class="text-left"><span class="block font-medium">Kiswahili</span><span class="block text-xs text-gray-500 dark:text-gray-400">Swahili</span></span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="es">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="es" lang="es">
                             <span class="mr-2">🇪🇸</span>
-                            <span>Spanish</span>
+                            <span class="text-left"><span class="block font-medium">Español</span><span class="block text-xs text-gray-500 dark:text-gray-400">Spanish</span></span>
                         </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="fr">
-                            <span class="mr-2">🇫🇷</span>
-                            <span>French</span>
-                        </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="pt">
-                            <span class="mr-2">🇵🇹</span>
-                            <span>Portuguese</span>
-                        </button>
-                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="it">
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="it" lang="it">
                             <span class="mr-2">🇮🇹</span>
-                            <span>Italian</span>
+                            <span class="text-left"><span class="block font-medium">Italiano</span><span class="block text-xs text-gray-500 dark:text-gray-400">Italian</span></span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="fr" lang="fr">
+                            <span class="mr-2">🇫🇷</span>
+                            <span class="text-left"><span class="block font-medium">Français</span><span class="block text-xs text-gray-500 dark:text-gray-400">French</span></span>
+                        </button>
+                        <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="pt" lang="pt">
+                            <span class="mr-2">🇵🇹</span>
+                            <span class="text-left"><span class="block font-medium">Português</span><span class="block text-xs text-gray-500 dark:text-gray-400">Portuguese</span></span>
                         </button>
                     </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="languageNote">
                         Changing language will refresh the app. Your preferences will be saved.
                     </p>
+                </section>
+                <!-- Appearance -->
+                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-palette mr-2 text-primary"></i>
+                        <span data-translate="appearance">Appearance</span>
+                    </h2>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div>
+                            <h3 class="font-medium" data-translate="darkMode">Dark Mode</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="darkModeDesc">Easier on the eyes at night</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="darkModeToggle" class="sr-only peer" aria-label="Toggle dark mode">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
                 </section>
                 <!-- Prayer Reminders -->
                 <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
@@ -211,7 +228,7 @@
               <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-hands-helping mr-2 text-primary"></i>
-                        <span>Connect & Support</span>
+                        <span data-translate="connectSupport">Connect &amp; Support</span>
                     </h2>
                     <div class="grid grid-cols-4 gap-3 mb-4">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
@@ -242,7 +259,7 @@
                     <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
                             <i class="far fa-copyright mr-1"></i>
-                            <span id="copyrightYear"></span> iPray App. All rights reserved.
+                            <span id="copyrightYear"></span> <span data-translate="copyright">ipray App. All rights reserved.</span>
                         </p>
                     </div>
                 </section>
@@ -253,31 +270,30 @@
     <div class="flex justify-around h-full items-center">
         <!-- Home -->
         <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </svg>
             <span class="text-xs font-medium" data-translate="home">Home</span>
         </a>
-        <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer">
-            <!-- Sunrise Icon -->
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
-            </svg>
-            <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
+        <!-- Prayers -->
+        <a href="../pages/prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m-5-11h10M9 4h6" />
+        </svg>
+            <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
         </a>
         <!-- Calendar -->
-        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
-            </svg>
+        <a href="../pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+        </svg>
             <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
         </a>
-        <!-- Settings (current page) -->
-        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400" aria-current="page">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
-            </svg>
+        <!-- Settings -->
+        <a href="../pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+        </svg>
             <span class="text-xs font-medium" data-translate="settings">Settings</span>
         </a>
     </div>

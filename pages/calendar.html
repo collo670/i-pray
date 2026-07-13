@@ -8,25 +8,38 @@
     <link rel="stylesheet" href="../css/index.css">
     <!-- PWA Manifest -->
     <link rel="manifest" href="/i-pray/manifest.json" />
-    <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)" id="theme-meta-color" />
+    <meta name="theme-color" content="#7C3AED" id="theme-meta-color" />
 
-    <!-- Tailwind CSS via CDN -->
     <!-- Tailwind CSS: locally built (npm run build) -->
     <link rel="stylesheet" href="../dist/output.css">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 
-    
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <style>
         :root {
-            --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)
+            --primary-color: #7C3AED;
         }
 
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
             transition: 0.3s ease;
             background: linear-gradient(135deg, #f3e7ff 0%, #ffeaf0 50%, #e0f2fe 100%);
+        }
+
+        html.dark body {
+            background: #111827;
         }
 
         .card-hover {
@@ -44,6 +57,7 @@
             border-radius: 50%;
             display: inline-block;
             margin-right: 8px;
+            flex-shrink: 0;
         }
 
         .purple { background-color: #7C3AED; }
@@ -51,6 +65,23 @@
         .red { background-color: #DC2626; }
         .green { background-color: #16A34A; }
         .rose { background-color: #DB2777; }
+
+        .day-cell {
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .day-cell:hover {
+            transform: scale(1.08);
+        }
+
+        .feast-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin: 2px auto 0;
+        }
 
         @media (max-width: 640px) {
             .bottom-nav {
@@ -60,131 +91,156 @@
     </style>
     <script src="../js/logo-loader.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-vintage">
+<body class="min-h-screen bg-gradient-vintage dark:text-gray-100">
 
     <div id="app" class="relative z-10">
 
         <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 backdrop-blur-sm shadow-sm" role="banner">
+        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm shadow-sm" role="banner">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600">Liturgical Calendar</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="liturgicalCalendar">Liturgical Calendar</p>
                 </div>
+                <p class="text-sm font-semibold text-gray-700 dark:text-gray-200" id="todayDateLabel"></p>
             </div>
         </header>
 
         <!-- Main Content -->
         <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
 
-            
-
             <!-- Today's Liturgical Info -->
-            <section class="mb-8 p-6 rounded-2xl bg-white shadow-xl">
-                <h3 class="text-lg font-bold text-gray-800 mb-4" data-translate="seasonAndSaint">Liturgical Season & Saint of the day</h3>
+            <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4" data-translate="seasonAndSaint">Liturgical Season &amp; Saint of the day</h3>
                 <div class="flex items-center gap-4">
                     <div id="todayColor" class="liturgical-color green"></div>
                     <div>
-                        <p class="font-semibold text-gray-800" id="todaySeason">Ordinary Time</p>
-                        <p class="text-sm text-gray-600" id="todayFeast">No feast today</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-100" id="todaySeason">Ordinary Time</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300" id="todayFeast">No feast today</p>
                     </div>
                 </div>
             </section>
 
             <!-- Prayer Weeks -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl card-hover">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3">Morning Prayer</h3>
-                    <div class="text-3xl font-bold text-purple-600" id="morningWeek"></div>
+                <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800 rounded-xl card-hover">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3" data-translate="morningPrayer">Morning Prayer</h3>
+                    <div class="text-3xl font-bold text-purple-600 dark:text-purple-400" id="morningWeek"></div>
                 </div>
-                <div class="p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl card-hover">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3">Office of Readings</h3>
-                    <div class="text-3xl font-bold text-green-600" id="readingsWeek"></div>
+                <div class="p-6 bg-gradient-to-r from-green-50 to-teal-50 dark:from-gray-800 dark:to-gray-800 rounded-xl card-hover">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3" data-translate="officeOfReadings">Office of Readings</h3>
+                    <div class="text-3xl font-bold text-green-600 dark:text-green-400" id="readingsWeek"></div>
                 </div>
             </div>
 
             <!-- Monthly Calendar View -->
-            <section class="mb-8 p-6 rounded-2xl bg-white shadow-xl">
-                <h3 class="text-xl font-bold text-gray-800 mb-4" data-translate="thisMonth">This Month</h3>
+            <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100" id="monthTitle">This Month</h3>
+                    <div class="flex items-center gap-2">
+                        <button id="prevMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Previous month">&lsaquo;</button>
+                        <button id="todayBtn" class="px-3 h-9 rounded-full bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium" data-translate="today">Today</button>
+                        <button id="nextMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Next month">&rsaquo;</button>
+                    </div>
+                </div>
                 <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-center text-sm font-medium">
                     <!-- Filled by JavaScript -->
                 </div>
             </section>
 
+            <!-- Selected Day Details -->
+            <section id="dayDetails" class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl hidden">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1" id="dayDetailsDate"></h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4" id="dayDetailsSeason"></p>
+                <div id="dayDetailsFeasts" class="space-y-3"></div>
+            </section>
+
             <!-- Upcoming Events -->
-            <section class="mb-8 p-6 rounded-2xl bg-white shadow-xl">
-                <h3 class="text-xl font-bold text-gray-800 mb-4" data-translate="upcomingFeasts">Upcoming Feasts & Solemnities</h3>
+            <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4" data-translate="upcomingFeasts">Upcoming Feasts &amp; Solemnities</h3>
                 <div id="upcomingEvents" class="space-y-3">
                     <!-- Filled by JavaScript -->
                 </div>
             </section>
 
             <!-- Liturgical Colors Guide -->
-            <section class="p-6 bg-gray-50 rounded-xl mb-8">
-                <h4 class="font-semibold text-gray-800 mb-3">Liturgical Colors</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <section class="p-6 bg-gray-50 dark:bg-gray-800 rounded-xl mb-8">
+                <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-3" data-translate="liturgicalColors">Liturgical Colors</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                     <div class="flex items-center">
                         <span class="liturgical-color purple"></span>
-                        <span class="ml-2">Purple: Advent, Lent</span>
+                        <span class="ml-2" data-translate="colorPurple">Purple: Advent, Lent</span>
                     </div>
                     <div class="flex items-center">
                         <span class="liturgical-color white"></span>
-                        <span class="ml-2">White: Christmas, Easter</span>
+                        <span class="ml-2" data-translate="colorWhite">White: Christmas, Easter</span>
                     </div>
                     <div class="flex items-center">
                         <span class="liturgical-color red"></span>
-                        <span class="ml-2">Red: Apostles, Martyrs</span>
+                        <span class="ml-2" data-translate="colorRed">Red: Apostles, Martyrs</span>
                     </div>
                     <div class="flex items-center">
                         <span class="liturgical-color green"></span>
-                        <span class="ml-2">Green: Ordinary Time</span>
+                        <span class="ml-2" data-translate="colorGreen">Green: Ordinary Time</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="liturgical-color rose"></span>
+                        <span class="ml-2" data-translate="colorRose">Rose: Gaudete, Laetare</span>
                     </div>
                 </div>
             </section>
 
             <!-- Inspirational Quote -->
-            <section class="mt-8 pt-6 border-t border-dashed border-gray-300 text-center">
-                <p class="text-sm italic text-gray-600">
+            <section class="mt-8 pt-6 border-t border-dashed border-gray-300 dark:border-gray-600 text-center">
+                <p class="text-sm italic text-gray-600 dark:text-gray-300" data-translate="calendarQuote">
                     “The liturgical year makes present the mystery of Christ, from the Incarnation to the Second Coming.”
                 </p>
             </section>
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
-    <div class="flex justify-around h-full items-center">
-        <!-- Home -->
-        <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600" data-translate="home">
-            
-            <span class="text-xs font-medium" data-translate="home">Home</span>
-        </a>
-        <!-- Lauds / Morning Prayer -->
-        <a id="masifuAsubuhiLink" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="lauds">
-            
-            <span class="text-xs font-medium" data-translate="lauds">Lauds</span>
-        </a>
-        <!-- Calendar -->
-        <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="calendar">
-            
-            <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
-        </a>
-        <!-- Settings -->
-        <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700" data-translate="settings">
-            
-            <span class="text-xs font-medium" data-translate="settings">Settings</span>
-        </a>
-    </div>
-</nav>
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <!-- Home -->
+                <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <!-- Prayers -->
+                <a href="../pages/prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m-5-11h10M9 4h6" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
+                </a>
+                <!-- Calendar -->
+                <a href="../pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <!-- Settings -->
+                <a href="../pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <!-- PWA Installation Prompt -->
-    <div id="installPrompt" class="fixed bottom-20 left-0 right-0 bg-white shadow-xl mx-4 p-4 rounded-lg hidden">
+    <div id="installPrompt" class="fixed bottom-20 left-0 right-0 bg-white dark:bg-gray-800 shadow-xl mx-4 p-4 rounded-lg hidden">
         <div class="flex items-center justify-between">
             <div>
                 <p class="font-medium">Install iPray App?</p>
-                <p class="text-sm text-gray-600">Access offline, get notifications</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Access offline, get notifications</p>
             </div>
             <div class="flex gap-2">
                 <button id="dismissInstall" class="px-3 py-1 rounded-lg border border-gray-300">Later</button>
@@ -199,52 +255,186 @@
             en: {
                 liturgicalCalendar: 'Liturgical Calendar',
                 seasonAndSaint: 'Liturgical Season & Saint of the day',
-                thisMonth: 'This Month',
                 upcomingFeasts: 'Upcoming Feasts & Solemnities',
+                morningPrayer: 'Morning Prayer',
+                officeOfReadings: 'Office of Readings',
+                liturgicalColors: 'Liturgical Colors',
+                colorPurple: 'Purple: Advent, Lent',
+                colorWhite: 'White: Christmas, Easter',
+                colorRed: 'Red: Apostles, Martyrs',
+                colorGreen: 'Green: Ordinary Time',
+                colorRose: 'Rose: Gaudete, Laetare',
+                today: 'Today',
+                noFeastToday: 'No feast today',
+                noFeast: 'No feast or memorial on this day.',
+                inDays: 'in {n} days',
+                tomorrow: 'tomorrow',
+                readAboutSaint: 'Read about this saint →',
+                week: 'Week',
+                calendarQuote: '“The liturgical year makes present the mystery of Christ, from the Incarnation to the Second Coming.”',
                 home: 'Home',
-                prayer: 'Prayer',
+                prayers: 'Prayers',
                 calendar: 'Calendar',
                 settings: 'Settings'
             },
             sw: {
                 liturgicalCalendar: 'Kalenda ya Kiliturujia',
                 seasonAndSaint: 'Msimu wa Kiliturujia & Mtakatifu wa leo',
-                thisMonth: 'Mwezi Huu',
                 upcomingFeasts: 'Sherehe Zinazokuja',
+                morningPrayer: 'Masifu ya Asubuhi',
+                officeOfReadings: 'Ofisi ya Masomo',
+                liturgicalColors: 'Rangi za Kiliturujia',
+                colorPurple: 'Zambarau: Majilio, Kwaresima',
+                colorWhite: 'Nyeupe: Noeli, Pasaka',
+                colorRed: 'Nyekundu: Mitume, Mashahidi',
+                colorGreen: 'Kijani: Majira ya Kawaida',
+                colorRose: 'Waridi: Gaudete, Laetare',
+                today: 'Leo',
+                noFeastToday: 'Hakuna sherehe leo',
+                noFeast: 'Hakuna sherehe wala kumbukumbu siku hii.',
+                inDays: 'baada ya siku {n}',
+                tomorrow: 'kesho',
+                readAboutSaint: 'Soma kuhusu mtakatifu huyu →',
+                week: 'Juma',
+                calendarQuote: '“Mwaka wa kiliturujia unadhihirisha fumbo la Kristo, tangu Umwilisho hadi Ujio wa Pili.”',
                 home: 'Nyumbani',
-                prayer: 'Sala',
+                prayers: 'Sala',
                 calendar: 'Kalenda',
                 settings: 'Mipangilio'
+            },
+            es: {
+                liturgicalCalendar: 'Calendario Litúrgico',
+                seasonAndSaint: 'Tiempo Litúrgico y Santo del día',
+                upcomingFeasts: 'Próximas Fiestas y Solemnidades',
+                morningPrayer: 'Oración de la Mañana',
+                officeOfReadings: 'Oficio de Lectura',
+                liturgicalColors: 'Colores Litúrgicos',
+                colorPurple: 'Morado: Adviento, Cuaresma',
+                colorWhite: 'Blanco: Navidad, Pascua',
+                colorRed: 'Rojo: Apóstoles, Mártires',
+                colorGreen: 'Verde: Tiempo Ordinario',
+                colorRose: 'Rosa: Gaudete, Laetare',
+                today: 'Hoy',
+                noFeastToday: 'No hay fiesta hoy',
+                noFeast: 'No hay fiesta ni memoria en este día.',
+                inDays: 'en {n} días',
+                tomorrow: 'mañana',
+                readAboutSaint: 'Leer sobre este santo →',
+                week: 'Semana',
+                calendarQuote: '“El año litúrgico hace presente el misterio de Cristo, desde la Encarnación hasta la Segunda Venida.”',
+                home: 'Inicio',
+                prayers: 'Oraciones',
+                calendar: 'Calendario',
+                settings: 'Ajustes'
+            },
+            it: {
+                liturgicalCalendar: 'Calendario Liturgico',
+                seasonAndSaint: 'Tempo Liturgico e Santo del giorno',
+                upcomingFeasts: 'Prossime Feste e Solennità',
+                morningPrayer: 'Lodi Mattutine',
+                officeOfReadings: 'Ufficio delle Letture',
+                liturgicalColors: 'Colori Liturgici',
+                colorPurple: 'Viola: Avvento, Quaresima',
+                colorWhite: 'Bianco: Natale, Pasqua',
+                colorRed: 'Rosso: Apostoli, Martiri',
+                colorGreen: 'Verde: Tempo Ordinario',
+                colorRose: 'Rosa: Gaudete, Laetare',
+                today: 'Oggi',
+                noFeastToday: 'Nessuna festa oggi',
+                noFeast: 'Nessuna festa o memoria in questo giorno.',
+                inDays: 'tra {n} giorni',
+                tomorrow: 'domani',
+                readAboutSaint: 'Leggi di questo santo →',
+                week: 'Settimana',
+                calendarQuote: '“L\'anno liturgico rende presente il mistero di Cristo, dall\'Incarnazione alla Seconda Venuta.”',
+                home: 'Home',
+                prayers: 'Preghiere',
+                calendar: 'Calendario',
+                settings: 'Impostazioni'
+            },
+            fr: {
+                liturgicalCalendar: 'Calendrier Liturgique',
+                seasonAndSaint: 'Temps Liturgique et Saint du jour',
+                upcomingFeasts: 'Fêtes et Solennités à venir',
+                morningPrayer: 'Laudes',
+                officeOfReadings: 'Office des Lectures',
+                liturgicalColors: 'Couleurs Liturgiques',
+                colorPurple: 'Violet : Avent, Carême',
+                colorWhite: 'Blanc : Noël, Pâques',
+                colorRed: 'Rouge : Apôtres, Martyrs',
+                colorGreen: 'Vert : Temps Ordinaire',
+                colorRose: 'Rose : Gaudete, Laetare',
+                today: 'Aujourd\'hui',
+                noFeastToday: 'Pas de fête aujourd\'hui',
+                noFeast: 'Aucune fête ni mémoire ce jour-là.',
+                inDays: 'dans {n} jours',
+                tomorrow: 'demain',
+                readAboutSaint: 'Lire sur ce saint →',
+                week: 'Semaine',
+                calendarQuote: '« L\'année liturgique rend présent le mystère du Christ, de l\'Incarnation à la Seconde Venue. »',
+                home: 'Accueil',
+                prayers: 'Prières',
+                calendar: 'Calendrier',
+                settings: 'Paramètres'
+            },
+            pt: {
+                liturgicalCalendar: 'Calendário Litúrgico',
+                seasonAndSaint: 'Tempo Litúrgico e Santo do dia',
+                upcomingFeasts: 'Próximas Festas e Solenidades',
+                morningPrayer: 'Laudes',
+                officeOfReadings: 'Ofício das Leituras',
+                liturgicalColors: 'Cores Litúrgicas',
+                colorPurple: 'Roxo: Advento, Quaresma',
+                colorWhite: 'Branco: Natal, Páscoa',
+                colorRed: 'Vermelho: Apóstolos, Mártires',
+                colorGreen: 'Verde: Tempo Comum',
+                colorRose: 'Rosa: Gaudete, Laetare',
+                today: 'Hoje',
+                noFeastToday: 'Nenhuma festa hoje',
+                noFeast: 'Nenhuma festa ou memória neste dia.',
+                inDays: 'em {n} dias',
+                tomorrow: 'amanhã',
+                readAboutSaint: 'Leia sobre este santo →',
+                week: 'Semana',
+                calendarQuote: '“O ano litúrgico torna presente o mistério de Cristo, da Encarnação à Segunda Vinda.”',
+                home: 'Início',
+                prayers: 'Orações',
+                calendar: 'Calendário',
+                settings: 'Configurações'
             }
         };
 
+        const LOCALE_MAP = { en: 'en-US', sw: 'sw-KE', es: 'es-ES', it: 'it-IT', fr: 'fr-FR', pt: 'pt-PT' };
+
+        let currentLang = 'en';
+
+        function t(key) {
+            return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+        }
+
         function setLanguage(lang) {
+            currentLang = translations[lang] ? lang : 'en';
             localStorage.setItem('preferredLanguage', lang);
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
                 }
             });
         }
 
-        // ========== Theme Toggle ==========
-        function updateThemeMetaColor() {
-            const meta = document.getElementById('theme-meta-color');
-            meta.setAttribute('content', '#7C3AED');
-        }
-
+        // ========== Theme ==========
         function initTheme() {
-            // Always use light theme
-            localStorage.setItem('themeMode', 'light');
-            updateThemeMetaColor();
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            document.documentElement.classList.toggle('dark', isDark);
+            document.getElementById('theme-meta-color').setAttribute('content', '#7C3AED');
         }
 
-        // Theme toggle removed - always using light mode
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'darkMode') initTheme();
+        });
 
-        window.addEventListener('storage', () => initTheme());
-
-       // === Liturgical Feasts Data (January) ===
+       // === Liturgical Feasts Data ===
         const LITURGICAL_FEASTS = {
     // Month: 0 = Jan, 1 = Feb, ..., 11 = Dec
     0: [ // January
@@ -257,7 +447,7 @@
         { date: 7, name: "Raymond of Penyafort", type: "Optional Memorial", color: "white" },
         { date: 13, name: "Hilary of Poitiers", type: "Optional Memorial", color: "white" },
         { date: 17, name: "Anthony of Egypt", type: "Memorial", color: "white" },
-        { date: 20, name: "Vincent, deacon and martyr", type: "Optional Memorial", color: "red" },
+        { date: 20, name: "Fabian and Sebastian", type: "Optional Memorial", color: "red" },
         { date: 21, name: "Agnes, virgin and martyr", type: "Memorial", color: "red" },
         { date: 22, name: "Vincent, deacon and martyr", type: "Optional Memorial", color: "red" },
         { date: 23, name: "Marianne Cope", type: "Optional Memorial", color: "white", country: "US" },
@@ -471,21 +661,21 @@
     ]
 };
 
-// Movable Feasts (examples)
-function getMovableFeasts(year) {
-    const easter = calculateEaster(year);
-    return [
-        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 39), name: "Ascension", type: "Solemnity", color: "white" },
-        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 49), name: "Pentecost", type: "Solemnity", color: "red" },
-        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 56), name: "Most Holy Trinity", type: "Solemnity", color: "white" },
-        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 60), name: "Corpus Christi", type: "Solemnity", color: "white" },
-        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 61), name: "Sacred Heart of Jesus", type: "Solemnity", color: "white" },
-        { date: new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + 62), name: "Immaculate Heart of Mary", type: "Memorial", color: "white" },
-        { date: new Date(easter.getFullYear(), 0, 1), name: "Mary, Mother of God", type: "Solemnity", color: "white" },
-        { date: new Date(easter.getFullYear(), 0, 6), name: "Epiphany", type: "Solemnity", color: "white" },
-        { date: new Date(easter.getFullYear(), 0, 8), name: "Baptism of the Lord", type: "Feast", color: "white" }
-    ];
-}
+        // Saint-of-the-day pages available under assets/months/
+        const SAINT_PAGES = {
+            6: { folder: 'july', abbr: 'jul', days: [31] },
+            7: { folder: 'august', abbr: 'aug', days: Array.from({ length: 31 }, (_, i) => i + 1) },
+            8: { folder: 'september', abbr: 'sep', days: Array.from({ length: 30 }, (_, i) => i + 1) },
+            10: { folder: 'november', abbr: 'nov', days: Array.from({ length: 10 }, (_, i) => i + 1) }
+        };
+
+        function getSaintPage(month, day) {
+            const m = SAINT_PAGES[month];
+            if (m && m.days.includes(day)) {
+                return `../assets/months/${m.folder}/${day}${m.abbr}.html`;
+            }
+            return null;
+        }
 
         // ========== Easter & Liturgical Year Helpers ==========
         function calculateEaster(year) {
@@ -499,159 +689,255 @@ function getMovableFeasts(year) {
             return new Date(year, month, day);
         }
 
-        function getAdventStart(year) {
-            const christmas = new Date(year, 11, 25);
-            const dayOfWeek = christmas.getDay();
-            const adventSunday = new Date(christmas);
-            adventSunday.setDate(christmas.getDate() - dayOfWeek - 21);
-            return adventSunday;
+        function addDays(date, days) {
+            const d = new Date(date);
+            d.setDate(d.getDate() + days);
+            return d;
         }
 
-        // ========== Prayer Week Logic (Week 3 & 19) ==========
-        // Get the most recent Sunday (start of liturgical week)
-function getStartOfWeek() {
-    const today = new Date();
-    const day = today.getDay(); // 0 = Sunday
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - day); // Roll back to Sunday
-    startOfWeek.setHours(0, 0, 0, 0);
-    return startOfWeek;
-}
+        function stripTime(d) {
+            return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        }
 
-// === Morning Prayer Week (1–4 rotating cycle, starts at 3, changes every Sunday) ===
-function getMorningPrayerWeek() {
-    const today = new Date();
-    // Find most recent Sunday
-    const startOfWeek = getStartOfWeek();
-    // Set base: August 11, 2025 is week 3
-    const baseDate = new Date(2025, 7, 10); // August is month 7 (0-indexed), Sunday before Aug 11
-    const baseWeek = 3;
-    const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
-    // Cycle 1-4
-    return ((baseWeek - 1 + diffWeeks) % 4) + 1;
-}
-
-// === Office of Readings Week (17–34 sequential cycle, starts at 19, changes every Sunday) ===
-function getOfficeReadingsWeek() {
-    const today = new Date();
-    // Find most recent Sunday
-    const startOfWeek = getStartOfWeek();
-    // Set base: August 11, 2025 is week 19
-    const baseDate = new Date(2025, 7, 10); // August is month 7 (0-indexed), Sunday before Aug 11
-    const baseWeek = 19;
-    const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
-    // Cycle 17-34
-    const week = ((baseWeek - 17 + diffWeeks) % 18) + 17;
-    return `Week ${week}`;
-}
-
-        // ========== Today's Liturgical Info ==========
-        function getLiturgicalInfo(today = new Date()) {
-            const month = today.getMonth();
-            const date = today.getDate();
-            const year = today.getFullYear();
-
-            let feast = null, feastType = null, color = "green";
-
-            // Check fixed feasts
-            if (LITURGICAL_FEASTS[month]) {
-                const feastData = LITURGICAL_FEASTS[month].find(f => f.date === date);
-                if (feastData) {
-                    feast = feastData.name;
-                    feastType = feastData.type;
-                    color = feastData.color;
-                }
-            }
-
-            // Determine season
-            const easter = calculateEaster(year);
-            const ashWednesday = new Date(easter); ashWednesday.setDate(easter.getDate() - 46);
-            const pentecost = new Date(easter); pentecost.setDate(easter.getDate() + 49);
+        function getAdventStart(year) {
             const christmas = new Date(year, 11, 25);
+            const dayOfWeek = christmas.getDay() || 7; // treat Sunday as 7 so Advent has 4 full Sundays
+            return addDays(christmas, -dayOfWeek - 21);
+        }
 
-            let season = "Ordinary Time";
-            if (today >= new Date(year, 11, 1) && today < christmas) {
-                season = "Advent"; color = "purple";
-            } else if (today >= christmas && today < new Date(year + 1, 0, 8)) {
-                season = "Christmas"; color = "white";
-            } else if (today >= ashWednesday && today < easter) {
-                season = "Lent"; color = "purple";
-            } else if (today >= easter && today < pentecost) {
-                season = "Easter"; color = "white";
-            }
+        function getBaptismOfTheLord(year) {
+            // Sunday after Epiphany (Jan 6)
+            const epiphany = new Date(year, 0, 6);
+            const offset = (7 - epiphany.getDay()) % 7 || 7;
+            return addDays(epiphany, offset);
+        }
 
-            return { season, color, feast, feastType };
+        // Movable feasts tied to Easter for a given year
+        function getMovableFeasts(year) {
+            const easter = calculateEaster(year);
+            return [
+                { d: addDays(easter, -46), name: "Ash Wednesday", type: "Fast", color: "purple" },
+                { d: addDays(easter, -7), name: "Palm Sunday", type: "Sunday", color: "red" },
+                { d: addDays(easter, -3), name: "Holy Thursday", type: "Triduum", color: "white" },
+                { d: addDays(easter, -2), name: "Good Friday", type: "Triduum", color: "red" },
+                { d: easter, name: "Easter Sunday", type: "Solemnity", color: "white" },
+                { d: addDays(easter, 7), name: "Divine Mercy Sunday", type: "Feast", color: "white" },
+                { d: addDays(easter, 39), name: "Ascension of the Lord", type: "Solemnity", color: "white" },
+                { d: addDays(easter, 49), name: "Pentecost", type: "Solemnity", color: "red" },
+                { d: addDays(easter, 56), name: "Most Holy Trinity", type: "Solemnity", color: "white" },
+                { d: addDays(easter, 63), name: "Corpus Christi", type: "Solemnity", color: "white" },
+                { d: addDays(easter, 68), name: "Sacred Heart of Jesus", type: "Solemnity", color: "white" },
+                { d: addDays(easter, 69), name: "Immaculate Heart of Mary", type: "Memorial", color: "white" },
+                { d: addDays(getAdventStart(year), 14), name: "Gaudete Sunday", type: "Sunday", color: "rose" },
+                { d: addDays(easter, -21), name: "Laetare Sunday", type: "Sunday", color: "rose" },
+                { d: getBaptismOfTheLord(year), name: "Baptism of the Lord", type: "Feast", color: "white" }
+            ].map(f => ({ date: f.d.getDate(), month: f.d.getMonth(), fullDate: stripTime(f.d), name: f.name, type: f.type, color: f.color }));
+        }
+
+        // All feasts (fixed + movable) falling on a given day
+        function getFeastsFor(year, month, day) {
+            const fixed = (LITURGICAL_FEASTS[month] || []).filter(f => f.date === day);
+            const movable = getMovableFeasts(year).filter(f => f.month === month && f.date === day);
+            return [...movable, ...fixed];
+        }
+
+        // ========== Prayer Week Logic ==========
+        function getStartOfWeek() {
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay()); // roll back to Sunday
+            startOfWeek.setHours(0, 0, 0, 0);
+            return startOfWeek;
+        }
+
+        // Morning Prayer: 1–4 rotating psalter cycle, changes every Sunday
+        function getMorningPrayerWeek() {
+            const startOfWeek = getStartOfWeek();
+            const baseDate = new Date(2025, 7, 10); // Sunday before Aug 11, 2025 = week 3
+            const baseWeek = 3;
+            const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
+            return ((baseWeek - 1 + diffWeeks) % 4 + 4) % 4 + 1;
+        }
+
+        // Office of Readings: weeks 17–34 sequential cycle, changes every Sunday
+        function getOfficeReadingsWeek() {
+            const startOfWeek = getStartOfWeek();
+            const baseDate = new Date(2025, 7, 10); // Sunday before Aug 11, 2025 = week 19
+            const baseWeek = 19;
+            const diffWeeks = Math.floor((startOfWeek - baseDate) / (1000 * 60 * 60 * 24 * 7));
+            return ((baseWeek - 17 + diffWeeks) % 18 + 18) % 18 + 17;
+        }
+
+        // ========== Liturgical Season ==========
+        function getSeason(d) {
+            const day = stripTime(d);
+            const year = day.getFullYear();
+            const easter = stripTime(calculateEaster(year));
+            const ashWednesday = addDays(easter, -46);
+            const pentecost = addDays(easter, 49);
+            const adventStart = stripTime(getAdventStart(year));
+            const christmas = new Date(year, 11, 25);
+            const baptism = stripTime(getBaptismOfTheLord(year));
+
+            if (day >= adventStart && day < christmas) return { season: "Advent", color: "purple" };
+            if (day >= christmas || day <= baptism) return { season: "Christmas", color: "white" };
+            if (day >= ashWednesday && day < easter) return { season: "Lent", color: "purple" };
+            if (day >= easter && day <= pentecost) return { season: "Easter", color: "white" };
+            return { season: "Ordinary Time", color: "green" };
+        }
+
+        function getLiturgicalInfo(today = new Date()) {
+            const { season, color: seasonColor } = getSeason(today);
+            const feasts = getFeastsFor(today.getFullYear(), today.getMonth(), today.getDate());
+            const main = feasts[0] || null;
+            return {
+                season,
+                // feast color takes precedence over the season color
+                color: main ? main.color : seasonColor,
+                feast: main ? main.name : null,
+                feastType: main ? main.type : null
+            };
         }
 
         // ========== Calendar Grid ==========
+        let viewYear, viewMonth;
+
         function renderCalendar() {
             const today = new Date();
-            const month = today.getMonth();
-            const year = today.getFullYear();
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
+            const firstDay = new Date(viewYear, viewMonth, 1);
+            const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
             const startingDay = firstDay.getDay();
+            const movable = getMovableFeasts(viewYear).filter(f => f.month === viewMonth);
+
+            const locale = LOCALE_MAP[currentLang] || 'en-US';
+            document.getElementById('monthTitle').textContent =
+                firstDay.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 
             const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
-            days.forEach(day => {
+            days.forEach((day, idx) => {
                 const th = document.createElement('div');
-                th.className = 'font-bold text-gray-600';
-                th.textContent = day;
+                th.className = 'font-bold text-gray-600 dark:text-gray-300';
+                th.textContent = new Date(2023, 0, idx + 1).toLocaleDateString(locale, { weekday: 'short' });
                 grid.appendChild(th);
             });
 
             for (let i = 0; i < startingDay; i++) {
-                const empty = document.createElement('div');
-                grid.appendChild(empty);
+                grid.appendChild(document.createElement('div'));
             }
 
             for (let i = 1; i <= daysInMonth; i++) {
                 const cell = document.createElement('div');
-                cell.className = 'py-2 rounded-lg text-sm text-center';
+                cell.className = 'day-cell py-2 rounded-lg text-sm text-center text-gray-700 dark:text-gray-200';
+                cell.setAttribute('role', 'button');
+                cell.setAttribute('tabindex', '0');
 
-                // Check for feast
-                const feast = LITURGICAL_FEASTS[month]?.find(f => f.date === i);
+                const fixed = (LITURGICAL_FEASTS[viewMonth] || []).find(f => f.date === i);
+                const mov = movable.find(f => f.date === i);
+                const feast = mov || fixed;
                 if (feast) {
                     if (feast.type === "Solemnity") {
-                        cell.classList.add('bg-red-100', 'font-bold', 'text-red-800');
+                        cell.classList.add('bg-red-100', 'dark:bg-red-900/40', 'font-bold', 'text-red-800', 'dark:text-red-300');
                     } else if (feast.type === "Feast") {
-                        cell.classList.add('bg-purple-100', 'text-purple-800');
+                        cell.classList.add('bg-purple-100', 'dark:bg-purple-900/40', 'text-purple-800', 'dark:text-purple-300');
                     } else {
-                        cell.classList.add('bg-gray-100', 'text-gray-700');
+                        cell.classList.add('bg-gray-100', 'dark:bg-gray-700');
                     }
                 }
 
-                if (i === today.getDate() && month === today.getMonth()) {
-                    cell.classList.add('ring-2', 'ring-primary', 'font-bold');
+                if (i === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+                    cell.classList.add('ring-2', 'ring-purple-500', 'font-bold');
                 }
-                cell.textContent = i;
+
+                const num = document.createElement('div');
+                num.textContent = i;
+                cell.appendChild(num);
+                if (feast) {
+                    const dot = document.createElement('div');
+                    dot.className = `feast-dot ${feast.color}`;
+                    cell.appendChild(dot);
+                }
+
+                const showDay = () => showDayDetails(viewYear, viewMonth, i);
+                cell.addEventListener('click', showDay);
+                cell.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDay(); }
+                });
                 grid.appendChild(cell);
             }
         }
 
+        // ========== Day Details ==========
+        function showDayDetails(year, month, day) {
+            const date = new Date(year, month, day);
+            const locale = LOCALE_MAP[currentLang] || 'en-US';
+            const panel = document.getElementById('dayDetails');
+            panel.classList.remove('hidden');
+
+            document.getElementById('dayDetailsDate').textContent =
+                date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            const { season } = getSeason(date);
+            document.getElementById('dayDetailsSeason').textContent = season;
+
+            const feasts = getFeastsFor(year, month, day);
+            const container = document.getElementById('dayDetailsFeasts');
+            container.innerHTML = '';
+
+            if (!feasts.length) {
+                container.innerHTML = `<p class="text-gray-600 dark:text-gray-300">${t('noFeast')}</p>`;
+                return;
+            }
+
+            feasts.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'flex items-start p-3 bg-gray-50 dark:bg-gray-700 rounded-lg';
+                const saintPage = getSaintPage(month, day);
+                el.innerHTML = `
+                    <span class="liturgical-color ${f.color} mt-1"></span>
+                    <div class="flex-1">
+                        <div class="font-medium text-gray-800 dark:text-white">${f.name}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">${f.type}</div>
+                        ${saintPage ? `<a href="${saintPage}" class="text-sm text-purple-600 dark:text-purple-400 hover:underline">${t('readAboutSaint')}</a>` : ''}
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
         // ========== Upcoming Events ==========
         function getUpcomingEvents() {
-            const today = new Date();
+            const today = stripTime(new Date());
             const year = today.getFullYear();
             let allFeasts = [];
 
-            for (let month = 0; month < 12; month++) {
-                const feasts = LITURGICAL_FEASTS[month] || [];
-                feasts.forEach(f => {
-                    const date = new Date(year, month, f.date);
-                    if (date >= today) allFeasts.push({ ...f, date });
+            // Fixed feasts for this year and next (so late-December still shows a full list)
+            for (const y of [year, year + 1]) {
+                for (let month = 0; month < 12; month++) {
+                    (LITURGICAL_FEASTS[month] || []).forEach(f => {
+                        const date = new Date(y, month, f.date);
+                        if (date >= today) allFeasts.push({ ...f, fullDate: date });
+                    });
+                }
+                getMovableFeasts(y).forEach(f => {
+                    if (f.fullDate >= today) allFeasts.push(f);
                 });
             }
 
+            const seen = new Set();
             return allFeasts
-                .sort((a, b) => a.date - b.date)
-                .slice(0, 5)
+                .sort((a, b) => a.fullDate - b.fullDate)
+                .filter(f => {
+                    const key = f.name + f.fullDate.toDateString();
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                })
+                .slice(0, 6)
                 .map(f => ({
-                    date: f.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    fullDate: f.fullDate,
+                    daysAway: Math.round((f.fullDate - today) / (1000 * 60 * 60 * 24)),
                     name: f.name,
                     type: f.type,
                     color: f.color
@@ -660,28 +946,37 @@ function getOfficeReadingsWeek() {
 
         // ========== Populate UI ==========
         function populateCalendar() {
+            const locale = LOCALE_MAP[currentLang] || 'en-US';
+            const now = new Date();
+            document.getElementById('todayDateLabel').textContent =
+                now.toLocaleDateString(locale, { weekday: 'short', month: 'short', day: 'numeric' });
+
             const info = getLiturgicalInfo();
             document.getElementById('todaySeason').textContent = info.season;
-            document.getElementById('todayFeast').textContent = info.feast || 'No feast today';
+            document.getElementById('todayFeast').textContent =
+                info.feast ? `${info.feast}${info.feastType ? ' · ' + info.feastType : ''}` : t('noFeastToday');
             document.getElementById('todayColor').className = `liturgical-color ${info.color}`;
 
-            document.getElementById('morningWeek').textContent = `Week ${getMorningPrayerWeek()}`;
-            document.getElementById('readingsWeek').textContent = getOfficeReadingsWeek();
+            document.getElementById('morningWeek').textContent = `${t('week')} ${getMorningPrayerWeek()}`;
+            document.getElementById('readingsWeek').textContent = `${t('week')} ${getOfficeReadingsWeek()}`;
 
             renderCalendar();
 
             const events = getUpcomingEvents();
             const container = document.getElementById('upcomingEvents');
-            container.innerHTML = events.length ? '' : '<p class="text-gray-600 dark:text-gray-300">No upcoming feasts.</p>';
+            container.innerHTML = events.length ? '' : `<p class="text-gray-600 dark:text-gray-300">${t('noFeastToday')}</p>`;
 
             events.forEach(e => {
+                const relative = e.daysAway === 0 ? t('today')
+                    : e.daysAway === 1 ? t('tomorrow')
+                    : t('inDays').replace('{n}', e.daysAway);
                 const el = document.createElement('div');
                 el.className = 'flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg';
                 el.innerHTML = `
-                    <span class="text-sm font-medium w-16 text-gray-600 dark:text-gray-300">${e.date}</span>
+                    <span class="text-sm font-medium w-16 text-gray-600 dark:text-gray-300">${e.fullDate.toLocaleDateString(locale, { month: 'short', day: 'numeric' })}</span>
                     <div class="flex-1">
                         <div class="font-medium text-gray-800 dark:text-white">${e.name}</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-300">${e.type}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">${e.type} · ${relative}</div>
                     </div>
                     <span class="liturgical-color ${e.color}"></span>
                 `;
@@ -692,13 +987,39 @@ function getOfficeReadingsWeek() {
         // ========== Init ==========
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
-            populateCalendar();
+
+            const now = new Date();
+            viewYear = now.getFullYear();
+            viewMonth = now.getMonth();
+
             const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
             setLanguage(preferredLang);
+            populateCalendar();
+            showDayDetails(viewYear, viewMonth, now.getDate());
+
+            document.getElementById('prevMonthBtn').addEventListener('click', () => {
+                viewMonth--;
+                if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+                renderCalendar();
+            });
+            document.getElementById('nextMonthBtn').addEventListener('click', () => {
+                viewMonth++;
+                if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+                renderCalendar();
+            });
+            document.getElementById('todayBtn').addEventListener('click', () => {
+                const t2 = new Date();
+                viewYear = t2.getFullYear();
+                viewMonth = t2.getMonth();
+                renderCalendar();
+                showDayDetails(viewYear, viewMonth, t2.getDate());
+            });
+
             window.addEventListener('storage', (e) => {
                 if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
                     const lang = localStorage.getItem('preferredLanguage') || 'en';
                     setLanguage(lang);
+                    populateCalendar();
                 }
             });
         });
@@ -706,7 +1027,7 @@ function getOfficeReadingsWeek() {
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+      navigator.serviceWorker.register('/i-pray/js/service-worker.js')
         .then(function(registration) {
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
         })

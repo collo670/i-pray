@@ -17,6 +17,7 @@ async function loadTranslations() {
 
 function setLanguage(lang) {
     localStorage.setItem('preferredLanguage', lang);
+    document.documentElement.lang = lang;
     loadTranslations().then(trans => {
         document.querySelectorAll('[data-translate]').forEach(el => {
             const key = el.getAttribute('data-translate');
@@ -203,7 +204,10 @@ function updateManifestThemeColor() {
 
 function highlightSelectedLanguage(lang) {
     document.querySelectorAll('.language-option').forEach(option => {
-        option.classList.toggle('border-primary', option.dataset.lang === lang);
+        const selected = option.dataset.lang === lang;
+        option.classList.toggle('border-primary', selected);
+        option.classList.toggle('ring-2', selected);
+        option.classList.toggle('ring-primary', selected);
     });
 }
 
