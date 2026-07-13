@@ -15,37 +15,15 @@
     <meta name="apple-mobile-web-app-title" content="ipray">
     <link rel="apple-touch-icon" href="/i-pray/assets/images/icon-192x192.png">
     <!-- Tailwind CSS via CDN with preconnect for faster loading -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
     <!-- Custom Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': 'rgb(155, 152, 152)',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                        'liturgical-purple': '#4A1E8A',
-                        'liturgical-white': '#F8F9FA',
-                        'liturgical-red': '#C41E3A',
-                        'liturgical-green': '#2E7D32',
-                        'liturgical-gold': '#FFD700',
-                    },
-                    backgroundImage: {
-                        'vintage-texture': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts & Font Awesome with preconnect for faster loading -->
+        <!-- Google Fonts & Font Awesome with preconnect for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
     <!-- Plausible Analytics -->
     <script defer data-domain="ipray.app" src="https://plausible.io/js/script.js"></script>
     <!-- Custom CSS -->
@@ -94,7 +72,7 @@
     <div id="homeView" class="space-y-8">
         <!-- Liturgical Season Image (static, styled by CSS) -->
         <div class="flex justify-center mb-4">
-            <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season" loading="lazy" decoding="async">
+            <img class="season-img" src="/i-pray/assets/images/maria-mdogo.jpg" alt="Liturgical Season" loading="lazy" decoding="async">
         </div>
         <div id="liturgicalCard" class="rounded-3xl p-8 bg-purple-100 backdrop-blur-sm shadow-xl border border-dashed border-purple-200 season-border" aria-live="polite" aria-label="Liturgical Information">
             <div class="text-center">
@@ -143,7 +121,7 @@
                 <div class="bg-white shadow-md rounded-lg p-4 mb-4">
                     <div class="flex items-center justify-between space-x-4">
                         <div class="flex items-center space-x-4">
-                            <img src="assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full" loading="lazy" decoding="async">
+                            <img src="/i-pray/assets/images/carmen.jpg" alt="Prayer Icon" class="w-10 h-10 rounded-full" loading="lazy" decoding="async">
                             <h2 class="text-xl font-semibold text-gray-800">Pray To Carmen Hernandez</h2>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -303,6 +281,6 @@
         </div>
     </div>
     <!-- Main JavaScript -->
-    <script src="index.js"></script>
+    <script src="/i-pray/js/fallback.js" defer></script>
 </body>
 </html>

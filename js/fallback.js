@@ -665,46 +665,46 @@ function calculateLiturgicalDay(lang = 'en') {
     adventStart.setDate(adventStart.getDate() - 21);
     let season = 'Ordinary Time';
     let feast = null;
-    let seasonImage = 'assets/images/maria mdogo.png';
+    let seasonImage = 'assets/images/maria-mdogo.jpg';
     let liturgicalColor = 'green';
     if (today.getMonth() === 11 && today.getDate() === 25) {
         season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         feast = 'Nativity of the Lord';
         liturgicalColor = 'white';
     } else if (today.getMonth() === 0 && today.getDate() === 1) {
         season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         feast = 'Mary, Mother of God';
         liturgicalColor = 'white';
     } else if (today.getMonth() === 0 && today.getDate() === 6) {
         season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         feast = 'Epiphany of the Lord';
         liturgicalColor = 'white';
     } else if (today >= adventStart && today < christmas) {
         season = 'Advent';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         liturgicalColor = 'purple';
     } else if (today >= christmas && today < new Date(year, 0, 8)) {
         season = 'Christmas';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         liturgicalColor = 'white';
     } else if (today >= new Date(year, 0, 8) && today < ashWednesday) {
         season = 'Ordinary Time';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         liturgicalColor = 'green';
     } else if (today >= ashWednesday && today < easter) {
         season = 'Lent';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         liturgicalColor = 'purple';
     } else if (today >= easter && today < pentecost) {
         season = 'Easter';
-        seasonImage = 'assets/images/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         liturgicalColor = 'white';
     } else if (today >= pentecost && today < adventStart) {
         season = 'Ordinary Time';
-        seasonImage = 'assets/maria mdogo.png';
+        seasonImage = 'assets/images/maria-mdogo.jpg';
         liturgicalColor = 'green';
     }
     if (today.getDate() === 2 && today.getMonth() === 2) {

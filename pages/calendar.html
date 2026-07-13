@@ -7,32 +7,17 @@
     <meta name="description" content="Modern Catholic liturgical calendar with feasts, seasons, and prayer cycles" />
     <link rel="stylesheet" href="../css/index.css">
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/ipray/manifest.json" />
+    <link rel="manifest" href="/i-pray/manifest.json" />
     <meta name="theme-color" content="linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)" id="theme-meta-color" />
 
     <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
-                        'secondary': '#DB2777',
-                        'accent': '#F59E0B',
-                    },
-                    backgroundImage: {
-                        'bg-gradient-vintage': 'linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)',
-                    }
-                }
-            }
-        };
-    </script>
-
+    
     <style>
         :root {
             --primary-color: linear-gradient(135deg, #035313 0%, #e7d7dc 50%, #62acdd 100%)

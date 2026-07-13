@@ -5,8 +5,19 @@
 (function () {
     'use strict';
 
-    var SHOW_DURATION = 3000; // how long the loader stays visible (ms)
-    var LOGO_FILE = 'assets/images/maria mdogo.png';
+    // 2s on the very first load of the app, 1s when moving between pages.
+    // A sessionStorage flag set on link clicks tells the next page it was
+    // an in-app navigation rather than a cold start.
+    var INITIAL_DURATION = 2000;
+    var NAV_DURATION = 1000;
+    var NAV_FLAG = 'ipray-in-app-nav';
+    var isInAppNav = false;
+    try {
+        isInAppNav = sessionStorage.getItem(NAV_FLAG) === '1';
+        sessionStorage.removeItem(NAV_FLAG);
+    } catch (e) {}
+    var SHOW_DURATION = isInAppNav ? NAV_DURATION : INITIAL_DURATION;
+    var LOGO_FILE = 'assets/images/logo-small.jpg';
 
     // Resolve the app root from this script's own URL so the logo path
     // works from any page depth (/, /pages/, /pages/ofisi ya masomo/..., etc.)
@@ -164,6 +175,9 @@
         // Same-page hash navigation
         if (link.pathname === window.location.pathname && link.hash) return;
 
+        // Tell the next page this is an in-app navigation so it uses the
+        // shorter loader duration
+        try { sessionStorage.setItem(NAV_FLAG, '1'); } catch (e) {}
         show();
     }, true);
 

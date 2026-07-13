@@ -62,7 +62,7 @@
     // Preload critical images
     function preloadCriticalImages() {
         const criticalImages = [
-            'assets/images/maria mdogo.png',
+            'assets/images/maria-mdogo.jpg',
             'assets/images/carmen.jpg'
         ];
         

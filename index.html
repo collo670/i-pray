@@ -22,7 +22,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Font Awesome loaded async so it never blocks first paint -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+    <!-- Splash logo & hero image fetched early -->
+    <link rel="preload" as="image" href="assets/images/logo-small.jpg">
+    <link rel="preload" as="image" href="assets/images/maria-mdogo.jpg">
     <!-- Plausible Analytics -->
     <script defer data-domain="ipray.app" src="https://plausible.io/js/script.js"></script>
     <!-- Custom CSS -->
@@ -83,7 +88,7 @@
             <div id="homeView" class="space-y-6">
                 <!-- Liturgical Season Image -->
                 <div class="flex justify-center">
-                    <img class="season-img" src="assets/images/maria mdogo.png" alt="Liturgical Season" loading="lazy" decoding="async">
+                    <img class="season-img" src="assets/images/maria-mdogo.jpg" alt="Liturgical Season" fetchpriority="high" decoding="async">
                 </div>
 
                 <!-- Liturgical Date Card (populated dynamically from the liturgical calendar) -->
@@ -285,20 +290,20 @@
         </div>
     </div>
     <!-- Main JavaScript -->
-    <script src="js/daily-readings.js"></script>
+    <script src="js/daily-readings.js" defer></script>
     <!-- Daily Readings Module -->
-    <script src="js/daily-readings-module.js"></script>
+    <script src="js/daily-readings-module.js" defer></script>
     <!-- Image Optimization -->
-    <script src="js/image-optimizer.js"></script>
+    <script src="js/image-optimizer.js" defer></script>
     <!-- Loading States -->
-    <script src="js/loading-states.js"></script>
+    <script src="js/loading-states.js" defer></script>
     <!-- Micro-interactions -->
-    <script src="js/micro-interactions.js"></script>
+    <script src="js/micro-interactions.js" defer></script>
     <!-- Mobile Navigation -->
-    <script src="js/mobile-navigation.js"></script>
+    <script src="js/mobile-navigation.js" defer></script>
     <!-- Main JavaScript -->
-    <script src="js/liturgical-calendar.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/liturgical-calendar.js" defer></script>
+    <script src="js/index.js" defer></script>
     <script>
         (function () {
             var btn = document.getElementById('darkModeQuickToggle');
