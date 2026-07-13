@@ -268,12 +268,10 @@
     <!-- JavaScript -->
     <script>
 
-        // PWA Installation
+        // PWA Installation — the install prompt is handled on index.html only
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installPrompt').classList.remove('hidden');
         });
 
         document.getElementById('installBtn').addEventListener('click', async () => {

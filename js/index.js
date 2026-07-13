@@ -1111,11 +1111,17 @@ function registerServiceWorker() {
     }
 }
 
-// Install Prompt Handling
+// Install Prompt Handling — home page (index.html) only
+function isHomePage() {
+    const path = window.location.pathname;
+    return path === '/i-pray/' || path.endsWith('/i-pray/index.html') ||
+        path === '/' || path.endsWith('/index.html');
+}
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     // Prevent the mini-infobar from appearing on mobile
     e.preventDefault();
+    if (!isHomePage()) return;
     // Stash the event so it can be triggered later
     deferredPrompt = e;
     // Show the install button
@@ -1142,6 +1148,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 // Detect iOS and show manual install instructions
 function showInstallPrompt() {
+    if (!isHomePage()) return;
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
     // Don't show if already installed
@@ -1163,6 +1170,7 @@ function showInstallPrompt() {
 document.addEventListener('DOMContentLoaded', showInstallPrompt);
 // Optionally: Hide install button if already installed
 window.addEventListener('appinstalled', () => {
+    if (!isHomePage()) return;
     const installContainer = document.getElementById('installContainer');
     installContainer.classList.add('hidden');
     console.log('App installed successfully');
