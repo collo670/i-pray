@@ -27,6 +27,11 @@
         /* Universalis reading text arrives as HTML with its own indentation styles */
         .reading-text { line-height: 1.75; }
         .reading-text div { margin-bottom: 0.15rem; }
+        /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+           Scoping it to .reading-text — rather than the root <html>
+           font-size — keeps #appBar and the bottom nav, which sit outside
+           it, a fixed size when the reading text is enlarged or shrunk. */
+        .reading-text { font-size: calc(1rem * var(--prayer-text-scale, 1)); }
     </style>
     <script src="../js/logo-loader.js"></script>
 </head>
@@ -360,5 +365,6 @@
         })();
     </script>
     <script src="../js/prayers-nav.js" defer></script>
+    <script src="../js/text-size-control.js" defer></script>
 </body>
 </html>

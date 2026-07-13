@@ -306,12 +306,13 @@
 
         function apply() {
             scale = Math.round(scale * 10) / 10;
-            // Scale the root font-size (not just body's) so every rem-based
-            // rule in the page — including .container's fixed 1.05rem from
-            // css/index.css — grows and shrinks with it. Scaling only body's
-            // font-size left the psalm text untouched because .container sets
-            // its own explicit rem value that ignores the body's size.
-            document.documentElement.style.fontSize = (scale * 100) + '%';
+            // Set a custom property that css/index.css's .container rule
+            // multiplies its font-size by, instead of scaling the root
+            // <html> font-size: the navbar sits outside .container as a
+            // sibling, so it (and the bottom nav, on pages that have one)
+            // never picks up --prayer-text-scale and stays a fixed size
+            // while only the prayer text grows and shrinks.
+            document.documentElement.style.setProperty('--prayer-text-scale', scale);
             reset.textContent = Math.round(scale * 100) + '%';
             reset.title = 'Rejesha 100%';
             dec.disabled = scale <= SCALE_MIN;
@@ -328,6 +329,14 @@
         ctl.appendChild(inc);
         document.body.appendChild(ctl);
         apply();
+
+        // A few asubuhi pages also carry a fixed bottom nav; without this
+        // the floating control would sit on top of it.
+        const bottomNav = document.querySelector('.bottom-nav, nav[role="navigation"][aria-label="Main Navigation"]');
+        if (bottomNav) {
+            const navHeight = bottomNav.getBoundingClientRect().height;
+            ctl.style.bottom = 'calc(' + navHeight + 'px + env(safe-area-inset-bottom, 0px) + 0.75rem)';
+        }
     }
 
     // ---- Init -------------------------------------------------------------------

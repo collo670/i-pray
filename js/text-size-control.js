@@ -67,7 +67,14 @@
 
         function apply() {
             scale = Math.round(scale * 10) / 10;
-            document.documentElement.style.fontSize = (scale * 100) + '%';
+            // Set a custom property that the page's content wrapper
+            // (.container / .content / #readingsContainer) multiplies its
+            // font-size by, instead of scaling the root <html> font-size:
+            // the top and bottom nav bars sit outside that wrapper as
+            // siblings, so they never pick up --prayer-text-scale and stay
+            // a fixed size while only the prayer/reading text grows and
+            // shrinks.
+            document.documentElement.style.setProperty('--prayer-text-scale', scale);
             reset.textContent = Math.round(scale * 100) + '%';
             reset.title = 'Rejesha 100%';
             dec.disabled = scale <= SCALE_MIN;
@@ -84,6 +91,14 @@
         ctl.appendChild(inc);
         document.body.appendChild(ctl);
         apply();
+
+        // Pages with a fixed bottom nav (mwaka*.html, daily-readings.html)
+        // would otherwise have this floating control overlap it.
+        const bottomNav = document.querySelector('.bottom-nav, nav[role="navigation"][aria-label="Main Navigation"]');
+        if (bottomNav) {
+            const navHeight = bottomNav.getBoundingClientRect().height;
+            ctl.style.bottom = 'calc(' + navHeight + 'px + env(safe-area-inset-bottom, 0px) + 0.75rem)';
+        }
     }
 
     if (document.readyState === 'loading') {

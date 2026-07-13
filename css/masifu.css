@@ -8,11 +8,9 @@
 --------------------------------------------------------------------------- */
 
 body.masifu-modern {
-    /* Responsive base size that scales with the device. The user-chosen
-       text scale (A− / A / A+ controls, js/masifu.js) is applied to the
-       root <html> font-size instead, so this rem-based value — and every
-       other rem measurement on the page, including .container's — grows
-       and shrinks along with it. */
+    /* Base size for anything outside .container (the psalm text itself is
+       scaled separately via .container's font-size in css/index.css, which
+       responds to the A− / A / A+ controls in js/masifu.js). */
     font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);
     line-height: 1.7;
     -webkit-text-size-adjust: 100%;

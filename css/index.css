@@ -554,7 +554,12 @@ html {
     padding: 32px 24px calc(96px + env(safe-area-inset-bottom, 0px));
     text-align: left;
     line-height: 1.75;
-    font-size: 1.05rem;
+    /* --prayer-text-scale is set by js/masifu.js / js/text-size-control.js
+       (default 1, so pages that never touch it render unchanged). Scoping
+       the scale to .container instead of the root <html> font-size means
+       the .navbar / .bottom-nav that sit outside it as siblings never
+       resize when the user adjusts prayer text size. */
+    font-size: calc(1.05rem * var(--prayer-text-scale, 1));
 }
 
 .prayer-section {
