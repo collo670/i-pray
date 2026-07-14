@@ -61,6 +61,11 @@
         .dark .office-content .sw-speaker { color: #c4b5fd; }
         .office-content .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
         .dark .office-content .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
+        /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+           Scoped to .sw-office only, so the resize control (shown only for
+           the Kiswahili reading view) grows/shrinks that reading text alone -
+           not the English/Universalis view and not the app chrome. */
+        .sw-office { font-size: calc(1rem * var(--prayer-text-scale, 1)); }
     </style>
     <!-- Apply saved theme before paint to avoid flash -->
     <script>
@@ -346,6 +351,22 @@
                         : 'text-gray-600 dark:text-gray-300');
                     TABS[key].setAttribute('aria-selected', String(active));
                 });
+                updateTextCtlVisibility();
+            }
+
+            // js/text-size-control.js (loaded deferred, so it may not have
+            // created its floating button yet on the very first call) only
+            // resizes .sw-office text, so it's only shown for that view -
+            // the Swahili Office of Readings - not English or Midday/Vespers.
+            function updateTextCtlVisibility() {
+                var ctl = document.querySelector('.prayer-textctl');
+                if (!ctl) return;
+                // An inline style is used (rather than a "hidden" class) because
+                // text-size-control.js injects its own <style> with
+                // ".prayer-textctl{display:flex}" after Tailwind's stylesheet,
+                // which would otherwise win a same-specificity, later-in-source
+                // tie against a Tailwind "hidden" utility class.
+                ctl.style.display = (hourKey === 'readings' && lang === 'sw') ? '' : 'none';
             }
 
             function applyLangSwitchUI() {
@@ -508,7 +529,7 @@
             }
 
             function renderSwReading(dayData, usedFallbackDay) {
-                var html = '<p class="sw-daylabel">' + esc(dayData.dayLabel) + '</p>';
+                var html = '<div class="sw-office"><p class="sw-daylabel">' + esc(dayData.dayLabel) + '</p>';
                 if (usedFallbackDay) {
                     html += '<div class="sw-fallback-note">Masomo ya siku hii mahususi hayapatikani; yanayoonyeshwa ni ya ' + esc(dayData.dayLabel) + ', ndani ya juma hili hili.</div>';
                 }
@@ -523,6 +544,7 @@
                     html += '<p>' + esc(p) + '</p>';
                 });
                 html += renderSwResponsory(dayData.responsory2);
+                html += '</div>';
                 return html;
             }
 
@@ -666,8 +688,17 @@
             applyHourChrome();
             applyLangSwitchUI();
             load(today);
+
+            // js/text-size-control.js is deferred, so its floating button
+            // may not exist yet at the point applyHourChrome() first runs
+            // above; DOMContentLoaded always fires after all deferred
+            // scripts, so this catches the initial visibility correctly.
+            document.addEventListener('DOMContentLoaded', updateTextCtlVisibility);
         })();
     </script>
     <script src="../js/prayers-nav.js" defer></script>
+    <!-- A-/A+ control that resizes only the rendered Swahili reading text
+         (.sw-office); hidden outside that view by updateTextCtlVisibility(). -->
+    <script src="../js/text-size-control.js" defer></script>
 </body>
 </html>
