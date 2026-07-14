@@ -612,7 +612,7 @@ function resolvePrayerLink(item) {
 const DAILY_PRAYERS_MENU = PRAYER_MENU.filter(item => ['lauds', 'scripture', 'midday', 'vespers'].includes(item.id));
 
 function renderPrayerMenus() {
-    const lang = localStorage.getItem('preferredLanguage') || 'en';
+    const lang = localStorage.getItem('preferredLanguage') || 'sw';
 
     const dailyPrayersList = document.getElementById('dailyPrayersSheetList');
     if (dailyPrayersList) {
@@ -900,11 +900,11 @@ function updateLiturgicalQuote(season, lang) {
     else if (season === 'Christmas') quoteKey = 'quoteChristmas';
     else if (season === 'Lent') quoteKey = 'quoteLent';
     else if (season === 'Easter') quoteKey = 'quoteEaster';
-    quoteElement.textContent = translations[lang || 'en'][quoteKey];
+    quoteElement.textContent = translations[lang || 'sw'][quoteKey];
 }
 
 // Liturgical Calendar Logic: fills the liturgical date card dynamically
-function calculateLiturgicalDay(lang = 'en') {
+function calculateLiturgicalDay(lang = 'sw') {
     const today = new Date();
     const info = getLiturgicalToday(today, lang);
     const feastInfo = getLiturgicalInfoForToday(today);
@@ -1009,7 +1009,7 @@ async function fetchDailyReadings() {
         
         // Check if running locally or on GitHub Pages
         const baseUrl = window.location.hostname === "collo670.github.io" ? "/i-pray" : "";
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const lang = localStorage.getItem('preferredLanguage') || 'sw';
         const readingsCard = document.createElement('div');
         readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
         readingsCard.innerHTML = `
@@ -1211,7 +1211,7 @@ window.addEventListener('appinstalled', () => {
 
 // Toggle translation function
 window.toggleTranslation = function() {
-    const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+    const currentLang = localStorage.getItem('preferredLanguage') || 'sw';
     const newLang = currentLang === 'en' ? 'sw' : 'en';
     setLanguage(newLang);
 };
@@ -1234,7 +1234,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderPrayerMenus();
     initAccessibility();
     initPrayerDB();
-    const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+    const preferredLang = localStorage.getItem('preferredLanguage') || 'sw';
     calculateLiturgicalDay(preferredLang);
     setupPrayerReminders();
     registerServiceWorker();
@@ -1285,7 +1285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setLanguage(preferredLang);
     window.addEventListener('storage', (e) => {
         if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
-            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            const lang = localStorage.getItem('preferredLanguage') || 'sw';
             setLanguage(lang);
         }
         if (e.key === 'textSize') {

@@ -96,7 +96,7 @@ window.translations = {
 };
 
 // State to track current language - using window object for GitHub Pages compatibility
-window.currentLanguage = 'english'; // Default language
+window.currentLanguage = 'swahili'; // Default language
 
 // Self-executing function to initialize translation functionality
 (function() {
@@ -386,18 +386,18 @@ window.initTranslation = function() {
         // Check saved language preference
         const savedLanguage = localStorage.getItem('iprayLanguage');
         console.log('Saved language:', savedLanguage);
-        
-        if (savedLanguage === 'swahili') {
+
+        if (savedLanguage === 'english') {
+            window.currentLanguage = 'english';
+            newToggle.textContent = 'EN';
+            newToggle.title = 'Translate to Swahili';
+            console.log('Initialized with English');
+        } else {
             window.currentLanguage = 'swahili';
             window.translateToSwahili();
             newToggle.textContent = 'SW';
             newToggle.title = 'Translate to English';
             console.log('Initialized with Swahili');
-        } else {
-            window.currentLanguage = 'english';
-            newToggle.textContent = 'EN';
-            newToggle.title = 'Translate to Swahili';
-            console.log('Initialized with English');
         }
     } else {
         console.log('Translation toggle button not found, will retry');
@@ -411,15 +411,15 @@ window.initTranslation = function() {
                 
                 // Check saved language preference
                 const savedLanguage = localStorage.getItem('iprayLanguage');
-                if (savedLanguage === 'swahili') {
+                if (savedLanguage === 'english') {
+                    window.currentLanguage = 'english';
+                    retryToggle.textContent = 'EN';
+                    retryToggle.title = 'Translate to Swahili';
+                } else {
                     window.currentLanguage = 'swahili';
                     window.translateToSwahili();
                     retryToggle.textContent = 'SW';
                     retryToggle.title = 'Translate to English';
-                } else {
-                    window.currentLanguage = 'english';
-                    retryToggle.textContent = 'EN';
-                    retryToggle.title = 'Translate to Swahili';
                 }
             } else {
                 console.error('Translation toggle button not found after retry');

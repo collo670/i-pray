@@ -48,12 +48,12 @@ function loadPreferences() {
         document.body.classList.add(`text-${textSize}`);
     }
 
-    const language = localStorage.getItem('preferredLanguage') || localStorage.getItem('language') || 'en';
+    const language = localStorage.getItem('preferredLanguage') || localStorage.getItem('language') || 'sw';
     highlightSelectedLanguage(language);
     setLanguage(language);
     window.addEventListener('storage', (e) => {
         if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
-            const l = localStorage.getItem('preferredLanguage') || 'en';
+            const l = localStorage.getItem('preferredLanguage') || 'sw';
             highlightSelectedLanguage(l);
             setLanguage(l);
         }
