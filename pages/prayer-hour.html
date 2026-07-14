@@ -557,6 +557,14 @@
                 return '<div class="sw-fallback-note">Imeshindikana kupakia Ofisi ya Masomo kwa Kiswahili kwa siku hii. Inaonyesha maandishi ya Kiingereza.</div>';
             }
 
+            // Midday Prayer and Vespers have no verified Swahili source yet
+            // (unlike the Office of Readings, which was extracted from the
+            // official Mwaka Sehemu PDFs) - show English with an explanatory
+            // note rather than fabricated or incorrect Swahili text.
+            function swHourUnavailableNote() {
+                return '<div class="sw-fallback-note">Kiswahili cha ' + HOURS[hourKey].titleSw + ' bado hakipatikani. Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+            }
+
             // Renders the Swahili office locally when possible (no network,
             // no PDF parsing at runtime); otherwise falls back to the normal
             // Universalis fetch with a short explanatory note prepended.
@@ -636,6 +644,11 @@
 
                 if (hourKey === 'readings' && lang === 'sw') {
                     loadSwahiliReadings(currentDate, token);
+                    return;
+                }
+
+                if (lang === 'sw') {
+                    loadUniversalisContent(token, swHourUnavailableNote());
                     return;
                 }
 

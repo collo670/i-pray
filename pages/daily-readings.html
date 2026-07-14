@@ -33,6 +33,8 @@
            font-size — keeps #appBar and the bottom nav, which sit outside
            it, a fixed size when the reading text is enlarged or shrunk. */
         .reading-text { font-size: calc(1rem * var(--prayer-text-scale, 1)); }
+        .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
+        .dark .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
     </style>
     <script src="../js/logo-loader.js"></script>
 </head>
@@ -47,10 +49,10 @@
                         </svg>
                     </a>
                     <div class="app-bar-brand">
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        <h1 id="pageTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                             Daily Readings
                         </h1>
-                        <p class="text-xs text-gray-600 dark:text-gray-400">Mass readings for every day</p>
+                        <p id="pageSubtitle" class="text-xs text-gray-600 dark:text-gray-400">Mass readings for every day</p>
                     </div>
                 </div>
                 <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
@@ -65,6 +67,15 @@
         </header>
 
         <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <!-- Language switch: English / Kiswahili. Remembered in localStorage;
+                 switching re-renders instantly, no page reload. -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose language / Chagua lugha">
+                    <button id="langEn" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">English</button>
+                    <button id="langSw" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">Kiswahili</button>
+                </div>
+            </div>
+
             <!-- Date navigation: pick any day of any year -->
             <div class="rounded-2xl p-4 bg-white dark:bg-gray-800 shadow-lg mb-6">
                 <div class="flex items-center justify-between gap-2">
@@ -108,6 +119,8 @@
                 <p id="readingsErrorText" class="text-gray-700 dark:text-gray-300 mb-4">Unable to load the readings for this day. Please check your connection and try again.</p>
                 <button id="retryBtn" class="px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold">Retry</button>
             </div>
+
+            <div id="readingsSwNote" class="sw-fallback-note hidden"></div>
 
             <!-- Readings rendered here in the order of the Mass -->
             <div id="readingsContainer" class="space-y-6"></div>
@@ -193,11 +206,46 @@
             var dayTitleEl = document.getElementById('liturgicalDayTitle');
             var dateEl = document.getElementById('readingsDate');
             var copyrightEl = document.getElementById('readingsCopyright');
+            var readingsSwNote = document.getElementById('readingsSwNote');
+            var pageTitleEl = document.getElementById('pageTitle');
+            var pageSubtitleEl = document.getElementById('pageSubtitle');
+            var langEnBtn = document.getElementById('langEn');
+            var langSwBtn = document.getElementById('langSw');
 
             var currentDate = new Date();
             var currentStamp = null;
             var pendingScript = null;
             var pendingTimer = null;
+
+            // Language switch: English / Kiswahili, same convention as
+            // pages/prayer-hour.html (localStorage key shared across pages).
+            var LANG_KEY = 'preferredLanguage';
+            var lang = 'en';
+            try { if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw'; } catch (e) {}
+
+            // Kiswahili daily readings: there is no API for this (checked
+            // Universalis, iBreviary, Divine Office - none publish Swahili).
+            // mkatolikileo.com is a Swahili Catholic news site that posts the
+            // full text of each day's Mass readings as a dated article; it has
+            // no CORS headers either, so it's fetched through the same proxy
+            // chain used for Universalis in prayer-hour.html. If a date isn't
+            // published there yet (it only covers today and the recent past,
+            // never the future) the English Universalis feed is shown instead,
+            // with a note explaining why.
+            var SW_SITE = 'https://mkatolikileo.com';
+            var SW_LIST_URL = SW_SITE + '/masomo-ya-misa';
+            var SW_CACHE_PREFIX = 'swReadings-';
+            var SW_LIST_CACHE_KEY = 'swReadingsListMap';
+            var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
+            var SW_PROXIES = [
+                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+            ];
+            var SW_MONTHS = {
+                januari: 0, februari: 1, machi: 2, aprili: 3, mei: 4, juni: 5,
+                julai: 6, agosti: 7, septemba: 8, oktoba: 9, novemba: 10, desemba: 11
+            };
 
             function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
             function addDays(d, n) { var c = new Date(d); c.setDate(c.getDate() + n); return c; }
@@ -279,6 +327,168 @@
                 }
             }
 
+            function renderSw(parsed) {
+                setState('ready');
+                dateEl.textContent = parsed.dateLabel || '';
+                dayTitleEl.textContent = parsed.dayTitle || '';
+                banner.classList.remove('hidden');
+
+                container.innerHTML = '';
+                parsed.sections.forEach(function (s) {
+                    container.appendChild(sectionCard(s.label, { source: s.citation, text: s.textHtml }));
+                });
+
+                copyrightEl.innerHTML = 'Masomo yametolewa na <a class="underline" target="_blank" rel="noopener" href="' + SW_SITE + '">Mkatoliki Leo</a>.';
+                copyrightEl.classList.remove('hidden');
+            }
+
+            function showSwUnavailable() {
+                readingsSwNote.textContent = 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyesha kwa Kiingereza.';
+                readingsSwNote.classList.remove('hidden');
+            }
+
+            function fetchTextThroughProxies(url, onOk, onFail) {
+                var i = 0;
+                (function tryNext() {
+                    if (i >= SW_PROXIES.length) { onFail(); return; }
+                    var proxied = SW_PROXIES[i++](url);
+                    var ctrl = window.AbortController ? new AbortController() : null;
+                    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
+                    fetch(proxied, ctrl ? { signal: ctrl.signal } : {})
+                        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                        .then(function (text) { clearTimeout(timer); onOk(text); })
+                        .catch(function () { clearTimeout(timer); tryNext(); });
+                })();
+            }
+
+            // The listing page (reverse-chronological, ~10 most recent days)
+            // is the only reliable way to map a date to its article id/URL:
+            // mkatolikileo.com's ids increment roughly one per published day,
+            // but there's no guarantee against gaps, so ids are never guessed.
+            function parseSwListHtml(html) {
+                var map = {};
+                var re = /masomo-ya-misa\/(\d+)\/([a-z]+)-([a-z]+)-(\d{1,2})-(\d{4})/g;
+                var m;
+                while ((m = re.exec(html))) {
+                    var monthIdx = SW_MONTHS[m[3]];
+                    if (monthIdx === undefined) continue;
+                    var d = new Date(Number(m[5]), monthIdx, Number(m[4]));
+                    map[stampOf(d)] = SW_SITE + '/masomo-ya-misa/' + m[1] + '/' + m[2] + '-' + m[3] + '-' + m[4] + '-' + m[5];
+                }
+                return map;
+            }
+
+            function resolveSwListMap(cb) {
+                var cached = null;
+                try { cached = JSON.parse(localStorage.getItem(SW_LIST_CACHE_KEY) || 'null'); } catch (e) {}
+                if (cached && cached.fetchedAt && (Date.now() - cached.fetchedAt) < SW_LIST_TTL_MS) {
+                    cb(cached.map);
+                    return;
+                }
+                fetchTextThroughProxies(SW_LIST_URL, function (html) {
+                    var map = parseSwListHtml(html);
+                    if (Object.keys(map).length) {
+                        try { localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), map: map })); } catch (e) {}
+                        cb(map);
+                    } else {
+                        cb(cached ? cached.map : null);
+                    }
+                }, function () {
+                    cb(cached ? cached.map : null);
+                });
+            }
+
+            // Pulls the day title and each reading (label + citation + text)
+            // out of a fetched mkatolikileo.com article and sanitizes it -
+            // same approach as cleanOffice() in pages/prayer-hour.html.
+            function parseSwArticle(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var titleEl = doc.querySelector('.pretty_date_title');
+                var blocks = doc.querySelectorAll('.readings');
+                if (!titleEl || !blocks.length) return null;
+
+                var rawTitle = titleEl.textContent.replace(/\s+/g, ' ').trim();
+                var dayTitle = rawTitle, dateLabel = '';
+                var titleMatch = rawTitle.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+                if (titleMatch) { dayTitle = titleMatch[1].trim(); dateLabel = titleMatch[2].trim(); }
+
+                var sections = [];
+                blocks.forEach(function (block) {
+                    var labelEl = block.querySelector('.reading_title');
+                    var citeEl = block.querySelector('.reading');
+                    var textEl = block.querySelector('p');
+                    if (!labelEl || !textEl) return;
+                    textEl.querySelectorAll('script, style, form, iframe, object, embed').forEach(function (n) {
+                        n.parentNode.removeChild(n);
+                    });
+                    textEl.querySelectorAll('*').forEach(function (n) {
+                        for (var i = n.attributes.length - 1; i >= 0; i--) {
+                            if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+                        }
+                    });
+                    textEl.querySelectorAll('a[href]').forEach(function (a) {
+                        var href = a.getAttribute('href');
+                        if (href && href.charAt(0) === '/') a.setAttribute('href', SW_SITE + href);
+                        a.setAttribute('target', '_blank');
+                        a.setAttribute('rel', 'noopener');
+                    });
+                    sections.push({
+                        label: labelEl.textContent.trim(),
+                        citation: citeEl ? citeEl.textContent.trim() : '',
+                        textHtml: textEl.innerHTML
+                    });
+                });
+                if (!sections.length) return null;
+                return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+            }
+
+            function fetchErrorText() {
+                return lang === 'sw'
+                    ? 'Imeshindikana kupakia masomo ya siku hii. Tafadhali angalia mtandao wako na ujaribu tena.'
+                    : 'Unable to load the readings for this day. Please check your connection and try again.';
+            }
+
+            function windowErrorText() {
+                return (lang === 'sw' ? 'Masomo yanapatikana kuanzia ' : 'Readings are available from ')
+                    + fmtDay(windowMin) + (lang === 'sw' ? ' hadi ' : ' to ')
+                    + fmtDay(windowMax) + (lang === 'sw' ? '. Tafadhali chagua tarehe kati ya hizo.' : '. Please choose a date in that range.');
+            }
+
+            var CHROME = {
+                en: { title: 'Daily Readings', subtitle: 'Mass readings for every day', loading: 'Loading readings…', retry: 'Retry', today: 'Back to today' },
+                sw: { title: 'Masomo ya Kila Siku', subtitle: 'Masomo ya Misa kwa kila siku', loading: 'Inapakia masomo…', retry: 'Jaribu tena', today: 'Rudi leo' }
+            };
+
+            function applyLangChrome() {
+                var c = CHROME[lang];
+                pageTitleEl.textContent = c.title;
+                pageSubtitleEl.textContent = c.subtitle;
+                document.title = c.title + ' - ipray';
+                var loadingText = loadingEl.querySelector('p');
+                if (loadingText) loadingText.textContent = c.loading;
+                retryBtn.textContent = c.retry;
+                todayBtn.textContent = c.today;
+                document.documentElement.lang = lang === 'sw' ? 'sw' : 'en';
+                [[langEnBtn, 'en'], [langSwBtn, 'sw']].forEach(function (pair) {
+                    var active = lang === pair[1];
+                    pair[0].className = 'px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ' + (active
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300');
+                    pair[0].setAttribute('aria-selected', String(active));
+                });
+            }
+
+            function setLang(newLang) {
+                if (newLang === lang) return;
+                lang = newLang;
+                try {
+                    localStorage.setItem(LANG_KEY, lang);
+                    localStorage.setItem('langUpdatedAt', String(Date.now()));
+                } catch (e) {}
+                applyLangChrome();
+                load(currentDate);
+            }
+
             function cleanupPending() {
                 if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
                 if (pendingScript && pendingScript.parentNode) {
@@ -296,18 +506,11 @@
                 render(data);
             };
 
-            function load(date) {
-                currentDate = date;
-                currentStamp = stampOf(date);
-                datePicker.value = isoOf(date);
-                todayBtn.classList.toggle('hidden', currentStamp === stampOf(new Date()));
-                prevBtn.disabled = +startOfDay(date) <= +windowMin;
-                nextBtn.disabled = +startOfDay(date) >= +windowMax;
-                cleanupPending();
-
+            function loadEnglish(date) {
+                var stamp = stampOf(date);
                 var cached = null;
                 try {
-                    cached = localStorage.getItem(CACHE_PREFIX + currentStamp);
+                    cached = localStorage.getItem(CACHE_PREFIX + stamp);
                 } catch (e) {}
                 if (cached) {
                     try {
@@ -316,18 +519,8 @@
                     } catch (e) {}
                 }
 
-                // Outside the feed's window nothing can be fetched: say so
-                // immediately instead of waiting for the request to time out
-                if (+startOfDay(date) < +windowMin || +startOfDay(date) > +windowMax) {
-                    errorText.textContent = 'Readings are available from ' + fmtDay(windowMin)
-                        + ' to ' + fmtDay(windowMax) + '. Please choose a date in that range.';
-                    setState('error');
-                    return;
-                }
-                errorText.textContent = 'Unable to load the readings for this day. Please check your connection and try again.';
-
+                errorText.textContent = fetchErrorText();
                 setState('loading');
-                var stamp = currentStamp;
                 pendingScript = document.createElement('script');
                 pendingScript.src = 'https://universalis.com/' + stamp + '/jsonpmass.js';
                 pendingScript.onerror = function () {
@@ -341,6 +534,72 @@
                 document.body.appendChild(pendingScript);
             }
 
+            function loadSwahili(date) {
+                var stamp = stampOf(date);
+                var cachedSw = null;
+                try { cachedSw = localStorage.getItem(SW_CACHE_PREFIX + stamp); } catch (e) {}
+                if (cachedSw) {
+                    try {
+                        renderSw(JSON.parse(cachedSw));
+                        return;
+                    } catch (e) {}
+                }
+
+                errorText.textContent = fetchErrorText();
+                setState('loading');
+
+                resolveSwListMap(function (map) {
+                    if (stamp !== currentStamp) return;
+                    var url = map && map[stamp];
+                    if (!url) {
+                        showSwUnavailable();
+                        loadEnglish(date);
+                        return;
+                    }
+                    fetchTextThroughProxies(url, function (html) {
+                        if (stamp !== currentStamp) return;
+                        var parsed = parseSwArticle(html);
+                        if (!parsed) {
+                            showSwUnavailable();
+                            loadEnglish(date);
+                            return;
+                        }
+                        try { localStorage.setItem(SW_CACHE_PREFIX + stamp, JSON.stringify(parsed)); } catch (e) {}
+                        renderSw(parsed);
+                    }, function () {
+                        if (stamp !== currentStamp) return;
+                        showSwUnavailable();
+                        loadEnglish(date);
+                    });
+                });
+            }
+
+            function load(date) {
+                currentDate = date;
+                currentStamp = stampOf(date);
+                datePicker.value = isoOf(date);
+                todayBtn.classList.toggle('hidden', currentStamp === stampOf(new Date()));
+                prevBtn.disabled = +startOfDay(date) <= +windowMin;
+                nextBtn.disabled = +startOfDay(date) >= +windowMax;
+                cleanupPending();
+                readingsSwNote.classList.add('hidden');
+                readingsSwNote.textContent = '';
+
+                // Outside the feed's window nothing can be fetched: say so
+                // immediately instead of waiting for the request to time out
+                if (+startOfDay(date) < +windowMin || +startOfDay(date) > +windowMax) {
+                    errorText.textContent = windowErrorText();
+                    setState('error');
+                    return;
+                }
+
+                if (lang === 'sw') {
+                    loadSwahili(date);
+                } else {
+                    loadEnglish(date);
+                }
+            }
+
             function shiftDay(delta) {
                 var next = new Date(currentDate);
                 next.setDate(next.getDate() + delta);
@@ -351,7 +610,10 @@
             nextBtn.addEventListener('click', function () { shiftDay(1); });
             todayBtn.addEventListener('click', function () { load(new Date()); });
             retryBtn.addEventListener('click', function () {
-                try { localStorage.removeItem(CACHE_PREFIX + currentStamp); } catch (e) {}
+                try {
+                    localStorage.removeItem(CACHE_PREFIX + currentStamp);
+                    localStorage.removeItem(SW_CACHE_PREFIX + currentStamp);
+                } catch (e) {}
                 load(currentDate);
             });
             datePicker.min = isoOf(windowMin);
@@ -362,6 +624,20 @@
                 load(new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
             });
 
+            langEnBtn.addEventListener('click', function () { setLang('en'); });
+            langSwBtn.addEventListener('click', function () { setLang('sw'); });
+            // Stay in sync if the language is changed from another open tab/page.
+            window.addEventListener('storage', function (e) {
+                if (e.key !== 'langUpdatedAt') return;
+                var newLang = 'en';
+                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
+                if (newLang === lang) return;
+                lang = newLang;
+                applyLangChrome();
+                load(currentDate);
+            });
+
+            applyLangChrome();
             load(new Date());
         })();
     </script>
