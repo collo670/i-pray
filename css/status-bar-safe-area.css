@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Status-bar-safe top navigation
+   --------------------------------------------------------------------------
+   Makes every top nav bar / header in the app bleed its background
+   seamlessly behind the mobile status bar (the notch / Dynamic Island /
+   Android status bar row that shows time, battery, signal), instead of
+   stopping at the visible viewport edge and leaving a gap of page
+   background above it.
+
+   How it works:
+   - <meta name="viewport" content="...viewport-fit=cover"> (already present
+     on every page) tells the browser the page may draw under the status
+     bar / notch.
+   - <meta name="apple-mobile-web-app-status-bar-style" content=
+     "black-translucent"> (added by scripts/apply-safe-area-meta) makes the
+     iOS status bar fully transparent in installed/standalone apps so our
+     own background shows through it, rather than iOS painting its own
+     opaque bar. That mode always renders light/white system icons, so
+     every rule below targets a nav whose top sliver is dark enough for
+     those icons to stay legible.
+   - env(safe-area-inset-top) resolves to the status bar / notch height on
+     devices that have one, and to 0px everywhere else (desktop, older
+     phones, Android Chrome tabs) - every rule below is a no-op there.
+
+   This file is linked last in <head> on every page (after any inline
+   <style> blocks and after Tailwind's output.css), so it reliably wins the
+   cascade for the specific padding/positioning properties it touches
+   without having to fight per-page specificity, while leaving each page's
+   own visual design otherwise untouched.
+   ========================================================================== */
+
+:root {
+  --sb-inset-top: env(safe-area-inset-top, 0px);
+  /* Shared dark sliver color for headers whose own background is light or
+     theme-adaptive (so it can't safely host always-light status bar icons
+     on its own). Reuses this app's existing dark-mode surface color
+     (Tailwind gray-800) rather than inventing a new brand color. */
+  --sb-sliver-color: #1f2937;
+}
+
+/* -- Group 1: already edge-to-edge, already dark. Their own background
+   simply needs to grow upward by the inset amount; no separate strip. -- */
+
+.navbar {
+  padding-top: var(--sb-inset-top);
+  box-sizing: border-box;
+}
+
+nav[class*="bg-[#202847]"] {
+  padding-top: var(--sb-inset-top);
+  box-sizing: border-box;
+}
+
+/* The PDF-viewer pages under assets/office pace their content with hard
+   <br> spacers sized to the nav's original (safe-area-unaware) height.
+   Growing the nav pushes it further into that spacing; this adds a
+   matching extra buffer at the body level so content never ends up
+   hidden behind the taller bar on notched devices. */
+body:has(> nav[class*="bg-[#202847]"]) {
+  padding-top: var(--sb-inset-top);
+}
+
+/* dump.html's one-off in-flow gradient header (not fixed/sticky - simply
+   the first element in the page, so growing its own top padding is
+   enough to push it, and everything after it, down). */
+header.liturgical-gradient {
+  padding-top: calc(var(--sb-inset-top) + 1.5rem) !important;
+  box-sizing: border-box;
+}
+
+/* -- Group 2: light / theme-adaptive headers. Rather than force their own
+   (light) background behind the status bar - which would make the
+   always-light iOS status bar icons unreadable - paint a small fixed dark
+   sliver exactly as tall as the inset, then push the header's real
+   content down to clear it. The sliver merges directly into the header's
+   top edge, so it still reads as one continuous bar, just with the top
+   few pixels tinted to guarantee icon contrast. -- */
+
+header[class*="backdrop-blur-sm"]:not([role="banner"]) {
+  position: relative;
+  padding-top: calc(var(--sb-inset-top) + 1rem) !important;
+  box-sizing: border-box;
+}
+
+header[class*="backdrop-blur-sm"]:not([role="banner"])::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--sb-inset-top);
+  background: var(--sb-sliver-color);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* .app-bar / header[role="banner"] (index.css) and .page-nav (ofisi ya
+   masomo/styles.css) already ship their own dedicated safe-area handling
+   next to their component definitions - see those files. */

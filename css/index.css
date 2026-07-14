@@ -861,13 +861,29 @@ header[role="banner"] {
     -webkit-backdrop-filter: none;
 }
 
+/* The bar's own box already includes the safe-area inset via its
+   padding-top above, so this panel only needs height:100% to fill it -
+   adding the inset a second time here would overshoot past the bar's own
+   bottom edge and bleed into the content below it.
+   The background is a hard-stop two-tone gradient rather than a flat
+   var(--glass-bg): the top `env(safe-area-inset-top)` sliver (behind the
+   status bar) is always a dark, theme-independent tone so the light
+   system icons shown by apple-mobile-web-app-status-bar-style=
+   black-translucent stay legible even when the bar itself is in its light
+   theme; the rest of the panel keeps the normal adaptive glass look. */
 .app-bar::before,
 header[role="banner"]::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
-    height: calc(100% + env(safe-area-inset-top, 0px));
-    background: var(--glass-bg);
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        var(--sb-sliver-color, #1f2937) 0,
+        var(--sb-sliver-color, #1f2937) var(--sb-inset-top, env(safe-area-inset-top, 0px)),
+        var(--glass-bg) var(--sb-inset-top, env(safe-area-inset-top, 0px)),
+        var(--glass-bg) 100%
+    );
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-subtle);
@@ -910,6 +926,11 @@ header[role="banner"]::before {
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: var(--radius-lg);
     z-index: 1000;
+    /* Pushes the logo/hamburger down below the status bar on notched
+       devices; harmless 0px no-op everywhere else. The ::before below
+       handles bleeding the same background color up behind the bar. */
+    padding-top: env(safe-area-inset-top, 0px);
+    box-sizing: border-box;
 }
 
 /* Extends the navbar's own background up behind the mobile status bar /

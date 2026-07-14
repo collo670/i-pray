@@ -49,6 +49,24 @@ body {
     z-index: 1000;
 }
 
+/* Keeps the pill's dark color visually continuous with the status bar:
+   a slim, viewport-fixed strip (independent of the pill's own sticky
+   scroll position) in the same tone, sized to the status-bar inset plus
+   the pill's own resting offset from the top. Purely decorative and out
+   of flow, so it never affects layout; resolves to 0 height on devices/
+   browsers without a safe area. */
+.page-nav::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(env(safe-area-inset-top, 0px) + 12px);
+    background: rgba(20, 31, 44, 0.97);
+    pointer-events: none;
+    z-index: 999;
+}
+
 .page-nav .nav-link {
     color: #fff;
     text-decoration: none;

@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#222">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ipray">
     <link rel="stylesheet" href="../css/prevent-zoom.css">
     <title>Mwaka Sehemu 2 - Week 20 - i-pray</title>
     <style>
@@ -12,7 +16,7 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            padding-top: 70px; /* Space for fixed nav */
+            padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
             background-color: #fff;
             color: #1a1a1a !important;
             transition: all 0.3s ease;
@@ -238,6 +242,7 @@
     <script src="../js/nav-theme.js"></script>
 
     <meta name="description" content="Office of Readings readings for Mwaka Sehemu 2 Week 20.">    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/status-bar-safe-area.css">
 </head>
 <body>
     <nav class="navbar">
