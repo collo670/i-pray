@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ipray-v202607132251';
+const CACHE_NAME = 'ipray-v202607140900';
 
 // Critical app shell: cached during install. If any of these fail, the
 // install fails, so keep this list short and only list files that exist.
@@ -181,7 +181,42 @@ const PRECACHE_EXTRA = [
   "/i-pray/assets/css/styles.css",
   "/i-pray/dist/output.css",
   "/i-pray/data/readings.json",
-  "/i-pray/data/translations.json"
+  "/i-pray/data/translations.json",
+  "/i-pray/data/office-readings-sw/week-1.json",
+  "/i-pray/data/office-readings-sw/week-2.json",
+  "/i-pray/data/office-readings-sw/week-3.json",
+  "/i-pray/data/office-readings-sw/week-4.json",
+  "/i-pray/data/office-readings-sw/week-5.json",
+  "/i-pray/data/office-readings-sw/week-6.json",
+  "/i-pray/data/office-readings-sw/week-7.json",
+  "/i-pray/data/office-readings-sw/week-8.json",
+  "/i-pray/data/office-readings-sw/week-9.json",
+  "/i-pray/data/office-readings-sw/week-10.json",
+  "/i-pray/data/office-readings-sw/week-11.json",
+  "/i-pray/data/office-readings-sw/week-12.json",
+  "/i-pray/data/office-readings-sw/week-13.json",
+  "/i-pray/data/office-readings-sw/week-14.json",
+  "/i-pray/data/office-readings-sw/week-15.json",
+  "/i-pray/data/office-readings-sw/week-16.json",
+  "/i-pray/data/office-readings-sw/week-17.json",
+  "/i-pray/data/office-readings-sw/week-18.json",
+  "/i-pray/data/office-readings-sw/week-19.json",
+  "/i-pray/data/office-readings-sw/week-20.json",
+  "/i-pray/data/office-readings-sw/week-21.json",
+  "/i-pray/data/office-readings-sw/week-22.json",
+  "/i-pray/data/office-readings-sw/week-23.json",
+  "/i-pray/data/office-readings-sw/week-24.json",
+  "/i-pray/data/office-readings-sw/week-25.json",
+  "/i-pray/data/office-readings-sw/week-26.json",
+  "/i-pray/data/office-readings-sw/week-27.json",
+  "/i-pray/data/office-readings-sw/week-28.json",
+  "/i-pray/data/office-readings-sw/week-29.json",
+  "/i-pray/data/office-readings-sw/week-30.json",
+  "/i-pray/data/office-readings-sw/week-31.json",
+  "/i-pray/data/office-readings-sw/week-32.json",
+  "/i-pray/data/office-readings-sw/week-33.json",
+  "/i-pray/data/office-readings-sw/week-34.json",
+  "/i-pray/data/office-readings-sw/index.json"
 ];
 
 self.addEventListener('install', event => {

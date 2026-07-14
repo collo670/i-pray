@@ -50,6 +50,17 @@
         .office-content .audioclip audio { width: 100%; max-width: 24rem; }
         .office-content a { color: #7c3aed; text-decoration: underline; }
         .dark .office-content a { color: #a78bfa; }
+        /* Locally-rendered Swahili Office of Readings (data/office-readings-sw) */
+        .office-content .sw-daylabel { font-weight: 700; font-size: 1.05rem; color: #1f2937; margin-bottom: 0.5rem; }
+        .dark .office-content .sw-daylabel { color: #f3f4f6; }
+        .office-content .sw-citation, .office-content .sw-source { font-style: italic; color: #6b7280; margin: 0.4em 0 0.8em; }
+        .dark .office-content .sw-citation, .dark .office-content .sw-source { color: #9ca3af; }
+        .office-content .sw-responsory { margin: 0.75em 0 1.25em; }
+        .office-content .sw-responsory p { margin: 0.35em 0; }
+        .office-content .sw-speaker { font-weight: 700; color: #7c3aed; }
+        .dark .office-content .sw-speaker { color: #c4b5fd; }
+        .office-content .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
+        .dark .office-content .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
     </style>
     <!-- Apply saved theme before paint to avoid flash -->
     <script>
@@ -98,6 +109,15 @@
                     <button id="tabReadings" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Readings</button>
                     <button id="tabSext" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Midday</button>
                     <button id="tabVespers" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Vespers</button>
+                </div>
+            </div>
+
+            <!-- Language switch: English / Kiswahili. Remembered in localStorage;
+                 switching re-renders instantly, no page reload. -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose language / Chagua lugha">
+                    <button id="langEn" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">English</button>
+                    <button id="langSw" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">Kiswahili</button>
                 </div>
             </div>
 
@@ -286,10 +306,16 @@
             var loadToken = 0;
             var fallbackToken = -1;
 
+            var LANG_KEY = 'preferredLanguage';
             var lang = 'en';
             try {
-                if (localStorage.getItem('preferredLanguage') === 'sw') lang = 'sw';
+                if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
             } catch (e) {}
+            var langEnBtn = document.getElementById('langEn');
+            var langSwBtn = document.getElementById('langSw');
+            // Day-of-week keys as used in data/office-readings-sw, indexed like Date#getDay() (0 = Sunday).
+            var SW_DAY_KEYS = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+            var swWeekCache = {};
 
             var today = startOfDay(new Date());
             var minDate = addDays(today, -WINDOW_BACK_DAYS);
@@ -320,6 +346,29 @@
                         : 'text-gray-600 dark:text-gray-300');
                     TABS[key].setAttribute('aria-selected', String(active));
                 });
+            }
+
+            function applyLangSwitchUI() {
+                [[langEnBtn, 'en'], [langSwBtn, 'sw']].forEach(function (pair) {
+                    var active = lang === pair[1];
+                    pair[0].className = 'px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ' + (active
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300');
+                    pair[0].setAttribute('aria-selected', String(active));
+                });
+            }
+
+            function setLang(newLang) {
+                if (newLang === lang) return;
+                lang = newLang;
+                try {
+                    localStorage.setItem(LANG_KEY, lang);
+                    localStorage.setItem('langUpdatedAt', String(Date.now()));
+                } catch (e) {}
+                document.documentElement.lang = lang === 'sw' ? 'sw' : 'en';
+                applyLangSwitchUI();
+                applyHourChrome();
+                load(currentDate);
             }
 
             function renderBanner(date) {
@@ -413,6 +462,128 @@
                 }
             }
 
+            // ---------------------------------------------------------------
+            // Swahili Office of Readings, extracted offline from the Mwaka
+            // Sehemu 1-3 source PDFs into data/office-readings-sw/week-##.json
+            // (see scripts/extract-office-readings-sw.js). Covers Ordinary
+            // Time weeks 1-34 only, matching what those source books contain.
+            // ---------------------------------------------------------------
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+                });
+            }
+
+            function fetchSwWeek(weekNum) {
+                if (swWeekCache[weekNum]) return Promise.resolve(swWeekCache[weekNum]);
+                return fetch('../data/office-readings-sw/week-' + weekNum + '.json')
+                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+                    .then(function (data) { swWeekCache[weekNum] = data; return data; })
+                    .catch(function () { return null; });
+            }
+
+            // "Never display an empty office": if today's exact weekday isn't
+            // present in the source, walk outward (Tue, then Mon, then Wed, …)
+            // to the nearest weekday that IS, within the same liturgical week.
+            function findNearestSwDay(days, targetKey) {
+                var idx = SW_DAY_KEYS.indexOf(targetKey);
+                for (var offset = 1; offset < SW_DAY_KEYS.length; offset++) {
+                    var back = SW_DAY_KEYS[(idx - offset + 7) % 7];
+                    if (days[back]) return { key: back, data: days[back] };
+                    var fwd = SW_DAY_KEYS[(idx + offset) % 7];
+                    if (days[fwd]) return { key: fwd, data: days[fwd] };
+                }
+                return null;
+            }
+
+            function renderSwResponsory(resp) {
+                if (!resp || !resp.verses || !resp.verses.length) return '';
+                var html = '<div class="sw-responsory">';
+                if (resp.citation) html += '<p class="sw-citation">' + esc(resp.citation) + '</p>';
+                resp.verses.forEach(function (v) {
+                    html += '<p><span class="sw-speaker">' + esc(v.speaker) + '.</span> ' + esc(v.text) + '</p>';
+                });
+                html += '</div>';
+                return html;
+            }
+
+            function renderSwReading(dayData, usedFallbackDay) {
+                var html = '<p class="sw-daylabel">' + esc(dayData.dayLabel) + '</p>';
+                if (usedFallbackDay) {
+                    html += '<div class="sw-fallback-note">Masomo ya siku hii mahususi hayapatikani; yanayoonyeshwa ni ya ' + esc(dayData.dayLabel) + ', ndani ya juma hili hili.</div>';
+                }
+                html += '<hr class="shortrule">';
+                html += '<h4>Somo la Kwanza</h4>';
+                html += '<p class="sw-citation">' + esc(dayData.firstReading.citation) + '</p>';
+                html += renderSwResponsory(dayData.responsory1);
+                html += '<hr class="shortrule">';
+                html += '<h4>Somo la Pili</h4>';
+                if (dayData.secondReading.source) html += '<p class="sw-source">' + esc(dayData.secondReading.source) + '</p>';
+                (dayData.secondReading.paragraphs || []).forEach(function (p) {
+                    html += '<p>' + esc(p) + '</p>';
+                });
+                html += renderSwResponsory(dayData.responsory2);
+                return html;
+            }
+
+            function swSeasonNote() {
+                return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani kwa kipindi hiki cha liturujia (nje ya Kipindi cha Mwaka). Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+            }
+
+            function swFetchFailNote() {
+                return '<div class="sw-fallback-note">Imeshindikana kupakia Ofisi ya Masomo kwa Kiswahili kwa siku hii. Inaonyesha maandishi ya Kiingereza.</div>';
+            }
+
+            // Renders the Swahili office locally when possible (no network,
+            // no PDF parsing at runtime); otherwise falls back to the normal
+            // Universalis fetch with a short explanatory note prepended.
+            function loadSwahiliReadings(date, token) {
+                var info = getLiturgicalToday(date, 'sw');
+                if (info.season === 'Ordinary Time' && info.weekNum >= 1 && info.weekNum <= 34) {
+                    fetchSwWeek(info.weekNum).then(function (weekData) {
+                        if (token !== loadToken) return;
+                        if (!weekData || !weekData.days) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                        var dayKey = SW_DAY_KEYS[date.getDay()];
+                        var dayData = weekData.days[dayKey];
+                        var usedFallbackDay = null;
+                        if (!dayData) {
+                            var alt = findNearestSwDay(weekData.days, dayKey);
+                            if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
+                        }
+                        if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                        showOffice(renderSwReading(dayData, usedFallbackDay));
+                    });
+                } else {
+                    loadUniversalisContent(token, swSeasonNote());
+                }
+            }
+
+            // Shared Universalis fetch (English content), used directly for
+            // the English UI and as the fallback when Swahili has no local
+            // data for a given date (noteHtml explains why, in that case).
+            function loadUniversalisContent(token, noteHtml) {
+                var url = 'https://universalis.com/' + stampOf(currentDate) + '/' + HOURS[hourKey].page + '.htm';
+                var cacheKey = CACHE_PREFIX + hourKey + '-' + stampOf(currentDate);
+                var cached = null;
+                try { cached = localStorage.getItem(cacheKey); } catch (e) {}
+                if (cached) {
+                    showOffice((noteHtml || '') + cached);
+                    return;
+                }
+
+                fetchThroughProxies(url, token, function (cleaned) {
+                    try {
+                        pruneCache();
+                        localStorage.setItem(cacheKey, cleaned);
+                    } catch (e) {}
+                    showOffice((noteHtml || '') + cleaned);
+                }, function () {
+                    if (token !== loadToken) return;
+                    fallbackToken = token;
+                    frame.src = url;
+                });
+            }
+
             function load(date) {
                 currentDate = startOfDay(date);
                 datePicker.value = isoOf(currentDate);
@@ -440,25 +611,12 @@
                 officeEl.classList.add('hidden');
                 loadingEl.classList.remove('hidden');
 
-                var cacheKey = CACHE_PREFIX + hourKey + '-' + stampOf(currentDate);
-                var cached = null;
-                try { cached = localStorage.getItem(cacheKey); } catch (e) {}
-                if (cached) {
-                    showOffice(cached);
+                if (hourKey === 'readings' && lang === 'sw') {
+                    loadSwahiliReadings(currentDate, token);
                     return;
                 }
 
-                fetchThroughProxies(url, token, function (cleaned) {
-                    try {
-                        pruneCache();
-                        localStorage.setItem(cacheKey, cleaned);
-                    } catch (e) {}
-                    showOffice(cleaned);
-                }, function () {
-                    if (token !== loadToken) return;
-                    fallbackToken = token;
-                    frame.src = url;
-                });
+                loadUniversalisContent(token, '');
             }
 
             frame.addEventListener('load', function () {
@@ -480,6 +638,20 @@
             Object.keys(TABS).forEach(function (key) {
                 TABS[key].addEventListener('click', function () { switchHour(key); });
             });
+            langEnBtn.addEventListener('click', function () { setLang('en'); });
+            langSwBtn.addEventListener('click', function () { setLang('sw'); });
+            // Stay in sync if the language is changed from another open tab/page
+            // (e.g. Settings), matching the rest of the app's convention.
+            window.addEventListener('storage', function (e) {
+                if (e.key !== 'langUpdatedAt') return;
+                var newLang = 'en';
+                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
+                if (newLang === lang) return;
+                lang = newLang;
+                applyLangSwitchUI();
+                applyHourChrome();
+                load(currentDate);
+            });
             prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
             nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
             todayBtn.addEventListener('click', function () { load(today); });
@@ -492,6 +664,7 @@
             });
 
             applyHourChrome();
+            applyLangSwitchUI();
             load(today);
         })();
     </script>
