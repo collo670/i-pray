@@ -1,0 +1,7 @@
+/* Global zoom lock: keeps the app at a fixed scale on touch devices.
+   touch-action restricts gestures to panning only, so pinch-zoom and
+   double-tap-zoom are suppressed while scrolling/taps behave normally. */
+html,
+body {
+    touch-action: pan-x pan-y;
+}
