@@ -929,13 +929,22 @@ function calculateLiturgicalDay(lang = 'sw') {
 
     setText('season', (seasonNames[lang] && seasonNames[lang][info.season]) || info.season);
     setText('liturgicalYear', today.getFullYear());
-    setText('liturgicalDay', info.weekdayName);
-    setText('liturgicalWeek', info.dayLabel);
+
     const dateLocales = { en: 'en-US', sw: 'sw', es: 'es-ES', it: 'it-IT', fr: 'fr-FR', pt: 'pt-PT' };
-    setText('currentDate', today.toLocaleDateString(
+    const formattedDate = today.toLocaleDateString(
         dateLocales[lang] || 'en-US',
         { year: 'numeric', month: 'long', day: 'numeric' }
-    ));
+    );
+    setText('liturgicalDay', `${info.weekdayName}, ${formattedDate}`);
+
+    // dayLabel often repeats the weekday name (e.g. "Jumatatu, Juma la 15 la Mwaka");
+    // strip it since it's already shown above in liturgicalDay.
+    let weekLabel = info.dayLabel;
+    if (weekLabel.startsWith(info.weekdayName)) {
+        weekLabel = weekLabel.slice(info.weekdayName.length).replace(/^[,\s]+/, '');
+        weekLabel = weekLabel.charAt(0).toUpperCase() + weekLabel.slice(1);
+    }
+    setText('liturgicalWeek', weekLabel);
 
     const psalterEl = document.getElementById('psalterWeek');
     if (psalterEl) {

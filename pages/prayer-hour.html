@@ -111,21 +111,20 @@
         </header>
 
         <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
-            <!-- Hour switch: Midday / Vespers -->
-            <div class="flex justify-center mb-4">
+            <!-- Hour switch: Readings / Midday / Vespers, with the language
+                 switch (English / Kiswahili) pinned to the right of the same
+                 row. Remembered in localStorage; switching re-renders
+                 instantly, no page reload. -->
+            <div class="flex flex-wrap items-center justify-between gap-y-2 gap-x-2 mb-4">
+                <div class="flex-1 hidden sm:block" aria-hidden="true"></div>
                 <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose the hour">
-                    <button id="tabReadings" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Readings</button>
-                    <button id="tabSext" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Midday</button>
-                    <button id="tabVespers" class="px-4 py-2 rounded-full text-sm font-semibold transition-colors" role="tab">Vespers</button>
+                    <button id="tabReadings" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Readings</button>
+                    <button id="tabSext" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Midday</button>
+                    <button id="tabVespers" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Vespers</button>
                 </div>
-            </div>
-
-            <!-- Language switch: English / Kiswahili. Remembered in localStorage;
-                 switching re-renders instantly, no page reload. -->
-            <div class="flex justify-center mb-4">
-                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose language / Chagua lugha">
-                    <button id="langEn" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">English</button>
-                    <button id="langSw" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">Kiswahili</button>
+                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1 ml-auto sm:ml-0" role="tablist" aria-label="Choose language / Chagua lugha">
+                    <button id="langEn" class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors" role="tab">ENG</button>
+                    <button id="langSw" class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors" role="tab">SW</button>
                 </div>
             </div>
 
@@ -349,7 +348,7 @@
                 document.title = h.title + ' - ipray';
                 Object.keys(TABS).forEach(function (key) {
                     var active = key === hourKey;
-                    TABS[key].className = 'px-4 py-2 rounded-full text-sm font-semibold transition-colors ' + (active
+                    TABS[key].className = 'px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap ' + (active
                         ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
                         : 'text-gray-600 dark:text-gray-300');
                     TABS[key].setAttribute('aria-selected', String(active));
@@ -375,7 +374,7 @@
             function applyLangSwitchUI() {
                 [[langEnBtn, 'en'], [langSwBtn, 'sw']].forEach(function (pair) {
                     var active = lang === pair[1];
-                    pair[0].className = 'px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ' + (active
+                    pair[0].className = 'px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors ' + (active
                         ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
                         : 'text-gray-600 dark:text-gray-300');
                     pair[0].setAttribute('aria-selected', String(active));
