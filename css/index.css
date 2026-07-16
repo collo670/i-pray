@@ -226,8 +226,8 @@ body.page-index::before {
 
 .bottom-nav a span,
 .bottom-nav button span {
-    font-size: clamp(0.72rem, 1.8vw, 0.95rem);
-    font-weight: 700;
+    font-size: clamp(0.9rem, 2.6vw, 1.1rem);
+    font-weight: 800;
     line-height: 1.1;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -243,7 +243,8 @@ body.page-index::before {
 
     .bottom-nav a span,
     .bottom-nav button span {
-        font-size: clamp(0.68rem, 2.2vw, 0.8rem);
+        font-size: clamp(0.82rem, 3.4vw, 0.98rem);
+        font-weight: 800;
     }
     .bottom-nav a,
     nav[role="navigation"] a,
@@ -1157,8 +1158,8 @@ nav.fixed.bottom-0.left-0.right-0 svg {
 nav[role="navigation"][aria-label="Main Navigation"] span,
 .bottom-nav span,
 nav.fixed.bottom-0.left-0.right-0 span {
-    font-size: clamp(0.74rem, 1.95vw, 0.92rem) !important;
-    font-weight: 700 !important;
+    font-size: clamp(0.9rem, 2.6vw, 1.1rem) !important;
+    font-weight: 800 !important;
     line-height: 1.1 !important;
     letter-spacing: 0.01em !important;
     margin-top: 0.2rem !important;
@@ -1198,7 +1199,8 @@ nav.fixed.bottom-0.left-0.right-0 span {
     nav[role="navigation"][aria-label="Main Navigation"] span,
     .bottom-nav span,
     nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: clamp(0.7rem, 2.8vw, 0.82rem) !important;
+        font-size: clamp(0.82rem, 3.4vw, 0.98rem) !important;
+        font-weight: 800 !important;
     }
 }
 
@@ -1218,7 +1220,8 @@ nav.fixed.bottom-0.left-0.right-0 span {
     nav[role="navigation"][aria-label="Main Navigation"] span,
     .bottom-nav span,
     nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: clamp(0.64rem, 3.3vw, 0.74rem) !important;
+        font-size: clamp(0.76rem, 3.9vw, 0.88rem) !important;
+        font-weight: 800 !important;
     }
 }
 
