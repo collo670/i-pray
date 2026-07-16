@@ -81,6 +81,14 @@ body {
     padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 }
 
+.bottom-nav a span,
+.bottom-nav button span {
+    font-size: clamp(0.74rem, 1.95vw, 0.92rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+}
+
 @media (max-width: 768px) {
     .bottom-nav a,
     nav[role="navigation"] a,

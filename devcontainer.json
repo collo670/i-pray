@@ -1,0 +1,6 @@
+{
+  "remoteEnv": {
+    "OPENAI_API_KEY": "${localEnv:OPENROUTER_API_KEY}",
+    "OPENAI_BASE_URL": "https://openrouter.ai/api/v1"
+  }
+}

@@ -204,8 +204,47 @@ body.page-index::before {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+.bottom-nav a,
+.bottom-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.3rem 0.2rem;
+    min-height: 3rem;
+    border-radius: 0.75rem;
+    flex: 1 1 0;
+}
+
+.bottom-nav a svg,
+.bottom-nav button svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+}
+
+.bottom-nav a span,
+.bottom-nav button span {
+    font-size: clamp(0.72rem, 1.8vw, 0.95rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
 /* Mobile Navigation Enhancements */
 @media (max-width: 768px) {
+    .bottom-nav a,
+    .bottom-nav button {
+        min-height: 3.2rem;
+        padding: 0.35rem 0.15rem;
+    }
+
+    .bottom-nav a span,
+    .bottom-nav button span {
+        font-size: clamp(0.68rem, 2.2vw, 0.8rem);
+    }
     .bottom-nav a,
     nav[role="navigation"] a,
     nav.fixed.bottom-0.left-0.right-0 a {
@@ -1118,8 +1157,10 @@ nav.fixed.bottom-0.left-0.right-0 svg {
 nav[role="navigation"][aria-label="Main Navigation"] span,
 .bottom-nav span,
 nav.fixed.bottom-0.left-0.right-0 span {
-    font-size: 0.68rem !important;
+    font-size: clamp(0.74rem, 1.95vw, 0.92rem) !important;
+    font-weight: 700 !important;
     line-height: 1.1 !important;
+    letter-spacing: 0.01em !important;
     margin-top: 0.2rem !important;
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -1157,7 +1198,7 @@ nav.fixed.bottom-0.left-0.right-0 span {
     nav[role="navigation"][aria-label="Main Navigation"] span,
     .bottom-nav span,
     nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: 0.62rem !important;
+        font-size: clamp(0.7rem, 2.8vw, 0.82rem) !important;
     }
 }
 
@@ -1177,7 +1218,7 @@ nav.fixed.bottom-0.left-0.right-0 span {
     nav[role="navigation"][aria-label="Main Navigation"] span,
     .bottom-nav span,
     nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: 0.56rem !important;
+        font-size: clamp(0.64rem, 3.3vw, 0.74rem) !important;
     }
 }
 
