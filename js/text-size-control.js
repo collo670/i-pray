@@ -1,9 +1,12 @@
 // ---------------------------------------------------------------------------
 // Shared text-size control (A− / A / A+) for prayer pages that don't load
 // js/masifu.js: midday (saa-sita), vespers (jioni) and office of readings
-// (ofisi ya masomo). Scales the root <html> font-size so every rem/em-based
-// rule on the page — psalm text included — grows and shrinks together, and
-// persists the choice across all prayer pages via localStorage.
+// (ofisi ya masomo) — including the English versions of all three, pulled
+// live from Universalis in pages/prayer-hour.html. Sets --prayer-text-scale
+// on the root <html> element; each page's own CSS decides which container
+// (.office-content, .reading-text, etc.) multiplies its font-size by that
+// variable, and the chosen scale persists across all prayer pages via
+// localStorage.
 // ---------------------------------------------------------------------------
 
 (function () {
