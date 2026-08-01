@@ -184,19 +184,19 @@ function updateManifestThemeColor() {
 
     switch (theme) {
         case 'purple':
-            themeColor = '#4A1E8A';
+            themeColor = isDark ? '#111827' : '#4A1E8A';
             break;
         case 'green':
-            themeColor = '#2E7D32';
+            themeColor = isDark ? '#111827' : '#2E7D32';
             break;
         case 'red':
-            themeColor = '#C41E3A';
+            themeColor = isDark ? '#111827' : '#C41E3A';
             break;
         case 'white':
-            themeColor = isDark ? '#374151' : '#F8F9FA';
+            themeColor = isDark ? '#111827' : '#F8F9FA';
             break;
         default:
-            themeColor = '#7C3AED';
+            themeColor = isDark ? '#111827' : '#7C3AED';
     }
 
     document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);

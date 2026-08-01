@@ -17,11 +17,11 @@ body.masifu-modern {
     text-size-adjust: 100%;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    color: #1a1a1a;
+    color: var(--text-primary, #1a1a1a);
 }
 
 body.masifu-modern.dark-mode {
-    color: #eee;
+    color: var(--text-primary, #eee);
 }
 
 body.masifu-modern .container {
@@ -106,12 +106,12 @@ body.masifu-modern .prayer-section {
     border-radius: 14px;
     padding: 1.1rem 1.15rem;
     margin: 1.15rem 0;
-    background: #fff;
+    background: var(--surface-0, #fff);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 body.masifu-modern.dark-mode .prayer-section {
-    background: #1f2937;
+    background: var(--surface-1, #1f2937);
     border-color: rgba(255, 160, 122, 0.22);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }

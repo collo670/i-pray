@@ -39,18 +39,18 @@
 
 body.dark-mode,
 :root.dark {
-    /* Blend of the dark index gradient stops
-       (#0b1a10 + #1b1626 + #0f1a24 → #12191e) */
-    --index-blend: #12191e;
+    /* Use the Masifu ya Asubuhi dark palette across the app */
+    --index-blend: #111827;
 
-    --surface-0: #12191e;
-    --surface-1: #1a232a;
-    --surface-2: #232e37;
-    --text-primary: #eaf2f0;
-    --text-secondary: #a7bab6;
-    --border-subtle: rgba(167, 186, 182, 0.14);
-    --glass-bg: rgba(18, 25, 30, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --surface-0: #111827;
+    --surface-1: #1f2937;
+    --surface-2: #243041;
+    --text-primary: #eee;
+    --text-secondary: #cfd6df;
+    --border-subtle: rgba(255, 160, 122, 0.22);
+    --glass-bg: rgba(17, 24, 39, 0.78);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --accent: #FFA07A;
 }
 
 /* Retint Tailwind's gray ramp toward the index-background blends so
@@ -992,8 +992,8 @@ header[role="banner"]::before {
 }
 
 .dark-mode .navbar {
-    background: linear-gradient(135deg, rgba(46, 20, 89, 0.92) 0%, rgba(90, 15, 60, 0.92) 100%);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
+    border-color: rgba(255, 160, 122, 0.2);
 }
 
 .nav-container {
@@ -1045,7 +1045,7 @@ header[role="banner"]::before {
 }
 
 .dark-mode .nav-links a:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 160, 122, 0.14);
 }
 
 /* Bottom navigation height and shared layout */
@@ -1139,7 +1139,7 @@ nav.fixed.bottom-0.left-0.right-0 button {
     color: var(--color-gray-400);
 }
 .dark-mode .bottom-nav .text-purple-600,
-:root.dark .bottom-nav .text-purple-600 { color: #c084fc; }
+:root.dark .bottom-nav .text-purple-600 { color: var(--accent, #FFA07A); }
 
 /* The floating text-size button on liturgy pages must sit above the nav,
    not on top of it. */
