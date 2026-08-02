@@ -72,7 +72,7 @@
         '    position: absolute;' +
         '    inset: -4px;' +
         '    border-radius: 50%;' +
-        '    border: 3px solid #7c3aed;' +
+        '    border: 3px solid #7c2133;' +
         '    opacity: 0;' +
         '    animation: logo-loader-ring 3s ease-out infinite;' +
         '}' +

@@ -20,8 +20,8 @@
     --text-secondary: #52645f;
     --border-subtle: rgba(111, 157, 153, 0.28);
 
-    --brand-purple: #6d28d9;
-    --brand-pink: #db2777;
+    --brand-purple: #7c2133;
+    --brand-pink: #8b3046;
     --brand-gradient: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 100%);
 
     --radius-sm: 0.5rem;
@@ -35,6 +35,9 @@
 
     --glass-bg: rgba(247, 250, 249, 0.72);
     --glass-border: rgba(255, 255, 255, 0.4);
+    --topbar-start: #581523;
+    --topbar-end: #7c2133;
+    --topbar-gold: #f0c96a;
 }
 
 body.dark-mode,
@@ -110,7 +113,7 @@ body.page-index .text-xl { font-size: 1.35rem !important; }
 /* Liturgical app themes, set on <body> by js/settings.js.
    --primary-color drives .bg-gradient-vintage (page background);
    --color-primary drives the Tailwind primary utilities (text/bg/border-primary). */
-.theme-purple { --primary-color: #4A1E8A; --color-primary: #4A1E8A; }
+.theme-purple { --primary-color: #7c2133; --color-primary: #7c2133; }
 .theme-white  { --primary-color: #F8F9FA; --color-primary: #6B7280; }
 .theme-green  { --primary-color: #2E7D32; --color-primary: #2E7D32; }
 .theme-red    { --primary-color: #C41E3A; --color-primary: #C41E3A; }
@@ -164,25 +167,27 @@ body.page-index::before {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     position: relative;
     z-index: 10;
+    min-height: 3rem;
 }
 /* These duplicate Tailwind utility class names for pages that don't run the
    Tailwind build (the liturgy pages under /pages). Scoped to :root:not(.dark)
    so pages that DO load Tailwind (index/login/signup/settings) let Tailwind's
    own `dark:` variants win once dark mode is active, instead of being
    permanently shadowed by these unconditional overrides. */
-:root:not(.dark) .bg-purple-100 { background-color: rgba(237, 233, 254, 0.8); }
+:root:not(.dark) .bg-purple-100 { background-color: rgba(124, 33, 51, 0.12); }
 :root:not(.dark) .bg-white-100 { background-color: rgba(255, 255, 255, 0.8); }
 :root:not(.dark) .bg-red-100 { background-color: rgba(254, 226, 226, 0.8); }
 :root:not(.dark) .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
 :root:not(.dark) .bg-gold-100 { background-color: rgba(254, 249, 195, 0.8); }
-:root:not(.dark) .border-purple-200 { border-color: #e9d5ff; }
+:root:not(.dark) .border-purple-200 { border-color: rgba(124, 33, 51, 0.22); }
 :root:not(.dark) .border-white-200 { border-color: #e5e7eb; }
 :root:not(.dark) .border-red-200 { border-color: #fecaca; }
 :root:not(.dark) .border-green-200 { border-color: #bbf7d0; }
 :root:not(.dark) .border-gold-200 { border-color: #fef08a; }
-:root:not(.dark) .text-purple-800 { color: #7c06ea; }
+:root:not(.dark) .text-purple-800 { color: #7c2133; }
 :root:not(.dark) .text-white-800 { color: #f9fafb; }
 :root:not(.dark) .text-red-800 { color: #991b1b; }
 :root:not(.dark) .text-green-800 { color: #166534; }
@@ -288,7 +293,7 @@ body.page-index::before {
 /* Loading Spinner for Prayer Wall */
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #4A1E8A;
+    border-left-color: #7c2133;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -324,7 +329,7 @@ body.page-index::before {
 
 /* Enhanced focus indicators */
 *:focus {
-    outline: 2px solid #4A1E8A;
+    outline: 2px solid #7c2133;
     outline-offset: 2px;
 }
 
@@ -503,8 +508,8 @@ html {
 
 .search-input:focus {
     outline: none;
-    border-color: #7c3aed;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    border-color: #7c2133;
+    box-shadow: 0 0 0 3px rgba(124, 33, 51, 0.1);
 }
 
 .search-results {
@@ -699,13 +704,13 @@ html {
 }
 
 .search-filter:hover {
-    border-color: #7c3aed;
+    border-color: #7c2133;
 }
 
 .search-filter.active {
-    background: #7c3aed;
+    background: #7c2133;
     color: white;
-    border-color: #7c3aed;
+    border-color: #7c2133;
 }
 
 /* Favorite Button Styles */
@@ -750,7 +755,7 @@ html {
     width: 3rem;
     height: 3rem;
     border: 4px solid #e5e7eb;
-    border-top-color: #7c3aed;
+    border-top-color: #7c2133;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -895,22 +900,15 @@ header[role="banner"] {
     z-index: 30;
     position: relative;
     isolation: isolate;
-    padding: calc(env(safe-area-inset-top, 0px) + 0.625rem) 1.25rem 0.625rem;
+    padding: calc(env(safe-area-inset-top, 0px) + 0.9rem) 1rem 1rem;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
 
-/* The bar's own box already includes the safe-area inset via its
-   padding-top above, so this panel only needs height:100% to fill it -
-   adding the inset a second time here would overshoot past the bar's own
-   bottom edge and bleed into the content below it.
-   The background is a hard-stop two-tone gradient rather than a flat
-   var(--glass-bg): the top `env(safe-area-inset-top)` sliver (behind the
-   status bar) is always a dark, theme-independent tone so the light
-   system icons shown by apple-mobile-web-app-status-bar-style=
-   black-translucent stay legible even when the bar itself is in its light
-   theme; the rest of the panel keeps the normal adaptive glass look. */
+/* Keep the top bar visually consistent with the screenshot: a warm maroon
+   gradient that fills the full status-bar area and then settles into a
+   rounded header panel beneath it. */
 .app-bar::before,
 header[role="banner"]::before {
     content: "";
@@ -919,33 +917,52 @@ header[role="banner"]::before {
     height: 100%;
     background: linear-gradient(
         to bottom,
-        var(--sb-sliver-color, #1f2937) 0,
-        var(--sb-sliver-color, #1f2937) var(--sb-inset-top, env(safe-area-inset-top, 0px)),
-        var(--glass-bg) var(--sb-inset-top, env(safe-area-inset-top, 0px)),
-        var(--glass-bg) 100%
+        var(--topbar-start, #581523) 0%,
+        var(--topbar-start, #581523) calc(env(safe-area-inset-top, 0px) + 0.05rem),
+        var(--topbar-end, #7c2133) calc(env(safe-area-inset-top, 0px) + 0.05rem),
+        var(--topbar-end, #7c2133) 100%
     );
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border-subtle);
-    border-radius: 0 0 1rem 1rem;
-    box-shadow: 0 1px 8px rgba(27, 36, 34, 0.06);
+    border-bottom: 1px solid rgba(243, 205, 137, 0.16);
+    border-radius: 0 0 1.4rem 1.4rem;
+    box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
     z-index: -1;
 }
 
+.app-bar-brand {
+    flex: 1;
+    min-width: 0;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    text-align: left;
+}
+
 .app-bar-brand h1 {
-    line-height: 1.2;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--topbar-gold, #f0c96a);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+}
+
+.app-bar-brand p {
+    margin: 0.15rem 0 0;
+    color: rgba(250, 232, 188, 0.9);
+    font-weight: 600;
 }
 
 .app-bar-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 9999px;
-    color: var(--text-primary);
-    background: var(--surface-2);
-    transition: background-color 0.2s ease, transform 0.15s ease;
+    color: var(--topbar-gold, #f0c96a);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
 .app-bar-btn:active {
@@ -959,11 +976,11 @@ header[role="banner"]::before {
     left: 0.5rem;
     right: 0.5rem;
     width: auto;
-    background: linear-gradient(135deg, rgba(76, 29, 149, 0.92) 0%, rgba(157, 23, 105, 0.92) 100%);
+    background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    box-shadow: var(--shadow-md);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
+    border: 1px solid rgba(240, 201, 106, 0.24);
     border-radius: var(--radius-lg);
     z-index: 1000;
     /* Pushes the logo/hamburger down below the status bar on notched
@@ -992,8 +1009,8 @@ header[role="banner"]::before {
 }
 
 .dark-mode .navbar {
-    background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
-    border-color: rgba(255, 160, 122, 0.2);
+    background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
+    border-color: rgba(240, 201, 106, 0.24);
 }
 
 .nav-container {
@@ -1007,12 +1024,13 @@ header[role="banner"]::before {
 }
 
 .nav-logo {
-    color: white;
+    color: var(--topbar-gold, #f0c96a);
     font-family: var(--font-display);
     font-weight: 700;
     text-decoration: none;
     font-size: 1.4em;
     letter-spacing: 0.02em;
+    text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
 }
 
 .nav-links {
@@ -1029,10 +1047,10 @@ header[role="banner"]::before {
 }
 
 .nav-links a {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--topbar-gold, #f0c96a);
     text-decoration: none;
     font-size: 0.9em;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.2s ease;
     padding: 8px 14px;
     border-radius: var(--radius-sm);
@@ -1040,12 +1058,12 @@ header[role="banner"]::before {
 }
 
 .nav-links a:hover {
-    background-color: rgba(255, 255, 255, 0.16);
-    color: white;
+    background-color: rgba(240, 201, 106, 0.16);
+    color: #fff3cf;
 }
 
 .dark-mode .nav-links a:hover {
-    background-color: rgba(255, 160, 122, 0.14);
+    background-color: rgba(240, 201, 106, 0.14);
 }
 
 /* Bottom navigation height and shared layout */
@@ -1122,6 +1140,7 @@ nav.fixed.bottom-0.left-0.right-0 button {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     text-decoration: none !important;
+    color: #7c2133 !important;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
 }
@@ -1129,22 +1148,47 @@ nav.fixed.bottom-0.left-0.right-0 button {
 /* Colour fallbacks for the nav's Tailwind utility classes on pages that don't
    load Tailwind (the self-contained mwaka liturgy pages). Values mirror the
    themed gray ramp above so both kinds of pages look identical. */
-.bottom-nav .text-purple-600 { color: #9333ea; }
-.bottom-nav .text-gray-500 { color: var(--color-gray-500); }
-.bottom-nav .text-gray-600 { color: var(--color-gray-600); }
+.bottom-nav .text-purple-600,
+.bottom-nav .text-gray-500,
+.bottom-nav .text-gray-600,
+.bottom-nav a,
+.bottom-nav button,
+.bottom-nav a span,
+.bottom-nav button span,
+.bottom-nav svg {
+    color: #7c2133 !important;
+}
 .dark-mode .bottom-nav .text-gray-500,
 .dark-mode .bottom-nav .text-gray-600,
 :root.dark .bottom-nav .text-gray-500,
-:root.dark .bottom-nav .text-gray-600 {
-    color: var(--color-gray-400);
-}
+:root.dark .bottom-nav .text-gray-600,
 .dark-mode .bottom-nav .text-purple-600,
-:root.dark .bottom-nav .text-purple-600 { color: var(--accent, #FFA07A); }
+:root.dark .bottom-nav .text-purple-600,
+.dark-mode .bottom-nav a,
+.dark-mode .bottom-nav button,
+:root.dark .bottom-nav a,
+:root.dark .bottom-nav button {
+    color: #7c2133 !important;
+}
 
 /* The floating text-size button on liturgy pages must sit above the nav,
    not on top of it. */
 #textSizeCycleBtn {
     bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+#toggleUpcomingFeasts {
+    color: #7c2133 !important;
+}
+
+#toggleUpcomingFeasts:hover {
+    color: #5e1524 !important;
+}
+
+#dailyReadingsCard > div > svg:last-of-type,
+#dailyPrayersCard > div > svg:last-of-type {
+    color: #7c2133 !important;
+    stroke: #7c2133 !important;
 }
 
 nav[role="navigation"][aria-label="Main Navigation"] svg,
@@ -1235,13 +1279,13 @@ nav.fixed.bottom-0.left-0.right-0 span {
 }
 
 .hamburger:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(240, 201, 106, 0.16);
 }
 
 .hamburger div {
     width: 25px;
     height: 3px;
-    background-color: white;
+    background-color: var(--topbar-gold, #f0c96a);
     margin: 4px 0;
     transition: all 0.3s ease;
     border-radius: 2px;
@@ -1273,7 +1317,7 @@ nav.fixed.bottom-0.left-0.right-0 span {
         right: 0;
         width: 100%;
         margin-top: 8px;
-        background: linear-gradient(135deg, rgba(76, 29, 149, 0.97) 0%, rgba(157, 23, 105, 0.97) 100%);
+        background: linear-gradient(135deg, rgba(88, 21, 35, 0.97) 0%, rgba(124, 33, 51, 0.97) 100%);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         flex-direction: column;
@@ -1289,7 +1333,7 @@ nav.fixed.bottom-0.left-0.right-0 span {
     }
 
     .dark-mode .nav-links {
-        background: linear-gradient(135deg, rgba(46, 20, 89, 0.97) 0%, rgba(90, 15, 60, 0.97) 100%);
+        background: linear-gradient(135deg, rgba(88, 21, 35, 0.97) 0%, rgba(124, 33, 51, 0.97) 100%);
         border-top: none;
     }
 
@@ -1331,11 +1375,11 @@ nav.fixed.bottom-0.left-0.right-0 span {
     }
 
     .nav-links li:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(240, 201, 106, 0.12);
     }
 
     .nav-links a:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(240, 201, 106, 0.14);
         transform: translateX(4px);
     }
 }
@@ -1450,7 +1494,7 @@ nav.fixed.bottom-0.left-0.right-0 {
 
 /* --lit-bg values match the old seasonal card tints (bg-green-100 & co.) */
 .liturgical-card[data-color="green"]  { --lit-accent: #2E7D32; --lit-soft: rgba(46, 125, 50, 0.14);  --lit-text: #1b5e20; --lit-bg: rgba(220, 252, 231, 0.8); }
-.liturgical-card[data-color="purple"] { --lit-accent: #6d28d9; --lit-soft: rgba(109, 40, 217, 0.14); --lit-text: #5b21b6; --lit-bg: rgba(237, 233, 254, 0.8); }
+.liturgical-card[data-color="purple"] { --lit-accent: #7c2133; --lit-soft: rgba(124, 33, 51, 0.14); --lit-text: #7c2133; --lit-bg: rgba(124, 33, 51, 0.12); }
 .liturgical-card[data-color="white"]  { --lit-accent: #c9a227; --lit-soft: rgba(201, 162, 39, 0.16); --lit-text: #92700c; --lit-bg: rgba(255, 255, 255, 0.8); }
 .liturgical-card[data-color="red"]    { --lit-accent: #C41E3A; --lit-soft: rgba(196, 30, 58, 0.13);  --lit-text: #9f1230; --lit-bg: rgba(254, 226, 226, 0.8); }
 .liturgical-card[data-color="gold"]   { --lit-accent: #b45309; --lit-soft: rgba(180, 83, 9, 0.14);   --lit-text: #92400e; --lit-bg: rgba(254, 249, 195, 0.8); }
