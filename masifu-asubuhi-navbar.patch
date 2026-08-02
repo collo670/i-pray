@@ -1,1084 +1,3311 @@
+
 diff --git a/assets/office/alhamisi1.html b/assets/office/alhamisi1.html
-index 2e9e885..471d394 100644
+index 471d394..c919991 100644
 --- a/assets/office/alhamisi1.html
 +++ b/assets/office/alhamisi1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color:  #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,6 +262,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="asubuhi.html">Masifu ya Asubuhi</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>JUMA 1: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/alhamisi2.html b/assets/office/alhamisi2.html
-index 3231e17..e37690c 100644
+index e37690c..82d70a3 100644
 --- a/assets/office/alhamisi2.html
 +++ b/assets/office/alhamisi2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,7 +262,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>JUMA 2: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/alhamisi3.html b/assets/office/alhamisi3.html
-index 344321c..d9338ef 100644
+index d9338ef..f1e20b1 100644
 --- a/assets/office/alhamisi3.html
 +++ b/assets/office/alhamisi3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,7 +262,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>ALHAMISI – JUMA III<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/alhamisi4.html b/assets/office/alhamisi4.html
-index d5b135c..dcaea7e 100644
+index dcaea7e..655dcbd 100644
 --- a/assets/office/alhamisi4.html
 +++ b/assets/office/alhamisi4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,6 +262,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>JUMA IV: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/antifona.html b/assets/office/antifona.html
-index 211d7f3..e61f848 100644
+index e61f848..3fa6fed 100644
 --- a/assets/office/antifona.html
 +++ b/assets/office/antifona.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -244,6 +256,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -251,6 +268,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="asubuhi.html">Masifu ya Asubuhi</a></li>
+@@ -262,9 +281,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
-         
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
+         <h1>JUMAPILI ZA MWAKA<br>MASIFU YA ASUBUHI</h1>
+         <p>Badala ya Jumapili ya kwanza ya mwaka, huadhimishwa Sikukuu ya Ubatizo wa Bwana.</p>
 diff --git a/assets/office/kristomfalme.html b/assets/office/kristomfalme.html
-index 4021ea8..70d15a9 100644
+index 70d15a9..0abe345 100644
 --- a/assets/office/kristomfalme.html
 +++ b/assets/office/kristomfalme.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,7 +262,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>JUMAPILI LA 34: KRISTO MFALME<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/mwilinadamu.html b/assets/office/mwilinadamu.html
-index 25b376e..55bcd53 100644
+index 55bcd53..b822ff5 100644
 --- a/assets/office/mwilinadamu.html
 +++ b/assets/office/mwilinadamu.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,7 +262,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>MWILI NA DAMU YA KRISTO<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/sacredheart.html b/assets/office/sacredheart.html
-index 5ca2e13..bdb4d1d 100644
+index bdb4d1d..465a1b4 100644
 --- a/assets/office/sacredheart.html
 +++ b/assets/office/sacredheart.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,7 +262,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>MOYO MTAKATIFU WA YESU<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/assets/office/trinity.html b/assets/office/trinity.html
-index 7aace53..5b759db 100644
+index 5b759db..bfa5230 100644
 --- a/assets/office/trinity.html
 +++ b/assets/office/trinity.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -33,14 +33,13 @@
-             top: 0;
-             left: 0;
-             width: 100%;
--            background-color: #222;
--            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-             z-index: 1000;
+@@ -51,6 +51,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -54,10 +53,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -188,22 +194,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
 -            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
          }
          
-         .nav-links {
-@@ -73,17 +69,11 @@
-         }
+         .prayer-section {
+@@ -238,6 +250,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -245,7 +262,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="index.html">Nyumbani</a></li>
+                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
+                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
+@@ -256,9 +275,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
          
-         .nav-links a {
--            color: white;
--            text-decoration: none;
--            font-size: 0.9em;
--            transition: all 0.3s;
--            padding: 8px 12px;
--            border-radius: 3px;
--            display: block;
-+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
-         }
+         <h1>SHEREHE ZA BWANA<br>Jumapili baada ya Pentekoste<br>UTATU MTAKATIFU<br>MASIFU YA ASUBUHI</h1>
          
-         .nav-links a:hover {
--            background-color: rgba(255,255,255,0.2);
-+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
-         }
-         
-         .dark-mode .nav-links a:hover {
-@@ -100,9 +90,10 @@
-         .hamburger div {
-             width: 25px;
-             height: 3px;
--            background-color: white;
-+            background-color: #f0c96a;
-             margin: 5px 0;
--            transition: all 0.3s;
-+            transition: all 0.3s ease;
-+            border-radius: 2px;
-         }
-         
-         /* Mobile Menu */
 diff --git a/pages/alhamisi1.html b/pages/alhamisi1.html
-index c9027d5..86522f2 100644
+index 86522f2..11c44c7 100644
 --- a/pages/alhamisi1.html
 +++ b/pages/alhamisi1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 1: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/alhamisi2.html b/pages/alhamisi2.html
-index 710b1d7..7152bad 100644
+index 7152bad..a4977f2 100644
 --- a/pages/alhamisi2.html
 +++ b/pages/alhamisi2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 2: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/alhamisi3.html b/pages/alhamisi3.html
-index d74971b..53b1c42 100644
+index 53b1c42..5585868 100644
 --- a/pages/alhamisi3.html
 +++ b/pages/alhamisi3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>ALHAMISI – JUMA III<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/alhamisi4.html b/pages/alhamisi4.html
-index 438e6ab..80c3e8e 100644
+index 80c3e8e..5724de8 100644
 --- a/pages/alhamisi4.html
 +++ b/pages/alhamisi4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA IV: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/antifona.html b/pages/antifona.html
-index 9125f61..d91f00e 100644
+index d91f00e..13fff5d 100644
 --- a/pages/antifona.html
 +++ b/pages/antifona.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
-@@ -37,8 +37,8 @@
+@@ -50,6 +50,12 @@
+             padding: 10px 20px;
+             position: relative;
          }
-         
-         .dark-mode .navbar {
--            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
--            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
-+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
-         }
-         
-         .nav-container {
-@@ -52,10 +52,7 @@
-         }
++
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
          
          .nav-logo {
--            color: white;
--            font-weight: bold;
--            text-decoration: none;
--            font-size: 1.2em;
-+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+@@ -184,22 +190,28 @@
          }
          
-         .nav-links {
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -243,6 +255,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -250,6 +267,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="asubuhi.html">Masifu ya Asubuhi</a></li>
+@@ -261,9 +280,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMAPILI ZA MWAKA<br>MASIFU YA ASUBUHI</h1>
+         <p>Badala ya Jumapili ya kwanza ya mwaka, huadhimishwa Sikukuu ya Ubatizo wa Bwana.</p>
 diff --git a/pages/ijumaa1.html b/pages/ijumaa1.html
-index 0cb2c62..4e91a87 100644
+index 4e91a87..0d8a11a 100644
 --- a/pages/ijumaa1.html
 +++ b/pages/ijumaa1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 1: IJUMAA<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/ijumaa2.html b/pages/ijumaa2.html
-index 7cc0183..f93365f 100644
+index f93365f..e3cee7a 100644
 --- a/pages/ijumaa2.html
 +++ b/pages/ijumaa2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 2: IJUMAA<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/ijumaa3.html b/pages/ijumaa3.html
-index f1e9f6f..d016c2f 100644
+index d016c2f..3bce1ae 100644
 --- a/pages/ijumaa3.html
 +++ b/pages/ijumaa3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>IJUMAA – JUMA III<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/ijumaa4.html b/pages/ijumaa4.html
-index 983c0d0..85c668f 100644
+index 85c668f..d7b0634 100644
 --- a/pages/ijumaa4.html
 +++ b/pages/ijumaa4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA IV: IJUMAA<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumamosi1.html b/pages/jumamosi1.html
-index b43042c..2046438 100644
+index 2046438..7ad0c79 100644
 --- a/pages/jumamosi1.html
 +++ b/pages/jumamosi1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 1: JUMAMOSI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumamosi2.html b/pages/jumamosi2.html
-index e529453..f1b92b7 100644
+index f1b92b7..aaa8b76 100644
 --- a/pages/jumamosi2.html
 +++ b/pages/jumamosi2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 2: JUMAMOSI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumamosi3.html b/pages/jumamosi3.html
-index e0a0fac..c1e68df 100644
+index c1e68df..d8884f2 100644
 --- a/pages/jumamosi3.html
 +++ b/pages/jumamosi3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -49,6 +49,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -317,22 +323,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -370,6 +382,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -377,6 +394,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -388,9 +407,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMAMOSI – JUMA III<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumamosi4.html b/pages/jumamosi4.html
-index 5d0f136..ea0942b 100644
+index ea0942b..81c4cba 100644
 --- a/pages/jumamosi4.html
 +++ b/pages/jumamosi4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA IV: JUMAMOSI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumanne1.html b/pages/jumanne1.html
-index 9419cfc..9357836 100644
+index 9357836..204ad13 100644
 --- a/pages/jumanne1.html
 +++ b/pages/jumanne1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 1: JUMANNE<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumanne2.html b/pages/jumanne2.html
-index 6637c27..6b33194 100644
+index 6b33194..1d9a3e6 100644
 --- a/pages/jumanne2.html
 +++ b/pages/jumanne2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 2: JUMANNE<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumanne3.html b/pages/jumanne3.html
-index 8a653fc..445bb85 100644
+index 445bb85..f4012f2 100644
 --- a/pages/jumanne3.html
 +++ b/pages/jumanne3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMANNE – JUMA III<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumanne4.html b/pages/jumanne4.html
-index 4ccdcb2..d324b97 100644
+index d324b97..e552b89 100644
 --- a/pages/jumanne4.html
 +++ b/pages/jumanne4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA IV: JUMANNE<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumapili1.html b/pages/jumapili1.html
-index 34a9844..a7d6db1 100644
+index a7d6db1..d25db9b 100644
 --- a/pages/jumapili1.html
 +++ b/pages/jumapili1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -375,15 +387,22 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
+             
+             <!-- Hamburger Menu -->
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
++            
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+                 <div></div>
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -392,10 +411,8 @@
+             </ul>
+         </div>
+     </nav>
++
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+          <h1>JUMA I<br>JUMAPILI<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumapili2.html b/pages/jumapili2.html
-index 65774eb..546efdd 100644
+index 546efdd..5fb1a44 100644
 --- a/pages/jumapili2.html
 +++ b/pages/jumapili2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -377,6 +389,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -384,6 +401,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -395,9 +414,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMAPILI – JUMA II<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumapili3.html b/pages/jumapili3.html
-index 973b602..642b5c1 100644
+index 642b5c1..bfd57da 100644
 --- a/pages/jumapili3.html
 +++ b/pages/jumapili3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -383,6 +395,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -390,7 +407,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -401,9 +420,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMAPILI – JUMA III<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumapili4.html b/pages/jumapili4.html
-index ee5b55f..ac419f3 100644
+index ac419f3..cf8145b 100644
 --- a/pages/jumapili4.html
 +++ b/pages/jumapili4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -377,6 +389,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -384,6 +401,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -395,9 +414,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMAPILI – JUMA IV<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatano1.html b/pages/jumatano1.html
-index a4c2608..d9f0755 100644
+index d9f0755..f214bc2 100644
 --- a/pages/jumatano1.html
 +++ b/pages/jumatano1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,6 +393,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 1: JUMATANO<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatano2.html b/pages/jumatano2.html
-index 2ecf6fb..b6f4b26 100644
+index b6f4b26..5bd2f1d 100644
 --- a/pages/jumatano2.html
 +++ b/pages/jumatano2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 2: JUMATANO<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatano3.html b/pages/jumatano3.html
-index 9b4b906..7c3ebde 100644
+index 7c3ebde..782fbda 100644
 --- a/pages/jumatano3.html
 +++ b/pages/jumatano3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMATANO – JUMA III<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatano4.html b/pages/jumatano4.html
-index cd23247..1e2d457 100644
+index 1e2d457..d41dcfb 100644
 --- a/pages/jumatano4.html
 +++ b/pages/jumatano4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -369,6 +381,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                 <div></div>
+@@ -376,7 +393,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -387,9 +406,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA IV: JUMATANO<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatatu1.html b/pages/jumatatu1.html
-index 6011a0a..af8d9b4 100644
+index af8d9b4..9e47748 100644
 --- a/pages/jumatatu1.html
 +++ b/pages/jumatatu1.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -371,14 +383,21 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
+             
+             <!-- Hamburger Menu -->
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
++            
+             <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                 <div></div>
+                 <div></div>
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -390,9 +409,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 1: JUMATATU<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatatu2.html b/pages/jumatatu2.html
-index 5461f79..1d11edd 100644
+index 1d11edd..b34a595 100644
 --- a/pages/jumatatu2.html
 +++ b/pages/jumatatu2.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -370,6 +382,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                 <div></div>
+@@ -377,6 +394,8 @@
+                 <div></div>
+             </div>
+             
++            </div>
++
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+@@ -388,9 +407,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 2: JUMATATU<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatatu3.html b/pages/jumatatu3.html
-index ee7cf54..a4fadb1 100644
+index a4fadb1..04b8e0d 100644
 --- a/pages/jumatatu3.html
 +++ b/pages/jumatatu3.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -640,6 +652,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                 <div></div>
+@@ -647,7 +664,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -658,9 +677,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA 3: JUMATATU<br>MASIFU YA ASUBUHI</h1>
+         
 diff --git a/pages/jumatatu4.html b/pages/jumatatu4.html
-index c94b983..3b36623 100644
+index 3b36623..1dc172f 100644
 --- a/pages/jumatatu4.html
 +++ b/pages/jumatatu4.html
-@@ -3,7 +3,7 @@
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
--    <meta name="theme-color" content="#222">
-+    <meta name="theme-color" content="#1f2937">
-     <meta name="apple-mobile-web-app-capable" content="yes">
-     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-     <meta name="apple-mobile-web-app-title" content="ipray">
+@@ -48,6 +48,12 @@
+             position: relative;
+         }
+ 
++        .nav-actions {
++            display: flex;
++            align-items: center;
++            gap: 0.6rem;
++        }
++
+         .nav-logo {
+             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+         }
+@@ -316,22 +322,28 @@
+         }
+         
+         .toggle-container {
+-            text-align: right;
+-            margin-bottom: 20px;
++            display: contents;
+         }
+         
+         .toggle-btn {
+-            background: #8B0000;
+-            color: white;
+-            border: none;
+-            padding: 8px 15px;
+-            border-radius: 5px;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            background: transparent;
++            color: #f0c96a;
++            border: 1px solid rgba(240, 201, 106, 0.35);
++            border-radius: 9999px;
++            padding: 0.4rem 0.7rem;
++            font-size: 0.7rem;
++            font-weight: 600;
++            white-space: nowrap;
+             cursor: pointer;
+         }
++        .toggle-btn:active { transform: scale(0.94); }
+         
+         .dark-mode .toggle-btn {
+-            background: #FFA07A;
+-            color: #222;
++            background: rgba(240, 201, 106, 0.16);
++            color: #f0c96a;
+         }
+         
+         .prayer-section {
+@@ -640,6 +652,11 @@
+     <nav class="navbar">
+         <div class="nav-container">
+             <a href="#" class="nav-logo">ipray</a>
++            <div class="nav-actions">
++            
++            <div class="toggle-container">
++                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
++            </div>
+             
+             <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                 <div></div>
+@@ -647,7 +664,9 @@
+                 <div></div>
+             </div>
+             
+-             <ul class="nav-links">
++             </div>
++
++            <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+                 <li></li>
+@@ -658,9 +677,6 @@
+     </nav>
+ 
+     <div class="container">
+-        <div class="toggle-container">
+-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+-        </div>
+         
+         <h1>JUMA IV: JUMATATU<br>MASIFU YA ASUBUHI</h1>
+         
