@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#222">
+    <meta name="theme-color" content="#1f2937">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ipray">
@@ -33,14 +33,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color:  #222;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
             z-index: 1000;
         }
         
         .dark-mode .navbar {
-            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(31, 41, 55, 0.98) 100%);
-            border-bottom: 1px solid rgba(255, 160, 122, 0.2);
+            background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
+            border-bottom: 1px solid rgba(240, 201, 106, 0.24);
         }
         
         .nav-container {
@@ -54,10 +53,7 @@
         }
         
         .nav-logo {
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 1.2em;
+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
         }
         
         .nav-links {
@@ -73,17 +69,11 @@
         }
         
         .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: all 0.3s;
-            padding: 8px 12px;
-            border-radius: 3px;
-            display: block;
+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
         }
         
         .nav-links a:hover {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
         }
         
         .dark-mode .nav-links a:hover {
@@ -100,9 +90,10 @@
         .hamburger div {
             width: 25px;
             height: 3px;
-            background-color: white;
+            background-color: #f0c96a;
             margin: 5px 0;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            border-radius: 2px;
         }
         
         /* Mobile Menu */
