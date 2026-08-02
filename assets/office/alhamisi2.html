@@ -51,6 +51,12 @@
             padding: 10px 20px;
             position: relative;
         }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
         
         .nav-logo {
             color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
@@ -188,22 +194,28 @@
         }
         
         .toggle-container {
-            text-align: right;
-            margin-bottom: 20px;
+            display: contents;
         }
         
         .toggle-btn {
-            background: #8B0000;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: #f0c96a;
+            border: 1px solid rgba(240, 201, 106, 0.35);
+            border-radius: 9999px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
             cursor: pointer;
         }
+        .toggle-btn:active { transform: scale(0.94); }
         
         .dark-mode .toggle-btn {
-            background: #FFA07A;
-            color: #222;
+            background: rgba(240, 201, 106, 0.16);
+            color: #f0c96a;
         }
         
         .prayer-section {
@@ -238,6 +250,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">ipray</a>
+            <div class="nav-actions">
+            
+            <div class="toggle-container">
+                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
+            </div>
             
             <div class="hamburger" onclick="toggleMenu()">
                 <div></div>
@@ -245,7 +262,9 @@
                 <div></div>
             </div>
             
-             <ul class="nav-links">
+             </div>
+
+            <ul class="nav-links">
                 <li><a href="index.html">Nyumbani</a></li>
                 <li><a href="majira.html">Ofisi ya Masomo</a></li>
                 <li><a href="Eng-office.html">Ofice of Readings</a></li>
@@ -256,9 +275,6 @@
     </nav>
 
     <div class="container">
-        <div class="toggle-container">
-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
-        </div>
         
         <h1>JUMA 2: ALHAMISI<br>MASIFU YA ASUBUHI</h1>
         
