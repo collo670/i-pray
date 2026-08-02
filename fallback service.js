@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ipray-v202608021900';
+const CACHE_NAME = 'ipray-v202608011233';
 
 // Critical app shell: cached during install. If any of these fail, the
 // install fails, so keep this list short and only list files that exist.
@@ -271,34 +271,10 @@ self.addEventListener('fetch', event => {
     requestURL.pathname.endsWith('.html') ||
     requestURL.pathname === '/i-pray/';
 
-  if (isNavigation) {
-    // Network-first for pages: an installed/homescreen app has no address
-    // bar to "reload past" a stale cache, so it must always try the network
-    // for the latest markup (e.g. nav bar fixes) first, only falling back to
-    // the cached copy when offline. This is what keeps the standalone app's
-    // nav bar matching the live web page instead of lagging a version behind.
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          if (networkResponse && networkResponse.ok) {
-            const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
-          }
-          return networkResponse;
-        })
-        .catch(() =>
-          caches.match(event.request).then(cachedResponse =>
-            cachedResponse || caches.match('/i-pray/pages/fallback.html')
-          )
-        )
-    );
-    return;
-  }
-
-  // Stale-while-revalidate for everything else (css/js/images/data): serve
-  // from cache instantly for fast in-app navigation, refresh the cache in
-  // the background so updates arrive on the next visit. Never-seen requests
-  // hit the network and are cached for next time.
+  // Stale-while-revalidate for everything, including pages: serve from cache
+  // instantly for fast in-app navigation, refresh the cache in the background
+  // so updates arrive on the next visit. Never-seen requests hit the network
+  // and are cached for next time.
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       const networkFetch = revalidate(event.request);
@@ -309,7 +285,12 @@ self.addEventListener('fetch', event => {
         return cachedResponse;
       }
 
-      return networkFetch.catch(() => new Response('Resource not available', { status: 404 }));
+      return networkFetch.catch(() => {
+        if (isNavigation) {
+          return caches.match('/i-pray/pages/fallback.html');
+        }
+        return new Response('Resource not available', { status: 404 });
+      });
     })
   );
 });
