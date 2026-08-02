@@ -118,7 +118,7 @@
             
             focusableElements.forEach(element => {
                 element.addEventListener('focus', function() {
-                    this.style.outline = '2px solid #7c3aed';
+                    this.style.outline = '2px solid #7c2133';
                     this.style.outlineOffset = '2px';
                 });
                 

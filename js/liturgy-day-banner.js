@@ -34,7 +34,7 @@
     };
     var COLOR_DOTS = {
         white: '#e6cc6e', red: '#C41E3A', green: '#2E7D32',
-        purple: '#6d28d9', rose: '#DB2777', gold: '#b45309'
+        purple: '#7c2133', rose: '#DB2777', gold: '#b45309'
     };
     var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
 

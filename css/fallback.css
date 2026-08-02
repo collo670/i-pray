@@ -40,17 +40,17 @@ body {
     position: relative;
     z-index: 10;
 }
-.bg-purple-100 { background-color: rgba(237, 233, 254, 0.8); }
+.bg-purple-100 { background-color: rgba(124, 33, 51, 0.12); }
 .bg-white-100 { background-color: rgba(255, 255, 255, 0.8); }
 .bg-red-100 { background-color: rgba(254, 226, 226, 0.8); }
 .bg-green-100 { background-color: rgba(220, 252, 231, 0.8); }
 .bg-gold-100 { background-color: rgba(254, 249, 195, 0.8); }
-.border-purple-200 { border-color: #e9d5ff; }
+.border-purple-200 { border-color: rgba(124, 33, 51, 0.22); }
 .border-white-200 { border-color: #e5e7eb; }
 .border-red-200 { border-color: #fecaca; }
 .border-green-200 { border-color: #bbf7d0; }
 .border-gold-200 { border-color: #fef08a; }
-.text-purple-800 { color: #7c06ea; }
+.text-purple-800 { color: #7c2133; }
 .text-white-800 { color: #f9fafb; }
 .text-red-800 { color: #991b1b; }
 .text-green-800 { color: #166534; }
@@ -87,6 +87,27 @@ body {
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: 0.01em;
+    color: #7c2133;
+}
+
+.bottom-nav a,
+.bottom-nav button,
+.bottom-nav svg {
+    color: #7c2133;
+}
+
+#toggleUpcomingFeasts {
+    color: #7c2133;
+}
+
+#toggleUpcomingFeasts:hover {
+    color: #5e1524;
+}
+
+#dailyReadingsCard > div > svg:last-of-type,
+#dailyPrayersCard > div > svg:last-of-type {
+    color: #7c2133;
+    stroke: #7c2133;
 }
 
 @media (max-width: 768px) {
@@ -105,7 +126,7 @@ body {
 /* Loading Spinner for Prayer Wall */
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #4A1E8A;
+    border-left-color: #7c2133;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -141,7 +162,7 @@ body {
 
 /* Enhanced focus indicators */
 *:focus {
-    outline: 2px solid #4A1E8A;
+    outline: 2px solid #7c2133;
     outline-offset: 2px;
 }
 

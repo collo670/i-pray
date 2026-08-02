@@ -55,7 +55,7 @@
             flex-shrink: 0;
         }
 
-        .purple { background-color: #7C3AED; }
+        .purple { background-color: #7c2133; }
         .white { background-color: #FFFFFF; border: 1px solid #ddd; }
         .red { background-color: #DC2626; }
         .green { background-color: #16A34A; }
@@ -424,7 +424,7 @@
         function initTheme() {
             const isDark = localStorage.getItem('darkMode') === 'true';
             document.documentElement.classList.toggle('dark', isDark);
-            document.getElementById('theme-meta-color').setAttribute('content', '#7C3AED');
+            document.getElementById('theme-meta-color').setAttribute('content', '#7c2133');
         }
 
         window.addEventListener('storage', (e) => {

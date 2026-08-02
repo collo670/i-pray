@@ -184,7 +184,7 @@ function updateManifestThemeColor() {
 
     switch (theme) {
         case 'purple':
-            themeColor = isDark ? '#111827' : '#4A1E8A';
+            themeColor = isDark ? '#111827' : '#7c2133';
             break;
         case 'green':
             themeColor = isDark ? '#111827' : '#2E7D32';
@@ -196,7 +196,7 @@ function updateManifestThemeColor() {
             themeColor = isDark ? '#111827' : '#F8F9FA';
             break;
         default:
-            themeColor = isDark ? '#111827' : '#7C3AED';
+            themeColor = isDark ? '#111827' : '#7c2133';
     }
 
     document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);

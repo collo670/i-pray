@@ -1,11 +1,11 @@
 /* Theme Variables */
 :root {
-  --primary-color: #7C3AED;
+  --primary-color: #7c2133;
   --primary-text: #FFFFFF;
 }
 
 .theme-purple {
-  --primary-color: #4A1E8A;
+  --primary-color: #7c2133;
   --primary-text: #FFFFFF;
 }
 

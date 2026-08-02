@@ -7,7 +7,7 @@ body {
     transition: all 0.3s ease;
 }
 /* Dynamic Theme Classes */
-.theme-purple { --primary-color: #4A1E8A; }
+.theme-purple { --primary-color: #7c2133; }
 .theme-red { --primary-color: #C41E3A; }
 .theme-green { --primary-color: #2E7D32; }
 /* Accessibility */

@@ -4,14 +4,26 @@
 
 @theme {
   /* Custom Colors */
-  --color-primary: #7c3aed;
-  --color-secondary: #DB2777;
+  --color-primary: #7c2133;
+  --color-secondary: #8b3046;
   --color-accent: #F59E0B;
-  --color-liturgical-purple: #4A1E8A;
+  --color-liturgical-purple: #7c2133;
   --color-liturgical-white: #F8F9FA;
   --color-liturgical-red: #C41E3A;
   --color-liturgical-green: #2E7D32;
   --color-liturgical-gold: #FFD700;
+
+  /* Override Tailwind's default purple scale to the app's maroon family */
+  --color-purple-50: #f8edf1;
+  --color-purple-100: #f2dce3;
+  --color-purple-200: #e4c0cc;
+  --color-purple-300: #cf9eaa;
+  --color-purple-400: #b37586;
+  --color-purple-500: #9a4a63;
+  --color-purple-600: #7c2133;
+  --color-purple-700: #671b29;
+  --color-purple-800: #4d111b;
+  --color-purple-900: #391018;
   
   /* Custom Screens */
   --breakpoint-xs: 475px;
