@@ -83,6 +83,11 @@
                 padding-bottom: env(safe-area-inset-bottom);
             }
         }
+
+        /* Top nav date label: match the gold used by the app-bar title/icons on index.html */
+        #todayDateLabel {
+            color: var(--topbar-gold, #f0c96a);
+        }
     </style>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
@@ -91,16 +96,16 @@
 
     <div id="app" class="relative z-10">
 
-        <!-- Header -->
-        <header class="px-6 py-4 bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm shadow-sm" role="banner">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+        <!-- Header: app-bar, same maroon/gold theme as index.html's top nav -->
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="app-bar-brand">
+                    <h1 class="text-2xl font-bold">
                         ipray
                     </h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="liturgicalCalendar">Liturgical Calendar</p>
+                    <p data-translate="liturgicalCalendar">Liturgical Calendar</p>
                 </div>
-                <p class="text-sm font-semibold text-gray-700 dark:text-gray-200" id="todayDateLabel"></p>
+                <p class="text-sm font-semibold" id="todayDateLabel"></p>
             </div>
         </header>
 
@@ -424,7 +429,8 @@
         function initTheme() {
             const isDark = localStorage.getItem('darkMode') === 'true';
             document.documentElement.classList.toggle('dark', isDark);
-            document.getElementById('theme-meta-color').setAttribute('content', '#7c2133');
+            const themeMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeMeta) themeMeta.setAttribute('content', '#7c2133');
         }
 
         window.addEventListener('storage', (e) => {

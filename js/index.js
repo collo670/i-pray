@@ -66,7 +66,7 @@ const translations = {
         prayerFinal: "<strong>Mwisho:</strong> Baba yetu. Salamu Maria. Atukuzwe Baba...",
         tapToViewPrayer: "Gusa kuona sala",
         tapToView: "Gusa kuona",
-        dailyReadings: "Masomo ya Kila Siku",
+        dailyReadings: "Masomo ya Siku",
         dailyPrayers: "Sala za Kanisa",
         installApp: "Sakinisha App ya ipray",
         copyright: "App ya iPray. Haki zote zimehifadhiwa.",

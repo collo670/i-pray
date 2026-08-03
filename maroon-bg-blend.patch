@@ -1,0 +1,28 @@
+diff --git a/css/index.css b/css/index.css
+index e8b9b94..01e16b0 100644
+--- a/css/index.css
++++ b/css/index.css
+@@ -118,7 +118,10 @@ body.page-index .text-xl { font-size: 1.35rem !important; }
+ .theme-green  { --primary-color: #2E7D32; --color-primary: #2E7D32; }
+ .theme-red    { --primary-color: #C41E3A; --color-primary: #C41E3A; }
+ .bg-gradient-vintage {
+-    background: var(--primary-color);
++    /* Blend the navbar's maroon (#581523 -> #7c2133) into the theme's
++       primary color so the main background reads as an extension of the
++       nav bar rather than a flat, disconnected color. */
++    background: linear-gradient(135deg, var(--primary-color) 0%, #7c2133 55%, #581523 100%);
+     min-height: 100vh;
+     min-height: 100dvh;
+ }
+@@ -137,7 +140,10 @@ body.page-index::before {
+     position: fixed;
+     inset: 0;
+     z-index: -1;
+-    background: var(--primary-color);
++    /* Same navbar-maroon blend as .bg-gradient-vintage, kept in sync so the
++       fixed full-viewport layer used on the index page matches other pages
++       that use the background utility class directly. */
++    background: linear-gradient(135deg, var(--primary-color) 0%, #7c2133 55%, #581523 100%);
+ }
+ :root.dark body.page-index::before {
+     background: linear-gradient(135deg, #0b1a10 0%, #1b1626 50%, #0f1a24 100%);

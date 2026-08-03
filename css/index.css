@@ -1508,6 +1508,20 @@ nav.fixed.bottom-0.left-0.right-0 {
 :root.dark .liturgical-card[data-color="red"]    { --lit-text: #ef9a9a; }
 :root.dark .liturgical-card[data-color="gold"]   { --lit-text: #fbbf24; }
 
+/* Maroon lining for the home screen's three main cards: the liturgical
+   date card, Daily Readings ("Masomo ya Siku"), and Sala za Kanisa. Kept
+   as one shared rule so all three stay visually consistent. */
+#liturgicalCard,
+#dailyReadingsCard,
+#dailyPrayersCard {
+    border: 2px solid #7c2133;
+}
+:root.dark #liturgicalCard,
+:root.dark #dailyReadingsCard,
+:root.dark #dailyPrayersCard {
+    border-color: #a8455e;
+}
+
 .season-badge {
     display: inline-block;
     padding: 0.3rem 1rem;
