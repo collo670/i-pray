@@ -77,7 +77,8 @@ header.liturgical-gradient {
    few pixels tinted to guarantee icon contrast. -- */
 
 header[class*="backdrop-blur-sm"]:not([role="banner"]) {
-  position: relative;
+  position: sticky;
+  top: 0;
   padding-top: calc(var(--sb-inset-top) + 1rem) !important;
   box-sizing: border-box;
 }
