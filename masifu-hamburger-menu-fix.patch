@@ -1,0 +1,336 @@
+diff --git a/pages/alhamisi1.html b/pages/alhamisi1.html
+index 11c44c7..940b420 100644
+--- a/pages/alhamisi1.html
++++ b/pages/alhamisi1.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/alhamisi2.html b/pages/alhamisi2.html
+index a4977f2..a221bd6 100644
+--- a/pages/alhamisi2.html
++++ b/pages/alhamisi2.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/alhamisi3.html b/pages/alhamisi3.html
+index 5585868..0a4dbcd 100644
+--- a/pages/alhamisi3.html
++++ b/pages/alhamisi3.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/alhamisi4.html b/pages/alhamisi4.html
+index 5724de8..65afc76 100644
+--- a/pages/alhamisi4.html
++++ b/pages/alhamisi4.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/ijumaa1.html b/pages/ijumaa1.html
+index 0d8a11a..088c8b3 100644
+--- a/pages/ijumaa1.html
++++ b/pages/ijumaa1.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/ijumaa2.html b/pages/ijumaa2.html
+index e3cee7a..39ef33e 100644
+--- a/pages/ijumaa2.html
++++ b/pages/ijumaa2.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/ijumaa3.html b/pages/ijumaa3.html
+index 3bce1ae..230f225 100644
+--- a/pages/ijumaa3.html
++++ b/pages/ijumaa3.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/ijumaa4.html b/pages/ijumaa4.html
+index d7b0634..150b08e 100644
+--- a/pages/ijumaa4.html
++++ b/pages/ijumaa4.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumamosi1.html b/pages/jumamosi1.html
+index 7ad0c79..7eafbc5 100644
+--- a/pages/jumamosi1.html
++++ b/pages/jumamosi1.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumamosi2.html b/pages/jumamosi2.html
+index aaa8b76..612a7dc 100644
+--- a/pages/jumamosi2.html
++++ b/pages/jumamosi2.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumamosi3.html b/pages/jumamosi3.html
+index d8884f2..091b2e1 100644
+--- a/pages/jumamosi3.html
++++ b/pages/jumamosi3.html
+@@ -399,7 +399,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumamosi4.html b/pages/jumamosi4.html
+index 81c4cba..bc3c827 100644
+--- a/pages/jumamosi4.html
++++ b/pages/jumamosi4.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumanne1.html b/pages/jumanne1.html
+index 204ad13..34bfa1d 100644
+--- a/pages/jumanne1.html
++++ b/pages/jumanne1.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumanne2.html b/pages/jumanne2.html
+index 1d9a3e6..e527ec5 100644
+--- a/pages/jumanne2.html
++++ b/pages/jumanne2.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumanne3.html b/pages/jumanne3.html
+index f4012f2..243ed66 100644
+--- a/pages/jumanne3.html
++++ b/pages/jumanne3.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumanne4.html b/pages/jumanne4.html
+index e552b89..d5b0c69 100644
+--- a/pages/jumanne4.html
++++ b/pages/jumanne4.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumapili1.html b/pages/jumapili1.html
+index d25db9b..4511dae 100644
+--- a/pages/jumapili1.html
++++ b/pages/jumapili1.html
+@@ -405,7 +405,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumapili2.html b/pages/jumapili2.html
+index 5fb1a44..62a6d5a 100644
+--- a/pages/jumapili2.html
++++ b/pages/jumapili2.html
+@@ -406,7 +406,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumapili3.html b/pages/jumapili3.html
+index bfd57da..b667403 100644
+--- a/pages/jumapili3.html
++++ b/pages/jumapili3.html
+@@ -412,7 +412,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumapili4.html b/pages/jumapili4.html
+index cf8145b..584da9d 100644
+--- a/pages/jumapili4.html
++++ b/pages/jumapili4.html
+@@ -406,7 +406,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatano1.html b/pages/jumatano1.html
+index f214bc2..af05197 100644
+--- a/pages/jumatano1.html
++++ b/pages/jumatano1.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatano2.html b/pages/jumatano2.html
+index 5bd2f1d..bc2fe39 100644
+--- a/pages/jumatano2.html
++++ b/pages/jumatano2.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatano3.html b/pages/jumatano3.html
+index 782fbda..169f463 100644
+--- a/pages/jumatano3.html
++++ b/pages/jumatano3.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatano4.html b/pages/jumatano4.html
+index d41dcfb..044eb6b 100644
+--- a/pages/jumatano4.html
++++ b/pages/jumatano4.html
+@@ -398,7 +398,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatatu1.html b/pages/jumatatu1.html
+index 9e47748..1696dfe 100644
+--- a/pages/jumatatu1.html
++++ b/pages/jumatatu1.html
+@@ -401,7 +401,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatatu2.html b/pages/jumatatu2.html
+index b34a595..88dfe9f 100644
+--- a/pages/jumatatu2.html
++++ b/pages/jumatatu2.html
+@@ -399,7 +399,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatatu3.html b/pages/jumatatu3.html
+index 04b8e0d..fdd51f6 100644
+--- a/pages/jumatatu3.html
++++ b/pages/jumatatu3.html
+@@ -669,7 +669,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>
+diff --git a/pages/jumatatu4.html b/pages/jumatatu4.html
+index 1dc172f..ad81e9d 100644
+--- a/pages/jumatatu4.html
++++ b/pages/jumatatu4.html
+@@ -669,7 +669,6 @@
+             <ul class="nav-links">
+                 <li><a href="../index.html">Nyumbani</a></li>
+                 <li><a href="prayer-hour.html?hour=readings">Ofisi ya Masomo</a></li>
+-                <li></li>
+                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+             </ul>

@@ -1,0 +1,296 @@
+
+diff --git a/assets/office/amefufuka.html b/assets/office/amefufuka.html
+index ad7c8cf..75aa12b 100644
+--- a/assets/office/amefufuka.html
++++ b/assets/office/amefufuka.html
+@@ -127,6 +127,7 @@
+             min-height: 100vh;
+             display: flex;
+             flex-direction: column;
++            padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+             transition: background-color 0.3s ease, color 0.3s ease;
+         }
+ 
+@@ -141,9 +142,11 @@
+             background-color: #202847; /* Custom dark blue for navbar */
+             color: #ffffff; /* text-white */
+             padding: 1rem;
+-            position: sticky;
++            position: fixed;
+             top: 0;
+-            border-radius: 10px;
++            left: 0;
++            right: 0;
++            border-radius: 0;
+             z-index: 50;
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+         }
+diff --git a/assets/office/pentekoste.html b/assets/office/pentekoste.html
+index b15105d..ec8aa51 100644
+--- a/assets/office/pentekoste.html
++++ b/assets/office/pentekoste.html
+@@ -19,6 +19,7 @@
+             min-height: 100vh;
+             display: flex;
+             flex-direction: column;
++            padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+             transition: background-color 0.3s ease, color 0.3s ease;
+         }
+ 
+@@ -33,9 +34,11 @@
+             background-color: #202847; /* Custom dark blue for navbar */
+             color: #ffffff; /* text-white */
+             padding: 1rem;
+-            position: sticky;
++            position: fixed;
+             top: 0;
+-            border-radius: 10px;
++            left: 0;
++            right: 0;
++            border-radius: 0;
+             z-index: 50;
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+         }
+diff --git a/assets/office/rozari.html b/assets/office/rozari.html
+index 10e4e7e..6a44460 100644
+--- a/assets/office/rozari.html
++++ b/assets/office/rozari.html
+@@ -22,6 +22,7 @@
+             min-height: 100vh;
+             display: flex;
+             flex-direction: column;
++            padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+             transition: background-color 0.3s ease, color 0.3s ease;
+         }
+ 
+@@ -37,9 +38,11 @@
+             background-color: #202847; /* Custom dark blue for navbar */
+             color: #ffffff; /* text-white */
+             padding: 1rem;
+-            position: sticky;
++            position: fixed;
+             top: 0;
+-            border-radius: 10px;
++            left: 0;
++            right: 0;
++            border-radius: 0;
+             z-index: 50;
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+         }
+diff --git a/css/index.css b/css/index.css
+index e8b9b94..c7c3f89 100644
+--- a/css/index.css
++++ b/css/index.css
+@@ -894,11 +894,12 @@ button[aria-busy="true"]::after {
+    the status bar. */
+ .app-bar,
+ header[role="banner"] {
+-    position: sticky;
++    position: fixed;
+     top: 0;
++    left: 0;
++    right: 0;
+     width: 100%;
+     z-index: 30;
+-    position: relative;
+     isolation: isolate;
+     padding: calc(env(safe-area-inset-top, 0px) + 0.9rem) 1rem 1rem;
+     background: transparent;
+@@ -928,6 +929,15 @@ header[role="banner"]::before {
+     z-index: -1;
+ }
+ 
++/* Now that .app-bar/header[role="banner"] is fixed (taken out of flow),
++   give the content that follows it enough top clearance so nothing sits
++   underneath the bar. Applied explicitly via this class rather than a
++   blanket "main" selector so pages with their own fixed .navbar (which
++   already handle their own offset) aren't affected. */
++.app-bar-spacer {
++    padding-top: calc(env(safe-area-inset-top, 0px) + 6rem) !important;
++}
++
+ .app-bar-brand {
+     flex: 1;
+     min-width: 0;
+diff --git a/index.html b/index.html
+index 8a67d05..f269734 100644
+--- a/index.html
++++ b/index.html
+@@ -84,7 +84,7 @@
+             </button>
+         </div>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <div id="homeView" class="space-y-6">
+                 <!-- Liturgical Season Image -->
+                 <div class="flex justify-center">
+diff --git a/pages/amefufuka.html b/pages/amefufuka.html
+index c1d58d3..3545673 100644
+--- a/pages/amefufuka.html
++++ b/pages/amefufuka.html
+@@ -126,6 +126,7 @@
+             min-height: 100vh;
+             display: flex;
+             flex-direction: column;
++            padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+             transition: background-color 0.3s ease, color 0.3s ease;
+         }
+ 
+@@ -140,9 +141,11 @@
+             background-color: #202847; /* Custom dark blue for navbar */
+             color: #ffffff; /* text-white */
+             padding: 1rem;
+-            position: sticky;
++            position: fixed;
+             top: 0;
+-            border-radius: 10px;
++            left: 0;
++            right: 0;
++            border-radius: 0;
+             z-index: 50;
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+         }
+diff --git a/pages/calendar.html b/pages/calendar.html
+index 4f8ac48..a1d7a20 100644
+--- a/pages/calendar.html
++++ b/pages/calendar.html
+@@ -105,7 +105,7 @@
+         </header>
+ 
+         <!-- Main Content -->
+-        <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
++        <main class="max-w-4xl mx-auto px-6 py-8 pb-24 app-bar-spacer">
+ 
+             <!-- Today's Liturgical Info -->
+             <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
+diff --git a/pages/carmen.html b/pages/carmen.html
+index 4cedc3f..3bcaf89 100644
+--- a/pages/carmen.html
++++ b/pages/carmen.html
+@@ -109,7 +109,7 @@
+ </header>
+ 
+         <!-- Main Content -->
+-        <main class="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-24">
++        <main class="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-24 app-bar-spacer">
+             <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8">
+             <!-- Hero Image -->
+             <img src="../assets/images/carmen.jpg" class="mx-auto my-4 rounded-lg shadow-md" alt="Carmen Hernández, mwanzilishi mwenza wa Njia ya Neokatekumenato" width="500" height="500" loading="lazy" decoding="async" loading="lazy" decoding="async">
+diff --git a/pages/compline.html b/pages/compline.html
+index e350edf..127de78 100644
+--- a/pages/compline.html
++++ b/pages/compline.html
+@@ -69,7 +69,7 @@
+         </div>
+     </div>
+ </header>
+-    <main class="max-w-4xl mx-auto px-6 py-8 pb-24">
++    <main class="max-w-4xl mx-auto px-6 py-8 pb-24 app-bar-spacer">
+ 
+         <section class="collapsed-section card card-hover season-border" id="saturday-section" onclick="toggleSection('saturday')">
+             <h2 class="text-xl font-bold text-green-800 mb-3">Saturday</h2>
+diff --git a/pages/daily-readings.html b/pages/daily-readings.html
+index 7d8ca16..ce14322 100644
+--- a/pages/daily-readings.html
++++ b/pages/daily-readings.html
+@@ -68,7 +68,7 @@
+             </div>
+         </header>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <!-- Language switch: English / Kiswahili. Remembered in localStorage;
+                  switching re-renders instantly, no page reload. -->
+             <div class="flex justify-center mb-4">
+diff --git a/pages/fallback.html b/pages/fallback.html
+index 6af9376..600b28e 100644
+--- a/pages/fallback.html
++++ b/pages/fallback.html
+@@ -70,7 +70,7 @@
+         </div>
+     </div>
+ </header>
+-<main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6" role="main">
++<main class="max-w-4xl mx-auto px-6 py-8 pb-32 pt-6 app-bar-spacer" role="main">
+     <div id="homeView" class="space-y-8">
+         <!-- Liturgical Season Image (static, styled by CSS) -->
+         <div class="flex justify-center mb-4">
+diff --git a/pages/holy-rosary.html b/pages/holy-rosary.html
+index 6e65a94..6ea1f78 100644
+--- a/pages/holy-rosary.html
++++ b/pages/holy-rosary.html
+@@ -56,7 +56,7 @@
+             </div>
+         </header>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <div class="space-y-6">
+                 <!-- Opening prayers -->
+                 <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+diff --git a/pages/prayer-hour.html b/pages/prayer-hour.html
+index e1e1894..0ab8a92 100644
+--- a/pages/prayer-hour.html
++++ b/pages/prayer-hour.html
+@@ -109,7 +109,7 @@
+             </div>
+         </header>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <!-- Hour switch: Readings / Midday / Vespers, with the language
+                  switch (English / Kiswahili) pinned to the right of the same
+                  row. Remembered in localStorage; switching re-renders
+diff --git a/pages/prayer.html b/pages/prayer.html
+index 6d82614..0c3a27e 100644
+--- a/pages/prayer.html
++++ b/pages/prayer.html
+@@ -83,7 +83,7 @@
+             </div>
+         </header>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <div class="space-y-6">
+                 <!-- Prayer Categories -->
+                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+diff --git a/pages/sacraments.html b/pages/sacraments.html
+index c4feb0b..bb78234 100644
+--- a/pages/sacraments.html
++++ b/pages/sacraments.html
+@@ -56,7 +56,7 @@
+             </div>
+         </header>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <div class="space-y-6">
+                 <!-- Introduction -->
+                 <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+diff --git a/pages/settings.html b/pages/settings.html
+index 5d565f6..cefa82f 100644
+--- a/pages/settings.html
++++ b/pages/settings.html
+@@ -56,7 +56,7 @@
+             </div>
+         </header>
+         <!-- Main Content -->
+-        <main class="container mx-auto px-4 py-6 pb-24">
++        <main class="container mx-auto px-4 py-6 pb-24 app-bar-spacer">
+             
+             <!-- Settings Sections -->
+             <div class="space-y-8">
+diff --git a/pages/via-cruce.html b/pages/via-cruce.html
+index 23d1200..c3bf2fe 100644
+--- a/pages/via-cruce.html
++++ b/pages/via-cruce.html
+@@ -90,7 +90,7 @@
+             </div>
+         </header>
+ 
+-        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
++        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6 app-bar-spacer" role="main">
+             <div class="space-y-6">
+                 <!-- Introduction -->
+                 <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
