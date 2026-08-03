@@ -898,7 +898,6 @@ header[role="banner"] {
     top: 0;
     width: 100%;
     z-index: 30;
-    position: relative;
     isolation: isolate;
     padding: calc(env(safe-area-inset-top, 0px) + 0.9rem) 1rem 1rem;
     background: transparent;
