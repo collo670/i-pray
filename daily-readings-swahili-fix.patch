@@ -1,0 +1,185 @@
+diff --git a/pages/daily-readings.html b/pages/daily-readings.html
+index bb44ca1..e034afe 100644
+--- a/pages/daily-readings.html
++++ b/pages/daily-readings.html
+@@ -239,8 +239,16 @@
+             var SW_CACHE_PREFIX = 'swReadings-';
+             var SW_LIST_CACHE_KEY = 'swReadingsListMap';
+             var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
++            // r.jina.ai ("Reader") fetches a page server-side and returns
++            // clean Markdown with CORS already open - no proxy needed, and
++            // it isn't tied to mkatolikileo.com's current HTML/class names,
++            // so a site redesign can't silently break it the way the old
++            // DOM-scraping path could. Tried first; the raw-HTML proxy
++            // chain below is kept as a fallback only.
++            var SW_READER_PREFIX = 'https://r.jina.ai/';
+             var SW_PROXIES = [
+                 function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
++                function (u) { return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); },
+                 function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+                 function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+             ];
+@@ -363,6 +371,33 @@
+                 })();
+             }
+ 
++            function fetchViaReader(url, onOk, onFail) {
++                var ctrl = window.AbortController ? new AbortController() : null;
++                var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
++                fetch(SW_READER_PREFIX + url, ctrl ? { signal: ctrl.signal } : {})
++                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
++                    .then(function (text) { clearTimeout(timer); onOk(text); })
++                    .catch(function () { clearTimeout(timer); onFail(); });
++            }
++
++            // Fetches one day's article, trying the Reader first and only
++            // falling back to the raw-HTML proxy chain (+ DOM parse) if the
++            // Reader is unreachable or its Markdown doesn't match the
++            // expected shape. onOk receives an already-parsed
++            // {dayTitle, dateLabel, sections} object either way.
++            function fetchSwArticle(url, onOk, onFail) {
++                function viaProxies() {
++                    fetchTextThroughProxies(url, function (html) {
++                        var parsed = parseSwArticle(html);
++                        if (parsed) onOk(parsed); else onFail();
++                    }, onFail);
++                }
++                fetchViaReader(url, function (md) {
++                    var parsed = parseSwArticleText(md);
++                    if (parsed) onOk(parsed); else viaProxies();
++                }, viaProxies);
++            }
++
+             // The listing page (reverse-chronological, ~10 most recent days)
+             // is the only reliable way to map a date to its article id/URL:
+             // mkatolikileo.com's ids increment roughly one per published day,
+@@ -387,17 +422,32 @@
+                     cb(cached.map);
+                     return;
+                 }
+-                fetchTextThroughProxies(SW_LIST_URL, function (html) {
+-                    var map = parseSwListHtml(html);
++
++                function useText(text) {
++                    var map = parseSwListHtml(text);
+                     if (Object.keys(map).length) {
+                         try { localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), map: map })); } catch (e) {}
+                         cb(map);
+-                    } else {
+-                        cb(cached ? cached.map : null);
++                        return true;
+                     }
+-                }, function () {
+-                    cb(cached ? cached.map : null);
+-                });
++                    return false;
++                }
++
++                // parseSwListHtml just regex-scans for article URLs, so it
++                // works equally well on the Reader's Markdown or on raw
++                // HTML from the proxy chain - only the fetch step differs.
++                fetchViaReader(SW_LIST_URL, function (md) {
++                    if (useText(md)) return;
++                    viaProxies();
++                }, viaProxies);
++
++                function viaProxies() {
++                    fetchTextThroughProxies(SW_LIST_URL, function (html) {
++                        if (!useText(html)) cb(cached ? cached.map : null);
++                    }, function () {
++                        cb(cached ? cached.map : null);
++                    });
++                }
+             }
+ 
+             // Pulls the day title and each reading (label + citation + text)
+@@ -444,6 +494,73 @@
+                 return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+             }
+ 
++            // Parses the Markdown that r.jina.ai's Reader returns for an
++            // mkatolikileo.com article. The Reader ignores the site's HTML
++            // classes/layout entirely, so this only depends on the visible
++            // content shape, which has been stable: a "### Day Title
++            // (Date)" heading, then repeating [plain label line] / [###
++            // citation] / [body text] triples ("Somo la 1", "Wimbo wa
++            // Katikati" / "Zaburi ya Katikati", "Shangilio", "Injili", plus
++            // "Somo la 2" on Sundays and solemnities).
++            function parseSwArticleText(md) {
++                if (!md) return null;
++                var lines = md.replace(/\r\n/g, '\n').split('\n');
++                var dayTitle = '', dateLabel = '', startIdx = -1;
++                for (var i = 0; i < lines.length; i++) {
++                    var head = lines[i].match(/^#{2,3}\s+(.+?)\s*\(([^()]+)\)\s*$/);
++                    if (head) { dayTitle = head[1].trim(); dateLabel = head[2].trim(); startIdx = i + 1; break; }
++                }
++                if (startIdx === -1) return null;
++
++                function isStop(line) {
++                    return /^\d+\s*Imependwa/.test(line) || /^#{1,3}\s*Maoni\b/.test(line);
++                }
++
++                var sections = [];
++                var i2 = startIdx;
++                while (i2 < lines.length) {
++                    var line = lines[i2].trim();
++                    i2++;
++                    if (!line || isStop(line) || line.charAt(0) === '#') continue;
++
++                    var j = i2;
++                    while (j < lines.length && !lines[j].trim()) j++;
++                    var citeMatch = j < lines.length ? lines[j].match(/^###\s+(.+)$/) : null;
++                    if (!citeMatch) continue;
++
++                    var label = line.replace(/\*\*/g, '').trim();
++                    var citation = citeMatch[1].trim();
++                    i2 = j + 1;
++
++                    var bodyLines = [];
++                    while (i2 < lines.length) {
++                        var peekTrim = lines[i2].trim();
++                        if (isStop(peekTrim)) break;
++                        if (peekTrim && lines[i2].charAt(0) !== '#') {
++                            var k = i2 + 1;
++                            while (k < lines.length && !lines[k].trim()) k++;
++                            if (k < lines.length && /^###\s+/.test(lines[k])) break;
++                        } else if (peekTrim.charAt(0) === '#') {
++                            break;
++                        }
++                        bodyLines.push(lines[i2]);
++                        i2++;
++                    }
++                    var text = bodyLines.join('\n').trim();
++                    if (!text) continue;
++                    sections.push({ label: label, citation: citation, textHtml: swTextToHtml(text) });
++                }
++                if (!sections.length) return null;
++                return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
++            }
++
++            function swTextToHtml(text) {
++                var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
++                return esc.split(/\n{2,}/).map(function (p) {
++                    return '<div>' + p.trim().replace(/ {2,}\n|\n/g, '<br>') + '</div>';
++                }).join('');
++            }
++
+             function fetchErrorText() {
+                 return lang === 'sw'
+                     ? 'Imeshindikana kupakia masomo ya siku hii. Tafadhali angalia mtandao wako na ujaribu tena.'
+@@ -558,14 +675,8 @@
+                         loadEnglish(date);
+                         return;
+                     }
+-                    fetchTextThroughProxies(url, function (html) {
++                    fetchSwArticle(url, function (parsed) {
+                         if (stamp !== currentStamp) return;
+-                        var parsed = parseSwArticle(html);
+-                        if (!parsed) {
+-                            showSwUnavailable();
+-                            loadEnglish(date);
+-                            return;
+-                        }
+                         try { localStorage.setItem(SW_CACHE_PREFIX + stamp, JSON.stringify(parsed)); } catch (e) {}
+                         renderSw(parsed);
+                     }, function () {

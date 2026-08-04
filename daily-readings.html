@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1f2937">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ipray">
+    <link rel="stylesheet" href="../css/prevent-zoom.css">
+    <title>Daily Readings - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Daily Catholic Mass readings for every day of the year, in the proper order of the Mass">
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <style>
+        /* Universalis reading text arrives as HTML with its own indentation styles */
+        .reading-text { line-height: 1.75; }
+        .reading-text div { margin-bottom: 0.15rem; }
+        /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+           Scoping it to .reading-text — rather than the root <html>
+           font-size — keeps #appBar and the bottom nav, which sit outside
+           it, a fixed size when the reading text is enlarged or shrunk. */
+        .reading-text { font-size: calc(1rem * var(--prayer-text-scale, 1)); }
+        .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
+        .dark .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
+    </style>
+    <script src="../js/logo-loader.js"></script>
+    <link rel="stylesheet" href="../css/status-bar-safe-area.css">
+</head>
+<body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
+    <div id="app" class="relative z-10 page-content">
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="flex items-center gap-2">
+                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </a>
+                    <div class="app-bar-brand">
+                        <h1 id="pageTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Daily Readings
+                        </h1>
+                        <p id="pageSubtitle" class="text-xs text-gray-600 dark:text-gray-400">Mass readings for every day</p>
+                    </div>
+                </div>
+                <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <!-- Language switch: English / Kiswahili. Remembered in localStorage;
+                 switching re-renders instantly, no page reload. -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose language / Chagua lugha">
+                    <button id="langEn" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">English</button>
+                    <button id="langSw" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-colors" role="tab">Kiswahili</button>
+                </div>
+            </div>
+
+            <!-- Date navigation: pick any day of any year -->
+            <div class="rounded-2xl p-4 bg-white dark:bg-gray-800 shadow-lg mb-6">
+                <div class="flex items-center justify-between gap-2">
+                    <button id="prevDay" class="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" aria-label="Previous day">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 text-center">
+                        <input type="date" id="datePicker" class="w-full max-w-[13rem] mx-auto text-center font-semibold bg-transparent text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" aria-label="Choose a date">
+                    </div>
+                    <button id="nextDay" class="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" aria-label="Next day">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="text-center mt-3">
+                    <button id="todayBtn" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline focus:outline-none hidden">
+                        Back to today
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liturgical day banner -->
+            <div id="dayBanner" class="liturgical-card mb-6 hidden" data-color="green">
+                <div class="text-center">
+                    <p id="readingsDate" class="text-sm text-gray-600 dark:text-gray-400 mb-1"></p>
+                    <div id="liturgicalDayTitle" class="text-lg font-bold text-gray-800 dark:text-gray-100"></div>
+                </div>
+            </div>
+
+            <!-- Loading state -->
+            <div id="readingsLoading" class="text-center py-12">
+                <div class="inline-block w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+                <p class="mt-4 text-gray-600 dark:text-gray-400">Loading readings…</p>
+            </div>
+
+            <!-- Error state -->
+            <div id="readingsError" class="rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg text-center hidden">
+                <p id="readingsErrorText" class="text-gray-700 dark:text-gray-300 mb-4">Unable to load the readings for this day. Please check your connection and try again.</p>
+                <button id="retryBtn" class="px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold">Retry</button>
+            </div>
+
+            <div id="readingsSwNote" class="sw-fallback-note hidden"></div>
+
+            <!-- Readings rendered here in the order of the Mass -->
+            <div id="readingsContainer" class="space-y-6"></div>
+
+            <p id="readingsCopyright" class="text-xs text-gray-500 dark:text-gray-400 text-center mt-8 hidden"></p>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <!-- Home -->
+                <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <!-- Prayers -->
+                <a href="../pages/prayer.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m-5-11h10M9 4h6" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
+                </a>
+                <!-- Calendar -->
+                <a href="../pages/calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <!-- Settings -->
+                <a href="../pages/settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('darkModeQuickToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            // Readings come from Universalis' embeddable JSONP feed
+            // (https://universalis.com/<yyyymmdd>/jsonpmass.js), which covers
+            // every day of the year and returns the parts in Mass order.
+            var MASS_ORDER = [
+                { key: 'Mass_R1', label: 'First Reading' },
+                { key: 'Mass_Ps', label: 'Responsorial Psalm' },
+                { key: 'Mass_R2', label: 'Second Reading' },
+                { key: 'Mass_GA', label: 'Gospel Acclamation' },
+                { key: 'Mass_G',  label: 'Gospel' }
+            ];
+            var FETCH_TIMEOUT_MS = 15000;
+            var CACHE_PREFIX = 'massReadings-';
+            // Universalis' free feed covers a sliding window around today;
+            // outside it the request redirects, so navigation is clamped.
+            var WINDOW_BACK_DAYS = 3;
+            var WINDOW_AHEAD_DAYS = 9;
+
+            var datePicker = document.getElementById('datePicker');
+            var prevBtn = document.getElementById('prevDay');
+            var nextBtn = document.getElementById('nextDay');
+            var todayBtn = document.getElementById('todayBtn');
+            var retryBtn = document.getElementById('retryBtn');
+            var loadingEl = document.getElementById('readingsLoading');
+            var errorEl = document.getElementById('readingsError');
+            var errorText = document.getElementById('readingsErrorText');
+            var container = document.getElementById('readingsContainer');
+            var banner = document.getElementById('dayBanner');
+            var dayTitleEl = document.getElementById('liturgicalDayTitle');
+            var dateEl = document.getElementById('readingsDate');
+            var copyrightEl = document.getElementById('readingsCopyright');
+            var readingsSwNote = document.getElementById('readingsSwNote');
+            var pageTitleEl = document.getElementById('pageTitle');
+            var pageSubtitleEl = document.getElementById('pageSubtitle');
+            var langEnBtn = document.getElementById('langEn');
+            var langSwBtn = document.getElementById('langSw');
+
+            var currentDate = new Date();
+            var currentStamp = null;
+            var pendingScript = null;
+            var pendingTimer = null;
+
+            // Language switch: English / Kiswahili, same convention as
+            // pages/prayer-hour.html (localStorage key shared across pages).
+            var LANG_KEY = 'preferredLanguage';
+            var lang = 'en';
+            try { if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw'; } catch (e) {}
+
+            // Kiswahili daily readings: there is no API for this (checked
+            // Universalis, iBreviary, Divine Office - none publish Swahili).
+            // mkatolikileo.com is a Swahili Catholic news site that posts the
+            // full text of each day's Mass readings as a dated article; it has
+            // no CORS headers either, so it's fetched through the same proxy
+            // chain used for Universalis in prayer-hour.html. If a date isn't
+            // published there yet (it only covers today and the recent past,
+            // never the future) the English Universalis feed is shown instead,
+            // with a note explaining why.
+            var SW_SITE = 'https://mkatolikileo.com';
+            var SW_LIST_URL = SW_SITE + '/masomo-ya-misa';
+            var SW_CACHE_PREFIX = 'swReadings-';
+            var SW_LIST_CACHE_KEY = 'swReadingsListMap';
+            var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
+            // r.jina.ai ("Reader") fetches a page server-side and returns
+            // clean Markdown with CORS already open - no proxy needed, and
+            // it isn't tied to mkatolikileo.com's current HTML/class names,
+            // so a site redesign can't silently break it the way the old
+            // DOM-scraping path could. Tried first; the raw-HTML proxy
+            // chain below is kept as a fallback only.
+            var SW_READER_PREFIX = 'https://r.jina.ai/';
+            var SW_PROXIES = [
+                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+            ];
+            var SW_MONTHS = {
+                januari: 0, februari: 1, machi: 2, aprili: 3, mei: 4, juni: 5,
+                julai: 6, agosti: 7, septemba: 8, oktoba: 9, novemba: 10, desemba: 11
+            };
+
+            function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+            function addDays(d, n) { var c = new Date(d); c.setDate(c.getDate() + n); return c; }
+            var windowMin = addDays(startOfDay(new Date()), -WINDOW_BACK_DAYS);
+            var windowMax = addDays(startOfDay(new Date()), WINDOW_AHEAD_DAYS);
+            function fmtDay(d) {
+                return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            }
+
+            function stampOf(date) {
+                var m = String(date.getMonth() + 1).padStart(2, '0');
+                var d = String(date.getDate()).padStart(2, '0');
+                return '' + date.getFullYear() + m + d;
+            }
+
+            function isoOf(date) {
+                var s = stampOf(date);
+                return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6);
+            }
+
+            function setState(state) {
+                loadingEl.classList.toggle('hidden', state !== 'loading');
+                errorEl.classList.toggle('hidden', state !== 'error');
+                if (state !== 'ready') {
+                    container.innerHTML = '';
+                    banner.classList.add('hidden');
+                    copyrightEl.classList.add('hidden');
+                }
+            }
+
+            function sectionCard(label, part) {
+                var card = document.createElement('article');
+                card.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg';
+
+                var header = document.createElement('div');
+                header.className = 'mb-4';
+                var chip = document.createElement('span');
+                chip.className = 'inline-block text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/40 rounded-full px-3 py-1';
+                chip.textContent = label;
+                header.appendChild(chip);
+                if (part.source) {
+                    var source = document.createElement('p');
+                    source.className = 'text-sm font-semibold text-gray-500 dark:text-gray-400 mt-2';
+                    source.innerHTML = part.source;
+                    header.appendChild(source);
+                }
+                if (part.heading) {
+                    var heading = document.createElement('h3');
+                    heading.className = 'text-base font-bold italic text-gray-800 dark:text-gray-100 mt-1';
+                    heading.innerHTML = part.heading;
+                    header.appendChild(heading);
+                }
+                card.appendChild(header);
+
+                var text = document.createElement('div');
+                text.className = 'reading-text text-gray-700 dark:text-gray-300';
+                text.innerHTML = part.text || '';
+                card.appendChild(text);
+                return card;
+            }
+
+            function render(data) {
+                setState('ready');
+                dateEl.textContent = data.date || '';
+                dayTitleEl.innerHTML = data.day || '';
+                banner.classList.remove('hidden');
+
+                container.innerHTML = '';
+                MASS_ORDER.forEach(function (section) {
+                    var part = data[section.key];
+                    if (part && part.text) {
+                        container.appendChild(sectionCard(section.label, part));
+                    }
+                });
+
+                if (data.copyright && data.copyright.text) {
+                    copyrightEl.innerHTML = data.copyright.text;
+                    copyrightEl.classList.remove('hidden');
+                }
+            }
+
+            function renderSw(parsed) {
+                setState('ready');
+                dateEl.textContent = parsed.dateLabel || '';
+                dayTitleEl.textContent = parsed.dayTitle || '';
+                banner.classList.remove('hidden');
+
+                container.innerHTML = '';
+                parsed.sections.forEach(function (s) {
+                    container.appendChild(sectionCard(s.label, { source: s.citation, text: s.textHtml }));
+                });
+
+                copyrightEl.innerHTML = 'Masomo yametolewa na <a class="underline" target="_blank" rel="noopener" href="' + SW_SITE + '">Mkatoliki Leo</a>.';
+                copyrightEl.classList.remove('hidden');
+            }
+
+            function showSwUnavailable() {
+                readingsSwNote.textContent = 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyesha kwa Kiingereza.';
+                readingsSwNote.classList.remove('hidden');
+            }
+
+            function fetchTextThroughProxies(url, onOk, onFail) {
+                var i = 0;
+                (function tryNext() {
+                    if (i >= SW_PROXIES.length) { onFail(); return; }
+                    var proxied = SW_PROXIES[i++](url);
+                    var ctrl = window.AbortController ? new AbortController() : null;
+                    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
+                    fetch(proxied, ctrl ? { signal: ctrl.signal } : {})
+                        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                        .then(function (text) { clearTimeout(timer); onOk(text); })
+                        .catch(function () { clearTimeout(timer); tryNext(); });
+                })();
+            }
+
+            function fetchViaReader(url, onOk, onFail) {
+                var ctrl = window.AbortController ? new AbortController() : null;
+                var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
+                fetch(SW_READER_PREFIX + url, ctrl ? { signal: ctrl.signal } : {})
+                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                    .then(function (text) { clearTimeout(timer); onOk(text); })
+                    .catch(function () { clearTimeout(timer); onFail(); });
+            }
+
+            // Fetches one day's article, trying the Reader first and only
+            // falling back to the raw-HTML proxy chain (+ DOM parse) if the
+            // Reader is unreachable or its Markdown doesn't match the
+            // expected shape. onOk receives an already-parsed
+            // {dayTitle, dateLabel, sections} object either way.
+            function fetchSwArticle(url, onOk, onFail) {
+                function viaProxies() {
+                    fetchTextThroughProxies(url, function (html) {
+                        var parsed = parseSwArticle(html);
+                        if (parsed) onOk(parsed); else onFail();
+                    }, onFail);
+                }
+                fetchViaReader(url, function (md) {
+                    var parsed = parseSwArticleText(md);
+                    if (parsed) onOk(parsed); else viaProxies();
+                }, viaProxies);
+            }
+
+            // The listing page (reverse-chronological, ~10 most recent days)
+            // is the only reliable way to map a date to its article id/URL:
+            // mkatolikileo.com's ids increment roughly one per published day,
+            // but there's no guarantee against gaps, so ids are never guessed.
+            function parseSwListHtml(html) {
+                var map = {};
+                var re = /masomo-ya-misa\/(\d+)\/([a-z]+)-([a-z]+)-(\d{1,2})-(\d{4})/g;
+                var m;
+                while ((m = re.exec(html))) {
+                    var monthIdx = SW_MONTHS[m[3]];
+                    if (monthIdx === undefined) continue;
+                    var d = new Date(Number(m[5]), monthIdx, Number(m[4]));
+                    map[stampOf(d)] = SW_SITE + '/masomo-ya-misa/' + m[1] + '/' + m[2] + '-' + m[3] + '-' + m[4] + '-' + m[5];
+                }
+                return map;
+            }
+
+            function resolveSwListMap(cb) {
+                var cached = null;
+                try { cached = JSON.parse(localStorage.getItem(SW_LIST_CACHE_KEY) || 'null'); } catch (e) {}
+                if (cached && cached.fetchedAt && (Date.now() - cached.fetchedAt) < SW_LIST_TTL_MS) {
+                    cb(cached.map);
+                    return;
+                }
+
+                function useText(text) {
+                    var map = parseSwListHtml(text);
+                    if (Object.keys(map).length) {
+                        try { localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), map: map })); } catch (e) {}
+                        cb(map);
+                        return true;
+                    }
+                    return false;
+                }
+
+                // parseSwListHtml just regex-scans for article URLs, so it
+                // works equally well on the Reader's Markdown or on raw
+                // HTML from the proxy chain - only the fetch step differs.
+                fetchViaReader(SW_LIST_URL, function (md) {
+                    if (useText(md)) return;
+                    viaProxies();
+                }, viaProxies);
+
+                function viaProxies() {
+                    fetchTextThroughProxies(SW_LIST_URL, function (html) {
+                        if (!useText(html)) cb(cached ? cached.map : null);
+                    }, function () {
+                        cb(cached ? cached.map : null);
+                    });
+                }
+            }
+
+            // Pulls the day title and each reading (label + citation + text)
+            // out of a fetched mkatolikileo.com article and sanitizes it -
+            // same approach as cleanOffice() in pages/prayer-hour.html.
+            function parseSwArticle(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var titleEl = doc.querySelector('.pretty_date_title');
+                var blocks = doc.querySelectorAll('.readings');
+                if (!titleEl || !blocks.length) return null;
+
+                var rawTitle = titleEl.textContent.replace(/\s+/g, ' ').trim();
+                var dayTitle = rawTitle, dateLabel = '';
+                var titleMatch = rawTitle.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+                if (titleMatch) { dayTitle = titleMatch[1].trim(); dateLabel = titleMatch[2].trim(); }
+
+                var sections = [];
+                blocks.forEach(function (block) {
+                    var labelEl = block.querySelector('.reading_title');
+                    var citeEl = block.querySelector('.reading');
+                    var textEl = block.querySelector('p');
+                    if (!labelEl || !textEl) return;
+                    textEl.querySelectorAll('script, style, form, iframe, object, embed').forEach(function (n) {
+                        n.parentNode.removeChild(n);
+                    });
+                    textEl.querySelectorAll('*').forEach(function (n) {
+                        for (var i = n.attributes.length - 1; i >= 0; i--) {
+                            if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+                        }
+                    });
+                    textEl.querySelectorAll('a[href]').forEach(function (a) {
+                        var href = a.getAttribute('href');
+                        if (href && href.charAt(0) === '/') a.setAttribute('href', SW_SITE + href);
+                        a.setAttribute('target', '_blank');
+                        a.setAttribute('rel', 'noopener');
+                    });
+                    sections.push({
+                        label: labelEl.textContent.trim(),
+                        citation: citeEl ? citeEl.textContent.trim() : '',
+                        textHtml: textEl.innerHTML
+                    });
+                });
+                if (!sections.length) return null;
+                return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+            }
+
+            // Parses the Markdown that r.jina.ai's Reader returns for an
+            // mkatolikileo.com article. The Reader ignores the site's HTML
+            // classes/layout entirely, so this only depends on the visible
+            // content shape, which has been stable: a "### Day Title
+            // (Date)" heading, then repeating [plain label line] / [###
+            // citation] / [body text] triples ("Somo la 1", "Wimbo wa
+            // Katikati" / "Zaburi ya Katikati", "Shangilio", "Injili", plus
+            // "Somo la 2" on Sundays and solemnities).
+            function parseSwArticleText(md) {
+                if (!md) return null;
+                var lines = md.replace(/\r\n/g, '\n').split('\n');
+                var dayTitle = '', dateLabel = '', startIdx = -1;
+                for (var i = 0; i < lines.length; i++) {
+                    var head = lines[i].match(/^#{2,3}\s+(.+?)\s*\(([^()]+)\)\s*$/);
+                    if (head) { dayTitle = head[1].trim(); dateLabel = head[2].trim(); startIdx = i + 1; break; }
+                }
+                if (startIdx === -1) return null;
+
+                function isStop(line) {
+                    return /^\d+\s*Imependwa/.test(line) || /^#{1,3}\s*Maoni\b/.test(line);
+                }
+
+                var sections = [];
+                var i2 = startIdx;
+                while (i2 < lines.length) {
+                    var line = lines[i2].trim();
+                    i2++;
+                    if (!line || isStop(line) || line.charAt(0) === '#') continue;
+
+                    var j = i2;
+                    while (j < lines.length && !lines[j].trim()) j++;
+                    var citeMatch = j < lines.length ? lines[j].match(/^###\s+(.+)$/) : null;
+                    if (!citeMatch) continue;
+
+                    var label = line.replace(/\*\*/g, '').trim();
+                    var citation = citeMatch[1].trim();
+                    i2 = j + 1;
+
+                    var bodyLines = [];
+                    while (i2 < lines.length) {
+                        var peekTrim = lines[i2].trim();
+                        if (isStop(peekTrim)) break;
+                        if (peekTrim && lines[i2].charAt(0) !== '#') {
+                            var k = i2 + 1;
+                            while (k < lines.length && !lines[k].trim()) k++;
+                            if (k < lines.length && /^###\s+/.test(lines[k])) break;
+                        } else if (peekTrim.charAt(0) === '#') {
+                            break;
+                        }
+                        bodyLines.push(lines[i2]);
+                        i2++;
+                    }
+                    var text = bodyLines.join('\n').trim();
+                    if (!text) continue;
+                    sections.push({ label: label, citation: citation, textHtml: swTextToHtml(text) });
+                }
+                if (!sections.length) return null;
+                return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+            }
+
+            function swTextToHtml(text) {
+                var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return esc.split(/\n{2,}/).map(function (p) {
+                    return '<div>' + p.trim().replace(/ {2,}\n|\n/g, '<br>') + '</div>';
+                }).join('');
+            }
+
+            function fetchErrorText() {
+                return lang === 'sw'
+                    ? 'Imeshindikana kupakia masomo ya siku hii. Tafadhali angalia mtandao wako na ujaribu tena.'
+                    : 'Unable to load the readings for this day. Please check your connection and try again.';
+            }
+
+            function windowErrorText() {
+                return (lang === 'sw' ? 'Masomo yanapatikana kuanzia ' : 'Readings are available from ')
+                    + fmtDay(windowMin) + (lang === 'sw' ? ' hadi ' : ' to ')
+                    + fmtDay(windowMax) + (lang === 'sw' ? '. Tafadhali chagua tarehe kati ya hizo.' : '. Please choose a date in that range.');
+            }
+
+            var CHROME = {
+                en: { title: 'Daily Readings', subtitle: 'Mass readings for every day', loading: 'Loading readings…', retry: 'Retry', today: 'Back to today' },
+                sw: { title: 'Masomo ya Siku', subtitle: 'Masomo ya siku', loading: 'Inapakia masomo…', retry: 'Jaribu tena', today: 'Rudi leo' }
+            };
+
+            function applyLangChrome() {
+                var c = CHROME[lang];
+                pageTitleEl.textContent = c.title;
+                pageSubtitleEl.textContent = c.subtitle;
+                document.title = c.title + ' - ipray';
+                var loadingText = loadingEl.querySelector('p');
+                if (loadingText) loadingText.textContent = c.loading;
+                retryBtn.textContent = c.retry;
+                todayBtn.textContent = c.today;
+                document.documentElement.lang = lang === 'sw' ? 'sw' : 'en';
+                [[langEnBtn, 'en'], [langSwBtn, 'sw']].forEach(function (pair) {
+                    var active = lang === pair[1];
+                    pair[0].className = 'px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ' + (active
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300');
+                    pair[0].setAttribute('aria-selected', String(active));
+                });
+            }
+
+            function setLang(newLang) {
+                if (newLang === lang) return;
+                lang = newLang;
+                try {
+                    localStorage.setItem(LANG_KEY, lang);
+                    localStorage.setItem('langUpdatedAt', String(Date.now()));
+                } catch (e) {}
+                applyLangChrome();
+                load(currentDate);
+            }
+
+            function cleanupPending() {
+                if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
+                if (pendingScript && pendingScript.parentNode) {
+                    pendingScript.parentNode.removeChild(pendingScript);
+                }
+                pendingScript = null;
+            }
+
+            window.universalisCallback = function (data) {
+                cleanupPending();
+                if (!data || String(data.number) !== currentStamp) return;
+                try {
+                    localStorage.setItem(CACHE_PREFIX + currentStamp, JSON.stringify(data));
+                } catch (e) {}
+                render(data);
+            };
+
+            function loadEnglish(date) {
+                var stamp = stampOf(date);
+                var cached = null;
+                try {
+                    cached = localStorage.getItem(CACHE_PREFIX + stamp);
+                } catch (e) {}
+                if (cached) {
+                    try {
+                        render(JSON.parse(cached));
+                        return;
+                    } catch (e) {}
+                }
+
+                errorText.textContent = fetchErrorText();
+                setState('loading');
+                pendingScript = document.createElement('script');
+                pendingScript.src = 'https://universalis.com/' + stamp + '/jsonpmass.js';
+                pendingScript.onerror = function () {
+                    cleanupPending();
+                    if (stamp === currentStamp) setState('error');
+                };
+                pendingTimer = setTimeout(function () {
+                    cleanupPending();
+                    if (stamp === currentStamp) setState('error');
+                }, FETCH_TIMEOUT_MS);
+                document.body.appendChild(pendingScript);
+            }
+
+            function loadSwahili(date) {
+                var stamp = stampOf(date);
+                var cachedSw = null;
+                try { cachedSw = localStorage.getItem(SW_CACHE_PREFIX + stamp); } catch (e) {}
+                if (cachedSw) {
+                    try {
+                        renderSw(JSON.parse(cachedSw));
+                        return;
+                    } catch (e) {}
+                }
+
+                errorText.textContent = fetchErrorText();
+                setState('loading');
+
+                resolveSwListMap(function (map) {
+                    if (stamp !== currentStamp) return;
+                    var url = map && map[stamp];
+                    if (!url) {
+                        showSwUnavailable();
+                        loadEnglish(date);
+                        return;
+                    }
+                    fetchSwArticle(url, function (parsed) {
+                        if (stamp !== currentStamp) return;
+                        try { localStorage.setItem(SW_CACHE_PREFIX + stamp, JSON.stringify(parsed)); } catch (e) {}
+                        renderSw(parsed);
+                    }, function () {
+                        if (stamp !== currentStamp) return;
+                        showSwUnavailable();
+                        loadEnglish(date);
+                    });
+                });
+            }
+
+            function load(date) {
+                currentDate = date;
+                currentStamp = stampOf(date);
+                datePicker.value = isoOf(date);
+                todayBtn.classList.toggle('hidden', currentStamp === stampOf(new Date()));
+                prevBtn.disabled = +startOfDay(date) <= +windowMin;
+                nextBtn.disabled = +startOfDay(date) >= +windowMax;
+                cleanupPending();
+                readingsSwNote.classList.add('hidden');
+                readingsSwNote.textContent = '';
+
+                // Outside the feed's window nothing can be fetched: say so
+                // immediately instead of waiting for the request to time out
+                if (+startOfDay(date) < +windowMin || +startOfDay(date) > +windowMax) {
+                    errorText.textContent = windowErrorText();
+                    setState('error');
+                    return;
+                }
+
+                if (lang === 'sw') {
+                    loadSwahili(date);
+                } else {
+                    loadEnglish(date);
+                }
+            }
+
+            function shiftDay(delta) {
+                var next = new Date(currentDate);
+                next.setDate(next.getDate() + delta);
+                load(next);
+            }
+
+            prevBtn.addEventListener('click', function () { shiftDay(-1); });
+            nextBtn.addEventListener('click', function () { shiftDay(1); });
+            todayBtn.addEventListener('click', function () { load(new Date()); });
+            retryBtn.addEventListener('click', function () {
+                try {
+                    localStorage.removeItem(CACHE_PREFIX + currentStamp);
+                    localStorage.removeItem(SW_CACHE_PREFIX + currentStamp);
+                } catch (e) {}
+                load(currentDate);
+            });
+            datePicker.min = isoOf(windowMin);
+            datePicker.max = isoOf(windowMax);
+            datePicker.addEventListener('change', function () {
+                if (!datePicker.value) return;
+                var parts = datePicker.value.split('-');
+                load(new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
+            });
+
+            langEnBtn.addEventListener('click', function () { setLang('en'); });
+            langSwBtn.addEventListener('click', function () { setLang('sw'); });
+            // Stay in sync if the language is changed from another open tab/page.
+            window.addEventListener('storage', function (e) {
+                if (e.key !== 'langUpdatedAt') return;
+                var newLang = 'en';
+                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
+                if (newLang === lang) return;
+                lang = newLang;
+                applyLangChrome();
+                load(currentDate);
+            });
+
+            applyLangChrome();
+            load(new Date());
+        })();
+    </script>
+    <script src="../js/prayers-nav.js" defer></script>
+    <script src="../js/text-size-control.js" defer></script>
+    <script src="../js/prevent-zoom.js" defer></script>
+</body>
+</html>
