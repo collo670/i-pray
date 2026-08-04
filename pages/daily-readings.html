@@ -222,8 +222,13 @@
             // Language switch: English / Kiswahili, same convention as
             // pages/prayer-hour.html (localStorage key shared across pages).
             var LANG_KEY = 'preferredLanguage';
-            var lang = 'en';
-            try { if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw'; } catch (e) {}
+            // Match the rest of the app (index/settings default to Kiswahili).
+            var lang = 'sw';
+            try {
+                var storedLang = localStorage.getItem(LANG_KEY);
+                if (storedLang === 'en') lang = 'en';
+                else if (storedLang === 'sw') lang = 'sw';
+            } catch (e) {}
 
             // Kiswahili daily readings: there is no API for this (checked
             // Universalis, iBreviary, Divine Office - none publish Swahili).
@@ -236,9 +241,11 @@
             // with a note explaining why.
             var SW_SITE = 'https://mkatolikileo.com';
             var SW_LIST_URL = SW_SITE + '/masomo-ya-misa';
-            var SW_CACHE_PREFIX = 'swReadings-';
+            var SW_CACHE_PREFIX = 'swReadings-v2-';
             var SW_LIST_CACHE_KEY = 'swReadingsListMap';
             var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
+            var SW_WEEKDAYS = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+            var SW_MONTH_SLUGS = ['januari', 'februari', 'machi', 'aprili', 'mei', 'juni', 'julai', 'agosti', 'septemba', 'oktoba', 'novemba', 'desemba'];
             // r.jina.ai ("Reader") fetches a page server-side and returns
             // clean Markdown with CORS already open - no proxy needed, and
             // it isn't tied to mkatolikileo.com's current HTML/class names,
@@ -344,12 +351,28 @@
                 banner.classList.remove('hidden');
 
                 container.innerHTML = '';
-                parsed.sections.forEach(function (s) {
+                var sections = parsed.sections || [];
+                for (var i = 0; i < sections.length; i++) {
+                    var s = sections[i];
                     container.appendChild(sectionCard(s.label, { source: s.citation, text: s.textHtml }));
-                });
+                    // Stop at the Gospel — nothing after Injili should render.
+                    if (isSwGospelLabel(s.label)) break;
+                }
 
-                copyrightEl.innerHTML = 'Masomo yametolewa na <a class="underline" target="_blank" rel="noopener" href="' + SW_SITE + '">Mkatoliki Leo</a>.';
+                copyrightEl.textContent = 'Masomo yametolewa na Mkatoliki Leo.';
                 copyrightEl.classList.remove('hidden');
+            }
+
+            // Reject a parsed article whose embedded date label does not
+            // match the day we asked for (guards against a wrong projected id).
+            function swParsedMatchesStamp(parsed, stamp) {
+                if (!parsed || !parsed.dateLabel) return false;
+                var m = String(parsed.dateLabel).match(/([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})/);
+                if (!m) return true; // unparseable label — trust the URL slug
+                var monthIdx = SW_MONTHS[m[1].toLowerCase()];
+                if (monthIdx === undefined) return true;
+                var d = new Date(Number(m[3]), monthIdx, Number(m[2]));
+                return stampOf(d) === stamp;
             }
 
             function showSwUnavailable() {
@@ -410,15 +433,67 @@
                     var monthIdx = SW_MONTHS[m[3]];
                     if (monthIdx === undefined) continue;
                     var d = new Date(Number(m[5]), monthIdx, Number(m[4]));
-                    map[stampOf(d)] = SW_SITE + '/masomo-ya-misa/' + m[1] + '/' + m[2] + '-' + m[3] + '-' + m[4] + '-' + m[5];
+                    var daySlug = String(Number(m[4])).padStart(2, '0');
+                    map[stampOf(d)] = SW_SITE + '/masomo-ya-misa/' + m[1] + '/' + m[2] + '-' + m[3] + '-' + daySlug + '-' + m[5];
                 }
                 return map;
             }
 
-            function resolveSwListMap(cb) {
+            function buildSwArticleUrl(date, articleId) {
+                var dd = String(date.getDate()).padStart(2, '0');
+                return SW_SITE + '/masomo-ya-misa/' + articleId + '/'
+                    + SW_WEEKDAYS[date.getDay()] + '-'
+                    + SW_MONTH_SLUGS[date.getMonth()] + '-'
+                    + dd + '-' + date.getFullYear();
+            }
+
+            // The listing page often lags behind newly published articles
+            // (today can already be live while the index still ends at
+            // yesterday). Article ids increment roughly one per day, so
+            // when a stamp is missing we project a URL from the nearest
+            // known listing entry and verify it by fetching.
+            function guessSwArticleUrl(date, map) {
+                if (!map) return null;
+                var target = startOfDay(date).getTime();
+                var best = null;
+                Object.keys(map).forEach(function (stamp) {
+                    var y = Number(stamp.slice(0, 4));
+                    var mo = Number(stamp.slice(4, 6)) - 1;
+                    var da = Number(stamp.slice(6, 8));
+                    var t = new Date(y, mo, da).getTime();
+                    var idMatch = String(map[stamp]).match(/masomo-ya-misa\/(\d+)\//);
+                    if (!idMatch) return;
+                    var delta = Math.abs(t - target);
+                    if (!best || delta < best.delta) {
+                        best = { t: t, id: Number(idMatch[1]), delta: delta };
+                    }
+                });
+                if (!best) return null;
+                var dayDiff = Math.round((target - best.t) / 86400000);
+                var guessedId = best.id + dayDiff;
+                if (guessedId < 1) return null;
+                return buildSwArticleUrl(date, guessedId);
+            }
+
+            function rememberSwListUrl(stamp, url) {
+                try {
+                    var cached = JSON.parse(localStorage.getItem(SW_LIST_CACHE_KEY) || 'null') || { map: {} };
+                    cached.map = cached.map || {};
+                    cached.map[stamp] = url;
+                    cached.fetchedAt = Date.now();
+                    localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify(cached));
+                } catch (e) {}
+            }
+
+            // neededStamp: if the cached map is still fresh but lacks this
+            // date, refetch so newly published days are not stuck behind
+            // the 6h TTL.
+            function resolveSwListMap(neededStamp, cb) {
                 var cached = null;
                 try { cached = JSON.parse(localStorage.getItem(SW_LIST_CACHE_KEY) || 'null'); } catch (e) {}
-                if (cached && cached.fetchedAt && (Date.now() - cached.fetchedAt) < SW_LIST_TTL_MS) {
+                var cacheFresh = cached && cached.fetchedAt && (Date.now() - cached.fetchedAt) < SW_LIST_TTL_MS;
+                var cacheHasStamp = !!(neededStamp && cached && cached.map && cached.map[neededStamp]);
+                if (cacheFresh && (!neededStamp || cacheHasStamp)) {
                     cb(cached.map);
                     return;
                 }
@@ -426,6 +501,13 @@
                 function useText(text) {
                     var map = parseSwListHtml(text);
                     if (Object.keys(map).length) {
+                        // Keep any previously remembered (guessed) URLs that
+                        // the listing still doesn't show.
+                        if (cached && cached.map) {
+                            Object.keys(cached.map).forEach(function (k) {
+                                if (!map[k]) map[k] = cached.map[k];
+                            });
+                        }
                         try { localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), map: map })); } catch (e) {}
                         cb(map);
                         return true;
@@ -465,33 +547,54 @@
                 if (titleMatch) { dayTitle = titleMatch[1].trim(); dateLabel = titleMatch[2].trim(); }
 
                 var sections = [];
-                blocks.forEach(function (block) {
+                for (var b = 0; b < blocks.length; b++) {
+                    var block = blocks[b];
                     var labelEl = block.querySelector('.reading_title');
                     var citeEl = block.querySelector('.reading');
                     var textEl = block.querySelector('p');
-                    if (!labelEl || !textEl) return;
-                    textEl.querySelectorAll('script, style, form, iframe, object, embed').forEach(function (n) {
+                    if (!labelEl || !textEl) continue;
+                    textEl.querySelectorAll('script, style, form, iframe, object, embed, nav, ul, ol').forEach(function (n) {
                         n.parentNode.removeChild(n);
+                    });
+                    // Drop site chrome links; keep plain reading text only.
+                    textEl.querySelectorAll('a[href]').forEach(function (a) {
+                        var parent = a.parentNode;
+                        while (a.firstChild) parent.insertBefore(a.firstChild, a);
+                        parent.removeChild(a);
                     });
                     textEl.querySelectorAll('*').forEach(function (n) {
                         for (var i = n.attributes.length - 1; i >= 0; i--) {
                             if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
                         }
                     });
-                    textEl.querySelectorAll('a[href]').forEach(function (a) {
-                        var href = a.getAttribute('href');
-                        if (href && href.charAt(0) === '/') a.setAttribute('href', SW_SITE + href);
-                        a.setAttribute('target', '_blank');
-                        a.setAttribute('rel', 'noopener');
-                    });
+                    var label = labelEl.textContent.trim();
                     sections.push({
-                        label: labelEl.textContent.trim(),
+                        label: label,
                         citation: citeEl ? citeEl.textContent.trim() : '',
                         textHtml: textEl.innerHTML
                     });
-                });
+                    if (isSwGospelLabel(label)) break;
+                }
                 if (!sections.length) return null;
                 return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+            }
+
+            function isSwGospelLabel(label) {
+                return /^injili\b/i.test(String(label || '').replace(/\*/g, '').trim());
+            }
+
+            function isSwFooterLine(line) {
+                var t = String(line || '').trim();
+                if (!t) return false;
+                if (/^\d+\s*Imependwa/.test(t)) return true;
+                if (/^#{1,3}\s*Maoni\b/i.test(t)) return true;
+                if (/^---+/.test(t)) return true;
+                // Nav / footer markdown links that follow the Gospel on the site.
+                if (/^\*\s+\[[^\]]+\]\([^)]+\)/.test(t)) return true;
+                if (/^-\s+\[[^\]]+\]\([^)]+\)/.test(t)) return true;
+                if (/^\[[^\]]+\]\(https?:\/\/mkatolikileo\.com/i.test(t)) return true;
+                if (/^\[?\d+\]?\s*Imependwa/i.test(t)) return true;
+                return false;
             }
 
             // Parses the Markdown that r.jina.ai's Reader returns for an
@@ -502,6 +605,7 @@
             // citation] / [body text] triples ("Somo la 1", "Wimbo wa
             // Katikati" / "Zaburi ya Katikati", "Shangilio", "Injili", plus
             // "Somo la 2" on Sundays and solemnities).
+            // Parsing stops at Injili so site nav/footer links never render.
             function parseSwArticleText(md) {
                 if (!md) return null;
                 var lines = md.replace(/\r\n/g, '\n').split('\n');
@@ -512,16 +616,12 @@
                 }
                 if (startIdx === -1) return null;
 
-                function isStop(line) {
-                    return /^\d+\s*Imependwa/.test(line) || /^#{1,3}\s*Maoni\b/.test(line);
-                }
-
                 var sections = [];
                 var i2 = startIdx;
                 while (i2 < lines.length) {
                     var line = lines[i2].trim();
                     i2++;
-                    if (!line || isStop(line) || line.charAt(0) === '#') continue;
+                    if (!line || isSwFooterLine(line) || line.charAt(0) === '#') continue;
 
                     var j = i2;
                     while (j < lines.length && !lines[j].trim()) j++;
@@ -535,7 +635,7 @@
                     var bodyLines = [];
                     while (i2 < lines.length) {
                         var peekTrim = lines[i2].trim();
-                        if (isStop(peekTrim)) break;
+                        if (isSwFooterLine(peekTrim)) break;
                         if (peekTrim && lines[i2].charAt(0) !== '#') {
                             var k = i2 + 1;
                             while (k < lines.length && !lines[k].trim()) k++;
@@ -549,16 +649,24 @@
                     var text = bodyLines.join('\n').trim();
                     if (!text) continue;
                     sections.push({ label: label, citation: citation, textHtml: swTextToHtml(text) });
+                    // Mass readings end at the Gospel — ignore everything after.
+                    if (isSwGospelLabel(label)) break;
                 }
                 if (!sections.length) return null;
                 return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
             }
 
             function swTextToHtml(text) {
-                var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                // Drop leftover nav/footer link lines that may trail a section.
+                var cleaned = String(text || '').split('\n').filter(function (ln) {
+                    return !isSwFooterLine(ln) && !/^\[[^\]]+\]\([^)]+\)\s*$/.test(ln.trim());
+                }).join('\n');
+                // Unwrap any remaining markdown links to plain text.
+                cleaned = cleaned.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+                var esc = cleaned.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 return esc.split(/\n{2,}/).map(function (p) {
                     return '<div>' + p.trim().replace(/ {2,}\n|\n/g, '<br>') + '</div>';
-                }).join('');
+                }).filter(function (p) { return p !== '<div></div>'; }).join('');
             }
 
             function fetchErrorText() {
@@ -667,23 +775,43 @@
                 errorText.textContent = fetchErrorText();
                 setState('loading');
 
-                resolveSwListMap(function (map) {
+                function onSwFail() {
                     if (stamp !== currentStamp) return;
-                    var url = map && map[stamp];
-                    if (!url) {
-                        showSwUnavailable();
-                        loadEnglish(date);
+                    showSwUnavailable();
+                    loadEnglish(date);
+                }
+
+                function onSwOk(url, parsed) {
+                    if (stamp !== currentStamp) return;
+                    rememberSwListUrl(stamp, url);
+                    try { localStorage.setItem(SW_CACHE_PREFIX + stamp, JSON.stringify(parsed)); } catch (e) {}
+                    renderSw(parsed);
+                }
+
+                function tryUrl(url, onFail) {
+                    if (!url) { onFail(); return; }
+                    fetchSwArticle(url, function (parsed) {
+                        if (!swParsedMatchesStamp(parsed, stamp)) { onFail(); return; }
+                        onSwOk(url, parsed);
+                    }, onFail);
+                }
+
+                resolveSwListMap(stamp, function (map) {
+                    if (stamp !== currentStamp) return;
+                    var listed = map && map[stamp];
+                    if (listed) {
+                        tryUrl(listed, function () {
+                            // Listed URL failed; try a projected id in case
+                            // the listing entry is stale/wrong.
+                            var guessed = guessSwArticleUrl(date, map);
+                            if (guessed && guessed !== listed) tryUrl(guessed, onSwFail);
+                            else onSwFail();
+                        });
                         return;
                     }
-                    fetchSwArticle(url, function (parsed) {
-                        if (stamp !== currentStamp) return;
-                        try { localStorage.setItem(SW_CACHE_PREFIX + stamp, JSON.stringify(parsed)); } catch (e) {}
-                        renderSw(parsed);
-                    }, function () {
-                        if (stamp !== currentStamp) return;
-                        showSwUnavailable();
-                        loadEnglish(date);
-                    });
+                    // Not on the index yet (common for "today") — project
+                    // from the nearest known article id and verify by fetch.
+                    tryUrl(guessSwArticleUrl(date, map), onSwFail);
                 });
             }
 
@@ -726,6 +854,9 @@
                 try {
                     localStorage.removeItem(CACHE_PREFIX + currentStamp);
                     localStorage.removeItem(SW_CACHE_PREFIX + currentStamp);
+                    // Force a fresh listing fetch so newly published Swahili
+                    // articles are not hidden by a stale 6h list cache.
+                    localStorage.removeItem(SW_LIST_CACHE_KEY);
                 } catch (e) {}
                 load(currentDate);
             });
@@ -742,8 +873,12 @@
             // Stay in sync if the language is changed from another open tab/page.
             window.addEventListener('storage', function (e) {
                 if (e.key !== 'langUpdatedAt') return;
-                var newLang = 'en';
-                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
+                var newLang = 'sw';
+                try {
+                    var stored = localStorage.getItem(LANG_KEY);
+                    if (stored === 'en') newLang = 'en';
+                    else if (stored === 'sw') newLang = 'sw';
+                } catch (err) {}
                 if (newLang === lang) return;
                 lang = newLang;
                 applyLangChrome();
