@@ -1,0 +1,93 @@
+diff --git a/pages/prayer-hour.html b/pages/prayer-hour.html
+index e1e1894..9d089b8 100644
+--- a/pages/prayer-hour.html
++++ b/pages/prayer-hour.html
+@@ -56,6 +56,22 @@
+         .office-content .audioclip audio { width: 100%; max-width: 24rem; }
+         .office-content a { color: #7c2133; text-decoration: underline; }
+         .dark .office-content a { color: #a78bfa; }
++        /* Saint/celebration-of-the-day tag, shown inline inside the calendar
++           day banner (#bannerDay) instead of the old separate date, psalter
++           week and celebration rows. */
++        #dayBanner .saint-tag {
++            display: inline-block;
++            margin-left: 0.5rem;
++            padding: 0.2rem 0.75rem;
++            border-radius: 9999px;
++            font-size: 0.7rem;
++            font-weight: 700;
++            letter-spacing: 0.03em;
++            text-transform: uppercase;
++            vertical-align: middle;
++            background: var(--lit-soft, rgba(124, 33, 51, 0.14));
++            color: var(--lit-text, #7c2133);
++        }
+         /* Locally-rendered Swahili Office of Readings (data/office-readings-sw) */
+         .office-content .sw-daylabel { font-weight: 700; font-size: 1.05rem; color: #1f2937; margin-bottom: 0.5rem; }
+         .dark .office-content .sw-daylabel { color: #f3f4f6; }
+@@ -151,16 +167,13 @@
+                 </div>
+             </div>
+ 
+-            <!-- Liturgical day banner: day, psalter week, celebration of the day -->
++            <!-- Liturgical day banner: just the calendar day, with the saint /
++                 celebration of the day (if any) shown as a tag inline with it. -->
+             <div id="dayBanner" class="liturgical-card mb-6" data-color="green">
+                 <div class="text-center">
+-                    <p id="bannerDate" class="text-sm text-gray-600 dark:text-gray-400 mb-1"></p>
+-                    <div id="bannerDay" class="text-lg font-bold text-gray-800 dark:text-gray-100"></div>
+-                    <span id="bannerPsalter" class="psalter-chip hidden"></span>
+-                    <div id="bannerCelebration" class="mt-3 pt-3 border-t border-dashed border-gray-300 dark:border-gray-600 hidden">
+-                        <p id="celebrationRank" class="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400"></p>
+-                        <p id="celebrationName" class="text-base font-bold text-gray-800 dark:text-gray-100 mt-1"></p>
+-                        <p id="celebrationNote" class="text-sm italic text-gray-600 dark:text-gray-400 mt-1 hidden">The office below carries the proper texts of this celebration.</p>
++                    <div id="bannerDay" class="text-lg font-bold text-gray-800 dark:text-gray-100">
++                        <span id="bannerDayLabel"></span>
++                        <span id="celebrationTag" class="saint-tag hidden"></span>
+                     </div>
+                 </div>
+             </div>
+@@ -296,13 +309,8 @@
+             var nextBtn = document.getElementById('nextDay');
+             var todayBtn = document.getElementById('todayBtn');
+             var banner = document.getElementById('dayBanner');
+-            var bannerDate = document.getElementById('bannerDate');
+-            var bannerDay = document.getElementById('bannerDay');
+-            var bannerPsalter = document.getElementById('bannerPsalter');
+-            var celebrationBox = document.getElementById('bannerCelebration');
+-            var celebrationRank = document.getElementById('celebrationRank');
+-            var celebrationName = document.getElementById('celebrationName');
+-            var celebrationNote = document.getElementById('celebrationNote');
++            var bannerDayLabel = document.getElementById('bannerDayLabel');
++            var celebrationTag = document.getElementById('celebrationTag');
+             var loadingEl = document.getElementById('hourLoading');
+             var unavailableEl = document.getElementById('hourUnavailable');
+             var windowNote = document.getElementById('windowNote');
+@@ -400,23 +408,13 @@
+             function renderBanner(date) {
+                 var info = getLiturgicalToday(date, lang);
+                 var celebration = getCelebrationForDate(date);
+-                bannerDate.textContent = fmt(date);
+-                bannerDay.textContent = info.dayLabel;
++                bannerDayLabel.textContent = info.dayLabel;
+                 banner.setAttribute('data-color', COLOR_MAP[(celebration && celebration.color) || info.color] || 'green');
+-                if (info.psalterWeek) {
+-                    bannerPsalter.textContent = (lang === 'sw' ? 'Juma la Zaburi ' : 'Psalter Week ') + (ROMAN[info.psalterWeek] || info.psalterWeek);
+-                    bannerPsalter.classList.remove('hidden');
+-                } else {
+-                    bannerPsalter.classList.add('hidden');
+-                }
+                 if (celebration) {
+-                    celebrationRank.textContent = RANK_LABELS[lang][celebration.type] || celebration.type;
+-                    celebrationName.textContent = celebration.name;
+-                    var isMajor = celebration.type === 'Solemnity' || celebration.type === 'Feast' || celebration.type === 'Triduum';
+-                    celebrationNote.classList.toggle('hidden', !isMajor);
+-                    celebrationBox.classList.remove('hidden');
++                    celebrationTag.textContent = (RANK_LABELS[lang][celebration.type] || celebration.type) + ': ' + celebration.name;
++                    celebrationTag.classList.remove('hidden');
+                 } else {
+-                    celebrationBox.classList.add('hidden');
++                    celebrationTag.classList.add('hidden');
+                 }
+             }
+ 
