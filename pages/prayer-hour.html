@@ -83,6 +83,9 @@
         .dark .office-content .sw-speaker { color: #c4b5fd; }
         .office-content .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
         .dark .office-content .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
+        .office-content .sw-reading-header { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+        .office-content .sw-reading-header h4 { margin: 1.25rem 0 0.75rem; }
+        .office-content .sw-reading-header .sw-citation { margin: 0; }
     </style>
     <!-- Apply saved theme before paint to avoid flash -->
     <script>
@@ -538,8 +541,10 @@
                     html += '<div class="sw-fallback-note">Masomo ya siku hii mahususi hayapatikani; yanayoonyeshwa ni ya ' + esc(dayData.dayLabel) + ', ndani ya juma hili hili.</div>';
                 }
                 html += '<hr class="shortrule">';
+                html += '<div class="sw-reading-header">';
                 html += '<h4>Somo la Kwanza</h4>';
                 html += '<p class="sw-citation">' + esc(dayData.firstReading.citation) + '</p>';
+                html += '</div>';
                 html += renderSwResponsory(dayData.responsory1);
                 html += '<hr class="shortrule">';
                 html += '<h4>Somo la Pili</h4>';
@@ -586,6 +591,9 @@
                         }
                         if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
                         showOffice(renderSwReading(dayData, usedFallbackDay));
+                        if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
+                            window.SomoLaKwanzaBible.init();
+                        }
                     });
                 } else {
                     loadUniversalisContent(token, swSeasonNote());
@@ -715,6 +723,7 @@
             document.addEventListener('DOMContentLoaded', updateTextCtlVisibility);
         })();
     </script>
+    <script src="../js/somo-la-kwanza-bible.js" defer></script>
     <script src="../js/prayers-nav.js" defer></script>
     <!-- A-/A+ control that resizes the rendered office text (.office-content)
          for every hour and language - Readings, Midday and Vespers, English
