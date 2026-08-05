@@ -314,10 +314,9 @@
     }
 
     function findSomoLaKwanzaHeading() {
-        // Most pages use <h2>, a handful of OCR-sourced pages have it as
-        // <h3> and/or with a stray space inside "KWANZA" ("KWA NZA") —
-        // tolerate both.
-        var headings = document.querySelectorAll('h2, h3');
+        // Most pages use <h2>, OCR-sourced pages may use <h3>, and the
+        // dynamic Liturgy of the Hours view uses <h4> — tolerate all.
+        var headings = document.querySelectorAll('h2, h3, h4');
         var pattern = /SOMO\s+LA\s+KWA\s*NZA/i;
         for (var i = 0; i < headings.length; i++) {
             if (pattern.test(headings[i].textContent)) return headings[i];
@@ -326,10 +325,17 @@
     }
 
     function extractCitation(headingEl) {
-        var text = headingEl.textContent || '';
+        var text = (headingEl.textContent || '').trim();
         var idx = text.search(/:/);
-        var citation = idx === -1 ? text : text.slice(idx + 1);
-        return normalizeRef(citation);
+        if (idx !== -1) {
+            var after = text.slice(idx + 1).trim();
+            if (after) return normalizeRef(after);
+        }
+        var next = headingEl.nextElementSibling;
+        if (next && /sw-citation/i.test(next.className)) {
+            return normalizeRef((next.textContent || '').trim());
+        }
+        return normalizeRef(text);
     }
 
     function buildContainer() {
@@ -443,6 +449,7 @@
         BOOK_MAP: BOOK_MAP,
         parseCitation: parseCitation,
         splitBookAndRest: splitBookAndRest,
-        normalizeRef: normalizeRef
+        normalizeRef: normalizeRef,
+        init: init
     };
 })();
