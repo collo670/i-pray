@@ -1,0 +1,1363 @@
+diff --git a/cloudflare-worker/bolls-proxy.js b/cloudflare-worker/bolls-proxy.js
+new file mode 100644
+index 0000000..231aed1
+--- /dev/null
++++ b/cloudflare-worker/bolls-proxy.js
+@@ -0,0 +1,63 @@
++// Bolls Bible API CORS proxy — Cloudflare Worker
++// -----------------------------------------------------------------
++// bolls.life does not send Access-Control-Allow-Origin, so a static
++// site (GitHub Pages, no backend of its own) cannot call it directly
++// from the browser. This Worker sits in front of bolls.life, adds a
++// permissive CORS header, and passes the request straight through.
++//
++// DEPLOY (free, ~5 minutes, no credit card required):
++//   1. https://dash.cloudflare.com -> sign up / log in (free plan)
++//   2. Workers & Pages -> Create -> "Create Worker"
++//   3. Delete the sample code, paste this whole file in, click "Deploy"
++//   4. You'll get a URL like https://bolls-proxy.<you>.workers.dev
++//   5. Put that URL in js/somo-la-kwanza-bible.js as WORKER_PROXY
++//      (see the comment next to that constant).
++//
++// This only relays GET requests to bolls.life — it does not add a
++// key, does not store anything, and works within Cloudflare's free
++// tier (100,000 requests/day) indefinitely.
++
++const UPSTREAM = 'https://bolls.life';
++
++export default {
++  async fetch(request) {
++    const url = new URL(request.url);
++
++    // CORS preflight
++    if (request.method === 'OPTIONS') {
++      return new Response(null, { headers: corsHeaders() });
++    }
++
++    if (request.method !== 'GET') {
++      return new Response('Only GET is supported', { status: 405, headers: corsHeaders() });
++    }
++
++    const upstreamUrl = UPSTREAM + url.pathname + url.search;
++
++    const upstreamResponse = await fetch(upstreamUrl, {
++      headers: { 'Accept': 'application/json' }
++    });
++
++    const body = await upstreamResponse.text();
++
++    return new Response(body, {
++      status: upstreamResponse.status,
++      headers: {
++        ...corsHeaders(),
++        'Content-Type': upstreamResponse.headers.get('Content-Type') || 'application/json',
++        // Cache successful chapter lookups for a day — this is static
++        // scripture text, and it's kinder to bolls.life's single-core
++        // server than re-fetching on every page view.
++        'Cache-Control': upstreamResponse.ok ? 'public, max-age=86400' : 'no-store'
++      }
++    });
++  }
++};
++
++function corsHeaders() {
++  return {
++    'Access-Control-Allow-Origin': '*',
++    'Access-Control-Allow-Methods': 'GET, OPTIONS',
++    'Access-Control-Allow-Headers': 'Accept, Content-Type'
++  };
++}
+diff --git a/js/somo-la-kwanza-bible.js b/js/somo-la-kwanza-bible.js
+new file mode 100644
+index 0000000..dc81ff1
+--- /dev/null
++++ b/js/somo-la-kwanza-bible.js
+@@ -0,0 +1,448 @@
++// Somo la Kwanza — Bible verse fetcher
++// -----------------------------------------------------------------
++// Reads the "SOMO LA KWANZA : <rejea>" heading on an Ofisi ya Masomo
++// page, resolves the citation against the Bolls Bible API
++// (https://bolls.life/api/) using the Swahili Union Version (SUV,
++// 1997) translation, and injects the actual verse text between the
++// SOMO LA KWANZA heading and the Kiitikizano heading that follows it.
++//
++// No build step, no dependency — a plain self-contained script, in
++// the same style as js/logo-loader.js.
++(function () {
++    'use strict';
++
++    var TRANSLATION = 'SUV'; // Swahili Union Version, 1997 (bolls.life)
++    var API_BASE = 'https://bolls.life';
++
++    // ---------------------------------------------------------------
++    // Swahili book-abbreviation -> Bolls numeric book id.
++    // Bolls uses the standard 66-book ordering (Mwanzo=1 ... Ufunuo=66).
++    // Keys are matched with whitespace stripped and lower-cased, so
++    // "I Tim", "1 Tim" and "1tim" all resolve the same way.
++    // ---------------------------------------------------------------
++    var BOOK_MAP = {
++        // Torati
++        'mwa': 1, 'mwanzo': 1,
++        'kut': 2, 'kutoka': 2,
++        'law': 3, 'mambo ya walawi': 3, 'walawi': 3,
++        'hes': 4, 'hesabu': 4,
++        'kum': 5, 'kumbukumbu': 5, 'kumbukumbularomu': 5,
++        // Vitabu vya historia
++        'yos': 6, 'yoshua': 6,
++        'amu': 7, 'waamuzi': 7,
++        'ruth': 8, 'ruthi': 8,
++        '1sam': 9, 'isamweli': 9, '1samweli': 9,
++        '2sam': 10, 'iisamweli': 10, '2samweli': 10,
++        '1fal': 11, 'iwafalme': 11, '1wafalme': 11,
++        '2fal': 12, 'iiwafalme': 12, '2wafalme': 12,
++        '1nya': 13, 'inyakati': 13, '1nyakati': 13,
++        '2nya': 14, 'iinyakati': 14, '2nyakati': 14,
++        'ezr': 15, 'ezra': 15,
++        'neh': 16, 'nehemia': 16,
++        'est': 17, 'esta': 17,
++        // Vitabu vya hekima
++        'ayu': 18, 'ayubu': 18,
++        'zab': 19, 'zaburi': 19,
++        'mit': 20, 'mithali': 20,
++        'mhu': 21, 'mhubiri': 21,
++        'wim': 22, 'wimboulibora': 22,
++        // Manabii wakuu
++        'isa': 23, 'isaya': 23,
++        'yer': 24, 'yeremia': 24,
++        'omb': 25, 'maombolezo': 25,
++        'eze': 26, 'ezekieli': 26,
++        'dan': 27, 'danieli': 27,
++        // Manabii wadogo
++        'hos': 28, 'hosea': 28,
++        'yoeli': 29, 'yl': 29,
++        'amo': 30, 'amosi': 30,
++        'oba': 31, 'obadia': 31,
++        'yona': 32,
++        'mik': 33, 'mika': 33,
++        'nah': 34, 'nahumu': 34,
++        'hab': 35, 'habakuki': 35,
++        'sef': 36, 'sefania': 36,
++        'hag': 37, 'hagai': 37,
++        'zek': 38, 'zekaria': 38,
++        'mal': 39, 'malaki': 39,
++        // Agano Jipya
++        'mt': 40, 'mathayo': 40,
++        'mk': 41, 'ma': 41, 'marko': 41,
++        'lk': 42, 'luka': 42,
++        'yoh': 43, 'yohana': 43,
++        'mdo': 44, 'matendo': 44,
++        'rum': 45, 'warumi': 45,
++        '1kor': 46, 'ikorintho': 46, '1korintho': 46,
++        '2kor': 47, 'iikorintho': 47, '2korintho': 47,
++        'gal': 48, 'wagalatia': 48,
++        'efe': 49, 'waefeso': 49,
++        'flp': 50, 'wafilipi': 50,
++        'kol': 51, 'wakolosai': 51,
++        '1the': 52, 'ithesalonike': 52, '1thesalonike': 52,
++        '2the': 53, 'iithesalonike': 53, '2thesalonike': 53,
++        '1tim': 54, 'itim': 54, 'itimotheo': 54,
++        '2tim': 55, 'iitim': 55, 'iitimotheo': 55,
++        'tit': 56, 'tito': 56,
++        'flm': 57, 'filemoni': 57,
++        'ebr': 58, 'hek': 58, 'waebrania': 58,
++        'yak': 59, 'yakobo': 59,
++        '1pet': 60, 'ipetro': 60, '1petro': 60,
++        '2pet': 61, 'iipetro': 61, '2petro': 61,
++        '1yoh': 62, 'iyohana': 62,
++        '2yoh': 63, 'iiyohana': 63,
++        '3yoh': 64, 'iiiyohana': 64,
++        'yud': 65, 'yuda': 65,
++        'ufu': 66, 'ufunuo': 66
++    };
++
++    // Deuterocanonical / apocryphal books that appear in this lectionary
++    // (Catholic Ofisi ya Masomo) but are not carried by the SUV
++    // translation on Bolls. We recognise these so we can show a clear,
++    // honest message instead of silently failing.
++    var DEUTEROCANONICAL = {
++        'bar': 'Baruku', 'baruku': 'Baruku',
++        'ybs': 'Yesu bin Sira (Sirach)',
++        'imak': '1 Wamakabayo', '1mak': '1 Wamakabayo',
++        'iimak': '2 Wamakabayo', '2mak': '2 Wamakabayo',
++        'tob': 'Tobiti', 'tobiti': 'Tobiti',
++        'yud t': 'Yuditi', 'yuditi': 'Yuditi',
++        'hekima': 'Kitabu cha Hekima'
++    };
++
++    function normKey(s) {
++        return s.toLowerCase().replace(/\s+/g, '');
++    }
++
++    // -----------------------------------------------------------------
++    // Reference parsing
++    // -----------------------------------------------------------------
++    // Splits "Sef 1, 1-7. 14-2,3" into a book token and the rest, then
++    // walks the rest to build a list of {chapter, verseStart, verseEnd}
++    // spans, carrying the "current chapter" across segments the way
++    // Bible citations normally omit it (e.g. "14-2,3" continues from
++    // the chapter set earlier in the same reference).
++    function normalizeRef(raw) {
++        return raw
++            .replace(/[\u2013\u2014]/g, '-') // en/em dash -> hyphen
++            .replace(/\s+/g, ' ')
++            .trim();
++    }
++
++    function splitBookAndRest(ref) {
++        var m = ref.match(/^([A-Za-zĀ-ž]+(?:\s+[A-Za-zĀ-ž]+)?)\s+(\d.*)$/);
++        if (!m) return null;
++        return { book: m[1].trim(), rest: trimToCitation(m[2].trim()) };
++    }
++
++    // Some scraped headings carry a trailing title after the citation,
++    // e.g. "2:21-32 Siku za mwisho" — keep only the leading run of
++    // tokens that actually look like chapter/verse citation syntax.
++    function trimToCitation(rest) {
++        var tokenPattern = /^[\d,.:;\-–—]+[ab]?$/i;
++        var tokens = rest.split(/\s+/);
++        var kept = [];
++        for (var i = 0; i < tokens.length; i++) {
++            if (tokenPattern.test(tokens[i])) {
++                kept.push(tokens[i]);
++            } else {
++                break;
++            }
++        }
++        return kept.length ? kept.join(' ') : rest;
++    }
++
++    function parseToken(tok, currentChapter) {
++        tok = tok.trim().replace(/[ab]$/i, ''); // drop half-verse marker (14a, 20b)
++        var chVerse = tok.match(/^(\d+)\s*[,:]\s*(\d+)$/);
++        if (chVerse) return { chapter: parseInt(chVerse[1], 10), verse: parseInt(chVerse[2], 10) };
++        var verseOnly = tok.match(/^(\d+)$/);
++        if (verseOnly && currentChapter != null) {
++            return { chapter: currentChapter, verse: parseInt(verseOnly[1], 10) };
++        }
++        if (verseOnly) return { chapter: parseInt(verseOnly[1], 10), verse: 1 };
++        return null;
++    }
++
++    function parseCitation(rest) {
++        var segments = rest.split(/[.;]/).map(function (s) { return s.trim(); }).filter(Boolean);
++        var currentChapter = null;
++        var spans = [];
++
++        segments.forEach(function (seg) {
++            var parts = seg.split('-').map(function (s) { return s.trim(); }).filter(Boolean);
++            if (!parts.length) return;
++            var start = parseToken(parts[0], currentChapter);
++            if (!start) return;
++            currentChapter = start.chapter;
++
++            if (parts.length > 1) {
++                var end = parseToken(parts[1], currentChapter);
++                if (!end) {
++                    spans.push({ chapter: start.chapter, vStart: start.verse, vEnd: start.verse });
++                    return;
++                }
++                if (end.chapter === start.chapter) {
++                    spans.push({ chapter: start.chapter, vStart: start.verse, vEnd: end.verse });
++                } else {
++                    // Crosses a chapter boundary: rest of start chapter,
++                    // any full chapters between, then 1..end.verse.
++                    spans.push({ chapter: start.chapter, vStart: start.verse, vEnd: null });
++                    for (var c = start.chapter + 1; c < end.chapter; c++) {
++                        spans.push({ chapter: c, vStart: 1, vEnd: null });
++                    }
++                    spans.push({ chapter: end.chapter, vStart: 1, vEnd: end.verse });
++                }
++                currentChapter = end.chapter;
++            } else {
++                spans.push({ chapter: start.chapter, vStart: start.verse, vEnd: start.verse });
++            }
++        });
++
++        return spans;
++    }
++
++    // -----------------------------------------------------------------
++    // Fetching
++    // -----------------------------------------------------------------
++    // bolls.life's JSON endpoints are not reachable directly from a
++    // browser on another origin (no Access-Control-Allow-Origin header
++    // — confirmed independently: the Obsidian Bible Reference plugin
++    // needs its own backend proxy for this exact API, and a dedicated
++    // Cloudflare Worker proxy exists for the same reason). Since this
++    // site has no backend of its own:
++    //
++    //   1. If you deploy the included cloudflare-worker/bolls-proxy.js
++    //      (free, ~5 min, see that file), put its URL here. This is
++    //      the reliable path — set it and everything else is a safety
++    //      net you likely won't need.
++    //   2. Otherwise we fall back to a chain of public CORS relays.
++    //      These are free, third-party, and can go down or rate-limit
++    //      independently of anything in this codebase — treat them as
++    //      a best-effort fallback, not a guarantee.
++    var WORKER_PROXY = ''; // e.g. 'https://bolls-proxy.<you>.workers.dev'
++
++    var CORS_RELAYS = [
++        function (url) { return 'https://corsproxy.io/?url=' + encodeURIComponent(url); },
++        function (url) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url); },
++        function (url) { return 'https://thingproxy.freeboard.io/fetch/' + url; }
++    ];
++
++    function tryFetchJson(url) {
++        return fetch(url, { headers: { 'Accept': 'application/json' } }).then(function (res) {
++            if (!res.ok) throw new Error('HTTP ' + res.status);
++            return res.json();
++        });
++    }
++
++    function fetchJson(url) {
++        var attempt;
++        if (WORKER_PROXY) {
++            // Worker mirrors bolls.life's path/query exactly, so just
++            // swap the origin.
++            var workerUrl = WORKER_PROXY.replace(/\/$/, '') + url.replace(API_BASE, '');
++            attempt = tryFetchJson(workerUrl).catch(function () { return tryFetchJson(url); });
++        } else {
++            attempt = tryFetchJson(url);
++        }
++        CORS_RELAYS.forEach(function (buildRelayUrl) {
++            attempt = attempt.catch(function () { return tryFetchJson(buildRelayUrl(url)); });
++        });
++        return attempt;
++    }
++
++    function fetchChapter(bookId, chapter) {
++        var url = API_BASE + '/get-text/' + TRANSLATION + '/' + bookId + '/' + chapter + '/';
++        return fetchJson(url);
++    }
++
++    function stripHtml(html) {
++        var tmp = document.createElement('div');
++        tmp.innerHTML = html;
++        return tmp.textContent || tmp.innerText || '';
++    }
++
++    function fetchVerses(bookId, spans) {
++        var chapters = [];
++        spans.forEach(function (s) { if (chapters.indexOf(s.chapter) === -1) chapters.push(s.chapter); });
++
++        return Promise.all(chapters.map(function (c) { return fetchChapter(bookId, c); }))
++            .then(function (chapterResults) {
++                var byChapter = {};
++                chapters.forEach(function (c, i) { byChapter[c] = chapterResults[i]; });
++
++                var verses = [];
++                spans.forEach(function (span) {
++                    var verseList = byChapter[span.chapter] || [];
++                    verseList.forEach(function (v) {
++                        var inRange = v.verse >= span.vStart && (span.vEnd === null || v.verse <= span.vEnd);
++                        if (inRange) {
++                            verses.push({ chapter: span.chapter, verse: v.verse, text: stripHtml(v.text) });
++                        }
++                    });
++                });
++                // De-duplicate (adjacent spans can overlap on shared verses) and order.
++                var seen = {};
++                var ordered = verses.filter(function (v) {
++                    var key = v.chapter + ':' + v.verse;
++                    if (seen[key]) return false;
++                    seen[key] = true;
++                    return true;
++                });
++                ordered.sort(function (a, b) { return a.chapter - b.chapter || a.verse - b.verse; });
++                return ordered;
++            });
++    }
++
++    // -----------------------------------------------------------------
++    // Rendering
++    // -----------------------------------------------------------------
++    var CSS_ID = 'somo-la-kwanza-bible-styles';
++    function injectStyles() {
++        if (document.getElementById(CSS_ID)) return;
++        var style = document.createElement('style');
++        style.id = CSS_ID;
++        style.textContent =
++            '.somo-verses{margin:0.75rem 0 1.25rem;padding:0.9rem 1rem;' +
++            'border-left:3px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);' +
++            'border-radius:0.4rem;font-size:0.98em;line-height:1.65;}' +
++            '.somo-verses__label{font-size:0.78em;letter-spacing:0.06em;text-transform:uppercase;' +
++            'opacity:0.65;margin-bottom:0.4rem;}' +
++            '.somo-verses__body sup{font-size:0.7em;opacity:0.7;margin-right:0.15rem;}' +
++            '.somo-verses__status{opacity:0.7;font-style:italic;}' +
++            '.somo-verses__error a{color:inherit;text-decoration:underline;}';
++        document.head.appendChild(style);
++    }
++
++    function findSomoLaKwanzaHeading() {
++        // Most pages use <h2>, a handful of OCR-sourced pages have it as
++        // <h3> and/or with a stray space inside "KWANZA" ("KWA NZA") —
++        // tolerate both.
++        var headings = document.querySelectorAll('h2, h3');
++        var pattern = /SOMO\s+LA\s+KWA\s*NZA/i;
++        for (var i = 0; i < headings.length; i++) {
++            if (pattern.test(headings[i].textContent)) return headings[i];
++        }
++        return null;
++    }
++
++    function extractCitation(headingEl) {
++        var text = headingEl.textContent || '';
++        var idx = text.search(/:/);
++        var citation = idx === -1 ? text : text.slice(idx + 1);
++        return normalizeRef(citation);
++    }
++
++    function buildContainer() {
++        var box = document.createElement('div');
++        box.className = 'somo-verses';
++        box.id = 'somo-la-kwanza-verses';
++        var label = document.createElement('div');
++        label.className = 'somo-verses__label';
++        label.textContent = 'Andiko — Somo la Kwanza';
++        var body = document.createElement('div');
++        body.className = 'somo-verses__body';
++        body.innerHTML = '<span class="somo-verses__status">Inapakia andiko…</span>';
++        box.appendChild(label);
++        box.appendChild(body);
++        return { box: box, body: body };
++    }
++
++    function renderVerses(body, bookLabel, verses) {
++        if (!verses.length) {
++            renderError(body, 'Aya hazikupatikana kwa rejea hii.');
++            return;
++        }
++        var frag = document.createDocumentFragment();
++        var lastChapter = null;
++        verses.forEach(function (v) {
++            if (v.chapter !== lastChapter) {
++                lastChapter = v.chapter;
++            }
++            var sup = document.createElement('sup');
++            sup.textContent = (v.chapter + ':' + v.verse);
++            frag.appendChild(sup);
++            frag.appendChild(document.createTextNode(v.text.trim() + ' '));
++        });
++        body.innerHTML = '';
++        body.appendChild(frag);
++    }
++
++    function renderError(body, message, helpUrl) {
++        body.innerHTML = '';
++        var span = document.createElement('span');
++        span.className = 'somo-verses__error';
++        span.textContent = message + ' ';
++        if (helpUrl) {
++            var a = document.createElement('a');
++            a.href = helpUrl;
++            a.target = '_blank';
++            a.rel = 'noopener';
++            a.textContent = 'Soma andiko kwenye Bolls Bible';
++            span.appendChild(a);
++        }
++        body.appendChild(span);
++    }
++
++    function init() {
++        var heading = findSomoLaKwanzaHeading();
++        if (!heading) return; // Not a page with a first reading — nothing to do.
++
++        var citation = extractCitation(heading);
++        var split = splitBookAndRest(citation);
++        injectStyles();
++        var built = buildContainer();
++        heading.insertAdjacentElement('afterend', built.box);
++
++        if (!split) {
++            renderError(built.body, 'Imeshindikana kusoma rejea "' + citation + '".');
++            return;
++        }
++
++        var key = normKey(split.book);
++        var bookId = BOOK_MAP[key];
++
++        if (!bookId) {
++            if (DEUTEROCANONICAL[key]) {
++                renderError(
++                    built.body,
++                    'Kitabu cha ' + DEUTEROCANONICAL[key] + ' (' + split.book + ') hakipatikani kwenye tafsiri ya ' +
++                    TRANSLATION + ' ya Bolls Bible API — kinapatikana katika Biblia ya Kikatoliki pekee.'
++                );
++            } else {
++                renderError(built.body, 'Kitabu "' + split.book + '" hakikutambuliwa.');
++            }
++            return;
++        }
++
++        var spans = parseCitation(split.rest);
++        if (!spans.length) {
++            renderError(built.body, 'Imeshindikana kusoma rejea "' + citation + '".');
++            return;
++        }
++
++        fetchVerses(bookId, spans)
++            .then(function (verses) { renderVerses(built.body, split.book, verses); })
++            .catch(function () {
++                var firstChapter = spans[0].chapter;
++                renderError(
++                    built.body,
++                    'Imeshindwa kupata andiko kutoka Bolls Bible API kwa sasa.',
++                    API_BASE + '/' + TRANSLATION + '/' + bookId + '/' + firstChapter + '/'
++                );
++            });
++    }
++
++    if (document.readyState === 'loading') {
++        document.addEventListener('DOMContentLoaded', init);
++    } else {
++        init();
++    }
++
++    // Exposed for debugging / reuse elsewhere.
++    window.SomoLaKwanzaBible = {
++        BOOK_MAP: BOOK_MAP,
++        parseCitation: parseCitation,
++        splitBookAndRest: splitBookAndRest,
++        normalizeRef: normalizeRef
++    };
++})();
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html b/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html
+index 27e79b3..e971af1 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html	
+@@ -82,6 +82,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html b/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html
+index 700f66d..b0efbd2 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html	
+@@ -92,6 +92,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html
+index aa17ff2..7a20107 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html	
+@@ -83,6 +83,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html
+index 19be33d..8ba37e4 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html	
+@@ -76,6 +76,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html
+index ed52dcf..2c3fc2b 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html	
+@@ -70,6 +70,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html
+index 825b1e6..fcd5abe 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html	
+@@ -82,6 +82,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+         
+     
+ 
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html
+index 168f928..085ea24 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html	
+@@ -78,6 +78,7 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/dominika.html b/pages/ofisi ya masomo/ishirini_na_moja/dominika.html
+index 3badc7c..3472bb7 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_moja/dominika.html	
+@@ -72,6 +72,7 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+             </div>
+         </div>
+     </div>
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html
+index d38afd5..84a8767 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html	
++++ b/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html	
+@@ -81,6 +81,7 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html
+index e958cc0..a391130 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html	
+@@ -89,6 +89,7 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html b/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html
+index 781b487..a515ba4 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html	
+@@ -84,6 +84,7 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html b/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html
+index 3d70328..0213ea5 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html	
+@@ -128,6 +128,7 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/dominika.html b/pages/ofisi ya masomo/ishirini_na_nne/dominika.html
+index d932351..901c786 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_nne/dominika.html	
+@@ -79,6 +79,7 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html
+index 5d7029d..1e23b7a 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html	
++++ b/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html	
+@@ -91,6 +91,7 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html
+index f89b448..d3da8da 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html	
+@@ -87,6 +87,7 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html b/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html
+index 5a121e6..cdfd114 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html	
+@@ -88,6 +88,7 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html b/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html
+index b06fb1a..aead0d1 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html	
+@@ -82,6 +82,7 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html
+index b5046d1..05b5c3b 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html	
+@@ -80,6 +80,7 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/dominika.html b/pages/ofisi ya masomo/ishirini_na_saba/dominika.html
+index e4828fe..bed8aa4 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_saba/dominika.html	
+@@ -85,6 +85,7 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html
+index 2cc54cd..7b0c3ca 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html	
+@@ -88,6 +88,7 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+         
+     
+ 
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html b/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html
+index d0da00d..e223312 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html	
+@@ -89,6 +89,7 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html b/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html
+index 7d7ad83..18c8742 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html	
+@@ -83,6 +83,7 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html
+index dfc6e36..f06d4c7 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html	
+@@ -76,6 +76,7 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/dominika.html b/pages/ofisi ya masomo/ishirini_na_sita/dominika.html
+index 614ff3b..9c235c2 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_sita/dominika.html	
+@@ -78,6 +78,7 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html
+index 71e75ce..92b49cd 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html	
+@@ -85,6 +85,7 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html b/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html
+index cdebef4..07e1b42 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html	
+@@ -78,6 +78,7 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html b/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html
+index 2c2b623..7079e77 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html	
+@@ -81,6 +81,7 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html
+index b13e3f8..81c0fb0 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html	
+@@ -82,6 +82,7 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html
+index 834211c..ace4d9c 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html	
+@@ -94,6 +94,7 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html
+index 599142c..0bde855 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html	
+@@ -72,6 +72,7 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+         
+     
+ 
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html b/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html
+index 8c227d0..329fbfc 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html	
+@@ -85,6 +85,7 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html b/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html
+index bea7543..aef2f56 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html	
+@@ -85,6 +85,7 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html
+index 2eeb03c..a9a8d42 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html	
+@@ -80,6 +80,7 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html b/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html
+index af5dc62..c364022 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html	
+@@ -83,6 +83,7 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html
+index 4e6e7ff..042d0c2 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html	
+@@ -83,6 +83,7 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html
+index ce064c7..754ae1e 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html	
+@@ -79,6 +79,7 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html b/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html
+index 6f2cc0d..1db5a1c 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html	
+@@ -121,6 +121,7 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+         
+     
+ 
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html
+index f5bf44e..be4aff1 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html	
+@@ -76,6 +76,7 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html b/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html
+index 9d41d5b..ed87e27 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html	
+@@ -80,6 +80,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html b/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html
+index a94d0e9..59c605f 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html	
+@@ -85,6 +85,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+         
+     
+ 
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html
+index 5881b11..c65bcc0 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html	
+@@ -88,6 +88,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html
+index 80e2d86..87ce656 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html	
+@@ -88,6 +88,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html
+index 5580b79..5973fe8 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html	
+@@ -77,6 +77,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html
+index 3b577f4..d7dff4f 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html	
+@@ -87,6 +87,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html
+index d64e2b5..c17d0f5 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html	
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html	
+@@ -87,6 +87,7 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini/dominika.html b/pages/ofisi ya masomo/thelathini/dominika.html
+index 7fc2a66..83dff47 100644
+--- a/pages/ofisi ya masomo/thelathini/dominika.html	
++++ b/pages/ofisi ya masomo/thelathini/dominika.html	
+@@ -75,6 +75,7 @@ Juma la Thelathini · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini/ijumaa.html b/pages/ofisi ya masomo/thelathini/ijumaa.html
+index 0b784ec..78e6016 100644
+--- a/pages/ofisi ya masomo/thelathini/ijumaa.html	
++++ b/pages/ofisi ya masomo/thelathini/ijumaa.html	
+@@ -80,6 +80,7 @@ Juma la Thelathini · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini/jumamosi.html b/pages/ofisi ya masomo/thelathini/jumamosi.html
+index de99694..9826c27 100644
+--- a/pages/ofisi ya masomo/thelathini/jumamosi.html	
++++ b/pages/ofisi ya masomo/thelathini/jumamosi.html	
+@@ -73,6 +73,7 @@ Juma la Thelathini · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini/jumanne.html b/pages/ofisi ya masomo/thelathini/jumanne.html
+index 5a9103e..28fefee 100644
+--- a/pages/ofisi ya masomo/thelathini/jumanne.html	
++++ b/pages/ofisi ya masomo/thelathini/jumanne.html	
+@@ -79,6 +79,7 @@ Juma la Thelathini · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini/jumatatu.html b/pages/ofisi ya masomo/thelathini/jumatatu.html
+index 2328248..6b59f0c 100644
+--- a/pages/ofisi ya masomo/thelathini/jumatatu.html	
++++ b/pages/ofisi ya masomo/thelathini/jumatatu.html	
+@@ -81,6 +81,7 @@ Juma la Thelathini · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html b/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html
+index c46f142..68f2612 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html	
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html	
+@@ -82,6 +82,7 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+             <a href="../index.html" class="nav-button">Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html b/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html
+index 03e07c3..b0533d0 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html	
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html	
+@@ -80,6 +80,7 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html
+index 2c79118..ed31e8e 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html	
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html	
+@@ -82,6 +82,7 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html b/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html
+index a1ded80..f21d535 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html	
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html	
+@@ -74,6 +74,7 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html b/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html
+index e27b129..cece28d 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html	
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html	
+@@ -75,6 +75,7 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/dominika.html b/pages/ofisi ya masomo/thelathini_na_moja/dominika.html
+index 8e3d625..9108e16 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/dominika.html	
++++ b/pages/ofisi ya masomo/thelathini_na_moja/dominika.html	
+@@ -78,6 +78,7 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html b/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html
+index 550b584..ae3414a 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html	
++++ b/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html	
+@@ -88,6 +88,7 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html
+index 1cf83b4..6d73979 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html	
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html	
+@@ -79,6 +79,7 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html b/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html
+index cc59299..6631eb9 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html	
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html	
+@@ -80,6 +80,7 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html b/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html
+index 8860b75..4342523 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html	
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html	
+@@ -80,6 +80,7 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html b/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html
+index 37ed4ee..b52e187 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html	
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html	
+@@ -80,6 +80,7 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html b/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html
+index d7142dd..f4fe487 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html	
++++ b/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html	
+@@ -65,6 +65,7 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/dominika.html b/pages/ofisi ya masomo/thelathini_na_nne/dominika.html
+index 4143677..28e87a8 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/dominika.html	
++++ b/pages/ofisi ya masomo/thelathini_na_nne/dominika.html	
+@@ -68,6 +68,7 @@ Juma la Thelathini Na Nne · KRISTO MFALME
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html b/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html
+index dc05c34..5a4004e 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html	
++++ b/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html	
+@@ -59,6 +59,7 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html b/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html
+index 11a76cf..21bf763 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html	
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html	
+@@ -63,6 +63,7 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+         
+     
+ 
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html b/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html
+index 1931bbe..c6e8e56 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html	
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html	
+@@ -65,6 +65,7 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html
+index 4899a83..8000445 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html	
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html	
+@@ -63,6 +63,7 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html
+index 78e5cf6..ae47d7c 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html	
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html	
+@@ -66,6 +66,7 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html
+index 719a149..1798efd 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html	
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html	
+@@ -62,6 +62,7 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html
+index 1020bce..e80aa96 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html	
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html	
+@@ -65,6 +65,7 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+             <a href="../../index.html" class="nav-button">← Rudi Mwanzo</a>
+         
+     
++    <script src="../../../js/somo-la-kwanza-bible.js" defer></script>
+     <script src="../../../js/text-size-control.js" defer></script>
+     <script src="../../../js/prevent-zoom.js" defer></script>
+ </body>
