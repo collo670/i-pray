@@ -12,7 +12,7 @@
     'use strict';
 
     var TRANSLATION = 'SUV'; // Swahili Union Version, 1997 (bolls.life)
-    var API_BASE = 'https://ancient-rice-28a1.otienocollo95.workers.dev/';
+    var API_BASE = 'https://ancient-rice-28a1.otienocollo95.workers.dev';
 
     // ---------------------------------------------------------------
     // Swahili book-abbreviation -> Bolls numeric book id.
@@ -303,11 +303,11 @@
         style.id = CSS_ID;
         style.textContent =
             '.somo-verses{margin:0.75rem 0 1.25rem;padding:0.9rem 1rem;' +
-            'border-left:3px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);' +
+            'border-left:4px solid #1f4d3d;background:#f4f7f5;' +
             'border-radius:0.4rem;font-size:0.98em;line-height:1.65;}' +
             '.somo-verses__label{font-size:0.78em;letter-spacing:0.06em;text-transform:uppercase;' +
-            'opacity:0.65;margin-bottom:0.4rem;}' +
-            '.somo-verses__body sup{font-size:0.7em;opacity:0.7;margin-right:0.15rem;}' +
+            'opacity:0.8;margin-bottom:0.4rem;}' +
+            '.somo-verses__body sup{font-size:0.8em;opacity:0.85;margin-right:0.15rem;}' +
             '.somo-verses__status{opacity:0.7;font-style:italic;}' +
             '.somo-verses__error a{color:inherit;text-decoration:underline;}';
         document.head.appendChild(style);
