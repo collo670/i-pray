@@ -296,23 +296,6 @@
     // -----------------------------------------------------------------
     // Rendering
     // -----------------------------------------------------------------
-    var CSS_ID = 'somo-la-kwanza-bible-styles';
-    function injectStyles() {
-        if (document.getElementById(CSS_ID)) return;
-        var style = document.createElement('style');
-        style.id = CSS_ID;
-        style.textContent =
-            '.somo-verses{margin:0.75rem 0 1.25rem;padding:0.9rem 1rem;' +
-            'border-left:4px solid #1f4d3d;background:#f4f7f5;' +
-            'border-radius:0.4rem;font-size:0.98em;line-height:1.65;}' +
-            '.somo-verses__label{font-size:0.78em;letter-spacing:0.06em;text-transform:uppercase;' +
-            'opacity:0.8;margin-bottom:0.4rem;}' +
-            '.somo-verses__body sup{font-size:0.8em;opacity:0.85;margin-right:0.15rem;}' +
-            '.somo-verses__status{opacity:0.7;font-style:italic;}' +
-            '.somo-verses__error a{color:inherit;text-decoration:underline;}';
-        document.head.appendChild(style);
-    }
-
     function findSomoLaKwanzaHeading() {
         // Most pages use <h2>, OCR-sourced pages may use <h3>, and the
         // dynamic Liturgy of the Hours view uses <h4> — tolerate all.
@@ -338,69 +321,59 @@
         return normalizeRef(text);
     }
 
-    function buildContainer() {
-        var box = document.createElement('div');
-        box.className = 'somo-verses';
-        box.id = 'somo-la-kwanza-verses';
-        var label = document.createElement('div');
-        label.className = 'somo-verses__label';
-        label.textContent = 'Andiko — Somo la Kwanza';
-        var body = document.createElement('div');
-        body.className = 'somo-verses__body';
-        body.innerHTML = '<span class="somo-verses__status">Inapakia andiko…</span>';
-        box.appendChild(label);
-        box.appendChild(body);
-        return { box: box, body: body };
+    function buildContainer(citation) {
+        var cite = document.createElement('p');
+        cite.className = 'citation';
+        cite.textContent = citation;
+        return cite;
     }
 
-    function renderVerses(body, bookLabel, verses) {
+    function renderVerses(citeEl, verses) {
         if (!verses.length) {
-            renderError(body, 'Aya hazikupatikana kwa rejea hii.');
+            renderError(citeEl, 'Aya hazikupatikana kwa rejea hii.');
             return;
         }
-        var frag = document.createDocumentFragment();
-        var lastChapter = null;
         verses.forEach(function (v) {
-            if (v.chapter !== lastChapter) {
-                lastChapter = v.chapter;
-            }
+            var p = document.createElement('p');
             var sup = document.createElement('sup');
             sup.textContent = (v.chapter + ':' + v.verse);
-            frag.appendChild(sup);
-            frag.appendChild(document.createTextNode(v.text.trim() + ' '));
+            p.appendChild(sup);
+            p.appendChild(document.createTextNode(v.text.trim()));
+            citeEl.insertAdjacentElement('afterend', p);
         });
-        body.innerHTML = '';
-        body.appendChild(frag);
     }
 
-    function renderError(body, message, helpUrl) {
-        body.innerHTML = '';
+    function renderError(citeEl, message, helpUrl) {
+        var p = document.createElement('p');
+        p.style.fontStyle = 'italic';
+        p.style.opacity = '0.7';
         var span = document.createElement('span');
-        span.className = 'somo-verses__error';
         span.textContent = message + ' ';
+        p.appendChild(span);
         if (helpUrl) {
             var a = document.createElement('a');
             a.href = helpUrl;
             a.target = '_blank';
             a.rel = 'noopener';
             a.textContent = 'Soma andiko kwenye Bolls Bible';
+            a.style.color = 'inherit';
+            a.style.textDecoration = 'underline';
             span.appendChild(a);
         }
-        body.appendChild(span);
+        citeEl.insertAdjacentElement('afterend', p);
     }
 
     function init() {
         var heading = findSomoLaKwanzaHeading();
-        if (!heading) return; // Not a page with a first reading — nothing to do.
+        if (!heading) return;
 
         var citation = extractCitation(heading);
         var split = splitBookAndRest(citation);
-        injectStyles();
-        var built = buildContainer();
-        heading.insertAdjacentElement('afterend', built.box);
+        var built = buildContainer(citation);
+        heading.insertAdjacentElement('afterend', built);
 
         if (!split) {
-            renderError(built.body, 'Imeshindikana kusoma rejea "' + citation + '".');
+            renderError(built, 'Imeshindikana kusoma rejea "' + citation + '".');
             return;
         }
 
@@ -410,28 +383,28 @@
         if (!bookId) {
             if (DEUTEROCANONICAL[key]) {
                 renderError(
-                    built.body,
+                    built,
                     'Kitabu cha ' + DEUTEROCANONICAL[key] + ' (' + split.book + ') hakipatikani kwenye tafsiri ya ' +
                     TRANSLATION + ' ya Bolls Bible API — kinapatikana katika Biblia ya Kikatoliki pekee.'
                 );
             } else {
-                renderError(built.body, 'Kitabu "' + split.book + '" hakikutambuliwa.');
+                renderError(built, 'Kitabu "' + split.book + '" hakikutambuliwa.');
             }
             return;
         }
 
         var spans = parseCitation(split.rest);
         if (!spans.length) {
-            renderError(built.body, 'Imeshindikana kusoma rejea "' + citation + '".');
+            renderError(built, 'Imeshindikana kusoma rejea "' + citation + '".');
             return;
         }
 
         fetchVerses(bookId, spans)
-            .then(function (verses) { renderVerses(built.body, split.book, verses); })
+            .then(function (verses) { renderVerses(built, verses); })
             .catch(function () {
                 var firstChapter = spans[0].chapter;
                 renderError(
-                    built.body,
+                    built,
                     'Imeshindwa kupata andiko kutoka Bolls Bible API kwa sasa.',
                     API_BASE + '/' + TRANSLATION + '/' + bookId + '/' + firstChapter + '/'
                 );
