@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ipray-v20260806101522';
+const CACHE_NAME = 'ipray-v20260806140040';
 
 // Critical app shell: cached during install. If any of these fail, the
 // install fails, so keep this list short and only list files that exist.
@@ -179,6 +179,7 @@ const PRECACHE_EXTRA = [
   "/i-pray/css/masifu.css",
   "/i-pray/css/settings.css",
   "/i-pray/assets/css/styles.css",
+  "/i-pray/pages/ofisi ya masomo/styles.css",
   "/i-pray/dist/output.css",
   "/i-pray/data/readings.json",
   "/i-pray/data/translations.json",
