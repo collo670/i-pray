@@ -307,16 +307,35 @@
         return null;
     }
 
-    function extractCitation(headingEl) {
+    // Newer pages wrap the heading in a ".reading-title" panel div
+    // (gold-on-maroon styling) and put the citation in a sibling
+    // <p class="sw-citation"> *after that wrapper*, not after the
+    // heading itself — so headingEl.nextElementSibling is null (the
+    // heading is the wrapper's only child) and the old lookup missed
+    // it entirely. Resolve the right element to walk siblings from:
+    // the wrapper if there is one, otherwise the heading itself.
+    function resolveAnchor(headingEl) {
+        var parent = headingEl.parentElement;
+        if (parent && /(^|\s)reading-title(\s|$)/i.test(parent.className)) return parent;
+        return headingEl;
+    }
+
+    function findCitationElement(anchorEl) {
+        var next = anchorEl.nextElementSibling;
+        if (next && /(^|\s)sw-citation(\s|$)/i.test(next.className)) return next;
+        return null;
+    }
+
+    function extractCitation(headingEl, anchorEl) {
         var text = (headingEl.textContent || '').trim();
         var idx = text.search(/:/);
         if (idx !== -1) {
             var after = text.slice(idx + 1).trim();
             if (after) return normalizeRef(after);
         }
-        var next = headingEl.nextElementSibling;
-        if (next && /sw-citation/i.test(next.className)) {
-            return normalizeRef((next.textContent || '').trim());
+        var citationEl = findCitationElement(anchorEl);
+        if (citationEl) {
+            return normalizeRef((citationEl.textContent || '').trim());
         }
         return normalizeRef(text);
     }
@@ -367,10 +386,20 @@
         var heading = findSomoLaKwanzaHeading();
         if (!heading) return;
 
-        var citation = extractCitation(heading);
+        var anchor = resolveAnchor(heading);
+        var citationEl = findCitationElement(anchor);
+        var citation = extractCitation(heading, anchor);
         var split = splitBookAndRest(citation);
-        var built = buildContainer(citation);
-        heading.insertAdjacentElement('afterend', built);
+
+        // If the page already shows the citation in its own
+        // <p class="sw-citation">, insert after that (so the panel
+        // heading stays intact and we don't print the citation a
+        // second time). Otherwise fall back to building our own
+        // citation line, as on older/OCR pages that lack it.
+        var built = citationEl || buildContainer(citation);
+        if (!citationEl) {
+            anchor.insertAdjacentElement('afterend', built);
+        }
 
         if (!split) {
             renderError(built, 'Imeshindikana kusoma rejea "' + citation + '".');
