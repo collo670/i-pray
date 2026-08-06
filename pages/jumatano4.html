@@ -17,7 +17,7 @@
             padding: 0;
             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
             background-color: #fff;
-            color: #333;
+            color: #000;
             transition: all 0.3s ease;
         }
         
@@ -370,6 +370,16 @@
         .dark-mode .reading {
             background-color: #333;
             border-left-color: #FFA07A;
+        }
+
+        /* Plain prayer text (verses, readings, intercession lines) rendered
+           black at ~90% boldness; existing bold (.antiphon/.leader) and
+           italic (.response/.psalm-title) elements are left untouched. */
+        .verse,
+        .reading,
+        .intercession {
+            color: #000;
+            font-weight: 600;
         }
     </style>
     <!-- Custom CSS -->

@@ -30,6 +30,13 @@
         .reading-ref { font-weight: bold; color: #DB2777; }
         .responsory { color: #F59E0B; font-style: italic; }
         .prayer { color: #4B5563; }
+        /* Plain compline text black at ~90% bold; existing bold
+           (.psalm-number/.reading-ref) and italic (.antiphon/.responsory)
+           elements are left untouched. */
+        .compline-text p:not(.antiphon):not(.psalm-number):not(.reading-ref):not(.responsory):not(.prayer) {
+            color: #000;
+            font-weight: 600;
+        }
     </style>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">

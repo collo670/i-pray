@@ -1,0 +1,927 @@
+diff --git a/daily-readings.html b/daily-readings.html
+index b02a91f..e064ac5 100644
+--- a/daily-readings.html
++++ b/daily-readings.html
+@@ -27,7 +27,7 @@
+     </script>
+     <style>
+         /* Universalis reading text arrives as HTML with its own indentation styles */
+-        .reading-text { line-height: 1.75; }
++        .reading-text { line-height: 1.75; color: #000; font-weight: 600; }
+         .reading-text div { margin-bottom: 0.15rem; }
+         /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+            Scoping it to .reading-text — rather than the root <html>
+diff --git a/midday.html b/midday.html
+index 19f5d0c..90865b2 100644
+--- a/midday.html
++++ b/midday.html
+@@ -125,6 +125,8 @@
+             margin-bottom: 25px;
+             padding-left: 20px;
+             border-left: 3px solid #3a5f8c;
++            color: #000;
++            font-weight: 600;
+         }
+         
+         .antiphon {
+diff --git a/pages/alhamisi1.html b/pages/alhamisi1.html
+index 43d7f0e..d64c68b 100644
+--- a/pages/alhamisi1.html
++++ b/pages/alhamisi1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/alhamisi2.html b/pages/alhamisi2.html
+index 89f300f..1ea78eb 100644
+--- a/pages/alhamisi2.html
++++ b/pages/alhamisi2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/alhamisi3.html b/pages/alhamisi3.html
+index ae95c8e..e718211 100644
+--- a/pages/alhamisi3.html
++++ b/pages/alhamisi3.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/alhamisi4.html b/pages/alhamisi4.html
+index da0ea6c..8c76440 100644
+--- a/pages/alhamisi4.html
++++ b/pages/alhamisi4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/compline.html b/pages/compline.html
+index e350edf..1990e0f 100644
+--- a/pages/compline.html
++++ b/pages/compline.html
+@@ -30,6 +30,13 @@
+         .reading-ref { font-weight: bold; color: #DB2777; }
+         .responsory { color: #F59E0B; font-style: italic; }
+         .prayer { color: #4B5563; }
++        /* Plain compline text black at ~90% bold; existing bold
++           (.psalm-number/.reading-ref) and italic (.antiphon/.responsory)
++           elements are left untouched. */
++        .compline-text p:not(.antiphon):not(.psalm-number):not(.reading-ref):not(.responsory):not(.prayer) {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/daily-readings.html b/pages/daily-readings.html
+index b02a91f..e064ac5 100644
+--- a/pages/daily-readings.html
++++ b/pages/daily-readings.html
+@@ -27,7 +27,7 @@
+     </script>
+     <style>
+         /* Universalis reading text arrives as HTML with its own indentation styles */
+-        .reading-text { line-height: 1.75; }
++        .reading-text { line-height: 1.75; color: #000; font-weight: 600; }
+         .reading-text div { margin-bottom: 0.15rem; }
+         /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+            Scoping it to .reading-text — rather than the root <html>
+diff --git a/pages/ijumaa1.html b/pages/ijumaa1.html
+index f88a03c..f92eee2 100644
+--- a/pages/ijumaa1.html
++++ b/pages/ijumaa1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/ijumaa2.html b/pages/ijumaa2.html
+index 485f0e4..bfac303 100644
+--- a/pages/ijumaa2.html
++++ b/pages/ijumaa2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/ijumaa3.html b/pages/ijumaa3.html
+index ea776fb..76f44c8 100644
+--- a/pages/ijumaa3.html
++++ b/pages/ijumaa3.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/ijumaa4.html b/pages/ijumaa4.html
+index e0b24af..80379ca 100644
+--- a/pages/ijumaa4.html
++++ b/pages/ijumaa4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumamosi1.html b/pages/jumamosi1.html
+index ae50718..4c92091 100644
+--- a/pages/jumamosi1.html
++++ b/pages/jumamosi1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumamosi2.html b/pages/jumamosi2.html
+index c289e38..5ecedf5 100644
+--- a/pages/jumamosi2.html
++++ b/pages/jumamosi2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumamosi3.html b/pages/jumamosi3.html
+index 3bdc436..6496718 100644
+--- a/pages/jumamosi3.html
++++ b/pages/jumamosi3.html
+@@ -18,7 +18,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -372,6 +372,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumamosi4.html b/pages/jumamosi4.html
+index e48a250..7005f62 100644
+--- a/pages/jumamosi4.html
++++ b/pages/jumamosi4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumanne1.html b/pages/jumanne1.html
+index d909577..92665df 100644
+--- a/pages/jumanne1.html
++++ b/pages/jumanne1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumanne2.html b/pages/jumanne2.html
+index b533a92..acae6fd 100644
+--- a/pages/jumanne2.html
++++ b/pages/jumanne2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumanne3.html b/pages/jumanne3.html
+index 6bc6eb8..6440469 100644
+--- a/pages/jumanne3.html
++++ b/pages/jumanne3.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumanne4.html b/pages/jumanne4.html
+index 72d2b1a..1eb02dd 100644
+--- a/pages/jumanne4.html
++++ b/pages/jumanne4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumapili1.html b/pages/jumapili1.html
+index f1d290b..40e2277 100644
+--- a/pages/jumapili1.html
++++ b/pages/jumapili1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -369,6 +369,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+         .btk{
+             background: #8B0000;
+             color: white;
+diff --git a/pages/jumapili2.html b/pages/jumapili2.html
+index e26d97f..cfc0550 100644
+--- a/pages/jumapili2.html
++++ b/pages/jumapili2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+         .btk{
+             background: #8B0000;
+             color: white;
+diff --git a/pages/jumapili3.html b/pages/jumapili3.html
+index 319f3ef..c1bb788 100644
+--- a/pages/jumapili3.html
++++ b/pages/jumapili3.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+         
+         .option-heading {
+             margin-top: 30px;
+diff --git a/pages/jumapili4.html b/pages/jumapili4.html
+index c2cee66..d6fd440 100644
+--- a/pages/jumapili4.html
++++ b/pages/jumapili4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+         .btk{
+             background: #8B0000;
+             color: white;
+diff --git a/pages/jumatano1.html b/pages/jumatano1.html
+index c4e64cf..02b7c52 100644
+--- a/pages/jumatano1.html
++++ b/pages/jumatano1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumatano2.html b/pages/jumatano2.html
+index 8b265e7..2e651f8 100644
+--- a/pages/jumatano2.html
++++ b/pages/jumatano2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumatano3.html b/pages/jumatano3.html
+index b313d15..ea998c9 100644
+--- a/pages/jumatano3.html
++++ b/pages/jumatano3.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumatano4.html b/pages/jumatano4.html
+index a3d6671..2f849a0 100644
+--- a/pages/jumatano4.html
++++ b/pages/jumatano4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -371,6 +371,16 @@
+             background-color: #333;
+             border-left-color: #FFA07A;
+         }
++
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumatatu1.html b/pages/jumatatu1.html
+index e8a36b0..ed5b610 100644
+--- a/pages/jumatatu1.html
++++ b/pages/jumatatu1.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -372,6 +372,16 @@
+             border-left-color: #FFA07A;
+         }
+ 
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
++
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumatatu2.html b/pages/jumatatu2.html
+index c810551..f7b883b 100644
+--- a/pages/jumatatu2.html
++++ b/pages/jumatatu2.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -372,6 +372,16 @@
+             border-left-color: #FFA07A;
+         }
+ 
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
++
+     </style>
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="../css/index.css">
+diff --git a/pages/jumatatu3.html b/pages/jumatatu3.html
+index f27eaee..5ed41c7 100644
+--- a/pages/jumatatu3.html
++++ b/pages/jumatatu3.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -372,6 +372,16 @@
+             border-left-color: #FFA07A;
+         }
+ 
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
++
+         /* Bottom Navigation Styles */
+         .bottom-nav {
+             backdrop-filter: blur(10px);
+diff --git a/pages/jumatatu4.html b/pages/jumatatu4.html
+index 099f0c8..a7c8d66 100644
+--- a/pages/jumatatu4.html
++++ b/pages/jumatatu4.html
+@@ -17,7 +17,7 @@
+             padding: 0;
+             padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+             background-color: #fff;
+-            color: #333;
++            color: #000;
+             transition: all 0.3s ease;
+         }
+         
+@@ -372,6 +372,16 @@
+             border-left-color: #FFA07A;
+         }
+ 
++        /* Plain prayer text (verses, readings, intercession lines) rendered
++           black at ~90% boldness; existing bold (.antiphon/.leader) and
++           italic (.response/.psalm-title) elements are left untouched. */
++        .verse,
++        .reading,
++        .intercession {
++            color: #000;
++            font-weight: 600;
++        }
++
+         /* Bottom Navigation Styles */
+         .bottom-nav {
+             backdrop-filter: blur(10px);
+diff --git a/pages/prayer-hour.html b/pages/prayer-hour.html
+index f2f2570..20ffbce 100644
+--- a/pages/prayer-hour.html
++++ b/pages/prayer-hour.html
+@@ -22,7 +22,7 @@
+            and applies to the whole rendered office - English (Universalis)
+            and Swahili alike - across all three hours (Readings, Midday,
+            Vespers), since every view renders into this one container. */
+-        .office-content { font-size: calc(1.0625rem * var(--prayer-text-scale, 1)); line-height: 1.75; color: #374151; }
++        .office-content { font-size: calc(1.0625rem * var(--prayer-text-scale, 1)); line-height: 1.75; color: #000000; font-weight: 600; }
+         .dark .office-content { color: #d1d5db; }
+         .office-content .v { margin: 0; }
+         .office-content .gb { margin-top: 0.9em; }
+@@ -86,6 +86,16 @@
+         .office-content .sw-reading-header { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+         .office-content .sw-reading-header h4 { margin: 1.25rem 0 0.75rem; }
+         .office-content .sw-reading-header .sw-citation { margin: 0; }
++        /* Keep already-italic elements (rubrics, citations, source notes)
++           at normal weight - only plain body text becomes 90% bold. */
++        .office-content .rubric,
++        .office-content table.each th[align="right"],
++        .office-content td[align="right"],
++        .office-content .sw-citation,
++        .office-content .sw-source,
++        .office-content .sw-fallback-note {
++            font-weight: 400;
++        }
+     </style>
+     <!-- Apply saved theme before paint to avoid flash -->
+     <script>

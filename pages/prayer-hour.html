@@ -22,7 +22,7 @@
            and applies to the whole rendered office - English (Universalis)
            and Swahili alike - across all three hours (Readings, Midday,
            Vespers), since every view renders into this one container. */
-        .office-content { font-size: calc(1.0625rem * var(--prayer-text-scale, 1)); line-height: 1.75; color: #374151; }
+        .office-content { font-size: calc(1.0625rem * var(--prayer-text-scale, 1)); line-height: 1.75; color: #000000; font-weight: 600; }
         .dark .office-content { color: #d1d5db; }
         .office-content .v { margin: 0; }
         .office-content .gb { margin-top: 0.9em; }
@@ -86,6 +86,16 @@
         .office-content .sw-reading-header { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
         .office-content .sw-reading-header h4 { margin: 1.25rem 0 0.75rem; }
         .office-content .sw-reading-header .sw-citation { margin: 0; }
+        /* Keep already-italic elements (rubrics, citations, source notes)
+           at normal weight - only plain body text becomes 90% bold. */
+        .office-content .rubric,
+        .office-content table.each th[align="right"],
+        .office-content td[align="right"],
+        .office-content .sw-citation,
+        .office-content .sw-source,
+        .office-content .sw-fallback-note {
+            font-weight: 400;
+        }
     </style>
     <!-- Apply saved theme before paint to avoid flash -->
     <script>
