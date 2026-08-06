@@ -129,6 +129,7 @@
     }
 
     function splitBookAndRest(ref) {
+        ref = ref.replace(/^:/, '').trim();
         var m = ref.match(/^([A-Za-zĀ-ž]+(?:\s+[A-Za-zĀ-ž]+)?)\s+(\d.*)$/);
         if (!m) return null;
         return { book: m[1].trim(), rest: trimToCitation(m[2].trim()) };
@@ -307,7 +308,7 @@
         return null;
     }
 
-    // Newer pages wrap the heading in a ".reading-title" panel div
+    // Newer pages wrap the heading in a ".sw-title-box" panel div
     // (gold-on-maroon styling) and put the citation in a sibling
     // <p class="sw-citation"> *after that wrapper*, not after the
     // heading itself — so headingEl.nextElementSibling is null (the
@@ -316,13 +317,16 @@
     // the wrapper if there is one, otherwise the heading itself.
     function resolveAnchor(headingEl) {
         var parent = headingEl.parentElement;
-        if (parent && /(^|\s)reading-title(\s|$)/i.test(parent.className)) return parent;
+        if (parent && /(^|\s)sw-title-box(\s|$)/i.test(parent.className)) return parent;
         return headingEl;
     }
 
     function findCitationElement(anchorEl) {
         var next = anchorEl.nextElementSibling;
-        if (next && /(^|\s)sw-citation(\s|$)/i.test(next.className)) return next;
+        while (next) {
+            if (/(^|\s)sw-citation(\s|$)/i.test(next.className)) return next;
+            next = next.nextElementSibling;
+        }
         return null;
     }
 
