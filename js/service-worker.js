@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ipray-v202608021900';
+const CACHE_NAME = 'ipray-v20260806101522';
 
 // Critical app shell: cached during install. If any of these fail, the
 // install fails, so keep this list short and only list files that exist.

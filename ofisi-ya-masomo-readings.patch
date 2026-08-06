@@ -1,0 +1,1322 @@
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html b/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html
+index e971af1..89ab405 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/alhamisi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>ALHAMISI  YA  ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :   Yer 29,1 -14</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 29,1 -14</p>
+@@ -35 +35 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Yer 14,7;  Zab 130, 3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -76 +76 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                               Zab 78, 1 -2</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html b/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html
+index b0efbd2..a888d14 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/dominika.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :   Yer 11,18 -20; 12,1 -13</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 11,18 -20; 12,1 -13</p>
+@@ -35 +35 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Yn 12,27 -28; Zab 42, 6</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -85 +85 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Zab 86,12 -13;  118, 28</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html
+index 7a20107..65e2f85 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/ijumaa.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :   Yer  30,18 – 31,9</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer  30,18 – 31,9</p>
+@@ -35 +35 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                        Yer 31,6;  Isa 2,5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -75 +75 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                     Mt 5, 1 -2;  Isa 66, 2</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html
+index 8ba37e4..e7888d9 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :   Yer 31, 15 -22. 27 -34</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 31, 15 -22. 27 -34</p>
+@@ -35 +35 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :   Zab 51, 10.9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -69 +69 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                            Mt 5,4.6.5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html
+index 2c3fc2b..59e277a 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA:    Yer 20, 7 -18</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 20, 7 -18</p>
+@@ -40 +40 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -63 +63 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Zab 119, 115.114.113</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html
+index fcd5abe..9ae022e 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumatano.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMATANO YA ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :    Yer  26, 1 -15</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer  26, 1 -15</p>
+@@ -35 +35 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Yer 26, 15;  Mt 27, 24</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -74 +74 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                          I Kor 6,19 -20;  Law 11,43.44</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html
+index 085ea24..8715a63 100644
+--- a/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_mbili/jumatatu.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA ISHIRINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :  Yer 19, 1 -5. 10 – 20,6</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 19, 1 -5. 10 – 20,6</p>
+@@ -35 +35 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                          Mt 23, 37;  Yer 19, 15</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -42 +42 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Ishirini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                     Mit 23,26;  5,1;  4,20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/dominika.html b/pages/ofisi ya masomo/ishirini_na_moja/dominika.html
+index 3472bb7..cab27b4 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_moja/dominika.html
+@@ -30,2 +30,2 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-                <h3>DOMINIKA YA ISHIRINI NA MOJA</h3>
+-                <h2>SOMO LA KWANZA :   Sef  1, 1 -7. 14 -2,3</h2>
++                <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Sef  1, 1 -7. 14 -2,3</p>
+@@ -33 +33 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-                <h3>Kiitikizano :                                                                                                                        Sef 2,3;  Lk 6,20</h3>
++                <div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -38 +38 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-                <h2>SOMO LA PILI:</h2>
++                <div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -63 +63 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-                <h3>Kiitikizano :                                                                                                        Zab 96,11; Isa 49,13; Zab 72,7</h3>
++                <div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html
+index 84a8767..d7f6a4e 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html
++++ b/pages/ofisi ya masomo/ishirini_na_moja/ijumaa.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  ISHIRINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :   Yer  4,5 -8. 13 -28</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer  4,5 -8. 13 -28</p>
+@@ -35 +35 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Yer 4,24 -26;  Zab 85,5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -75 +75 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                             Zab 24,4; 2 Kor 6,6; Kol 2,14; Yoe 2,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html
+index a391130..cfd9971 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_moja/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :   Yer 7, 1 -20</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 7, 1 -20</p>
+@@ -35 +35 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                            Yer 7,11; Isa 56,7; Yn 2,16</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -80 +80 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                Mt 25,35.40;  Mit 19,1 7</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html b/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html
+index a515ba4..5f27f85 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_moja/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA:    Yer 1, 1 -19</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 1, 1 -19</p>
+@@ -35 +35 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                      Yer 1,5.9;  Isa 42,6</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -77 +77 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                 Tob 12,8 -9;  Lk 6,37 -38</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html b/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html
+index 0213ea5..fc1ff06 100644
+--- a/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_moja/jumatano.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMATANO YA ISHIRINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :    Yer  2,1 -13. 20 -25</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer  2,1 -13. 20 -25</p>
+@@ -35 +35 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                          Yer 2, 21;  Mt 21,43;  Isa 5,7</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -42 +42 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -74 +74 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                               Yn 7,37 -38</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -79 +79,2 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA KWANZA :   Yer 3,1 -5;  19 -4,4</h2>
++<div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 3,1 -5;  19 -4,4</p>
+@@ -81 +82 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Yer 14,7;  Zab 130, 3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -86 +87 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -121 +122 @@ Juma la Ishirini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                               Yn 4,13 -15</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/dominika.html b/pages/ofisi ya masomo/ishirini_na_nne/dominika.html
+index 901c786..ce53b7c 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_nne/dominika.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA ISHIRINI NA NNE</h3>
+-<h2>SOMO LA KWANZA :   Eze  1,3 -14. 22 -28</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze  1,3 -14. 22 -28</p>
+@@ -35 +35 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                           Eze 1,26.24; 3,12; Ufu 5,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -72 +72 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                             Zab 23, 1 -2.3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html
+index 1e23b7a..b1c9f82 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html
++++ b/pages/ofisi ya masomo/ishirini_na_nne/ijumaa.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  ISHIRINI NA NNE</h3>
+-<h2>SOMO LA KWANZA :   Eze 16,3.5b -7a. 8 -15.35.37a. 40 -43.59 -63</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 16,3.5b -7a. 8 -15.35.37a. 40 -43.59 -63</p>
+@@ -35 +35 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                          Isa 54,6.8;  Eze 16,60</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -84 +84 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                                I The 2,4.3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html
+index d3da8da..b03f54b 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA NNE</h3>
+-<h2>SOMO LA KWANZA :   Eze 18,1 -13.20 -32</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 18,1 -13.20 -32</p>
+@@ -35 +35 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                            Yer 31,29; Eze 18,20.30.20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -80 +80 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                  Zab 44,22; Rum 8,37; Zab 44,10.11</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html b/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html
+index cdfd114..195fb65 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA NNE</h3>
+-<h2>SOMO LA KWANZA:    Eze 8,1 -6.16 – 9,11</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 8,1 -6.16 – 9,11</p>
+@@ -35 +35 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                      Mt 24,15.21.22; Ufu 7, 3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -80 +80 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                               2 Kor 12, 14 -15; Flp 2, 17</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html b/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html
+index aead0d1..05ec6fa 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumatano.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-            <h3>JUMATANO YA ISHIRINI NA NNE</h3>
+-<h2>SOMO LA KWANZA :    Eze 10,18 -22;  11,14 -25</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 10,18 -22;  11,14 -25</p>
+@@ -35 +35 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                              Eze 10,4.18; Mt 23,37.38</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -42 +42 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -75 +75 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 YbS 32, 1 -2;  Mk 9, 34</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html
+index 05b5c3b..9f0706d 100644
+--- a/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_nne/jumatatu.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA ISHIRINI NA NNE</h3>
+-<h2>SOMO LA KWANZA :  Eze  2,8 – 3,11.16 -21</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze  2,8 – 3,11.16 -21</p>
+@@ -35 +35 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Eze 3, 16 -17; 2, 6; 3, 8</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -73 +73 @@ Juma la Ishirini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                              Eze 34,15 -16</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/dominika.html b/pages/ofisi ya masomo/ishirini_na_saba/dominika.html
+index bed8aa4..e415fbf 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_saba/dominika.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA ISHIRINI NA SABA</h3>
+-<h2>SOMO LA KWANZA :   I Tim 1,1 -20</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Tim 1,1 -20</p>
+@@ -35 +35 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                             I Tim 1,14.15; Rum 3,23</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -78 +78 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                         Zab 51,13.14 -15</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html
+index 7b0c3ca..9b74d68 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA SABA</h3>
+-<h2>SOMO LA KWANZA :   I Tim 6,11 -21</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Tim 6,11 -21</p>
+@@ -35 +35 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Kol 2,6 -7; Mt 6,19 -20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -80 +80 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                       Lk 10,2; Zab 62,8</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html b/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html
+index e223312..d96ba79 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA SABA</h3>
+-<h2>SOMO LA KWANZA:    I Tim 3,1 -16</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Tim 3,1 -16</p>
+@@ -39 +39 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -80 +80 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                     Efe 4,3 -6; I Kor 3,11</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html b/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html
+index 18c8742..b256552 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumatano.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-            <h3>JUMATANO YA ISHIRINI NA SABA</h3>
+-<h2>SOMO LA KWANZA :    I Tim 4,1 – 5,2</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Tim 4,1 – 5,2</p>
+@@ -35 +35 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                I Tim 4,8.10;  2 Kor 4,9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -75 +75 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                            2 The 2,14 -15;  YbS 15,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html
+index f06d4c7..b5edbd6 100644
+--- a/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_saba/jumatatu.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA ISHIRINI NA SABA</h3>
+-<h2>SOMO LA KWANZA :  I Tim 2,1 -15</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Tim 2,1 -15</p>
+@@ -35 +35 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   I Tim 2,5 -6;  Ebr 2,17</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -70 +70 @@ Juma la Ishirini Na Saba · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                               Zab 61 1 -2.5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/dominika.html b/pages/ofisi ya masomo/ishirini_na_sita/dominika.html
+index 9c235c2..9b32f6c 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_sita/dominika.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA ISHIRINI NA SITA</h3>
+-<h2>SOMO LA KWANZA :   Flp 1,1 -11</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Flp 1,1 -11</p>
+@@ -35 +35 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                               Flp 1,9.10.6</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -69 +69 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                2 Tim 1,9; Zab 113 B, 1</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html
+index 92b49cd..47218c7 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA SITA</h3>
+-<h2>SOMO LA KWANZA :   Flp 4,10 -23</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Flp 4,10 -23</p>
+@@ -35 +35 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                               Flp 4,12 -13; 2 Kor 12,10</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -78 +78 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Gal 5,1 3;  I Kor 10,32</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html b/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html
+index 07e1b42..45eacd2 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA SITA</h3>
+-<h2>SOMO LA KWANZA:    Flp 1,27 – 2,11</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Flp 1,27 – 2,11</p>
+@@ -35 +35 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                            I Pet 2, 24; Ebr 2, 14; 12, 2</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -70 +70 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                 Rum 12,17; 2 Kor 6,3; Mdo 24 ,15.16</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html b/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html
+index 7079e77..f2f78f1 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumatano.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-            <h3>JUMATANO YA ISHIRINI NA SITA</h3>
+-<h2>SOMO LA KWANZA :    Flp 2,12 -30</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Flp 2,12 -30</p>
+@@ -35 +35 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                               2 Pet 1,10,11; Efe 5,8.11</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -73 +73 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Flp 2,12 -13; Yn 15,5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html
+index 81c0fb0..3b082fe 100644
+--- a/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_sita/jumatatu.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA ISHIRINI NA SITA</h3>
+-<h2>SOMO LA KWANZA :  Flp 1,12 -26</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Flp 1,12 -26</p>
+@@ -35 +35 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                               Flp 1,20 -21</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -74 +74 @@ Juma la Ishirini Na Sita · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                                  Flp 4, 8 -9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html
+index ace4d9c..dbe265b 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html
++++ b/pages/ofisi ya masomo/ishirini_na_tano/ijumaa.html
+@@ -32,3 +32,2 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  ISHIRINI NA TANO</h3>
+-<h3>SOMO LA KWA NZA :   Eze 40,1 -4; 43,1 -12; 44,6 -9</h3>
+-<h3>Kiitikizano :                                                                                                                     Eze 43,4 -5; Lk 2,27</h3>
++            <h3>SOMO LA KWA NZA :   Eze 40,1 -4; 43,1 -12; 44,6 -9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +38 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -87 +86 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html
+index 0bde855..e7d3d6b 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA TANO</h3>
+-<h2>SOMO LA KWANZA :   Eze 47,1 -12</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 47,1 -12</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Eze 47,1.9;  Yn 4,14</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -63 +63 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                        Zab 36,9 -10; 65,4</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html b/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html
+index 329fbfc..7514681 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA TANO</h3>
+-<h2>SOMO LA KWANZA:    Eze 36,16 -36</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 36,16 -36</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                         Eze 11,19 -20.19</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -77 +77 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                             2 Kor 3,4.  6. 5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html b/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html
+index aef2f56..a551245 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumatano.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-            <h3>JUMATANO YA ISHIRINI NA TANO</h3>
+-<h2>SOMO LA KWANZA :    Eze 37,1 -14</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze 37,1 -14</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                              Eze 37,12.13;  Yn 11,25</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -77 +77 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Lk 12,42.43; I Kor 4,2</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html
+index a9a8d42..34a382d 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_tano/jumatatu.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA ISHIRINI NA TANO</h3>
+-<h2>SOMO LA KWANZA :  Eze  34,1 -6.11-16.23 -31</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Eze  34,1 -6.11-16.23 -31</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                             Eze 34,12.13.14; Yn 10,10</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Ishirini Na Tano · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                 YbS 4,23 -24; 2 Tim 4,2</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html b/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html
+index c364022..0efeec0 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/dominika.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA ISHIRINI NA TATU</h3>
+-<h2>SOMO LA KWANZA :   Yer 37,21;  38,14 -28</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 37,21;  38,14 -28</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 2 Kor 6,4 -5;  Yud 8, 23</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -74 +74 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Zab 31, 19; I Kor 2, 9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html
+index 042d0c2..f16c2db 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/ijumaa.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  ISHIRINI NA TATU</h3>
+-<h2>SOMO LA KWANZA :   Ma 3, 1 -33</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Ma 3, 1 -33</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                               Ma 3, 54.56.57.58;  Mdo 21,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -76 +76 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                       Yn 17,20.21.22.18</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html
+index 754ae1e..befecd1 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA TATU</h3>
+-<h2>SOMO LA KWANZA :   Ma 5,1 -22</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Ma 5,1 -22</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                Ma 5,19.20,21; Mt 8,25</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                              Rum 3,23 -25; I Kor 15,22</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html b/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html
+index 1db5a1c..30a431d 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/jumanne.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA TATU</h3>
+-<h2>SOMO LA KWANZA:    Hab  1,1 – 2,4</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hab  1,1 – 2,4</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                         Ebr 10,37.38. 39</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -69 +69 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                     Zab 19,8;  I Yoh 2, 5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -76 +76,2 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA KWANZA :    Hab 2,5 -20</h2>
++<div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hab 2,5 -20</p>
+@@ -78 +79 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Rum 2,12; 11,32; 3, 23</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -83 +84 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -112 +113 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                 Zab 111,10; Hek 6,18; YbS  19,18</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html
+index be4aff1..bb9f496 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_tatu/jumatatu.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA ISHIRINI NA TATU</h3>
+-<h2>SOMO LA KWANZA :  Yer 42,1 -16; 43,4 -7</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yer 42,1 -16; 43,4 -7</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                      Yer 42, 2;  Ma 5, 3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -68 +68 @@ Juma la Ishirini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                            Isa 38,3;  I Yoh 2,6; 5,3; 2,5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html b/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html
+index ed87e27..c38a02c 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/alhamisi.html
+@@ -33,2 +33,2 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-            <h3>ALHAMISI  YA  ISHIRINI NA TISA</h3>
+-<h2>SOMO LA KWANZA :  Est 5,1 -2. 3-5; 7,1 -10</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Est 5,1 -2. 3-5; 7,1 -10</p>
+@@ -36 +36 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Est 10, 3f;  Isa 48, 20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -42 +42 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -73 +73 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Mt 7,7.8; Zab 145,17</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html b/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html
+index 59c605f..e6be58c 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/dominika.html
+@@ -33,2 +33,2 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA ISHIRINI NA TISA</h3>
+-<h2>SOMO LA KWANZA :   Est 1,1 -3. 9-13. 15 -16. 19; 2,5 -10.16 -17</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Est 1,1 -3. 9-13. 15 -16. 19; 2,5 -10.16 -17</p>
+@@ -36 +36 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                               Zab 113,5 -8; Lk 1,51 -52</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -43 +43 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -78 +78 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                          Yer 29,13.12,11</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html b/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html
+index c65bcc0..7cb5ab5 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/ijumaa.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  ISHIRINI NA TISA</h3>
+-<h2>SOMO LA KWANZA :   Bar 1,14 – 2,5; 3,1 -8</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Bar 1,14 – 2,5; 3,1 -8</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                      Efe 2,4 -5; Bar 2,12</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -80 +80 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                   Rum 8,26; Zek 12,10</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html
+index 87ce656..9bdbdaa 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumamosi.html
+@@ -32,2 +32,2 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  ISHIRINI NA TISA</h3>
+-<h2>SOMO LA KWANZA :   Bar 3,9 -15.24 – 4,4</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Bar 3,9 -15.24 – 4,4</p>
+@@ -35 +35 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                Rum 11,33; Bar 3,32.37</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -81 +81 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                             Rum 5,18.12</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html
+index 5973fe8..f210aa2 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumanne.html
+@@ -31,2 +31,2 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-            <h3>JUMANNE YA ISHIRINI NA TISA</h3>
+-<h2>SOMO LA KWANZA:    Est 4,1 -8. 8a. 9 -17</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Est 4,1 -8. 8a. 9 -17</p>
+@@ -34 +34 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                         Est 4,17t; Tob 13,2; Yud 6,19</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                                 2 Mak 1,5.3</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html
+index d7dff4f..e44f3e4 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumatano.html
+@@ -33 +33 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                             Est 14,12.13.9; Ayu 24,23</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -81 +80,0 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Zab 102,2.18;  130,2</h3>
+diff --git a/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html b/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html
+index c17d0f5..d86b59a 100644
+--- a/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html
++++ b/pages/ofisi ya masomo/ishirini_na_tisa/jumatatu.html
+@@ -34 +34 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                       Est 4,17b; Zab 44,27; Est 4, 17h</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -41 +41 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -79 +78,0 @@ Juma la Ishirini Na Tisa · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                    Zab 88, 2 -3;  Isa 26, 8</h3>
+diff --git a/pages/ofisi ya masomo/styles.css b/pages/ofisi ya masomo/styles.css
+index 82dad20..5c60a5b 100644
+--- a/pages/ofisi ya masomo/styles.css
++++ b/pages/ofisi ya masomo/styles.css
+@@ -168,0 +169,23 @@ body {
++/* SOMO LA KWANZA / SOMO LA PILI / KITIKIZANO titles: gold text in a
++   maroon panel, replacing the plain .content h2 underline treatment. */
++.reading-title {
++    background: #5c1a1a;
++    border-radius: 8px;
++    padding: 10px 16px;
++    margin: 28px 0 4px;
++}
++
++.reading-title h2 {
++    color: gold;
++    border-bottom: none;
++    margin: 0;
++    padding: 0;
++}
++
++.sw-citation {
++    color: var(--muted);
++    font-style: italic;
++    font-size: calc(0.95rem * var(--prayer-text-scale, 1));
++    margin: 4px 0 16px;
++}
++
+diff --git a/pages/ofisi ya masomo/thelathini/dominika.html b/pages/ofisi ya masomo/thelathini/dominika.html
+index 83dff47..8ff69f5 100644
+--- a/pages/ofisi ya masomo/thelathini/dominika.html
++++ b/pages/ofisi ya masomo/thelathini/dominika.html
+@@ -33,2 +33,2 @@ Juma la Thelathini · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA THELATHINI</h3>
+-<h2>SOMO LA KWANZA :   Hek 1,1 -15</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hek 1,1 -15</p>
+@@ -36 +36 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                               Mit 3,13.15.17; Yak 3,17</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -44 +44 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -68 +68 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                           Yud 9,12; 6,19</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini/ijumaa.html b/pages/ofisi ya masomo/thelathini/ijumaa.html
+index 78e6016..b3dca39 100644
+--- a/pages/ofisi ya masomo/thelathini/ijumaa.html
++++ b/pages/ofisi ya masomo/thelathini/ijumaa.html
+@@ -31,2 +31,2 @@ Juma la Thelathini · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  THELATHINI</h3>
+-<h2>SOMO LA KWANZA :   Hek 8,1 -21</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hek 8,1 -21</p>
+@@ -34 +34 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                      Hek 7,7.8; Yak 1,5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -74 +74 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                       YbS 1,5.16 (Vulg)</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini/jumamosi.html b/pages/ofisi ya masomo/thelathini/jumamosi.html
+index 9826c27..f83de3a 100644
+--- a/pages/ofisi ya masomo/thelathini/jumamosi.html
++++ b/pages/ofisi ya masomo/thelathini/jumamosi.html
+@@ -31,2 +31,2 @@ Juma la Thelathini · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  THELATHINI</h3>
+-<h2>SOMO LA KWANZA :   Hek 11,20b – 12,2.11b -19</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hek 11,20b – 12,2.11b -19</p>
+@@ -34 +34 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                            Hek 11,23.24.26; YbS  36,1</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -67 +67 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                                Zab 17,8.7</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini/jumanne.html b/pages/ofisi ya masomo/thelathini/jumanne.html
+index 28fefee..fa403f0 100644
+--- a/pages/ofisi ya masomo/thelathini/jumanne.html
++++ b/pages/ofisi ya masomo/thelathini/jumanne.html
+@@ -30,2 +30,2 @@ Juma la Thelathini · Kipindi cha Kawaida
+-            <h3>JUMANNE YA THELATHINI</h3>
+-<h2>SOMO LA KWANZA:    Hek 3,1 -19</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hek 3,1 -19</p>
+@@ -33 +33 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                                Her 3,6.7.9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                                  Est 4,17b.c</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini/jumatatu.html b/pages/ofisi ya masomo/thelathini/jumatatu.html
+index 6b59f0c..c30054b 100644
+--- a/pages/ofisi ya masomo/thelathini/jumatatu.html
++++ b/pages/ofisi ya masomo/thelathini/jumatatu.html
+@@ -33,2 +33,2 @@ Juma la Thelathini · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA THELATHINI</h3>
+-<h2>SOMO LA KWANZA :  Hek 1,16 – 2,1a. 10 -24</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Hek 1,16 – 2,1a. 10 -24</p>
+@@ -36 +36 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                           Hek 2,1.12.13.17; Mt 27, 43</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -44 +44 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -74 +74 @@ Juma la Thelathini · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                            Tob 4,19; 14,8</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html b/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html
+index 68f2612..1a2dfcc 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/alhamisi.html
+@@ -33,2 +33,2 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-            <h3>ALHAMISI  YA THELATHINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :  Dan 9,1 -4a. 18 -27</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Dan 9,1 -4a. 18 -27</p>
+@@ -36 +36 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                        Bar 2,16; Dan 9,18; Zab 80,20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -42 +42 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -74 +74 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                         Yer 7,3; Yak 4,8</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html b/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html
+index b0533d0..53c0372 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/dominika.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA THELATHINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :   Dan 1,1 -21</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Dan 1,1 -21</p>
+@@ -34 +34 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                                 Dan 1,17.20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -73 +73 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  I The 5,9 -10; Kol 1,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html
+index ed31e8e..5d7f0ec 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/jumamosi.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  THELATHINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA :   Dan 12,1 -13</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Dan 12,1 -13</p>
+@@ -34 +34 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                           Lk 20,35.36.38</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -75 +75 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                          Zab 37, 27.28.1</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html b/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html
+index f21d535..a1566cd 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/jumanne.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMANNE YA THELATHINI NA MBILI</h3>
+-<h2>SOMO LA KWANZA:   Dan 3,8 -12. 19 -24. 91-97</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Dan 3,8 -12. 19 -24. 91-97</p>
+@@ -34 +34 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Dan 3,49 .50.95</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -67 +67 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                  Eze 18,31 -32; 2 Pet 3,9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html b/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html
+index cece28d..b2ec48b 100644
+--- a/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html
++++ b/pages/ofisi ya masomo/thelathini_na_mbili/jumatano.html
+@@ -31,3 +31,2 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-            <h3>JUMATANO YA THELATHINI NA MBILI</h3>
+-<h3>sOMO LA KWANZA :    Dan 5,1 -2.5-9.13-17.25 -31</h3>
+-<h3>Kiitikizano :                                                                                                            Zab 75,6.8.9; Ufu 14,9.10</h3>
++            <h3>sOMO LA KWANZA :    Dan 5,1 -2.5-9.13-17.25 -31</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -38 +37 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -68 +67 @@ Juma la Thelathini Na Mbili · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 I Kor 15,58; 2 The 3,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/dominika.html b/pages/ofisi ya masomo/thelathini_na_moja/dominika.html
+index 9108e16..c116c95 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/dominika.html
++++ b/pages/ofisi ya masomo/thelathini_na_moja/dominika.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-            <h3>DOMINIKA YA THELATHINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :   I Mak 1,1 -24</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Mak 1,1 -24</p>
+@@ -34 +34 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  2 Mak 7,33; Ebr 12,11</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                               I Nya 29,11; 2 Mak 1,24</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html b/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html
+index ae3414a..23b125d 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html
++++ b/pages/ofisi ya masomo/thelathini_na_moja/ijumaa.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-            <h3>IJUMAA  YA  THELATHINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :   I Mak 12,32 -46</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Mak 12,32 -46</p>
+@@ -34 +34 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                              2 Mak 12,45</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -40 +40 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -79 +79 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                              Mik 6,6.8;  Kum 10,14.12</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html
+index 6d73979..8f0d032 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumamosi.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  THELATHINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :   I Mak 9,1 -22</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Mak 9,1 -22</p>
+@@ -34 +34 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                         I Mak 4,8.9.10.9</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -71 +71 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                               2 Tim 2,11 -12; YbS 1,20</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html b/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html
+index 6631eb9..52e363a 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumanne.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMANNE YA THELATHINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA:   I Mak 2,1.15 -28. 42 -50. 65 -70</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Mak 2,1.15 -28. 42 -50. 65 -70</p>
+@@ -34 +34 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                            I Mak 2 .51.64</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html b/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html
+index 4342523..9d013f6 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumatano.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMATANO YA THELATHINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :    I  Mak 3,1 -26</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I  Mak 3,1 -26</p>
+@@ -34 +34 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                       I Mak 3,20.22.19.21.22</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -39 +39 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -73 +73 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                     Gal 2,16; Rum 3,25</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html b/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html
+index b52e187..92156a7 100644
+--- a/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html
++++ b/pages/ofisi ya masomo/thelathini_na_moja/jumatatu.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA THELATHINI NA MOJA</h3>
+-<h2>SOMO LA KWANZA :  I Mak 1,41 -64</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">I Mak 1,41 -64</p>
+@@ -34 +34 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Dan 9,18; Mdo 4, 29</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -38 +38 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -73 +73 @@ Juma la Thelathini Na Moja · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                         YbS 23,2;  Isa 49,8; 37,35; Zab 122,7; 34,15</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html b/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html
+index f4fe487..3db176c 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/alhamisi.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-            <h3>ALHAMISI  YA THELATHINI NA NNE</h3>
+-<h2>SOMO LA KWANZA: Zekaria 11:4-12:8</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Zekaria 11:4-12:8</p>
+@@ -41 +41 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Zc 11:12-13; Mt 26:15</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -49 +49 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -58 +58 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                         Mt 10,16; Yn 12,36</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/dominika.html b/pages/ofisi ya masomo/thelathini_na_nne/dominika.html
+index 28e87a8..01654a9 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/dominika.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/dominika.html
+@@ -34 +34,2 @@ Juma la Thelathini Na Nne · KRISTO MFALME
+-<h2>SOMO LA KWANZA:</h2>
++<div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation"></p>
+@@ -47 +48 @@ Juma la Thelathini Na Nne · KRISTO MFALME
+-<h3>Kiitikizano :</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -52 +53 @@ Juma la Thelathini Na Nne · KRISTO MFALME
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -60 +61 @@ Juma la Thelathini Na Nne · KRISTO MFALME
+-<h3>Kiitikizano :                                                                                                               Ufu 11,15; Zab 21,28 -29</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/ijumaa.html b/pages/ofisi ya masomo/thelathini_na_nne/ijumaa.html
+index 2145add..80f53e7 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/ijumaa.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/ijumaa.html
+@@ -32 +31,0 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                Mt 26:31; Zk 13:7</h3>
+@@ -40 +39 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -47 +46 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Flp 3,20 -21; Kol 3,4</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_nne/jumamosi.html
+index 2f4d4d5..843395f 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/jumamosi.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/jumamosi.html
+@@ -32 +31,0 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Zc 14:8a, 13:1; Yoh 19:34</h3>
+@@ -82 +81 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                             Tob 13,17.18</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/jumanne.html b/pages/ofisi ya masomo/thelathini_na_nne/jumanne.html
+index 64f4393..0331329 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/jumanne.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/jumanne.html
+@@ -32 +31,0 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Zc 9:9; Yoh 12:14</h3>
+@@ -40 +39 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -48 +47 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                                 Ufu 22,5.4</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/jumatano.html b/pages/ofisi ya masomo/thelathini_na_nne/jumatano.html
+index dcfe692..f66f38c 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/jumatano.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/jumatano.html
+@@ -32 +31,0 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Zc 10:6-7; Isaya 28:5</h3>
+@@ -38 +37 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -46 +45 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                                 Ufu 22,5.4</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html b/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html
+index 5a4004e..8538ce3 100644
+--- a/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html
++++ b/pages/ofisi ya masomo/thelathini_na_nne/jumatatu.html
+@@ -32 +32,2 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA KWANZA:</h2>
++<div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation"></p>
+@@ -39 +40 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano: 2 P 1:3-4; Wagalatia 3:27</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -45 +46 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -52 +53 @@ Juma la Thelathini Na Nne · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                               Gal 6,9 -10.7</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html b/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html
+index 21bf763..bbcdafe 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/dominika.html
+@@ -31 +31,2 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-            <h2>SOMO LA KWANZA : Yoeli 2:21-32 Siku za mwisho</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yoeli 2:21-32 Siku za mwisho</p>
+@@ -40 +41 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Lk 21,25.31; Mk 13.33</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -54 +55 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Mt 16,27; Zab 95,13</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html b/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html
+index c6e8e56..11c8f7c 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/ijumaa.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-             <h3>IJUMAA  YA  THELATHINI NA NNE</h3>
+-<h2>SOMO LA KWANZA: Zekaria 12:9-12,13:1-9 </h2>
++             <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Zekaria 12:9-12,13:1-9</p>
+@@ -41 +41 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                    Mt 26,31;  Zek 13,7</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -50 +50 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -56 +56 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                               Kol 1,24.29</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html
+index 8000445..61e9b21 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumamosi.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-            <h3>JUMAMOSI  YA  THELATHINI NA NNE</h3>
+-<h2>SOMO LA KWANZA: Zekaria 14:1-21</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Zekaria 14:1-21</p>
+@@ -41 +41 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                     Zek 13,1; Yn 19,34</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -50 +50 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI :</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -56 +56 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                 Zab 17,15; I Kor 13,12</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html
+index ae47d7c..3edced9 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumanne.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-             <h3>JUMANNE YA THELATHINI NA NNE</h3>
+-<h2>SOMO LA KWANZA: Zekaria 9:1-10:2</h2>
++             <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Zekaria 9:1-10:2</p>
+@@ -42 +42 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                       Zek 9,9; Yn 12,14</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -52 +52 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -60 +60 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano                                                                                                                         Zab 118,26.27.23</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html
+index 1798efd..a8f5eb1 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumatano.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-            <h3>JUMATANO YA THELATHINI NA NNE</h3>
+-<h2>SOMO LA KWANZA: Zekaria 10:3-11:3</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Zekaria 10:3-11:3</p>
+@@ -39 +39 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                     Zek 10,6.7; Isa 28,5</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -48 +48 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -55 +55 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+diff --git a/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html b/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html
+index e80aa96..b5838db 100644
+--- a/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html
++++ b/pages/ofisi ya masomo/thelathini_na_tatu/jumatatu.html
+@@ -31,2 +31,2 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-            <h3>JUMATATU  YA THELATHINI NA NNE</h3>
+-<h2>SOMO LA KWANZA : Yoeli 4:1-3,9-21</h2>
++            <div class="reading-title"><h2>SOMO LA KWANZA</h2></div>
++<p class="sw-citation">Yoeli 4:1-3,9-21</p>
+@@ -40 +40 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano :                                                                                                                  Yoe 3,18; Ufu 22,17.1</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>
+@@ -50 +50 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h2>SOMO LA PILI:</h2>
++<div class="reading-title"><h2>SOMO LA PILI</h2></div>
+@@ -57 +57 @@ Juma la Thelathini Na Tatu · Kipindi cha Kawaida
+-<h3>Kiitikizano:                                                                                                                     Kol 3,3 -4; Rum 6,11</h3>
++<div class="reading-title kiitikizano-title"><h2>KITIKIZANO</h2></div>

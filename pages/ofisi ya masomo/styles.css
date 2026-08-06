@@ -165,6 +165,29 @@ body {
     font-size: calc(0.95rem * var(--prayer-text-scale, 1));
     margin: 8px 0 12px;
 }
+/* SOMO LA KWANZA / SOMO LA PILI / KITIKIZANO titles: gold text in a
+   maroon panel, replacing the plain .content h2 underline treatment. */
+.reading-title {
+    background: #5c1a1a;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 28px 0 4px;
+}
+
+.reading-title h2 {
+    color: gold;
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sw-citation {
+    color: var(--muted);
+    font-style: italic;
+    font-size: calc(0.95rem * var(--prayer-text-scale, 1));
+    margin: 4px 0 16px;
+}
+
 
 .verse {
     font-weight: 700;
