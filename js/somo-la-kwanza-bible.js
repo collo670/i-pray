@@ -31,12 +31,12 @@
         'yos': 6, 'yoshua': 6,
         'amu': 7, 'waamuzi': 7,
         'ruth': 8, 'ruthi': 8,
-        '1sam': 9, 'isamweli': 9, '1samweli': 9,
-        '2sam': 10, 'iisamweli': 10, '2samweli': 10,
-        '1fal': 11, 'iwafalme': 11, '1wafalme': 11,
-        '2fal': 12, 'iiwafalme': 12, '2wafalme': 12,
-        '1nya': 13, 'inyakati': 13, '1nyakati': 13,
-        '2nya': 14, 'iinyakati': 14, '2nyakati': 14,
+        '1sam': 9, 'isam': 9, 'isamweli': 9, '1samweli': 9,
+        '2sam': 10, 'iisam': 10, 'iisamweli': 10, '2samweli': 10,
+        '1fal': 11, 'ifal': 11, 'iwafalme': 11, '1wafalme': 11,
+        '2fal': 12, 'iifal': 12, 'iiwafalme': 12, '2wafalme': 12,
+        '1nya': 13, 'inya': 13, 'inyakati': 13, '1nyakati': 13,
+        '2nya': 14, 'iinya': 14, 'iinyakati': 14, '2nyakati': 14,
         'ezr': 15, 'ezra': 15,
         'neh': 16, 'nehemia': 16,
         'est': 17, 'esta': 17,
@@ -54,7 +54,7 @@
         'dan': 27, 'danieli': 27,
         // Manabii wadogo
         'hos': 28, 'hosea': 28,
-        'yoeli': 29, 'yl': 29,
+        'yoe': 29, 'yoeli': 29, 'yl': 29,
         'amo': 30, 'amosi': 30,
         'oba': 31, 'obadia': 31,
         'yona': 32,
@@ -72,25 +72,25 @@
         'yoh': 43, 'yohana': 43,
         'mdo': 44, 'matendo': 44,
         'rum': 45, 'warumi': 45,
-        '1kor': 46, 'ikorintho': 46, '1korintho': 46,
-        '2kor': 47, 'iikorintho': 47, '2korintho': 47,
+        '1kor': 46, 'ikor': 46, 'ikorintho': 46, '1korintho': 46,
+        '2kor': 47, 'iikor': 47, 'iikorintho': 47, '2korintho': 47,
         'gal': 48, 'wagalatia': 48,
         'efe': 49, 'waefeso': 49,
         'flp': 50, 'wafilipi': 50,
         'kol': 51, 'wakolosai': 51,
-        '1the': 52, 'ithesalonike': 52, '1thesalonike': 52,
-        '2the': 53, 'iithesalonike': 53, '2thesalonike': 53,
+        '1the': 52, 'ithe': 52, 'ithesalonike': 52, '1thesalonike': 52,
+        '2the': 53, 'iithe': 53, 'iithesalonike': 53, '2thesalonike': 53,
         '1tim': 54, 'itim': 54, 'itimotheo': 54,
         '2tim': 55, 'iitim': 55, 'iitimotheo': 55,
         'tit': 56, 'tito': 56,
         'flm': 57, 'filemoni': 57,
         'ebr': 58, 'hek': 58, 'waebrania': 58,
         'yak': 59, 'yakobo': 59,
-        '1pet': 60, 'ipetro': 60, '1petro': 60,
-        '2pet': 61, 'iipetro': 61, '2petro': 61,
-        '1yoh': 62, 'iyohana': 62,
-        '2yoh': 63, 'iiyohana': 63,
-        '3yoh': 64, 'iiiyohana': 64,
+        '1pet': 60, 'ipet': 60, 'ipetro': 60, '1petro': 60,
+        '2pet': 61, 'iipet': 61, 'iipetro': 61, '2petro': 61,
+        '1yoh': 62, 'iyoh': 62, 'iyohana': 62,
+        '2yoh': 63, 'iiyoh': 63, 'iiyohana': 63,
+        '3yoh': 64, 'iiiyoh': 64, 'iiiyohana': 64,
         'yud': 65, 'yuda': 65,
         'ufu': 66, 'ufunuo': 66
     };
@@ -104,6 +104,7 @@
         'ybs': 'Yesu bin Sira (Sirach)',
         'imak': '1 Wamakabayo', '1mak': '1 Wamakabayo',
         'iimak': '2 Wamakabayo', '2mak': '2 Wamakabayo',
+        'yda': '1 Wamakabayo',
         'tob': 'Tobiti', 'tobiti': 'Tobiti',
         'yud t': 'Yuditi', 'yuditi': 'Yuditi',
         'hekima': 'Kitabu cha Hekima'
@@ -116,11 +117,12 @@
     // -----------------------------------------------------------------
     // Reference parsing
     // -----------------------------------------------------------------
-    // Splits "Sef 1, 1-7. 14-2,3" into a book token and the rest, then
-    // walks the rest to build a list of {chapter, verseStart, verseEnd}
-    // spans, carrying the "current chapter" across segments the way
-    // Bible citations normally omit it (e.g. "14-2,3" continues from
-    // the chapter set earlier in the same reference).
+    // Splits "Kum 1, 1. 6-10" or "2 The 1, 1-12" or "I Sam 25, 14-24a"
+    // into a book token and the rest, then walks the rest to build a list
+    // of {chapter, verseStart, verseEnd} spans, carrying the "current
+    // chapter" across segments the way Bible citations normally omit it
+    // (e.g. "14-2,3" continues from the chapter set earlier in the same
+    // reference).
     function normalizeRef(raw) {
         return raw
             .replace(/[\u2013\u2014]/g, '-') // en/em dash -> hyphen
@@ -130,7 +132,7 @@
 
     function splitBookAndRest(ref) {
         ref = ref.replace(/^:/, '').trim();
-        var m = ref.match(/^([A-Za-zĀ-ž]+(?:\s+[A-Za-zĀ-ž]+)?)\s+(\d.*)$/);
+        var m = ref.match(/^((?:[IVXLCDM\d]+\s+)?[A-Za-zĀ-ž]+(?:\s+[A-Za-zĀ-ž]+)?)\s+(\d.*)$/);
         if (!m) return null;
         return { book: m[1].trim(), rest: trimToCitation(m[2].trim()) };
     }
@@ -139,7 +141,7 @@
     // e.g. "2:21-32 Siku za mwisho" — keep only the leading run of
     // tokens that actually look like chapter/verse citation syntax.
     function trimToCitation(rest) {
-        var tokenPattern = /^[\d,.:;\-–—]+[ab]?$/i;
+        var tokenPattern = /^[0-9abdc,.:;\-–—]+$/i;
         var tokens = rest.split(/\s+/);
         var kept = [];
         for (var i = 0; i < tokens.length; i++) {
@@ -153,7 +155,10 @@
     }
 
     function parseToken(tok, currentChapter) {
-        tok = tok.trim().replace(/[ab]$/i, ''); // drop half-verse marker (14a, 20b)
+        tok = tok.trim();
+        var halfVerse = tok.match(/^(.*?)([a-z])$/i);
+        if (halfVerse) tok = halfVerse[1];
+        tok = tok.replace(/^-+/, '').trim();
         var chVerse = tok.match(/^(\d+)\s*[,:]\s*(\d+)$/);
         if (chVerse) return { chapter: parseInt(chVerse[1], 10), verse: parseInt(chVerse[2], 10) };
         var verseOnly = tok.match(/^(\d+)$/);
