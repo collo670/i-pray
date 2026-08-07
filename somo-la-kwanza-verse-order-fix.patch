@@ -1,0 +1,26 @@
+diff --git a/js/somo-la-kwanza-bible.js b/js/somo-la-kwanza-bible.js
+index d5fdf3d..36679ea 100644
+--- a/js/somo-la-kwanza-bible.js
++++ b/js/somo-la-kwanza-bible.js
+@@ -377,13 +377,20 @@
+             renderError(citeEl, 'Aya hazikupatikana kwa rejea hii.');
+             return;
+         }
++        // 'afterend' always inserts immediately after its target — so
++        // inserting every verse 'afterend' citeEl itself would push
++        // each new paragraph above the previous one, reversing the
++        // reading. Insert each verse after the one before it instead,
++        // so they land in citation order.
++        var insertAfter = citeEl;
+         verses.forEach(function (v) {
+             var p = document.createElement('p');
+             var sup = document.createElement('sup');
+             sup.textContent = (v.chapter + ':' + v.verse);
+             p.appendChild(sup);
+             p.appendChild(document.createTextNode(v.text.trim()));
+-            citeEl.insertAdjacentElement('afterend', p);
++            insertAfter.insertAdjacentElement('afterend', p);
++            insertAfter = p;
+         });
+     }
+ 
