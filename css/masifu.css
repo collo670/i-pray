@@ -314,3 +314,32 @@ body.dark-mode .masifu-textctl button:focus-visible {
 body.dark-mode .masifu-textctl .tc-reset {
     border-color: rgba(0, 0, 0, 0.15);
 }
+
+/* ---- OFISI YA MASOMO link between kiitikizano and wimbo wa zakaria ---- */
+
+body.masifu-modern .ofisi-link-container {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+body.masifu-modern .ofisi-link {
+    color: #8B0000;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05em;
+}
+
+body.masifu-modern .ofisi-link:hover,
+body.masifu-modern .ofisi-link:focus {
+    color: #A52A2A;
+    text-decoration: underline;
+}
+
+body.masifu-modern.dark-mode .ofisi-link {
+    color: #FFA07A;
+}
+
+body.masifu-modern.dark-mode .ofisi-link:hover,
+body.masifu-modern.dark-mode .ofisi-link:focus {
+    color: #FFB385;
+}
