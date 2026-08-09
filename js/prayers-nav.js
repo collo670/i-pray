@@ -1,6 +1,7 @@
 // Makes the "Prayers" bottom-nav item open the same Prayers menu sheet used
 // on index.html, on every other page. index.html already builds this sheet
 // itself (see js/index.js + its inline scripts), so this script no-ops there.
+// Also injects Font Awesome if missing, so the menu items match index.html.
 (function () {
     'use strict';
 
@@ -8,6 +9,23 @@
     window.__ipnPrayersNavInit = true;
 
     if (document.getElementById('prayersSheet')) return; // index.html already handles itself
+
+    // Ensure Font Awesome is available for prayer menu icons
+    (function injectFontAwesome() {
+        if (document.querySelector('link[href*="font-awesome"]')) return;
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css';
+        link.media = 'print';
+        link.onload = function () { this.media = 'all'; };
+        var noscript = document.createElement('noscript');
+        var fallback = document.createElement('link');
+        fallback.rel = 'stylesheet';
+        fallback.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css';
+        noscript.appendChild(fallback);
+        document.head.appendChild(link);
+        document.head.appendChild(noscript);
+    })();
 
     function init() {
         var nav = document.querySelector('.bottom-nav, nav[role="navigation"][aria-label="Main Navigation"]');
@@ -20,33 +38,58 @@
         var basePath = resolveBasePath(prayersLink.getAttribute('href') || '');
 
         var PRAYER_MENU = [
-            { key: 'morningPrayer', label: 'Morning Prayer', href: basePath + 'pages/lauds.html' },
-            { key: 'officeOfReadings', label: 'Office of Readings', href: basePath + 'pages/prayer-hour.html?hour=readings' },
-            { key: 'middayPrayer', label: 'Midday Prayer', href: basePath + 'pages/prayer-hour.html?hour=sext' },
-            { key: 'eveningPrayer', label: 'Evening Prayer', href: basePath + 'pages/prayer-hour.html?hour=vespers' },
-            { key: 'nightPrayer', label: 'Night Prayer', href: basePath + 'pages/compline.html' },
-            { key: 'holyRosary', label: 'Holy Rosary', href: basePath + 'pages/holy-rosary.html' },
-            { key: 'stationsOfCross', label: 'Way of the Cross', href: basePath + 'pages/via-cruce.html' },
-            { key: 'otherPrayers', label: 'Other Prayers', href: basePath + 'pages/prayer.html' },
-            { key: 'carmenPrayer', label: 'Carmen Prayer', href: basePath + 'pages/carmen.html' }
+            { id: 'lauds', key: 'morningPrayer', label: 'Morning Prayer', icon: 'fa-sun', iconColor: 'text-yellow-500', type: 'hours', suffix: '' },
+            { id: 'scripture', key: 'officeOfReadings', label: 'Office of Readings', icon: 'fa-book-open', iconColor: 'text-orange-500', link: 'pages/prayer-hour.html?hour=readings' },
+            { id: 'midday', key: 'middayPrayer', label: 'Midday Prayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', link: 'pages/prayer-hour.html?hour=sext' },
+            { id: 'vespers', key: 'eveningPrayer', label: 'Evening Prayer', icon: 'fa-moon', iconColor: 'text-indigo-500', link: 'pages/prayer-hour.html?hour=vespers' },
+            { id: 'readings', key: 'nightPrayer', label: 'Night Prayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
+            { id: 'rosary', key: 'holyRosary', label: 'Holy Rosary', icon: 'fa-hands-praying', iconColor: 'text-red-500', link: 'pages/holy-rosary.html' },
+            { id: 'sacraments', key: 'stationsOfCross', label: 'Way of the Cross', icon: 'fa-cross', iconColor: 'text-pink-500', link: 'pages/via-cruce.html' },
+            { id: 'morning', key: 'otherPrayers', label: 'Other Prayers', icon: 'fa-book', iconColor: 'text-green-600', link: 'pages/prayer.html' },
+            { id: 'carmen-page', key: 'carmenPrayer', label: 'Carmen Prayer', icon: 'fa-heart', iconColor: 'text-purple-500', link: 'pages/carmen.html' }
         ];
 
         injectStyles();
-        var sheet = buildSheet(PRAYER_MENU);
+        var sheet = buildSheet(PRAYER_MENU, basePath);
         document.body.appendChild(sheet);
         wireUp(prayersLink, sheet);
     }
 
     function resolveBasePath(href) {
-        var match = href.match(/^(.*?)pages\/prayer\.html(?:[?#].*)?$/);
-        if (match) return match[1];
-        var parts = href.split('/');
+        if (href && href.indexOf('pages/prayer.html') !== -1) {
+            var match = href.match(/^(.*?)pages\/prayer\.html(?:[?#].*)?$/);
+            if (match) return match[1];
+        }
+        var parts = (href || '').split('/');
         parts.pop();
         if (parts[parts.length - 1] === 'pages') parts.pop();
-        return parts.length ? parts.join('/') + '/' : '';
+        if (parts.length === 0) return '../';
+        return parts.join('/') + '/';
     }
 
-    function buildSheet(items) {
+    function resolvePrayerLink(item, basePath) {
+        if (item.type === 'hours') {
+            var now = new Date();
+            var dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+            var dayPrefix = dayToPrefix[now.getDay()];
+            var weekSequence = [2, 3, 4, 1];
+            var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var daysSinceSunday = today.getDay();
+            var currentSunday = new Date(today);
+            currentSunday.setDate(today.getDate() - daysSinceSunday);
+            var referenceWeek2Sunday = new Date(2025, 7, 3);
+            referenceWeek2Sunday.setHours(0, 0, 0, 0);
+            var msPerWeek = 7 * 24 * 60 * 60 * 1000;
+            var weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+            var weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
+            var week = weekSequence[weekIndex];
+            var suffixPart = item.suffix ? '-' + item.suffix : '';
+            return basePath + 'pages/' + dayPrefix + week + suffixPart + '.html';
+        }
+        return basePath + item.link;
+    }
+
+    function buildSheet(items, basePath) {
         var overlay = document.createElement('div');
         overlay.id = 'ipnPrayersSheet';
         overlay.className = 'ipn-overlay ipn-hidden';
@@ -55,8 +98,11 @@
         overlay.setAttribute('aria-labelledby', 'ipnPrayersTitle');
 
         var itemsHtml = items.map(function (item) {
-            return '<a class="ipn-item" href="' + item.href + '" data-translate="' + item.key + '">' +
-                '<span class="ipn-item-label">' + item.label + '</span>' +
+            var href = resolvePrayerLink(item, basePath);
+            var label = item.label;
+            return '<a class="ipn-item" href="' + href + '" data-translate="' + item.key + '">' +
+                '<span class="ipn-item-icon"><i class="fas ' + item.icon + ' ' + item.iconColor + '" aria-hidden="true"></i></span>' +
+                '<span class="ipn-item-label">' + label + '</span>' +
                 '<svg class="ipn-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
                 '<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>' +
                 '</a>';
@@ -126,11 +172,12 @@
             '.ipn-item{display:flex;align-items:center;gap:.875rem;padding:.8rem 1.25rem;min-height:48px;color:#1f2937;font-weight:500;font-size:1.05rem;border-bottom:1px solid #e5e7eb;text-decoration:none;}' +
             '.ipn-item:last-child{border-bottom:none;}' +
             '.ipn-item:hover,.ipn-item:active{background-color:#f3f4f6;}' +
+            '.ipn-item-icon{display:flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border-radius:9999px;background:#f3f4f6;flex-shrink:0;}' +
             '.ipn-item-label{flex:1;}' +
             '.ipn-chevron{color:#6b7280;flex-shrink:0;}' +
             '@media (min-width:768px){.ipn-overlay{align-items:center;padding:1rem;}.ipn-panel{border-radius:1.5rem;}}' +
-            '@media (prefers-color-scheme:dark){.ipn-panel{background:#1f2937;}.ipn-title{color:#f3f4f6;}.ipn-close{background:#374151;color:#e5e7eb;}.ipn-item{color:#f3f4f6;border-bottom-color:#374151;}.ipn-item:hover,.ipn-item:active{background-color:#374151;}.ipn-chevron{color:#9ca3af;}}' +
-            'html.dark .ipn-panel{background:#1f2937;}html.dark .ipn-title{color:#f3f4f6;}html.dark .ipn-close{background:#374151;color:#e5e7eb;}html.dark .ipn-item{color:#f3f4f6;border-bottom-color:#374151;}html.dark .ipn-item:hover,html.dark .ipn-item:active{background-color:#374151;}html.dark .ipn-chevron{color:#9ca3af;}';
+            '@media (prefers-color-scheme:dark){.ipn-panel{background:#1f2937;}.ipn-title{color:#f3f4f6;}.ipn-close{background:#374151;color:#e5e7eb;}.ipn-item{color:#f3f4f6;border-bottom-color:#374151;}.ipn-item:hover,.ipn-item:active{background-color:#374151;}.ipn-chevron{color:#9ca3af;}.ipn-item-icon{background:#374151;}}' +
+            'html.dark .ipn-panel{background:#1f2937;}html.dark .ipn-title{color:#f3f4f6;}html.dark .ipn-close{background:#374151;color:#e5e7eb;}html.dark .ipn-item{color:#f3f4f6;border-bottom-color:#374151;}html.dark .ipn-item:hover,html.dark .ipn-item:active{background-color:#374151;}html.dark .ipn-chevron{color:#9ca3af;}html.dark .ipn-item-icon{background:#374151;}';
         document.head.appendChild(style);
     }
 
