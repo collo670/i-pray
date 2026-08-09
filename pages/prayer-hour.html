@@ -142,16 +142,16 @@
         </header>
 
         <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
-            <!-- Hour switch: Readings / Midday / Vespers, with the language
+            <!-- Hour switch: Midday / Vespers / Night Prayer, with the language
                  switch (English / Kiswahili) pinned to the right of the same
                  row. Remembered in localStorage; switching re-renders
                  instantly, no page reload. -->
             <div class="flex flex-wrap items-center justify-between gap-y-2 gap-x-2 mb-4">
                 <div class="flex-1 hidden sm:block" aria-hidden="true"></div>
                 <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1" role="tablist" aria-label="Choose the hour">
-                    <button id="tabReadings" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Readings</button>
                     <button id="tabSext" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Midday</button>
                     <button id="tabVespers" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Vespers</button>
+                    <button id="tabCompline" class="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap" role="tab">Night Prayer</button>
                 </div>
                 <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1 ml-auto sm:ml-0" role="tablist" aria-label="Choose language / Chagua lugha">
                     <button id="langEn" class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors" role="tab">ENG</button>
@@ -284,12 +284,6 @@
             var CACHE_PREFIX = 'officeHtml-';
 
             var HOURS = {
-                readings: {
-                    page: 'readings',
-                    title: 'Office of Readings',
-                    titleSw: 'Ofisi ya Masomo',
-                    subtitle: 'Matins · The Office of Readings'
-                },
                 sext: {
                     page: 'sext',
                     title: 'Midday Prayer',
@@ -316,9 +310,9 @@
             var titleEl = document.getElementById('hourTitle');
             var subtitleEl = document.getElementById('hourSubtitle');
             var TABS = {
-                readings: document.getElementById('tabReadings'),
                 sext: document.getElementById('tabSext'),
-                vespers: document.getElementById('tabVespers')
+                vespers: document.getElementById('tabVespers'),
+                compline: document.getElementById('tabCompline')
             };
             var datePicker = document.getElementById('datePicker');
             var prevBtn = document.getElementById('prevDay');
@@ -667,11 +661,6 @@
                 officeEl.classList.add('hidden');
                 loadingEl.classList.remove('hidden');
 
-                if (hourKey === 'readings' && lang === 'sw') {
-                    loadSwahiliReadings(currentDate, token);
-                    return;
-                }
-
                 if (lang === 'sw') {
                     loadUniversalisContent(token, swHourUnavailableNote());
                     return;
@@ -689,6 +678,10 @@
 
             function switchHour(key) {
                 if (key === hourKey) return;
+                if (key === 'compline') {
+                    window.location.href = 'pages/compline.html';
+                    return;
+                }
                 hourKey = key;
                 var qs = new URLSearchParams(window.location.search);
                 qs.set('hour', key);
