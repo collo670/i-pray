@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1f2937">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ipray">
+    <link rel="stylesheet" href="../css/prevent-zoom.css">
+    <title>Office of Readings - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Office of Readings for every day, complete with saint memorials, feasts and solemnities">
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .office-content { font-size: calc(1.0625rem * var(--prayer-text-scale, 1)); line-height: 1.75; color: #000000; font-weight: 600; }
+        .dark .office-content { color: #d1d5db; }
+        .office-content .v { margin: 0; }
+        .office-content .gb { margin-top: 0.9em; }
+        .office-content .vi { padding-left: 1.25rem; }
+        .office-content .p, .office-content .pi { margin: 0.6em 0; }
+        .office-content table { width: 100%; border-collapse: collapse; }
+        .office-content table.each { margin: 2rem 0 0.75rem; }
+        .office-content table.each th { font-weight: 400; }
+        .office-content table.each th[align="left"] {
+            display: inline-block; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: #7c2133; background: rgba(124, 33, 51, 0.10);
+            border-radius: 9999px; padding: 0.3rem 0.85rem;
+        }
+        .dark .office-content table.each th[align="left"] { color: #c4b5fd; background: rgba(124, 58, 237, 0.28); }
+        .office-content table.each th[align="right"] { font-size: 0.85rem; font-style: italic; color: #6b7280; text-align: right; }
+        .dark .office-content table.each th[align="right"] { color: #9ca3af; }
+        .office-content th:empty, .office-content td:empty { display: none; }
+        .office-content td[align="right"] { font-size: 0.85rem; font-style: italic; color: #6b7280; text-align: right; padding-top: 0.35rem; }
+        .dark .office-content td[align="right"] { color: #9ca3af; }
+        .office-content h4 { margin: 1.25rem 0 0.75rem; font-size: 1rem; font-weight: 700; color: #1f2937; }
+        .dark .office-content h4 { color: #f3f4f6; }
+        .office-content hr.shortrule { border: 0; border-top: 1px dashed #d1d5db; width: 4rem; margin: 1.75rem auto 0; }
+        .office-content > hr.shortrule:first-child { display: none; }
+        .dark .office-content hr.shortrule { border-top-color: #4b5563; }
+        .office-content .rubric { font-size: 0.875rem; font-style: italic; color: #b91c1c; margin: 0.75rem 0; }
+        .dark .office-content .rubric { color: #f87171; }
+        .office-content .boldrubric { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; color: #b91c1c; }
+        .dark .office-content .boldrubric { color: #f87171; }
+        .office-content .audioclip { margin: 1.25rem 0; text-align: center; font-size: 0.75rem; }
+        .office-content .audioclip audio { width: 100%; max-width: 24rem; }
+        .office-content a { color: #7c2133; text-decoration: underline; }
+        .dark .office-content a { color: #a78bfa; }
+        #dayBanner .saint-tag {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.2rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            vertical-align: middle;
+            background: var(--lit-soft, rgba(124, 33, 51, 0.14));
+            color: var(--lit-text, #7c2133);
+        }
+        .office-content .sw-citation, .office-content .sw-source, .office-content .citation { font-style: italic; color: #6b7280; margin: 0.4em 0 0.8em; }
+        .dark .office-content .sw-citation, .dark .office-content .sw-source, .dark .office-content .citation { color: #9ca3af; }
+        .office-content .sw-responsory { margin: 0.75em 0 1.25em; }
+        .office-content .sw-responsory p { margin: 0.35em 0; }
+        .office-content .sw-speaker { font-weight: 700; color: #7c2133; }
+        .dark .office-content .sw-speaker { color: #c4b5fd; }
+        .office-content .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
+        .dark .office-content .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
+        .office-content .sw-title-box { display: inline-block; background: #581523; border-radius: 0.375rem; padding: 0.35rem 1rem; margin: 1.25rem 0 0; }
+        .office-content .sw-title-box h2 { margin: 0; color: #f0c96a; font-size: 1.3rem; font-weight: 700; }
+        .dark .office-content .sw-title-box { background: #7c2133; }
+        .office-content .sw-kitikizano { color: #7c2133; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; margin: 0.5rem 0 0.75rem; }
+        .dark .office-content .sw-kitikizano { color: #c4b5fd; }
+        .office-content .rubric,
+        .office-content table.each th[align="right"],
+        .office-content td[align="right"],
+        .office-content .sw-citation,
+        .office-content .sw-source,
+        .office-content .citation,
+        .office-content .sw-fallback-note {
+            font-weight: 400;
+        }
+    </style>
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <script src="../js/logo-loader.js"></script>
+    <link rel="stylesheet" href="../css/status-bar-safe-area.css">
+</head>
+<body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
+    <div id="app" class="relative z-10 page-content">
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="flex items-center gap-2">
+                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </a>
+                    <div class="app-bar-brand">
+                        <h1 id="hourTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Office of Readings
+                        </h1>
+                        <p id="hourSubtitle" class="text-xs text-gray-600 dark:text-gray-400">Matins · The Office of Readings</p>
+                    </div>
+                </div>
+                <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <div class="flex flex-wrap items-center justify-between gap-y-2 gap-x-2 mb-4">
+                <div class="flex-1 hidden sm:block" aria-hidden="true"></div>
+                <div class="inline-flex rounded-full bg-white dark:bg-gray-800 shadow p-1 ml-auto sm:ml-0" role="tablist" aria-label="Choose language / Chagua lugha">
+                    <button id="langEn" class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors" role="tab">ENG</button>
+                    <button id="langSw" class="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors" role="tab">SW</button>
+                </div>
+            </div>
+
+            <div class="rounded-2xl p-4 bg-white dark:bg-gray-800 shadow-lg mb-6">
+                <div class="flex items-center justify-between gap-2">
+                    <button id="prevDay" class="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-40" aria-label="Previous day">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 text-center">
+                        <input type="date" id="datePicker" class="w-full max-w-[13rem] mx-auto text-center font-semibold bg-transparent text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" aria-label="Choose a date">
+                    </div>
+                    <button id="nextDay" class="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-40" aria-label="Next day">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="text-center mt-3">
+                    <button id="todayBtn" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline focus:outline-none hidden">
+                        Back to today
+                    </button>
+                </div>
+            </div>
+
+            <div id="dayBanner" class="liturgical-card mb-6" data-color="green">
+                <div class="text-center">
+                    <div id="bannerDay" class="text-lg font-bold text-gray-800 dark:text-gray-100">
+                        <span id="bannerDayLabel"></span>
+                        <span id="celebrationTag" class="saint-tag hidden"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden" style="border: 2px solid #7c2133;">
+                <div id="hourLoading" class="text-center py-12">
+                    <div class="inline-block w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
+                </div>
+                <div id="hourUnavailable" class="p-6 text-center hidden">
+                    <p class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
+                    <p id="windowNote" class="text-sm text-gray-500 dark:text-gray-400"></p>
+                </div>
+                <div id="officeContent" class="office-content hidden p-5 sm:p-7"></div>
+                <iframe id="hourFrame" title="Office of Readings" class="w-full hidden" style="height: 75vh; border: 0;" referrerpolicy="no-referrer"></iframe>
+            </div>
+
+            <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+                Texts served by <a id="externalLink" class="underline" target="_blank" rel="noopener" href="https://universalis.com">Universalis</a> — open there for the full-page version.
+            </p>
+        </main>
+
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <button id="prayersNavBtn" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" aria-haspopup="dialog" aria-controls="prayersSheet">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m-5-11h10M9 4h6" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
+                </button>
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script src="../js/liturgical-calendar.js"></script>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('darkModeQuickToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            var WINDOW_BACK_DAYS = 3;
+            var WINDOW_AHEAD_DAYS = 9;
+
+            var PROXIES = [
+                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+            ];
+            var FETCH_TIMEOUT_MS = 12000;
+            var CACHE_PREFIX = 'officeHtml-';
+
+            var HOURS = {
+                readings: {
+                    page: 'readings',
+                    title: 'Office of Readings',
+                    titleSw: 'Ofisi ya Masomo',
+                    subtitle: 'Matins · The Office of Readings'
+                }
+            };
+            var RANK_LABELS = {
+                en: { 'Triduum': 'Sacred Triduum', 'Solemnity': 'Solemnity', 'Feast': 'Feast', 'Special': 'Liturgical Day', 'Memorial': 'Memorial', 'Optional Memorial': 'Optional Memorial' },
+                sw: { 'Triduum': 'Siku Kuu Tatu Takatifu', 'Solemnity': 'Sherehe', 'Feast': 'Sikukuu', 'Special': 'Siku Maalum', 'Memorial': 'Kumbukumbu', 'Optional Memorial': 'Kumbukumbu ya Hiari' }
+            };
+            var COLOR_MAP = { white: 'white', red: 'red', green: 'green', purple: 'purple', rose: 'purple', gold: 'gold' };
+            var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
+
+            var hourKey = 'readings';
+
+            var titleEl = document.getElementById('hourTitle');
+            var subtitleEl = document.getElementById('hourSubtitle');
+            var datePicker = document.getElementById('datePicker');
+            var prevBtn = document.getElementById('prevDay');
+            var nextBtn = document.getElementById('nextDay');
+            var todayBtn = document.getElementById('todayBtn');
+            var banner = document.getElementById('dayBanner');
+            var bannerDayLabel = document.getElementById('bannerDayLabel');
+            var celebrationTag = document.getElementById('celebrationTag');
+            var loadingEl = document.getElementById('hourLoading');
+            var unavailableEl = document.getElementById('hourUnavailable');
+            var windowNote = document.getElementById('windowNote');
+            var frame = document.getElementById('hourFrame');
+            var officeEl = document.getElementById('officeContent');
+            var externalLink = document.getElementById('externalLink');
+            var loadToken = 0;
+            var fallbackToken = -1;
+
+            var LANG_KEY = 'preferredLanguage';
+            var lang = 'en';
+            try {
+                if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
+            } catch (e) {}
+            var langEnBtn = document.getElementById('langEn');
+            var langSwBtn = document.getElementById('langSw');
+            var SW_DAY_KEYS = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+            var swWeekCache = {};
+
+            var today = startOfDay(new Date());
+            var minDate = addDays(today, -WINDOW_BACK_DAYS);
+            var maxDate = addDays(today, WINDOW_AHEAD_DAYS);
+            var currentDate = today;
+
+            function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+            function addDays(d, n) { var c = new Date(d); c.setDate(c.getDate() + n); return c; }
+            function stampOf(d) {
+                return '' + d.getFullYear()
+                    + String(d.getMonth() + 1).padStart(2, '0')
+                    + String(d.getDate()).padStart(2, '0');
+            }
+            function isoOf(d) { var s = stampOf(d); return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6); }
+            function fmt(d) {
+                return d.toLocaleDateString(lang === 'sw' ? 'sw' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            function applyHourChrome() {
+                var h = HOURS[hourKey];
+                titleEl.textContent = lang === 'sw' ? h.titleSw : h.title;
+                subtitleEl.textContent = h.subtitle;
+                document.title = h.title + ' - ipray';
+                updateTextCtlVisibility();
+            }
+
+            function updateTextCtlVisibility() {
+                var ctl = document.querySelector('.prayer-textctl');
+                if (!ctl) return;
+                ctl.style.display = !officeEl.classList.contains('hidden') ? '' : 'none';
+            }
+
+            function applyLangSwitchUI() {
+                [[langEnBtn, 'en'], [langSwBtn, 'sw']].forEach(function (pair) {
+                    var active = lang === pair[1];
+                    pair[0].className = 'px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors ' + (active
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300');
+                    pair[0].setAttribute('aria-selected', String(active));
+                });
+            }
+
+            function setLang(newLang) {
+                if (newLang === lang) return;
+                lang = newLang;
+                try {
+                    localStorage.setItem(LANG_KEY, lang);
+                    localStorage.setItem('langUpdatedAt', String(Date.now()));
+                } catch (e) {}
+                document.documentElement.lang = lang === 'sw' ? 'sw' : 'en';
+                applyLangSwitchUI();
+                applyHourChrome();
+                load(currentDate);
+            }
+
+            function renderBanner(date) {
+                var info = getLiturgicalToday(date, lang);
+                var celebration = getCelebrationForDate(date);
+                bannerDayLabel.textContent = info.dayLabel;
+                banner.setAttribute('data-color', COLOR_MAP[(celebration && celebration.color) || info.color] || 'green');
+                if (celebration) {
+                    celebrationTag.textContent = (RANK_LABELS[lang][celebration.type] || celebration.type) + ': ' + celebration.name;
+                    celebrationTag.classList.remove('hidden');
+                } else {
+                    celebrationTag.classList.add('hidden');
+                }
+            }
+
+            function cleanOffice(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var inner = doc.getElementById('innertexst') || doc.getElementById('texts');
+                if (!inner || !inner.querySelector('.v, .p')) return null;
+                inner.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
+                    n.parentNode.removeChild(n);
+                });
+                inner.querySelectorAll('*').forEach(function (n) {
+                    for (var i = n.attributes.length - 1; i >= 0; i--) {
+                        if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+                    }
+                });
+                inner.querySelectorAll('a[href]').forEach(function (a) {
+                    var href = a.getAttribute('href');
+                    if (href && href.charAt(0) === '/') a.setAttribute('href', 'https://universalis.com' + href);
+                    a.setAttribute('target', '_blank');
+                    a.setAttribute('rel', 'noopener');
+                });
+                return inner.innerHTML;
+            }
+
+            function showOffice(htmlStr) {
+                officeEl.innerHTML = htmlStr;
+                loadingEl.classList.add('hidden');
+                frame.classList.add('hidden');
+                officeEl.classList.remove('hidden');
+                updateTextCtlVisibility();
+            }
+
+            function fetchThroughProxies(url, token, onOk, onFail) {
+                var i = 0;
+                (function tryNext() {
+                    if (token !== loadToken) return;
+                    if (i >= PROXIES.length) { onFail(); return; }
+                    var proxied = PROXIES[i++](url);
+                    var ctrl = window.AbortController ? new AbortController() : null;
+                    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
+                    fetch(proxied, ctrl ? { signal: ctrl.signal } : {})
+                        .then(function (r) {
+                            if (!r.ok) throw new Error('HTTP ' + r.status);
+                            return r.text();
+                        })
+                        .then(function (text) {
+                            clearTimeout(timer);
+                            if (token !== loadToken) return;
+                            var cleaned = cleanOffice(text);
+                            if (!cleaned) throw new Error('no office content');
+                            onOk(cleaned);
+                        })
+                        .catch(function () {
+                            clearTimeout(timer);
+                            tryNext();
+                        });
+                })();
+            }
+
+            function pruneCache() {
+                var oldest = stampOf(minDate);
+                for (var i = localStorage.length - 1; i >= 0; i--) {
+                    var k = localStorage.key(i);
+                    if (k && k.indexOf(CACHE_PREFIX) === 0 && k.slice(k.lastIndexOf('-') + 1) < oldest) {
+                        localStorage.removeItem(k);
+                    }
+                }
+            }
+
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+                });
+            }
+
+            function fetchSwWeek(weekNum) {
+                if (swWeekCache[weekNum]) return Promise.resolve(swWeekCache[weekNum]);
+                return fetch('../data/office-readings-sw/week-' + weekNum + '.json')
+                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+                    .then(function (data) { swWeekCache[weekNum] = data; return data; })
+                    .catch(function () { return null; });
+            }
+
+            function findNearestSwDay(days, targetKey) {
+                var idx = SW_DAY_KEYS.indexOf(targetKey);
+                for (var offset = 1; offset < SW_DAY_KEYS.length; offset++) {
+                    var back = SW_DAY_KEYS[(idx - offset + 7) % 7];
+                    if (days[back]) return { key: back, data: days[back] };
+                    var fwd = SW_DAY_KEYS[(idx + offset) % 7];
+                    if (days[fwd]) return { key: fwd, data: days[fwd] };
+                }
+                return null;
+            }
+
+            function renderSwResponsory(resp) {
+                if (!resp || !resp.verses || !resp.verses.length) return '';
+                var html = '<div class="sw-responsory">';
+                if (resp.citation) html += '<p class="sw-citation">' + esc(resp.citation) + '</p>';
+                resp.verses.forEach(function (v) {
+                    html += '<p><span class="sw-speaker">' + esc(v.speaker) + '.</span> ' + esc(v.text) + '</p>';
+                });
+                html += '</div>';
+                return html;
+            }
+
+            function renderSwReading(dayData, usedFallbackDay) {
+                var html = '<div class="sw-office">';
+                if (usedFallbackDay) {
+                    html += '<div class="sw-fallback-note">Masomo ya siku hii mahususi hayapatikani; yanayoonyeshwa ni ya ' + esc(dayData.dayLabel) + ', ndani ya juma hili hili.</div>';
+                }
+                html += '<div class="sw-title-box"><h2>Somo la Kwanza</h2></div>';
+                html += '<p class="sw-citation">' + esc(dayData.firstReading.citation) + '</p>';
+                html += '<p class="sw-kitikizano">Kitikizano</p>';
+                html += renderSwResponsory(dayData.responsory1);
+                html += '<div class="sw-title-box"><h2>Somo la Pili</h2></div>';
+                if (dayData.secondReading.source) html += '<p class="sw-source">' + esc(dayData.secondReading.source) + '</p>';
+                (dayData.secondReading.paragraphs || []).forEach(function (p) {
+                    html += '<p>' + esc(p) + '</p>';
+                });
+                html += '<p class="sw-kitikizano">Kitikizano</p>';
+                html += renderSwResponsory(dayData.responsory2);
+                html += '</div>';
+                return html;
+            }
+
+            function swSeasonNote() {
+                return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani kwa kipindi hiki cha liturujia (nje ya Kipindi cha Mwaka). Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+            }
+
+            function swFetchFailNote() {
+                return '<div class="sw-fallback-note">Imeshindikana kupakia Ofisi ya Masomo kwa Kiswahili kwa siku hii. Inaonyesha maandishi ya Kiingereza.</div>';
+            }
+
+            function swHourUnavailableNote() {
+                return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani. Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+            }
+
+            function loadSwahiliReadings(date, token) {
+                var info = getLiturgicalToday(date, 'sw');
+                if (info.season === 'Ordinary Time' && info.weekNum >= 1 && info.weekNum <= 34) {
+                    fetchSwWeek(info.weekNum).then(function (weekData) {
+                        if (token !== loadToken) return;
+                        if (!weekData || !weekData.days) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                        var dayKey = SW_DAY_KEYS[date.getDay()];
+                        var dayData = weekData.days[dayKey];
+                        var usedFallbackDay = null;
+                        if (!dayData) {
+                            var alt = findNearestSwDay(weekData.days, dayKey);
+                            if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
+                        }
+                        if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                        showOffice(renderSwReading(dayData, usedFallbackDay));
+                        if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
+                            window.SomoLaKwanzaBible.init();
+                        }
+                    });
+                } else {
+                    loadUniversalisContent(token, swSeasonNote());
+                }
+            }
+
+            function loadUniversalisContent(token, noteHtml) {
+                var url = 'https://universalis.com/' + stampOf(currentDate) + '/' + HOURS[hourKey].page + '.htm';
+                var cacheKey = CACHE_PREFIX + hourKey + '-' + stampOf(currentDate);
+                var cached = null;
+                try { cached = localStorage.getItem(cacheKey); } catch (e) {}
+                if (cached) {
+                    showOffice((noteHtml || '') + cached);
+                    return;
+                }
+
+                fetchThroughProxies(url, token, function (cleaned) {
+                    try {
+                        pruneCache();
+                        localStorage.setItem(cacheKey, cleaned);
+                    } catch (e) {}
+                    showOffice((noteHtml || '') + cleaned);
+                }, function () {
+                    if (token !== loadToken) return;
+                    fallbackToken = token;
+                    frame.src = url;
+                });
+            }
+
+            function load(date) {
+                currentDate = startOfDay(date);
+                datePicker.value = isoOf(currentDate);
+                prevBtn.disabled = +currentDate <= +minDate;
+                nextBtn.disabled = +currentDate >= +maxDate;
+                todayBtn.classList.toggle('hidden', +currentDate === +today);
+                renderBanner(currentDate);
+
+                var url = 'https://universalis.com/' + stampOf(currentDate) + '/' + HOURS[hourKey].page + '.htm';
+                externalLink.href = url;
+                var token = ++loadToken;
+
+                if (+currentDate < +minDate || +currentDate > +maxDate) {
+                    frame.classList.add('hidden');
+                    officeEl.classList.add('hidden');
+                    loadingEl.classList.add('hidden');
+                    windowNote.textContent = (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
+                        + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.';
+                    unavailableEl.classList.remove('hidden');
+                    updateTextCtlVisibility();
+                    return;
+                }
+
+                unavailableEl.classList.add('hidden');
+                frame.classList.add('hidden');
+                officeEl.classList.add('hidden');
+                loadingEl.classList.remove('hidden');
+
+                if (lang === 'sw') {
+                    loadSwahiliReadings(currentDate, token);
+                    return;
+                }
+
+                loadUniversalisContent(token, '');
+            }
+
+            frame.addEventListener('load', function () {
+                if (!frame.src || fallbackToken !== loadToken) return;
+                loadingEl.classList.add('hidden');
+                frame.classList.remove('hidden');
+                updateTextCtlVisibility();
+            });
+
+            langEnBtn.addEventListener('click', function () { setLang('en'); });
+            langSwBtn.addEventListener('click', function () { setLang('sw'); });
+            window.addEventListener('storage', function (e) {
+                if (e.key !== 'langUpdatedAt') return;
+                var newLang = 'en';
+                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
+                if (newLang === lang) return;
+                lang = newLang;
+                applyLangSwitchUI();
+                applyHourChrome();
+                load(currentDate);
+            });
+            prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
+            nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
+            todayBtn.addEventListener('click', function () { load(today); });
+            datePicker.min = isoOf(minDate);
+            datePicker.max = isoOf(maxDate);
+            datePicker.addEventListener('change', function () {
+                if (!datePicker.value) return;
+                var p = datePicker.value.split('-');
+                load(new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])));
+            });
+
+            applyHourChrome();
+            applyLangSwitchUI();
+            load(today);
+
+            document.addEventListener('DOMContentLoaded', updateTextCtlVisibility);
+        })();
+    </script>
+    <script src="../js/somo-la-kwanza-bible.js" defer></script>
+    <script src="../js/prayers-nav.js" defer></script>
+    <script src="../js/text-size-control.js" defer></script>
+    <script src="../js/prevent-zoom.js" defer></script>
+</body>
+</html>

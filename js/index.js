@@ -589,7 +589,7 @@ function initAccessibility() {
 // ---------------------------------------------------------------------------
 const PRAYER_MENU = [
     { id: 'lauds', key: 'morningPrayer', icon: 'fa-sun', iconColor: 'text-yellow-500', type: 'hours', suffix: '' },
-    { id: 'scripture', key: 'officeOfReadings', icon: 'fa-book-open', iconColor: 'text-orange-500', link: 'pages/prayer-hour.html?hour=readings' },
+    { id: 'scripture', key: 'officeOfReadings', icon: 'fa-book-open', iconColor: 'text-orange-500', link: 'pages/office-of-readings.html' },
     { id: 'midday', key: 'middayPrayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', link: 'pages/prayer-hour.html?hour=sext' },
     { id: 'vespers', key: 'eveningPrayer', icon: 'fa-moon', iconColor: 'text-indigo-500', link: 'pages/prayer-hour.html?hour=vespers' },
     { id: 'readings', key: 'nightPrayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },

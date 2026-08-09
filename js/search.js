@@ -67,7 +67,7 @@ class EnhancedPrayerSearch {
             {
                 id: 'office-readings',
                 title: 'Office of Readings',
-                link: 'pages/prayer-hour.html?hour=readings',
+                link: 'pages/office-of-readings.html',
                 type: 'liturgical',
                 season: 'ordinary',
                 content: 'Scripture readings office of readings masomo daily readings bible scripture liturgy',

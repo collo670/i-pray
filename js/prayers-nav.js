@@ -39,7 +39,7 @@
 
         var PRAYER_MENU = [
             { id: 'lauds', key: 'morningPrayer', label: 'Morning Prayer', icon: 'fa-sun', iconColor: 'text-yellow-500', type: 'hours', suffix: '' },
-            { id: 'scripture', key: 'officeOfReadings', label: 'Office of Readings', icon: 'fa-book-open', iconColor: 'text-orange-500', link: 'pages/prayer-hour.html?hour=readings' },
+            { id: 'scripture', key: 'officeOfReadings', label: 'Office of Readings', icon: 'fa-book-open', iconColor: 'text-orange-500', link: 'pages/office-of-readings.html' },
             { id: 'midday', key: 'middayPrayer', label: 'Midday Prayer', icon: 'fa-cloud-sun', iconColor: 'text-amber-500', link: 'pages/prayer-hour.html?hour=sext' },
             { id: 'vespers', key: 'eveningPrayer', label: 'Evening Prayer', icon: 'fa-moon', iconColor: 'text-indigo-500', link: 'pages/prayer-hour.html?hour=vespers' },
             { id: 'readings', key: 'nightPrayer', label: 'Night Prayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
