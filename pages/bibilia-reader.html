@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1f2937">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ipray">
+    <link rel="stylesheet" href="../css/prevent-zoom.css">
+    <title>Bibilia Takatifu - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <meta name="description" content="Soma vitabu vyote vya Biblia Takatifu kwa Kiswahili (SUV) kupitia Bolls Bible API.">
+    <!-- Tailwind CSS: locally built (npm run build) -->
+    <link rel="stylesheet" href="../dist/output.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- Apply saved theme before paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <!-- Splash logo & hero image fetched early -->
+    <link rel="preload" as="image" href="../assets/images/logo-small.jpg">
+    <link rel="stylesheet" href="../css/status-bar-safe-area.css">
+    <style>
+        /* Bible reading text scales with the A± control (--prayer-text-scale,
+           set by js/text-size-control.js). The app bar + bottom nav sit
+           outside .reading-body so they never resize. */
+        .reading-body {
+            font-size: calc(1.1rem * var(--prayer-text-scale, 1));
+            line-height: 1.9;
+        }
+        .bible-verse {
+            margin: 0 0 0.55rem;
+            text-align: left;
+        }
+        /* Verse numbers: narrow pill so they don't disrupt the text flow. */
+        .verse-num {
+            display: inline-block;
+            min-width: 1.35em;
+            height: 1.35em;
+            line-height: 1.35em;
+            margin-right: 0.25em;
+            margin-left: -0.05em;
+            padding: 0 0.22em;
+            color: #7c2133;
+            font-weight: 700;
+            font-size: 0.82em;
+            vertical-align: top;
+            border-radius: 9999px;
+            background: rgba(124, 33, 51, 0.10);
+        }
+        :root.dark .verse-num { color: #f87171; background: rgba(248, 113, 113, 0.15); }
+        .bible-verse sup { font-style: normal; }
+        .chapter-nav-btn {
+            width: 2.7rem; height: 2.7rem;
+            border-radius: 9999px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+        .chapter-nav-btn:disabled { opacity: 0.35; cursor: default; }
+        .chapter-nav-btn:not(:disabled):hover { background: var(--surface-2); }
+        .bible-loading { opacity: 0.7; }
+        .testament-badge {
+            display: inline-block;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.125rem 0.45rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+        #bibleContent { scroll-margin-top: 4rem; }
+    </style>
+    <script src="../js/logo-loader.js"></script>
+</head>
+<body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
+    <div id="app" class="relative z-10 page-content">
+        <!-- App Bar -->
+        <header id="appBar" class="app-bar" role="banner">
+            <div class="header-content">
+                <div class="flex items-center gap-2">
+                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </a>
+                    <div class="app-bar-brand">
+                        <h1 id="pageTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Bibilia Takatifu
+                        </h1>
+                        <p id="pageSubtitle" class="text-xs text-gray-600 dark:text-gray-400">Kiswahili · Swahili Union Version</p>
+                    </div>
+                </div>
+                <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg id="darkModeIconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 0 018 0z" />
+                    </svg>
+                    <svg id="darkModeIconMoon" class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
+            <!-- Book header: testament badge, book title, chapter selector -->
+            <section class="bible-header mb-5" aria-live="polite" aria-label="Bible book and chapter">
+                <div class="flex items-center gap-3 mb-2">
+                    <span id="testamentBadge" class="testament-badge">Agano la Kale</span>
+                    <span id="chapterLabel" class="text-xs text-gray-500 dark:text-gray-400 font-medium">Sura 1</span>
+                </div>
+                <h2 id="bookTitle" class="text-2xl font-bold text-gray-800 dark:text-gray-100">Mwanzo</h2>
+                <p id="bookSubtitle" class="text-sm text-gray-500 dark:text-gray-400 mb-4">Genesis · Mwa</p>
+
+                <!-- Chapter navigation -->
+                <div class="flex items-center justify-center gap-3">
+                    <button type="button" id="prevChapter" class="chapter-nav-btn" aria-label="Previous chapter">
+                        <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <label for="chapterSelect" class="sr-only">Chagua sura</label>
+                    <select id="chapterSelect" class="block w-40 text-center text-lg font-semibold rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"></select>
+                    <button type="button" id="nextChapter" class="chapter-nav-btn" aria-label="Next chapter">
+                        <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Verse content / loading / error -->
+            <div id="bibleContent" class="reading-body text-gray-800 dark:text-gray-200">
+                <!-- Verses rendered here by js/bibilia-reader.js -->
+            </div>
+            <div id="bibleError" class="error-state hidden" role="alert" aria-live="assertive">
+                <!-- Error message rendered here by js/bibilia-reader.js -->
+            </div>
+
+            <!-- Back to top (appears after scrolling) -->
+            <button type="button" id="backToTop" class="fixed bottom-24 right-6 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 rounded-full w-11 h-11 shadow-lg hidden items-center justify-center" aria-label="Back to top">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7 7 7M5 10v10h14V10" />
+                </svg>
+            </button>
+        </main>
+
+        <!-- Bottom Navigation (shared pattern; prayers-nav.js wires the Prayers sheet) -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 shadow-lg bottom-nav z-40" role="navigation" aria-label="Main Navigation">
+            <div class="flex justify-around h-full items-center">
+                <!-- Home -->
+                <a href="../index.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-purple-600 dark:text-purple-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="home">Home</span>
+                </a>
+                <!-- Prayers -->
+                <button id="prayersNavBtn" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" aria-haspopup="dialog" aria-controls="prayersSheet">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m-5-11h10M9 4h6" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="prayers">Prayers</span>
+                </button>
+                <!-- Calendar -->
+                <a href="calendar.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2 2V5a2 2 0 0 1 2-2h4V1h2v2h6V1h2v2zM3 7v12h18V7H3zm2 2h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zm4-8h2v2H9V9zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V9zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="calendar">Calendar</span>
+                </a>
+                <!-- Settings -->
+                <a href="settings.html" class="flex flex-col items-center px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+                    </svg>
+                    <span class="text-xs font-medium" data-translate="settings">Settings</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Dark mode quick toggle -->
+        <script>
+            (function () {
+                var btn = document.getElementById('darkModeQuickToggle');
+                if (!btn) return;
+                btn.addEventListener('click', function () {
+                    var isDark = document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('darkMode', isDark);
+                });
+            })();
+        </script>
+
+        <!-- Main reader logic -->
+        <script src="../js/bibilia-reader.js" defer></script>
+        <!-- Bottom-nav Prayers sheet (auto-wired on non-index pages) -->
+        <script src="../js/prayers-nav.js" defer></script>
+        <!-- A± text size control -->
+        <script src="../js/text-size-control.js" defer></script>
+        <!-- Prevent double-tap zoom on interactive elements -->
+        <script src="../js/prevent-zoom.js" defer></script>
+
+        <!-- Show "Back to top" only after the user scrolls down -->
+        <script>
+            (function () {
+                var btn = document.getElementById('backToTop');
+                if (!btn) return;
+                var toggle = function () {
+                    var main = document.querySelector('main');
+                    if (!main) return;
+                    btn.classList.toggle('hidden', main.scrollTop < 320);
+                };
+                document.addEventListener('scroll', toggle, { passive: true });
+                window.addEventListener('scroll', toggle);
+                toggle();
+            })();
+        </script>
+    </div>
+</body>
+</html>
