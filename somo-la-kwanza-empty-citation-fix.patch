@@ -1,0 +1,26 @@
+diff --git a/js/somo-la-kwanza-bible.js b/js/somo-la-kwanza-bible.js
+index 36679ea..dc160d1 100644
+--- a/js/somo-la-kwanza-bible.js
++++ b/js/somo-la-kwanza-bible.js
+@@ -423,6 +423,21 @@
+         var anchor = resolveAnchor(heading);
+         var citationEl = findCitationElement(anchor);
+         var citation = extractCitation(heading, anchor);
++
++        // A handful of scraped pages carry an empty
++        // <p class="sw-citation"></p> right after the heading, with the
++        // real citation and the full reading text already sitting
++        // further down the page as plain paragraphs (outside our
++        // markup contract). There is nothing to look up in that case —
++        // previously we'd still insert a "failed to parse ''" error
++        // right after that empty tag, cluttering an already complete,
++        // correct reading with a bogus error. Skip silently instead and
++        // leave the exact citation and reading that are already there
++        // untouched.
++        if (!citation) {
++            return;
++        }
++
+         var split = splitBookAndRest(citation);
+ 
+         // If the page already shows the citation in its own
