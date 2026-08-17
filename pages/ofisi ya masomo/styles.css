@@ -35,43 +35,54 @@ body {
 
 .page-nav {
     position: fixed;
-    top: 12px;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
     width: min(100%, 1040px);
-    background: rgba(20, 31, 44, 0.97);
-    color: #fff;
+    background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(240, 201, 106, 0.24);
+    color: var(--topbar-gold, #f0c96a);
     border-radius: 999px;
     padding: 10px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 12px 30px rgba(56, 15, 22, 0.24);
     z-index: 1000;
 }
 
-/* Keeps the pill's dark color visually continuous with the status bar:
+/* Keeps the pill's maroon color visually continuous with the status bar:
    a slim, viewport-fixed strip (independent of the pill's own sticky
-   scroll position) in the same tone, sized to the status-bar inset plus
-   the pill's own resting offset from the top. Purely decorative and out
-   of flow, so it never affects layout; resolves to 0 height on devices/
-   browsers without a safe area. */
+   scroll position) in the same maroon gradient tone, sized to the
+   status-bar inset plus the pill's own resting offset from the top.
+   Explicit position:fixed + top:0 + width:100vw matches the full-width
+   edge-to-edge pattern in technical requirement 2: the maroon safe-area
+   sliver extends from the absolute top of the screen across the full
+   viewport width, so no visible gap, white strip, or contrasting color
+   appears above the navigation pill on any notched / Dynamic Island /
+   camera-cutout device.
+   Purely decorative and out of flow, so it never affects layout;
+   resolves to 0 height on devices/browsers without a safe area. */
 .page-nav::before {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    width: 100vw;
+    max-width: 100%;
     height: calc(env(safe-area-inset-top, 0px) + 12px);
-    background: rgba(20, 31, 44, 0.97);
+    background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
     pointer-events: none;
     z-index: 999;
 }
 
 .page-nav .nav-link {
-    color: #fff;
+    color: var(--topbar-gold, #f0c96a);
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 700;
