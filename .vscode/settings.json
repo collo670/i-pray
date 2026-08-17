@@ -16,5 +16,7 @@
             ]
         }
     },
-    "liveServer.settings.port": 5508
+    "liveServer.settings.port": 5509,
+    "telemetry.editStats.details.enabled": true,
+    "editor.experimental.treeSitterTelemetry": true
 }

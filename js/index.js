@@ -1514,9 +1514,16 @@ function enhanceSmallTextAccessibility() {
             // contrast is null when a colour can't be evaluated reliably
             // (oklch/oklab from Tailwind 4, or semi-transparent backgrounds)
             if (contrast !== null && contrast < 4.5) {
-                // Enhance contrast by setting high contrast colors
-                el.style.color = '#000000';
-                el.style.backgroundColor = '#ffffff';
+                const isDark = document.body.classList.contains('dark-mode') ||
+                               document.documentElement.classList.contains('dark') ||
+                               document.body.classList.contains('dark');
+                if (isDark) {
+                    el.style.color = '#ffffff';
+                    el.style.backgroundColor = '#111827';
+                } else {
+                    el.style.color = '#000000';
+                    el.style.backgroundColor = '#ffffff';
+                }
                 // Add ARIA label for screen readers
                 if (!el.getAttribute('aria-label')) {
                     el.setAttribute('aria-label', el.textContent.trim());
