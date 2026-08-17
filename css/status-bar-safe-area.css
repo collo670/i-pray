@@ -31,24 +31,52 @@
 
 :root {
   --sb-inset-top: env(safe-area-inset-top, 0px);
-  /* Shared dark sliver color for headers whose own background is light or
-     theme-adaptive (so it can't safely host always-light status bar icons
-     on its own). Reuses this app's existing dark-mode surface color
-     (Tailwind gray-800) rather than inventing a new brand color. */
-  --sb-sliver-color: #1f2937;
+  /* Maroon safe-area sliver color: top-of-gradient tone that sits behind
+     every mobile status bar. Matches .app-bar's --topbar-start so every
+     page with a top nav presents a continuous maroon strip from the
+     screen's upper edge down through the notch/Dynamic Island/Android
+     status bar row, seamlessly joining the visible nav bar beneath. */
+  --sb-sliver-color: #581523;
+  --sb-sliver-color-end: #7c2133;
 }
 
 /* -- Group 1: already edge-to-edge, already dark. Their own background
    simply needs to grow upward by the inset amount; no separate strip. -- */
 
-.navbar {
-  padding-top: var(--sb-inset-top);
-  box-sizing: border-box;
-}
+/* NOTE: .navbar's own safe-area rules live in css/index.css (the ::before
+   pseudo-element spans full viewport width so the maroon reaches both
+   screen edges, not just the pill's bounding box). No duplicate rule
+   here to avoid double-applying padding. */
 
+/* PDF-viewer pages under assets/office originally shipped with a solid
+   dark-blue nav (bg-[#202847]). Rewrite it to the shared maroon brand
+   gradient and extend its background edge-to-edge behind the status bar
+   so the colored area fills the notch / cutout region fully on both
+   sides, then push actual nav content down beneath the status bar.
+   Explicit width:100vw + position:fixed + top:0 / left:0 / right:0
+   guarantee the nav extends from the absolute top of the screen on every
+   mobile device (per technical requirement 2), and padding-top uses
+   env(safe-area-inset-top) directly so every button / icon inside the
+   nav renders beneath the system status bar row. */
 nav[class*="bg-[#202847]"] {
-  padding-top: var(--sb-inset-top);
-  box-sizing: border-box;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+  max-width: 100% !important;
+  background: linear-gradient(
+    135deg,
+    rgba(88, 21, 35, 0.96) 0%,
+    rgba(124, 33, 51, 0.96) 100%
+  ) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding-top: env(safe-area-inset-top, 0px) !important;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px)) !important;
+  padding-right: max(1rem, env(safe-area-inset-right, 0px)) !important;
+  box-sizing: border-box !important;
+  border-bottom: 1px solid rgba(240, 201, 106, 0.16) !important;
 }
 
 /* The PDF-viewer pages under assets/office pace their content with hard
@@ -57,14 +85,14 @@ nav[class*="bg-[#202847]"] {
    matching extra buffer at the body level so content never ends up
    hidden behind the taller bar on notched devices. */
 body:has(> nav[class*="bg-[#202847]"]) {
-  padding-top: var(--sb-inset-top);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 /* dump.html's one-off in-flow gradient header (not fixed/sticky - simply
    the first element in the page, so growing its own top padding is
    enough to push it, and everything after it, down). */
 header.liturgical-gradient {
-  padding-top: calc(var(--sb-inset-top) + 1.5rem) !important;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem) !important;
   box-sizing: border-box;
 }
 
@@ -79,7 +107,11 @@ header.liturgical-gradient {
 header[class*="backdrop-blur-sm"]:not([role="banner"]) {
   position: sticky;
   top: 0;
-  padding-top: calc(var(--sb-inset-top) + 1rem) !important;
+  width: 100vw;
+  max-width: 100%;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1rem) !important;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px)) !important;
+  padding-right: max(1rem, env(safe-area-inset-right, 0px)) !important;
   box-sizing: border-box;
 }
 
@@ -89,10 +121,54 @@ header[class*="backdrop-blur-sm"]:not([role="banner"])::before {
   top: 0;
   left: 0;
   right: 0;
-  height: var(--sb-inset-top);
-  background: var(--sb-sliver-color);
+  width: 100vw;
+  max-width: 100%;
+  height: env(safe-area-inset-top, 0px);
+  background: linear-gradient(
+    to bottom,
+    var(--sb-sliver-color) 0%,
+    var(--sb-sliver-color-end) 100%
+  );
   pointer-events: none;
   z-index: 1;
+}
+
+/* Pages like carmen.html ship a top header marked with role="banner" but
+   WITHOUT the .app-bar class — so index.css's maroon .app-bar styles do
+   not apply, and the Group 2 rule above excludes them via :not([role="banner"])
+   to avoid double-padding the genuine .app-bar pages. This rule fills the
+   gap: it adds the maroon safe-area sliver and proper content padding for
+   those banner-classed white/blurred headers so every top navigation area,
+   regardless of its per-page visual skin, still shows a continuous maroon
+   strip behind the mobile status bar notch/cutout. */
+header[role="banner"][class*="backdrop-blur-sm"] {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  max-width: 100%;
+  z-index: 30;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1rem) !important;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px)) !important;
+  padding-right: max(1rem, env(safe-area-inset-right, 0px)) !important;
+  box-sizing: border-box;
+}
+
+header[role="banner"][class*="backdrop-blur-sm"]::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 100%;
+  height: env(safe-area-inset-top, 0px);
+  background: linear-gradient(
+    to bottom,
+    var(--sb-sliver-color) 0%,
+    var(--sb-sliver-color-end) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* .app-bar / header[role="banner"] (index.css) and .page-nav (ofisi ya

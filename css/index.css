@@ -891,15 +891,28 @@ button[aria-busy="true"]::after {
 
 /* App Bar: full-width, non-floating header. The colored bar extends into the
    safe-area region on mobile devices, while the visible content starts below
-   the status bar. */
+   the status bar.
+   Uses position: sticky + explicit 100vw width + top:0 so the nav visually
+   pins to the absolute top of the viewport (from screen edge through status
+   bar / notch area) while remaining in the normal document flow — so every
+   page's content follows after it naturally with no extra body padding.
+   width:100vw ensures the edge-to-edge coverage matches viewport-fit=cover on
+   every mobile screen size; box-sizing: border-box guarantees internal
+   horizontal padding never causes horizontal overflow despite 100vw. */
 .app-bar,
 header[role="banner"] {
     position: sticky;
     top: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100%;
     z-index: 30;
     isolation: isolate;
     padding: calc(env(safe-area-inset-top, 0px) + 0.9rem) 1rem 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left, 1rem));
+    padding-right: max(1rem, env(safe-area-inset-right, 1rem));
+    box-sizing: border-box;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -971,7 +984,7 @@ header[role="banner"]::before {
 /* Navigation Bar Styles */
 .navbar {
     position: fixed;
-    top: 0.5rem;
+    top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
     left: 0.5rem;
     right: 0.5rem;
     width: auto;
@@ -982,27 +995,31 @@ header[role="banner"]::before {
     border: 1px solid rgba(240, 201, 106, 0.24);
     border-radius: var(--radius-lg);
     z-index: 1000;
-    /* Pushes the logo/hamburger down below the status bar on notched
-       devices; harmless 0px no-op everywhere else. The ::before below
-       handles bleeding the same background color up behind the bar. */
-    padding-top: env(safe-area-inset-top, 0px);
     box-sizing: border-box;
 }
 
-/* Extends the navbar's own background up behind the mobile status bar /
-   notch (env(safe-area-inset-top)) so the brand color shows through there
-   instead of the page background. Purely decorative: absolutely positioned
-   and out of flow, so it never affects the navbar's own size/position or
-   the page layout below it. Resolves to a 0-height no-op on devices/browsers
-   without a safe area (e.g. desktop). */
+/* Extends the navbar's maroon background FULLY to the viewport edges behind
+   the mobile status bar / notch (env(safe-area-inset-top)) so the brand
+   color shows through there seamlessly instead of the page background.
+   Explicit position:fixed + top:0 + width:100vw matches the full-width
+   edge-to-edge pattern in technical requirement 2: the maroon safe-area
+   sliver extends from the absolute top of the screen across the full
+   viewport width, so no visible gap, white strip, or contrasting color
+   appears above the navigation pill on any notched / Dynamic Island /
+   camera-cutout device.
+   Purely decorative: fixed position and out of flow, so it never affects
+   the navbar's own size/position or the page layout below it. Resolves to
+   a 0-height no-op on devices/browsers without a safe area (e.g. desktop). */
 .navbar::before {
     content: "";
-    position: absolute;
-    top: -0.5rem;
-    left: -0.5rem;
-    right: -0.5rem;
-    height: env(safe-area-inset-top, 0px);
-    background: inherit;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100%;
+    height: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+    background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
     z-index: -1;
     pointer-events: none;
 }
