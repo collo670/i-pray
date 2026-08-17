@@ -153,6 +153,16 @@ body.masifu-modern.dark-mode .antiphon {
     border-left-color: #FFA07A;
 }
 
+body.masifu-modern.dark-mode .verse,
+body.masifu-modern.dark-mode .reading,
+body.masifu-modern.dark-mode .intercession {
+    color: #eee;
+}
+
+body.masifu-modern.dark-mode .compline-text p:not(.antiphon):not(.psalm-number):not(.reading-ref):not(.responsory):not(.prayer) {
+    color: #eee;
+}
+
 /* "ANT. I / II / III" heading line */
 body.masifu-modern .antiphon.ant-heading {
     background: none;
