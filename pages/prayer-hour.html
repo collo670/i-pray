@@ -28,6 +28,13 @@
         .office-content .gb { margin-top: 0.9em; }
         .office-content .vi { padding-left: 1.25rem; }
         .office-content .p, .office-content .pi { margin: 0.6em 0; }
+        .office-content .v,
+        .office-content .vi,
+        .office-content .p,
+        .office-content .pi {
+            text-align: justify;
+            text-justify: inter-word;
+        }
         .office-content table { width: 100%; border-collapse: collapse; }
         .office-content table.each { margin: 2rem 0 0.75rem; }
         .office-content table.each th { font-weight: 400; }
@@ -428,6 +435,96 @@
                 }
             }
 
+            function normalizeOfficeText(s) {
+                return String(s == null ? '' : s).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+            }
+
+            function trimOfficeAfter(root, endNode) {
+                var current = endNode;
+                while (current && current !== root) {
+                    while (current.nextSibling) {
+                        current.parentNode.removeChild(current.nextSibling);
+                    }
+                    current = current.parentNode;
+                }
+            }
+
+            function trimOfficeBefore(root, startNode) {
+                var current = startNode;
+                while (current && current !== root) {
+                    while (current.previousSibling) {
+                        current.parentNode.removeChild(current.previousSibling);
+                    }
+                    current = current.parentNode;
+                }
+            }
+
+            // Keep only the actual prayer body inside the imported Universalis
+            // office: start at the Introduction, drop audio/chooser/instruction
+            // chrome, and stop at the final Amen.
+            function postProcessOfficeContent(root) {
+                root.querySelectorAll('.audioclip, p.rubric').forEach(function (n) {
+                    if (n.parentNode) n.parentNode.removeChild(n);
+                });
+                root.querySelectorAll('table').forEach(function (table) {
+                    if (!table.classList.contains('each') && table.parentNode) {
+                        table.parentNode.removeChild(table);
+                    }
+                });
+                root.querySelectorAll('p').forEach(function (p) {
+                    var text = normalizeOfficeText(p.textContent);
+                    var links = p.querySelectorAll('a[href]');
+                    var onlyHashLinks = links.length && Array.prototype.every.call(links, function (a) {
+                        var href = a.getAttribute('href') || '';
+                        return href.charAt(0) === '#';
+                    });
+                    if (onlyHashLinks && /^(Psalms of the day|Complementary psalms|Continue)$/i.test(text) && p.parentNode) {
+                        p.parentNode.removeChild(p);
+                    }
+                });
+                root.querySelectorAll('h4').forEach(function (h4) {
+                    if (/^(PSALMS OF THE DAY|COMPLEMENTARY PSALMS|CONCLUSION)$/i.test(normalizeOfficeText(h4.textContent)) && h4.parentNode) {
+                        h4.parentNode.removeChild(h4);
+                    }
+                });
+                root.querySelectorAll('.boldrubric').forEach(function (n) {
+                    if (/^OR:?$/i.test(normalizeOfficeText(n.textContent)) && n.parentNode) {
+                        n.parentNode.removeChild(n);
+                    }
+                });
+                if (hourKey === 'sext') {
+                    root.querySelectorAll('.lastblock').forEach(function (n) {
+                        if (n.parentNode) n.parentNode.removeChild(n);
+                    });
+                }
+
+                var startNode = null;
+                var sectionHeads = root.querySelectorAll('table.each th[align="left"]');
+                for (var i = 0; i < sectionHeads.length; i++) {
+                    if (/^INTRODUCTION$/i.test(normalizeOfficeText(sectionHeads[i].textContent))) {
+                        startNode = sectionHeads[i];
+                        while (startNode && startNode.tagName !== 'TABLE') startNode = startNode.parentNode;
+                        break;
+                    }
+                }
+                if (startNode) trimOfficeBefore(root, startNode);
+
+                var lines = root.querySelectorAll('.pi, .v, .vi, .p');
+                for (var j = lines.length - 1; j >= 0; j--) {
+                    if (/^Amen\.?$/i.test(normalizeOfficeText(lines[j].textContent))) {
+                        trimOfficeAfter(root, lines[j]);
+                        break;
+                    }
+                }
+            }
+
+            function postProcessOfficeHtml(htmlStr) {
+                var wrapper = document.createElement('div');
+                wrapper.innerHTML = htmlStr;
+                postProcessOfficeContent(wrapper);
+                return wrapper.innerHTML;
+            }
+
             // Pull the office out of the fetched Universalis page and strip
             // everything that should not run or render inside the app.
             function cleanOffice(html) {
@@ -448,6 +545,7 @@
                     a.setAttribute('target', '_blank');
                     a.setAttribute('rel', 'noopener');
                 });
+                postProcessOfficeContent(inner);
                 return inner.innerHTML;
             }
 
@@ -616,7 +714,7 @@
                 var cached = null;
                 try { cached = localStorage.getItem(cacheKey); } catch (e) {}
                 if (cached) {
-                    showOffice((noteHtml || '') + cached);
+                    showOffice((noteHtml || '') + postProcessOfficeHtml(cached));
                     return;
                 }
 
