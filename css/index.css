@@ -920,13 +920,17 @@ header[role="banner"] {
 
 /* Keep the top bar visually consistent with the screenshot: a warm maroon
    gradient that fills the full status-bar area and then settles into a
-   rounded header panel beneath it. */
+   rounded header panel beneath it.
+   inset: 0 (rather than a percentage height) pins all four edges of this
+   layer directly to .app-bar's own border box, so the background can never
+   drift from, undershoot, or overshoot the nav bar's actual rendered
+   bounds - it stops exactly at the nav's edges with no reliance on
+   percentage-height resolution against an auto-sized ancestor. */
 .app-bar::before,
 header[role="banner"]::before {
     content: "";
     position: absolute;
-    inset: 0 0 auto 0;
-    height: 100%;
+    inset: 0;
     background: linear-gradient(
         to bottom,
         var(--topbar-start, #581523) 0%,
