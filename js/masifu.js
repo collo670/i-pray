@@ -284,6 +284,18 @@
         return dayPrefix + week + '.html';
     }
 
+    function getPreferredLanguage() {
+        try {
+            return localStorage.getItem('preferredLanguage') === 'en' ? 'en' : 'sw';
+        } catch (e) {
+            return 'sw';
+        }
+    }
+
+    function buildDailyReadingsLabel() {
+        return getPreferredLanguage() === 'en' ? 'Daily Readings' : 'Masomo ya Siku';
+    }
+
     function samePage(href) {
         try {
             const linkUrl = new URL(href, window.location.href);
@@ -312,7 +324,7 @@
         const items = [
             { href: '../index.html', label: 'Nyumbani' },
             { href: 'office-of-readings.html', label: 'Ofisi ya Masomo' },
-            { href: buildTodayMorningPrayerLink(), label: 'Masifu ya Asubuhi' },
+            { href: 'daily-readings.html', label: buildDailyReadingsLabel() },
             { href: 'prayer-hour.html?hour=sext', label: 'Sala za Mchana' },
             { href: 'prayer-hour.html?hour=vespers', label: 'Masifu ya Jioni' }
         ];
