@@ -261,6 +261,70 @@
         });
     }
 
+    // ---- Navigation -------------------------------------------------------------
+
+    function buildTodayMorningPrayerLink() {
+        const now = new Date();
+        const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+        const dayPrefix = dayToPrefix[now.getDay()];
+        const weekSequence = [2, 3, 4, 1];
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const daysSinceSunday = today.getDay();
+        const currentSunday = new Date(today);
+        currentSunday.setDate(today.getDate() - daysSinceSunday);
+
+        const referenceWeek2Sunday = new Date(2025, 7, 3);
+        referenceWeek2Sunday.setHours(0, 0, 0, 0);
+
+        const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+        const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+        const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
+        const week = weekSequence[weekIndex];
+
+        return dayPrefix + week + '.html';
+    }
+
+    function samePage(href) {
+        try {
+            const linkUrl = new URL(href, window.location.href);
+            const pageUrl = new URL(window.location.href);
+            return linkUrl.pathname === pageUrl.pathname && linkUrl.search === pageUrl.search;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function wireMobileMenuClose(nav) {
+        if (!nav) return;
+        nav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (window.innerWidth <= 768 && typeof window.toggleMenu === 'function') {
+                    window.toggleMenu(true);
+                }
+            });
+        });
+    }
+
+    function normalizeTopNavigation() {
+        const nav = document.querySelector('#nav-links.nav-links');
+        if (!nav) return;
+
+        const items = [
+            { href: '../index.html', label: 'Nyumbani' },
+            { href: 'office-of-readings.html', label: 'Ofisi ya Masomo' },
+            { href: buildTodayMorningPrayerLink(), label: 'Masifu ya Asubuhi' },
+            { href: 'prayer-hour.html?hour=sext', label: 'Sala za Mchana' },
+            { href: 'prayer-hour.html?hour=vespers', label: 'Masifu ya Jioni' }
+        ];
+
+        nav.innerHTML = items.map(function (item) {
+            const currentAttrs = samePage(item.href) ? ' aria-current="page" class="is-current"' : '';
+            return '<li><a href="' + item.href + '"' + currentAttrs + '>' + item.label + '</a></li>';
+        }).join('');
+
+        wireMobileMenuClose(nav);
+    }
+
     // ---- Text size controls ----------------------------------------------------
 
     const SCALE_MIN = 0.8;
@@ -345,6 +409,7 @@
         document.body.classList.add('masifu-modern');
         const ctx = seasonInfo();
         classifyPlainSections();
+        normalizeTopNavigation();
         setupSeasonalAntiphons(ctx);
         insertSeasonBadge(ctx);
         setupTextControls();

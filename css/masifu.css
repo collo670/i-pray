@@ -250,6 +250,40 @@ body.masifu-modern .toggle-btn {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
+/* ---- Morning prayer top nav / hamburger menu --------------------------- */
+
+body.masifu-topbar .nav-links {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem 0 0;
+}
+
+body.masifu-topbar .nav-links li {
+    margin: 0;
+}
+
+body.masifu-topbar .nav-links a {
+    white-space: nowrap;
+    font-size: 0.88rem;
+    padding: 0.65rem 0.85rem;
+}
+
+body.masifu-topbar .nav-links a.is-current,
+body.masifu-topbar .nav-links a[aria-current="page"] {
+    background-color: rgba(240, 201, 106, 0.18);
+    color: #fff3cf;
+}
+
+@media (max-width: 768px) {
+    body.masifu-topbar .nav-links.active {
+        max-height: 30rem;
+    }
+}
+
 /* ---- Text size controls (A− / A / A+) --------------------------------- */
 
 .masifu-textctl {
