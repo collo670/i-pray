@@ -242,31 +242,36 @@
     <meta name="description" content="Office of Readings readings for Mwaka Sehemu 3 Week 22.">    <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/i-pray/index.html" class="nav-logo">ipray</a>
-            
-            <div class="hamburger" onclick="toggleMenu()">
-                <div></div>
-                <div></div>
-                <div></div>
+<body class="prayer-topbar">
+        <header id="appBar" class="app-bar" role="banner">
+        <div class="header-content">
+            <div class="app-bar-brand">
+                <h2 class="brand-title">ipray</h2>
+                <p class="brand-subtitle">Ofisi ya Masomo</p>
             </div>
-            
-            <ul class="nav-links">
-                <li><a href="/i-pray/index.html">Nyumbani</a></li>
-                <li><a href="/i-pray/asubuhi.html">Masifu ya Asubuhi</a></li>
-                <li><a href="/i-pray/jioni.html">Masifu ya Jioni</a></li>
-                <li><a href="/i-pray/somo.html">Somo la Kila Siku</a></li>
-                <li><a href="/i-pray/takwimu.html">Kalenda</a></li>
-            </ul>
+            <div class="app-bar-actions">
+                <div class="toggle-container">
+                    <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
+                </div>
+                <button id="hamburger-button" class="app-bar-btn hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
-    </nav>
+        <nav class="app-bar-menu" aria-label="Prayer navigation">
+            <ul id="nav-links" class="nav-links">
+                <li><a href="../index.html">Nyumbani</a></li>
+                <li><a href="prayer.html">Masifu ya Asubuhi</a></li>
+                <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
+                <li><a href="compline.html">Sala ya Usiku</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <div class="container">
-        <div class="toggle-container">
-            <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
-        </div>
+
 
         <!-- original main content follows -->
 <div class="rounded-3xl p-6 bg-green-100 backdrop-blur-sm shadow-xl border border-dashed border-green-200 season-border space-y-6">

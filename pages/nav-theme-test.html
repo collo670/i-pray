@@ -11,42 +11,46 @@
   <title>Nav & Theme Test</title>
   <link rel="stylesheet" href="../css/index.css">
   <style>
-    body { padding-top: 72px; }
     .container { max-width: 720px; margin: 1.5rem auto; padding: 1rem; }
     .notice { background:#fff8c4; padding:8px 12px; border-radius:6px; margin-bottom:12px; }
   </style>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
 </head>
-<body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="#" class="nav-logo">ipray - test</a>
-
-      <div class="hamburger" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
-        <div></div>
-        <div></div>
-        <div></div>
+<body class="prayer-topbar">
+  <header id="appBar" class="app-bar" role="banner">
+    <div class="header-content">
+      <div class="app-bar-brand">
+        <h2 class="brand-title">ipray</h2>
+        <p class="brand-subtitle">Navigation test</p>
       </div>
-
-      <ul class="nav-links">
-        <li><a href="#">Nyumbani</a></li>
-        <li><a href="#">Ofisi ya Masomo</a></li>
-        <li><a href="#">Rozari Takatifu</a></li>
-        <li><a href="#">Kalenda</a></li>
-        <li><a href="#">Mipangilio</a></li>
-      </ul>
+      <div class="app-bar-actions">
+        <div class="toggle-container">
+          <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
+        </div>
+        <button class="app-bar-btn hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-controls="nav-links" aria-expanded="false" tabindex="0" type="button">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
-  </nav>
+    <nav class="app-bar-menu" aria-label="Test navigation">
+      <ul id="nav-links" class="nav-links">
+        <li><a href="../index.html">Nyumbani</a></li>
+        <li><a href="prayer.html">Masifu ya Asubuhi</a></li>
+        <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
+        <li><a href="compline.html">Sala ya Usiku</a></li>
+        <li><a href="settings.html">Mipangilio</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <div class="container">
     <div class="notice">This page is a lightweight test harness for the shared `nav-theme.js`.
       Open devtools in mobile emulation (<=768px) to test the hamburger and dark-mode behavior.
     </div>
 
-    <div class="toggle-container">
-      <button class="toggle-btn">Dark Mode</button>
-    </div>
 
     <h1>Navigation & Dark Mode Test</h1>
     <p>Use the hamburger (small screens) to open the menu. Click links to verify the menu closes. Toggle dark mode and reload to verify persistence.</p>

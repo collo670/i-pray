@@ -394,32 +394,34 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">ipray</a>
-            <div class="nav-actions">
-            
-            <div class="toggle-container">
-                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
+<body class="masifu-topbar">
+        <header id="appBar" class="app-bar" role="banner">
+        <div class="header-content">
+            <div class="app-bar-brand">
+                <h2 class="brand-title">ipray</h2>
+                <p class="brand-subtitle">Masifu ya Asubuhi</p>
             </div>
-            
-            <div class="hamburger" onclick="toggleMenu()">
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="app-bar-actions">
+                <div class="toggle-container">
+                    <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark</button>
+                </div>
+                <button class="app-bar-btn hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-            
-             </div>
-
-            <ul class="nav-links">
+        </div>
+        <nav class="app-bar-menu" aria-label="Morning prayer navigation">
+            <ul id="nav-links" class="nav-links">
                 <li><a href="../index.html">Nyumbani</a></li>
                 <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
             </ul>
-        </div>
-    </nav>
+        </nav>
+    </header>
+
 
     <div class="container">
         
@@ -630,54 +632,47 @@
         </div>
     </div>
     
-    <script>
-        // Toggle mobile menu
-        function toggleMenu() {
+        <script>
+        function syncDarkModeButton() {
+            const btn = document.querySelector('.toggle-btn');
+            if (!btn) return;
+            btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
+        }
+
+        function toggleMenu(forceClose) {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
-            
-            navLinks.classList.toggle('active');
-            
-            // Animate hamburger to X
-            if (navLinks.classList.contains('active')) {
-                hamburger.children[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
-                hamburger.children[1].style.opacity = '0';
-                hamburger.children[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
-            } else {
-                hamburger.children[0].style.transform = 'rotate(0) translate(0)';
-                hamburger.children[1].style.opacity = '1';
-                hamburger.children[2].style.transform = 'rotate(0) translate(0)';
-            }
+            if (!navLinks || !hamburger) return;
+
+            const shouldOpen = typeof forceClose === 'boolean'
+                ? !forceClose
+                : !navLinks.classList.contains('active');
+
+            navLinks.classList.toggle('active', shouldOpen);
+            hamburger.classList.toggle('active', shouldOpen);
+            hamburger.setAttribute('aria-expanded', String(shouldOpen));
         }
-        
-        // Close mobile menu when clicking a link
+
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
-                    toggleMenu();
+                    toggleMenu(true);
                 }
             });
         });
-        
-        // Dark mode toggle
+
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
-            const btn = document.querySelector('.toggle-btn');
-            if (document.body.classList.contains('dark-mode')) {
-                btn.textContent = 'Light Mode';
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                btn.textContent = 'Dark Mode';
-                localStorage.setItem('darkMode', 'disabled');
-            }
+            syncDarkModeButton();
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
         }
-        
-        // Check for dark mode preference
+
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.body.classList.add('dark-mode');
-            document.querySelector('.toggle-btn').textContent = 'Light Mode';
         }
+        syncDarkModeButton();
     </script>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {

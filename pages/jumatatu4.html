@@ -665,32 +665,34 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">ipray</a>
-            <div class="nav-actions">
-            
-            <div class="toggle-container">
-                <button class="toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
+<body class="masifu-topbar">
+        <header id="appBar" class="app-bar" role="banner">
+        <div class="header-content">
+            <div class="app-bar-brand">
+                <h2 class="brand-title">ipray</h2>
+                <p class="brand-subtitle">Masifu ya Asubuhi</p>
             </div>
-            
-            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="app-bar-actions">
+                <div class="toggle-container">
+                    <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark</button>
+                </div>
+                <button class="app-bar-btn hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-            
-             </div>
-
-            <ul class="nav-links">
+        </div>
+        <nav class="app-bar-menu" aria-label="Morning prayer navigation">
+            <ul id="nav-links" class="nav-links">
                 <li><a href="../index.html">Nyumbani</a></li>
                 <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
                 <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
                 <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
             </ul>
-        </div>
-    </nav>
+        </nav>
+    </header>
+
 
     <div class="container">
         

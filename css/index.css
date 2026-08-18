@@ -981,6 +981,206 @@ header[role="banner"]::before {
     transform: scale(0.92);
 }
 
+/* Generic prayer pages that reuse the index-style app bar while keeping
+   their own page content/styles. */
+body.prayer-topbar {
+    padding-top: 0 !important;
+}
+
+body.prayer-topbar .container {
+    padding-top: 1.5rem;
+}
+
+body.prayer-topbar .app-bar {
+    z-index: 1200;
+}
+
+body.prayer-topbar .header-content,
+body.prayer-topbar .app-bar-menu {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+body.prayer-topbar .app-bar-brand {
+    margin-left: 0;
+}
+
+body.prayer-topbar .app-bar-brand .brand-title {
+    margin: 0;
+    color: var(--topbar-gold, #f0c96a);
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+}
+
+body.prayer-topbar .app-bar-brand .brand-subtitle {
+    margin: 0.15rem 0 0;
+    color: rgba(250, 232, 188, 0.9);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+body.prayer-topbar .app-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+}
+
+body.prayer-topbar .toggle-container {
+    display: block;
+    margin: 0;
+    text-align: initial;
+}
+
+body.prayer-topbar .toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    color: var(--topbar-gold, #f0c96a);
+    background: transparent;
+    border: 1px solid rgba(240, 201, 106, 0.35);
+    box-shadow: none;
+}
+
+body.prayer-topbar .hamburger {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.24rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: none;
+    border-radius: 9999px;
+    background: transparent;
+    color: var(--topbar-gold, #f0c96a);
+    cursor: pointer;
+}
+
+body.prayer-topbar .hamburger:hover,
+body.prayer-topbar .hamburger:focus-visible,
+body.prayer-topbar .toggle-btn:hover,
+body.prayer-topbar .toggle-btn:focus-visible {
+    background-color: rgba(240, 201, 106, 0.18);
+    color: #fff3cf;
+    outline: none;
+}
+
+body.prayer-topbar .hamburger span {
+    display: block;
+    width: 1.3rem;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+body.prayer-topbar .hamburger.active span:nth-child(1) {
+    transform: translateY(0.36rem) rotate(-45deg);
+}
+
+body.prayer-topbar .hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+body.prayer-topbar .hamburger.active span:nth-child(3) {
+    transform: translateY(-0.36rem) rotate(45deg);
+}
+
+body.prayer-topbar .nav-links {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem 0 0;
+}
+
+body.prayer-topbar .nav-links li {
+    margin: 0;
+}
+
+body.prayer-topbar .nav-links a {
+    display: block;
+    color: var(--topbar-gold, #f0c96a);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.65rem 0.9rem;
+    border-radius: 0.8rem;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+body.prayer-topbar .nav-links a:hover,
+body.prayer-topbar .nav-links a:focus-visible {
+    background-color: rgba(240, 201, 106, 0.18);
+    color: #fff3cf;
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    body.prayer-topbar .app-bar {
+        padding-bottom: 0.85rem;
+    }
+
+    body.prayer-topbar .toggle-btn {
+        padding: 0 0.75rem;
+        font-size: 0.74rem;
+    }
+
+    body.prayer-topbar .hamburger {
+        display: flex;
+    }
+
+    body.prayer-topbar .app-bar-menu {
+        margin-top: 0.45rem;
+    }
+
+    body.prayer-topbar .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: max-height 0.35s ease, opacity 0.2s ease, transform 0.2s ease, padding 0.2s ease;
+        background: rgba(17, 24, 39, 0.96);
+        border: 1px solid rgba(240, 201, 106, 0.15);
+        border-radius: 1rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    body.prayer-topbar .nav-links.active {
+        max-height: 22rem;
+        opacity: 1;
+        transform: translateY(0);
+        padding: 0.35rem 0;
+    }
+
+    body.prayer-topbar .nav-links li + li {
+        border-top: 1px solid rgba(240, 201, 106, 0.12);
+    }
+
+    body.prayer-topbar .nav-links a {
+        width: 100%;
+        text-align: center;
+        padding: 0.9rem 1rem;
+        border-radius: 0;
+    }
+}
+
 /* Navigation Bar Styles */
 .navbar {
     position: fixed;
