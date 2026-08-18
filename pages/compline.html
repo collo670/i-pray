@@ -358,6 +358,12 @@
         .app-bar-brand .brand-subtitle {
             text-align: left;
         }
+
+        .app-bar-menu .nav-links a.is-current,
+        .app-bar-menu .nav-links a[aria-current="page"] {
+            background-color: rgba(240, 201, 106, 0.18);
+            color: #fff3cf;
+        }
         
         .dark-mode .reading-ref {
             color: #FFA07A;
@@ -477,7 +483,8 @@
             cursor: default;
         }
         
-        .masifu-textctl .tc-dec {
+        .masifu-textctl .tc-dec,
+        .masifu-textctl .tc-inc {
             font-size: 1.35rem;
             line-height: 1;
         }
@@ -602,11 +609,12 @@
             </div>
         </div>
         <nav class="app-bar-menu" aria-label="Prayer navigation">
-            <ul id="nav-links" class="nav-links">
+            <ul id="nav-links" class="nav-links" aria-hidden="true">
                 <li><a href="../index.html">Nyumbani</a></li>
-                <li><a href="prayer.html">Masifu ya Asubuhi</a></li>
                 <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
-                <li><a href="compline.html">Sala ya Usiku</a></li>
+                <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+                <li><a href="compline.html" aria-current="page">Sala ya Usiku</a></li>
             </ul>
         </nav>
     </header>
@@ -1331,151 +1339,246 @@
 
     </div>
     
-    <script></script>
-        const DAY_ORDER = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-        const DAY_LABELS = {
-            saturday: 'Saturday',
-            sunday: 'Sunday',
-            monday: 'Monday',
-            tuesday: 'Tuesday',
-            wednesday: 'Wednesday',
-            thursday: 'Thursday',
-            friday: 'Friday'
-        };
-        
-        let currentDayIndex = (new Date().getDay() + 1) % 7;
-        
-        function showDay(index) {
-            const day = DAY_ORDER[index];
-            document.querySelectorAll('.prayer-section').forEach(el => {
-                if (el.dataset.day === day) {
-                    el.classList.remove('hidden');
-                } else {
-                    el.classList.add('hidden');
+    <div class="masifu-textctl" role="group" aria-label="Adjust prayer text size">
+        <button id="textSizeDec" type="button" class="tc-dec" aria-label="Decrease text size">−</button>
+        <button id="textSizeReset" type="button" class="tc-reset" aria-label="Reset text size">100%</button>
+        <button id="textSizeInc" type="button" class="tc-inc" aria-label="Increase text size">+</button>
+    </div>
+    
+    <script>
+        (function () {
+            'use strict';
+
+            const DAY_ORDER = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+            const DAY_LABELS = {
+                saturday: 'Saturday',
+                sunday: 'Sunday',
+                monday: 'Monday',
+                tuesday: 'Tuesday',
+                wednesday: 'Wednesday',
+                thursday: 'Thursday',
+                friday: 'Friday'
+            };
+            const SCALE_MIN = 0.8;
+            const SCALE_MAX = 1.7;
+            const SCALE_STEP = 0.1;
+            const SCALE_KEY = 'masifuTextScale';
+
+            let currentDayIndex = (new Date().getDay() + 1) % DAY_ORDER.length;
+            let textScale = 1;
+
+            function buildTodayMorningPrayerLink() {
+                const now = new Date();
+                const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+                const dayPrefix = dayToPrefix[now.getDay()];
+                const weekSequence = [2, 3, 4, 1];
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const daysSinceSunday = today.getDay();
+                const currentSunday = new Date(today);
+                currentSunday.setDate(today.getDate() - daysSinceSunday);
+                const referenceWeek2Sunday = new Date(2025, 7, 3);
+                referenceWeek2Sunday.setHours(0, 0, 0, 0);
+                const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+                const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
+                const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
+                const week = weekSequence[weekIndex];
+                return dayPrefix + week + '.html';
+            }
+
+            function samePage(href) {
+                try {
+                    const linkUrl = new URL(href, window.location.href);
+                    const pageUrl = new URL(window.location.href);
+                    return linkUrl.pathname === pageUrl.pathname && linkUrl.search === pageUrl.search;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function renderTopNavigation() {
+                const nav = document.getElementById('nav-links');
+                if (!nav) return;
+                const items = [
+                    { href: '../index.html', label: 'Nyumbani' },
+                    { href: 'office-of-readings.html', label: 'Ofisi ya Masomo' },
+                    { href: buildTodayMorningPrayerLink(), label: 'Masifu ya Asubuhi' },
+                    { href: 'prayer-hour.html?hour=sext', label: 'Sala za Mchana' },
+                    { href: 'prayer-hour.html?hour=vespers', label: 'Masifu ya Jioni' },
+                    { href: 'compline.html', label: 'Sala ya Usiku' }
+                ];
+                nav.innerHTML = items.map(function (item) {
+                    const currentAttrs = samePage(item.href) ? ' aria-current="page" class="is-current"' : '';
+                    return '<li><a href="' + item.href + '"' + currentAttrs + '>' + item.label + '</a></li>';
+                }).join('');
+            }
+
+            function setMenuOpen(open) {
+                const navLinks = document.getElementById('nav-links');
+                const hamburger = document.querySelector('.hamburger');
+                if (!navLinks || !hamburger) return;
+                const isMobile = window.innerWidth <= 768;
+                navLinks.classList.toggle('active', isMobile && open);
+                navLinks.setAttribute('aria-hidden', String(isMobile ? !open : false));
+                hamburger.classList.toggle('active', isMobile && open);
+                hamburger.setAttribute('aria-expanded', String(isMobile && open));
+                if (isMobile && open) {
+                    window.setTimeout(function () {
+                        const firstLink = navLinks.querySelector('a');
+                        if (firstLink) firstLink.focus();
+                    }, 100);
+                }
+            }
+
+            window.toggleMenu = function (forceOpen) {
+                const navLinks = document.getElementById('nav-links');
+                if (!navLinks) return;
+                const open = typeof forceOpen === 'boolean' ? forceOpen : !navLinks.classList.contains('active');
+                if (open && navigator.vibrate) {
+                    try { navigator.vibrate(40); } catch (e) {}
+                }
+                setMenuOpen(open);
+            };
+
+            function wireMenuLinks() {
+                const navLinks = document.getElementById('nav-links');
+                if (!navLinks) return;
+                navLinks.querySelectorAll('a').forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        if (window.innerWidth <= 768) setMenuOpen(false);
+                    });
+                });
+            }
+
+            function storedDarkModeEnabled() {
+                try {
+                    const saved = localStorage.getItem('darkMode');
+                    return saved === 'true' || saved === 'enabled';
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function applyDarkMode(isDark, persist) {
+                document.body.classList.toggle('dark-mode', isDark);
+                document.documentElement.classList.toggle('dark', isDark);
+                const btn = document.querySelector('.toggle-btn');
+                if (btn) {
+                    btn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+                    btn.setAttribute('aria-pressed', String(isDark));
+                    btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+                    btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                }
+                if (persist === false) return;
+                try { localStorage.setItem('darkMode', isDark ? 'true' : 'false'); } catch (e) {}
+            }
+
+            window.toggleDarkMode = function () {
+                applyDarkMode(!document.body.classList.contains('dark-mode'));
+            };
+
+            function loadScale() {
+                try {
+                    const saved = parseFloat(localStorage.getItem(SCALE_KEY));
+                    if (!isNaN(saved)) return Math.min(SCALE_MAX, Math.max(SCALE_MIN, saved));
+                    const old = { small: 0.9, normal: 1, large: 1.25, xlarge: 1.5 }[localStorage.getItem('textSize')];
+                    if (old) return old;
+                } catch (e) {}
+                return 1;
+            }
+
+            function applyTextScale(persist) {
+                textScale = Math.min(SCALE_MAX, Math.max(SCALE_MIN, Math.round(textScale * 10) / 10));
+                document.documentElement.style.setProperty('--prayer-text-scale', textScale);
+                const dec = document.getElementById('textSizeDec');
+                const reset = document.getElementById('textSizeReset');
+                const inc = document.getElementById('textSizeInc');
+                if (reset) {
+                    reset.textContent = Math.round(textScale * 100) + '%';
+                    reset.title = 'Reset to 100%';
+                }
+                if (dec) dec.disabled = textScale <= SCALE_MIN;
+                if (inc) inc.disabled = textScale >= SCALE_MAX;
+                if (persist === false) return;
+                try { localStorage.setItem(SCALE_KEY, String(textScale)); } catch (e) {}
+            }
+
+            function changeTextScale(direction) {
+                textScale += SCALE_STEP * direction;
+                applyTextScale();
+            }
+
+            function resetTextScale() {
+                textScale = 1;
+                applyTextScale();
+            }
+
+            function showDay(index) {
+                const day = DAY_ORDER[index];
+                document.querySelectorAll('.prayer-section').forEach(function (el) {
+                    el.classList.toggle('hidden', el.dataset.day !== day);
+                });
+                const dayName = document.getElementById('currentDayName');
+                if (dayName) dayName.textContent = DAY_LABELS[day];
+                currentDayIndex = index;
+            }
+
+            function prevDay() {
+                showDay((currentDayIndex - 1 + DAY_ORDER.length) % DAY_ORDER.length);
+            }
+
+            function nextDay() {
+                showDay((currentDayIndex + 1) % DAY_ORDER.length);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                renderTopNavigation();
+                wireMenuLinks();
+                setMenuOpen(false);
+                applyDarkMode(storedDarkModeEnabled(), false);
+
+                textScale = loadScale();
+                applyTextScale(false);
+                const dec = document.getElementById('textSizeDec');
+                const reset = document.getElementById('textSizeReset');
+                const inc = document.getElementById('textSizeInc');
+                if (dec) dec.addEventListener('click', function () { changeTextScale(-1); });
+                if (reset) reset.addEventListener('click', resetTextScale);
+                if (inc) inc.addEventListener('click', function () { changeTextScale(1); });
+
+                const prevBtn = document.getElementById('prevDay');
+                const nextBtn = document.getElementById('nextDay');
+                if (prevBtn) prevBtn.addEventListener('click', prevDay);
+                if (nextBtn) nextBtn.addEventListener('click', nextDay);
+                showDay(currentDayIndex);
+            });
+
+            window.addEventListener('storage', function (e) {
+                if (e.key === 'darkMode') applyDarkMode(storedDarkModeEnabled(), false);
+                if (e.key === SCALE_KEY || e.key === 'textSize') {
+                    textScale = loadScale();
+                    applyTextScale(false);
                 }
             });
-            document.getElementById('currentDayName').textContent = DAY_LABELS[day];
-            currentDayIndex = index;
-        }
-        
-        function prevDay() {
-            const newIndex = (currentDayIndex - 1 + DAY_ORDER.length) % DAY_ORDER.length;
-            showDay(newIndex);
-        }
-        
-        function nextDay() {
-            const newIndex = (currentDayIndex + 1) % DAY_ORDER.length;
-            showDay(newIndex);
-        }
-        
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-            const isOpen = navLinks.classList.contains('active');
-            hamburger.setAttribute('aria-expanded', isOpen);
-            navLinks.setAttribute('aria-hidden', !isOpen);
-            if (isOpen) {
-                setTimeout(() => {
-                    const firstLink = navLinks.querySelector('a');
-                    if (firstLink) firstLink.focus();
-                }, 100);
-            }
-        }
-        
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    toggleMenu();
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 768) setMenuOpen(false);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                const navLinks = document.getElementById('nav-links');
+                if (e.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
+                    setMenuOpen(false);
                 }
             });
-        });
-        
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const btn = document.querySelector('.toggle-btn');
-            if (document.body.classList.contains('dark-mode')) {
-                btn.textContent = 'Light Mode';
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                btn.textContent = 'Dark Mode';
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        }
-        
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.querySelector('.toggle-btn').textContent = 'Light Mode';
-        }
-        
-        const translations = {
-            en: {
-                home: "Home",
-                lauds: "Lauds",
-                calendar: "Calendar",
-                settings: "Settings"
-            },
-            sw: {
-                home: "Nyumbani",
-                lauds: "Masifu",
-                calendar: "Kalenda",
-                settings: "Mipangilio"
-            }
-        };
-        
-        function setLanguage(lang) {
-            localStorage.setItem('preferredLanguage', lang);
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+
+            document.addEventListener('click', function (e) {
+                const navLinks = document.getElementById('nav-links');
+                const hamburger = document.querySelector('.hamburger');
+                if (navLinks && hamburger && navLinks.classList.contains('active') && !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+                    setMenuOpen(false);
                 }
             });
-        }
-        
-        window.toggleTranslation = function() {
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            const newLang = currentLang === 'en' ? 'sw' : 'en';
-            setLanguage(newLang);
-        };
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
-            setLanguage(preferredLang);
-            const translationToggle = document.getElementById('translationToggle');
-            if (translationToggle) {
-                translationToggle.addEventListener('click', toggleTranslation);
-            }
-            
-            const prevBtn = document.getElementById('prevDay');
-            const nextBtn = document.getElementById('nextDay');
-            if (prevBtn) prevBtn.addEventListener('click', prevDay);
-            if (nextBtn) nextBtn.addEventListener('click', nextDay);
-            showDay(currentDayIndex);
-        });
-        
-        document.addEventListener('keydown', function(e) {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks.classList.contains('active')) {
-                if (e.key === 'Escape') {
-                    toggleMenu();
-                }
-            }
-        });
-        
-        document.addEventListener('click', function(e) {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-            if (navLinks.classList.contains('active') &&
-                !navLinks.contains(e.target) &&
-                !hamburger.contains(e.target)) {
-                toggleMenu();
-            }
-        });
+        })();
     </script>
     <script>
       if ('serviceWorker' in navigator) {
@@ -1491,7 +1594,7 @@
       }
     </script>
     
-    <script src="../js/masifu.js" defer></script>
+
     <script src="../js/prevent-zoom.js" defer></script>
 </body>
 </html>
