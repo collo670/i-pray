@@ -352,6 +352,7 @@
             var minDate = addDays(today, -WINDOW_BACK_DAYS);
             var maxDate = addDays(today, WINDOW_AHEAD_DAYS);
             var currentDate = today;
+            var currentStamp = stampOf(today);
 
             function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
             function addDays(d, n) { var c = new Date(d); c.setDate(c.getDate() + n); return c; }
@@ -529,24 +530,32 @@
             // everything that should not run or render inside the app.
             function cleanOffice(html) {
                 var doc = new DOMParser().parseFromString(html, 'text/html');
-                var inner = doc.getElementById('innertexst') || doc.getElementById('texts');
-                if (!inner || !inner.querySelector('.v, .p')) return null;
-                inner.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
-                    n.parentNode.removeChild(n);
+                var root = doc.getElementById('innertexst') || doc.getElementById('texts');
+                if (root && root.id === 'texts') {
+                    var nested = root.querySelector('#innertexst');
+                    if (nested) root = nested;
+                }
+                if (!root || !root.querySelector('.v, .p')) return null;
+
+                doc.querySelectorAll('#mainheading, #overallcontainer, #hourlinks, #calendar-heading, #datename, #dateblock, #feastname, .toprightbox, #appplug, #univQRLink, #linktomain, script, style, link, iframe, object, embed, form, #univPageName').forEach(function (n) {
+                    if (n && n.parentNode) n.parentNode.removeChild(n);
                 });
-                inner.querySelectorAll('*').forEach(function (n) {
+                root.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
+                    if (n && n.parentNode) n.parentNode.removeChild(n);
+                });
+                root.querySelectorAll('*').forEach(function (n) {
                     for (var i = n.attributes.length - 1; i >= 0; i--) {
                         if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
                     }
                 });
-                inner.querySelectorAll('a[href]').forEach(function (a) {
+                root.querySelectorAll('a[href]').forEach(function (a) {
                     var href = a.getAttribute('href');
                     if (href && href.charAt(0) === '/') a.setAttribute('href', 'https://universalis.com' + href);
                     a.setAttribute('target', '_blank');
                     a.setAttribute('rel', 'noopener');
                 });
-                postProcessOfficeContent(inner);
-                return inner.innerHTML;
+                postProcessOfficeContent(root);
+                return root.innerHTML;
             }
 
             function showOffice(htmlStr) {
@@ -709,23 +718,30 @@
             // the English UI and as the fallback when Swahili has no local
             // data for a given date (noteHtml explains why, in that case).
             function loadUniversalisContent(token, noteHtml) {
-                var url = 'https://universalis.com/' + stampOf(currentDate) + '/' + HOURS[hourKey].page + '.htm';
-                var cacheKey = CACHE_PREFIX + hourKey + '-' + stampOf(currentDate);
+                var stamp = stampOf(currentDate);
+                var url = 'https://universalis.com/' + stamp + '/' + HOURS[hourKey].page + '.htm';
+                var cacheKey = CACHE_PREFIX + hourKey + '-' + stamp;
                 var cached = null;
                 try { cached = localStorage.getItem(cacheKey); } catch (e) {}
+                if (cached && /id="mainheading"|id="overallcontainer"|id="hourlinks"|Universalis<\/a>/i.test(cached)) {
+                    try { localStorage.removeItem(cacheKey); } catch (e) {}
+                    cached = null;
+                }
                 if (cached) {
+                    if (token !== loadToken || stamp !== currentStamp) return;
                     showOffice((noteHtml || '') + postProcessOfficeHtml(cached));
                     return;
                 }
 
                 fetchThroughProxies(url, token, function (cleaned) {
+                    if (token !== loadToken || stamp !== currentStamp) return;
                     try {
                         pruneCache();
                         localStorage.setItem(cacheKey, cleaned);
                     } catch (e) {}
                     showOffice((noteHtml || '') + cleaned);
                 }, function () {
-                    if (token !== loadToken) return;
+                    if (token !== loadToken || stamp !== currentStamp) return;
                     fallbackToken = token;
                     frame.src = url;
                 });
@@ -733,6 +749,7 @@
 
             function load(date) {
                 currentDate = startOfDay(date);
+                currentStamp = stampOf(currentDate);
                 datePicker.value = isoOf(currentDate);
                 prevBtn.disabled = +currentDate <= +minDate;
                 nextBtn.disabled = +currentDate >= +maxDate;
