@@ -1,0 +1,1011 @@
+diff --git a/js/universalis-office.js b/js/universalis-office.js
+new file mode 100644
+index 0000000..d82b9c9
+--- /dev/null
++++ b/js/universalis-office.js
+@@ -0,0 +1,407 @@
++/*
++ * universalis-office.js
++ * ---------------------------------------------------------------------------
++ * Turns a fetched Universalis hour page (Office of Readings, Midday Prayer /
++ * Sext, Vespers) into a fragment of liturgical text that can be dropped
++ * straight into iPray's own layout.
++ *
++ * Nothing from the Universalis *site* is meant to survive this: the page
++ * header, the hour links, the calendar strip, the QR/app plug boxes, the
++ * audio players, the footers, any script/style/link/iframe, any inline
++ * event handler and any class that isn't one of the handful Universalis
++ * uses to mark up the prayer itself. What comes out is the office only -
++ * hymn, psalms with their antiphons, readings, responsories, canticle,
++ * intercessions and the concluding prayer - styled by iPray's own
++ * `.office-content` rules.
++ *
++ * The sanitiser is an allow-list, not a block-list: an element, an
++ * attribute or a class has to be named here to survive. That way a change
++ * on the Universalis side can at worst lose a bit of formatting - it can
++ * never leak site chrome, tracking or styling into the app.
++ *
++ * Used by pages/office-of-readings.html and pages/prayer-hour.html.
++ * Exposed as window.UniversalisOffice (no build step; the app loads plain
++ * scripts).
++ */
++(function (global) {
++    'use strict';
++
++    var ORIGIN = 'https://universalis.com';
++
++    // Bumped whenever extraction changes shape, so offices cached by an
++    // older version of this file are re-fetched instead of re-rendered.
++    var EXTRACT_VERSION = 3;
++
++    // ---------------------------------------------------------------------
++    // Sanitiser allow-lists
++    // ---------------------------------------------------------------------
++
++    // Elements that may appear in the output at all. Anything not listed is
++    // either dropped with its subtree (DROP_WITH_CONTENT) or unwrapped, so
++    // its text survives even when the wrapper does not.
++    var ALLOWED_TAGS = {
++        DIV: 1, P: 1, SPAN: 1, BR: 1, HR: 1,
++        B: 1, STRONG: 1, I: 1, EM: 1, U: 1, SMALL: 1, SUP: 1, SUB: 1, ABBR: 1,
++        H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1,
++        UL: 1, OL: 1, LI: 1, DL: 1, DT: 1, DD: 1, BLOCKQUOTE: 1,
++        TABLE: 1, THEAD: 1, TBODY: 1, TFOOT: 1, TR: 1, TH: 1, TD: 1,
++        A: 1
++    };
++
++    // Dropped together with everything inside them. Scripts and styles are
++    // the security-relevant ones; the media/form/graphic tags are here
++    // because Universalis uses them for players, search boxes and logos,
++    // none of which are prayer text.
++    var DROP_WITH_CONTENT = {
++        SCRIPT: 1, STYLE: 1, LINK: 1, META: 1, BASE: 1, TITLE: 1, NOSCRIPT: 1,
++        IFRAME: 1, FRAME: 1, FRAMESET: 1, OBJECT: 1, EMBED: 1, APPLET: 1,
++        AUDIO: 1, VIDEO: 1, SOURCE: 1, TRACK: 1, CANVAS: 1, SVG: 1, MATH: 1,
++        IMG: 1, PICTURE: 1, FIGURE: 1, MAP: 1, AREA: 1,
++        FORM: 1, INPUT: 1, BUTTON: 1, SELECT: 1, OPTION: 1, TEXTAREA: 1,
++        LABEL: 1, FIELDSET: 1, LEGEND: 1, DATALIST: 1, OUTPUT: 1, PROGRESS: 1,
++        TEMPLATE: 1, DIALOG: 1, SLOT: 1, PORTAL: 1, MARQUEE: 1
++    };
++
++    // Attributes kept on surviving elements. `id` is deliberately absent:
++    // Universalis ids (#texts, #mainheading, #appplug…) would otherwise
++    // collide with iPray's own ids and with its CSS. `style` is absent so
++    // the Universalis look cannot override the app's typography.
++    var ALLOWED_ATTRS = { class: 1, align: 1, valign: 1, colspan: 1, rowspan: 1, lang: 1, dir: 1 };
++
++    // The only classes Universalis uses to mark up the prayer itself. Any
++    // other class (site layout, colour themes, ad slots…) is stripped; the
++    // element stays, so no text is ever lost to this step.
++    var ALLOWED_CLASSES = {
++        // verse lines and their runover/indented continuations
++        v: 1, vi: 1, vii: 1, viii: 1,
++        // prose paragraphs, indented prose, gap-before blocks
++        p: 1, pi: 1, pii: 1, gb: 1, gbi: 1,
++        // section heading tables ("PSALM 62", "READING", "CANTICLE"…)
++        each: 1,
++        // rubrics, scripture citations, section rules, closing block
++        rubric: 1, boldrubric: 1, smallrubric: 1, redsmall: 1,
++        citation: 1, shortrule: 1, lastblock: 1,
++        // antiphon / responsory markers
++        ant: 1, resp: 1
++    };
++
++    // Universalis chrome: ids and classes that are never prayer text. Used
++    // before the allow-list runs so their subtrees go in one pass, and so
++    // an `#innertexst` that happens to contain a plug box comes out clean.
++    var CHROME_SELECTOR = [
++        '#overallcontainer', '#mainheading', '#topheading', '#hourlinks',
++        '#calendar-heading', '#datename', '#dateblock', '#feastname',
++        '#univPageName', '#univQRLink', '#appplug', '#linktomain',
++        '#footer', '#pagefooter', '#sitefooter', '#navbar', '#nav',
++        '#menu', '#sidebar', '#searchbox', '#cookiebanner', '#cookienotice',
++        'header', 'footer', 'nav', 'aside',
++        '.toprightbox', '.audioclip', '.audiobox', '.adsbygoogle',
++        '.advert', '.advertisement', '.ad', '.banner', '.social',
++        '.sharebuttons', '.cookie', '.cookie-notice', '.privacy-notice',
++        '.sitenav', '.navigation', '.breadcrumb', '.menu', '.sidebar',
++        '.skiplink', '.printonly', '.screenonly'
++    ].join(', ');
++
++    // Headings and link-paragraphs that are page controls rather than
++    // prayer: the "which psalms do you want" chooser and the conclusion
++    // marker Universalis prints above its own footer.
++    var CHOOSER_TEXT = /^(Psalms of the day|Complementary psalms|Continue|Back|Top|Next|Previous)$/i;
++    var CHOOSER_HEADING = /^(PSALMS OF THE DAY|COMPLEMENTARY PSALMS|CONCLUSION)$/i;
++
++    // Rubrics that are website instructions, not liturgical ones. Genuine
++    // rubrics ("The psalms and antiphons are taken from the current
++    // weekday", "In Ordinary Time the Te Deum is not said") are kept,
++    // because they are part of how the hour is prayed.
++    var SITE_RUBRIC = /(click|tap|scroll|browser|website|web site|this page|audio|recording|download|subscribe|app store|google play|copyright|universalis publishing|select .*(option|psalms)|choose .*(option|psalms))/i;
++
++    // ---------------------------------------------------------------------
++    // Small helpers
++    // ---------------------------------------------------------------------
++
++    function text(node) {
++        return String(node == null ? '' : (node.textContent || ''))
++            .replace(/\u00a0/g, ' ')
++            .replace(/\s+/g, ' ')
++            .trim();
++    }
++
++    function remove(node) {
++        if (node && node.parentNode) node.parentNode.removeChild(node);
++    }
++
++    function unwrap(node) {
++        if (!node || !node.parentNode) return;
++        var parent = node.parentNode;
++        while (node.firstChild) parent.insertBefore(node.firstChild, node);
++        parent.removeChild(node);
++    }
++
++    function toArray(list) {
++        return Array.prototype.slice.call(list || []);
++    }
++
++    // ---------------------------------------------------------------------
++    // Sanitising
++    // ---------------------------------------------------------------------
++
++    function stripChrome(scope) {
++        toArray(scope.querySelectorAll(CHROME_SELECTOR)).forEach(remove);
++    }
++
++    function cleanClasses(el) {
++        var raw = el.getAttribute('class');
++        if (raw == null) return;
++        var kept = raw.split(/\s+/).filter(function (c) {
++            return c && ALLOWED_CLASSES[c] === 1;
++        });
++        if (kept.length) el.setAttribute('class', kept.join(' '));
++        else el.removeAttribute('class');
++    }
++
++    function cleanLink(a) {
++        var href = a.getAttribute('href') || '';
++        // In-page anchors point at the Universalis page we just threw away,
++        // so the link is meaningless here - keep the words, drop the link.
++        if (!href || href.charAt(0) === '#' || /^\s*javascript:/i.test(href)) {
++            unwrap(a);
++            return false;
++        }
++        if (href.charAt(0) === '/') href = ORIGIN + href;
++        if (!/^https?:\/\//i.test(href)) { unwrap(a); return false; }
++        a.setAttribute('href', href);
++        a.setAttribute('target', '_blank');
++        a.setAttribute('rel', 'noopener noreferrer');
++        return true;
++    }
++
++    // Walks the subtree bottom-up so unwrapping a parent can't skip
++    // children that still need cleaning.
++    function sanitize(root) {
++        toArray(root.querySelectorAll('*')).reverse().forEach(function (el) {
++            var tag = el.tagName;
++
++            if (DROP_WITH_CONTENT[tag] === 1) { remove(el); return; }
++            if (ALLOWED_TAGS[tag] !== 1) { unwrap(el); return; }
++
++            // Strip every attribute that isn't allow-listed. This is what
++            // takes out inline handlers (onclick…), style, data-*,
++            // srcset, and any tracking attribute.
++            toArray(el.attributes).forEach(function (attr) {
++                if (ALLOWED_ATTRS[attr.name.toLowerCase()] !== 1) {
++                    el.removeAttribute(attr.name);
++                }
++            });
++
++            cleanClasses(el);
++            if (tag === 'A') cleanLink(el);
++        });
++    }
++
++    // ---------------------------------------------------------------------
++    // Trimming to the office proper
++    // ---------------------------------------------------------------------
++
++    // Removes every node that comes before `startNode` in document order,
++    // walking up to `root`, so the office starts exactly at its first
++    // liturgical section.
++    function trimBefore(root, startNode) {
++        var current = startNode;
++        while (current && current !== root && current.parentNode) {
++            while (current.previousSibling) current.parentNode.removeChild(current.previousSibling);
++            current = current.parentNode;
++        }
++    }
++
++    function trimAfter(root, endNode) {
++        var current = endNode;
++        while (current && current !== root && current.parentNode) {
++            while (current.nextSibling) current.parentNode.removeChild(current.nextSibling);
++            current = current.parentNode;
++        }
++    }
++
++    function sectionHeadings(root) {
++        return toArray(root.querySelectorAll('table.each th[align="left"]'));
++    }
++
++    function tableOf(node) {
++        var n = node;
++        while (n && n.tagName !== 'TABLE') n = n.parentNode;
++        return n;
++    }
++
++    // The office always opens with INTRODUCTION; if that heading is missing
++    // (Universalis varies a little by season and by hour) fall back to the
++    // first section heading of any kind, and only then to the first verse.
++    function findStart(root) {
++        var heads = sectionHeadings(root);
++        for (var i = 0; i < heads.length; i++) {
++            if (/^INTRODUCTION$/i.test(text(heads[i]))) return tableOf(heads[i]);
++        }
++        if (heads.length) return tableOf(heads[0]);
++        return root.querySelector('.v, .p, .gb');
++    }
++
++    // Anything after the office's own last line is Universalis' page tail
++    // (app plug, QR box, footer). The closing line is either the
++    // `.lastblock` dismissal ("Let us praise the Lord. - Thanks be to
++    // God.") or, when there's no such block, the Amen of the concluding
++    // prayer. Looking for the *last* of these means the psalmody,
++    // canticle and readings above can never be caught by the trim.
++    var CLOSING_LINE = /^(Amen\.?|Amen\.\s*Alleluia\.?|Thanks be to God\.?|Deo gratias\.?|Alleluia\.?)$/i;
++
++    function findEnd(root) {
++        var blocks = toArray(root.querySelectorAll('.lastblock'));
++        if (blocks.length) return blocks[blocks.length - 1];
++
++        var lines = toArray(root.querySelectorAll('.v, .vi, .p, .pi, .gb'));
++        for (var i = lines.length - 1; i >= 0; i--) {
++            if (CLOSING_LINE.test(text(lines[i]))) return lines[i];
++        }
++        return null;
++    }
++
++    // ---------------------------------------------------------------------
++    // Office-specific tidying
++    // ---------------------------------------------------------------------
++
++    function dropChoosers(root) {
++        // "Psalms of the day / Complementary psalms" switcher: a heading
++        // plus a paragraph of in-page links. Universalis already serves
++        // the psalms of the day inline, so only the control goes.
++        toArray(root.querySelectorAll('p')).forEach(function (p) {
++            var links = p.querySelectorAll('a[href]');
++            var allInPage = links.length > 0 && toArray(links).every(function (a) {
++                return (a.getAttribute('href') || '').charAt(0) === '#';
++            });
++            if (allInPage && CHOOSER_TEXT.test(text(p))) remove(p);
++        });
++        toArray(root.querySelectorAll('h1, h2, h3, h4, h5, h6')).forEach(function (h) {
++            if (CHOOSER_HEADING.test(text(h))) remove(h);
++        });
++        // A lone "OR:" left behind once an alternative block is gone.
++        toArray(root.querySelectorAll('.boldrubric')).forEach(function (n) {
++            if (/^OR:?$/i.test(text(n))) remove(n);
++        });
++    }
++
++    function dropSiteRubrics(root) {
++        toArray(root.querySelectorAll('.rubric, .smallrubric')).forEach(function (n) {
++            if (SITE_RUBRIC.test(text(n))) remove(n);
++        });
++    }
++
++    // Universalis lays the office out in `table.each` blocks; any other
++    // table on the page is layout scaffolding. It's only removed when it
++    // holds no prayer lines, so a reading that happens to sit in a plain
++    // table is never thrown away.
++    function dropLayoutTables(root) {
++        toArray(root.querySelectorAll('table')).forEach(function (table) {
++            if (table.classList && table.classList.contains('each')) return;
++            if (table.querySelector('.v, .vi, .p, .pi, .gb')) return;
++            remove(table);
++        });
++    }
++
++    function dropEmptyBlocks(root) {
++        toArray(root.querySelectorAll('p, div, span')).forEach(function (n) {
++            if (n.querySelector('table, hr, p, div, br')) return;
++            if (text(n) === '') remove(n);
++        });
++    }
++
++    // ---------------------------------------------------------------------
++    // Post-processing (also applied to cached offices)
++    // ---------------------------------------------------------------------
++
++    function postProcessNode(root, hourKey) {
++        dropSiteRubrics(root);
++        dropLayoutTables(root);
++        dropChoosers(root);
++
++        // Midday Prayer ends at the concluding prayer; the `.lastblock`
++        // tail Universalis appends belongs to the longer hours.
++        if (hourKey === 'sext') {
++            toArray(root.querySelectorAll('.lastblock')).forEach(remove);
++        }
++
++        var start = findStart(root);
++        if (start) trimBefore(root, start);
++
++        var end = findEnd(root);
++        if (end) trimAfter(root, end);
++
++        dropEmptyBlocks(root);
++        return root;
++    }
++
++    function postProcessHtml(htmlStr, hourKey) {
++        var wrapper = global.document.createElement('div');
++        wrapper.innerHTML = htmlStr || '';
++        postProcessNode(wrapper, hourKey);
++        return wrapper.innerHTML;
++    }
++
++    // ---------------------------------------------------------------------
++    // Entry point
++    // ---------------------------------------------------------------------
++
++    /**
++     * Extract the liturgical body of a Universalis hour page.
++     *
++     * @param {string} html    raw page source as fetched
++     * @param {string} hourKey 'readings' | 'sext' | 'vespers'
++     * @returns {string|null}  sanitised HTML fragment, or null when the
++     *                         page held no office (redirect, error page,
++     *                         proxy error body…)
++     */
++    function extract(html, hourKey) {
++        var doc = new global.DOMParser().parseFromString(String(html || ''), 'text/html');
++
++        // Kill scripts and styles before anything else reads the tree.
++        toArray(doc.querySelectorAll('script, style, link, iframe, object, embed, form')).forEach(remove);
++
++        // The text container is located *before* chrome is stripped: the
++        // chrome selectors match its ancestors (#overallcontainer wraps
++        // the whole page, texts included), so stripping first would throw
++        // the office away with the wrapper.
++        var root = doc.getElementById('innertexst') || doc.getElementById('texts');
++        if (root && root.id === 'texts') {
++            var nested = root.querySelector('#innertexst');
++            if (nested) root = nested;
++        }
++        // No recognised container, or a container with no prayer lines in
++        // it, means this isn't an office page - let the caller fall back.
++        if (!root || !root.querySelector('.v, .p, .gb')) return null;
++
++        // Work on a detached copy so nothing in the source document can be
++        // re-read after sanitising.
++        var work = global.document.createElement('div');
++        work.innerHTML = root.innerHTML;
++
++        stripChrome(work);
++        sanitize(work);
++        postProcessNode(work, hourKey);
++
++        if (!work.querySelector('.v, .p, .gb')) return null;
++        return work.innerHTML;
++    }
++
++    /**
++     * True if `htmlStr` still looks like a whole Universalis page rather
++     * than an extracted office - used to throw away caches written by an
++     * earlier version of the app.
++     */
++    function looksLikeFullPage(htmlStr) {
++        return /id=["']?(mainheading|overallcontainer|hourlinks|texts|appplug)|<script|<iframe|universalis\.com\/[a-z]/i
++            .test(String(htmlStr || ''));
++    }
++
++    global.UniversalisOffice = {
++        VERSION: EXTRACT_VERSION,
++        extract: extract,
++        postProcessHtml: postProcessHtml,
++        looksLikeFullPage: looksLikeFullPage,
++        ORIGIN: ORIGIN
++    };
++})(typeof window !== 'undefined' ? window : this);
+diff --git a/pages/office-of-readings.html b/pages/office-of-readings.html
+index 430879a..eb245a8 100644
+--- a/pages/office-of-readings.html
++++ b/pages/office-of-readings.html
+@@ -39,6 +39,16 @@
+         .dark .office-content td[align="right"] { color: #9ca3af; }
+         .office-content h4 { margin: 1.25rem 0 0.75rem; font-size: 1rem; font-weight: 700; color: #1f2937; }
+         .dark .office-content h4 { color: #f3f4f6; }
++        /* Heading the app itself prints above the extracted liturgy
++           ("Vespers - English"), so the reader can see which hour and
++           which language the text belongs to. Not from Universalis. */
++        .office-hour-heading {
++            margin: 0 0 1.25rem; padding-bottom: 0.6rem;
++            border-bottom: 1px solid rgba(124, 33, 51, 0.18);
++            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
++            text-transform: uppercase; color: #7c2133; text-align: center;
++        }
++        .dark .office-hour-heading { color: #c4b5fd; border-bottom-color: rgba(196, 181, 253, 0.25); }
+         .office-content hr.shortrule { border: 0; border-top: 1px dashed #d1d5db; width: 4rem; margin: 1.75rem auto 0; }
+         .office-content > hr.shortrule:first-child { display: none; }
+         .dark .office-content hr.shortrule { border-top-color: #4b5563; }
+@@ -173,11 +183,10 @@
+                     <p class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
+                 </div>
+                 <div id="hourUnavailable" class="p-6 text-center hidden">
+-                    <p class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
++                    <p id="unavailableMsg" class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
+                     <p id="windowNote" class="text-sm text-gray-500 dark:text-gray-400"></p>
+                 </div>
+                 <div id="officeContent" class="office-content hidden p-5 sm:p-7"></div>
+-                <iframe id="hourFrame" title="Office of Readings" class="w-full hidden" style="height: 75vh; border: 0;" referrerpolicy="no-referrer"></iframe>
+             </div>
+ 
+             <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+@@ -216,6 +225,9 @@
+     </div>
+ 
+     <script src="../js/liturgical-calendar.js"></script>
++    <!-- Extracts and sanitises the liturgy out of a fetched Universalis hour
++         page so only the prayer itself is rendered inside the app -->
++    <script src="../js/universalis-office.js"></script>
+ 
+     <script>
+         (function () {
+@@ -239,7 +251,9 @@
+                 function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+             ];
+             var FETCH_TIMEOUT_MS = 12000;
+-            var CACHE_PREFIX = 'officeHtml-';
++            // Versioned so offices cached by an earlier build (which stored
++            // far more of the Universalis page) are re-fetched, not replayed.
++            var CACHE_PREFIX = 'officeHtml-v' + UniversalisOffice.VERSION + '-';
+ 
+             var HOURS = {
+                 readings: {
+@@ -270,11 +284,10 @@
+             var loadingEl = document.getElementById('hourLoading');
+             var unavailableEl = document.getElementById('hourUnavailable');
+             var windowNote = document.getElementById('windowNote');
+-            var frame = document.getElementById('hourFrame');
++            var unavailableMsgEl = document.getElementById('unavailableMsg');
+             var officeEl = document.getElementById('officeContent');
+             var externalLink = document.getElementById('externalLink');
+             var loadToken = 0;
+-            var fallbackToken = -1;
+ 
+             var LANG_KEY = 'preferredLanguage';
+             var lang = 'en';
+@@ -354,43 +367,40 @@
+                 }
+             }
+ 
+-            function cleanOffice(html) {
+-                var doc = new DOMParser().parseFromString(html, 'text/html');
+-                var root = doc.getElementById('innertexst') || doc.getElementById('texts');
+-                if (root && root.id === 'texts') {
+-                    var nested = root.querySelector('#innertexst');
+-                    if (nested) root = nested;
+-                }
+-                if (!root || !root.querySelector('.v, .p')) return null;
+-
+-                doc.querySelectorAll('#mainheading, #overallcontainer, #hourlinks, #calendar-heading, #datename, #dateblock, #feastname, .toprightbox, #appplug, #univQRLink, #linktomain, script, style, link, iframe, object, embed, form, #univPageName').forEach(function (n) {
+-                    if (n && n.parentNode) n.parentNode.removeChild(n);
+-                });
+-                root.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
+-                    if (n && n.parentNode) n.parentNode.removeChild(n);
+-                });
+-                root.querySelectorAll('*').forEach(function (n) {
+-                    for (var i = n.attributes.length - 1; i >= 0; i--) {
+-                        if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+-                    }
+-                });
+-                root.querySelectorAll('a[href]').forEach(function (a) {
+-                    var href = a.getAttribute('href');
+-                    if (href && href.charAt(0) === '/') a.setAttribute('href', 'https://universalis.com' + href);
+-                    a.setAttribute('target', '_blank');
+-                    a.setAttribute('rel', 'noopener');
+-                });
+-                return root.innerHTML;
++            // Heading shown above the liturgy, e.g. "Vespers - English", so
++            // the reader can see which hour they are looking at and which
++            // source the text came from. sourceLang is the language of the
++            // text itself ('en' for Universalis, 'sw' for the local books),
++            // which is not always the language the interface is in.
++            function officeHeading(sourceLang) {
++                var name = lang === 'sw' ? HOURS[hourKey].titleSw : HOURS[hourKey].title;
++                var source = sourceLang === 'sw'
++                    ? (lang === 'sw' ? 'Kiswahili' : 'Swahili')
++                    : (lang === 'sw' ? 'Kiingereza' : 'English');
++                return '<h3 class="office-hour-heading">' + esc(name) + ' \u2014 ' + esc(source) + '</h3>';
+             }
+ 
+-            function showOffice(htmlStr) {
+-                officeEl.innerHTML = htmlStr;
++            function showOffice(htmlStr, sourceLang) {
++                officeEl.innerHTML = officeHeading(sourceLang) + htmlStr;
+                 loadingEl.classList.add('hidden');
+-                frame.classList.add('hidden');
++                unavailableEl.classList.add('hidden');
+                 officeEl.classList.remove('hidden');
+                 updateTextCtlVisibility();
+             }
+ 
++            // Shown instead of the office when it genuinely cannot be
++            // rendered. Previously this fell back to an iframe of the whole
++            // Universalis page; the app now says so plainly and offers the
++            // external link in the caption below the card instead.
++            function showUnavailable(message, note) {
++                officeEl.classList.add('hidden');
++                loadingEl.classList.add('hidden');
++                unavailableMsgEl.textContent = message;
++                windowNote.textContent = note || '';
++                unavailableEl.classList.remove('hidden');
++                updateTextCtlVisibility();
++            }
++
+             function fetchThroughProxies(url, token, onOk, onFail) {
+                 var i = 0;
+                 (function tryNext() {
+@@ -407,7 +417,7 @@
+                         .then(function (text) {
+                             clearTimeout(timer);
+                             if (token !== loadToken) return;
+-                            var cleaned = cleanOffice(text);
++                            var cleaned = UniversalisOffice.extract(text, hourKey);
+                             if (!cleaned) throw new Error('no office content');
+                             onOk(cleaned);
+                         })
+@@ -510,7 +520,7 @@
+                             if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
+                         }
+                         if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
+-                        showOffice(renderSwReading(dayData, usedFallbackDay));
++                        showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
+                         if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
+                             window.SomoLaKwanzaBible.init();
+                         }
+@@ -526,13 +536,13 @@
+                 var cacheKey = CACHE_PREFIX + hourKey + '-' + stamp;
+                 var cached = null;
+                 try { cached = localStorage.getItem(cacheKey); } catch (e) {}
+-                if (cached && /id="mainheading"|id="overallcontainer"|id="hourlinks"|Universalis<\/a>/i.test(cached)) {
++                if (cached && UniversalisOffice.looksLikeFullPage(cached)) {
+                     try { localStorage.removeItem(cacheKey); } catch (e) {}
+                     cached = null;
+                 }
+                 if (cached) {
+                     if (token !== loadToken || stamp !== currentStamp) return;
+-                    showOffice((noteHtml || '') + cached);
++                    showOffice((noteHtml || '') + UniversalisOffice.postProcessHtml(cached, hourKey), 'en');
+                     return;
+                 }
+ 
+@@ -542,11 +552,16 @@
+                         pruneCache();
+                         localStorage.setItem(cacheKey, cleaned);
+                     } catch (e) {}
+-                    showOffice((noteHtml || '') + cleaned);
++                    showOffice((noteHtml || '') + cleaned, 'en');
+                 }, function () {
+                     if (token !== loadToken || stamp !== currentStamp) return;
+-                    fallbackToken = token;
+-                    frame.src = url;
++                    showUnavailable(
++                        lang === 'sw'
++                            ? 'Maandishi ya sala hayakuweza kupakuliwa kwa sasa.'
++                            : 'The text of this hour could not be loaded right now.',
++                        lang === 'sw'
++                            ? 'Jaribu tena, au fungua Universalis kwa kiungo kilicho hapa chini.'
++                            : 'Try again, or open Universalis using the link below.');
+                 });
+             }
+ 
+@@ -564,18 +579,16 @@
+                 var token = ++loadToken;
+ 
+                 if (+currentDate < +minDate || +currentDate > +maxDate) {
+-                    frame.classList.add('hidden');
+-                    officeEl.classList.add('hidden');
+-                    loadingEl.classList.add('hidden');
+-                    windowNote.textContent = (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
+-                        + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.';
+-                    unavailableEl.classList.remove('hidden');
+-                    updateTextCtlVisibility();
++                    showUnavailable(
++                        lang === 'sw'
++                            ? 'Sala ya tarehe hii haipatikani bado.'
++                            : 'The office for this date is not available yet.',
++                        (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
++                            + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.');
+                     return;
+                 }
+ 
+                 unavailableEl.classList.add('hidden');
+-                frame.classList.add('hidden');
+                 officeEl.classList.add('hidden');
+                 loadingEl.classList.remove('hidden');
+ 
+@@ -587,12 +600,6 @@
+                 loadUniversalisContent(token, '');
+             }
+ 
+-            frame.addEventListener('load', function () {
+-                if (!frame.src || fallbackToken !== loadToken) return;
+-                loadingEl.classList.add('hidden');
+-                frame.classList.remove('hidden');
+-                updateTextCtlVisibility();
+-            });
+ 
+             langEnBtn.addEventListener('click', function () { setLang('en'); });
+             langSwBtn.addEventListener('click', function () { setLang('sw'); });
+diff --git a/pages/prayer-hour.html b/pages/prayer-hour.html
+index 9bc7504..2d8ec97 100644
+--- a/pages/prayer-hour.html
++++ b/pages/prayer-hour.html
+@@ -52,6 +52,16 @@
+         .dark .office-content td[align="right"] { color: #9ca3af; }
+         .office-content h4 { margin: 1.25rem 0 0.75rem; font-size: 1rem; font-weight: 700; color: #1f2937; }
+         .dark .office-content h4 { color: #f3f4f6; }
++        /* Heading the app itself prints above the extracted liturgy
++           ("Vespers - English"), so the reader can see which hour and
++           which language the text belongs to. Not from Universalis. */
++        .office-hour-heading {
++            margin: 0 0 1.25rem; padding-bottom: 0.6rem;
++            border-bottom: 1px solid rgba(124, 33, 51, 0.18);
++            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
++            text-transform: uppercase; color: #7c2133; text-align: center;
++        }
++        .dark .office-hour-heading { color: #c4b5fd; border-bottom-color: rgba(196, 181, 253, 0.25); }
+         .office-content hr.shortrule { border: 0; border-top: 1px dashed #d1d5db; width: 4rem; margin: 1.75rem auto 0; }
+         .office-content > hr.shortrule:first-child { display: none; }
+         .dark .office-content hr.shortrule { border-top-color: #4b5563; }
+@@ -201,19 +211,20 @@
+                 </div>
+             </div>
+ 
+-            <!-- The office itself, fetched from Universalis and rendered natively
+-                 in the app layout; the iframe is only a fallback if fetching fails. -->
++            <!-- The office itself. The English text is fetched from Universalis,
++                 stripped down to the liturgy by js/universalis-office.js and
++                 rendered into this card as native app content - there is no
++                 iframe and no Universalis page furniture anywhere in it. -->
+             <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden" style="border: 2px solid #7c2133;">
+                 <div id="hourLoading" class="text-center py-12">
+                     <div class="inline-block w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+                     <p class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
+                 </div>
+                 <div id="hourUnavailable" class="p-6 text-center hidden">
+-                    <p class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
++                    <p id="unavailableMsg" class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
+                     <p id="windowNote" class="text-sm text-gray-500 dark:text-gray-400"></p>
+                 </div>
+                 <div id="officeContent" class="office-content hidden p-5 sm:p-7"></div>
+-                <iframe id="hourFrame" title="Liturgy of the Hours" class="w-full hidden" style="height: 75vh; border: 0;" referrerpolicy="no-referrer"></iframe>
+             </div>
+ 
+             <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+@@ -258,6 +269,9 @@
+ 
+     <!-- Shared liturgical calendar engine (day label, psalter week, celebrations) -->
+     <script src="../js/liturgical-calendar.js"></script>
++    <!-- Extracts and sanitises the liturgy out of a fetched Universalis hour
++         page so only the prayer itself is rendered inside the app -->
++    <script src="../js/universalis-office.js"></script>
+ 
+     <script>
+         (function () {
+@@ -279,16 +293,19 @@
+             var WINDOW_AHEAD_DAYS = 9;
+ 
+             // Universalis sends no CORS headers, so the page is fetched through
+-            // a public CORS proxy (trying each in turn) and the office content
+-            // is extracted and rendered natively in the app layout. If every
+-            // proxy fails, the iframe below is used as a fallback.
++            // a public CORS proxy (trying each in turn); js/universalis-office.js
++            // then extracts the liturgy and it is rendered natively in the app
++            // layout. If every proxy fails the card says so - the whole page is
++            // never embedded.
+             var PROXIES = [
+                 function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+                 function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+                 function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+             ];
+             var FETCH_TIMEOUT_MS = 12000;
+-            var CACHE_PREFIX = 'officeHtml-';
++            // Versioned so offices cached by an earlier build (which stored
++            // far more of the Universalis page) are re-fetched, not replayed.
++            var CACHE_PREFIX = 'officeHtml-v' + UniversalisOffice.VERSION + '-';
+ 
+             var HOURS = {
+                 sext: {
+@@ -331,11 +348,10 @@
+             var loadingEl = document.getElementById('hourLoading');
+             var unavailableEl = document.getElementById('hourUnavailable');
+             var windowNote = document.getElementById('windowNote');
+-            var frame = document.getElementById('hourFrame');
++            var unavailableMsgEl = document.getElementById('unavailableMsg');
+             var officeEl = document.getElementById('officeContent');
+             var externalLink = document.getElementById('externalLink');
+             var loadToken = 0;
+-            var fallbackToken = -1;
+ 
+             var LANG_KEY = 'preferredLanguage';
+             var lang = 'en';
+@@ -386,9 +402,8 @@
+             // .office-content text, which every rendered office - English or
+             // Swahili, Readings, Midday or Vespers - shares. It's only hidden
+             // when the rendered office itself isn't on screen (the loading
+-            // spinner, the "not available yet" message, or the iframe
+-            // fallback for when every Universalis proxy failed), since in
+-            // those cases there's no office text on the page to resize.
++            // spinner or the "not available" message), since in those cases
++            // there's no office text on the page to resize.
+             function updateTextCtlVisibility() {
+                 var ctl = document.querySelector('.prayer-textctl');
+                 if (!ctl) return;
+@@ -436,133 +451,37 @@
+                 }
+             }
+ 
+-            function normalizeOfficeText(s) {
+-                return String(s == null ? '' : s).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+-            }
+-
+-            function trimOfficeAfter(root, endNode) {
+-                var current = endNode;
+-                while (current && current !== root) {
+-                    while (current.nextSibling) {
+-                        current.parentNode.removeChild(current.nextSibling);
+-                    }
+-                    current = current.parentNode;
+-                }
+-            }
+-
+-            function trimOfficeBefore(root, startNode) {
+-                var current = startNode;
+-                while (current && current !== root) {
+-                    while (current.previousSibling) {
+-                        current.parentNode.removeChild(current.previousSibling);
+-                    }
+-                    current = current.parentNode;
+-                }
++            // Heading shown above the liturgy, e.g. "Vespers - English", so
++            // the reader can see which hour they are looking at and which
++            // source the text came from. sourceLang is the language of the
++            // text itself ('en' for Universalis, 'sw' for the local books),
++            // which is not always the language the interface is in.
++            function officeHeading(sourceLang) {
++                var name = lang === 'sw' ? HOURS[hourKey].titleSw : HOURS[hourKey].title;
++                var source = sourceLang === 'sw'
++                    ? (lang === 'sw' ? 'Kiswahili' : 'Swahili')
++                    : (lang === 'sw' ? 'Kiingereza' : 'English');
++                return '<h3 class="office-hour-heading">' + esc(name) + ' \u2014 ' + esc(source) + '</h3>';
+             }
+ 
+-            // Keep only the actual prayer body inside the imported Universalis
+-            // office: start at the Introduction, drop audio/chooser/instruction
+-            // chrome, and stop at the final Amen.
+-            function postProcessOfficeContent(root) {
+-                root.querySelectorAll('.audioclip, p.rubric').forEach(function (n) {
+-                    if (n.parentNode) n.parentNode.removeChild(n);
+-                });
+-                root.querySelectorAll('table').forEach(function (table) {
+-                    if (!table.classList.contains('each') && table.parentNode) {
+-                        table.parentNode.removeChild(table);
+-                    }
+-                });
+-                root.querySelectorAll('p').forEach(function (p) {
+-                    var text = normalizeOfficeText(p.textContent);
+-                    var links = p.querySelectorAll('a[href]');
+-                    var onlyHashLinks = links.length && Array.prototype.every.call(links, function (a) {
+-                        var href = a.getAttribute('href') || '';
+-                        return href.charAt(0) === '#';
+-                    });
+-                    if (onlyHashLinks && /^(Psalms of the day|Complementary psalms|Continue)$/i.test(text) && p.parentNode) {
+-                        p.parentNode.removeChild(p);
+-                    }
+-                });
+-                root.querySelectorAll('h4').forEach(function (h4) {
+-                    if (/^(PSALMS OF THE DAY|COMPLEMENTARY PSALMS|CONCLUSION)$/i.test(normalizeOfficeText(h4.textContent)) && h4.parentNode) {
+-                        h4.parentNode.removeChild(h4);
+-                    }
+-                });
+-                root.querySelectorAll('.boldrubric').forEach(function (n) {
+-                    if (/^OR:?$/i.test(normalizeOfficeText(n.textContent)) && n.parentNode) {
+-                        n.parentNode.removeChild(n);
+-                    }
+-                });
+-                if (hourKey === 'sext') {
+-                    root.querySelectorAll('.lastblock').forEach(function (n) {
+-                        if (n.parentNode) n.parentNode.removeChild(n);
+-                    });
+-                }
+-
+-                var startNode = null;
+-                var sectionHeads = root.querySelectorAll('table.each th[align="left"]');
+-                for (var i = 0; i < sectionHeads.length; i++) {
+-                    if (/^INTRODUCTION$/i.test(normalizeOfficeText(sectionHeads[i].textContent))) {
+-                        startNode = sectionHeads[i];
+-                        while (startNode && startNode.tagName !== 'TABLE') startNode = startNode.parentNode;
+-                        break;
+-                    }
+-                }
+-                if (startNode) trimOfficeBefore(root, startNode);
+-
+-                var lines = root.querySelectorAll('.pi, .v, .vi, .p');
+-                for (var j = lines.length - 1; j >= 0; j--) {
+-                    if (/^Amen\.?$/i.test(normalizeOfficeText(lines[j].textContent))) {
+-                        trimOfficeAfter(root, lines[j]);
+-                        break;
+-                    }
+-                }
+-            }
+-
+-            function postProcessOfficeHtml(htmlStr) {
+-                var wrapper = document.createElement('div');
+-                wrapper.innerHTML = htmlStr;
+-                postProcessOfficeContent(wrapper);
+-                return wrapper.innerHTML;
+-            }
+-
+-            // Pull the office out of the fetched Universalis page and strip
+-            // everything that should not run or render inside the app.
+-            function cleanOffice(html) {
+-                var doc = new DOMParser().parseFromString(html, 'text/html');
+-                var root = doc.getElementById('innertexst') || doc.getElementById('texts');
+-                if (root && root.id === 'texts') {
+-                    var nested = root.querySelector('#innertexst');
+-                    if (nested) root = nested;
+-                }
+-                if (!root || !root.querySelector('.v, .p')) return null;
+-
+-                doc.querySelectorAll('#mainheading, #overallcontainer, #hourlinks, #calendar-heading, #datename, #dateblock, #feastname, .toprightbox, #appplug, #univQRLink, #linktomain, script, style, link, iframe, object, embed, form, #univPageName').forEach(function (n) {
+-                    if (n && n.parentNode) n.parentNode.removeChild(n);
+-                });
+-                root.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
+-                    if (n && n.parentNode) n.parentNode.removeChild(n);
+-                });
+-                root.querySelectorAll('*').forEach(function (n) {
+-                    for (var i = n.attributes.length - 1; i >= 0; i--) {
+-                        if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+-                    }
+-                });
+-                root.querySelectorAll('a[href]').forEach(function (a) {
+-                    var href = a.getAttribute('href');
+-                    if (href && href.charAt(0) === '/') a.setAttribute('href', 'https://universalis.com' + href);
+-                    a.setAttribute('target', '_blank');
+-                    a.setAttribute('rel', 'noopener');
+-                });
+-                postProcessOfficeContent(root);
+-                return root.innerHTML;
++            function showOffice(htmlStr, sourceLang) {
++                officeEl.innerHTML = officeHeading(sourceLang) + htmlStr;
++                loadingEl.classList.add('hidden');
++                unavailableEl.classList.add('hidden');
++                officeEl.classList.remove('hidden');
++                updateTextCtlVisibility();
+             }
+ 
+-            function showOffice(htmlStr) {
+-                officeEl.innerHTML = htmlStr;
++            // Shown instead of the office when it genuinely cannot be
++            // rendered. Previously this fell back to an iframe of the whole
++            // Universalis page; the app now says so plainly and offers the
++            // external link in the caption below the card instead.
++            function showUnavailable(message, note) {
++                officeEl.classList.add('hidden');
+                 loadingEl.classList.add('hidden');
+-                frame.classList.add('hidden');
+-                officeEl.classList.remove('hidden');
++                unavailableMsgEl.textContent = message;
++                windowNote.textContent = note || '';
++                unavailableEl.classList.remove('hidden');
+                 updateTextCtlVisibility();
+             }
+ 
+@@ -582,7 +501,7 @@
+                         .then(function (text) {
+                             clearTimeout(timer);
+                             if (token !== loadToken) return;
+-                            var cleaned = cleanOffice(text);
++                            var cleaned = UniversalisOffice.extract(text, hourKey);
+                             if (!cleaned) throw new Error('no office content');
+                             onOk(cleaned);
+                         })
+@@ -704,7 +623,7 @@
+                             if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
+                         }
+                         if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
+-                        showOffice(renderSwReading(dayData, usedFallbackDay));
++                        showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
+                         if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
+                             window.SomoLaKwanzaBible.init();
+                         }
+@@ -723,13 +642,13 @@
+                 var cacheKey = CACHE_PREFIX + hourKey + '-' + stamp;
+                 var cached = null;
+                 try { cached = localStorage.getItem(cacheKey); } catch (e) {}
+-                if (cached && /id="mainheading"|id="overallcontainer"|id="hourlinks"|Universalis<\/a>/i.test(cached)) {
++                if (cached && UniversalisOffice.looksLikeFullPage(cached)) {
+                     try { localStorage.removeItem(cacheKey); } catch (e) {}
+                     cached = null;
+                 }
+                 if (cached) {
+                     if (token !== loadToken || stamp !== currentStamp) return;
+-                    showOffice((noteHtml || '') + postProcessOfficeHtml(cached));
++                    showOffice((noteHtml || '') + UniversalisOffice.postProcessHtml(cached, hourKey), 'en');
+                     return;
+                 }
+ 
+@@ -739,11 +658,16 @@
+                         pruneCache();
+                         localStorage.setItem(cacheKey, cleaned);
+                     } catch (e) {}
+-                    showOffice((noteHtml || '') + cleaned);
++                    showOffice((noteHtml || '') + cleaned, 'en');
+                 }, function () {
+                     if (token !== loadToken || stamp !== currentStamp) return;
+-                    fallbackToken = token;
+-                    frame.src = url;
++                    showUnavailable(
++                        lang === 'sw'
++                            ? 'Maandishi ya sala hayakuweza kupakuliwa kwa sasa.'
++                            : 'The text of this hour could not be loaded right now.',
++                        lang === 'sw'
++                            ? 'Jaribu tena, au fungua Universalis kwa kiungo kilicho hapa chini.'
++                            : 'Try again, or open Universalis using the link below.');
+                 });
+             }
+ 
+@@ -761,18 +685,16 @@
+                 var token = ++loadToken;
+ 
+                 if (+currentDate < +minDate || +currentDate > +maxDate) {
+-                    frame.classList.add('hidden');
+-                    officeEl.classList.add('hidden');
+-                    loadingEl.classList.add('hidden');
+-                    windowNote.textContent = (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
+-                        + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.';
+-                    unavailableEl.classList.remove('hidden');
+-                    updateTextCtlVisibility();
++                    showUnavailable(
++                        lang === 'sw'
++                            ? 'Sala ya tarehe hii haipatikani bado.'
++                            : 'The office for this date is not available yet.',
++                        (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
++                            + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.');
+                     return;
+                 }
+ 
+                 unavailableEl.classList.add('hidden');
+-                frame.classList.add('hidden');
+                 officeEl.classList.add('hidden');
+                 loadingEl.classList.remove('hidden');
+ 
+@@ -784,12 +706,6 @@
+                 loadUniversalisContent(token, '');
+             }
+ 
+-            frame.addEventListener('load', function () {
+-                if (!frame.src || fallbackToken !== loadToken) return;
+-                loadingEl.classList.add('hidden');
+-                frame.classList.remove('hidden');
+-                updateTextCtlVisibility();
+-            });
+ 
+             function switchHour(key) {
+                 if (key === hourKey) return;
+@@ -849,8 +765,7 @@
+     <!-- A-/A+ control that resizes the rendered office text (.office-content)
+          for every hour and language - Readings, Midday and Vespers, English
+          and Swahili alike; hidden only while the office itself isn't on
+-         screen (loading, unavailable, or iframe fallback) by
+-         updateTextCtlVisibility(). -->
++         screen (loading or unavailable) by updateTextCtlVisibility(). -->
+     <script src="../js/text-size-control.js" defer></script>
+     <script src="../js/prevent-zoom.js" defer></script>
+ </body>

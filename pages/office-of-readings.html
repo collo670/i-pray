@@ -39,6 +39,16 @@
         .dark .office-content td[align="right"] { color: #9ca3af; }
         .office-content h4 { margin: 1.25rem 0 0.75rem; font-size: 1rem; font-weight: 700; color: #1f2937; }
         .dark .office-content h4 { color: #f3f4f6; }
+        /* Heading the app itself prints above the extracted liturgy
+           ("Vespers - English"), so the reader can see which hour and
+           which language the text belongs to. Not from Universalis. */
+        .office-hour-heading {
+            margin: 0 0 1.25rem; padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(124, 33, 51, 0.18);
+            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #7c2133; text-align: center;
+        }
+        .dark .office-hour-heading { color: #c4b5fd; border-bottom-color: rgba(196, 181, 253, 0.25); }
         .office-content hr.shortrule { border: 0; border-top: 1px dashed #d1d5db; width: 4rem; margin: 1.75rem auto 0; }
         .office-content > hr.shortrule:first-child { display: none; }
         .dark .office-content hr.shortrule { border-top-color: #4b5563; }
@@ -173,11 +183,10 @@
                     <p class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
                 </div>
                 <div id="hourUnavailable" class="p-6 text-center hidden">
-                    <p class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
+                    <p id="unavailableMsg" class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
                     <p id="windowNote" class="text-sm text-gray-500 dark:text-gray-400"></p>
                 </div>
                 <div id="officeContent" class="office-content hidden p-5 sm:p-7"></div>
-                <iframe id="hourFrame" title="Office of Readings" class="w-full hidden" style="height: 75vh; border: 0;" referrerpolicy="no-referrer"></iframe>
             </div>
 
             <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
@@ -216,6 +225,9 @@
     </div>
 
     <script src="../js/liturgical-calendar.js"></script>
+    <!-- Extracts and sanitises the liturgy out of a fetched Universalis hour
+         page so only the prayer itself is rendered inside the app -->
+    <script src="../js/universalis-office.js"></script>
 
     <script>
         (function () {
@@ -239,7 +251,9 @@
                 function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
             ];
             var FETCH_TIMEOUT_MS = 12000;
-            var CACHE_PREFIX = 'officeHtml-';
+            // Versioned so offices cached by an earlier build (which stored
+            // far more of the Universalis page) are re-fetched, not replayed.
+            var CACHE_PREFIX = 'officeHtml-v' + UniversalisOffice.VERSION + '-';
 
             var HOURS = {
                 readings: {
@@ -270,11 +284,10 @@
             var loadingEl = document.getElementById('hourLoading');
             var unavailableEl = document.getElementById('hourUnavailable');
             var windowNote = document.getElementById('windowNote');
-            var frame = document.getElementById('hourFrame');
+            var unavailableMsgEl = document.getElementById('unavailableMsg');
             var officeEl = document.getElementById('officeContent');
             var externalLink = document.getElementById('externalLink');
             var loadToken = 0;
-            var fallbackToken = -1;
 
             var LANG_KEY = 'preferredLanguage';
             var lang = 'en';
@@ -354,40 +367,37 @@
                 }
             }
 
-            function cleanOffice(html) {
-                var doc = new DOMParser().parseFromString(html, 'text/html');
-                var root = doc.getElementById('innertexst') || doc.getElementById('texts');
-                if (root && root.id === 'texts') {
-                    var nested = root.querySelector('#innertexst');
-                    if (nested) root = nested;
-                }
-                if (!root || !root.querySelector('.v, .p')) return null;
-
-                doc.querySelectorAll('#mainheading, #overallcontainer, #hourlinks, #calendar-heading, #datename, #dateblock, #feastname, .toprightbox, #appplug, #univQRLink, #linktomain, script, style, link, iframe, object, embed, form, #univPageName').forEach(function (n) {
-                    if (n && n.parentNode) n.parentNode.removeChild(n);
-                });
-                root.querySelectorAll('script, style, link, iframe, object, embed, form, #univPageName, #appplug, .toprightbox').forEach(function (n) {
-                    if (n && n.parentNode) n.parentNode.removeChild(n);
-                });
-                root.querySelectorAll('*').forEach(function (n) {
-                    for (var i = n.attributes.length - 1; i >= 0; i--) {
-                        if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
-                    }
-                });
-                root.querySelectorAll('a[href]').forEach(function (a) {
-                    var href = a.getAttribute('href');
-                    if (href && href.charAt(0) === '/') a.setAttribute('href', 'https://universalis.com' + href);
-                    a.setAttribute('target', '_blank');
-                    a.setAttribute('rel', 'noopener');
-                });
-                return root.innerHTML;
+            // Heading shown above the liturgy, e.g. "Vespers - English", so
+            // the reader can see which hour they are looking at and which
+            // source the text came from. sourceLang is the language of the
+            // text itself ('en' for Universalis, 'sw' for the local books),
+            // which is not always the language the interface is in.
+            function officeHeading(sourceLang) {
+                var name = lang === 'sw' ? HOURS[hourKey].titleSw : HOURS[hourKey].title;
+                var source = sourceLang === 'sw'
+                    ? (lang === 'sw' ? 'Kiswahili' : 'Swahili')
+                    : (lang === 'sw' ? 'Kiingereza' : 'English');
+                return '<h3 class="office-hour-heading">' + esc(name) + ' \u2014 ' + esc(source) + '</h3>';
             }
 
-            function showOffice(htmlStr) {
-                officeEl.innerHTML = htmlStr;
+            function showOffice(htmlStr, sourceLang) {
+                officeEl.innerHTML = officeHeading(sourceLang) + htmlStr;
                 loadingEl.classList.add('hidden');
-                frame.classList.add('hidden');
+                unavailableEl.classList.add('hidden');
                 officeEl.classList.remove('hidden');
+                updateTextCtlVisibility();
+            }
+
+            // Shown instead of the office when it genuinely cannot be
+            // rendered. Previously this fell back to an iframe of the whole
+            // Universalis page; the app now says so plainly and offers the
+            // external link in the caption below the card instead.
+            function showUnavailable(message, note) {
+                officeEl.classList.add('hidden');
+                loadingEl.classList.add('hidden');
+                unavailableMsgEl.textContent = message;
+                windowNote.textContent = note || '';
+                unavailableEl.classList.remove('hidden');
                 updateTextCtlVisibility();
             }
 
@@ -407,7 +417,7 @@
                         .then(function (text) {
                             clearTimeout(timer);
                             if (token !== loadToken) return;
-                            var cleaned = cleanOffice(text);
+                            var cleaned = UniversalisOffice.extract(text, hourKey);
                             if (!cleaned) throw new Error('no office content');
                             onOk(cleaned);
                         })
@@ -510,7 +520,7 @@
                             if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
                         }
                         if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
-                        showOffice(renderSwReading(dayData, usedFallbackDay));
+                        showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
                         if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
                             window.SomoLaKwanzaBible.init();
                         }
@@ -526,13 +536,13 @@
                 var cacheKey = CACHE_PREFIX + hourKey + '-' + stamp;
                 var cached = null;
                 try { cached = localStorage.getItem(cacheKey); } catch (e) {}
-                if (cached && /id="mainheading"|id="overallcontainer"|id="hourlinks"|Universalis<\/a>/i.test(cached)) {
+                if (cached && UniversalisOffice.looksLikeFullPage(cached)) {
                     try { localStorage.removeItem(cacheKey); } catch (e) {}
                     cached = null;
                 }
                 if (cached) {
                     if (token !== loadToken || stamp !== currentStamp) return;
-                    showOffice((noteHtml || '') + cached);
+                    showOffice((noteHtml || '') + UniversalisOffice.postProcessHtml(cached, hourKey), 'en');
                     return;
                 }
 
@@ -542,11 +552,16 @@
                         pruneCache();
                         localStorage.setItem(cacheKey, cleaned);
                     } catch (e) {}
-                    showOffice((noteHtml || '') + cleaned);
+                    showOffice((noteHtml || '') + cleaned, 'en');
                 }, function () {
                     if (token !== loadToken || stamp !== currentStamp) return;
-                    fallbackToken = token;
-                    frame.src = url;
+                    showUnavailable(
+                        lang === 'sw'
+                            ? 'Maandishi ya sala hayakuweza kupakuliwa kwa sasa.'
+                            : 'The text of this hour could not be loaded right now.',
+                        lang === 'sw'
+                            ? 'Jaribu tena, au fungua Universalis kwa kiungo kilicho hapa chini.'
+                            : 'Try again, or open Universalis using the link below.');
                 });
             }
 
@@ -564,18 +579,16 @@
                 var token = ++loadToken;
 
                 if (+currentDate < +minDate || +currentDate > +maxDate) {
-                    frame.classList.add('hidden');
-                    officeEl.classList.add('hidden');
-                    loadingEl.classList.add('hidden');
-                    windowNote.textContent = (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
-                        + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.';
-                    unavailableEl.classList.remove('hidden');
-                    updateTextCtlVisibility();
+                    showUnavailable(
+                        lang === 'sw'
+                            ? 'Sala ya tarehe hii haipatikani bado.'
+                            : 'The office for this date is not available yet.',
+                        (lang === 'sw' ? 'Sala zinapatikana kuanzia ' : 'The office is available from ')
+                            + fmt(minDate) + (lang === 'sw' ? ' hadi ' : ' to ') + fmt(maxDate) + '.');
                     return;
                 }
 
                 unavailableEl.classList.add('hidden');
-                frame.classList.add('hidden');
                 officeEl.classList.add('hidden');
                 loadingEl.classList.remove('hidden');
 
@@ -587,12 +600,6 @@
                 loadUniversalisContent(token, '');
             }
 
-            frame.addEventListener('load', function () {
-                if (!frame.src || fallbackToken !== loadToken) return;
-                loadingEl.classList.add('hidden');
-                frame.classList.remove('hidden');
-                updateTextCtlVisibility();
-            });
 
             langEnBtn.addEventListener('click', function () { setLang('en'); });
             langSwBtn.addEventListener('click', function () { setLang('sw'); });
