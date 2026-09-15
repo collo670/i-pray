@@ -1387,8 +1387,14 @@ nav.fixed.bottom-0.left-0.right-0 button {
 .dark-mode .bottom-nav a,
 .dark-mode .bottom-nav button,
 :root.dark .bottom-nav a,
-:root.dark .bottom-nav button {
-    color: #7c2133 !important;
+:root.dark .bottom-nav button,
+.dark-mode .bottom-nav a span,
+.dark-mode .bottom-nav button span,
+.dark-mode .bottom-nav svg,
+:root.dark .bottom-nav a span,
+:root.dark .bottom-nav button span,
+:root.dark .bottom-nav svg {
+    color: #f0c96a !important;
 }
 
 /* The floating text-size button on liturgy pages must sit above the nav,
@@ -1741,7 +1747,7 @@ nav.fixed.bottom-0.left-0.right-0 {
 :root.dark #dailyReadingsCard,
 :root.dark #dailyPrayersCard,
 :root.dark #bibliaTakatifuCard {
-    border-color: #a8455e;
+    border-color: #f0c96a;
 }
 
 .season-badge {
