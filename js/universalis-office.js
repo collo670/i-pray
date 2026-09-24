@@ -30,7 +30,7 @@
 
     // Bumped whenever extraction changes shape, so offices cached by an
     // older version of this file are re-fetched instead of re-rendered.
-    var EXTRACT_VERSION = 3;
+    var EXTRACT_VERSION = 4;
 
     // ---------------------------------------------------------------------
     // Sanitiser allow-lists
@@ -314,31 +314,83 @@
     // Post-processing (also applied to cached offices)
     // ---------------------------------------------------------------------
 
-    function postProcessNode(root, hourKey) {
-        dropSiteRubrics(root);
-        dropLayoutTables(root);
-        dropChoosers(root);
+    var LINE_SELECTOR = '.v, .vi, .vii, .viii, .p, .pi, .pii, .gb, .gbi';
+
+    function lineCount(node) {
+        return node.querySelectorAll(LINE_SELECTOR).length;
+    }
+
+    // Every tidying step below is a heuristic about Universalis' markup, and
+    // Universalis does not use identical markup for every hour or every
+    // season. A step that is right for Midday Prayer can be wrong for
+    // Vespers, and the failure mode used to be silent and total: the step
+    // emptied the office, extract() returned null, and the page reported it
+    // as if the network had failed.
+    //
+    // So each step runs behind this guard. If it removes all the prayer
+    // lines - or more than half of them, which always means the heuristic
+    // misfired rather than that it trimmed some chrome - the step is rolled
+    // back and the office is rendered without it. Losing a bit of tidying is
+    // always better than losing the office.
+    function guard(root, name, step, log) {
+        var before = lineCount(root);
+        if (!before) return;
+        var snapshot = root.innerHTML;
+
+        try {
+            step(root);
+        } catch (e) {
+            root.innerHTML = snapshot;
+            log.push(name + ': threw (' + e.message + '), rolled back');
+            return;
+        }
+
+        var after = lineCount(root);
+        if (after === 0 || after * 2 < before) {
+            root.innerHTML = snapshot;
+            log.push(name + ': removed ' + (before - after) + '/' + before + ' lines, rolled back');
+        } else if (after !== before) {
+            log.push(name + ': ' + before + ' -> ' + after + ' lines');
+        }
+    }
+
+    function postProcessNode(root, hourKey, log) {
+        log = log || [];
+
+        guard(root, 'dropSiteRubrics', dropSiteRubrics, log);
+        guard(root, 'dropLayoutTables', dropLayoutTables, log);
+        guard(root, 'dropChoosers', dropChoosers, log);
 
         // Midday Prayer ends at the concluding prayer; the `.lastblock`
         // tail Universalis appends belongs to the longer hours.
         if (hourKey === 'sext') {
-            toArray(root.querySelectorAll('.lastblock')).forEach(remove);
+            guard(root, 'dropLastblock', function (r) {
+                toArray(r.querySelectorAll('.lastblock')).forEach(remove);
+            }, log);
         }
 
-        var start = findStart(root);
-        if (start) trimBefore(root, start);
+        guard(root, 'trimBefore', function (r) {
+            var start = findStart(r);
+            if (start && r.contains(start)) trimBefore(r, start);
+        }, log);
 
-        var end = findEnd(root);
-        if (end) trimAfter(root, end);
+        guard(root, 'trimAfter', function (r) {
+            var end = findEnd(r);
+            if (end && r.contains(end)) trimAfter(r, end);
+        }, log);
 
-        dropEmptyBlocks(root);
+        guard(root, 'dropEmptyBlocks', dropEmptyBlocks, log);
         return root;
     }
 
     function postProcessHtml(htmlStr, hourKey) {
         var wrapper = global.document.createElement('div');
         wrapper.innerHTML = htmlStr || '';
-        postProcessNode(wrapper, hourKey);
+        var before = wrapper.innerHTML;
+        postProcessNode(wrapper, hourKey, []);
+        // Cached offices are already extracted; if re-tidying them somehow
+        // empties the card, give back what was cached rather than nothing.
+        if (!lineCount(wrapper)) return before;
         return wrapper.innerHTML;
     }
 
@@ -346,16 +398,46 @@
     // Entry point
     // ---------------------------------------------------------------------
 
+    // Universalis' text container is #innertexst inside #texts, but that has
+    // not always been true and is not guaranteed to stay true. If neither id
+    // is there, fall back to whichever element in the document holds the most
+    // prayer lines while being as deep as possible - i.e. the tightest
+    // wrapper around the office.
+    function findContainer(doc) {
+        var byId = doc.getElementById('innertexst') || doc.getElementById('texts');
+        if (byId) {
+            var nested = byId.querySelector('#innertexst');
+            if (nested) byId = nested;
+            if (lineCount(byId)) return byId;
+        }
+
+        var best = null, bestCount = 0;
+        toArray(doc.querySelectorAll('div, td, section, article, main')).forEach(function (el) {
+            var n = lineCount(el);
+            if (n < 3) return;
+            // Prefer the deepest element that still holds (nearly) all the
+            // lines its ancestors hold, so we get the office and not <body>.
+            if (n > bestCount || (n === bestCount && best && best.contains(el))) {
+                best = el;
+                bestCount = n;
+            }
+        });
+        return best;
+    }
+
     /**
      * Extract the liturgical body of a Universalis hour page.
      *
      * @param {string} html    raw page source as fetched
      * @param {string} hourKey 'readings' | 'sext' | 'vespers'
-     * @returns {string|null}  sanitised HTML fragment, or null when the
-     *                         page held no office (redirect, error page,
-     *                         proxy error body…)
+     * @param {Array}  [log]   optional array; step-by-step notes are pushed
+     *                         onto it for diagnostics
+     * @returns {string|null}  sanitised HTML fragment, or null only when the
+     *                         page genuinely held no office (redirect, error
+     *                         page, proxy error body...)
      */
-    function extract(html, hourKey) {
+    function extract(html, hourKey, log) {
+        log = log || [];
         var doc = new global.DOMParser().parseFromString(String(html || ''), 'text/html');
 
         // Kill scripts and styles before anything else reads the tree.
@@ -365,26 +447,60 @@
         // chrome selectors match its ancestors (#overallcontainer wraps
         // the whole page, texts included), so stripping first would throw
         // the office away with the wrapper.
-        var root = doc.getElementById('innertexst') || doc.getElementById('texts');
-        if (root && root.id === 'texts') {
-            var nested = root.querySelector('#innertexst');
-            if (nested) root = nested;
+        var root = findContainer(doc);
+        if (!root) {
+            log.push('no container with prayer lines found (' + String(html || '').length + ' bytes fetched)');
+            return null;
         }
-        // No recognised container, or a container with no prayer lines in
-        // it, means this isn't an office page - let the caller fall back.
-        if (!root || !root.querySelector('.v, .p, .gb')) return null;
+        log.push('container <' + root.tagName.toLowerCase() +
+            (root.id ? ' id=' + root.id : '') + '> with ' + lineCount(root) + ' lines');
 
         // Work on a detached copy so nothing in the source document can be
         // re-read after sanitising.
         var work = global.document.createElement('div');
         work.innerHTML = root.innerHTML;
 
-        stripChrome(work);
-        sanitize(work);
-        postProcessNode(work, hourKey);
+        guard(work, 'stripChrome', stripChrome, log);
+        guard(work, 'sanitize', sanitize, log);
 
-        if (!work.querySelector('.v, .p, .gb')) return null;
+        if (!lineCount(work)) {
+            log.push('sanitising left no prayer lines');
+            return null;
+        }
+
+        // Keep the sanitised-but-untrimmed text as a floor. Everything after
+        // this point is presentation tidying, and none of it is worth
+        // failing the whole hour over.
+        var floor = work.innerHTML;
+
+        postProcessNode(work, hourKey, log);
+
+        if (!lineCount(work)) {
+            log.push('post-processing emptied the office; falling back to untrimmed text');
+            work.innerHTML = floor;
+        }
+
+        log.push('rendered ' + lineCount(work) + ' lines');
         return work.innerHTML;
+    }
+
+    /**
+     * Run extraction purely for its step log. Returns { ok, lines, log }.
+     * Used by scripts/diagnose-universalis.js.
+     */
+    function diagnose(html, hourKey) {
+        var log = [];
+        var out = extract(html, hourKey, log);
+        return {
+            ok: out !== null,
+            bytes: String(html || '').length,
+            lines: out === null ? 0 : (function () {
+                var d = global.document.createElement('div');
+                d.innerHTML = out;
+                return lineCount(d);
+            })(),
+            log: log
+        };
     }
 
     /**
@@ -400,6 +516,7 @@
     global.UniversalisOffice = {
         VERSION: EXTRACT_VERSION,
         extract: extract,
+        diagnose: diagnose,
         postProcessHtml: postProcessHtml,
         looksLikeFullPage: looksLikeFullPage,
         ORIGIN: ORIGIN

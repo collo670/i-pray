@@ -401,11 +401,20 @@
                 updateTextCtlVisibility();
             }
 
+            // onFail is told *why* it failed. "Every proxy was unreachable"
+            // and "a proxy returned the page but no office could be read out
+            // of it" are completely different problems, and reporting both as
+            // a network error made an extraction bug look like a connection
+            // one. The step log from the last readable response is kept so
+            // it can be printed to the console.
             function fetchThroughProxies(url, token, onOk, onFail) {
                 var i = 0;
+                var gotBody = false;
+                var lastLog = null;
+
                 (function tryNext() {
                     if (token !== loadToken) return;
-                    if (i >= PROXIES.length) { onFail(); return; }
+                    if (i >= PROXIES.length) { onFail(gotBody, lastLog); return; }
                     var proxied = PROXIES[i++](url);
                     var ctrl = window.AbortController ? new AbortController() : null;
                     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
@@ -417,8 +426,10 @@
                         .then(function (text) {
                             clearTimeout(timer);
                             if (token !== loadToken) return;
-                            var cleaned = UniversalisOffice.extract(text, hourKey);
-                            if (!cleaned) throw new Error('no office content');
+                            if (text && text.length > 500) gotBody = true;
+                            var log = [];
+                            var cleaned = UniversalisOffice.extract(text, hourKey, log);
+                            if (!cleaned) { lastLog = log; throw new Error('no office content'); }
                             onOk(cleaned);
                         })
                         .catch(function () {
@@ -553,15 +564,30 @@
                         localStorage.setItem(cacheKey, cleaned);
                     } catch (e) {}
                     showOffice((noteHtml || '') + cleaned, 'en');
-                }, function () {
+                }, function (gotBody, log) {
                     if (token !== loadToken || stamp !== currentStamp) return;
-                    showUnavailable(
-                        lang === 'sw'
-                            ? 'Maandishi ya sala hayakuweza kupakuliwa kwa sasa.'
-                            : 'The text of this hour could not be loaded right now.',
-                        lang === 'sw'
-                            ? 'Jaribu tena, au fungua Universalis kwa kiungo kilicho hapa chini.'
-                            : 'Try again, or open Universalis using the link below.');
+                    if (log && window.console && console.warn) {
+                        console.warn('[iPray] ' + hourKey + ' ' + stamp +
+                            ': page fetched but no office could be extracted.\n  ' +
+                            log.join('\n  ') + '\n  source: ' + url);
+                    }
+                    if (gotBody) {
+                        showUnavailable(
+                            lang === 'sw'
+                                ? 'Ukurasa umepakuliwa lakini maandishi ya sala hayakupatikana ndani yake.'
+                                : 'The page loaded, but no prayer text could be read from it.',
+                            lang === 'sw'
+                                ? 'Universalis huenda imebadilisha muundo wa ukurasa huu. Fungua Universalis kwa kiungo kilicho hapa chini.'
+                                : 'Universalis may have changed the layout of this page. Details are in the browser console; the link below opens it there.');
+                    } else {
+                        showUnavailable(
+                            lang === 'sw'
+                                ? 'Maandishi ya sala hayakuweza kupakuliwa kwa sasa.'
+                                : 'The text of this hour could not be loaded right now.',
+                            lang === 'sw'
+                                ? 'Jaribu tena, au fungua Universalis kwa kiungo kilicho hapa chini.'
+                                : 'Try again, or open Universalis using the link below.');
+                    }
                 });
             }
 

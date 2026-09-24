@@ -892,20 +892,19 @@ button[aria-busy="true"]::after {
 /* App Bar: full-width, non-floating header. The colored bar extends into the
    safe-area region on mobile devices, while the visible content starts below
    the status bar.
-   Uses position: sticky + explicit 100vw width + top:0 so the nav visually
+    Uses position: sticky + full containing width + top:0 so the nav visually
    pins to the absolute top of the viewport (from screen edge through status
    bar / notch area) while remaining in the normal document flow — so every
    page's content follows after it naturally with no extra body padding.
-   width:100vw ensures the edge-to-edge coverage matches viewport-fit=cover on
-   every mobile screen size; box-sizing: border-box guarantees internal
-   horizontal padding never causes horizontal overflow despite 100vw. */
+    box-sizing: border-box guarantees internal horizontal padding never causes
+    horizontal overflow. */
 .app-bar,
 header[role="banner"] {
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    width: 100vw;
+    width: 100%;
     max-width: 100%;
     z-index: 30;
     isolation: isolate;
@@ -1205,7 +1204,7 @@ body.prayer-topbar .nav-links a:focus-visible {
 /* Extends the navbar's maroon background FULLY to the viewport edges behind
    the mobile status bar / notch (env(safe-area-inset-top)) so the brand
    color shows through there seamlessly instead of the page background.
-   Explicit position:fixed + top:0 + width:100vw matches the full-width
+    Explicit position:fixed + top:0 + width:100% matches the full-width
    edge-to-edge pattern in technical requirement 2: the maroon safe-area
    sliver extends from the absolute top of the screen across the full
    viewport width, so no visible gap, white strip, or contrasting color
@@ -1220,7 +1219,7 @@ body.prayer-topbar .nav-links a:focus-visible {
     top: 0;
     left: 0;
     right: 0;
-    width: 100vw;
+    width: 100%;
     max-width: 100%;
     height: calc(env(safe-area-inset-top, 0px) + 0.5rem);
     background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
