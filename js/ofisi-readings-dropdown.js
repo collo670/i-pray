@@ -43,18 +43,44 @@
         });
 
         panel.appendChild(section);
+        return section;
+    }
+
+    function addResponsory(section, responsory) {
+        if (!responsory || !responsory.verses || !responsory.verses.length) return;
+
+        var heading = document.createElement('h3');
+        heading.textContent = 'KIITIKIZANO';
+        section.appendChild(heading);
+
+        if (responsory.citation) {
+            var citation = document.createElement('p');
+            citation.className = 'reading-ref';
+            citation.textContent = responsory.citation;
+            section.appendChild(citation);
+        }
+
+        responsory.verses.forEach(function (verse) {
+            var paragraph = document.createElement('p');
+            paragraph.className = verse.speaker === 'K' ? 'leader' : 'response';
+            paragraph.textContent = (verse.speaker ? verse.speaker + '. ' : '') + verse.text;
+            section.appendChild(paragraph);
+        });
     }
 
     function renderReadings(dayData) {
         panel.replaceChildren();
-        addReading('SOMO LA KWANZA', [
+        var firstReading = addReading('SOMO LA KWANZA', [
             { className: 'sw-citation reading-ref', text: dayData.firstReading.citation }
         ]);
-        addReading('SOMO LA PILI', [
+        addResponsory(firstReading, dayData.responsory1);
+
+        var secondReading = addReading('SOMO LA PILI', [
             { className: 'reading-ref', text: dayData.secondReading.source || '' }
         ].concat((dayData.secondReading.paragraphs || []).map(function (text) {
             return { text: text };
         })));
+        addResponsory(secondReading, dayData.responsory2);
 
         if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
             window.SomoLaKwanzaBible.init();
