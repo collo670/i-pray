@@ -3,39 +3,6 @@
     'use strict';
     
     const LoadingStates = {
-        // Show loading overlay
-        showOverlay: function(message = 'Loading...') {
-            let overlay = document.getElementById('loading-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'loading-overlay';
-                overlay.className = 'loading-overlay';
-                overlay.innerHTML = `
-                    <div class="text-center">
-                        <div class="loading-spinner mx-auto mb-4"></div>
-                        <p class="text-gray-700 font-medium">${message}</p>
-                    </div>
-                `;
-                document.body.appendChild(overlay);
-            }
-            overlay.classList.add('active');
-            const messageEl = overlay.querySelector('p');
-            if (messageEl) messageEl.textContent = message;
-        },
-        
-        // Hide loading overlay
-        hideOverlay: function() {
-            const overlay = document.getElementById('loading-overlay');
-            if (overlay) {
-                overlay.classList.remove('active');
-                setTimeout(() => {
-                    if (overlay && !overlay.classList.contains('active')) {
-                        overlay.remove();
-                    }
-                }, 300);
-            }
-        },
-        
         // Show skeleton loader for content
         showSkeleton: function(container, count = 3) {
             if (!container) return;
@@ -142,28 +109,8 @@
         }
     };
     
-    // Add loading states to navigation
+    // Add loading states to forms
     document.addEventListener('DOMContentLoaded', () => {
-        // Add loading to navigation links
-        const navLinks = document.querySelectorAll('nav a, .nav-item');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && href.startsWith('#') === false && !this.hasAttribute('data-no-loading')) {
-                    LoadingStates.showOverlay('Loading page...');
-                }
-            });
-        });
-        
-        // Hide loading when page is fully loaded
-        if (document.readyState === 'complete') {
-            LoadingStates.hideOverlay();
-        } else {
-            window.addEventListener('load', () => {
-                LoadingStates.hideOverlay();
-            });
-        }
-        
         // Add loading to form submissions
         const forms = document.querySelectorAll('form');
         forms.forEach(form => {

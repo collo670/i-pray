@@ -1,22 +1,19 @@
 // ipray logo loading animation
 // Self-contained: injects its own styles and overlay markup.
 // Shows the app logo with 3 expanding rings and the "ipray" wordmark
-// on initial page load and whenever the user navigates to another page.
+// on the first page load in a tab session.
 (function () {
     'use strict';
 
-    // 2s on the very first load of the app, 1s when moving between pages.
-    // A sessionStorage flag set on link clicks tells the next page it was
-    // an in-app navigation rather than a cold start.
+    // Show the loader only on the first page opened in this tab session.
     var INITIAL_DURATION = 2000;
-    var NAV_DURATION = 1000;
-    var NAV_FLAG = 'ipray-in-app-nav';
-    var isInAppNav = false;
+    var hasShownInitialLoader = false;
     try {
-        isInAppNav = sessionStorage.getItem(NAV_FLAG) === '1';
-        sessionStorage.removeItem(NAV_FLAG);
+        hasShownInitialLoader = sessionStorage.getItem('ipray-initial-loader-shown') === '1';
+        if (!hasShownInitialLoader) {
+            sessionStorage.setItem('ipray-initial-loader-shown', '1');
+        }
     } catch (e) {}
-    var SHOW_DURATION = isInAppNav ? NAV_DURATION : INITIAL_DURATION;
     var LOGO_FILE = 'assets/images/logo-small.jpg';
 
     // Resolve the app root from this script's own URL so the logo path
@@ -138,7 +135,7 @@
         mount();
         clearTimeout(hideTimer);
         overlay.classList.remove('logo-loader-hidden');
-        hideTimer = setTimeout(hide, SHOW_DURATION);
+        hideTimer = setTimeout(hide, INITIAL_DURATION);
     }
 
     function hide() {
@@ -146,40 +143,18 @@
         overlay.classList.add('logo-loader-hidden');
     }
 
-    // Show immediately while the current page loads
-    show();
+    // Show immediately when the app is first opened in this tab.
+    if (!hasShownInitialLoader) {
+        show();
+    }
 
     // Re-mount into <body> once it exists so the overlay isn't a direct
     // child of <html> (harmless, but keeps the DOM tidy)
     document.addEventListener('DOMContentLoaded', function () {
-        if (overlay.parentNode !== document.body) {
+        if (overlay.parentNode && overlay.parentNode !== document.body) {
             document.body.appendChild(overlay);
         }
     });
-
-    // Show the loader when navigating to another page in the app
-    document.addEventListener('click', function (event) {
-        if (event.defaultPrevented || event.button !== 0 ||
-            event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-            return;
-        }
-        var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
-        if (!link) return;
-        if (link.target && link.target !== '_self') return;
-        if (link.hasAttribute('download')) return;
-
-        var href = link.getAttribute('href');
-        if (!href || href.charAt(0) === '#') return;
-        if (/^(javascript|mailto|tel|sms):/i.test(href)) return;
-        if (link.origin && link.origin !== window.location.origin) return;
-        // Same-page hash navigation
-        if (link.pathname === window.location.pathname && link.hash) return;
-
-        // Tell the next page this is an in-app navigation so it uses the
-        // shorter loader duration
-        try { sessionStorage.setItem(NAV_FLAG, '1'); } catch (e) {}
-        show();
-    }, true);
 
     // Hide the loader when a page is restored from the back/forward cache
     window.addEventListener('pageshow', function (event) {

@@ -772,21 +772,6 @@ function hideSkeletonLoaders() {
     }
 }
 
-// Loading overlay control
-function showLoadingOverlay() {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) {
-        overlay.classList.add('active');
-    }
-}
-
-function hideLoadingOverlay() {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) {
-        overlay.classList.remove('active');
-    }
-}
-
 // Load and display favorites
 function loadFavorites() {
     const favorites = FavoritesManager.getFavorites();
@@ -1230,11 +1215,6 @@ window.toggleTranslation = function() {
 // Initialize the app
 // Initialize page transitions and loading
 document.addEventListener('DOMContentLoaded', function() {
-    // Hide loading overlay after page loads
-    setTimeout(() => {
-        hideLoadingOverlay();
-    }, 500);
-    
     // Add page transition class to main content
     const mainContent = document.querySelector('main');
     if (mainContent) {

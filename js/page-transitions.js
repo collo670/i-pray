@@ -19,13 +19,6 @@
         // Add transition to body
         document.body.classList.add('page-content');
         
-        // Hide loading overlay if it exists
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        if (loadingOverlay) {
-            setTimeout(() => {
-                loadingOverlay.classList.remove('active');
-            }, 300);
-        }
     }
 })();
 
