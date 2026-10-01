@@ -68,6 +68,141 @@
         });
     }
 
+    function createPrayerTimer() {
+        var duration = 15 * 60;
+        var remaining = duration;
+        var deadline = 0;
+        var interval = null;
+        var cancelAlarm = null;
+        var timer = document.createElement('div');
+        timer.className = 'masifu-prayer-timer';
+
+        var details = document.createElement('div');
+        details.className = 'masifu-prayer-timer-details';
+        var label = document.createElement('p');
+        label.className = 'masifu-prayer-timer-label';
+        label.textContent = 'SALA YA KIMYA';
+        var display = document.createElement('div');
+        display.className = 'masifu-prayer-timer-display';
+        display.setAttribute('role', 'timer');
+        display.setAttribute('aria-live', 'off');
+
+        var button = document.createElement('button');
+        button.className = 'masifu-prayer-timer-start';
+        button.type = 'button';
+        button.setAttribute('aria-label', 'Start 15 minute timer');
+        button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span>START</span>';
+        details.appendChild(label);
+        details.appendChild(display);
+        timer.appendChild(details);
+        timer.appendChild(button);
+
+        function formatTime(seconds) {
+            var minutes = Math.floor(seconds / 60);
+            var remainder = seconds % 60;
+            return String(minutes).padStart(2, '0') + ':' + String(remainder).padStart(2, '0');
+        }
+
+        function setButtonState(icon, text, accessibleLabel) {
+            var path = icon === 'pause'
+                ? '<path d="M7 5h4v14H7zm6 0h4v14h-4z"></path>'
+                : '<path d="M8 5v14l11-7z"></path>';
+            button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + path + '</svg><span>' + text + '</span>';
+            button.setAttribute('aria-label', accessibleLabel);
+        }
+
+        function scheduleAlarm(endTime) {
+            var AudioContextType = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextType) return null;
+
+            var context = null;
+            var oscillator = null;
+            var cancelled = false;
+
+            function closeContext() {
+                if (context && context.state !== 'closed') {
+                    context.close().catch(function () {});
+                }
+            }
+
+            try {
+                context = new AudioContextType();
+                context.resume().then(function () {
+                    if (cancelled) {
+                        closeContext();
+                        return;
+                    }
+                    oscillator = context.createOscillator();
+                    var gain = context.createGain();
+                    var startAt = context.currentTime + Math.max(0, endTime - Date.now()) / 1000;
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(880, startAt);
+                    gain.gain.setValueAtTime(0, context.currentTime);
+                    for (var pulse = 0; pulse < 8; pulse++) {
+                        var pulseAt = startAt + pulse * 0.4;
+                        gain.gain.setValueAtTime(0.16, pulseAt);
+                        gain.gain.setValueAtTime(0, pulseAt + 0.24);
+                    }
+                    oscillator.connect(gain);
+                    gain.connect(context.destination);
+                    oscillator.onended = function () { context.close(); };
+                    oscillator.start(startAt);
+                    oscillator.stop(startAt + 3);
+                }).catch(function () {
+                    closeContext();
+                });
+            } catch (error) {
+                closeContext();
+            }
+
+            return function () {
+                cancelled = true;
+                if (oscillator) {
+                    try { oscillator.stop(); } catch (error) {}
+                }
+                closeContext();
+            };
+        }
+
+        function updateTimer() {
+            remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+            display.textContent = formatTime(remaining);
+            if (remaining > 0) return;
+
+            window.clearInterval(interval);
+            interval = null;
+            cancelAlarm = null;
+            setButtonState('play', 'START', 'Start 15 minute timer');
+        }
+
+        display.textContent = formatTime(remaining);
+        button.addEventListener('click', function () {
+            if (interval) {
+                remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+                if (remaining === 0) {
+                    updateTimer();
+                    return;
+                }
+                window.clearInterval(interval);
+                interval = null;
+                if (cancelAlarm) cancelAlarm();
+                cancelAlarm = null;
+                display.textContent = formatTime(remaining);
+                setButtonState('play', 'RESUME', 'Resume 15 minute timer');
+                return;
+            }
+
+            if (remaining === 0) remaining = duration;
+            deadline = Date.now() + remaining * 1000;
+            cancelAlarm = scheduleAlarm(deadline);
+            setButtonState('pause', 'PAUSE', 'Pause 15 minute timer');
+            interval = window.setInterval(updateTimer, 250);
+            updateTimer();
+        });
+
+        return timer;
+    }
+
     function renderReadings(dayData) {
         panel.replaceChildren();
         var firstReading = addReading('SOMO LA KWANZA', [
@@ -141,7 +276,7 @@
                 text.className = 'reading-text';
                 text.innerHTML = event.data.gospel.textHtml;
                 reading.appendChild(text);
-                gospelPanel.replaceChildren(reading);
+                gospelPanel.replaceChildren(reading, createPrayerTimer());
                 gospelFrame.remove();
                 gospelFrame = null;
             }
