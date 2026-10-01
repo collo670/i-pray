@@ -366,15 +366,23 @@ body.masifu-modern .ofisi-link-container {
     margin: 1rem 0;
 }
 
-body.masifu-modern .ofisi-link {
+body.masifu-modern .ofisi-link,
+body.masifu-topbar .ofisi-link {
     color: #8B0000;
     text-decoration: none;
     font-weight: 600;
     font-size: 1.05em;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
 }
 
 body.masifu-modern .ofisi-link:hover,
-body.masifu-modern .ofisi-link:focus {
+body.masifu-modern .ofisi-link:focus,
+body.masifu-topbar .ofisi-link:hover,
+body.masifu-topbar .ofisi-link:focus {
     color: #A52A2A;
     text-decoration: underline;
 }
@@ -383,9 +391,33 @@ body.masifu-modern.dark-mode .ofisi-link {
     color: #FFA07A;
 }
 
+body.masifu-topbar.dark-mode .ofisi-link {
+    color: #FFA07A;
+}
+
 body.masifu-modern.dark-mode .ofisi-link:hover,
-body.masifu-modern.dark-mode .ofisi-link:focus {
+body.masifu-modern.dark-mode .ofisi-link:focus,
+body.masifu-topbar.dark-mode .ofisi-link:hover,
+body.masifu-topbar.dark-mode .ofisi-link:focus {
     color: #FFB385;
+}
+
+body.masifu-topbar .ofisi-reading-panel {
+    margin: 1rem 0;
+}
+
+body.masifu-topbar .ofisi-reading-panel .reading h2 {
+    margin: 0 0 0.65rem;
+    font-size: 1.1em;
+}
+
+body.masifu-topbar .ofisi-reading-panel .reading-ref {
+    font-style: italic;
+    margin: 0 0 0.65rem;
+}
+
+body.masifu-topbar .ofisi-reading-panel .reading p:last-child {
+    margin-bottom: 0;
 }
 
 /* ---- Index-style app bar for live Masifu ya Asubuhi pages ------------- */

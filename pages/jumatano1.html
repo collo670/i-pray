@@ -575,8 +575,9 @@
             <p class="antiphon">Ant. ya Wimbo wa Zakaria: Utuonyeshe huruma yako, Ee Bwana; ulikumbuke agano lako takatifu.</p>
         </div>
         <div class="ofisi-link-container">
-            <a href="office-of-readings.html?lang=sw&amp;start=first-reading" class="ofisi-link">GUSA KUONA OFISI YA MASOMO</a>
+            <button class="ofisi-link" type="button" aria-expanded="false" aria-controls="ofisi-readings-panel">GUSA KUONA OFISI YA MASOMO</button>
         </div>
+        <div id="ofisi-readings-panel" class="ofisi-reading-panel" hidden aria-live="polite"></div>
 
         <div>
             <h2>WIMBO WA ZAKARIA</h2>
@@ -689,6 +690,9 @@
   }
 </script>
 
+    <script src="../js/liturgical-calendar.js" defer></script>
+    <script src="../js/somo-la-kwanza-bible.js" defer></script>
+    <script src="../js/ofisi-readings-dropdown.js" defer></script>
     <script src="../js/masifu.js" defer></script>
     <script src="../js/prevent-zoom.js" defer></script>
 </body>
