@@ -82,6 +82,82 @@
         })));
         addResponsory(secondReading, dayData.responsory2);
 
+        var gospelLinkContainer = document.createElement('div');
+        gospelLinkContainer.className = 'gospel-link-container';
+        var gospelLink = document.createElement('button');
+        gospelLink.type = 'button';
+        gospelLink.className = 'gospel-link';
+        gospelLink.setAttribute('aria-expanded', 'false');
+        gospelLink.setAttribute('aria-controls', 'daily-gospel-panel');
+        gospelLink.textContent = 'GUSA KUONA INJILI YA SIKU';
+        gospelLinkContainer.appendChild(gospelLink);
+        panel.appendChild(gospelLinkContainer);
+
+        var gospelPanel = document.createElement('div');
+        gospelPanel.id = 'daily-gospel-panel';
+        gospelPanel.className = 'gospel-reading-panel';
+        gospelPanel.hidden = true;
+        gospelPanel.setAttribute('aria-live', 'polite');
+        panel.appendChild(gospelPanel);
+
+        var gospelFrame = null;
+
+        function loadGospel() {
+            var status = document.createElement('p');
+            status.className = 'reading gospel-reading-status';
+            status.textContent = 'Inapakia Injili ya siku...';
+            gospelPanel.replaceChildren(status);
+
+            gospelFrame = document.createElement('iframe');
+            gospelFrame.hidden = true;
+            gospelFrame.title = 'Injili ya Siku';
+
+            function handleGospelMessage(event) {
+                if (event.source !== gospelFrame.contentWindow || event.origin !== window.location.origin) return;
+                if (!event.data || event.data.type !== 'daily-gospel-content') return;
+                window.removeEventListener('message', handleGospelMessage);
+
+                if (event.data.status !== 'ready' || !event.data.gospel || typeof event.data.gospel.textHtml !== 'string') {
+                    status.textContent = event.data.message || 'Injili ya Kiswahili haipatikani kwa sasa.';
+                    gospelFrame.remove();
+                    gospelFrame = null;
+                    return;
+                }
+
+                var reading = document.createElement('section');
+                reading.className = 'reading ofisi-reading gospel-inline-reading';
+                var heading = document.createElement('h2');
+                heading.textContent = event.data.gospel.label || 'Injili';
+                reading.appendChild(heading);
+
+                if (event.data.gospel.citation) {
+                    var citation = document.createElement('p');
+                    citation.className = 'reading-ref';
+                    citation.textContent = event.data.gospel.citation;
+                    reading.appendChild(citation);
+                }
+
+                var text = document.createElement('div');
+                text.className = 'reading-text';
+                text.innerHTML = event.data.gospel.textHtml;
+                reading.appendChild(text);
+                gospelPanel.replaceChildren(reading);
+                gospelFrame.remove();
+                gospelFrame = null;
+            }
+
+            window.addEventListener('message', handleGospelMessage);
+            gospelFrame.src = 'daily-readings.html?view=gospel&embed=1';
+            gospelPanel.appendChild(gospelFrame);
+        }
+
+        gospelLink.addEventListener('click', function () {
+            var open = gospelLink.getAttribute('aria-expanded') !== 'true';
+            gospelLink.setAttribute('aria-expanded', String(open));
+            gospelPanel.hidden = !open;
+            if (open && !gospelFrame && !gospelPanel.querySelector('.gospel-inline-reading')) loadGospel();
+        });
+
         if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
             window.SomoLaKwanzaBible.init();
         }

@@ -402,6 +402,144 @@ body.masifu-topbar.dark-mode .ofisi-link:focus {
     color: #FFB385;
 }
 
+body.masifu-modern .gospel-link-container,
+body.masifu-topbar .gospel-link-container {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+body.masifu-modern .gospel-link,
+body.masifu-topbar .gospel-link {
+    color: #8B0000;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05em;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+body.masifu-modern .gospel-link:hover,
+body.masifu-modern .gospel-link:focus,
+body.masifu-topbar .gospel-link:hover,
+body.masifu-topbar .gospel-link:focus {
+    color: #A52A2A;
+    text-decoration: underline;
+}
+
+body.masifu-modern.dark-mode .gospel-link,
+body.masifu-topbar.dark-mode .gospel-link {
+    color: #FFA07A;
+}
+
+body.masifu-topbar .gospel-reading-panel {
+    margin: 1rem 0;
+}
+
+body.masifu-topbar .gospel-reading-panel .gospel-inline-reading {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid rgba(139, 0, 0, 0.15);
+    border-radius: 12px;
+    background: var(--surface-0, #fff);
+}
+
+body.masifu-topbar.dark-mode .gospel-reading-panel .gospel-inline-reading {
+    border-color: rgba(255, 160, 122, 0.22);
+    background: var(--surface-1, #1f2937);
+}
+
+body.masifu-topbar .gospel-reading-panel .reading h2 {
+    margin: 0 0 0.65rem;
+    font-size: 1.1em;
+}
+
+body.masifu-topbar .gospel-reading-panel .reading-ref {
+    margin: 0 0 0.65rem;
+    font-style: italic;
+}
+
+body.masifu-topbar .gospel-reading-panel .reading-text div {
+    margin-bottom: 0.15rem;
+}
+
+body.masifu-modern.gospel-only {
+    min-height: 100vh;
+    background: var(--surface-0, #fff);
+    color: var(--text-primary, #1a1a1a);
+}
+
+body.masifu-modern.gospel-only #app > header,
+body.masifu-modern.gospel-only .bottom-nav,
+body.masifu-modern.gospel-only main > :not(#readingsLoading):not(#readingsError):not(#readingsSwNote):not(#readingsContainer) {
+    display: none;
+}
+
+body.masifu-modern.gospel-only main {
+    max-width: 46rem;
+    min-height: 100vh;
+    padding: 1.5rem 1rem 3rem;
+}
+
+body.masifu-modern.gospel-only .masifu-gospel-card {
+    margin: 0;
+    border: 1px solid rgba(139, 0, 0, 0.15);
+    border-radius: 14px;
+    padding: 1.1rem 1.15rem;
+    background: var(--surface-0, #fff);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+body.masifu-modern.gospel-only .masifu-gospel-card > div:first-child {
+    margin-bottom: 0.75rem;
+}
+
+body.masifu-modern.gospel-only .masifu-gospel-card span {
+    color: #8B0000;
+    background: rgba(139, 0, 0, 0.06);
+}
+
+body.masifu-modern.gospel-only .masifu-gospel-card p {
+    color: var(--text-primary, #1a1a1a);
+}
+
+body.masifu-modern.gospel-only .reading-text {
+    color: var(--text-primary, #1a1a1a);
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+body.masifu-modern.gospel-only #readingsError {
+    margin-top: 2rem;
+    border: 1px solid rgba(139, 0, 0, 0.15);
+    background: var(--surface-0, #fff);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+html.dark body.masifu-modern.gospel-only {
+    background: #111827;
+    color: #eee;
+}
+
+html.dark body.masifu-modern.gospel-only .masifu-gospel-card,
+html.dark body.masifu-modern.gospel-only #readingsError {
+    border-color: rgba(255, 160, 122, 0.22);
+    background: #1f2937;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+html.dark body.masifu-modern.gospel-only .masifu-gospel-card span {
+    color: #FFA07A;
+    background: rgba(255, 160, 122, 0.09);
+}
+
+html.dark body.masifu-modern.gospel-only .masifu-gospel-card p,
+html.dark body.masifu-modern.gospel-only .reading-text {
+    color: #eee;
+}
+
 body.masifu-topbar .ofisi-reading-panel {
     margin: 1rem 0;
 }

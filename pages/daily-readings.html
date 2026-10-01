@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../dist/output.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/masifu.css">
     <!-- Apply saved theme before paint to avoid flash -->
     <script>
         (function () {
@@ -219,6 +220,12 @@
             var currentStamp = null;
             var pendingScript = null;
             var pendingTimer = null;
+            var gospelOnly = new URLSearchParams(window.location.search).get('view') === 'gospel';
+            var gospelEmbed = gospelOnly && new URLSearchParams(window.location.search).get('embed') === '1';
+            if (gospelOnly) {
+                document.body.classList.add('masifu-modern', 'gospel-only');
+                document.documentElement.lang = 'sw';
+            }
 
             // Language switch: English / Kiswahili, same convention as
             // pages/prayer-hour.html (localStorage key shared across pages).
@@ -230,6 +237,7 @@
                 if (storedLang === 'en') lang = 'en';
                 else if (storedLang === 'sw') lang = 'sw';
             } catch (e) {}
+            if (gospelOnly) lang = 'sw';
 
             // Kiswahili daily readings: there is no API for this (checked
             // Universalis, iBreviary, Divine Office - none publish Swahili).
@@ -297,6 +305,7 @@
             function sectionCard(label, part) {
                 var card = document.createElement('article');
                 card.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg';
+                if (gospelOnly) card.classList.add('masifu-gospel-card');
 
                 var header = document.createElement('div');
                 header.className = 'mb-4';
@@ -325,6 +334,16 @@
                 return card;
             }
 
+            function sendEmbeddedGospel(status, gospel, message) {
+                if (!gospelEmbed || window.parent === window) return;
+                window.parent.postMessage({
+                    type: 'daily-gospel-content',
+                    status: status,
+                    gospel: gospel,
+                    message: message
+                }, window.location.origin);
+            }
+
             function render(data) {
                 setState('ready');
                 dateEl.textContent = data.date || '';
@@ -347,21 +366,44 @@
 
             function renderSw(parsed) {
                 setState('ready');
-                dateEl.textContent = parsed.dateLabel || '';
-                dayTitleEl.textContent = parsed.dayTitle || '';
-                banner.classList.remove('hidden');
+                if (!gospelOnly) {
+                    dateEl.textContent = parsed.dateLabel || '';
+                    dayTitleEl.textContent = parsed.dayTitle || '';
+                    banner.classList.remove('hidden');
+                }
 
                 container.innerHTML = '';
                 var sections = parsed.sections || [];
+                var renderedGospel = null;
                 for (var i = 0; i < sections.length; i++) {
                     var s = sections[i];
+                    if (gospelOnly && !isSwGospelLabel(s.label)) continue;
                     container.appendChild(sectionCard(s.label, { source: s.citation, text: s.textHtml }));
+                    if (gospelOnly && isSwGospelLabel(s.label)) {
+                        renderedGospel = {
+                            label: s.label,
+                            citation: s.citation || '',
+                            textHtml: s.textHtml
+                        };
+                    }
                     // Stop at the Gospel — nothing after Injili should render.
                     if (isSwGospelLabel(s.label)) break;
                 }
 
-                copyrightEl.textContent = 'Masomo yametolewa na Mkatoliki Leo.';
-                copyrightEl.classList.remove('hidden');
+                if (gospelOnly && !container.children.length) {
+                    var unavailable = 'Injili ya Kiswahili haipatikani kwa siku hii.';
+                    errorText.textContent = unavailable;
+                    setState('error');
+                    sendEmbeddedGospel('error', null, unavailable);
+                    return;
+                }
+
+                if (!gospelOnly) {
+                    copyrightEl.textContent = 'Masomo yametolewa na Mkatoliki Leo.';
+                    copyrightEl.classList.remove('hidden');
+                }
+
+                if (gospelOnly) sendEmbeddedGospel('ready', renderedGospel);
             }
 
             // Reject a parsed article whose embedded date label does not
@@ -778,6 +820,13 @@
 
                 function onSwFail() {
                     if (stamp !== currentStamp) return;
+                    if (gospelOnly) {
+                        var unavailable = 'Injili ya Kiswahili ya siku hii haipatikani kwa sasa. Tafadhali jaribu tena.';
+                        errorText.textContent = unavailable;
+                        setState('error');
+                        sendEmbeddedGospel('error', null, unavailable);
+                        return;
+                    }
                     showSwUnavailable();
                     loadEnglish(date);
                 }
