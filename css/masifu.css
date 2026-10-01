@@ -492,6 +492,12 @@ body.masifu-topbar .masifu-prayer-timer-display {
     line-height: 1.15;
 }
 
+body.masifu-topbar .masifu-prayer-timer-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 body.masifu-topbar .masifu-prayer-timer-start {
     display: inline-flex;
     align-items: center;
@@ -530,12 +536,54 @@ body.masifu-topbar .masifu-prayer-timer-start svg {
     fill: currentColor;
 }
 
+body.masifu-topbar .masifu-prayer-timer-stop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-width: 5.5rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(139, 0, 0, 0.35);
+    border-radius: 999px;
+    background: transparent;
+    color: #8B0000;
+    font: inherit;
+    font-size: 0.82em;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+body.masifu-topbar .masifu-prayer-timer-stop[hidden] {
+    display: none;
+}
+
+body.masifu-topbar .masifu-prayer-timer-stop:hover,
+body.masifu-topbar .masifu-prayer-timer-stop:focus-visible {
+    background: rgba(139, 0, 0, 0.08);
+}
+
+body.masifu-topbar .masifu-prayer-timer-stop:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+body.masifu-topbar .masifu-prayer-timer-stop svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: currentColor;
+}
+
 body.masifu-topbar.dark-mode .masifu-prayer-timer {
     border-color: rgba(255, 160, 122, 0.24);
     background: var(--surface-1, #1f2937);
 }
 
 body.masifu-topbar.dark-mode .masifu-prayer-timer-label {
+    color: #FFA07A;
+}
+
+body.masifu-topbar.dark-mode .masifu-prayer-timer-stop {
+    border-color: rgba(255, 160, 122, 0.4);
     color: #FFA07A;
 }
 
@@ -548,6 +596,11 @@ body.masifu-topbar.dark-mode .masifu-prayer-timer-label {
     body.masifu-topbar .masifu-prayer-timer-start {
         min-width: 5.5rem;
         padding: 0.5rem 0.7rem;
+    }
+
+    body.masifu-topbar .masifu-prayer-timer-stop {
+        min-width: 5rem;
+        padding: 0.5rem 0.6rem;
     }
 }
 

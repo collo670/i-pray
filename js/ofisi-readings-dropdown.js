@@ -74,6 +74,7 @@
         var deadline = 0;
         var interval = null;
         var cancelAlarm = null;
+        var state = 'idle';
         var timer = document.createElement('div');
         timer.className = 'masifu-prayer-timer';
 
@@ -92,10 +93,20 @@
         button.type = 'button';
         button.setAttribute('aria-label', 'Start 15 minute timer');
         button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span>START</span>';
+        var stopButton = document.createElement('button');
+        stopButton.className = 'masifu-prayer-timer-stop';
+        stopButton.type = 'button';
+        stopButton.setAttribute('aria-label', 'Stop timer and reset');
+        stopButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"></path></svg><span>STOP</span>';
+        stopButton.hidden = true;
+        var actions = document.createElement('div');
+        actions.className = 'masifu-prayer-timer-actions';
+        actions.appendChild(button);
+        actions.appendChild(stopButton);
         details.appendChild(label);
         details.appendChild(display);
         timer.appendChild(details);
-        timer.appendChild(button);
+        timer.appendChild(actions);
 
         function formatTime(seconds) {
             var minutes = Math.floor(seconds / 60);
@@ -103,12 +114,15 @@
             return String(minutes).padStart(2, '0') + ':' + String(remainder).padStart(2, '0');
         }
 
-        function setButtonState(icon, text, accessibleLabel) {
+        function setButtonState(icon, text, accessibleLabel, showStop) {
             var path = icon === 'pause'
                 ? '<path d="M7 5h4v14H7zm6 0h4v14h-4z"></path>'
-                : '<path d="M8 5v14l11-7z"></path>';
+                : icon === 'stop'
+                    ? '<path d="M6 6h12v12H6z"></path>'
+                    : '<path d="M8 5v14l11-7z"></path>';
             button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + path + '</svg><span>' + text + '</span>';
             button.setAttribute('aria-label', accessibleLabel);
+            stopButton.hidden = !showStop;
         }
 
         function scheduleAlarm(endTime) {
@@ -135,19 +149,19 @@
                     oscillator = context.createOscillator();
                     var gain = context.createGain();
                     var startAt = context.currentTime + Math.max(0, endTime - Date.now()) / 1000;
-                    oscillator.type = 'sine';
-                    oscillator.frequency.setValueAtTime(880, startAt);
+                    oscillator.type = 'triangle';
+                    oscillator.frequency.setValueAtTime(660, startAt);
                     gain.gain.setValueAtTime(0, context.currentTime);
-                    for (var pulse = 0; pulse < 8; pulse++) {
-                        var pulseAt = startAt + pulse * 0.4;
-                        gain.gain.setValueAtTime(0.16, pulseAt);
-                        gain.gain.setValueAtTime(0, pulseAt + 0.24);
+                    gain.gain.setValueAtTime(0.32, startAt);
+                    for (var pulse = 1; pulse < 20; pulse++) {
+                        var pulseAt = startAt + pulse * 0.5;
+                        oscillator.frequency.setValueAtTime(pulse % 2 === 0 ? 660 : 880, pulseAt);
                     }
                     oscillator.connect(gain);
                     gain.connect(context.destination);
                     oscillator.onended = function () { context.close(); };
                     oscillator.start(startAt);
-                    oscillator.stop(startAt + 3);
+                    oscillator.stop(startAt + 10);
                 }).catch(function () {
                     closeContext();
                 });
@@ -171,13 +185,29 @@
 
             window.clearInterval(interval);
             interval = null;
+            state = 'ringing';
+            setButtonState('stop', 'STOP', 'Stop alarm and reset timer', false);
+        }
+
+        function resetTimer() {
+            window.clearInterval(interval);
+            interval = null;
+            if (cancelAlarm) cancelAlarm();
             cancelAlarm = null;
-            setButtonState('play', 'START', 'Start 15 minute timer');
+            remaining = duration;
+            display.textContent = formatTime(remaining);
+            state = 'idle';
+            setButtonState('play', 'START', 'Start 15 minute timer', false);
         }
 
         display.textContent = formatTime(remaining);
         button.addEventListener('click', function () {
-            if (interval) {
+            if (state === 'ringing') {
+                resetTimer();
+                return;
+            }
+
+            if (state === 'running') {
                 remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
                 if (remaining === 0) {
                     updateTimer();
@@ -188,17 +218,20 @@
                 if (cancelAlarm) cancelAlarm();
                 cancelAlarm = null;
                 display.textContent = formatTime(remaining);
-                setButtonState('play', 'RESUME', 'Resume 15 minute timer');
+                state = 'paused';
+                setButtonState('play', 'CONTINUE', 'Continue 15 minute timer', true);
                 return;
             }
 
-            if (remaining === 0) remaining = duration;
             deadline = Date.now() + remaining * 1000;
             cancelAlarm = scheduleAlarm(deadline);
-            setButtonState('pause', 'PAUSE', 'Pause 15 minute timer');
+            state = 'running';
+            setButtonState('pause', 'PAUSE', 'Pause 15 minute timer', true);
             interval = window.setInterval(updateTimer, 250);
             updateTimer();
         });
+
+        stopButton.addEventListener('click', resetTimer);
 
         return timer;
     }
