@@ -427,9 +427,15 @@
         setupTextControls();
     }
 
+    function initAfterSikukuu() {
+        const ready = window.sikukuuReady;
+        if (ready && typeof ready.then === 'function') ready.then(init);
+        else init();
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', initAfterSikukuu);
     } else {
-        init();
+        initAfterSikukuu();
     }
 })();

@@ -163,6 +163,7 @@ const PRECACHE_EXTRA = [
   "/i-pray/js/liturgy-day-banner.js",
   "/i-pray/js/loading-states.js",
   "/i-pray/js/logo-loader.js",
+  "/i-pray/js/sikukuu.js",
   "/i-pray/js/micro-interactions.js",
   "/i-pray/js/mobile-navigation.js",
   "/i-pray/js/nav-theme.js",
