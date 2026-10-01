@@ -82,6 +82,7 @@
         .office-content .sw-fallback-note { font-size: 0.85rem; font-style: italic; color: #b91c1c; background: rgba(185,28,28,0.08); border-radius: 0.5rem; padding: 0.6rem 0.9rem; margin: 0 0 1rem; }
         .dark .office-content .sw-fallback-note { color: #f87171; background: rgba(248,113,113,0.12); }
         .office-content .sw-title-box { display: inline-block; background: #581523; border-radius: 0.375rem; padding: 0.35rem 1rem; margin: 1.25rem 0 0; }
+        .office-content #somo-la-kwanza { scroll-margin-top: 5rem; }
         .office-content .sw-title-box h2 { margin: 0; color: #f0c96a; font-size: 1.3rem; font-weight: 700; }
         .dark .office-content .sw-title-box { background: #7c2133; }
         .office-content .sw-kitikizano { color: #7c2133; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; margin: 0.5rem 0 0.75rem; }
@@ -290,9 +291,12 @@
             var loadToken = 0;
 
             var LANG_KEY = 'preferredLanguage';
-            var lang = 'en';
+            var urlParams = new URLSearchParams(window.location.search);
+            var startAtFirstReading = urlParams.get('start') === 'first-reading';
+            var requestedLang = urlParams.get('lang');
+            var lang = requestedLang === 'sw' ? 'sw' : 'en';
             try {
-                if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
+                if (!requestedLang && localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
             } catch (e) {}
             var langEnBtn = document.getElementById('langEn');
             var langSwBtn = document.getElementById('langSw');
@@ -386,6 +390,11 @@
                 unavailableEl.classList.add('hidden');
                 officeEl.classList.remove('hidden');
                 updateTextCtlVisibility();
+                var firstReading = startAtFirstReading && officeEl.querySelector('#somo-la-kwanza');
+                if (firstReading) {
+                    startAtFirstReading = false;
+                    firstReading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
 
             // Shown instead of the office when it genuinely cannot be
@@ -490,7 +499,7 @@
                 if (usedFallbackDay) {
                     html += '<div class="sw-fallback-note">Masomo ya siku hii mahususi hayapatikani; yanayoonyeshwa ni ya ' + esc(dayData.dayLabel) + ', ndani ya juma hili hili.</div>';
                 }
-                html += '<div class="sw-title-box"><h2>Somo la Kwanza</h2></div>';
+                html += '<div class="sw-title-box" id="somo-la-kwanza"><h2>Somo la Kwanza</h2></div>';
                 html += '<p class="sw-citation">' + esc(dayData.firstReading.citation) + '</p>';
                 html += '<p class="sw-kitikizano">Kitikizano</p>';
                 html += renderSwResponsory(dayData.responsory1);
