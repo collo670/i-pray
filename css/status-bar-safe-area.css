@@ -44,10 +44,18 @@
    Transparent while the top bar covers the status bar. As the bar scrolls
    up and fades out, the script fades the strip in with the colour of the
    page underneath (--sb-scrim-left / --sb-scrim-right, sampled at each
-   side so it follows backgrounds that change across the screen), plus a
-   short feather below it so content melts into the status bar instead of
-   meeting a hard edge. The feather is 0px tall where there is no inset
-   (the browser paints the status bar from theme-color there). */
+   side so it follows backgrounds that change across the screen).
+
+   The strip itself is only as tall as the status bar (the script measures
+   it); what is painted is its ::before, which runs on past the status bar
+   and dissolves into the page along a cosine-eased mask. The fade starts
+   inside the status bar, below the clock and battery icons, and has no
+   hard start or end, so the status bar and the page read as one
+   continuous colour rather than two bands. No backdrop blur: a blur would
+   end in a visible line where the strip ends.
+
+   Where there is no inset (the browser paints the status bar from
+   theme-color) the strip and its fade are 0px tall. */
 
 .sb-scrim {
   position: fixed;
@@ -55,30 +63,48 @@
   left: 0;
   right: 0;
   height: env(safe-area-inset-top, 0px);
-  background: linear-gradient(to right,
-                              var(--sb-scrim-left, transparent),
-                              var(--sb-scrim-right, transparent));
   pointer-events: none;
-  /* Above every bar, sheet and overlay: only ever as tall as the status
-     bar, and transparent until the page is scrolled. */
+  /* Above every bar, sheet and overlay: transparent until the page is
+     scrolled, and its fade below the status bar never takes clicks. */
   z-index: 2147483000;
 }
 
-.sb-scrim::after {
+.sb-scrim::before {
   content: "";
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  top: 100%;
-  height: calc(min(env(safe-area-inset-top, 0px), 1px) * 14);
-  background: inherit;
-  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
-  mask-image: linear-gradient(to bottom, #000, transparent);
-}
-
-html.sb-scrolled .sb-scrim {
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  backdrop-filter: blur(14px) saturate(1.2);
+  height: calc(100% + min(env(safe-area-inset-top, 0px), 1px) * 44);
+  background: linear-gradient(to right,
+                              var(--sb-scrim-left, transparent),
+                              var(--sb-scrim-right, transparent));
+  -webkit-mask-image: linear-gradient(to bottom,
+    #000 0,
+    #000 calc(env(safe-area-inset-top, 0px) * 0.6),
+    rgba(0, 0, 0, 0.976) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.1),
+    rgba(0, 0, 0, 0.905) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.2),
+    rgba(0, 0, 0, 0.794) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.3),
+    rgba(0, 0, 0, 0.655) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.4),
+    rgba(0, 0, 0, 0.500) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.5),
+    rgba(0, 0, 0, 0.345) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.6),
+    rgba(0, 0, 0, 0.206) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.7),
+    rgba(0, 0, 0, 0.095) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.8),
+    rgba(0, 0, 0, 0.024) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.9),
+    transparent calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 1));
+  mask-image: linear-gradient(to bottom,
+    #000 0,
+    #000 calc(env(safe-area-inset-top, 0px) * 0.6),
+    rgba(0, 0, 0, 0.976) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.1),
+    rgba(0, 0, 0, 0.905) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.2),
+    rgba(0, 0, 0, 0.794) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.3),
+    rgba(0, 0, 0, 0.655) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.4),
+    rgba(0, 0, 0, 0.500) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.5),
+    rgba(0, 0, 0, 0.345) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.6),
+    rgba(0, 0, 0, 0.206) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.7),
+    rgba(0, 0, 0, 0.095) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.8),
+    rgba(0, 0, 0, 0.024) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.9),
+    transparent calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 1));
 }
 
 /* -- .navbar (pages/amefufuka.html, assets/office day pages, and the

@@ -12,8 +12,9 @@
 // - Where the page draws under the status bar (iOS installed app and
 //   other viewport-fit=cover cases, env(safe-area-inset-top) > 0) a fixed
 //   strip exactly as tall as the status bar, .sb-scrim, fades in with the
-//   page colour while the bar fades out beneath it, with a short feather
-//   below it so content melts into it rather than meeting a hard edge.
+//   page colour while the bar fades out beneath it; its painted layer runs
+//   on below the status bar and dissolves into the page along an eased
+//   mask, so status bar and page read as one continuous colour.
 // - Where the browser paints the status bar itself from <meta name=
 //   "theme-color"> (Android Chrome, Samsung Internet, Safari tabs) the
 //   inset is 0 and the strip collapses, so each theme-color is moved
@@ -39,9 +40,8 @@
     // How often (ms) the colour under the status bar is re-sampled while
     // scrolling; update() eases between samples.
     var SAMPLE_EVERY = 120;
-    // Scrim alpha once fully blended: just enough see-through for the
-    // backdrop blur to show content passing underneath.
-    var SCRIM_ALPHA = 0.9;
+    // Scrim alpha once fully blended, behind the status bar icons.
+    var SCRIM_ALPHA = 0.95;
 
     var root = document.documentElement;
     var scrim = null;
