@@ -22,6 +22,12 @@
      fixed strip exactly as tall as the status bar, in a faded
      maroon, so content scrolling up never shows raw under the status bar
      (on Android it swaps theme-color to the faded maroon instead).
+   - As the page scrolls, js/status-bar.js fades the top bar out while it
+     slides up under the status bar, and fills .sb-scrim (a fixed strip
+     exactly as tall as the status bar) with a colour that moves from the
+     bar's maroon to the colour of the page underneath, so the bar blends
+     into the page. Where the browser paints the status bar (Android,
+     Safari tabs) it moves theme-color the same way instead.
 
    This file is linked last in <head> on every page (after inline <style>
    blocks and Tailwind's output.css) so it wins the cascade for the few
@@ -35,15 +41,25 @@
   /* The one top-bar maroon. Keep in sync with NAV in js/status-bar.js and
      the theme-color metas / manifest.json. */
   --nav-maroon: #7c2133;
-  /* A lighter, faded maroon for the status bar strip while scrolled. It
-     reads as faded over the solid bar on pages whose bar stays pinned as
-     well as over page content where the bar has scrolled away. Keep in
-     sync with FADED in js/status-bar.js. */
-  --nav-maroon-faded: rgba(150, 78, 92, 0.92);
   --nav-gold: #f0c96a;
 }
 
-/* -- Status bar strip shown while the page is scrolled (js/status-bar.js) -- */
+/* -- Status bar strip (js/status-bar.js) --
+   Transparent while the top bar covers the status bar. As the bar scrolls
+   up and fades out, the script fades the strip in with the colour of the
+   page underneath (--sb-scrim-left / --sb-scrim-right, sampled at each
+   side so it follows backgrounds that change across the screen).
+
+   The strip itself is only as tall as the status bar (the script measures
+   it); what is painted is its ::before, which runs on past the status bar
+   and dissolves into the page along a cosine-eased mask. The fade starts
+   inside the status bar, below the clock and battery icons, and has no
+   hard start or end, so the status bar and the page read as one
+   continuous colour rather than two bands. No backdrop blur: a blur would
+   end in a visible line where the strip ends.
+
+   Where there is no inset (the browser paints the status bar from
+   theme-color) the strip and its fade are 0px tall. */
 
 .sb-scrim {
   position: fixed;
@@ -51,18 +67,48 @@
   left: 0;
   right: 0;
   height: env(safe-area-inset-top, 0px);
-  background-color: transparent;
   pointer-events: none;
-  /* Above every bar, sheet and overlay: only ever as tall as the status
-     bar, and transparent until the page is scrolled. */
+  /* Above every bar, sheet and overlay: transparent until the page is
+     scrolled, and its fade below the status bar never takes clicks. */
   z-index: 2147483000;
-  transition: background-color 0.25s ease;
 }
 
-html.sb-scrolled .sb-scrim {
-  background-color: var(--nav-maroon-faded);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+.sb-scrim::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% + min(env(safe-area-inset-top, 0px), 1px) * 44);
+  background: linear-gradient(to right,
+                              var(--sb-scrim-left, transparent),
+                              var(--sb-scrim-right, transparent));
+  -webkit-mask-image: linear-gradient(to bottom,
+    #000 0,
+    #000 calc(env(safe-area-inset-top, 0px) * 0.6),
+    rgba(0, 0, 0, 0.976) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.1),
+    rgba(0, 0, 0, 0.905) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.2),
+    rgba(0, 0, 0, 0.794) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.3),
+    rgba(0, 0, 0, 0.655) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.4),
+    rgba(0, 0, 0, 0.500) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.5),
+    rgba(0, 0, 0, 0.345) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.6),
+    rgba(0, 0, 0, 0.206) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.7),
+    rgba(0, 0, 0, 0.095) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.8),
+    rgba(0, 0, 0, 0.024) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.9),
+    transparent calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 1));
+  mask-image: linear-gradient(to bottom,
+    #000 0,
+    #000 calc(env(safe-area-inset-top, 0px) * 0.6),
+    rgba(0, 0, 0, 0.976) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.1),
+    rgba(0, 0, 0, 0.905) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.2),
+    rgba(0, 0, 0, 0.794) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.3),
+    rgba(0, 0, 0, 0.655) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.4),
+    rgba(0, 0, 0, 0.500) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.5),
+    rgba(0, 0, 0, 0.345) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.6),
+    rgba(0, 0, 0, 0.206) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.7),
+    rgba(0, 0, 0, 0.095) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.8),
+    rgba(0, 0, 0, 0.024) calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 0.9),
+    transparent calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 1));
 }
 
 /* -- .navbar (pages/amefufuka.html, assets/office day pages, and the
