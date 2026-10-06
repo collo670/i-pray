@@ -291,3 +291,51 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Dark mode: follows the app-wide light/dark choice (js/theme.js sets
+   html.dark on every page). */
+html.dark {
+    --accent: #7fc8a9;
+    --accent-2: #e0b872;
+    --accent-3: #9bb8de;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --bg: #111827;
+    --panel: #1f2937;
+    --panel-soft: #18212f;
+    color-scheme: dark;
+}
+
+html.dark body {
+    background: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+}
+
+html.dark .container {
+    background: rgba(31, 41, 55, 0.96);
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+html.dark .header,
+html.dark .main-header,
+html.dark .nav-button {
+    background: linear-gradient(135deg, #1f4d3d 0%, #0f6b52 100%);
+}
+
+html.dark .content {
+    background: linear-gradient(180deg, #1f2937 0%, #18212f 100%);
+}
+
+html.dark .content h2 {
+    border-bottom-color: rgba(127, 200, 169, 0.25);
+}
+
+html.dark .day-link {
+    background: linear-gradient(135deg, #1f2937 0%, #243244 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .navigation {
+    background: linear-gradient(90deg, #18212f 0%, #1f2937 100%);
+    border-top-color: rgba(255, 255, 255, 0.06);
+}

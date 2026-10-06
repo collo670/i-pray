@@ -1,4 +1,5 @@
-// Centralized navigation and theme manager for pages
+// Centralized navigation manager for pages. Light/dark mode itself lives in
+// js/theme.js (shared app-wide); this only wires the page's toggle button.
 (function () {
   'use strict';
 
@@ -20,10 +21,7 @@
 
   if (!window.toggleDarkMode) {
     window.toggleDarkMode = function () {
-      document.body.classList.toggle('dark-mode');
-      const btn = document.querySelector('.toggle-btn');
-      if (btn) btn.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
-      try { localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'); } catch (e) {}
+      if (window.IPrayTheme) window.IPrayTheme.toggle();
     };
   }
 
@@ -57,9 +55,8 @@
 
     if (!navLinks || !hamburger) {
       // Nothing to do if page doesn't have the expected structure
-      // Expose no-op functions so existing onclick attributes won't error
+      // Expose a no-op so existing onclick attributes won't error
       window.toggleMenu = function () {};
-      window.toggleDarkMode = function () {};
       return;
     }
 
@@ -131,34 +128,16 @@
       }
     });
 
-    // Dark mode handling
-    function setDark(enabled) {
-      document.body.classList.toggle('dark-mode', enabled);
-      if (toggleBtn) toggleBtn.textContent = enabled ? 'Light Mode' : 'Dark Mode';
-      localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
-    }
-
-    window.toggleDarkMode = function () {
-      setDark(!document.body.classList.contains('dark-mode'));
-    };
-
-    // Mark that the enhanced implementation is active
+    // Dark mode: the button's inline onclick="toggleDarkMode()" already
+    // calls the shared toggle, so only add a listener when it has none
+    // (adding both would toggle twice and cancel out).
     window.__navThemeLoaded = true;
 
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', window.toggleDarkMode);
+    if (toggleBtn && !toggleBtn.hasAttribute('onclick')) {
+      toggleBtn.addEventListener('click', function () {
+        window.toggleDarkMode();
+      });
     }
-
-    // Initialize dark mode preference
-    try {
-      const saved = localStorage.getItem('darkMode');
-      if (saved === 'enabled') setDark(true);
-      else if (saved === 'disabled') setDark(false);
-      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setDark(true);
-      }
-    } catch (e) {
-      // ignore storage errors
-    }
+    if (window.IPrayTheme) window.IPrayTheme.refresh();
   });
 })();

@@ -554,6 +554,7 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
+    <script src="../js/theme.js"></script>
 </head>
 <body class="masifu-topbar">
         <header id="appBar" class="app-bar" role="banner">
@@ -837,21 +838,7 @@
 
         // Dark mode toggle
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const btn = document.querySelector('.toggle-btn');
-            if (document.body.classList.contains('dark-mode')) {
-                btn.textContent = 'Light Mode';
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                btn.textContent = 'Dark Mode';
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        }
-
-        // Check for dark mode preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.querySelector('.toggle-btn').textContent = 'Light Mode';
+            window.IPrayTheme.toggle();
         }
 
         // Translations

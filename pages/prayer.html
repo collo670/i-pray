@@ -42,16 +42,8 @@
         .favorite-btn:hover { transform: scale(1.1); }
         .favorite-btn.active { color: #DC2626; }
     </style>
-    <!-- Apply saved theme before paint to avoid flash -->
-    <script>
-        (function () {
-            try {
-                if (localStorage.getItem('darkMode') === 'true') {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
+    <!-- Shared light/dark theme: applies the saved choice before paint -->
+    <script src="../js/theme.js"></script>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
@@ -274,8 +266,7 @@
             var btn = document.getElementById('darkModeQuickToggle');
             if (!btn) return;
             btn.addEventListener('click', function () {
-                var isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('darkMode', isDark);
+                window.IPrayTheme.toggle();
             });
         })();
     </script>
