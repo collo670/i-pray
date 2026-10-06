@@ -180,11 +180,14 @@ function getCurrentWeekAndDay() {
 function updateManifestThemeColor() {
     const theme = localStorage.getItem('appTheme') || 'default';
     const isDark = localStorage.getItem('darkMode') === 'true';
+    // The top bar is maroon in light and dark mode; match it (faded while
+    // the page is scrolled, see js/status-bar.js).
+    const barColor = document.documentElement.classList.contains('sb-scrolled') ? '#964e5c' : '#7c2133';
     let themeColor;
 
     switch (theme) {
         case 'purple':
-            themeColor = isDark ? '#111827' : '#7c2133';
+            themeColor = barColor;
             break;
         case 'green':
             themeColor = isDark ? '#111827' : '#2E7D32';
@@ -196,7 +199,7 @@ function updateManifestThemeColor() {
             themeColor = isDark ? '#111827' : '#F8F9FA';
             break;
         default:
-            themeColor = isDark ? '#111827' : '#7c2133';
+            themeColor = barColor;
     }
 
     document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);

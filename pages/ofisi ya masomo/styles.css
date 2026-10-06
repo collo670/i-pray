@@ -61,6 +61,11 @@ body {
 }
 
 .page-nav .nav-link {
+    /* One line, so the bar keeps the height .page-shell clears */
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--topbar-gold, #f0c96a);
     text-decoration: none;
     font-size: 0.95rem;

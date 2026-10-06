@@ -1916,15 +1916,22 @@ nav.fixed.bottom-0.left-0.right-0 {
 .sheet-overlay.sheet-from-top .sheet-panel {
     border-radius: 0 0 1.5rem 1.5rem;
     padding-top: calc(env(safe-area-inset-top, 0px) + 0.25rem);
-    /* The part behind the status bar stays the top-bar maroon */
-    background: linear-gradient(
-        to bottom,
-        var(--nav-maroon, #7c2133) env(safe-area-inset-top, 0px),
-        var(--surface-0) env(safe-area-inset-top, 0px)
-    );
     padding-bottom: 1rem;
     transform: translateY(-100%);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* The status bar above a top sheet stays the top-bar maroon, full width */
+.sheet-overlay.sheet-from-top::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--nav-maroon, #7c2133);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .sheet-overlay.sheet-from-top.open .sheet-panel {
