@@ -18,10 +18,12 @@
      so every rule below is a no-op there. Where the browser paints the
      status bar itself it uses <meta name="theme-color">, which is the same
      maroon.
-   - Once the page is scrolled, js/status-bar.js fades in .sb-scrim: a
-     fixed strip exactly as tall as the status bar, in a translucent
-     maroon, so content scrolling up never shows raw under the status bar
-     (on Android it swaps theme-color to the faded maroon instead).
+   - As the page scrolls, js/status-bar.js fades the top bar out while it
+     slides up under the status bar, and fills .sb-scrim (a fixed strip
+     exactly as tall as the status bar) with a colour that moves from the
+     bar's maroon to the colour of the page underneath, so the bar blends
+     into the page. Where the browser paints the status bar (Android,
+     Safari tabs) it moves theme-color the same way instead.
 
    This file is linked last in <head> on every page (after inline <style>
    blocks and Tailwind's output.css) so it wins the cascade for the few
@@ -35,12 +37,17 @@
   /* The one top-bar maroon. Keep in sync with NAV in js/status-bar.js and
      the theme-color metas / manifest.json. */
   --nav-maroon: #7c2133;
-  /* The same maroon, faded, for the status bar strip while scrolled. */
-  --nav-maroon-faded: rgba(124, 33, 51, 0.8);
   --nav-gold: #f0c96a;
 }
 
-/* -- Status bar strip shown while the page is scrolled (js/status-bar.js) -- */
+/* -- Status bar strip (js/status-bar.js) --
+   Transparent while the top bar covers the status bar. As the bar scrolls
+   up and fades out, the script fades the strip in with the colour of the
+   page underneath (--sb-scrim-left / --sb-scrim-right, sampled at each
+   side so it follows backgrounds that change across the screen), plus a
+   short feather below it so content melts into the status bar instead of
+   meeting a hard edge. The feather is 0px tall where there is no inset
+   (the browser paints the status bar from theme-color there). */
 
 .sb-scrim {
   position: fixed;
@@ -48,18 +55,30 @@
   left: 0;
   right: 0;
   height: env(safe-area-inset-top, 0px);
-  background-color: transparent;
+  background: linear-gradient(to right,
+                              var(--sb-scrim-left, transparent),
+                              var(--sb-scrim-right, transparent));
   pointer-events: none;
   /* Above every bar, sheet and overlay: only ever as tall as the status
      bar, and transparent until the page is scrolled. */
   z-index: 2147483000;
-  transition: background-color 0.25s ease;
+}
+
+.sb-scrim::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: calc(min(env(safe-area-inset-top, 0px), 1px) * 14);
+  background: inherit;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
 }
 
 html.sb-scrolled .sb-scrim {
-  background-color: var(--nav-maroon-faded);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
 }
 
 /* -- .navbar (pages/amefufuka.html, assets/office day pages, and the
