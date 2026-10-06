@@ -29,8 +29,16 @@ function setLanguage(lang) {
 }
 
 function loadPreferences() {
-    const darkMode = localStorage.getItem('darkMode') === 'true';
-    applyDarkMode(darkMode);
+    const darkMode = window.IPrayTheme ? window.IPrayTheme.isDark() : localStorage.getItem('darkMode') === 'true';
+    updateThemeIcon(darkMode);
+    updateManifestThemeColor();
+    // Keep the switch and icons in step when the theme changes in another page or tab.
+    window.addEventListener('ipray:themechange', function (e) {
+        const toggle = document.getElementById('darkModeToggle');
+        if (toggle) toggle.checked = e.detail.dark;
+        updateThemeIcon(e.detail.dark);
+        updateManifestThemeColor();
+    });
 
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (darkModeToggle) {
@@ -84,9 +92,8 @@ function updateThemeIcon(isDark) {
 }
 
 function applyDarkMode(isDark) {
-    document.documentElement.classList.toggle('dark', isDark);
-    document.body.classList.toggle('dark', isDark);
-    localStorage.setItem('darkMode', String(isDark));
+    // Saved and applied app-wide by js/theme.js.
+    window.IPrayTheme.set(isDark);
     updateThemeIcon(isDark);
     updateManifestThemeColor();
 }

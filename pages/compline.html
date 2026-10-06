@@ -590,6 +590,7 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
+    <script src="../js/theme.js"></script>
 </head>
 <body class="prayer-topbar">
         <header id="appBar" class="app-bar" role="banner">
@@ -1450,31 +1451,9 @@
                 });
             }
 
-            function storedDarkModeEnabled() {
-                try {
-                    const saved = localStorage.getItem('darkMode');
-                    return saved === 'true' || saved === 'enabled';
-                } catch (e) {
-                    return false;
-                }
-            }
-
-            function applyDarkMode(isDark, persist) {
-                document.body.classList.toggle('dark-mode', isDark);
-                document.documentElement.classList.toggle('dark', isDark);
-                const btn = document.querySelector('.toggle-btn');
-                if (btn) {
-                    btn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-                    btn.setAttribute('aria-pressed', String(isDark));
-                    btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-                    btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-                }
-                if (persist === false) return;
-                try { localStorage.setItem('darkMode', isDark ? 'true' : 'false'); } catch (e) {}
-            }
-
+            // Light/dark mode is shared app-wide by js/theme.js.
             window.toggleDarkMode = function () {
-                applyDarkMode(!document.body.classList.contains('dark-mode'));
+                window.IPrayTheme.toggle();
             };
 
             function loadScale() {
@@ -1535,7 +1514,6 @@
                 renderTopNavigation();
                 wireMenuLinks();
                 setMenuOpen(false);
-                applyDarkMode(storedDarkModeEnabled(), false);
 
                 textScale = loadScale();
                 applyTextScale(false);
@@ -1554,7 +1532,6 @@
             });
 
             window.addEventListener('storage', function (e) {
-                if (e.key === 'darkMode') applyDarkMode(storedDarkModeEnabled(), false);
                 if (e.key === SCALE_KEY || e.key === 'textSize') {
                     textScale = loadScale();
                     applyTextScale(false);

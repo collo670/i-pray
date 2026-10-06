@@ -20,16 +20,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 
-    <!-- Apply saved theme before paint to avoid flash -->
-    <script>
-        (function () {
-            try {
-                if (localStorage.getItem('darkMode') === 'true') {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
+    <!-- Shared light/dark theme: applies the saved choice before paint -->
+    <script src="../js/theme.js"></script>
 
     <style>
         body {
@@ -427,16 +419,12 @@
         }
 
         // ========== Theme ==========
+        // Light/dark mode itself is applied and kept in sync by js/theme.js.
         function initTheme() {
-            const isDark = localStorage.getItem('darkMode') === 'true';
-            document.documentElement.classList.toggle('dark', isDark);
             const themeMeta = document.querySelector('meta[name="theme-color"]');
             if (themeMeta) themeMeta.setAttribute('content', '#7c2133');
         }
 
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'darkMode') initTheme();
-        });
 
        // === Liturgical Feasts Data ===
         const LITURGICAL_FEASTS = {

@@ -394,6 +394,7 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
+    <script src="../js/theme.js"></script>
 </head>
 <body class="masifu-topbar">
         <header id="appBar" class="app-bar" role="banner">
@@ -669,14 +670,9 @@
         });
 
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            syncDarkModeButton();
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+            window.IPrayTheme.toggle();
         }
 
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-        }
         syncDarkModeButton();
     </script>
 

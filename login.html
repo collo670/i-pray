@@ -33,16 +33,8 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
-    <!-- Apply saved theme before paint to avoid flash -->
-    <script>
-        (function () {
-            try {
-                if (localStorage.getItem('darkMode') === 'true') {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
+    <!-- Shared light/dark theme: applies the saved choice before paint -->
+    <script src="js/theme.js"></script>
     <script src="js/logo-loader.js"></script>
     <link rel="stylesheet" href="css/status-bar-safe-area.css">
     <script src="js/status-bar.js" defer></script>

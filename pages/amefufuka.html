@@ -535,6 +535,7 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
+    <script src="../js/theme.js"></script>
 </head>
 <body>
 
@@ -693,32 +694,10 @@
             });
         });
 
-        // --- Dark Mode Toggle ---
-        const applyTheme = (theme) => {
-            if (theme === 'dark') {
-                htmlElement.classList.add('dark');
-                htmlElement.classList.remove('light');
-            } else {
-                htmlElement.classList.add('light');
-                htmlElement.classList.remove('dark');
-            }
-        };
-
+        // --- Dark Mode Toggle (shared app-wide by js/theme.js) ---
         darkModeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
+            window.IPrayTheme.toggle();
         });
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            applyTheme(savedTheme);
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            applyTheme('dark');
-        } else {
-            applyTheme('light');
-        }
 
         // --- Text Size Adjustment Toggle ---
         const fontSizeClasses = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
