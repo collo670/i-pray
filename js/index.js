@@ -316,15 +316,6 @@ function setLanguage(lang) {
     calculateLiturgicalDay(lang);
     renderPrayerMenus();
 
-    const saintEl = document.getElementById('saintOfDay');
-    if (saintEl && !saintEl.classList.contains('hidden')) {
-        const info = getLiturgicalInfoForToday();
-        if (info.feast) {
-            const feastName = lang === 'sw' ? translateFeastName(info.feast) : info.feast;
-            saintEl.textContent = `${translations[lang].saint}: ${feastName}`;
-        }
-    }
-
     // Update prayer text
     const prayerMain = document.getElementById('prayerMain');
     const prayerFinal = document.getElementById('prayerFinal');
@@ -1229,17 +1220,6 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateLiturgicalDay(preferredLang);
     setupPrayerReminders();
     registerServiceWorker();
-    // Populate Saint of the Day just below the date
-    const saintEl = document.getElementById('saintOfDay');
-    if (saintEl) {
-        const info = getLiturgicalInfoForToday();
-        if (info.feast) {
-            const langData = translations[preferredLang] ? preferredLang : 'en';
-            const feastName = langData === 'sw' ? translateFeastName(info.feast) : info.feast;
-            saintEl.textContent = `${translations[langData].saint}: ${feastName}`;
-            saintEl.classList.remove('hidden');
-        }
-    }
     // Upcoming feasts toggle behavior
     const toggleUpcoming = document.getElementById('toggleUpcomingFeasts');
     const feastsList = document.getElementById('upcomingFeastsList');

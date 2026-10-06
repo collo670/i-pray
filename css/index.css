@@ -1650,7 +1650,7 @@ nav.fixed.bottom-0.left-0.right-0 {
    --------------------------------------------------------------------------- */
 .liturgical-card {
     border-radius: var(--radius-xl);
-    padding: 2rem 1.5rem;
+    padding: 2rem clamp(1rem, 4.5vw, 1.5rem);
     background: var(--lit-bg, var(--glass-bg));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -1698,24 +1698,39 @@ nav.fixed.bottom-0.left-0.right-0 {
     border-radius: 9999px;
     /* Keep >= 14px: enhanceSmallTextAccessibility() rewrites smaller text
        and cannot evaluate this badge's semi-transparent background */
-    font-size: 0.875rem;
+    font-size: clamp(0.875rem, 4.2vw, 1.05rem);
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     background: var(--lit-soft);
     color: var(--lit-text);
     margin-bottom: 1rem;
 }
 
-.liturgical-day {
-    font-size: 2.5rem;
+/* Sizes scale with the viewport so the card's text is as large as the
+   card allows on a phone without spilling out of it; the date wraps
+   (balanced) rather than overflowing when a long weekday or month needs
+   it. #liturgicalCard is in the selectors to beat the generic
+   `body.page-index h2` size. */
+#liturgicalCard .liturgical-day,
+#liturgicalCard .liturgical-week,
+#liturgicalCard .feast-day,
+#liturgicalCard .season-badge {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+}
+
+#liturgicalCard .liturgical-day {
+    font-size: clamp(1.75rem, 7.6vw, 2.5rem);
     font-weight: 700;
     line-height: 1.1;
     color: var(--text-primary);
 }
 
 .liturgical-week {
-    font-size: 1.2rem;
+    font-size: clamp(1.3rem, 6vw, 1.6rem);
+    line-height: 1.3;
     font-weight: 600;
     color: var(--lit-text);
     margin-top: 0.4rem;
@@ -1732,7 +1747,7 @@ nav.fixed.bottom-0.left-0.right-0 {
     margin-top: 0.75rem;
     padding: 0.2rem 0.8rem;
     border-radius: 9999px;
-    font-size: 0.75rem;
+    font-size: clamp(0.9rem, 4.2vw, 1.05rem);
     font-weight: 600;
     background: var(--surface-2);
     color: var(--text-secondary);
@@ -1741,8 +1756,12 @@ nav.fixed.bottom-0.left-0.right-0 {
 .feast-day {
     margin-top: 0.75rem;
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: clamp(1.15rem, 5.4vw, 1.4rem);
     color: var(--lit-text);
+}
+
+.upcoming-feasts-toggle {
+    font-size: clamp(1rem, 4.6vw, 1.15rem);
 }
 
 /* ---------------------------------------------------------------------------
