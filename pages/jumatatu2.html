@@ -714,117 +714,6 @@
             setLanguage(newLang);
         };
 
-        // Enhanced Bottom Navigation Functions
-        function initBottomNavigation() {
-            console.log('Initializing bottom navigation...');
-
-            // Wait for DOM to be fully loaded
-            if (!document.querySelector('.bottom-nav')) {
-                console.log('Bottom nav element not found, retrying...');
-                setTimeout(initBottomNavigation, 100);
-                return;
-            }
-
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.bottom-nav a');
-            console.log('Found', navLinks.length, 'navigation links');
-            console.log('Current page:', currentPage);
-
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                console.log('Link href:', href, 'Current page:', currentPage);
-
-                // Better active state detection
-                if (href === currentPage ||
-                    (currentPage === '' && href === 'index.html') ||
-                    (currentPage.includes('jumatatu') && href === 'lauds.html')) {
-
-                    link.classList.add('text-purple-600', 'active');
-                    link.classList.remove('text-gray-500');
-                    link.setAttribute('aria-current', 'page');
-                    console.log('Set active state for:', href);
-                } else {
-                    link.classList.add('text-gray-500');
-                    link.classList.remove('text-purple-600', 'active');
-                    link.removeAttribute('aria-current');
-                }
-            });
-
-            // Add click handlers for navigation
-            const homeLink = document.querySelector('.bottom-nav a[href="../index.html"]');
-            if (homeLink) {
-                homeLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    savePrayerAccess('home', 'Home', 'index.html');
-                    window.location.href = 'index.html';
-                });
-            }
-
-            const laudsLink = document.querySelector('.bottom-nav a[href="lauds.html"]');
-            if (laudsLink) {
-                laudsLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // Navigate to appropriate Lauds file based on day
-                    const day = new Date().getDay();
-                    const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
-                    const weekSequence = [2, 3, 4, 1]; // This week is 2, then 3, 4, 1, repeat
-                    const now = new Date();
-                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                    const daysSinceSunday = today.getDay();
-                    const currentSunday = new Date(today);
-                    currentSunday.setDate(today.getDate() - daysSinceSunday);
-                    const referenceWeek2Sunday = new Date(2025, 7, 3);
-                    referenceWeek2Sunday.setHours(0,0,0);
-                    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-                    const weeksSinceRef = Math.floor((currentSunday - referenceWeek2Sunday) / msPerWeek);
-                    const weekIndex = ((weeksSinceRef % weekSequence.length) + weekSequence.length) % weekSequence.length;
-                    const week = weekSequence[weekIndex];
-                    const fileName = `${dayToPrefix[day]}${week}.html`;
-                    savePrayerAccess('lauds', 'Lauds', fileName);
-                    window.location.href = fileName;
-                });
-            }
-
-            const calendarLink = document.querySelector('.bottom-nav a[href="calendar.html"]');
-            if (calendarLink) {
-                calendarLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    savePrayerAccess('calendar', 'Calendar', 'calendar.html');
-                    window.location.href = 'calendar.html';
-                });
-            }
-
-            const settingsLink = document.querySelector('.bottom-nav a[href="settings.html"]');
-            if (settingsLink) {
-                settingsLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    savePrayerAccess('settings', 'Settings', 'settings.html');
-                    window.location.href = 'settings.html';
-                });
-            }
-
-            console.log('Bottom navigation initialized successfully');
-        }
-
-        // Save prayer access for history
-        function savePrayerAccess(prayerId, title, url) {
-            // Simple localStorage-based history (since we don't have IndexedDB in these pages)
-            const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
-            const newAccess = {
-                id: prayerId,
-                title: title,
-                url: url,
-                lastAccessed: new Date().toISOString()
-            };
-
-            // Remove existing entry if present
-            const filteredHistory = history.filter(item => item.id !== prayerId);
-            filteredHistory.unshift(newAccess);
-
-            // Keep only last 10 entries
-            localStorage.setItem('prayerHistory', JSON.stringify(filteredHistory.slice(0, 10)));
-        }
-
         // Keyboard navigation support for mobile menu
         document.addEventListener('keydown', function(e) {
             const navLinks = document.querySelector('.nav-links');
@@ -847,10 +736,7 @@
             }
         });
 
-        // Initialize bottom navigation when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            initBottomNavigation();
-
             // Set initial language
             const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
             setLanguage(preferredLang);
@@ -882,7 +768,6 @@
     <script src="../js/ofisi-readings-dropdown.js" defer></script>
     <script src="../js/sikukuu.js" defer></script>
     <script src="../js/masifu.js" defer></script>
-    <script src="../js/prayers-nav.js" defer></script>
     <script src="../js/prevent-zoom.js" defer></script>
 </body>
 </html>
