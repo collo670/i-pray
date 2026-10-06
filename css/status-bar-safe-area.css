@@ -19,7 +19,7 @@
      status bar itself it uses <meta name="theme-color">, which is the same
      maroon.
    - Once the page is scrolled, js/status-bar.js fades in .sb-scrim: a
-     fixed strip exactly as tall as the status bar, in a translucent
+     fixed strip exactly as tall as the status bar, in a faded
      maroon, so content scrolling up never shows raw under the status bar
      (on Android it swaps theme-color to the faded maroon instead).
 
@@ -35,8 +35,11 @@
   /* The one top-bar maroon. Keep in sync with NAV in js/status-bar.js and
      the theme-color metas / manifest.json. */
   --nav-maroon: #7c2133;
-  /* The same maroon, faded, for the status bar strip while scrolled. */
-  --nav-maroon-faded: rgba(124, 33, 51, 0.8);
+  /* A lighter, faded maroon for the status bar strip while scrolled. It
+     reads as faded over the solid bar on pages whose bar stays pinned as
+     well as over page content where the bar has scrolled away. Keep in
+     sync with FADED in js/status-bar.js. */
+  --nav-maroon-faded: rgba(150, 78, 92, 0.92);
   --nav-gold: #f0c96a;
 }
 
@@ -90,12 +93,13 @@ html.sb-scrolled .sb-scrim {
   content: none !important;
 }
 
-/* Bars whose content sits in a padded .nav-container */
+/* Bars whose content sits in a .nav-container with its own 20px side
+   padding: only the part of a side inset beyond that is added. */
 .navbar:has(> .nav-container) {
   padding: env(safe-area-inset-top, 0px)
-           env(safe-area-inset-right, 0px)
+           max(0px, calc(env(safe-area-inset-right, 0px) - 20px))
            0
-           env(safe-area-inset-left, 0px) !important;
+           max(0px, calc(env(safe-area-inset-left, 0px) - 20px)) !important;
 }
 
 /* Card-style bars (padding on the bar itself, .navbar-container inside):
@@ -103,6 +107,14 @@ html.sb-scrolled .sb-scrim {
    dropped to let them reach the screen edges. */
 body:has(> .navbar > .navbar-container) {
   margin: 0;
+}
+
+/* The toggle row under those bars is width:100% plus padding; keep it on
+   screen now that the body margin is gone. */
+body:has(> .navbar > .navbar-container) .toggles-container {
+  box-sizing: border-box;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
 }
 
 .navbar:has(> .navbar-container) {
@@ -135,6 +147,7 @@ body:has(> .navbar > .navbar-container) {
 .navbar .nav-links,
 .app-bar .nav-links {
   background: var(--nav-maroon) !important;
+  border-top: 0 !important;
 }
 
 @media (max-width: 768px) {
@@ -143,6 +156,14 @@ body:has(> .navbar > .navbar-container) {
   .navbar .nav-links,
   .app-bar .nav-links {
     border-radius: 0 0 1.4rem 1.4rem !important;
+  }
+
+  /* A closed dropdown takes no space (some pages pad it even at
+     max-height 0, which would leave a maroon tab under the bar). */
+  .navbar .nav-links:not(.active),
+  .app-bar .nav-links:not(.active) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .navbar:has(.nav-links.active),
@@ -157,6 +178,18 @@ body:has(> .navbar > .navbar-container) {
   .navbar .nav-links,
   .app-bar .nav-links {
     background: transparent !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Phones in landscape: keep the link row on one line inside the safe
+     area between the notch insets. */
+  .navbar > .nav-container .nav-links li {
+    margin-left: 4px;
+  }
+
+  .navbar > .nav-container .nav-links a {
+    padding: 8px 6px;
   }
 }
 
@@ -182,7 +215,8 @@ nav[class*="bg-[#202847]"] {
 nav[class*="bg-[#202847]"] a,
 nav[class*="bg-[#202847]"] h1,
 nav[class*="bg-[#202847]"] h2,
-nav[class*="bg-[#202847]"] span {
+nav[class*="bg-[#202847]"] span,
+nav[class*="bg-[#202847]"] .text-white {
   color: var(--nav-gold) !important;
 }
 

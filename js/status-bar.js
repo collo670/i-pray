@@ -5,8 +5,8 @@
 // While a page sits at the top, its maroon top nav bar paints the mobile
 // status-bar area itself. Once the page is scrolled the bar either scrolls
 // away or stays pinned; either way a fixed strip exactly as tall as the
-// status bar (env(safe-area-inset-top)) fades in with a translucent version
-// of the nav maroon, so page content never shows raw under the clock and
+// status bar (env(safe-area-inset-top)) fades in with a faded version of
+// the nav maroon, so page content never shows raw under the clock and
 // battery icons. css/status-bar-safe-area.css styles the strip; this script
 // only adds it and toggles html.sb-scrolled.
 //
@@ -23,8 +23,8 @@
     window.__iprayStatusBarInit = true;
 
     // Keep in sync with --nav-maroon / --nav-maroon-faded in
-    // css/status-bar-safe-area.css. FADED is NAV at 80% over white, made
-    // opaque because theme-color ignores alpha.
+    // css/status-bar-safe-area.css (theme-color ignores alpha, so FADED is
+    // the opaque faded maroon).
     var NAV = '#7c2133';
     var FADED = '#964e5c';
     var THRESHOLD = 4;
