@@ -30,7 +30,7 @@
 
     // Bumped whenever extraction changes shape, so offices cached by an
     // older version of this file are re-fetched instead of re-rendered.
-    var EXTRACT_VERSION = 4;
+    var EXTRACT_VERSION = 5;
 
     // ---------------------------------------------------------------------
     // Sanitiser allow-lists
@@ -108,11 +108,26 @@
     var CHOOSER_TEXT = /^(Psalms of the day|Complementary psalms|Continue|Back|Top|Next|Previous)$/i;
     var CHOOSER_HEADING = /^(PSALMS OF THE DAY|COMPLEMENTARY PSALMS|CONCLUSION)$/i;
 
-    // Rubrics that are website instructions, not liturgical ones. Genuine
-    // rubrics ("The psalms and antiphons are taken from the current
-    // weekday", "In Ordinary Time the Te Deum is not said") are kept,
-    // because they are part of how the hour is prayed.
-    var SITE_RUBRIC = /(click|tap|scroll|browser|website|web site|this page|audio|recording|download|subscribe|app store|google play|copyright|universalis publishing|select .*(option|psalms)|choose .*(option|psalms))/i;
+    // Block-level rubrics are instructions about the hour ("The hymn may be
+    // taken from…", "Choose which celebration…", the italic psalm captions)
+    // rather than words that are prayed, so they are dropped. These few are
+    // the exceptions: short labels or abbreviated prayers that are said.
+    var KEPT_RUBRIC = /^(psalm[- ]?prayer|let us pray\.?|(the )?lord'?s prayer|our father\b.*|ant\.?\s*\d*\b.*|[\u2123\u211f]\.?.*)$/i;
+
+    // Page information Universalis prints in and around the office: the
+    // date and celebration lines, "Year / Psalm week / Liturgical Colour",
+    // the celebration and hour pickers, copyright and translation notes and
+    // the app plug. Only ever matched against blocks that hold no prayer
+    // lines (see dropMetaBlocks), so a psalm verse can't be caught by it.
+    var META_TEXT = /(copyright|\u00a9|all rights reserved|universalis|psalm week|liturgical colou?r|^year\s*:|today'?s options|other hours|choose which|you can also|see also|this page|click|tap here|browser|website|download|subscribe|app store|google play|listen|audio|recording|jerusalem bible|grail|icel|international commission|translation|texts? (are|from|of)|^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b.*\b(19|20)\d\d$)/i;
+
+    // Prayer lines get a much narrower test: only a copyright or publisher
+    // notice that happens to be styled as a paragraph of text.
+    var META_LINE = /(copyright|\u00a9|all rights reserved|universalis publishing|universalis apps?)/i;
+
+    // Headings of the parts of an hour, used to find where the office
+    // starts when INTRODUCTION is missing.
+    var OFFICE_HEADING = /^(introduction|invitatory|hymn|psalmody|psalm|canticle|(short |scripture |first |second )?reading|(short )?responsory|benedictus|magnificat|gospel canticle|(prayers and )?intercessions|prayers|(the )?lord'?s prayer|our father|concluding prayer|prayer|te deum|conclusion|dismissal)\b/i;
 
     // ---------------------------------------------------------------------
     // Small helpers
@@ -158,20 +173,12 @@
         else el.removeAttribute('class');
     }
 
+    // Links in the office lead back into the Universalis site (other hours,
+    // the psalm and Bible pages, in-page anchors to the page we just threw
+    // away). None of that belongs in the prayer, so every link becomes its
+    // plain text.
     function cleanLink(a) {
-        var href = a.getAttribute('href') || '';
-        // In-page anchors point at the Universalis page we just threw away,
-        // so the link is meaningless here - keep the words, drop the link.
-        if (!href || href.charAt(0) === '#' || /^\s*javascript:/i.test(href)) {
-            unwrap(a);
-            return false;
-        }
-        if (href.charAt(0) === '/') href = ORIGIN + href;
-        if (!/^https?:\/\//i.test(href)) { unwrap(a); return false; }
-        a.setAttribute('href', href);
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener noreferrer');
-        return true;
+        unwrap(a);
     }
 
     // Walks the subtree bottom-up so unwrapping a parent can't skip
@@ -220,8 +227,10 @@
         }
     }
 
+    // Section headings come as `table.each` header cells, as h1-h6 or as a
+    // bold rubric, depending on the hour and the season.
     function sectionHeadings(root) {
-        return toArray(root.querySelectorAll('table.each th[align="left"]'));
+        return toArray(root.querySelectorAll('table.each th[align="left"], h1, h2, h3, h4, h5, h6, .boldrubric'));
     }
 
     function tableOf(node) {
@@ -233,12 +242,18 @@
     // The office always opens with INTRODUCTION; if that heading is missing
     // (Universalis varies a little by season and by hour) fall back to the
     // first section heading of any kind, and only then to the first verse.
+    function headingBlock(head) {
+        return head.tagName === 'TH' ? tableOf(head) : head;
+    }
+
     function findStart(root) {
         var heads = sectionHeadings(root);
         for (var i = 0; i < heads.length; i++) {
-            if (/^INTRODUCTION$/i.test(text(heads[i]))) return tableOf(heads[i]);
+            if (/^INTRODUCTION$/i.test(text(heads[i]))) return headingBlock(heads[i]);
         }
-        if (heads.length) return tableOf(heads[0]);
+        for (var j = 0; j < heads.length; j++) {
+            if (OFFICE_HEADING.test(text(heads[j]))) return headingBlock(heads[j]);
+        }
         return root.querySelector('.v, .p, .gb');
     }
 
@@ -267,14 +282,14 @@
 
     function dropChoosers(root) {
         // "Psalms of the day / Complementary psalms" switcher: a heading
-        // plus a paragraph of in-page links. Universalis already serves
-        // the psalms of the day inline, so only the control goes.
-        toArray(root.querySelectorAll('p')).forEach(function (p) {
-            var links = p.querySelectorAll('a[href]');
-            var allInPage = links.length > 0 && toArray(links).every(function (a) {
-                return (a.getAttribute('href') || '').charAt(0) === '#';
-            });
-            if (allInPage && CHOOSER_TEXT.test(text(p))) remove(p);
+        // plus paragraphs of in-page links. Universalis already serves the
+        // psalms of the day inline, so only the control goes. By the time
+        // this runs sanitize() has already unwrapped the links, so the
+        // paragraphs are matched on their text alone - but never a prayer
+        // line, only a bare paragraph.
+        toArray(root.querySelectorAll('p, div')).forEach(function (p) {
+            if (isLine(p) || hasLines(p)) return;
+            if (CHOOSER_TEXT.test(text(p))) remove(p);
         });
         toArray(root.querySelectorAll('h1, h2, h3, h4, h5, h6')).forEach(function (h) {
             if (CHOOSER_HEADING.test(text(h))) remove(h);
@@ -285,10 +300,67 @@
         });
     }
 
-    function dropSiteRubrics(root) {
-        toArray(root.querySelectorAll('.rubric, .smallrubric')).forEach(function (n) {
-            if (SITE_RUBRIC.test(text(n))) remove(n);
+    // Drops rubric *blocks* - instructions, captions, site notes. A rubric
+    // span inside a prayer line (the red "Ant." or "℟.") is part of that
+    // line and stays.
+    function dropRubricBlocks(root) {
+        toArray(root.querySelectorAll('.rubric, .smallrubric, .redsmall')).forEach(function (n) {
+            if (!/^(P|DIV|TD|LI|DD|BLOCKQUOTE)$/.test(n.tagName)) return;
+            if (n.parentNode && n.parentNode.closest && n.parentNode.closest(LINE_SELECTOR)) return;
+            if (hasLines(n)) return;
+            if (KEPT_RUBRIC.test(text(n))) return;
+            remove(n);
         });
+    }
+
+    // Date and celebration headings, "Year / Psalm week / Colour", copyright
+    // and translation notes, "Other hours" and similar page information. The
+    // app prints its own date banner and hour heading, so none of it is
+    // needed - and it is not prayer.
+    function dropMetaBlocks(root) {
+        toArray(root.querySelectorAll('p, div, h1, h2, h3, h4, h5, h6, li, dl, ul, ol, blockquote'))
+            .forEach(function (n) {
+                if (!n.parentNode) return;
+                var t = text(n);
+                if (!t) return;
+                if (isLine(n)) {
+                    if (META_LINE.test(t) && !hasLines(n)) remove(n);
+                    return;
+                }
+                if (hasLines(n)) return;
+                if (OFFICE_HEADING.test(t) && /^H[1-6]$/.test(n.tagName)) return;
+                if (META_TEXT.test(t)) remove(n);
+            });
+    }
+
+    // Lines made of nothing but links ("Tuesday of week 27 | Saint Bruno",
+    // "Lauds | Midday | Vespers", "Terce · None") are site navigation. Runs
+    // before sanitize(), which turns every link into plain text.
+    function dropLinkBlocks(root) {
+        toArray(root.querySelectorAll('p, div, li, td, h1, h2, h3, h4, h5, h6')).forEach(function (n) {
+            if (!n.parentNode || isLine(n) || hasLines(n)) return;
+            var links = toArray(n.querySelectorAll('a'));
+            if (!links.length) return;
+            var rest = text(n);
+            links.forEach(function (a) {
+                var t = text(a);
+                if (t) rest = rest.split(t).join(' ');
+            });
+            if (!/[A-Za-z0-9]/.test(rest.replace(/\b(or|and)\b/gi, ''))) remove(n);
+        });
+    }
+
+    // A rule or break left with no prayer on one side of it - at the very
+    // top or bottom, or doubled up where a block in between was dropped.
+    function dropStrayRules(root) {
+        toArray(root.querySelectorAll('hr')).forEach(function (hr) {
+            var prev = hr.previousElementSibling;
+            if (prev && prev.tagName === 'HR') remove(hr);
+        });
+        var first;
+        while ((first = root.firstElementChild) && /^(HR|BR)$/.test(first.tagName)) remove(first);
+        var last;
+        while ((last = root.lastElementChild) && /^(HR|BR)$/.test(last.tagName)) remove(last);
     }
 
     // Universalis lays the office out in `table.each` blocks; any other
@@ -318,6 +390,14 @@
 
     function lineCount(node) {
         return node.querySelectorAll(LINE_SELECTOR).length;
+    }
+
+    function isLine(node) {
+        return !!(node.matches && node.matches(LINE_SELECTOR));
+    }
+
+    function hasLines(node) {
+        return !!node.querySelector(LINE_SELECTOR);
     }
 
     // Every tidying step below is a heuristic about Universalis' markup, and
@@ -357,7 +437,13 @@
     function postProcessNode(root, hourKey, log) {
         log = log || [];
 
-        guard(root, 'dropSiteRubrics', dropSiteRubrics, log);
+        // Midday Prayer and Vespers render as prayer text only. The Office
+        // of Readings keeps its rubrics, which there carry the sources of
+        // the readings.
+        if (hourKey === 'sext' || hourKey === 'vespers') {
+            guard(root, 'dropRubricBlocks', dropRubricBlocks, log);
+        }
+        guard(root, 'dropMetaBlocks', dropMetaBlocks, log);
         guard(root, 'dropLayoutTables', dropLayoutTables, log);
         guard(root, 'dropChoosers', dropChoosers, log);
 
@@ -380,6 +466,7 @@
         }, log);
 
         guard(root, 'dropEmptyBlocks', dropEmptyBlocks, log);
+        guard(root, 'dropStrayRules', dropStrayRules, log);
         return root;
     }
 
@@ -461,6 +548,7 @@
         work.innerHTML = root.innerHTML;
 
         guard(work, 'stripChrome', stripChrome, log);
+        guard(work, 'dropLinkBlocks', dropLinkBlocks, log);
         guard(work, 'sanitize', sanitize, log);
 
         if (!lineCount(work)) {
