@@ -35,8 +35,8 @@
 
     --glass-bg: rgba(247, 250, 249, 0.72);
     --glass-border: rgba(255, 255, 255, 0.4);
-    --topbar-start: #581523;
-    --topbar-end: #7c2133;
+    /* The one top-bar maroon (also set in css/status-bar-safe-area.css) */
+    --nav-maroon: #7c2133;
     --topbar-gold: #f0c96a;
 }
 
@@ -897,9 +897,8 @@ header[role="banner"] {
     -webkit-backdrop-filter: none;
 }
 
-/* Keep the top bar visually consistent with the screenshot: a warm maroon
-   gradient that fills the full status-bar area and then settles into a
-   rounded header panel beneath it.
+/* One uniform maroon that fills the full status-bar area and continues
+   down into a rounded header panel beneath it.
    inset: 0 (rather than a percentage height) pins all four edges of this
    layer directly to .app-bar's own border box, so the background can never
    drift from, undershoot, or overshoot the nav bar's actual rendered
@@ -910,13 +909,7 @@ header[role="banner"]::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        var(--topbar-start, #581523) 0%,
-        var(--topbar-start, #581523) calc(env(safe-area-inset-top, 0px) + 0.05rem),
-        var(--topbar-end, #7c2133) calc(env(safe-area-inset-top, 0px) + 0.05rem),
-        var(--topbar-end, #7c2133) 100%
-    );
+    background: var(--nav-maroon, #7c2133);
     border-bottom: 1px solid rgba(243, 205, 137, 0.16);
     border-radius: 0 0 1.4rem 1.4rem;
     box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
@@ -1164,52 +1157,22 @@ body.prayer-topbar .nav-links a:focus-visible {
     }
 }
 
-/* Navigation Bar Styles */
+/* Navigation Bar Styles: a full-width maroon bar from the very top of the
+   screen, its content pushed below the status bar / notch
+   (env(safe-area-inset-top), 0px where there is none). See also
+   css/status-bar-safe-area.css. */
 .navbar {
-    position: fixed;
-    top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
-    left: 0.5rem;
-    right: 0.5rem;
-    width: auto;
-    background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
-    border: 1px solid rgba(240, 201, 106, 0.24);
-    border-radius: var(--radius-lg);
-    z-index: 1000;
-    box-sizing: border-box;
-}
-
-/* Extends the navbar's maroon background FULLY to the viewport edges behind
-   the mobile status bar / notch (env(safe-area-inset-top)) so the brand
-   color shows through there seamlessly instead of the page background.
-    Explicit position:fixed + top:0 + width:100% matches the full-width
-   edge-to-edge pattern in technical requirement 2: the maroon safe-area
-   sliver extends from the absolute top of the screen across the full
-   viewport width, so no visible gap, white strip, or contrasting color
-   appears above the navigation pill on any notched / Dynamic Island /
-   camera-cutout device.
-   Purely decorative: fixed position and out of flow, so it never affects
-   the navbar's own size/position or the page layout below it. Resolves to
-   a 0-height no-op on devices/browsers without a safe area (e.g. desktop). */
-.navbar::before {
-    content: "";
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: calc(env(safe-area-inset-top, 0px) + 0.5rem);
-    background: linear-gradient(135deg, rgba(88, 21, 35, 0.96) 0%, rgba(124, 33, 51, 0.96) 100%);
-    z-index: -1;
-    pointer-events: none;
-}
-
-.dark-mode .navbar {
-    background: linear-gradient(135deg, rgba(88, 21, 35, 0.98) 0%, rgba(124, 33, 51, 0.98) 100%);
-    border-color: rgba(240, 201, 106, 0.24);
+    width: auto;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: var(--nav-maroon, #7c2133);
+    box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
+    border-radius: 0 0 1.4rem 1.4rem;
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
 .nav-container {
@@ -1522,7 +1485,7 @@ nav.fixed.bottom-0.left-0.right-0 span {
         right: 0;
         width: 100%;
         margin-top: 8px;
-        background: linear-gradient(135deg, rgba(88, 21, 35, 0.97) 0%, rgba(124, 33, 51, 0.97) 100%);
+        background: var(--nav-maroon, #7c2133);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         flex-direction: column;
@@ -1538,7 +1501,7 @@ nav.fixed.bottom-0.left-0.right-0 span {
     }
 
     .dark-mode .nav-links {
-        background: linear-gradient(135deg, rgba(88, 21, 35, 0.97) 0%, rgba(124, 33, 51, 0.97) 100%);
+        background: var(--nav-maroon, #7c2133);
         border-top: none;
     }
 
@@ -1953,6 +1916,12 @@ nav.fixed.bottom-0.left-0.right-0 {
 .sheet-overlay.sheet-from-top .sheet-panel {
     border-radius: 0 0 1.5rem 1.5rem;
     padding-top: calc(env(safe-area-inset-top, 0px) + 0.25rem);
+    /* The part behind the status bar stays the top-bar maroon */
+    background: linear-gradient(
+        to bottom,
+        var(--nav-maroon, #7c2133) env(safe-area-inset-top, 0px),
+        var(--surface-0) env(safe-area-inset-top, 0px)
+    );
     padding-bottom: 1rem;
     transform: translateY(-100%);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);

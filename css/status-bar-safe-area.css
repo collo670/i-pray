@@ -1,63 +1,168 @@
 /* ==========================================================================
    Status-bar-safe top navigation
    --------------------------------------------------------------------------
-   Makes every top nav bar / header in the app bleed its background
-   seamlessly behind the mobile status bar (the notch / Dynamic Island /
-   Android status bar row that shows time, battery, signal), instead of
-   stopping at the visible viewport edge and leaving a gap of page
-   background above it.
+   Every top nav bar in the app is one uniform maroon (--nav-maroon) that
+   extends up through the mobile status bar (the notch / Dynamic Island /
+   Android status bar row that shows time, battery, signal), while the
+   bar's own title and buttons stay below it.
 
    How it works:
-   - <meta name="viewport" content="...viewport-fit=cover"> (already present
-     on every page) tells the browser the page may draw under the status
-     bar / notch.
+   - <meta name="viewport" content="...viewport-fit=cover"> (present on
+     every page) lets the page draw under the status bar / notch.
    - <meta name="apple-mobile-web-app-status-bar-style" content=
-     "black-translucent"> (added by scripts/apply-safe-area-meta) makes the
-     iOS status bar fully transparent in installed/standalone apps so our
-     own background shows through it, rather than iOS painting its own
-     opaque bar. That mode always renders light/white system icons, so
-     every rule below targets a nav whose top sliver is dark enough for
-     those icons to stay legible.
-   - env(safe-area-inset-top) resolves to the status bar / notch height on
-     devices that have one, and to 0px everywhere else (desktop, older
-     phones, Android Chrome tabs) - every rule below is a no-op there.
+     "black-translucent"> makes the iOS status bar transparent in the
+     installed app so our maroon shows through; its icons are always
+     white, which reads well on the maroon.
+   - env(safe-area-inset-top) is the status bar / notch height on devices
+     that have one and 0px everywhere else (desktop, Android Chrome tabs),
+     so every rule below is a no-op there. Where the browser paints the
+     status bar itself it uses <meta name="theme-color">, which is the same
+     maroon.
+   - Once the page is scrolled, js/status-bar.js fades in .sb-scrim: a
+     fixed strip exactly as tall as the status bar, in a translucent
+     maroon, so content scrolling up never shows raw under the status bar
+     (on Android it swaps theme-color to the faded maroon instead).
 
-   This file is linked last in <head> on every page (after any inline
-   <style> blocks and after Tailwind's output.css), so it reliably wins the
-   cascade for the specific padding/positioning properties it touches
-   without having to fight per-page specificity, while leaving each page's
-   own visual design otherwise untouched.
+   This file is linked last in <head> on every page (after inline <style>
+   blocks and Tailwind's output.css) so it wins the cascade for the few
+   properties it touches. .app-bar / header[role="banner"] (css/index.css)
+   and .page-nav ("pages/ofisi ya masomo/styles.css") keep their safe-area
+   handling next to their component definitions and use these tokens.
    ========================================================================== */
 
 :root {
   --sb-inset-top: env(safe-area-inset-top, 0px);
-  /* Maroon safe-area sliver color: top-of-gradient tone that sits behind
-     every mobile status bar. Matches .app-bar's --topbar-start so every
-     page with a top nav presents a continuous maroon strip from the
-     screen's upper edge down through the notch/Dynamic Island/Android
-     status bar row, seamlessly joining the visible nav bar beneath. */
-  --sb-sliver-color: #581523;
-  --sb-sliver-color-end: #7c2133;
+  /* The one top-bar maroon. Keep in sync with NAV in js/status-bar.js and
+     the theme-color metas / manifest.json. */
+  --nav-maroon: #7c2133;
+  /* The same maroon, faded, for the status bar strip while scrolled. */
+  --nav-maroon-faded: rgba(124, 33, 51, 0.8);
+  --nav-gold: #f0c96a;
 }
 
-/* -- Group 1: already edge-to-edge, already dark. Their own background
-   simply needs to grow upward by the inset amount; no separate strip. -- */
+/* -- Status bar strip shown while the page is scrolled (js/status-bar.js) -- */
 
-/* NOTE: .navbar's own safe-area rules live in css/index.css (the ::before
-   pseudo-element spans full viewport width so the maroon reaches both
-   screen edges, not just the pill's bounding box). No duplicate rule
-   here to avoid double-applying padding. */
+.sb-scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background-color: transparent;
+  pointer-events: none;
+  /* Above every bar, sheet and overlay: only ever as tall as the status
+     bar, and transparent until the page is scrolled. */
+  z-index: 2147483000;
+  transition: background-color 0.25s ease;
+}
 
-/* PDF-viewer pages under assets/office originally shipped with a solid
-   dark-blue nav (bg-[#202847]). Rewrite it to the shared maroon brand
-   gradient and extend its background edge-to-edge behind the status bar
-   so the colored area fills the notch / cutout region fully on both
-   sides, then push actual nav content down beneath the status bar.
-  Full containing width + position:fixed + top:0 / left:0 / right:0
-   guarantee the nav extends from the absolute top of the screen on every
-   mobile device (per technical requirement 2), and padding-top uses
-   env(safe-area-inset-top) directly so every button / icon inside the
-   nav renders beneath the system status bar row. */
+html.sb-scrolled .sb-scrim {
+  background-color: var(--nav-maroon-faded);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* -- .navbar (pages/amefufuka.html, assets/office day pages, and the
+   legacy rules in css/index.css): a full-width maroon bar from the very
+   top of the screen instead of a floating pill, with its content pushed
+   below the status bar. Each page keeps its own position (fixed pages
+   already pad their content for it). -- */
+
+.navbar {
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  background: var(--nav-maroon) !important;
+  border: 0 !important;
+  border-radius: 0 0 1.4rem 1.4rem !important;
+  box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24) !important;
+  /* backdrop-filter would make the bar the containing block of fixed
+     descendants; the bar is opaque anyway. */
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-sizing: border-box !important;
+}
+
+.navbar::before {
+  content: none !important;
+}
+
+/* Bars whose content sits in a padded .nav-container */
+.navbar:has(> .nav-container) {
+  padding: env(safe-area-inset-top, 0px)
+           env(safe-area-inset-right, 0px)
+           0
+           env(safe-area-inset-left, 0px) !important;
+}
+
+/* Card-style bars (padding on the bar itself, .navbar-container inside):
+   in normal flow at the top of the page, so the default body margin is
+   dropped to let them reach the screen edges. */
+body:has(> .navbar > .navbar-container) {
+  margin: 0;
+}
+
+.navbar:has(> .navbar-container) {
+  position: sticky !important;
+  padding: calc(env(safe-area-inset-top, 0px) + 1rem)
+           max(1rem, env(safe-area-inset-right, 0px))
+           1rem
+           max(1rem, env(safe-area-inset-left, 0px)) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-brand-text,
+.navbar .navbar-link,
+.navbar .nav-logo,
+.navbar .nav-links a {
+  color: var(--nav-gold) !important;
+}
+
+.navbar .navbar-link.active-day {
+  background-color: rgba(240, 201, 106, 0.18) !important;
+  color: #fff3cf !important;
+}
+
+.navbar .hamburger-button {
+  color: var(--nav-gold) !important;
+  border-color: rgba(240, 201, 106, 0.4) !important;
+}
+
+/* Mobile dropdown of the legacy .navbar / masifu-style menus */
+.navbar .nav-links,
+.app-bar .nav-links {
+  background: var(--nav-maroon) !important;
+}
+
+@media (max-width: 768px) {
+  /* An open dropdown continues the bar: square the bar's bottom corners
+     and give the menu the bar's rounded bottom instead. */
+  .navbar .nav-links,
+  .app-bar .nav-links {
+    border-radius: 0 0 1.4rem 1.4rem !important;
+  }
+
+  .navbar:has(.nav-links.active),
+  .app-bar:has(.nav-links.active)::before {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}
+
+@media (min-width: 769px) {
+  /* Inline row inside the bar on wide screens: let the bar show through */
+  .navbar .nav-links,
+  .app-bar .nav-links {
+    background: transparent !important;
+  }
+}
+
+/* -- PDF-viewer pages under assets/office originally shipped with a solid
+   dark-blue nav (bg-[#202847]). Rewrite it to the maroon bar, edge to
+   edge behind the status bar, with its content beneath it. -- */
 nav[class*="bg-[#202847]"] {
   position: fixed !important;
   top: 0 !important;
@@ -65,112 +170,24 @@ nav[class*="bg-[#202847]"] {
   right: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
-  background: linear-gradient(
-    135deg,
-    rgba(88, 21, 35, 0.96) 0%,
-    rgba(124, 33, 51, 0.96) 100%
-  ) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--nav-maroon) !important;
   padding-top: env(safe-area-inset-top, 0px) !important;
   padding-left: max(1rem, env(safe-area-inset-left, 0px)) !important;
   padding-right: max(1rem, env(safe-area-inset-right, 0px)) !important;
   box-sizing: border-box !important;
   border-bottom: 1px solid rgba(240, 201, 106, 0.16) !important;
+  color: var(--nav-gold) !important;
 }
 
-/* The PDF-viewer pages under assets/office pace their content with hard
-   <br> spacers sized to the nav's original (safe-area-unaware) height.
-   Growing the nav pushes it further into that spacing; this adds a
-   matching extra buffer at the body level so content never ends up
-   hidden behind the taller bar on notched devices. */
+nav[class*="bg-[#202847]"] a,
+nav[class*="bg-[#202847]"] h1,
+nav[class*="bg-[#202847]"] h2,
+nav[class*="bg-[#202847]"] span {
+  color: var(--nav-gold) !important;
+}
+
+/* Those pages pace their content with <br> spacers sized to the nav's
+   original (safe-area-unaware) height; add the inset on top. */
 body:has(> nav[class*="bg-[#202847]"]) {
   padding-top: env(safe-area-inset-top, 0px);
 }
-
-/* dump.html's one-off in-flow gradient header (not fixed/sticky - simply
-   the first element in the page, so growing its own top padding is
-   enough to push it, and everything after it, down). */
-header.liturgical-gradient {
-  padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem) !important;
-  box-sizing: border-box;
-}
-
-/* -- Group 2: light / theme-adaptive headers. Rather than force their own
-   (light) background behind the status bar - which would make the
-   always-light iOS status bar icons unreadable - paint a small fixed dark
-   sliver exactly as tall as the inset, then push the header's real
-   content down to clear it. The sliver merges directly into the header's
-   top edge, so it still reads as one continuous bar, just with the top
-   few pixels tinted to guarantee icon contrast. -- */
-
-header[class*="backdrop-blur-sm"]:not([role="banner"]) {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  max-width: 100%;
-  padding-top: calc(env(safe-area-inset-top, 0px) + 1rem) !important;
-  padding-left: max(1rem, env(safe-area-inset-left, 0px)) !important;
-  padding-right: max(1rem, env(safe-area-inset-right, 0px)) !important;
-  box-sizing: border-box;
-}
-
-header[class*="backdrop-blur-sm"]:not([role="banner"])::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  max-width: 100%;
-  height: env(safe-area-inset-top, 0px);
-  background: linear-gradient(
-    to bottom,
-    var(--sb-sliver-color) 0%,
-    var(--sb-sliver-color-end) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Pages like carmen.html ship a top header marked with role="banner" but
-   WITHOUT the .app-bar class — so index.css's maroon .app-bar styles do
-   not apply, and the Group 2 rule above excludes them via :not([role="banner"])
-   to avoid double-padding the genuine .app-bar pages. This rule fills the
-   gap: it adds the maroon safe-area sliver and proper content padding for
-   those banner-classed white/blurred headers so every top navigation area,
-   regardless of its per-page visual skin, still shows a continuous maroon
-   strip behind the mobile status bar notch/cutout. */
-header[role="banner"][class*="backdrop-blur-sm"] {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  max-width: 100%;
-  z-index: 30;
-  padding-top: calc(env(safe-area-inset-top, 0px) + 1rem) !important;
-  padding-left: max(1rem, env(safe-area-inset-left, 0px)) !important;
-  padding-right: max(1rem, env(safe-area-inset-right, 0px)) !important;
-  box-sizing: border-box;
-}
-
-header[role="banner"][class*="backdrop-blur-sm"]::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  max-width: 100%;
-  height: env(safe-area-inset-top, 0px);
-  background: linear-gradient(
-    to bottom,
-    var(--sb-sliver-color) 0%,
-    var(--sb-sliver-color-end) 100%
-  );
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* .app-bar / header[role="banner"] (index.css) and .page-nav (ofisi ya
-   masomo/styles.css) already ship their own dedicated safe-area handling
-   next to their component definitions - see those files. */
