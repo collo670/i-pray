@@ -274,15 +274,12 @@
             var WINDOW_AHEAD_DAYS = 9;
 
             // Universalis sends no CORS headers, so the page is fetched through
-            // a public CORS proxy (trying each in turn); js/universalis-office.js
+            // the app's Cloudflare Worker or, failing that, a public CORS proxy
+            // (UniversalisOffice.PROXIES, tried in turn); js/universalis-office.js
             // then extracts the liturgy and it is rendered natively in the app
-            // layout. If every proxy fails the card says so - the whole page is
-            // never embedded.
-            var PROXIES = [
-                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
-            ];
+            // layout. If every route fails the card says so - the whole page
+            // is never embedded.
+            var PROXIES = UniversalisOffice.PROXIES;
             var FETCH_TIMEOUT_MS = 12000;
             // Versioned so offices cached by an earlier build (which stored
             // far more of the Universalis page) are re-fetched, not replayed.

@@ -110,3 +110,17 @@ test('the celebration of the day is named in the chosen language', async ({ page
     await openHour(page, 'sext', { lang: 'sw' });
     await expect(page.locator('#celebrationTag')).toHaveText('Kumbukumbu: Bikira Maria wa Rozari');
 });
+
+test("the app's own Worker is tried first", async ({ page }) => {
+    const { calls } = await openHour(page, 'vespers');
+    expect(calls.map((c) => c.via)).toEqual(['ancient-rice-28a1.otienocollo95.workers.dev']);
+});
+
+test('public proxies take over while the Worker has no Universalis route', async ({ page }) => {
+    const errors = collectErrors(page);
+    const calls = await isolate(page, { worker: 'down' });
+    await page.goto('pages/prayer-hour.html?hour=vespers');
+    await expect(page.locator('#officeContent .office-hour-heading')).toHaveText('Vespers — English');
+    expect(calls.map((c) => c.via)).toEqual(['ancient-rice-28a1.otienocollo95.workers.dev', 'corsproxy.io']);
+    expect(errors).toEqual([]);
+});

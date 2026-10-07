@@ -217,7 +217,7 @@
     // Cloudflare Worker proxy exists for the same reason). Since this
     // site has no backend of its own:
     //
-    //   1. If you deploy the included cloudflare-worker/bolls-proxy.js
+    //   1. If you deploy the included cloudflare-worker/ipray-worker.js
     //      (free, ~5 min, see that file), put its URL here. This is
     //      the reliable path — set it and everything else is a safety
     //      net you likely won't need.
@@ -225,7 +225,7 @@
     //      These are free, third-party, and can go down or rate-limit
     //      independently of anything in this codebase — treat them as
     //      a best-effort fallback, not a guarantee.
-    var WORKER_PROXY = ''; // e.g. 'https://bolls-proxy.<you>.workers.dev'
+    var WORKER_PROXY = ''; // e.g. 'https://ipray-worker.<you>.workers.dev'
 
     var CORS_RELAYS = [
         function (url) { return 'https://corsproxy.io/?url=' + encodeURIComponent(url); },

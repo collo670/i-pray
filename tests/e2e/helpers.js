@@ -21,8 +21,10 @@ function universalisTarget(proxiedUrl) {
  *   'fixture' - the saved page for that hour, if there is one
  *   'fail'    - a network error
  *   'junk'    - a 200 response that holds no office
+ * `worker: 'down'` makes the app's Cloudflare Worker answer 404, as it
+ * does until the Universalis route is deployed.
  */
-async function isolate(target, { universalis = 'fixture' } = {}) {
+async function isolate(target, { universalis = 'fixture', worker = 'up' } = {}) {
     // `target` is a page, or a browser context when requests made by the
     // service worker have to be caught too.
     const calls = [];
@@ -30,7 +32,13 @@ async function isolate(target, { universalis = 'fixture' } = {}) {
         const url = route.request().url();
         const target = PROXY_HOST.test(url) ? universalisTarget(url) : null;
         if (!target) return route.abort();
-        calls.push(target);
+        const via = new URL(url).hostname;
+        calls.push(Object.assign({ via }, target));
+        // The app's own Worker not deployed yet: its /universalis route
+        // still goes to bolls.life, which has no such page.
+        if (worker === 'down' && /workers\.dev$/.test(via)) {
+            return route.fulfill({ status: 404, headers: { 'access-control-allow-origin': '*' }, body: 'Not Found' });
+        }
         const file = path.join(FIXTURES, target.hour + '.html');
         if (universalis === 'fixture' && fs.existsSync(file)) {
             return route.fulfill({

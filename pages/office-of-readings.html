@@ -240,11 +240,7 @@
             var WINDOW_BACK_DAYS = 3;
             var WINDOW_AHEAD_DAYS = 9;
 
-            var PROXIES = [
-                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
-            ];
+            var PROXIES = UniversalisOffice.PROXIES;
             var FETCH_TIMEOUT_MS = 12000;
             // Versioned so offices cached by an earlier build (which stored
             // far more of the Universalis page) are re-fetched, not replayed.
