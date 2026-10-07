@@ -35,3 +35,13 @@ for (const lang of ['en', 'sw']) {
         }
     });
 }
+
+test('calendar page uses the shared calendar rules', async ({ page }) => {
+    await isolate(page, { universalis: 'fail' });
+    await setLanguage(page, 'sw');
+    // Sunday 4 October 2026: the Sunday, not St Francis
+    await page.clock.setFixedTime(new Date(2026, 9, 4, 9, 0));
+    await page.goto('pages/calendar.html');
+    await expect(page.locator('#todayFeast')).toHaveText('Hakuna sherehe leo');
+    await expect(page.locator('#upcomingEvents')).toContainText('Mt. Faustina Kowalska');
+});

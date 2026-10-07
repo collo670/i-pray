@@ -252,46 +252,18 @@ const translations = {
 };
 
 
-function getLiturgicalInfoForToday(date = new Date()) {
-    const month = date.getMonth();
-    const day = date.getDate();
-    const year = date.getFullYear();
-    let feast = null, feastType = null, color = 'green';
-    const feastData = (LITURGICAL_FEASTS[month] || []).find(f => f.date === day);
-    if (feastData) { feast = feastData.name; feastType = feastData.type; color = feastData.color; }
-    const easter = calculateEasterForFeasts(year);
-    const ashWednesday = new Date(easter); ashWednesday.setDate(easter.getDate() - 46);
-    const pentecost = new Date(easter); pentecost.setDate(easter.getDate() + 49);
-    const christmas = new Date(year, 11, 25);
-    let season = 'Ordinary Time';
-    if (date >= new Date(year, 11, 1) && date < christmas) { season = 'Advent'; color = 'purple'; }
-    else if (date >= christmas && date < new Date(year + 1, 0, 8)) { season = 'Christmas'; color = 'white'; }
-    else if (date >= ashWednesday && date < easter) { season = 'Lent'; color = 'purple'; }
-    else if (date >= easter && date < pentecost) { season = 'Easter'; color = 'white'; }
-    return { season, color, feast, feastType };
-}
-
-function getUpcomingFeasts(nextCount = 5) {
-    const today = new Date();
-    const year = today.getFullYear();
-    let allFeasts = [];
-    for (let m = 0; m < 12; m++) {
-        (LITURGICAL_FEASTS[m] || []).forEach(f => {
-            const d = new Date(year, m, f.date);
-            if (d >= new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
-                allFeasts.push({ ...f, date: d });
-            }
-        });
-    }
-    return allFeasts
-        .sort((a,b) => a.date - b.date)
-        .slice(0, nextCount)
-        .map(f => ({
-            date: f.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-            name: f.name,
-            type: f.type,
-            color: f.color
-        }));
+// Upcoming celebrations for the home page list, from the shared calendar
+// engine (js/liturgical-calendar.js), which applies the Church's rules of
+// precedence (a Sunday outranks a saint's memorial, impeded solemnities are
+// transferred...). Optional memorials are left out of this short list.
+function getUpcomingFeasts(nextCount = 5, lang = 'en') {
+    const locale = lang === 'sw' ? 'sw' : 'en-US';
+    return getUpcomingCelebrations(new Date(), nextCount, lang, { minType: 'Memorial' }).map(c => ({
+        date: c.date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
+        name: c.name,
+        type: c.rankLabel,
+        color: c.color
+    }));
 }
 
 // Language Management
@@ -325,207 +297,6 @@ function setLanguage(lang) {
     if (prayerFinal) {
         prayerFinal.innerHTML = translations[lang].prayerFinal;
     }
-}
-
-function translateFeastName(name) {
-    const feastMap = {
-        "All Saints": "Watakatifu Wote",
-        "Mary, Mother of God": "Maria, Mama wa Mungu",
-        "Epiphany": "Epifania",
-        "Conversion of Paul, Apostle": "Kuongoka kwa Paulo, Mtume",
-        "Annunciation of the Lord": "Kupashwa habari kwa Bwana",
-        "Nativity of the Lord": "Kuzaliwa kwa Bwana",
-        "Assumption of the Blessed Virgin Mary": "Kupalizwa kwa Bikira ",
-        "Presentation of the Lord": "Kutolewa kwa Bwana Hekaluni",
-        "Birth of John the Baptist": "Kuzaliwa kwa Yohana Mbatizaji",
-        "Sts. Michael, Gabriel, and Raphael": "Mikaele, Gabarieli, na Rafaele",
-        "All Souls": "Marehemu Wote",
-        "Basil the Great and Gregory Nazianzen": "Basil Mkuu na Gregory wa Nazianzus",
-        "Most Holy Name of Jesus": "Jina Takatifu Zaidi la Yesu",
-        "Elizabeth Ann Seton": "Elizabeth Ann Seton",
-        "John Neumann": "John Neumann",
-        "Raymond of Penyafort": "Raymond wa Penyafort",
-        "Hilary of Poitiers": "Hilary wa Poitiers",
-        "Anthony of Egypt": "Anthony wa Misri",
-        "Vincent, deacon and martyr": "Vincent, shemasi na shahidi",
-        "Agnes, virgin and martyr": "Agnes, bikira na shahidi",
-        "Marianne Cope": "Marianne Cope",
-        "Francis de Sales": "Francis de Sales",
-        "Timothy and Titus": "Timotheo na Tito",
-        "Angela Merici": "Angela Merici",
-        "Thomas Aquinas": "Thomas Aquinas",
-        "John Bosco": "John Bosco",
-        "Blase, bishop and martyr": "Blase, askofu na shahidi",
-        "Agatha, virgin and martyr": "Agatha, bikira na shahidi",
-        "Paul Miki and companions": "Paul Miki na wenzake",
-        "Josephine Bakhita": "Josephine Bakhita",
-        "Scholastica": "Scholastica",
-        "Our Lady of Lourdes": "Mama Yetu wa Lourdes",
-        "Cyril and Methodius": "Cyril na Methodius",
-        "Peter Damian": "Peter Damian",
-        "Chair of Peter": "Kiti cha Peter",
-        "Polycarp": "Polycarp",
-        "Katharine Drexel": "Katharine Drexel",
-        "Casimir": "Casimir",
-        "Perpetua and Felicity": "Perpetua na Felicity",
-        "John of God": "John wa Mungu",
-        "Frances of Rome": "Frances wa Roma",
-        "Patrick": "Patrick",
-        "Cyril of Jerusalem": "Cyril wa Yerusalemu",
-        "Joseph, Husband of Mary": "Joseph, Mume wa Maria",
-        "Turibius of Mogrovejo": "Turibius wa Mogrovejo",
-        "Francis of Paola": "Francis wa Paola",
-        "Isidore": "Isidore",
-        "Vincent Ferrer": "Vincent Ferrer",
-        "John Baptist de la Salle": "John Baptist de la Salle",
-        "Stanislaus": "Stanislaus",
-        "Martin I": "Martin I",
-        "Anselm of Canterbury": "Anselm wa Canterbury",
-        "George or Adalbert": "George au Adalbert",
-        "Fidelis of Sigmaringen": "Fidelis wa Sigmaringen",
-        "Mark the Evangelist": "Marko Mwinjilisti",
-        "Peter Chanel or Louis de Montfort": "Peter Chanel au Louis de Montfort",
-        "Catherine of Siena": "Catherine wa Siena",
-        "Pius V": "Pius V",
-        "Joseph the Worker": "Joseph Mfanyakazi",
-        "Athanasius": "Athanasius",
-        "Philip and James, Apostles": "Philip na James, Mitume",
-        "Damien de Veuster": "Damien de Veuster",
-        "Our Lady of Fatima": "Mama Yetu wa Fatima",
-        "Matthias the Apostle": "Matthias Mtume",
-        "Isidore the Farmer": "Isidore Mkulima",
-        "John I": "John I",
-        "Bernardine of Siena": "Bernardine wa Siena",
-        "Christopher Magallanes and companions": "Christopher Magallanes na wenzake",
-        "Rita of Cascia": "Rita wa Cascia",
-        "Bede or Gregory VII or Mary Magdalene de Pazzi": "Bede au Gregory VII au Mary Magdalene de Pazzi",
-        "Philip Neri": "Philip Neri",
-        "Augustine of Canterbury": "Augustine wa Canterbury",
-        "Visitation of the Blessed Virgin Mary": "Ziara ya Bikira Maria",
-        "Justin Martyr": "Justin Shahidi",
-        "Charles Lwanga and companions": "Charles Lwanga na wenzake",
-        "Boniface": "Boniface",
-        "Ephrem": "Ephrem",
-        "Barnabas the Apostle": "Barnabas Mtume",
-        "Anthony of Padua": "Anthony wa Padua",
-        "Romuald": "Romuald",
-        "Aloysius Gonzaga": "Aloysius Gonzaga",
-        "Paulinus or John Fisher and Thomas More": "Paulinus au John Fisher na Thomas More",
-        "Irenaeus": "Irenaeus",
-        "Peter and Paul, Apostles": "Peter na Paul, Mitume",
-        "First Martyrs of the Church of Rome": "Washahidi wa Kwanza wa Kanisa la Roma",
-        "Junípero Serra": "Junípero Serra",
-        "Thomas the Apostle": "Thomas Mtume",
-        "Anthony Zaccaria or Elizabeth of Portugal": "Anthony Zaccaria au Elizabeth wa Ureno",
-        "Maria Goretti": "Maria Goretti",
-        "Augustine Zhao Rong and companions": "Augustine Zhao Rong na wenzake",
-        "Benedict": "Benedict",
-        "Henry": "Henry",
-        "Camillus de Lellis or Kateri Tekakwitha": "Camillus de Lellis au Kateri Tekakwitha",
-        "Bonaventure": "Bonaventure",
-        "Our Lady of Mount Carmel": "Mama Yetu wa Mlima Karmeli",
-        "Apollinaris": "Apollinaris",
-        "Lawrence of Brindisi": "Lawrence wa Brindisi",
-        "Mary Magdalene": "Mary Magdalene",
-        "James, Apostle": "James, Mtume",
-        "Joachim and Anne": "Joakim na Anna",
-        "Martha": "Martha",
-        "Peter Chrysologus": "Peter Chrysologus",
-        "Ignatius of Loyola": "Ignatius wa Loyola",
-        "Alphonsus Maria de Liguori": "Alphonsus Maria de Liguori",
-        "Jean Vianney": "Jean Vianney",
-        "Dedication of Mary Major": "Kujitolea kwa Mary Mkuu",
-        "Transfiguration of the Lord": "Ubadilishaji wa Bwana",
-        "Sixtus II or Cajetan": "Sixtus II au Cajetan",
-        "Dominic": "Dominic",
-        "Teresa Benedicta of the Cross": "Teresa Benedicta wa Msalaba",
-        "Lawrence, deacon and martyr": "Lawrence, shemasi na shahidi",
-        "Clare": "Clare",
-        "Jane Frances de Chantal": "Jane Frances de Chantal",
-        "Pontian and Hippolytus": "Pontian na Hippolytus",
-        "Maximilian Kolbe": "Maximilian Kolbe",
-        "Stephen of Hungary": "Stephen wa Hungaria",
-        "John Eudes": "John Eudes",
-        "Bernard of Clairvaux": "Bernard wa Clairvaux",
-        "Pius X": "Pius X",
-        "Queenship of Blessed Virgin Mary": "Ufalme wa Bikira Maria",
-        "Rose of Lima": "Rose wa Lima",
-        "Bartholomew the Apostle": "Bartholomew Mtume",
-        "Louis or Joseph of Calasanz": "Louis au Joseph wa Calasanz",
-        "Monica": "Monica",
-        "Augustine of Hippo": "Augustine wa Hippo",
-        "Beheading of John the Baptist": "Kukata Kichwa cha Yohana Mbatizaji",
-        "Gregory the Great": "Gregory Mkuu",
-        "Birth of the Blessed Virgin Mary": "Kuzaliwa kwa Bikira Maria",
-        "Peter Claver": "Peter Claver",
-        "Holy Name of the Blessed Virgin Mary": "Jina Takatifu la Bikira Maria",
-        "John Chrysostom": "John Chrysostom",
-        "Exaltation of the Holy Cross": "Kuinuliwa kwa Msalaba Mtakatifu",
-        "Our Lady of Sorrows": "Mama Yetu wa Huzuni",
-        "Cornelius and Cyprian": "Cornelius na Cyprian",
-        "Robert Bellarmine": "Robert Bellarmine",
-        "Januarius": "Januarius",
-        "Andrew Kim and companions": "Andrew Kim na wenzake",
-        "Matthew the Evangelist": "Matthew Mwinjilisti",
-        "Padre Pio": "Padre Pio",
-        "Cosmas and Damian": "Cosmas na Damian",
-        "Vincent de Paul": "Vincent de Paul",
-        "Wenceslaus or Lawrence Ruiz and companions": "Wenceslaus au Lawrence Ruiz na wenzake",
-        "Jerome": "Jerome",
-        "Thérèse of the Child Jesus": "Thérèse wa Mtoto Yesu",
-        "Guardian Angels": "Malaika Walinzi",
-        "Francis of Assisi": "Francis wa Assisi",
-        "Francis Xavier Seelos": "Francis Xavier Seelos",
-        "Bruno or Marie-Rose Durocher": "Bruno au Marie-Rose Durocher",
-        "Denis or John Leonardi": "Denis au John Leonardi",
-        "John XXIII": "John XXIII",
-        "Callistus I": "Callistus I",
-        "Teresa of Jesus": "Teresa wa Yesu",
-        "Hedwig or Margaret Mary Alacoque": "Hedwig au Margaret Mary Alacoque",
-        "Ignatius of Antioch": "Ignatius wa Antiokia",
-        "Luke the Evangelist": "Luke Mwinjilisti",
-        "Jean de Brébeuf and companions": "Jean de Brébeuf na wenzake",
-        "Paul of the Cross": "Paul wa Msalaba",
-        "John Paul II": "John Paul II",
-        "John of Capistrano": "John wa Capistrano",
-        "Anthony Mary Claret": "Anthony Mary Claret",
-        "Simon and Jude": "Simon na Jude",
-        "Martin de Porres": "Martin de Porres",
-        "Charles Borromeo": "Charles Borromeo",
-        "Dedication of the Lateran Basilica": "Kujitolea kwa Basilica ya Lateran",
-        "Leo the Great": "Leo Mkuu",
-        "Martin of Tours": "Martin wa Tours",
-        "Josaphat": "Josaphat",
-        "Frances Xavier Cabrini": "Frances Xavier Cabrini",
-        "Albert the Great": "Albert Mkuu",
-        "Margaret of Scotland or Gertrude": "Margaret wa Scotland au Gertrude",
-        "Elizabeth of Hungary": "Elizabeth wa Hungaria",
-        "Rose Philippine Duchesne": "Rose Philippine Duchesne",
-        "Presentation of the Blessed Virgin Mary": "Utoaji wa Bikira Maria",
-        "Cecilia": "Cecilia",
-        "Clement I or Columban or Miguel Pro": "Clement I au Columban au Miguel Pro",
-        "Andrew Dung-Lac and companions": "Andrew Dung-Lac na wenzake",
-        "Catherine of Alexandria": "Catherine wa Alexandria",
-        "Andrew the Apostle": "Andrew Mtume",
-        "Francis Xavier": "Francis Xavier",
-        "John Damascene": "John Damascene",
-        "Nicholas": "Nicholas",
-        "Ambrose": "Ambrose",
-        "Immaculate Conception": "Ujauzito Usio na Dhambi",
-        "Juan Diego": "Juan Diego",
-        "Damasus I": "Damasus I",
-        "Our Lady of Guadalupe": "Mama Yetu wa Guadalupe",
-        "Lucy": "Lucy",
-        "John of the Cross": "John wa Msalaba",
-        "Peter Canisius": "Peter Canisius",
-        "John of Kanty": "John wa Kanty",
-        "Stephen, First Martyr": "Stephen, Shahidi wa Kwanza",
-        "John the Apostle": "John Mtume",
-        "Holy Innocents": "Watoto Watakatifu",
-        "Thomas Becket": "Thomas Becket",
-        "Sylvester I": "Sylvester I"
-    };
-    return feastMap[name] || name;
 }
 
 // Accessibility Features
@@ -862,13 +633,13 @@ function updateLiturgicalQuote(season, lang) {
 // Liturgical Calendar Logic: fills the liturgical date card dynamically
 function calculateLiturgicalDay(lang = 'sw') {
     const today = new Date();
-    const info = getLiturgicalToday(today, lang);
-    const feastInfo = getLiturgicalInfoForToday(today);
+    const info = getLiturgicalToday(today, lang === 'sw' ? 'sw' : 'en');
+    const celebration = getCelebrationForDate(today, lang === 'sw' ? 'sw' : 'en');
 
     // Solemnities and feasts take their own liturgical colour
     let color = info.color;
-    if (feastInfo.feast && (feastInfo.feastType === 'Solemnity' || feastInfo.feastType === 'Feast')) {
-        color = feastInfo.color;
+    if (celebration && ['Solemnity', 'Feast', 'Triduum', 'Special'].includes(celebration.type)) {
+        color = celebration.color;
     }
 
     const seasonNames = {
@@ -918,8 +689,8 @@ function calculateLiturgicalDay(lang = 'sw') {
 
     const feastElement = document.getElementById('feastDay');
     if (feastElement) {
-        if (feastInfo.feast) {
-            feastElement.textContent = lang === 'sw' ? translateFeastName(feastInfo.feast) : feastInfo.feast;
+        if (celebration) {
+            feastElement.textContent = celebration.name;
             feastElement.classList.remove('hidden');
         } else {
             feastElement.classList.add('hidden');
@@ -1204,9 +975,10 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleUpcoming.addEventListener('click', () => {
             feastsList.classList.toggle('hidden');
             if (!loaded) {
-                const items = getUpcomingFeasts(5);
+                const lang = localStorage.getItem('preferredLanguage') === 'sw' ? 'sw' : 'en';
+                const items = getUpcomingFeasts(5, lang);
                 if (!items.length) {
-                    feastsList.innerHTML = '<p class="text-sm text-gray-600">No upcoming feasts.</p>';
+                    feastsList.innerHTML = '<p class="text-sm text-gray-600">' + (lang === 'sw' ? 'Hakuna sikukuu zijazo.' : 'No upcoming feasts.') + '</p>';
                 } else {
                     const container = document.createElement('div');
                     container.className = 'space-y-2';

@@ -93,3 +93,20 @@ test('a fetched office is cached and shown again without the network', async ({ 
     expect(calls).toEqual([]);
     expect(await page.locator('#officeContent').innerHTML()).toBe(first);
 });
+
+test('on Saturday evening Vespers is First Vespers of Sunday', async ({ page }) => {
+    await page.clock.setFixedTime(new Date(2026, 9, 10, 18, 0));
+    await openHour(page, 'vespers', { lang: 'sw' });
+    await expect(page.locator('#bannerDay')).toContainText('Masifu ya Jioni I · Dominika ya 28 ya Mwaka');
+    await page.click('#langEn');
+    await expect(page.locator('#bannerDay')).toContainText('First Vespers · 28th Sunday in Ordinary Time');
+    // Midday on the same Saturday is still Saturday's office.
+    await page.click('#tabSext');
+    await expect(page.locator('#bannerDay')).toContainText('Saturday of the 27th Week in Ordinary Time');
+});
+
+test('the celebration of the day is named in the chosen language', async ({ page }) => {
+    await page.clock.setFixedTime(new Date(2026, 9, 7, 9, 0));
+    await openHour(page, 'sext', { lang: 'sw' });
+    await expect(page.locator('#celebrationTag')).toHaveText('Kumbukumbu: Bikira Maria wa Rozari');
+});

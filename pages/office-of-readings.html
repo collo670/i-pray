@@ -258,10 +258,6 @@
                     subtitle: 'Matins · The Office of Readings'
                 }
             };
-            var RANK_LABELS = {
-                en: { 'Triduum': 'Sacred Triduum', 'Solemnity': 'Solemnity', 'Feast': 'Feast', 'Special': 'Liturgical Day', 'Memorial': 'Memorial', 'Optional Memorial': 'Optional Memorial' },
-                sw: { 'Triduum': 'Siku Kuu Tatu Takatifu', 'Solemnity': 'Sherehe', 'Feast': 'Sikukuu', 'Special': 'Siku Maalum', 'Memorial': 'Kumbukumbu', 'Optional Memorial': 'Kumbukumbu ya Hiari' }
-            };
             var COLOR_MAP = { white: 'white', red: 'red', green: 'green', purple: 'purple', rose: 'purple', gold: 'gold' };
             var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
 
@@ -354,11 +350,11 @@
 
             function renderBanner(date) {
                 var info = getLiturgicalToday(date, lang);
-                var celebration = getCelebrationForDate(date);
+                var celebration = getCelebrationForDate(date, lang);
                 bannerDayLabel.textContent = info.dayLabel;
                 banner.setAttribute('data-color', COLOR_MAP[(celebration && celebration.color) || info.color] || 'green');
                 if (celebration) {
-                    celebrationTag.textContent = (RANK_LABELS[lang][celebration.type] || celebration.type) + ': ' + celebration.name;
+                    celebrationTag.textContent = celebration.rankLabel + ': ' + celebration.name;
                     celebrationTag.classList.remove('hidden');
                 } else {
                     celebrationTag.classList.add('hidden');
