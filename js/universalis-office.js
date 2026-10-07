@@ -30,7 +30,7 @@
 
     // Bumped whenever extraction changes shape, so offices cached by an
     // older version of this file are re-fetched instead of re-rendered.
-    var EXTRACT_VERSION = 5;
+    var EXTRACT_VERSION = 6;
 
     // ---------------------------------------------------------------------
     // Sanitiser allow-lists
@@ -119,7 +119,9 @@
     // the celebration and hour pickers, copyright and translation notes and
     // the app plug. Only ever matched against blocks that hold no prayer
     // lines (see dropMetaBlocks), so a psalm verse can't be caught by it.
-    var META_TEXT = /(copyright|\u00a9|all rights reserved|universalis|psalm week|liturgical colou?r|^year\s*:|today'?s options|other hours|choose which|you can also|see also|this page|click|tap here|browser|website|download|subscribe|app store|google play|listen|audio|recording|jerusalem bible|grail|icel|international commission|translation|texts? (are|from|of)|^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b.*\b(19|20)\d\d$)/i;
+    // "listen" is only matched as part of an audio prompt: on its own it
+    // would also catch a prayer ("Listen to my prayer, O Lord").
+    var META_TEXT = /(copyright|\u00a9|all rights reserved|universalis|psalm week|liturgical colou?r|^year\s*:|today'?s options|other hours|choose which|you can also|see also|this page|click|tap here|browser|website|download|subscribe|app store|google play|listen (to )?(this|the) (hour|office|audio|recording)|listen (online|now|again)|audio|recording|jerusalem bible|grail|icel|international commission|translation|texts? (are|from|of)|^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b.*\b(19|20)\d\d$)/i;
 
     // Prayer lines get a much narrower test: only a copyright or publisher
     // notice that happens to be styled as a paragraph of text.
@@ -229,8 +231,10 @@
 
     // Section headings come as `table.each` header cells, as h1-h6 or as a
     // bold rubric, depending on the hour and the season.
+    var HEADING_SELECTOR = 'table.each th[align="left"], h1, h2, h3, h4, h5, h6, .boldrubric';
+
     function sectionHeadings(root) {
-        return toArray(root.querySelectorAll('table.each th[align="left"], h1, h2, h3, h4, h5, h6, .boldrubric'));
+        return toArray(root.querySelectorAll(HEADING_SELECTOR));
     }
 
     function tableOf(node) {
@@ -298,6 +302,42 @@
         toArray(root.querySelectorAll('.boldrubric')).forEach(function (n) {
             if (/^OR:?$/i.test(text(n))) remove(n);
         });
+    }
+
+    // Midday Prayer: Universalis prints both the psalms of the day and the
+    // complementary (gradual) psalmody on the one page, each under its own
+    // heading, with in-page links to jump over the set that isn't wanted.
+    // dropChoosers() removes those headings and links as page controls,
+    // which used to leave the two sets running on as one long psalmody.
+    // The psalms of the day are what is prayed when one daytime hour is
+    // said, so the complementary set goes - from its heading up to the
+    // next section (CONCLUSION, the reading, or the psalms of the day when
+    // the complementary set comes first). If that next section can't be
+    // found among the following siblings, nothing is removed.
+    var COMPLEMENTARY_HEADING = /^complementary psalm(s|ody):?$/i;
+    var AFTER_COMPLEMENTARY = /^(psalms of the day|conclusion|(short |scripture )?reading|(short )?responsory|concluding prayer|prayer)\b/i;
+
+    function startsSectionAfterComplementary(el) {
+        if (el.nodeType !== 1) return false;
+        var heads = toArray(el.querySelectorAll(HEADING_SELECTOR));
+        if (el.matches && el.matches(HEADING_SELECTOR)) heads.unshift(el);
+        return heads.some(function (h) { return AFTER_COMPLEMENTARY.test(text(h)); });
+    }
+
+    function dropComplementaryPsalmody(root) {
+        var head = sectionHeadings(root).filter(function (h) {
+            return COMPLEMENTARY_HEADING.test(text(h));
+        })[0];
+        if (!head) return;
+        var start = headingBlock(head);
+        var doomed = [start];
+        for (var n = start.nextSibling; n; n = n.nextSibling) {
+            if (startsSectionAfterComplementary(n)) {
+                doomed.forEach(remove);
+                return;
+            }
+            doomed.push(n);
+        }
     }
 
     // Drops rubric *blocks* - instructions, captions, site notes. A rubric
@@ -436,6 +476,12 @@
 
     function postProcessNode(root, hourKey, log) {
         log = log || [];
+
+        // Runs first: later steps (dropChoosers, dropRubricBlocks) remove
+        // the headings it finds the complementary psalmody by.
+        if (hourKey === 'sext') {
+            guard(root, 'dropComplementaryPsalmody', dropComplementaryPsalmody, log);
+        }
 
         // Midday Prayer and Vespers render as prayer text only. The Office
         // of Readings keeps its rubrics, which there carry the sources of
