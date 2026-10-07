@@ -529,14 +529,7 @@ function translateFeastName(name) {
 }
 
 // Accessibility Features
-function setTextSize(size) {
-    document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
-    if (size !== 'normal') {
-        document.body.classList.add(`text-${size}`);
-    }
-    localStorage.setItem('textSize', size);
-}
-
+// The text size buttons (data-text-size-preset) are handled by js/text-size.js.
 function initAccessibility() {
     document.getElementById('accessibilityToggle').addEventListener('click', function(e) {
         e.stopPropagation();
@@ -552,18 +545,6 @@ function initAccessibility() {
         document.body.classList.toggle('high-contrast');
         localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
     });
-    document.getElementById('textSizeSmall').addEventListener('click', function() {
-        setTextSize('small');
-    });
-    document.getElementById('textSizeNormal').addEventListener('click', function() {
-        setTextSize('normal');
-    });
-    document.getElementById('textSizeLarge').addEventListener('click', function() {
-        setTextSize('large');
-    });
-    document.getElementById('textSizeExtraLarge').addEventListener('click', function() {
-        setTextSize('xlarge');
-    });
     document.getElementById('reminderToggle').addEventListener('click', function() {
         togglePrayerReminders();
         this.textContent = localStorage.getItem('prayerReminders') === 'false' ? 'Enable Prayer Reminders' : 'Disable Prayer Reminders';
@@ -571,8 +552,6 @@ function initAccessibility() {
     if (localStorage.getItem('highContrast') === 'true') {
         document.body.classList.add('high-contrast');
     }
-    const textSize = localStorage.getItem('textSize') || 'normal';
-    setTextSize(textSize);
 }
 
 
@@ -1258,10 +1237,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
             const lang = localStorage.getItem('preferredLanguage') || 'sw';
             setLanguage(lang);
-        }
-        if (e.key === 'textSize') {
-            const size = e.newValue || 'normal';
-            setTextSize(size);
         }
     });
     // Footer year

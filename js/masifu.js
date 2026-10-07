@@ -339,72 +339,19 @@
 
     // ---- Text size controls ----------------------------------------------------
 
-    const SCALE_MIN = 0.8;
-    const SCALE_MAX = 1.7;
-    const SCALE_STEP = 0.1;
-    const SCALE_KEY = 'masifuTextScale';
-
-    function loadScale() {
-        try {
-            const saved = parseFloat(localStorage.getItem(SCALE_KEY));
-            if (!isNaN(saved)) return Math.min(SCALE_MAX, Math.max(SCALE_MIN, saved));
-            // Migrate the old 3-step cycle button setting
-            const old = { small: 0.9, normal: 1, large: 1.25, xlarge: 1.5 }[localStorage.getItem('textSize')];
-            if (old) return old;
-        } catch (e) { /* storage unavailable */ }
-        return 1;
-    }
-
+    // The size is the app-wide setting kept by js/text-size.js: it sets
+    // --prayer-text-scale on <html>, which css/index.css's .container rule
+    // multiplies its font-size by, instead of scaling the root <html>
+    // font-size: the navbar sits outside .container as a sibling, so it (and
+    // the bottom nav, on pages that have one) stays a fixed size while only
+    // the prayer text grows and shrinks.
     function setupTextControls() {
-        const ctl = document.createElement('div');
-        ctl.className = 'masifu-textctl';
-        ctl.setAttribute('role', 'group');
-        ctl.setAttribute('aria-label', 'Ukubwa wa maandishi');
-
-        const dec = document.createElement('button');
-        dec.type = 'button';
-        dec.className = 'tc-dec';
-        dec.textContent = '−';
-        dec.setAttribute('aria-label', 'Punguza ukubwa wa maandishi');
-
-        const reset = document.createElement('button');
-        reset.type = 'button';
-        reset.className = 'tc-reset';
-        reset.setAttribute('aria-label', 'Rejesha ukubwa wa kawaida');
-
-        const inc = document.createElement('button');
-        inc.type = 'button';
-        inc.className = 'tc-inc';
-        inc.textContent = '+';
-        inc.setAttribute('aria-label', 'Ongeza ukubwa wa maandishi');
-
-        let scale = loadScale();
-
-        function apply() {
-            scale = Math.round(scale * 10) / 10;
-            // Set a custom property that css/index.css's .container rule
-            // multiplies its font-size by, instead of scaling the root
-            // <html> font-size: the navbar sits outside .container as a
-            // sibling, so it (and the bottom nav, on pages that have one)
-            // never picks up --prayer-text-scale and stays a fixed size
-            // while only the prayer text grows and shrinks.
-            document.documentElement.style.setProperty('--prayer-text-scale', scale);
-            reset.textContent = Math.round(scale * 100) + '%';
-            reset.title = 'Rejesha 100%';
-            dec.disabled = scale <= SCALE_MIN;
-            inc.disabled = scale >= SCALE_MAX;
-            try { localStorage.setItem(SCALE_KEY, String(scale)); } catch (e) { /* ignore */ }
-        }
-
-        dec.addEventListener('click', function () { scale -= SCALE_STEP; apply(); });
-        inc.addEventListener('click', function () { scale += SCALE_STEP; apply(); });
-        reset.addEventListener('click', function () { scale = 1; apply(); });
-
-        ctl.appendChild(dec);
-        ctl.appendChild(reset);
-        ctl.appendChild(inc);
+        if (!window.IPrayTextSize) return;
+        const ctl = window.IPrayTextSize.createControl({
+            className: 'masifu-textctl',
+            buttonClass: { dec: 'tc-dec', reset: 'tc-reset', inc: 'tc-inc' }
+        });
         document.body.appendChild(ctl);
-        apply();
 
         // A few asubuhi pages also carry a fixed bottom nav; without this
         // the floating control would sit on top of it.

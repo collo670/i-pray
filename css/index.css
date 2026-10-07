@@ -92,23 +92,23 @@ body.page-index h3 {
     letter-spacing: 0.01em;
 }
 
-body.page-index h1 { font-size: 1.9rem; }
-body.page-index h2 { font-size: 1.5rem; }
-body.page-index h3 { font-size: 1.3rem; }
+/* --ipray-text-scale is the app-wide text size, set on <main> by
+   js/text-size.js; outside <main> (app bar, bottom nav) it is unset, so
+   these fall back to 1 and the chrome keeps a fixed size. */
+body.page-index h1 { font-size: calc(1.9rem * var(--ipray-text-scale, 1)); }
+body.page-index h2 { font-size: calc(1.5rem * var(--ipray-text-scale, 1)); }
+body.page-index h3 { font-size: calc(1.3rem * var(--ipray-text-scale, 1)); }
 body.page-index .app-bar-brand h1 {
     font-size: 2.2rem !important;
     line-height: 1.1;
 }
 
-body.page-index .text-xs { font-size: 0.9rem !important; }
-body.page-index .text-sm { font-size: 1rem !important; }
-body.page-index .text-base { font-size: 1.1rem !important; }
-body.page-index .text-lg { font-size: 1.2rem !important; }
-body.page-index .text-xl { font-size: 1.35rem !important; }
-.text-small { font-size: 0.875rem; }
-.text-large { font-size: 1.25rem; }
-.text-xlarge { font-size: 1.5rem; }
-.text-xxs { font-size: 0.7rem; }
+body.page-index .text-xs { font-size: calc(0.9rem * var(--ipray-text-scale, 1)) !important; }
+body.page-index .text-sm { font-size: calc(1rem * var(--ipray-text-scale, 1)) !important; }
+body.page-index .text-base { font-size: calc(1.1rem * var(--ipray-text-scale, 1)) !important; }
+body.page-index .text-lg { font-size: calc(1.2rem * var(--ipray-text-scale, 1)) !important; }
+body.page-index .text-xl { font-size: calc(1.35rem * var(--ipray-text-scale, 1)) !important; }
+.text-xxs { font-size: calc(0.7rem * var(--ipray-text-scale, 1)); }
 .high-contrast { filter: contrast(1.8); }
 /* Liturgical app themes, set on <body> by js/settings.js.
    --primary-color drives .bg-gradient-vintage (page background);
@@ -599,8 +599,8 @@ html {
     padding: 32px 24px calc(96px + env(safe-area-inset-bottom, 0px));
     text-align: left;
     line-height: 1.75;
-    /* --prayer-text-scale is set by js/masifu.js / js/text-size-control.js
-       (default 1, so pages that never touch it render unchanged). Scoping
+    /* --prayer-text-scale is the app-wide text size set by js/text-size.js
+       (default 1, so the page renders unchanged until it's changed). Scoping
        the scale to .container instead of the root <html> font-size means
        the .navbar / .bottom-nav that sit outside it as siblings never
        resize when the user adjusts prayer text size. */
@@ -1339,6 +1339,92 @@ nav.fixed.bottom-0.left-0.right-0 button {
     color: #f0c96a !important;
 }
 
+/* App-wide text size controls (wired by js/text-size.js). Fixed rem sizes
+   so a control doesn't grow with the text it resizes. */
+.textsize-stepper {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: stretch;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: #ffffff;
+}
+.textsize-stepper button {
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 0.6rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #7c2133;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+.textsize-stepper .ts-dec { font-size: 0.9rem; }
+.textsize-stepper .ts-inc { font-size: 1.15rem; }
+.textsize-stepper .ts-reset {
+    min-width: 58px;
+    font-size: 0.85rem;
+    color: #374151;
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+}
+.textsize-stepper button:hover,
+.textsize-stepper button:focus-visible {
+    background: rgba(124, 33, 51, 0.08);
+}
+/* Inset so the pill's overflow: hidden doesn't clip the focus ring. */
+.textsize-stepper button:focus-visible {
+    outline: 2px solid #7c2133;
+    outline-offset: -2px;
+}
+.textsize-stepper button[disabled] {
+    opacity: 0.35;
+    cursor: default;
+    background: none;
+}
+:root.dark .textsize-stepper {
+    background: #4b5563;
+    border-color: #6b7280;
+}
+:root.dark .textsize-stepper button { color: #f0c96a; }
+:root.dark .textsize-stepper .ts-reset {
+    color: #f3f4f6;
+    border-color: #6b7280;
+}
+:root.dark .textsize-stepper button:hover,
+:root.dark .textsize-stepper button:focus-visible {
+    background: rgba(255, 255, 255, 0.1);
+}
+:root.dark .textsize-stepper button:focus-visible { outline-color: #f0c96a; }
+
+/* Settings: the language and social grids drop columns once the app-wide
+   text size makes their labels wider than a column. The queries are in em,
+   which tracks the section's (scaled) font size. */
+.settings-fit { container-type: inline-size; }
+@container (max-width: 13em) {
+    .language-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@container (max-width: 12em) {
+    .social-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Home Accessibility menu: mark the preset matching the current size. */
+[data-text-size-preset][aria-pressed="true"] {
+    background: rgba(124, 33, 51, 0.1);
+    color: #7c2133;
+    font-weight: 600;
+}
+:root.dark [data-text-size-preset][aria-pressed="true"] {
+    background: rgba(240, 201, 106, 0.15);
+    color: #f0c96a;
+}
+
 /* The floating text-size button on liturgy pages must sit above the nav,
    not on top of it. */
 #textSizeCycleBtn {
@@ -1698,7 +1784,7 @@ nav.fixed.bottom-0.left-0.right-0 {
     border-radius: 9999px;
     /* Keep >= 14px: enhanceSmallTextAccessibility() rewrites smaller text
        and cannot evaluate this badge's semi-transparent background */
-    font-size: clamp(0.875rem, 4.2vw, 1.05rem);
+    font-size: calc(clamp(0.875rem, 4.2vw, 1.05rem) * var(--ipray-text-scale, 1));
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -1722,14 +1808,14 @@ nav.fixed.bottom-0.left-0.right-0 {
 }
 
 #liturgicalCard .liturgical-day {
-    font-size: clamp(1.75rem, 7.6vw, 2.5rem);
+    font-size: calc(clamp(1.75rem, 7.6vw, 2.5rem) * var(--ipray-text-scale, 1));
     font-weight: 700;
     line-height: 1.1;
     color: var(--text-primary);
 }
 
 .liturgical-week {
-    font-size: clamp(1.3rem, 6vw, 1.6rem);
+    font-size: calc(clamp(1.3rem, 6vw, 1.6rem) * var(--ipray-text-scale, 1));
     line-height: 1.3;
     font-weight: 600;
     color: var(--lit-text);
@@ -1737,7 +1823,7 @@ nav.fixed.bottom-0.left-0.right-0 {
 }
 
 .liturgical-date {
-    font-size: 1rem;
+    font-size: calc(1rem * var(--ipray-text-scale, 1));
     color: var(--text-secondary);
     margin-top: 0.3rem;
 }
@@ -1747,7 +1833,7 @@ nav.fixed.bottom-0.left-0.right-0 {
     margin-top: 0.75rem;
     padding: 0.2rem 0.8rem;
     border-radius: 9999px;
-    font-size: clamp(0.9rem, 4.2vw, 1.05rem);
+    font-size: calc(clamp(0.9rem, 4.2vw, 1.05rem) * var(--ipray-text-scale, 1));
     font-weight: 600;
     background: var(--surface-2);
     color: var(--text-secondary);
@@ -1756,12 +1842,12 @@ nav.fixed.bottom-0.left-0.right-0 {
 .feast-day {
     margin-top: 0.75rem;
     font-weight: 600;
-    font-size: clamp(1.15rem, 5.4vw, 1.4rem);
+    font-size: calc(clamp(1.15rem, 5.4vw, 1.4rem) * var(--ipray-text-scale, 1));
     color: var(--lit-text);
 }
 
 .upcoming-feasts-toggle {
-    font-size: clamp(1rem, 4.6vw, 1.15rem);
+    font-size: calc(clamp(1rem, 4.6vw, 1.15rem) * var(--ipray-text-scale, 1));
 }
 
 /* ---------------------------------------------------------------------------

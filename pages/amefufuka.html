@@ -485,49 +485,18 @@
             margin-top: 0.5rem;
         }
 
-        /* Text size adjustment classes (applied to .content-wrapper by JS) */
-        .text-size-sm .paragraph-text { font-size: 0.75rem; } /* Smaller than default text-sm */
-        .text-size-base .paragraph-text { font-size: 0.875rem; } /* text-sm */
-        .text-size-lg .paragraph-text { font-size: 1rem; } /* text-base */
-        .text-size-xl .paragraph-text { font-size: 1.125rem; } /* text-lg */
+        /* Text follows the app-wide text size (--prayer-text-scale, set on
+           <html> by js/text-size.js; default 1 = the sizes above). */
+        .content-wrapper .paragraph-text { font-size: calc(0.875rem * var(--prayer-text-scale, 1)); }
+        .content-wrapper .subsection-heading { font-size: calc(1.25rem * var(--prayer-text-scale, 1)); }
+        .content-wrapper .section-heading { font-size: calc(1.5rem * var(--prayer-text-scale, 1)); }
+        .content-wrapper .main-title { font-size: calc(1.875rem * var(--prayer-text-scale, 1)); }
 
-        /* Adjust headings and other elements proportionally for text size changes */
-        .text-size-sm .subsection-heading { font-size: 1rem; }
-        .text-size-base .subsection-heading { font-size: 1.25rem; }
-        .text-size-lg .subsection-heading { font-size: 1.5rem; }
-        .text-size-xl .subsection-heading { font-size: 1.75rem; }
-
-        .text-size-sm .section-heading { font-size: 1.25rem; }
-        .text-size-base .section-heading { font-size: 1.5rem; }
-        .text-size-lg .section-heading { font-size: 1.75rem; }
-        .text-size-xl .section-heading { font-size: 2rem; }
-
-        .text-size-sm .main-title { font-size: 1.5rem; }
-        .text-size-base .main-title { font-size: 1.875rem; }
-        .text-size-lg .main-title { font-size: 2.25rem; }
-        .text-size-xl .main-title { font-size: 2.5rem; }
-
-        /* Media queries for text size adjustment on small screens */
         @media (min-width: 640px) {
-            .text-size-sm .paragraph-text { font-size: 0.875rem; } /* sm:text-base */
-            .text-size-base .paragraph-text { font-size: 1rem; } /* sm:text-base */
-            .text-size-lg .paragraph-text { font-size: 1.125rem; } /* sm:text-lg */
-            .text-size-xl .paragraph-text { font-size: 1.25rem; } /* sm:text-xl */
-
-            .text-size-sm .subsection-heading { font-size: 1.25rem; }
-            .text-size-base .subsection-heading { font-size: 1.5rem; }
-            .text-size-lg .subsection-heading { font-size: 1.75rem; }
-            .text-size-xl .subsection-heading { font-size: 2rem; }
-
-            .text-size-sm .section-heading { font-size: 1.5rem; }
-            .text-size-base .section-heading { font-size: 1.875rem; }
-            .text-size-lg .section-heading { font-size: 2.25rem; }
-            .text-size-xl .section-heading { font-size: 2.5rem; }
-
-            .text-size-sm .main-title { font-size: 1.875rem; }
-            .text-size-base .main-title { font-size: 2.25rem; }
-            .text-size-lg .main-title { font-size: 2.5rem; }
-            .text-size-xl .main-title { font-size: 3rem; }
+            .content-wrapper .paragraph-text { font-size: calc(1rem * var(--prayer-text-scale, 1)); }
+            .content-wrapper .subsection-heading { font-size: calc(1.5rem * var(--prayer-text-scale, 1)); }
+            .content-wrapper .section-heading { font-size: calc(1.875rem * var(--prayer-text-scale, 1)); }
+            .content-wrapper .main-title { font-size: calc(2.25rem * var(--prayer-text-scale, 1)); }
         }
     </style>
     <!-- Custom CSS -->
@@ -536,6 +505,7 @@
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
     <script src="../js/theme.js"></script>
+    <script src="../js/text-size.js"></script>
 </head>
 <body>
 
@@ -570,7 +540,8 @@
                 <span>Dark Mode</span>
             </button>
 
-            <button id="text-size-toggle" class="toggle-button">
+            <!-- Steps through the app-wide text sizes (js/text-size.js) -->
+            <button id="text-size-toggle" class="toggle-button" data-text-size="cycle" aria-label="Change text size">
                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
                 </svg>
@@ -672,8 +643,6 @@
         const hamburgerButton = document.getElementById('hamburger-button');
         const navLinks = document.getElementById('nav-links');
         const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const textSizeToggle = document.getElementById('text-size-toggle');
-        const mainContentWrapper = document.getElementById('main-content-wrapper');
 
         // --- Hamburger Menu Toggle ---
         hamburgerButton.addEventListener('click', () => {
@@ -698,31 +667,6 @@
         darkModeToggle.addEventListener('click', () => {
             window.IPrayTheme.toggle();
         });
-
-        // --- Text Size Adjustment Toggle ---
-        const fontSizeClasses = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
-        let currentFontSizeIndex = 1;
-
-        const applyFontSize = (index) => {
-            fontSizeClasses.forEach(sizeClass => {
-                mainContentWrapper.classList.remove(sizeClass);
-            });
-            mainContentWrapper.classList.add(fontSizeClasses[index]);
-        };
-
-        textSizeToggle.addEventListener('click', () => {
-            currentFontSizeIndex = (currentFontSizeIndex + 1) % fontSizeClasses.length;
-            applyFontSize(currentFontSizeIndex);
-            localStorage.setItem('fontSizeIndex', currentFontSizeIndex);
-        });
-
-        const savedFontSizeIndex = localStorage.getItem('fontSizeIndex');
-        if (savedFontSizeIndex !== null) {
-            currentFontSizeIndex = parseInt(savedFontSizeIndex);
-            applyFontSize(currentFontSizeIndex);
-        } else {
-            applyFontSize(currentFontSizeIndex);
-        }
 
         // --- PDF Viewer ---
         const pdfjsLib = window['pdfjs-dist/build/pdf'];

@@ -120,7 +120,7 @@ body {
 .content {
     padding: 32px 28px 40px;
     background: linear-gradient(180deg, #ffffff 0%, #faf7ef 100%);
-    /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+    /* --prayer-text-scale is set by js/text-size.js (default 1).
        Scoping the scale to .content — rather than the root <html>
        font-size — keeps .page-nav, which sits outside it as a sibling,
        a fixed size when the reading text is enlarged or shrunk. */

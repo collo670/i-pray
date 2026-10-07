@@ -49,12 +49,7 @@ function loadPreferences() {
     document.getElementById('highContrastToggle').checked = highContrast;
     document.body.classList.toggle('high-contrast', highContrast);
 
-    const textSize = localStorage.getItem('textSize') || 'normal';
-    document.getElementById('textSizeSelect').value = textSize;
-    document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
-    if (textSize !== 'normal') {
-        document.body.classList.add(`text-${textSize}`);
-    }
+    // The Text Size buttons are wired, saved and applied app-wide by js/text-size.js.
 
     const language = localStorage.getItem('preferredLanguage') || localStorage.getItem('language') || 'sw';
     highlightSelectedLanguage(language);
@@ -131,15 +126,6 @@ function setupEventListeners() {
         const highContrast = this.checked;
         document.body.classList.toggle('high-contrast', highContrast);
         localStorage.setItem('highContrast', highContrast);
-    });
-
-    document.getElementById('textSizeSelect').addEventListener('change', function() {
-        const size = this.value;
-        document.body.classList.remove('text-small', 'text-large', 'text-xlarge');
-        if (size !== 'normal') {
-            document.body.classList.add(`text-${size}`);
-        }
-        localStorage.setItem('textSize', size);
     });
 
     // Add time input listeners
@@ -224,7 +210,7 @@ function clearCache() {
             appTheme: localStorage.getItem('appTheme'),
             darkMode: localStorage.getItem('darkMode'),
             language: localStorage.getItem('language'),
-            textSize: localStorage.getItem('textSize'),
+            masifuTextScale: localStorage.getItem('masifuTextScale'),
             highContrast: localStorage.getItem('highContrast')
         };
 
@@ -249,7 +235,7 @@ function exportData() {
         theme: localStorage.getItem('appTheme'),
         darkMode: localStorage.getItem('darkMode'),
         language: localStorage.getItem('language'),
-        textSize: localStorage.getItem('textSize'),
+        textScale: window.IPrayTextSize ? window.IPrayTextSize.get() : 1,
         highContrast: localStorage.getItem('highContrast')
     };
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });

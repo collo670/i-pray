@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="../js/theme.js"></script>
+    <script src="../js/text-size.js"></script>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
@@ -54,12 +55,12 @@
             <!-- Settings Sections -->
             <div class="space-y-8">
                 <!-- Language Settings -->
-                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                <section class="settings-fit bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-language mr-2 text-primary"></i>
                         <span data-translate="languageSettings">Language Settings</span>
                     </h2>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                    <div class="language-grid grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                         <button class="language-option flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary dark:hover:border-primary transition-colors" data-lang="en" lang="en">
                             <span class="mr-2">🇺🇸</span>
                             <span class="text-left"><span class="block font-medium">English</span></span>
@@ -113,8 +114,8 @@
                         <span data-translate="prayerReminders">Prayer Reminders</span>
                     </h2>
                     <div class="space-y-4">
-                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div>
+                        <div class="prayer-reminder flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="flex-1">
                                 <h3 class="font-medium" data-translate="morningPrayer">Morning Prayer (Lauds)</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="startDayWithPrayer">Start your day with prayer</p>
                             </div>
@@ -126,8 +127,8 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div>
+                        <div class="prayer-reminder flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="flex-1">
                                 <h3 class="font-medium" data-translate="angelus">Angelus</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="noonPrayer">Noon prayer tradition</p>
                             </div>
@@ -168,17 +169,17 @@
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                             </label>
                         </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="flex-1">
                                 <h3 class="font-medium" data-translate="textSize">Text Size</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="adjustPreference">Adjust to your preference</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="textSizeAllPages">Applies to every page of the app</p>
                             </div>
-                            <select id="textSizeSelect" class="bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-2 py-1" aria-label="Select text size">
-                                <option value="small">Small</option>
-                                <option value="normal">Normal</option>
-                                <option value="large">Large</option>
-                                <option value="xlarge">Extra Large</option>
-                            </select>
+                            <!-- App-wide text size, shared with every page (js/text-size.js) -->
+                            <div class="textsize-stepper" role="group" aria-label="Text size">
+                                <button type="button" class="ts-dec" data-text-size="dec" aria-label="Decrease text size">A−</button>
+                                <button type="button" class="ts-reset" data-text-size="reset" data-text-size-value aria-label="Reset text size to 100%" title="Reset to 100%">100%</button>
+                                <button type="button" class="ts-inc" data-text-size="inc" aria-label="Increase text size">A+</button>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -219,12 +220,12 @@
                     </div>
                 </section>
                 <!-- Social & Support -->
-              <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+              <section class="settings-fit bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-hands-helping mr-2 text-primary"></i>
                         <span data-translate="connectSupport">Connect &amp; Support</span>
                     </h2>
-                    <div class="grid grid-cols-4 gap-3 mb-4">
+                    <div class="social-grid grid grid-cols-4 gap-3 mb-4">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                             <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-1">
                                 <i class="fab fa-facebook-f"></i>

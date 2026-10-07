@@ -591,6 +591,7 @@
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
     <script src="../js/theme.js"></script>
+    <script src="../js/text-size.js"></script>
 </head>
 <body class="prayer-topbar">
         <header id="appBar" class="app-bar" role="banner">
@@ -1342,9 +1343,10 @@
     </div>
     
     <div class="masifu-textctl" role="group" aria-label="Adjust prayer text size">
-        <button id="textSizeDec" type="button" class="tc-dec" aria-label="Decrease text size">−</button>
-        <button id="textSizeReset" type="button" class="tc-reset" aria-label="Reset text size">100%</button>
-        <button id="textSizeInc" type="button" class="tc-inc" aria-label="Increase text size">+</button>
+        <!-- Wired by js/text-size.js: the size is shared with every page -->
+        <button type="button" class="tc-dec" data-text-size="dec" aria-label="Decrease text size">−</button>
+        <button type="button" class="tc-reset" data-text-size="reset" data-text-size-value aria-label="Reset text size" title="Reset to 100%">100%</button>
+        <button type="button" class="tc-inc" data-text-size="inc" aria-label="Increase text size">+</button>
     </div>
     
     <script>
@@ -1361,13 +1363,8 @@
                 thursday: 'Thursday',
                 friday: 'Friday'
             };
-            const SCALE_MIN = 0.8;
-            const SCALE_MAX = 1.7;
-            const SCALE_STEP = 0.1;
-            const SCALE_KEY = 'masifuTextScale';
 
             let currentDayIndex = (new Date().getDay() + 1) % DAY_ORDER.length;
-            let textScale = 1;
 
             function buildTodayMorningPrayerLink() {
                 const now = new Date();
@@ -1456,42 +1453,6 @@
                 window.IPrayTheme.toggle();
             };
 
-            function loadScale() {
-                try {
-                    const saved = parseFloat(localStorage.getItem(SCALE_KEY));
-                    if (!isNaN(saved)) return Math.min(SCALE_MAX, Math.max(SCALE_MIN, saved));
-                    const old = { small: 0.9, normal: 1, large: 1.25, xlarge: 1.5 }[localStorage.getItem('textSize')];
-                    if (old) return old;
-                } catch (e) {}
-                return 1;
-            }
-
-            function applyTextScale(persist) {
-                textScale = Math.min(SCALE_MAX, Math.max(SCALE_MIN, Math.round(textScale * 10) / 10));
-                document.documentElement.style.setProperty('--prayer-text-scale', textScale);
-                const dec = document.getElementById('textSizeDec');
-                const reset = document.getElementById('textSizeReset');
-                const inc = document.getElementById('textSizeInc');
-                if (reset) {
-                    reset.textContent = Math.round(textScale * 100) + '%';
-                    reset.title = 'Reset to 100%';
-                }
-                if (dec) dec.disabled = textScale <= SCALE_MIN;
-                if (inc) inc.disabled = textScale >= SCALE_MAX;
-                if (persist === false) return;
-                try { localStorage.setItem(SCALE_KEY, String(textScale)); } catch (e) {}
-            }
-
-            function changeTextScale(direction) {
-                textScale += SCALE_STEP * direction;
-                applyTextScale();
-            }
-
-            function resetTextScale() {
-                textScale = 1;
-                applyTextScale();
-            }
-
             function showDay(index) {
                 const day = DAY_ORDER[index];
                 document.querySelectorAll('.prayer-section').forEach(function (el) {
@@ -1515,27 +1476,11 @@
                 wireMenuLinks();
                 setMenuOpen(false);
 
-                textScale = loadScale();
-                applyTextScale(false);
-                const dec = document.getElementById('textSizeDec');
-                const reset = document.getElementById('textSizeReset');
-                const inc = document.getElementById('textSizeInc');
-                if (dec) dec.addEventListener('click', function () { changeTextScale(-1); });
-                if (reset) reset.addEventListener('click', resetTextScale);
-                if (inc) inc.addEventListener('click', function () { changeTextScale(1); });
-
                 const prevBtn = document.getElementById('prevDay');
                 const nextBtn = document.getElementById('nextDay');
                 if (prevBtn) prevBtn.addEventListener('click', prevDay);
                 if (nextBtn) nextBtn.addEventListener('click', nextDay);
                 showDay(currentDayIndex);
-            });
-
-            window.addEventListener('storage', function (e) {
-                if (e.key === SCALE_KEY || e.key === 'textSize') {
-                    textScale = loadScale();
-                    applyTextScale(false);
-                }
             });
 
             window.addEventListener('resize', function () {
