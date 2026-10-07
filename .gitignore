@@ -1,0 +1,15 @@
+# Dependencies (npm install recreates them)
+node_modules/
+
+# Local logs and process files
+logs/
+*.log
+*.pid
+
+# Test output
+test-results/
+playwright-report/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
