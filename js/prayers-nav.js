@@ -45,7 +45,6 @@
             { id: 'readings', key: 'nightPrayer', label: 'Night Prayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
             { id: 'rosary', key: 'holyRosary', label: 'Holy Rosary', icon: 'fa-hands-praying', iconColor: 'text-red-500', link: 'pages/holy-rosary.html' },
             { id: 'sacraments', key: 'stationsOfCross', label: 'Way of the Cross', icon: 'fa-cross', iconColor: 'text-pink-500', link: 'pages/via-cruce.html' },
-            { id: 'morning', key: 'otherPrayers', label: 'Other Prayers', icon: 'fa-book', iconColor: 'text-green-600', link: 'pages/prayer.html' },
             { id: 'carmen-page', key: 'carmenPrayer', label: 'Carmen Prayer', icon: 'fa-heart', iconColor: 'text-purple-500', link: 'pages/carmen.html' }
         ];
 
@@ -56,8 +55,8 @@
     }
 
     function resolveBasePath(href) {
-        if (href && href.indexOf('pages/prayer.html') !== -1) {
-            var match = href.match(/^(.*?)pages\/prayer\.html(?:[?#].*)?$/);
+        if (href && href.indexOf('pages/masifu-asubuhi.html') !== -1) {
+            var match = href.match(/^(.*?)pages\/masifu-asubuhi\.html(?:[?#].*)?$/);
             if (match) return match[1];
         }
         var parts = (href || '').split('/');

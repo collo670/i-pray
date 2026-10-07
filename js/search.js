@@ -104,7 +104,7 @@ class EnhancedPrayerSearch {
             {
                 id: 'morning-prayer',
                 title: 'Morning Prayer (Lauds)',
-                link: 'pages/prayer.html',
+                link: 'pages/masifu-asubuhi.html',
                 type: 'liturgical',
                 season: 'all',
                 content: 'Morning prayer lauds masifu asubuhi dawn sunrise day begin morning office liturgy',

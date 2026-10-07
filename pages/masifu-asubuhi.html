@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#7c2133">
+    <title>Masifu ya Asubuhi - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <!-- Opens today's Masifu ya Asubuhi (jumapili1.html ... jumamosi4.html),
+         using the same day / psalter-week rule as the home page (js/index.js). -->
+    <script src="../js/liturgical-calendar.js"></script>
+    <script>
+        (function () {
+            var now = new Date();
+            var dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
+            var week;
+            try {
+                week = getLiturgicalToday(now).psalterWeek;
+            } catch (e) {}
+            if (!week) {
+                // Same fallback as js/index.js: rolling 4-week cycle from a
+                // known Week-1 Sunday (October 19, 2025)
+                var sunday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+                var weeks = Math.floor((sunday - new Date(2025, 9, 19)) / (7 * 24 * 60 * 60 * 1000));
+                week = ((weeks % 4) + 4) % 4 + 1;
+            }
+            location.replace(dayToPrefix[now.getDay()] + week + '.html');
+        })();
+    </script>
+</head>
+<body>
+    <p><a href="jumapili1.html">Masifu ya Asubuhi</a></p>
+</body>
+</html>
