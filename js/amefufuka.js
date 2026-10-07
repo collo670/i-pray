@@ -2,20 +2,11 @@
 // Amefufuka songbook — shared behaviour for the index and the song pages.
 //   - top bar hamburger menu (same markup as the Masifu ya Asubuhi pages)
 //   - index: live search over the song titles
-//   - song page: show/hide chords, "Mlalo" (keep the PDF's side-by-side
-//     columns on narrow screens) and the app-wide text size control
+//   - song page: the app-wide text size control
 // Light/dark mode comes from js/theme.js, text size from js/text-size.js.
 // ---------------------------------------------------------------------------
 (function () {
     'use strict';
-
-    function store(key, value) {
-        try {
-            if (value === undefined) return localStorage.getItem(key);
-            localStorage.setItem(key, value);
-        } catch (e) {}
-        return null;
-    }
 
     window.toggleMenu = function (forceClose) {
         var navLinks = document.querySelector('.nav-links');
@@ -71,22 +62,7 @@
         run();
     }
 
-    // ---- Song page: toggles -------------------------------------------------
-
-    function setupToggle(id, bodyClass, key, onWhenSaved) {
-        var btn = document.getElementById(id);
-        if (!btn) return;
-        function apply(on) {
-            document.body.classList.toggle(bodyClass, on);
-            btn.setAttribute('aria-pressed', String(on === onWhenSaved));
-        }
-        apply(store(key) === '1');
-        btn.addEventListener('click', function () {
-            var on = !document.body.classList.contains(bodyClass);
-            store(key, on ? '1' : '0');
-            apply(on);
-        });
-    }
+    // ---- Song page ---------------------------------------------------------
 
     function setupTextControls() {
         if (!window.IPrayTextSize || !document.querySelector('.song-sheet')) return;
@@ -100,9 +76,6 @@
     function init() {
         setupMenu();
         setupSearch();
-        // "Chords" is pressed while chords are shown (body has no amef-no-chords)
-        setupToggle('chordToggle', 'amef-no-chords', 'amefufukaHideChords', false);
-        setupToggle('layoutToggle', 'amef-horizontal', 'amefufukaHorizontal', true);
         setupTextControls();
     }
 

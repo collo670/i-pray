@@ -280,36 +280,19 @@ def page_label(s):
         return f"Ukurasa {pages[0]}" + (f"–{pages[-1]}" if len(pages) > 1 else '')
     return 'Nyongeza'
 
-for k, s in enumerate(order):
+for s in order:
     sec = section_of(s['page'])
-    prev_s = order[k - 1] if k else None
-    next_s = order[k + 1] if k + 1 < len(order) else None
     title = nice_title(s['title'])
-    nav = nav_items([('../../index.html', 'Nyumbani'), ('../amefufuka.html', 'Amefufuka — Orodha ya Nyimbo')]
-                    + ([(prev_s['file'], '← ' + nice_title(prev_s['title']).title()[:40])] if prev_s else [])
-                    + ([(next_s['file'], nice_title(next_s['title']).title()[:40] + ' →')] if next_s else []))
+    nav = nav_items([('../../index.html', 'Nyumbani'), ('../amefufuka.html', 'Amefufuka — Orodha ya Nyimbo')])
     sub = ''.join(f'<p class="song-subtitle">{esc(t)}</p>' for t in s['subtitle'])
-    def pager_link(o, cls, label):
-        if not o: return f'<span class="placeholder"></span>'
-        pg = f"uk. {o['page']}" if o['page'] else 'Nyongeza'
-        return f'<a class="{cls}" href="{o["file"]}"><small>{label} · {pg}</small>{esc(nice_title(o["title"]))}</a>'
     body = f'''
     <div class="container">
         <div class="song-meta"><span><i class="amef-dot {sec[1]}"></i>{page_label(s)}</span><span>{esc(sec[2])}</span></div>
         <h1 class="song-title">{esc(title)}</h1>
         {sub}
-        <div class="song-tools">
-            <button type="button" id="chordToggle" aria-pressed="true" title="Onyesha / ficha chords">Chords</button>
-            <button type="button" id="layoutToggle" aria-pressed="false" title="Safu kando kwa kando kama kwenye PDF">Mlalo</button>
-        </div>
         <article class="song-sheet" aria-label="{html.escape(title)}">
 {render_song_body(s)}
         </article>
-        <nav class="song-pager" aria-label="Nyimbo nyingine">
-            {pager_link(prev_s, 'prev', '← Uliotangulia')}
-            <a class="up" href="../amefufuka.html"><small>Amefufuka</small>Orodha</a>
-            {pager_link(next_s, 'next', 'Unaofuata →')}
-        </nav>
     </div>
 '''
     doc = HEAD.format(r='../../', title=esc(title.title()) + ' - Amefufuka', extra=f' amef-song', nav=nav) + body + FOOT.format(r='../../')
