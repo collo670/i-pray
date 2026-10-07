@@ -447,7 +447,7 @@ const navItemsData = [
     // Prayer Requests → Community/users icon (unchanged)
     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`, title: 'requests', color: 'text-green-600', id: 'prayers', link: 'pages/carmen.html' },
     // Morning Prayer → Sun icon (unchanged)
-    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'pages/prayer.html' },
+    { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`, title: 'prayers', color: 'text-yellow-600', id: 'morning', link: 'pages/masifu-asubuhi.html' },
     // Way of the Cross → Cross (plus) icon
     { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />`, title: 'sacraments', color: 'text-pink-600', id: 'sacraments', link: 'pages/via-cruce.html' },
     // Midday Prayer → Sun icon

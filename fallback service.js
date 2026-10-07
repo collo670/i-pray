@@ -145,7 +145,7 @@ const PRECACHE_URLS = [
   "/i-pray/pages/mwaka3-week34.html",
   "/i-pray/pages/mwaka3.html",
   "/i-pray/pages/prayer-hour.html",
-  "/i-pray/pages/prayer.html",
+  "/i-pray/pages/masifu-asubuhi.html",
   "/i-pray/pages/sacraments.html",
   "/i-pray/pages/settings.html",
   "/i-pray/pages/via-cruce.html"

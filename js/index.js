@@ -567,7 +567,6 @@ const PRAYER_MENU = [
     { id: 'readings', key: 'nightPrayer', icon: 'fa-star', iconColor: 'text-blue-500', link: 'pages/compline.html' },
     { id: 'rosary', key: 'holyRosary', icon: 'fa-hands-praying', iconColor: 'text-red-500', link: 'pages/holy-rosary.html' },
     { id: 'sacraments', key: 'stationsOfCross', icon: 'fa-cross', iconColor: 'text-pink-500', link: 'pages/via-cruce.html' },
-    { id: 'morning', key: 'otherPrayers', icon: 'fa-book', iconColor: 'text-green-600', link: 'pages/prayer.html' },
     { id: 'carmen-page', key: 'carmenPrayer', icon: 'fa-heart', iconColor: 'text-purple-500', link: 'pages/carmen.html' }
 ];
 
