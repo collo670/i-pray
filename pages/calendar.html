@@ -54,21 +54,196 @@
         .green { background-color: #16A34A; }
         .rose { background-color: #DB2777; }
 
-        .day-cell {
+        /* ===== Month grid ===== */
+        .cal-card {
+            --cal-accent: var(--color-primary, #7c2133);
+            --cal-text: #374151;
+            --cal-muted: #9ca3af;
+            --cal-hover: rgba(124, 33, 51, 0.07);
+            --cal-solemnity-bg: rgba(124, 33, 51, 0.12);
+            --cal-solemnity-text: var(--cal-accent);
+            --cal-feast-ring: rgba(124, 33, 51, 0.38);
+            --cal-sunday: var(--cal-accent);
+            --cal-white-dot-ring: #c9a227;
+            --cal-divider: rgba(0, 0, 0, 0.07);
+        }
+
+        .dark .cal-card {
+            --cal-text: #e5e7eb;
+            --cal-muted: #6b7280;
+            --cal-hover: rgba(255, 255, 255, 0.07);
+            --cal-solemnity-bg: rgba(240, 201, 106, 0.15);
+            --cal-solemnity-text: #f0c96a;
+            --cal-feast-ring: rgba(240, 201, 106, 0.45);
+            --cal-sunday: #f0c96a;
+            --cal-white-dot-ring: transparent;
+            --cal-divider: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Shrinks on narrow phones so long month names stay on one line */
+        #monthTitle {
+            min-width: 0;
+            font-size: clamp(1.2rem, 5.4vw, 1.5rem);
+            line-height: 1.2;
+        }
+
+        .cal-nav-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cal-text);
+            background: var(--cal-hover);
+            transition: background-color 0.15s ease, transform 0.1s ease;
+        }
+        .cal-nav-btn:hover { background: var(--cal-solemnity-bg); }
+        .cal-nav-btn:active { transform: scale(0.92); }
+
+        .cal-today-btn {
+            height: 2.5rem;
+            padding: 0 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            color: #fff;
+            background: var(--cal-accent);
+            transition: filter 0.15s ease, transform 0.1s ease;
+        }
+        .cal-today-btn:hover { filter: brightness(1.1); }
+        .cal-today-btn:active { transform: scale(0.95); }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 0.3rem;
+            touch-action: pan-y;
+        }
+
+        .cal-weekday {
+            padding-bottom: 0.4rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--cal-muted);
+            border-bottom: 1px solid var(--cal-divider);
+            margin-bottom: 0.3rem;
+        }
+        .cal-weekday.is-sunday { color: var(--cal-sunday); }
+
+        .cal-day {
+            aspect-ratio: 1 / 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
+            border-radius: 0.85rem;
+            border: 1.5px solid transparent;
+            background: transparent;
+            color: var(--cal-text);
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1;
+            font-variant-numeric: lining-nums tabular-nums;
             cursor: pointer;
-            position: relative;
-            transition: background-color 0.15s ease, transform 0.15s ease;
+            transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+        }
+        .cal-day:hover { background: var(--cal-hover); }
+        .cal-day:active { transform: scale(0.94); }
+        .cal-day:focus-visible { outline: 2px solid var(--cal-accent); outline-offset: 2px; }
+
+        .cal-day.is-sunday { color: var(--cal-sunday); }
+        .cal-day.is-solemnity {
+            background: var(--cal-solemnity-bg);
+            color: var(--cal-solemnity-text);
+            font-weight: 700;
+        }
+        .cal-day.is-feast { border-color: var(--cal-feast-ring); }
+        .cal-day.is-outside {
+            color: var(--cal-muted);
+            opacity: 0.45;
+            font-weight: 500;
+            cursor: default;
+            pointer-events: none;
+        }
+        .cal-day.is-selected { box-shadow: 0 0 0 2px var(--cal-accent); }
+        .cal-day.is-today {
+            background: var(--cal-accent);
+            border-color: transparent;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 4px 10px -2px rgba(124, 33, 51, 0.45);
+        }
+        .cal-day.is-today.is-selected {
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--cal-accent);
+        }
+        .dark .cal-day.is-today.is-selected {
+            box-shadow: 0 0 0 2px #1f2937, 0 0 0 4px #f0c96a;
         }
 
-        .day-cell:hover {
-            transform: scale(1.08);
+        /* Feast dots: one per celebration, in its liturgical colour */
+        .cal-dots {
+            display: flex;
+            gap: 3px;
+            height: 6px;
         }
-
-        .feast-dot {
+        .cal-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            margin: 2px auto 0;
+        }
+        .cal-dot.white { border: none; box-shadow: inset 0 0 0 1.5px var(--cal-white-dot-ring); }
+        .cal-day.is-today .cal-dot { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.85); }
+
+        .cal-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.1rem;
+            margin-top: 1rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid var(--cal-divider);
+            font-size: 0.85rem;
+            color: var(--cal-text);
+        }
+        .cal-legend-item { display: inline-flex; align-items: center; gap: 0.45rem; }
+        .cal-legend-swatch {
+            width: 1.1rem;
+            height: 1.1rem;
+            border-radius: 0.35rem;
+            border: 1.5px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cal-legend-swatch.solemnity { background: var(--cal-solemnity-bg); }
+        .cal-legend-swatch.feast { border-color: var(--cal-feast-ring); }
+        .cal-legend-swatch.today { background: var(--cal-accent); border-radius: 9999px; }
+
+        .cal-anim-next { animation: calSlideNext 0.25s ease; }
+        .cal-anim-prev { animation: calSlidePrev 0.25s ease; }
+        @keyframes calSlideNext { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+        @keyframes calSlidePrev { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .cal-anim-next, .cal-anim-prev { animation: none; }
+            .cal-day, .cal-nav-btn, .cal-today-btn { transition: none; }
+        }
+
+        /* Wide screens: keep cells a comfortable height instead of square */
+        @media (min-width: 640px) {
+            .cal-day { aspect-ratio: auto; height: 4rem; font-size: 1.2rem; }
+        }
+
+        @media (max-width: 380px) {
+            #monthTitle { font-size: 1.1rem; }
+            .cal-nav-btn { width: 2.25rem; height: 2.25rem; }
+            .cal-today-btn { height: 2.25rem; padding: 0 0.75rem; }
+            .cal-grid { gap: 0.2rem; }
+            .cal-day { font-size: 1rem; border-radius: 0.7rem; }
         }
 
         @media (max-width: 640px) {
@@ -127,17 +302,27 @@
             </div>
 
             <!-- Monthly Calendar View -->
-            <section class="mb-8 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100" id="monthTitle">This Month</h3>
+            <section class="cal-card mb-8 p-4 sm:p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
+                <div class="flex items-center justify-between gap-2 mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100" id="monthTitle" aria-live="polite">This Month</h3>
                     <div class="flex items-center gap-2">
-                        <button id="prevMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-primary/10 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Previous month">&lsaquo;</button>
-                        <button id="todayBtn" class="px-3 h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-medium" data-translate="today">Today</button>
-                        <button id="nextMonthBtn" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-primary/10 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold" aria-label="Next month">&rsaquo;</button>
+                        <button type="button" id="prevMonthBtn" class="cal-nav-btn" aria-label="Previous month">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button type="button" id="todayBtn" class="cal-today-btn" data-translate="today">Today</button>
+                        <button type="button" id="nextMonthBtn" class="cal-nav-btn" aria-label="Next month">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        </button>
                     </div>
                 </div>
-                <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-center text-sm font-medium">
+                <div id="calendarGrid" class="cal-grid">
                     <!-- Filled by JavaScript -->
+                </div>
+                <div class="cal-legend" aria-hidden="true">
+                    <span class="cal-legend-item"><span class="cal-legend-swatch today"></span><span data-translate="today">Today</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-swatch solemnity"></span><span data-translate="rankSolemnity">Solemnity</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-swatch feast"></span><span data-translate="rankFeast">Feast</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-swatch"><span class="cal-dot red"></span></span><span data-translate="rankMemorial">Memorial</span></span>
                 </div>
             </section>
 
@@ -254,6 +439,9 @@
                 colorRed: 'Red: Apostles, Martyrs',
                 colorGreen: 'Green: Ordinary Time',
                 colorRose: 'Rose: Gaudete, Laetare',
+                rankSolemnity: 'Solemnity',
+                rankFeast: 'Feast',
+                rankMemorial: 'Memorial',
                 today: 'Today',
                 noFeastToday: 'No feast today',
                 noFeast: 'No feast or memorial on this day.',
@@ -279,6 +467,9 @@
                 colorRed: 'Nyekundu: Mitume, Mashahidi',
                 colorGreen: 'Kijani: Majira ya Kawaida',
                 colorRose: 'Waridi: Gaudete, Laetare',
+                rankSolemnity: 'Sherehe',
+                rankFeast: 'Sikukuu',
+                rankMemorial: 'Kumbukumbu',
                 today: 'Leo',
                 noFeastToday: 'Hakuna sherehe leo',
                 noFeast: 'Hakuna sherehe wala kumbukumbu siku hii.',
@@ -304,6 +495,9 @@
                 colorRed: 'Rojo: Apóstoles, Mártires',
                 colorGreen: 'Verde: Tiempo Ordinario',
                 colorRose: 'Rosa: Gaudete, Laetare',
+                rankSolemnity: 'Solemnidad',
+                rankFeast: 'Fiesta',
+                rankMemorial: 'Memoria',
                 today: 'Hoy',
                 noFeastToday: 'No hay fiesta hoy',
                 noFeast: 'No hay fiesta ni memoria en este día.',
@@ -329,6 +523,9 @@
                 colorRed: 'Rosso: Apostoli, Martiri',
                 colorGreen: 'Verde: Tempo Ordinario',
                 colorRose: 'Rosa: Gaudete, Laetare',
+                rankSolemnity: 'Solennità',
+                rankFeast: 'Festa',
+                rankMemorial: 'Memoria',
                 today: 'Oggi',
                 noFeastToday: 'Nessuna festa oggi',
                 noFeast: 'Nessuna festa o memoria in questo giorno.',
@@ -354,6 +551,9 @@
                 colorRed: 'Rouge : Apôtres, Martyrs',
                 colorGreen: 'Vert : Temps Ordinaire',
                 colorRose: 'Rose : Gaudete, Laetare',
+                rankSolemnity: 'Solennité',
+                rankFeast: 'Fête',
+                rankMemorial: 'Mémoire',
                 today: 'Aujourd\'hui',
                 noFeastToday: 'Pas de fête aujourd\'hui',
                 noFeast: 'Aucune fête ni mémoire ce jour-là.',
@@ -379,6 +579,9 @@
                 colorRed: 'Vermelho: Apóstolos, Mártires',
                 colorGreen: 'Verde: Tempo Comum',
                 colorRose: 'Rosa: Gaudete, Laetare',
+                rankSolemnity: 'Solenidade',
+                rankFeast: 'Festa',
+                rankMemorial: 'Memória',
                 today: 'Hoje',
                 noFeastToday: 'Nenhuma festa hoje',
                 noFeast: 'Nenhuma festa ou memória neste dia.',
@@ -785,77 +988,119 @@
 
         // ========== Calendar Grid ==========
         let viewYear, viewMonth;
+        let selected = null; // { y, m, d } of the day shown in the details panel
 
-        function renderCalendar() {
+        // Highest-ranked celebration decides how the day cell is styled
+        function feastRank(feasts) {
+            if (feasts.some(f => f.type === 'Solemnity' || f.type === 'Triduum')) return 'solemnity';
+            if (feasts.some(f => f.type === 'Feast')) return 'feast';
+            return feasts.length ? 'memorial' : null;
+        }
+
+        function makeOutsideCell(day) {
+            const cell = document.createElement('div');
+            cell.className = 'cal-day is-outside';
+            cell.setAttribute('aria-hidden', 'true');
+            cell.textContent = day;
+            return cell;
+        }
+
+        // direction: 1 = moved forward, -1 = moved back, 0 = no animation
+        function renderCalendar(direction = 0) {
             const today = new Date();
             const firstDay = new Date(viewYear, viewMonth, 1);
             const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+            const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
             const startingDay = firstDay.getDay();
-            const movable = getMovableFeasts(viewYear).filter(f => f.month === viewMonth);
 
             const locale = LOCALE_MAP[currentLang] || 'en-US';
             document.getElementById('monthTitle').textContent =
                 firstDay.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
-            days.forEach((day, idx) => {
+            for (let idx = 0; idx < 7; idx++) {
                 const th = document.createElement('div');
-                th.className = 'font-bold text-gray-600 dark:text-gray-300';
+                th.className = 'cal-weekday' + (idx === 0 ? ' is-sunday' : '');
                 th.textContent = new Date(2023, 0, idx + 1).toLocaleDateString(locale, { weekday: 'short' });
                 grid.appendChild(th);
-            });
+            }
 
-            for (let i = 0; i < startingDay; i++) {
-                grid.appendChild(document.createElement('div'));
+            // Trailing days of the previous month
+            for (let i = startingDay - 1; i >= 0; i--) {
+                grid.appendChild(makeOutsideCell(daysInPrevMonth - i));
             }
 
             for (let i = 1; i <= daysInMonth; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'day-cell py-2 rounded-lg text-sm text-center text-gray-700 dark:text-gray-200';
-                cell.setAttribute('role', 'button');
-                cell.setAttribute('tabindex', '0');
+                const date = new Date(viewYear, viewMonth, i);
+                const feasts = getFeastsFor(viewYear, viewMonth, i);
+                const rank = feastRank(feasts);
+                const isToday = i === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+                const isSelected = selected && selected.y === viewYear && selected.m === viewMonth && selected.d === i;
 
-                const fixed = (LITURGICAL_FEASTS[viewMonth] || []).find(f => f.date === i);
-                const mov = movable.find(f => f.date === i);
-                const feast = mov || fixed;
-                if (feast) {
-                    if (feast.type === "Solemnity") {
-                        cell.classList.add('bg-red-100', 'dark:bg-red-900/40', 'font-bold', 'text-red-800', 'dark:text-red-300');
-                    } else if (feast.type === "Feast") {
-                        cell.classList.add('bg-purple-100', 'dark:bg-purple-900/40', 'text-purple-800', 'dark:text-purple-300');
-                    } else {
-                        cell.classList.add('bg-gray-100', 'dark:bg-gray-700');
-                    }
+                const cell = document.createElement('button');
+                cell.type = 'button';
+                cell.className = 'cal-day';
+                if (date.getDay() === 0) cell.classList.add('is-sunday');
+                if (rank === 'solemnity') cell.classList.add('is-solemnity');
+                if (rank === 'feast') cell.classList.add('is-feast');
+                if (isToday) {
+                    cell.classList.add('is-today');
+                    cell.setAttribute('aria-current', 'date');
+                }
+                if (isSelected) {
+                    cell.classList.add('is-selected');
+                    cell.setAttribute('aria-pressed', 'true');
                 }
 
-                if (i === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
-                    cell.classList.add('ring-2', 'ring-primary', 'font-bold');
-                }
+                const label = date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
+                cell.setAttribute('aria-label', feasts.length ? `${label}: ${feasts.map(f => f.name).join(', ')}` : label);
 
-                const num = document.createElement('div');
+                const num = document.createElement('span');
                 num.textContent = i;
                 cell.appendChild(num);
-                if (feast) {
-                    const dot = document.createElement('div');
-                    dot.className = `feast-dot ${feast.color}`;
-                    cell.appendChild(dot);
-                }
 
-                const showDay = () => showDayDetails(viewYear, viewMonth, i);
-                cell.addEventListener('click', showDay);
-                cell.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDay(); }
+                const dots = document.createElement('span');
+                dots.className = 'cal-dots';
+                feasts.slice(0, 3).forEach(f => {
+                    const dot = document.createElement('span');
+                    dot.className = `cal-dot ${f.color}`;
+                    dots.appendChild(dot);
+                });
+                cell.appendChild(dots);
+
+                cell.addEventListener('click', () => {
+                    showDayDetails(viewYear, viewMonth, i);
+                    renderCalendar();
                 });
                 grid.appendChild(cell);
             }
+
+            // Leading days of the next month, to complete the last week
+            const filled = startingDay + daysInMonth;
+            for (let i = 1; i <= (7 - (filled % 7)) % 7; i++) {
+                grid.appendChild(makeOutsideCell(i));
+            }
+
+            if (direction) {
+                grid.classList.remove('cal-anim-next', 'cal-anim-prev');
+                void grid.offsetWidth; // restart the animation
+                grid.classList.add(direction > 0 ? 'cal-anim-next' : 'cal-anim-prev');
+            }
+        }
+
+        function changeMonth(delta) {
+            viewMonth += delta;
+            if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+            if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+            renderCalendar(delta);
         }
 
         // ========== Day Details ==========
         function showDayDetails(year, month, day) {
             const date = new Date(year, month, day);
+            selected = { y: year, m: month, d: day };
             const locale = LOCALE_MAP[currentLang] || 'en-US';
             const panel = document.getElementById('dayDetails');
             panel.classList.remove('hidden');
@@ -977,26 +1222,34 @@
 
             const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
             setLanguage(preferredLang);
-            populateCalendar();
             showDayDetails(viewYear, viewMonth, now.getDate());
+            populateCalendar();
 
-            document.getElementById('prevMonthBtn').addEventListener('click', () => {
-                viewMonth--;
-                if (viewMonth < 0) { viewMonth = 11; viewYear--; }
-                renderCalendar();
-            });
-            document.getElementById('nextMonthBtn').addEventListener('click', () => {
-                viewMonth++;
-                if (viewMonth > 11) { viewMonth = 0; viewYear++; }
-                renderCalendar();
-            });
+            document.getElementById('prevMonthBtn').addEventListener('click', () => changeMonth(-1));
+            document.getElementById('nextMonthBtn').addEventListener('click', () => changeMonth(1));
             document.getElementById('todayBtn').addEventListener('click', () => {
                 const t2 = new Date();
+                const delta = (t2.getFullYear() - viewYear) * 12 + (t2.getMonth() - viewMonth);
                 viewYear = t2.getFullYear();
                 viewMonth = t2.getMonth();
-                renderCalendar();
                 showDayDetails(viewYear, viewMonth, t2.getDate());
+                renderCalendar(Math.sign(delta));
             });
+
+            // Swipe left/right on the grid to change month
+            const grid = document.getElementById('calendarGrid');
+            let touchX = null, touchY = null;
+            grid.addEventListener('touchstart', (e) => {
+                touchX = e.touches[0].clientX;
+                touchY = e.touches[0].clientY;
+            }, { passive: true });
+            grid.addEventListener('touchend', (e) => {
+                if (touchX === null) return;
+                const dx = e.changedTouches[0].clientX - touchX;
+                const dy = e.changedTouches[0].clientY - touchY;
+                touchX = touchY = null;
+                if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) changeMonth(dx < 0 ? 1 : -1);
+            }, { passive: true });
 
             window.addEventListener('storage', (e) => {
                 if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
