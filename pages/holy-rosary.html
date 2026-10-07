@@ -33,12 +33,14 @@
                         </svg>
                     </a>
                     <div class="app-bar-brand">
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        <h1 id="rosaryTitle" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                             Holy Rosary
                         </h1>
-                        <p class="text-xs text-gray-600 dark:text-gray-400">Mysteries of the life of Christ</p>
+                        <p id="rosarySubtitle" class="text-xs text-gray-600 dark:text-gray-400">Mysteries of the life of Christ</p>
                     </div>
                 </div>
+                <div class="flex items-center gap-1">
+                <button id="rosaryLangToggle" class="app-bar-btn text-sm font-bold" aria-label="Soma kwa Kiswahili" title="Soma kwa Kiswahili">SW</button>
                 <button id="darkModeQuickToggle" class="app-bar-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -47,11 +49,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
+                </div>
             </div>
         </header>
 
         <main class="max-w-2xl mx-auto px-5 pb-32 pt-6" role="main">
-            <div class="space-y-6">
+            <div class="space-y-6" data-rosary-lang="en">
                 <!-- Opening prayers -->
                 <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
                     <div class="text-center mb-8">
@@ -243,6 +246,231 @@
                     </p>
                 </div>
             </div>
+
+            <!-- Rozari Takatifu (Kiswahili) -->
+            <div class="space-y-6 hidden" data-rosary-lang="sw" lang="sw">
+                <!-- Sala za mwanzo -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">Rozari Takatifu</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Sala yenye nguvu inayotuunganisha na Maria tukitafakari matendo ya maisha ya Kristo.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Namna ya Kusali</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Kwa jina la Baba, na la Mwana, na la Roho Mtakatifu. Amina. Sali Nasadiki, Baba Yetu, kisha Salamu Maria mara tatu (tukiomba Imani, Matumaini na Mapendo), na Atukuzwe Baba. Kwa kila tendo: tangaza tendo, sali Baba Yetu, Salamu Maria mara kumi, Atukuzwe Baba, na Ee Yesu Wangu. Mwishoni sali Salamu Malkia na Litania ya Bikira Maria.</p>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Nasadiki</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Nasadiki kwa Mungu, Baba Mwenyezi, mwumba mbingu na dunia. Na kwa Yesu Kristo, Mwanaye wa pekee, Bwana wetu; aliyetungwa kwa Roho Mtakatifu, akazaliwa na Bikira Maria, akateswa kwa mamlaka ya Ponsyo Pilato, akasulibiwa, akafa, akazikwa, akashukia kuzimu; siku ya tatu akafufuka katika wafu; akapaa mbinguni; amekaa kuume kwa Mungu Baba Mwenyezi; toka huko atakuja kuwahukumu wazima na wafu. Nasadiki kwa Roho Mtakatifu, Kanisa takatifu katoliki, ushirika wa Watakatifu, maondoleo ya dhambi, ufufuko wa miili, uzima wa milele. Amina.</p>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Baba Yetu</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Baba yetu uliye mbinguni, jina lako litukuzwe, ufalme wako ufike, utakalo lifanyike duniani kama mbinguni. Utupe leo mkate wetu wa kila siku, utusamehe makosa yetu, kama nasi tunavyowasamehe waliotukosea. Usitutie katika kishawishi, lakini utuopoe maovuni. Amina.</p>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Salamu Maria</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Salamu Maria, umejaa neema, Bwana yu nawe, umebarikiwa kuliko wanawake wote, na Yesu mzao wa tumbo lako amebarikiwa. Maria Mtakatifu, Mama wa Mungu, utuombee sisi wakosefu, sasa na saa ya kufa kwetu. Amina.</p>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Atukuzwe Baba</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Atukuzwe Baba, na Mwana, na Roho Mtakatifu. Kama mwanzo, na sasa, na siku zote, na milele. Amina.</p>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Ee Yesu Wangu (Sala ya Fatima)</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Ee Yesu wangu, utusamehe dhambi zetu, utuepushe na moto wa milele, uzipeleke mbinguni roho zote, hasa zile zinazohitaji zaidi huruma yako.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matendo ya leo -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <h4 class="font-semibold text-red-800 dark:text-red-300 mb-3">Matendo ya Leo</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Matendo ya Furaha -->
+                        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+                            <h5 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Matendo ya Furaha</h5>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Husaliwa Jumatatu na Jumamosi</p>
+                            <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" onclick="toggleMystery('joyful-sw')">Gusa Kuona</button>
+                            <div id="joyful-sw" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <ol class="list-decimal list-inside space-y-2">
+                                    <li>Malaika Gabrieli anampasha Maria habari kuwa atakuwa Mama wa Mungu. <em>Tumwombe Mungu atujalie unyenyekevu.</em></li>
+                                    <li>Maria Mtakatifu anakwenda kumtembelea Elizabeti. <em>Tumwombe Mungu atujalie mapendo ya jirani.</em></li>
+                                    <li>Yesu anazaliwa Betlehemu. <em>Tumwombe Mungu atujalie moyo wa ufukara.</em></li>
+                                    <li>Yesu anatolewa Hekaluni. <em>Tumwombe Mungu atujalie usafi wa moyo.</em></li>
+                                    <li>Maria anamkuta Yesu Hekaluni. <em>Tumwombe Mungu atujalie kuwatii wakubwa wetu.</em></li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Matendo ya Uchungu -->
+                        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+                            <h5 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Matendo ya Uchungu</h5>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Husaliwa Jumanne na Ijumaa</p>
+                            <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" onclick="toggleMystery('sorrowful-sw')">Gusa Kuona</button>
+                            <div id="sorrowful-sw" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <ol class="list-decimal list-inside space-y-2">
+                                    <li>Yesu anatoka jasho la damu kwa ajili yetu. <em>Tumwombe Mungu atujalie sikitiko la dhambi.</em></li>
+                                    <li>Yesu anapigwa kwa mijeledi kwa ajili yetu. <em>Tumwombe Mungu atujalie kuacha dhambi za uchafu.</em></li>
+                                    <li>Yesu anatiwa miiba kichwani kwa ajili yetu. <em>Tumwombe Mungu atujalie kushinda kiburi.</em></li>
+                                    <li>Yesu anachukua Msalaba kwa ajili yetu. <em>Tumwombe Mungu atujalie kuvumilia taabu.</em></li>
+                                    <li>Yesu anakufa Msalabani. <em>Tumwombe Mungu atujalie kuwapenda Yesu na Maria.</em></li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Matendo ya Utukufu -->
+                        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+                            <h5 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Matendo ya Utukufu</h5>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Husaliwa Jumapili na Jumatano</p>
+                            <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" onclick="toggleMystery('glorious-sw')">Gusa Kuona</button>
+                            <div id="glorious-sw" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <ol class="list-decimal list-inside space-y-2">
+                                    <li>Yesu anafufuka. <em>Tumwombe Mungu atujalie kugeuka watakatifu.</em></li>
+                                    <li>Yesu anapaa mbinguni. <em>Tumwombe Mungu atujalie kwenda mbinguni.</em></li>
+                                    <li>Roho Mtakatifu anawashukia Mitume. <em>Tumwombe Mungu atujalie bidii katika dini yetu.</em></li>
+                                    <li>Bikira Maria anapalizwa mbinguni. <em>Tumwombe Mungu atujalie kufa vizuri.</em></li>
+                                    <li>Bikira Maria anawekwa Malkia mbinguni. <em>Tumwombe Mungu atujalie kudumu katika njia njema.</em></li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Matendo ya Mwanga -->
+                        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+                            <h5 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Matendo ya Mwanga</h5>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Husaliwa Alhamisi</p>
+                            <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none" onclick="toggleMystery('luminous-sw')">Gusa Kuona</button>
+                            <div id="luminous-sw" class="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300 hidden">
+                                <ol class="list-decimal list-inside space-y-2">
+                                    <li>Yesu anabatizwa Mto Yordani. <em>Tumwombe Mungu atujalie uaminifu kwa ahadi zetu za ubatizo.</em></li>
+                                    <li>Yesu anageuza maji kuwa divai huko Kana. <em>Tumwombe Mungu atujalie kuukoleza ulimwengu kwa chachu ya Injili.</em></li>
+                                    <li>Yesu anatangaza Ufalme wa Mungu. <em>Tumwombe Mungu atujalie kupokea Ufalme wake kwa toba ya kweli.</em></li>
+                                    <li>Yesu anageuka sura. <em>Tumwombe Mungu atujalie neema ya kuung'arisha ulimwengu kwa uso wa Yesu.</em></li>
+                                    <li>Yesu anaweka Sakramenti ya Ekaristi. <em>Tumwombe Mungu atujalie neema ya kujitoa sadaka kwa ajili ya wengine.</em></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salamu Malkia -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <h4 class="font-semibold text-red-800 dark:text-red-300 flex items-center gap-2 mb-3">
+                        <span class="text-xl">🌹</span>
+                        Salamu Malkia
+                    </h4>
+                    <button class="text-sm text-red-600 dark:text-red-300 hover:underline focus:outline-none mb-3" onclick="toggleSection('salveRegina-sw')">Gusa Kuona</button>
+                    <div id="salveRegina-sw" class="space-y-3 text-sm text-gray-700 dark:text-gray-300 hidden">
+                        <p>Salamu Malkia, Mama mwenye huruma, uzima, tulizo na matumaini yetu, salamu. Tunakusihi ugenini hapa, sisi wana wa Eva. Tunakulilia tukilalamika na kuhuzunika bondeni huku kwenye machozi. Haya basi, Mwombezi wetu, utuangalie kwa macho yako yenye huruma. Na mwisho wa ugeni huu, utuonyeshe Yesu, mzao mbarikiwa wa tumbo lako. Ee mpole, ee mwema, ee mpendevu Bikira Maria.</p>
+                        <p><strong>K.</strong> Utuombee, ee Mzazi Mtakatifu wa Mungu.<br><strong>W.</strong> Tujaliwe ahadi za Kristo.</p>
+                    </div>
+                </div>
+
+                <!-- Rozari ya Huruma ya Mungu -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <h4 class="font-semibold text-blue-800 dark:text-blue-300 flex items-center gap-2 mb-3">
+                        <span class="text-xl">💧</span>
+                        Rozari ya Huruma ya Mungu
+                    </h4>
+                    <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none mb-3" onclick="toggleSection('divineMercy-sw')">Gusa Kuona</button>
+                    <div id="divineMercy-sw" class="space-y-3 text-sm text-gray-700 dark:text-gray-300 hidden">
+                        <p><strong>Wakati:</strong> Kwa kawaida husaliwa saa tisa mchana (Saa ya Huruma).</p>
+                        <p>Unaweza kutumia chembe za rozari ya kawaida. Anza kwa Baba Yetu, Salamu Maria na Nasadiki.</p>
+                        <p><strong>Penye punje kubwa (badala ya Baba Yetu):</strong> "Baba wa Milele, ninakutolea Mwili na Damu, Roho na Umungu wa Mwanao mpenzi sana, Bwana wetu Yesu Kristo, kwa malipizi ya dhambi zetu na dhambi za dunia nzima."</p>
+                        <p><strong>Penye punje kumi ndogo (badala ya Salamu Maria):</strong> "Kwa ajili ya mateso makali ya Bwana wetu Yesu Kristo, utuhurumie sisi na dunia nzima."</p>
+                        <p>Rudia kwa makumi yote matano.</p>
+                        <p><strong>Mwishoni (mara tatu):</strong> "Mungu Mtakatifu, Mtakatifu mwenye Enzi, Mtakatifu unayeishi milele, utuhurumie sisi na dunia nzima."</p>
+                    </div>
+                </div>
+
+                <!-- Litania ya Bikira Maria -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <h4 class="font-semibold text-purple-800 dark:text-purple-300 flex items-center gap-2 mb-3">
+                        <span class="text-xl">👑</span>
+                        Litania ya Bikira Maria
+                    </h4>
+                    <button class="text-sm text-purple-600 dark:text-purple-400 hover:underline focus:outline-none mb-3" onclick="toggleSection('litany-sw')">Gusa Kuona</button>
+                    <div id="litany-sw" class="space-y-2 text-sm text-gray-700 dark:text-gray-300 hidden max-h-96 overflow-y-auto">
+                        <p>Bwana utuhurumie. Bwana utuhurumie.</p>
+                        <p>Kristo utuhurumie. Kristo utuhurumie.</p>
+                        <p>Bwana utuhurumie. Bwana utuhurumie.</p>
+                        <p>Kristo utusikie. Kristo utusikilize.</p>
+                        <p>Mungu Baba wa mbinguni, utuhurumie.</p>
+                        <p>Mungu Mwana, Mkombozi wa dunia, utuhurumie.</p>
+                        <p>Mungu Roho Mtakatifu, utuhurumie.</p>
+                        <p>Utatu Mtakatifu, Mungu mmoja, utuhurumie.</p>
+                        <p>Maria Mtakatifu, utuombee.</p>
+                        <p>Mzazi Mtakatifu wa Mungu, utuombee.</p>
+                        <p>Bikira Mtakatifu, mkuu wa mabikira, utuombee.</p>
+                        <p>Mama wa Kristo, utuombee.</p>
+                        <p>Mama wa Kanisa, utuombee.</p>
+                        <p>Mama wa neema ya Mungu, utuombee.</p>
+                        <p>Mama mtakatifu sana, utuombee.</p>
+                        <p>Mama mwenye usafi wa moyo, utuombee.</p>
+                        <p>Mama mwenye ubikira, utuombee.</p>
+                        <p>Mama usiye na doa, utuombee.</p>
+                        <p>Mama mpendelevu, utuombee.</p>
+                        <p>Mama mstaajabivu, utuombee.</p>
+                        <p>Mama wa shauri jema, utuombee.</p>
+                        <p>Mama wa Muumba, utuombee.</p>
+                        <p>Mama wa Mkombozi, utuombee.</p>
+                        <p>Bikira mwenye utaratibu, utuombee.</p>
+                        <p>Bikira mwenye heshima, utuombee.</p>
+                        <p>Bikira mwenye sifa, utuombee.</p>
+                        <p>Bikira mwenye uwezo, utuombee.</p>
+                        <p>Bikira mwenye huruma, utuombee.</p>
+                        <p>Bikira mwaminifu, utuombee.</p>
+                        <p>Kioo cha haki, utuombee.</p>
+                        <p>Kikao cha hekima, utuombee.</p>
+                        <p>Sababu ya furaha yetu, utuombee.</p>
+                        <p>Chombo cha neema, utuombee.</p>
+                        <p>Chombo cha kuheshimiwa, utuombee.</p>
+                        <p>Chombo bora cha ibada, utuombee.</p>
+                        <p>Waridi lenye fumbo, utuombee.</p>
+                        <p>Mnara wa Daudi, utuombee.</p>
+                        <p>Mnara wa pembe, utuombee.</p>
+                        <p>Nyumba ya dhahabu, utuombee.</p>
+                        <p>Sanduku la Agano, utuombee.</p>
+                        <p>Mlango wa mbingu, utuombee.</p>
+                        <p>Nyota ya asubuhi, utuombee.</p>
+                        <p>Afya ya wagonjwa, utuombee.</p>
+                        <p>Kimbilio la wakosefu, utuombee.</p>
+                        <p>Mtuliza wenye huzuni, utuombee.</p>
+                        <p>Msaada wa Wakristo, utuombee.</p>
+                        <p>Malkia wa Malaika, utuombee.</p>
+                        <p>Malkia wa Mababu, utuombee.</p>
+                        <p>Malkia wa Manabii, utuombee.</p>
+                        <p>Malkia wa Mitume, utuombee.</p>
+                        <p>Malkia wa Mashahidi, utuombee.</p>
+                        <p>Malkia wa Waungama dini, utuombee.</p>
+                        <p>Malkia wa Mabikira, utuombee.</p>
+                        <p>Malkia wa Watakatifu wote, utuombee.</p>
+                        <p>Malkia uliyeumbwa bila dhambi ya asili, utuombee.</p>
+                        <p>Malkia uliyepalizwa mbinguni, utuombee.</p>
+                        <p>Malkia wa Rozari Takatifu, utuombee.</p>
+                        <p>Malkia wa amani, utuombee.</p>
+                        <p>Mwanakondoo wa Mungu, uondoaye dhambi za dunia, utusamehe ee Bwana.</p>
+                        <p>Mwanakondoo wa Mungu, uondoaye dhambi za dunia, utusikilize ee Bwana.</p>
+                        <p>Mwanakondoo wa Mungu, uondoaye dhambi za dunia, utuhurumie.</p>
+                        <p>Kristo utusikie. Kristo utusikilize.</p>
+                        <p><strong>K.</strong> Utuombee, ee Mzazi Mtakatifu wa Mungu. <strong>W.</strong> Tujaliwe ahadi za Kristo.</p>
+                        <p><strong>Tuombe:</strong> Ee Bwana Mungu, utujalie sisi watumishi wako afya ya roho na ya mwili siku zote; na kwa maombezi ya Bikira Maria Mtakatifu daima, tuopolewe katika mashaka ya sasa, tufikie furaha ya milele. Kwa Kristo Bwana wetu. Amina.</p>
+                    </div>
+                </div>
+
+                <!-- Neno la mwisho -->
+                <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg p-5 sm:p-7">
+                    <p class="text-sm italic text-gray-600 dark:text-gray-400 text-center">
+                        "Rozari ni sala nzuri kuliko zote na yenye neema tele kuliko sala zote; ni sala inayougusa zaidi Moyo wa Mama wa Mungu." - Mtakatifu Padre Pio
+                    </p>
+                </div>
+            </div>
         </main>
 
         <!-- Bottom Navigation -->
@@ -318,14 +546,49 @@
                 mysteryId = 'luminous';
             }
 
-            const element = document.getElementById(mysteryId);
-            if (element && mysteryId) {
-                element.classList.remove('hidden');
-            }
+            [mysteryId, mysteryId + '-sw'].forEach(function (id) {
+                const element = document.getElementById(id);
+                if (element && mysteryId) {
+                    element.classList.remove('hidden');
+                }
+            });
+        }
+
+        // English / Kiswahili toggle
+        const ROSARY_LANG_KEY = 'rosaryLang';
+        const rosaryLabels = {
+            en: { title: 'Holy Rosary', subtitle: 'Mysteries of the life of Christ', pageTitle: 'Holy Rosary - ipray',
+                  btn: 'SW', btnLabel: 'Soma kwa Kiswahili' },
+            sw: { title: 'Rozari Takatifu', subtitle: 'Matendo ya maisha ya Kristo', pageTitle: 'Rozari Takatifu - ipray',
+                  btn: 'EN', btnLabel: 'Read in English' }
+        };
+
+        function setRosaryLang(lang) {
+            const labels = rosaryLabels[lang] || rosaryLabels.en;
+            document.querySelectorAll('[data-rosary-lang]').forEach(function (el) {
+                el.classList.toggle('hidden', el.getAttribute('data-rosary-lang') !== lang);
+            });
+            document.getElementById('rosaryTitle').textContent = labels.title;
+            document.getElementById('rosarySubtitle').textContent = labels.subtitle;
+            document.title = labels.pageTitle;
+            document.documentElement.lang = lang;
+            const btn = document.getElementById('rosaryLangToggle');
+            btn.textContent = labels.btn;
+            btn.setAttribute('aria-label', labels.btnLabel);
+            btn.setAttribute('title', labels.btnLabel);
+            try { localStorage.setItem(ROSARY_LANG_KEY, lang); } catch (e) {}
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             autoExpandTodaysMystery();
+
+            let savedLang = 'en';
+            try { savedLang = localStorage.getItem(ROSARY_LANG_KEY) || 'en'; } catch (e) {}
+            setRosaryLang(savedLang);
+
+            document.getElementById('rosaryLangToggle').addEventListener('click', function () {
+                setRosaryLang(document.documentElement.lang === 'sw' ? 'en' : 'sw');
+            });
         });
     </script>
     <script src="../js/prayers-nav.js" defer></script>
