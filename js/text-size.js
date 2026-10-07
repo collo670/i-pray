@@ -12,8 +12,9 @@
 // The scale is set as --prayer-text-scale on <html>. Prayer pages multiply
 // their reading text by it in their own CSS (.container, .office-content,
 // .reading-text, ...); on every page the rules injected below also scale the
-// text inside <main>. The top app bar, the bottom nav and the size controls
-// themselves sit outside <main>, so they keep a fixed size.
+// text inside <main>, unless it has data-fixed-text-size (the home page).
+// The top app bar, the bottom nav and the size controls themselves sit
+// outside <main>, so they keep a fixed size.
 //
 // Controls need no script of their own - clicks are handled here:
 //   data-text-size="dec" | "inc" | "reset" | "cycle"    buttons
@@ -60,7 +61,8 @@
   // Tailwind's text-* utilities read --text-*, so redefining them on <main>
   // scales classed text there; plain text follows main's own font-size. A
   // <main> inside .container (css/index.css already scales .container) is
-  // left alone so its text isn't scaled twice.
+  // left alone so its text isn't scaled twice, and so is a <main> marked
+  // data-fixed-text-size.
   function injectStyle() {
     if (document.getElementById('ipray-text-size-style')) return;
     var sizes = {
@@ -74,8 +76,9 @@
     var style = document.createElement('style');
     style.id = 'ipray-text-size-style';
     style.textContent =
-      'main{' + vars.join(';') + '}\n' +
-      'main:not(.container):not(.container main){font-size:calc(100% * ' + SCALE_VAR + ')}';
+      'main:not([data-fixed-text-size]){' + vars.join(';') + '}\n' +
+      'main:not([data-fixed-text-size]):not(.container):not(.container main)' +
+      '{font-size:calc(100% * ' + SCALE_VAR + ')}';
     (document.head || document.documentElement).appendChild(style);
   }
 
