@@ -119,6 +119,7 @@ test("the app's own Worker is tried first", async ({ page }) => {
 test('public proxies take over while the Worker has no Universalis route', async ({ page }) => {
     const errors = collectErrors(page);
     const calls = await isolate(page, { worker: 'down' });
+    await setLanguage(page, 'en');
     await page.goto('pages/prayer-hour.html?hour=vespers');
     await expect(page.locator('#officeContent .office-hour-heading')).toHaveText('Vespers — English');
     expect(calls.map((c) => c.via)).toEqual(['ancient-rice-28a1.otienocollo95.workers.dev', 'corsproxy.io']);

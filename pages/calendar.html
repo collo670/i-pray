@@ -23,6 +23,7 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
 
     <style>
         body {
@@ -613,9 +614,9 @@
             return (seasons && seasons[season]) || season;
         }
 
+        // Renders the page in `lang`; the setting itself is kept by js/i18n.js.
         function setLanguage(lang) {
             currentLang = translations[lang] ? lang : 'en';
-            localStorage.setItem('preferredLanguage', lang);
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
                 if (translations[currentLang] && translations[currentLang][key]) {
@@ -883,7 +884,7 @@
             viewYear = now.getFullYear();
             viewMonth = now.getMonth();
 
-            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+            const preferredLang = IPrayI18n.lang();
             setLanguage(preferredLang);
             showDayDetails(viewYear, viewMonth, now.getDate());
             populateCalendar();
@@ -914,12 +915,10 @@
                 if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) changeMonth(dx < 0 ? 1 : -1);
             }, { passive: true });
 
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
-                    const lang = localStorage.getItem('preferredLanguage') || 'en';
-                    setLanguage(lang);
-                    populateCalendar();
-                }
+            // Follow language changes made on another page (Settings...)
+            IPrayI18n.onChange((lang) => {
+                setLanguage(lang);
+                populateCalendar();
             });
         });
     </script>

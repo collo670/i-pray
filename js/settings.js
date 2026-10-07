@@ -15,8 +15,9 @@ async function loadTranslations() {
     return translations;
 }
 
+// Renders this page in `lang`. The setting itself is saved and shared by
+// js/i18n.js (IPrayI18n.set).
 function setLanguage(lang) {
-    localStorage.setItem('preferredLanguage', lang);
     document.documentElement.lang = lang;
     loadTranslations().then(trans => {
         document.querySelectorAll('[data-translate]').forEach(el => {
@@ -51,15 +52,13 @@ function loadPreferences() {
 
     // The Text Size buttons are wired, saved and applied app-wide by js/text-size.js.
 
-    const language = localStorage.getItem('preferredLanguage') || localStorage.getItem('language') || 'sw';
+    const language = IPrayI18n.lang();
     highlightSelectedLanguage(language);
     setLanguage(language);
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
-            const l = localStorage.getItem('preferredLanguage') || 'sw';
-            highlightSelectedLanguage(l);
-            setLanguage(l);
-        }
+    // Follow changes made here or on another open page
+    IPrayI18n.onChange((l) => {
+        highlightSelectedLanguage(l);
+        setLanguage(l);
     });
 
     // Load saved times
@@ -111,14 +110,8 @@ function setupEventListeners() {
 
     document.querySelectorAll('.language-option').forEach(option => {
         option.addEventListener('click', function() {
-            const lang = this.dataset.lang;
-            // Store under unified key and legacy key for backward compatibility
-            localStorage.setItem('preferredLanguage', lang);
-            localStorage.setItem('language', lang);
-            highlightSelectedLanguage(lang);
-            // Notify other tabs/pages via storage event
-            try { localStorage.setItem('langUpdatedAt', Date.now().toString()); } catch (e) {}
-            window.location.reload();
+            // Saved, applied here and passed to every open page by js/i18n.js
+            IPrayI18n.set(this.dataset.lang);
         });
     });
 
@@ -204,26 +197,22 @@ function highlightSelectedLanguage(lang) {
     });
 }
 
+// Frees space taken by downloaded content: the offline copies kept by the
+// service worker and the offices saved from Universalis. Settings and the
+// user's own things (language, text size, theme, favourites, bookmarks,
+// reminders, reading positions) are kept.
 function clearCache() {
     if (confirm('Clear all cached data? This will free up storage but require re-downloading content.')) {
-        const preservedData = {
-            appTheme: localStorage.getItem('appTheme'),
-            darkMode: localStorage.getItem('darkMode'),
-            language: localStorage.getItem('language'),
-            masifuTextScale: localStorage.getItem('masifuTextScale'),
-            highContrast: localStorage.getItem('highContrast')
-        };
-
         if ('caches' in window) {
             caches.keys().then(cacheNames => {
                 cacheNames.forEach(cacheName => caches.delete(cacheName));
             });
         }
 
-        localStorage.clear();
-        Object.entries(preservedData).forEach(([key, value]) => {
-            if (value !== null) localStorage.setItem(key, value);
-        });
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const key = localStorage.key(i);
+            if (key && key.indexOf('officeHtml-') === 0) localStorage.removeItem(key);
+        }
 
         showToast('Cache cleared successfully. Reloading...');
         setTimeout(() => window.location.reload(), 1000);

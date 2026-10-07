@@ -208,6 +208,7 @@ HEAD = '''<!DOCTYPE html>
     <script src="{r}js/status-bar.js" defer></script>
     <script src="{r}js/theme.js"></script>
     <script src="{r}js/text-size.js"></script>
+    <script src="{r}js/i18n.js"></script>
 </head>
 <body class="masifu-topbar masifu-modern amefufuka{extra}">
     <header id="appBar" class="app-bar" role="banner">

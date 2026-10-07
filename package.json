@@ -7,13 +7,14 @@
   "scripts": {
     "start": "node scripts/serve.js",
     "build": "postcss src/input.css -o dist/output.css",
-    "build:generated": "npm run build && node scripts/build-sw.js",
+    "build:generated": "npm run build && node scripts/build-masifu-pages.js && node scripts/build-sw.js",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "node --test \"tests/unit/*.test.js\"",
     "test:e2e": "playwright test",
     "extract:compline": "node scripts/extract-compline.js",
     "extract:readings-sw": "node scripts/extract-office-readings-sw.js",
-    "generate:mwaka2": "node scripts/generate-mwaka2-weeks.js"
+    "generate:mwaka2": "node scripts/generate-mwaka2-weeks.js",
+    "build:masifu": "node scripts/build-masifu-pages.js"
   },
   "repository": {
     "type": "git",

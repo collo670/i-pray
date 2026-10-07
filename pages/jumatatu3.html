@@ -22,11 +22,11 @@
         }
         
         body.dark-mode {
-            background-color: #222;
+            background-color: #111827;
             color: #eee;
         }
         
-?        /* Navigation Bar Styles - Responsive */
+        /* Navigation Bar Styles - Responsive */
         .navbar {
             position: fixed;
             top: 0;
@@ -387,166 +387,20 @@
         .dark-mode .intercession {
             color: #eee;
         }
-
-                /* RESPONSIVE MOBILE NAVIGATION STYLES */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 6px;
-            background-color: transparent;
+        /* Sunday pages: the canticle choice buttons and option headings */
+        .option-heading {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .btk{
+            background: #8B0000;
+            color: white;
             border: none;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            min-width: 44px;
-            min-height: 44px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
         }
-
-        .hamburger:hover {
-            background-color: rgba(240, 201, 106, 0.16);
-        }
-
-        .hamburger div {
-            width: 26px;
-            height: 3px;
-            background-color: #f0c96a;
-            margin: 5px 0;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.active div:nth-child(1) {
-            transform: rotate(-45deg) translate(-7px, 8px);
-        }
-
-        .hamburger.active div:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-10px);
-        }
-
-        .hamburger.active div:nth-child(3) {
-            transform: rotate(45deg) translate(-6px, -8px);
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .nav-links {
-                position: absolute;
-                top: calc(100% + 2px);
-                left: 0;
-                right: 0;
-                background-color: #222;
-                flex-direction: column;
-                align-items: stretch;
-                max-height: 0;
-                overflow: hidden;
-                transition: all 0.4s ease;
-                opacity: 0;
-                z-index: 999;
-            }
-
-            .dark-mode .nav-links {
-                background-color: #1f2937;
-            }
-
-            .nav-links.active {
-                max-height: 500px;
-                opacity: 1;
-                padding: 12px 0;
-            }
-
-            .nav-links li {
-                width: 100%;
-                margin: 0;
-                border-bottom: 1px solid rgba(240, 201, 106, 0.18);
-            }
-
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                padding: 14px 20px;
-                border-radius: 0;
-                display: flex;
-                align-items: center;
-            }
-
-            .nav-links a:hover {
-                background-color: rgba(240, 201, 106, 0.16);
-                transform: translateX(4px);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .nav-logo {
-                font-size: 1rem;
-            }
-
-            .hamburger div {
-                width: 24px;
-                height: 2.5px;
-            }
-
-            .nav-links a {
-                font-size: 0.9rem;
-                padding: 12px 18px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-container {
-                padding: 8px 10px;
-            }
-
-            .nav-logo {
-                font-size: 0.9rem;
-            }
-
-            .hamburger {
-                min-width: 40px;
-                min-height: 40px;
-                padding: 6px;
-            }
-
-            .hamburger div {
-                width: 22px;
-                height: 2px;
-            }
-
-            .nav-links a {
-                font-size: 0.85rem;
-                padding: 12px 16px;
-            }
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            .hamburger {
-                min-height: 48px;
-                min-width: 48px;
-            }
-
-            .nav-links a {
-                min-height: 48px;
-                display: flex;
-                align-items: center;
-            }
-        }
-            /* Adjust body padding when mobile menu is active */
-            .nav-links.active {
-                z-index: 45;
-            }
-
-            /* Subtle shadow under the mobile menu */
-            .nav-links {
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            }
     </style>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">
@@ -556,6 +410,7 @@
     <script src="../js/status-bar.js" defer></script>
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
 </head>
 <body class="masifu-topbar">
         <header id="appBar" class="app-bar" role="banner">
@@ -811,118 +666,42 @@
         </div>
     </div>
     
-    <script>
-        // Enhanced mobile menu toggle with smooth animations
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-
-            // Toggle active classes
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-
-            // Add haptic feedback on mobile devices
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-
-            // Enhanced accessibility
-            const isOpen = navLinks.classList.contains('active');
-            hamburger.setAttribute('aria-expanded', isOpen);
-            navLinks.setAttribute('aria-hidden', !isOpen);
-
-            // Focus management for accessibility
-            if (isOpen) {
-                // Focus first menu item when opening
-                setTimeout(() => {
-                    const firstLink = navLinks.querySelector('a');
-                    if (firstLink) firstLink.focus();
-                }, 100);
-            }
+        <script>
+        function syncDarkModeButton() {
+            const btn = document.querySelector('.toggle-btn');
+            if (!btn) return;
+            btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
         }
 
-        // Close mobile menu when clicking a link
+        function toggleMenu(forceClose) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            if (!navLinks || !hamburger) return;
+
+            const shouldOpen = typeof forceClose === 'boolean'
+                ? !forceClose
+                : !navLinks.classList.contains('active');
+
+            navLinks.classList.toggle('active', shouldOpen);
+            hamburger.classList.toggle('active', shouldOpen);
+            hamburger.setAttribute('aria-expanded', String(shouldOpen));
+        }
+
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
-                    toggleMenu();
+                    toggleMenu(true);
                 }
             });
         });
 
-        // Dark mode toggle
         function toggleDarkMode() {
             window.IPrayTheme.toggle();
         }
 
-        // Translations
-        const translations = {
-            en: {
-                home: "Home",
-                lauds: "Lauds",
-                calendar: "Calendar",
-                settings: "Settings"
-            },
-            sw: {
-                home: "Nyumbani",
-                lauds: "Masifu",
-                calendar: "Kalenda",
-                settings: "Mipangilio"
-            }
-        };
-
-        // Language Management
-        function setLanguage(lang) {
-            localStorage.setItem('preferredLanguage', lang);
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-        }
-
-        // Toggle translation function
-        window.toggleTranslation = function() {
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            const newLang = currentLang === 'en' ? 'sw' : 'en';
-            setLanguage(newLang);
-        };
-
-        // Keyboard navigation support for mobile menu
-        document.addEventListener('keydown', function(e) {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks.classList.contains('active')) {
-                if (e.key === 'Escape') {
-                    toggleMenu();
-                }
-            }
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-
-            if (navLinks.classList.contains('active') &&
-                !navLinks.contains(e.target) &&
-                !hamburger.contains(e.target)) {
-                toggleMenu();
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set initial language
-            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
-            setLanguage(preferredLang);
-
-            // Add translation toggle listener if button exists
-            const translationToggle = document.getElementById('translationToggle');
-            if (translationToggle) {
-                translationToggle.addEventListener('click', toggleTranslation);
-            }
-        });
+        syncDarkModeButton();
     </script>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -937,8 +716,6 @@
   }
 </script>
 
-
-
     <script src="../js/liturgical-calendar.js" defer></script>
     <script src="../js/somo-la-kwanza-bible.js" defer></script>
     <script src="../js/ofisi-readings-dropdown.js" defer></script>
@@ -947,7 +724,6 @@
     <script src="../js/prevent-zoom.js" defer></script>
 </body>
 </html>
-
 
 
 

@@ -26,7 +26,7 @@
             color: #eee;
         }
         
-?        /* Navigation Bar Styles - Responsive */
+        /* Navigation Bar Styles - Responsive */
         .navbar {
             position: fixed;
             top: 0;
@@ -387,7 +387,20 @@
         .dark-mode .intercession {
             color: #eee;
         }
-
+        /* Sunday pages: the canticle choice buttons and option headings */
+        .option-heading {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .btk{
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/index.css">
@@ -397,8 +410,10 @@
     <script src="../js/status-bar.js" defer></script>
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
 </head>
-<body class="masifu-topbar">    <header id="appBar" class="app-bar" role="banner">
+<body class="masifu-topbar">
+        <header id="appBar" class="app-bar" role="banner">
         <div class="header-content">
             <div class="app-bar-brand">
                 <h2 class="brand-title">ipray</h2>
@@ -644,141 +659,42 @@
         </div>
     </div>
     
-    
-    <script>
-        // Enhanced mobile menu toggle with smooth animations
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-
-            // Toggle active classes
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-
-            // Add haptic feedback on mobile devices
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-
-            // Enhanced accessibility
-            const isOpen = navLinks.classList.contains('active');
-            hamburger.setAttribute('aria-expanded', isOpen);
-            navLinks.setAttribute('aria-hidden', !isOpen);
-
-            // Focus management for accessibility
-            if (isOpen) {
-                // Focus first menu item when opening
-                setTimeout(() => {
-                    const firstLink = navLinks.querySelector('a');
-                    if (firstLink) firstLink.focus();
-                }, 100);
-            }
+        <script>
+        function syncDarkModeButton() {
+            const btn = document.querySelector('.toggle-btn');
+            if (!btn) return;
+            btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
         }
 
-        // Close mobile menu when clicking a link
+        function toggleMenu(forceClose) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            if (!navLinks || !hamburger) return;
+
+            const shouldOpen = typeof forceClose === 'boolean'
+                ? !forceClose
+                : !navLinks.classList.contains('active');
+
+            navLinks.classList.toggle('active', shouldOpen);
+            hamburger.classList.toggle('active', shouldOpen);
+            hamburger.setAttribute('aria-expanded', String(shouldOpen));
+        }
+
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
-                    toggleMenu();
+                    toggleMenu(true);
                 }
             });
         });
 
-        // Dark mode toggle
         function toggleDarkMode() {
             window.IPrayTheme.toggle();
         }
 
-        // Translations
-        const translations = {
-            en: {
-                home: "Home",
-                lauds: "Lauds",
-                calendar: "Calendar",
-                settings: "Settings"
-            },
-            sw: {
-                home: "Nyumbani",
-                lauds: "Masifu",
-                calendar: "Kalenda",
-                settings: "Mipangilio"
-            }
-        };
-
-        // Language Management
-        function setLanguage(lang) {
-            localStorage.setItem('preferredLanguage', lang);
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-        }
-
-        // Toggle translation function
-        window.toggleTranslation = function() {
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            const newLang = currentLang === 'en' ? 'sw' : 'en';
-            setLanguage(newLang);
-        };
-
-
-        // Save prayer access for history
-        function savePrayerAccess(prayerId, title, url) {
-            // Simple localStorage-based history (since we don't have IndexedDB in these pages)
-            const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
-            const newAccess = {
-                id: prayerId,
-                title: title,
-                url: url,
-                lastAccessed: new Date().toISOString()
-            };
-
-            // Remove existing entry if present
-            const filteredHistory = history.filter(item => item.id !== prayerId);
-            filteredHistory.unshift(newAccess);
-
-            // Keep only last 10 entries
-            localStorage.setItem('prayerHistory', JSON.stringify(filteredHistory.slice(0, 10)));
-        }
-
-        // Keyboard navigation support for mobile menu
-        document.addEventListener('keydown', function(e) {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks.classList.contains('active')) {
-                if (e.key === 'Escape') {
-                    toggleMenu();
-                }
-            }
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const navLinks = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-
-            if (navLinks.classList.contains('active') &&
-                !navLinks.contains(e.target) &&
-                !hamburger.contains(e.target)) {
-                toggleMenu();
-            }
-        });
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-
-            // Set initial language
-            const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
-            setLanguage(preferredLang);
-
-            // Add translation toggle listener if button exists
-            const translationToggle = document.getElementById('translationToggle');
-            if (translationToggle) {
-                translationToggle.addEventListener('click', toggleTranslation);
-            }
-        });
+        syncDarkModeButton();
     </script>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -793,7 +709,6 @@
   }
 </script>
 
-
     <script src="../js/liturgical-calendar.js" defer></script>
     <script src="../js/somo-la-kwanza-bible.js" defer></script>
     <script src="../js/ofisi-readings-dropdown.js" defer></script>
@@ -802,8 +717,6 @@
     <script src="../js/prevent-zoom.js" defer></script>
 </body>
 </html>
-
-
 
 
 

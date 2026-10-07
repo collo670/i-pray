@@ -108,6 +108,7 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
@@ -359,11 +360,9 @@
             var externalLink = document.getElementById('externalLink');
             var loadToken = 0;
 
-            var LANG_KEY = 'preferredLanguage';
-            var lang = 'en';
-            try {
-                if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
-            } catch (e) {}
+            // The app's language (js/i18n.js); the office itself exists in
+            // Kiswahili and English only.
+            var lang = IPrayI18n.prayerLang();
             var langEnBtn = document.getElementById('langEn');
             var langSwBtn = document.getElementById('langSw');
 
@@ -454,11 +453,14 @@
 
             function setLang(newLang) {
                 if (newLang === lang) return;
+                // Saved and passed to every open page by js/i18n.js, which
+                // calls showLang below.
+                IPrayI18n.set(newLang);
+            }
+
+            function showLang(newLang) {
+                if (newLang === lang) return;
                 lang = newLang;
-                try {
-                    localStorage.setItem(LANG_KEY, lang);
-                    localStorage.setItem('langUpdatedAt', String(Date.now()));
-                } catch (e) {}
                 applyLangSwitchUI();
                 applyHourChrome();
                 load(currentDate);
@@ -693,16 +695,7 @@
             langSwBtn.addEventListener('click', function () { setLang('sw'); });
             // Stay in sync if the language is changed from another open tab/page
             // (e.g. Settings), matching the rest of the app's convention.
-            window.addEventListener('storage', function (e) {
-                if (e.key !== 'langUpdatedAt') return;
-                var newLang = 'en';
-                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
-                if (newLang === lang) return;
-                lang = newLang;
-                applyLangSwitchUI();
-                applyHourChrome();
-                load(currentDate);
-            });
+            IPrayI18n.onChange(function () { showLang(IPrayI18n.prayerLang()); });
             prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
             nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
             todayBtn.addEventListener('click', function () { load(today); });

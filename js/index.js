@@ -267,9 +267,10 @@ function getUpcomingFeasts(nextCount = 5, lang = 'en') {
 }
 
 // Language Management
+// Renders the home page in `lang`. The setting itself is saved and shared
+// by js/i18n.js: call IPrayI18n.set(lang) to change it.
 function setLanguage(lang) {
     if (!translations[lang]) lang = 'en';
-    localStorage.setItem('preferredLanguage', lang);
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
         if (translations[lang][key]) {
@@ -354,7 +355,7 @@ function resolvePrayerLink(item) {
 const DAILY_PRAYERS_MENU = PRAYER_MENU.filter(item => ['lauds', 'scripture', 'midday', 'vespers'].includes(item.id));
 
 function renderPrayerMenus() {
-    const lang = localStorage.getItem('preferredLanguage') || 'sw';
+    const lang = IPrayI18n.lang();
 
     const dailyPrayersList = document.getElementById('dailyPrayersSheetList');
     if (dailyPrayersList) {
@@ -745,7 +746,7 @@ async function fetchDailyReadings() {
         
         // Check if running locally or on GitHub Pages
         const baseUrl = window.location.hostname === "collo670.github.io" ? "/i-pray" : "";
-        const lang = localStorage.getItem('preferredLanguage') || 'sw';
+        const lang = IPrayI18n.lang();
         const readingsCard = document.createElement('div');
         readingsCard.className = 'rounded-2xl p-6 bg-white dark:bg-gray-800 shadow-lg card-hover cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-32';
         readingsCard.innerHTML = `
@@ -945,9 +946,7 @@ window.addEventListener('appinstalled', () => {
 
 // Toggle translation function
 window.toggleTranslation = function() {
-    const currentLang = localStorage.getItem('preferredLanguage') || 'sw';
-    const newLang = currentLang === 'en' ? 'sw' : 'en';
-    setLanguage(newLang);
+    IPrayI18n.set(IPrayI18n.lang() === 'en' ? 'sw' : 'en');
 };
 
 // Initialize the app
@@ -963,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderPrayerMenus();
     initAccessibility();
     initPrayerDB();
-    const preferredLang = localStorage.getItem('preferredLanguage') || 'sw';
+    const preferredLang = IPrayI18n.lang();
     calculateLiturgicalDay(preferredLang);
     setupPrayerReminders();
     registerServiceWorker();
@@ -975,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleUpcoming.addEventListener('click', () => {
             feastsList.classList.toggle('hidden');
             if (!loaded) {
-                const lang = localStorage.getItem('preferredLanguage') === 'sw' ? 'sw' : 'en';
+                const lang = IPrayI18n.prayerLang();
                 const items = getUpcomingFeasts(5, lang);
                 if (!items.length) {
                     feastsList.innerHTML = '<p class="text-sm text-gray-600">' + (lang === 'sw' ? 'Hakuna sikukuu zijazo.' : 'No upcoming feasts.') + '</p>';
@@ -1000,14 +999,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    // Set language
+    // Set language, and follow changes made here or on another page
     setLanguage(preferredLang);
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'preferredLanguage' || e.key === 'langUpdatedAt') {
-            const lang = localStorage.getItem('preferredLanguage') || 'sw';
-            setLanguage(lang);
-        }
-    });
+    IPrayI18n.onChange(setLanguage);
     // Footer year
     const cy = document.getElementById('copyrightYear');
     if (cy) { cy.textContent = new Date().getFullYear(); }

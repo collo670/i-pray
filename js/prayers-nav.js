@@ -51,6 +51,11 @@
         injectStyles();
         var sheet = buildSheet(PRAYER_MENU, basePath);
         document.body.appendChild(sheet);
+        // Labels in the app's language (js/i18n.js), now and when it changes.
+        if (window.IPrayI18n) {
+            window.IPrayI18n.apply(sheet);
+            window.IPrayI18n.onChange(function () { window.IPrayI18n.apply(sheet); });
+        }
         wireUp(prayersLink, sheet);
     }
 
@@ -99,9 +104,9 @@
         var itemsHtml = items.map(function (item) {
             var href = resolvePrayerLink(item, basePath);
             var label = item.label;
-            return '<a class="ipn-item" href="' + href + '" data-translate="' + item.key + '">' +
+            return '<a class="ipn-item" href="' + href + '">' +
                 '<span class="ipn-item-icon"><i class="fas ' + item.icon + ' ' + item.iconColor + '" aria-hidden="true"></i></span>' +
-                '<span class="ipn-item-label">' + label + '</span>' +
+                '<span class="ipn-item-label" data-translate="' + item.key + '">' + label + '</span>' +
                 '<svg class="ipn-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
                 '<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>' +
                 '</a>';
@@ -111,7 +116,7 @@
             '<div class="ipn-panel">' +
             '<div class="ipn-handle" aria-hidden="true"></div>' +
             '<div class="ipn-header">' +
-            '<h2 id="ipnPrayersTitle" class="ipn-title">Prayers</h2>' +
+            '<h2 id="ipnPrayersTitle" class="ipn-title" data-translate="prayers">Prayers</h2>' +
             '<button type="button" id="ipnClosePrayersSheet" class="ipn-close" aria-label="Close prayers menu">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
             '<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>' +

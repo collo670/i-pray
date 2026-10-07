@@ -19,6 +19,7 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
     <style>
         /* Universalis reading text arrives as HTML with its own indentation styles */
         .reading-text { line-height: 1.75; color: #000; font-weight: 600; }
@@ -220,17 +221,9 @@
                 document.documentElement.lang = 'sw';
             }
 
-            // Language switch: English / Kiswahili, same convention as
-            // pages/prayer-hour.html (localStorage key shared across pages).
-            var LANG_KEY = 'preferredLanguage';
-            // Match the rest of the app (index/settings default to Kiswahili).
-            var lang = 'sw';
-            try {
-                var storedLang = localStorage.getItem(LANG_KEY);
-                if (storedLang === 'en') lang = 'en';
-                else if (storedLang === 'sw') lang = 'sw';
-            } catch (e) {}
-            if (gospelOnly) lang = 'sw';
+            // Language switch: English / Kiswahili, the app's setting
+            // (js/i18n.js).
+            var lang = gospelOnly ? 'sw' : IPrayI18n.prayerLang();
 
             // Kiswahili daily readings: there is no API for this (checked
             // Universalis, iBreviary, Divine Office - none publish Swahili).
@@ -743,11 +736,14 @@
 
             function setLang(newLang) {
                 if (newLang === lang) return;
+                // Saved and passed to every open page by js/i18n.js, which
+                // calls showLang below.
+                IPrayI18n.set(newLang);
+            }
+
+            function showLang(newLang) {
+                if (gospelOnly || newLang === lang) return;
                 lang = newLang;
-                try {
-                    localStorage.setItem(LANG_KEY, lang);
-                    localStorage.setItem('langUpdatedAt', String(Date.now()));
-                } catch (e) {}
                 applyLangChrome();
                 load(currentDate);
             }
@@ -913,20 +909,8 @@
 
             langEnBtn.addEventListener('click', function () { setLang('en'); });
             langSwBtn.addEventListener('click', function () { setLang('sw'); });
-            // Stay in sync if the language is changed from another open tab/page.
-            window.addEventListener('storage', function (e) {
-                if (e.key !== 'langUpdatedAt') return;
-                var newLang = 'sw';
-                try {
-                    var stored = localStorage.getItem(LANG_KEY);
-                    if (stored === 'en') newLang = 'en';
-                    else if (stored === 'sw') newLang = 'sw';
-                } catch (err) {}
-                if (newLang === lang) return;
-                lang = newLang;
-                applyLangChrome();
-                load(currentDate);
-            });
+            // Follow the language when it changes here or on another page.
+            IPrayI18n.onChange(function () { showLang(IPrayI18n.prayerLang()); });
 
             applyLangChrome();
             load(new Date());
