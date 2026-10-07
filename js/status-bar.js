@@ -19,6 +19,11 @@
 //   "theme-color"> (Android Chrome, Samsung Internet, Safari tabs) the
 //   inset is 0 and the strip collapses, so each theme-color is moved
 //   between its own value and the page colour instead.
+// - On Android the strip comes back as the fade alone, so it looks like
+//   iOS: theme-color moves to a whitish frost of the page colour (the page
+//   colour itself in dark mode), and the strip's fade starts at the very
+//   top of the page in that same colour, fully opaque, so the status bar
+//   flows into the page instead of ending in a hard line.
 //
 // Bars that stay pinned (position: fixed, or a sticky bar that engages)
 // never leave the top, so they stay opaque and the status bar keeps their
@@ -42,6 +47,10 @@
     var SAMPLE_EVERY = 120;
     // Scrim alpha once fully blended, behind the status bar icons.
     var SCRIM_ALPHA = 0.95;
+    // Android: how far the page colour is lifted towards white for the
+    // status bar and the fade below it, in light mode.
+    var FROST = 0.7;
+    var WHITE = [255, 255, 255];
 
     var root = document.documentElement;
     var scrim = null;
@@ -61,6 +70,11 @@
     // (black-translucent: always white icons), so the strip must stay dark
     // enough behind them.
     var iosStandalone = window.navigator.standalone === true;
+
+    // Android paints the status bar from theme-color (no inset), so the
+    // strip there is only the fade below it.
+    var android = /Android/i.test(window.navigator.userAgent);
+    var androidFade = false;
 
     // ---- colour helpers ---------------------------------------------------
 
@@ -354,6 +368,13 @@
         return NAV;
     }
 
+    // Android: the whitish frost iOS shows behind its status bar. Dark mode
+    // keeps the page colour, which is already dark.
+    function frost(c) {
+        var dark = root.classList.contains('dark') || root.getAttribute('data-theme') === 'dark';
+        return dark ? c : mix(c, WHITE, FROST);
+    }
+
     // ---- scroll progress --------------------------------------------------
 
     function scrollTop() {
@@ -378,7 +399,8 @@
         return Math.max(0, Math.min(1, scrollTop() / NO_BAR_FADE));
     }
 
-    function applyThemeColors(p) {
+    // Move each theme-color a fraction t of the way to color.
+    function applyThemeColors(color, t) {
         for (var i = 0; i < themeMetas.length; i++) {
             var meta = themeMetas[i];
             var current = meta.getAttribute('content') || '';
@@ -387,7 +409,7 @@
             if (current !== meta.__sbWritten) meta.__sbBase = current;
             var base = parseColor(meta.__sbBase);
             if (!base) continue;
-            var next = p > 0 && pageColor ? hex(mix(base, pageColor, p)) : meta.__sbBase;
+            var next = t > 0 && color ? hex(mix(base, color, t)) : meta.__sbBase;
             if (next !== current) meta.setAttribute('content', next);
             meta.__sbWritten = next;
         }
@@ -429,25 +451,45 @@
             }
         }
 
+        androidFade = android && scrim.getBoundingClientRect().height < 1;
+
         // Ease towards newly sampled colours rather than jumping, as
-        // differently coloured sections pass under the status bar.
-        var left = shownLeft = ease(shownLeft, pageColor ? forIosIcons(pageLeft) : NAV);
-        var right = shownRight = ease(shownRight, pageColor ? forIosIcons(pageRight) : NAV);
+        // differently coloured sections pass under the status bar. On
+        // Android both sides take the one colour the status bar can show.
+        var toLeft = NAV;
+        var toRight = NAV;
+        if (pageColor && androidFade) {
+            toLeft = toRight = frost(pageColor);
+        } else if (pageColor) {
+            toLeft = forIosIcons(pageLeft);
+            toRight = forIosIcons(pageRight);
+        }
+        var left = shownLeft = ease(shownLeft, toLeft);
+        var right = shownRight = ease(shownRight, toRight);
         if (easing) schedule();
 
-        var key = p.toFixed(3) + hex(left) + hex(right);
+        var key = p.toFixed(3) + hex(left) + hex(right) + androidFade;
         if (key === lastKey) return;
         lastKey = key;
 
         root.classList.toggle('sb-scrolled', p > 0);
+        root.classList.toggle('sb-android', androidFade);
         if (bar) bar.style.opacity = p > 0 ? String(1 - p) : '';
         // The strip fades in with the page colour as the bar fades out over
         // it, so the status bar always matches what is right below it.
         // Left-to-right so backgrounds that change across the screen
         // (diagonal gradients) still line up with the strip.
-        root.style.setProperty('--sb-scrim-left', rgba(left, SCRIM_ALPHA * p));
-        root.style.setProperty('--sb-scrim-right', rgba(right, SCRIM_ALPHA * p));
-        applyThemeColors(p);
+        var alpha = androidFade ? p : SCRIM_ALPHA * p;
+        root.style.setProperty('--sb-scrim-left', rgba(left, alpha));
+        root.style.setProperty('--sb-scrim-right', rgba(right, alpha));
+        if (androidFade) {
+            // The top of the page is the strip (alpha p) over the bar fading
+            // out (opacity 1 - p), so the status bar moves to the strip's
+            // colour by that much and the two meet without a line.
+            applyThemeColors(left, 1 - (1 - p) * (1 - p));
+        } else {
+            applyThemeColors(pageColor, p);
+        }
     }
 
     // ---- wiring -----------------------------------------------------------
@@ -485,9 +527,10 @@
         update();
         // Theme / dark-mode switches recolour both the bar and the page.
         if (window.MutationObserver) {
-            var strip = function (v) { return (v || '').replace(/\bsb-scrolled\b/g, '').trim().split(/\s+/).sort().join(' '); };
+            var strip = function (v) { return (v || '').replace(/\bsb-(?:scrolled|android)\b/g, '').trim().split(/\s+/).sort().join(' '); };
             var mo = new MutationObserver(function (records) {
-                // Our own sb-scrolled toggle is not a theme change.
+                // Our own sb-scrolled / sb-android toggles are not a theme
+                // change.
                 var changed = records.some(function (r) {
                     return r.attributeName !== 'class' || strip(r.oldValue) !== strip(r.target.getAttribute('class'));
                 });

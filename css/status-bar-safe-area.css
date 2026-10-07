@@ -23,7 +23,9 @@
      exactly as tall as the status bar) with a colour that moves from the
      bar's maroon to the colour of the page underneath, so the bar blends
      into the page. Where the browser paints the status bar (Android,
-     Safari tabs) it moves theme-color the same way instead.
+     Safari tabs) it moves theme-color the same way instead; on Android
+     the strip's fade is kept below that status bar (:root.sb-android) so
+     it dissolves into the page the way it does on iOS.
 
    This file is linked last in <head> on every page (after inline <style>
    blocks and Tailwind's output.css) so it wins the cascade for the few
@@ -34,6 +36,9 @@
 
 :root {
   --sb-inset-top: env(safe-area-inset-top, 0px);
+  /* How far the status bar strip's fade runs on past the status bar: 44px
+     where there is an inset, 0px where there is none (see .sb-scrim). */
+  --sb-fade: calc(min(env(safe-area-inset-top, 0px), 1px) * 44);
   /* The one top-bar maroon. Keep in sync with NAV in js/status-bar.js and
      the theme-color metas / manifest.json. */
   --nav-maroon: #7c2133;
@@ -55,7 +60,14 @@
    end in a visible line where the strip ends.
 
    Where there is no inset (the browser paints the status bar from
-   theme-color) the strip and its fade are 0px tall. */
+   theme-color) the strip and its fade are 0px tall, except on Android
+   (:root.sb-android, set by the script): there the fade alone runs down
+   from the top of the page, starting fully opaque in the status bar's own
+   theme-color, so the status bar dissolves into the page as on iOS. */
+
+:root.sb-android {
+  --sb-fade: 44px;
+}
 
 .sb-scrim {
   position: fixed;
@@ -75,7 +87,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: calc(100% + min(env(safe-area-inset-top, 0px), 1px) * 44);
+  height: calc(100% + var(--sb-fade));
   background: linear-gradient(to right,
                               var(--sb-scrim-left, transparent),
                               var(--sb-scrim-right, transparent));
