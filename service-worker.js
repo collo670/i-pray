@@ -16,7 +16,7 @@
 // files on disk (`npm run build:generated`); don't edit them by hand.
 
 // BEGIN GENERATED
-const VERSION = '10a096e488';
+const VERSION = '9c7e206840';
 const PRECACHE = [
     '/i-pray/',
     '/i-pray/assets/images/carmen.jpg',
@@ -26,13 +26,9 @@ const PRECACHE = [
     '/i-pray/assets/images/logo-small.jpg',
     '/i-pray/assets/images/maria-mdogo.jpg',
     '/i-pray/css/amefufuka.css',
-    '/i-pray/css/fallback.css',
-    '/i-pray/css/improved-nav.css',
     '/i-pray/css/index.css',
-    '/i-pray/css/main.css',
     '/i-pray/css/masifu.css',
     '/i-pray/css/prevent-zoom.css',
-    '/i-pray/css/settings.css',
     '/i-pray/css/status-bar-safe-area.css',
     '/i-pray/data/office-readings-sw/index.json',
     '/i-pray/data/office-readings-sw/week-1.json',
@@ -77,11 +73,9 @@ const PRECACHE = [
     '/i-pray/js/bibilia-reader.js',
     '/i-pray/js/daily-readings-module.js',
     '/i-pray/js/daily-readings.js',
-    '/i-pray/js/fallback.js',
     '/i-pray/js/image-optimizer.js',
     '/i-pray/js/index.js',
     '/i-pray/js/liturgical-calendar.js',
-    '/i-pray/js/liturgy-day-banner.js',
     '/i-pray/js/loading-states.js',
     '/i-pray/js/logo-loader.js',
     '/i-pray/js/masifu.js',
@@ -89,10 +83,8 @@ const PRECACHE = [
     '/i-pray/js/mobile-navigation.js',
     '/i-pray/js/nav-theme.js',
     '/i-pray/js/ofisi-readings-dropdown.js',
-    '/i-pray/js/page-transitions.js',
     '/i-pray/js/prayers-nav.js',
     '/i-pray/js/prevent-zoom.js',
-    '/i-pray/js/search.js',
     '/i-pray/js/settings.js',
     '/i-pray/js/sikukuu.js',
     '/i-pray/js/somo-la-kwanza-bible.js',
@@ -100,7 +92,6 @@ const PRECACHE = [
     '/i-pray/js/text-size-control.js',
     '/i-pray/js/text-size.js',
     '/i-pray/js/theme.js',
-    '/i-pray/js/translation.js',
     '/i-pray/js/universalis-office.js',
     '/i-pray/manifest.json',
     '/i-pray/pages/alhamisi1.html',
