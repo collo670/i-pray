@@ -661,6 +661,39 @@
             .test(String(htmlStr || ''));
     }
 
+    var CACHE_PREFIX = 'officeHtml-v' + EXTRACT_VERSION + '-';
+
+    /**
+     * Fetches one hour for one day through PROXIES (in order), extracts the
+     * office and keeps it in localStorage under the key the office pages
+     * read ('officeHtml-v<VERSION>-<hour>-<YYYYMMDD>'). Resolves to true if
+     * the office is (now) saved, false if no route could provide it.
+     * Used by "Save this week for offline use" (js/offline-week.js).
+     */
+    function saveOffice(stamp, hourKey, timeoutMs) {
+        var key = CACHE_PREFIX + hourKey + '-' + stamp;
+        try { if (global.localStorage.getItem(key)) return Promise.resolve(true); } catch (e) {}
+        var url = ORIGIN + '/' + stamp + '/' + hourKey + '.htm';
+        var i = 0;
+        return new Promise(function (resolve) {
+            (function next() {
+                if (i >= PROXIES.length) { resolve(false); return; }
+                var ctrl = global.AbortController ? new global.AbortController() : null;
+                var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, timeoutMs || 12000);
+                global.fetch(PROXIES[i++](url), ctrl ? { signal: ctrl.signal } : {})
+                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                    .then(function (text) {
+                        clearTimeout(timer);
+                        var cleaned = extract(text, hourKey);
+                        if (!cleaned) throw new Error('no office');
+                        try { global.localStorage.setItem(key, cleaned); } catch (e) {}
+                        resolve(true);
+                    })
+                    .catch(function () { clearTimeout(timer); next(); });
+            })();
+        });
+    }
+
     global.UniversalisOffice = {
         VERSION: EXTRACT_VERSION,
         extract: extract,
@@ -668,6 +701,8 @@
         postProcessHtml: postProcessHtml,
         looksLikeFullPage: looksLikeFullPage,
         PROXIES: PROXIES,
+        CACHE_PREFIX: CACHE_PREFIX,
+        saveOffice: saveOffice,
         ORIGIN: ORIGIN
     };
 })(typeof window !== 'undefined' ? window : this);

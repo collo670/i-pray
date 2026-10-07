@@ -16,7 +16,7 @@
 // files on disk (`npm run build:generated`); don't edit them by hand.
 
 // BEGIN GENERATED
-const VERSION = 'fec4443783';
+const VERSION = '24150757d0';
 const PRECACHE = [
     '/i-pray/',
     '/i-pray/assets/images/carmen.jpg',
@@ -78,6 +78,7 @@ const PRECACHE = [
     '/i-pray/js/i18n.js',
     '/i-pray/js/image-optimizer.js',
     '/i-pray/js/index.js',
+    '/i-pray/js/library.js',
     '/i-pray/js/liturgical-calendar.js',
     '/i-pray/js/loading-states.js',
     '/i-pray/js/logo-loader.js',
@@ -85,9 +86,11 @@ const PRECACHE = [
     '/i-pray/js/micro-interactions.js',
     '/i-pray/js/mobile-navigation.js',
     '/i-pray/js/nav-theme.js',
+    '/i-pray/js/offline-week.js',
     '/i-pray/js/ofisi-readings-dropdown.js',
     '/i-pray/js/prayers-nav.js',
     '/i-pray/js/prevent-zoom.js',
+    '/i-pray/js/reminders.js',
     '/i-pray/js/settings.js',
     '/i-pray/js/sikukuu.js',
     '/i-pray/js/somo-la-kwanza-bible.js',
@@ -219,6 +222,24 @@ async function cacheFirst(request) {
     if (response && (response.ok || response.type === 'opaque')) putRuntime(request, response.clone());
     return response;
 }
+
+// A prayer reminder (js/reminders.js) was tapped: bring an open ipray window
+// to that prayer, or open one.
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+    const url = (event.notification.data && event.notification.data.url) || BASE;
+    event.waitUntil((async () => {
+        const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        for (const client of windows) {
+            if ('focus' in client) {
+                await client.focus();
+                if ('navigate' in client) return client.navigate(url);
+                return undefined;
+            }
+        }
+        return self.clients.openWindow(url);
+    })());
+});
 
 self.addEventListener('fetch', (event) => {
     const request = event.request;

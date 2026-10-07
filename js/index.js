@@ -317,9 +317,9 @@ function initAccessibility() {
         document.body.classList.toggle('high-contrast');
         localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
     });
+    // Reminders are set up in Settings (times, phone calendar, notifications).
     document.getElementById('reminderToggle').addEventListener('click', function() {
-        togglePrayerReminders();
-        this.textContent = localStorage.getItem('prayerReminders') === 'false' ? 'Enable Prayer Reminders' : 'Disable Prayer Reminders';
+        window.location.href = 'pages/settings.html#reminders';
     });
     if (localStorage.getItem('highContrast') === 'true') {
         document.body.classList.add('high-contrast');
@@ -373,9 +373,6 @@ function renderPrayerMenus() {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             `;
-            a.addEventListener('click', () => {
-                savePrayerAccess(item.id, translations.en[item.key], link);
-            });
             dailyPrayersList.appendChild(a);
         });
     }
@@ -396,9 +393,6 @@ function renderPrayerMenus() {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             `;
-            a.addEventListener('click', () => {
-                savePrayerAccess(item.id, translations.en[item.key], link);
-            });
             sheetList.appendChild(a);
         });
     }
@@ -419,72 +413,10 @@ function renderPrayerMenus() {
                 <span class="options-quicklink-icon"><i class="fas ${item.icon} ${item.iconColor}" aria-hidden="true"></i></span>
                 <span class="options-quicklink-label" data-translate="${item.key}">${label}</span>
             `;
-            a.addEventListener('click', () => {
-                savePrayerAccess(item.id, translations.en[item.key], link);
-            });
             optionsList.appendChild(a);
         });
     }
 }
-
-// Favorites Management
-const FavoritesManager = {
-    getFavorites() {
-        return JSON.parse(localStorage.getItem('favorites') || '[]');
-    },
-    
-    addFavorite(itemId, title, link) {
-        const favorites = this.getFavorites();
-        if (!favorites.find(f => f.id === itemId)) {
-            favorites.push({ id: itemId, title, link, date: new Date().toISOString() });
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            this.updateFavoriteUI(itemId, true);
-            this.showToast('Added to favorites');
-            if (typeof loadFavorites === 'function') {
-                loadFavorites();
-            }
-        }
-    },
-    
-    removeFavorite(itemId) {
-        const favorites = this.getFavorites();
-        const filtered = favorites.filter(f => f.id !== itemId);
-        localStorage.setItem('favorites', JSON.stringify(filtered));
-        this.updateFavoriteUI(itemId, false);
-        this.showToast('Removed from favorites');
-        if (typeof loadFavorites === 'function') {
-            loadFavorites();
-        }
-    },
-    
-    isFavorite(itemId) {
-        return this.getFavorites().some(f => f.id === itemId);
-    },
-    
-    updateFavoriteUI(itemId, isFavorite) {
-        const btn = document.querySelector(`[data-favorite-id="${itemId}"]`);
-        if (btn) {
-            if (isFavorite) {
-                btn.classList.add('active');
-                btn.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
-            } else {
-                btn.classList.remove('active');
-                btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>';
-            }
-        }
-    },
-    
-    showToast(message) {
-        const toast = document.createElement('div');
-        toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg toast-notification z-50';
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 300);
-        }, 2000);
-    }
-};
 
 // Show skeleton loaders
 function showSkeletonLoaders() {
@@ -510,49 +442,6 @@ function hideSkeletonLoaders() {
     const skeletonGrid = document.getElementById('navGridSkeleton');
     if (skeletonGrid) {
         skeletonGrid.style.display = 'none';
-    }
-}
-
-// Load and display favorites
-function loadFavorites() {
-    const favorites = FavoritesManager.getFavorites();
-    const favoritesSection = document.getElementById('favoritesSection');
-    const favoritesList = document.getElementById('favoritesList');
-    
-    if (!favoritesSection || !favoritesList) return;
-    
-    if (favorites.length === 0) {
-        favoritesSection.classList.add('hidden');
-        return;
-    }
-    
-    favoritesSection.classList.remove('hidden');
-    favoritesList.innerHTML = favorites.map(fav => `
-        <a href="${fav.link}" class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-            <div class="flex-1">
-                <h3 class="font-semibold text-gray-800">${fav.title}</h3>
-                <p class="text-sm text-gray-500">${new Date(fav.date).toLocaleDateString()}</p>
-            </div>
-            <button class="favorite-btn active ml-2" 
-                    onclick="event.preventDefault(); event.stopPropagation(); FavoritesManager.removeFavorite('${fav.id}'); loadFavorites();"
-                    aria-label="Remove from favorites">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-            </button>
-        </a>
-    `).join('');
-    
-    // Clear all favorites button
-    const clearBtn = document.getElementById('clearFavorites');
-    if (clearBtn) {
-        clearBtn.onclick = () => {
-            if (confirm('Clear all favorites?')) {
-                localStorage.removeItem('favorites');
-                loadFavorites();
-                FavoritesManager.showToast('All favorites cleared');
-            }
-        };
     }
 }
 
@@ -586,38 +475,6 @@ function getCurrentWeekAndDay() {
     return { dayPrefix, week };
 }
 
-// Masifu ya Asubuhi dynamic link
-const masifuAsubuhiLink = document.getElementById('masifuAsubuhiLink');
-if (masifuAsubuhiLink) {
-    masifuAsubuhiLink.addEventListener('click', function() {
-        const { dayPrefix, week } = getCurrentWeekAndDay();
-        const fileName = getPrayerFileName(dayPrefix, week);
-        savePrayerAccess('lauds', 'Lauds', fileName);
-        window.location.href = `pages/${fileName}`;
-    });
-}
-
-// Sala ya Mchana (Saa Sita) dynamic link
-const saaSitaLink = document.getElementById('saaSitaLink');
-if (saaSitaLink) {
-    saaSitaLink.addEventListener('click', function() {
-        const { dayPrefix, week } = getCurrentWeekAndDay();
-        const fileName = getPrayerFileName(dayPrefix, week, 'saa-sita');
-        savePrayerAccess('midday', 'Sala ya Mchana', fileName);
-        window.location.href = `pages/${fileName}`;
-    });
-}
-
-// Masifu ya Jioni (Vespers) dynamic link
-const masifuJioniLink = document.getElementById('masifuJioniLink');
-if (masifuJioniLink) {
-    masifuJioniLink.addEventListener('click', function() {
-        const { dayPrefix, week } = getCurrentWeekAndDay();
-        const fileName = getPrayerFileName(dayPrefix, week, 'jioni');
-        savePrayerAccess('vespers', 'Masifu ya Jioni', fileName);
-        window.location.href = `pages/${fileName}`;
-    });
-}
 
 // Update liturgical quote (element may be absent in the redesigned home)
 function updateLiturgicalQuote(season, lang) {
@@ -788,57 +645,6 @@ async function fetchDailyReadings() {
 }
 
 // Prayer Reminders
-let reminderTimeouts = [];
-function setupPrayerReminders() {
-    if (!('Notification' in window)) return;
-    const remindersEnabled = localStorage.getItem('prayerReminders') !== 'false';
-    if (!remindersEnabled) return;
-    Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-            scheduleDailyReminder(6, 0, 'Morning Prayer: Start your day with God');
-            scheduleDailyReminder(12, 0, 'Angelus: Let us pray the Angelus together');
-            scheduleDailyReminder(15, 0, 'Divine Mercy Hour: Remember God\'s mercy at 3 PM');
-        }
-    });
-}
-
-function scheduleDailyReminder(hour, minute, message) {
-    const now = new Date();
-    const reminderTime = new Date();
-    reminderTime.setHours(hour, minute, 0, 0);
-    if (now > reminderTime) {
-        reminderTime.setDate(reminderTime.getDate() + 1);
-    }
-    const timeout = reminderTime - now;
-    const timeoutId = setTimeout(() => {
-        const notification = new Notification('iPray Reminder', {
-            body: message,
-            icon: 'assets/images/favicon.ico.jpg',
-            actions: [{ action: 'snooze', title: 'Snooze 10 min' }]
-        });
-        notification.onclick = () => window.focus();
-        notification.onclose = () => scheduleDailyReminder(hour, minute, message);
-        notification.addEventListener('click', (event) => {
-            if (event.action === 'snooze') {
-                setTimeout(() => scheduleDailyReminder(hour, minute, message), 10 * 60 * 1000);
-            }
-        });
-    }, timeout);
-    reminderTimeouts.push(timeoutId);
-}
-
-function togglePrayerReminders() {
-    const enabled = localStorage.getItem('prayerReminders') !== 'false';
-    localStorage.setItem('prayerReminders', !enabled);
-    if (enabled) {
-        // Disable
-        reminderTimeouts.forEach(clearTimeout);
-        reminderTimeouts = [];
-    } else {
-        // Enable
-        setupPrayerReminders();
-    }
-}
 
 // PWA Service Worker Registration
 function registerServiceWorker() {
@@ -961,10 +767,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation and features
     renderPrayerMenus();
     initAccessibility();
-    initPrayerDB();
     const preferredLang = IPrayI18n.lang();
     calculateLiturgicalDay(preferredLang);
-    setupPrayerReminders();
     registerServiceWorker();
     // Upcoming feasts toggle behavior
     const toggleUpcoming = document.getElementById('toggleUpcomingFeasts');
@@ -1029,105 +833,6 @@ function openOfficeReadingsMwaka2() {
 // Function to open Office of the Readings for Mwaka 3
 function openOfficeReadingsMwaka3() {
     window.location.href = "mwaka3.html";
-}
-
-// Offline Prayer History and Favorites using IndexedDB
-let prayerDB;
-function initPrayerDB() {
-    const request = indexedDB.open('PrayerAppDB', 1);
-    request.onerror = () => console.error('IndexedDB error');
-    request.onsuccess = (event) => {
-        prayerDB = event.target.result;
-        loadPrayerHistory();
-        loadFavorites();
-    };
-    request.onupgradeneeded = (event) => {
-        prayerDB = event.target.result;
-        if (!prayerDB.objectStoreNames.contains('prayers')) {
-            prayerDB.createObjectStore('prayers', { keyPath: 'id' });
-        }
-        if (!prayerDB.objectStoreNames.contains('favorites')) {
-            prayerDB.createObjectStore('favorites', { keyPath: 'id' });
-        }
-    };
-}
-
-function savePrayerAccess(prayerId, title, url) {
-    if (!prayerDB) return;
-    const transaction = prayerDB.transaction(['prayers'], 'readwrite');
-    const store = transaction.objectStore('prayers');
-    const prayer = { id: prayerId, title, url, lastAccessed: new Date() };
-    store.put(prayer);
-}
-
-function toggleFavorite(prayerId, title, url) {
-    if (!prayerDB) return;
-    const transaction = prayerDB.transaction(['favorites'], 'readwrite');
-    const store = transaction.objectStore('favorites');
-    const getRequest = store.get(prayerId);
-    getRequest.onsuccess = () => {
-        if (getRequest.result) {
-            store.delete(prayerId);
-        } else {
-            store.put({ id: prayerId, title, url, added: new Date() });
-        }
-        loadFavorites();
-    };
-}
-
-function loadPrayerHistory() {
-    if (!prayerDB) return;
-    const transaction = prayerDB.transaction(['prayers'], 'readonly');
-    const store = transaction.objectStore('prayers');
-    const request = store.getAll();
-    request.onsuccess = () => {
-        const history = request.result.sort((a, b) => new Date(b.lastAccessed) - new Date(a.lastAccessed)).slice(0, 10);
-        displayPrayerHistory(history);
-    };
-}
-
-function loadFavorites() {
-    if (!prayerDB) return;
-    const transaction = prayerDB.transaction(['favorites'], 'readonly');
-    const store = transaction.objectStore('favorites');
-    const request = store.getAll();
-    request.onsuccess = () => {
-        displayFavorites(request.result);
-    };
-}
-
-function displayPrayerHistory(history) {
-    const historyEl = document.getElementById('prayerHistory');
-    if (!historyEl) return;
-    historyEl.innerHTML = '<h3 class="text-lg font-bold mb-4 dark:text-gray-100">Recent Prayers</h3>';
-    if (history.length === 0) {
-        historyEl.innerHTML += '<p class="text-gray-500 dark:text-gray-400">No recent prayers</p>';
-        return;
-    }
-    history.forEach(prayer => {
-        const item = document.createElement('a');
-        item.href = prayer.url;
-        item.className = 'block p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm mb-2 hover:bg-gray-50 dark:hover:bg-gray-600';
-        item.innerHTML = `<div class="font-medium dark:text-gray-100">${prayer.title}</div><div class="text-sm text-gray-500 dark:text-gray-400">${new Date(prayer.lastAccessed).toLocaleDateString()}</div>`;
-        historyEl.appendChild(item);
-    });
-}
-
-function displayFavorites(favorites) {
-    const favEl = document.getElementById('prayerFavorites');
-    if (!favEl) return;
-    favEl.innerHTML = '<h3 class="text-lg font-bold mb-4 dark:text-gray-100">Favorite Prayers</h3>';
-    if (favorites.length === 0) {
-        favEl.innerHTML += '<p class="text-gray-500 dark:text-gray-400">No favorites yet</p>';
-        return;
-    }
-    favorites.forEach(prayer => {
-        const item = document.createElement('a');
-        item.href = prayer.url;
-        item.className = 'block p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm mb-2 hover:bg-gray-50 dark:hover:bg-gray-600';
-        item.innerHTML = `<div class="font-medium dark:text-gray-100">${prayer.title}</div>`;
-        favEl.appendChild(item);
-    });
 }
 
 // Prayer Streaks and Progress Tracking

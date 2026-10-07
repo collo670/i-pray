@@ -21,6 +21,8 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/library.js" defer></script>
+    <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
@@ -108,49 +110,30 @@
                         </label>
                     </div>
                 </section>
-                <!-- Prayer Reminders -->
-                <section class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                <!-- Prayer Reminders (rows drawn by js/settings.js from js/reminders.js) -->
+                <section id="reminders" class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                     <h2 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-bell mr-2 text-primary"></i>
                         <span data-translate="prayerReminders">Prayer Reminders</span>
                     </h2>
-                    <div class="space-y-4">
-                        <div class="prayer-reminder flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div class="flex-1">
-                                <h3 class="font-medium" data-translate="morningPrayer">Morning Prayer (Lauds)</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="startDayWithPrayer">Start your day with prayer</p>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="time" value="06:00" class="bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-2 py-1 mr-3" aria-label="Set morning prayer reminder time">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" checked class="sr-only peer" aria-label="Toggle morning prayer reminder">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="prayer-reminder flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div class="flex-1">
-                                <h3 class="font-medium" data-translate="angelus">Angelus</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="noonPrayer">Noon prayer tradition</p>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="time" value="12:00" class="bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-2 py-1 mr-3" aria-label="Set angelus reminder time">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" checked class="sr-only peer" aria-label="Toggle angelus reminder">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="prayer-reminder flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div>
-                                <h3 class="font-medium" data-translate="divineMercy">Divine Mercy (3 PM)</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="hourOfMercy">Hour of Great Mercy</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" checked class="sr-only peer" aria-label="Toggle divine mercy reminder">
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                            </label>
-                        </div>
+                    <div id="reminderList" class="space-y-3"></div>
+                    <div class="mt-4 grid gap-2">
+                        <button id="reminderCalendarBtn" type="button" class="w-full p-3 rounded-lg font-semibold text-white bg-primary hover:opacity-90 transition-opacity"></button>
+                        <button id="reminderNotifyBtn" type="button" class="w-full p-3 rounded-lg font-semibold border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"></button>
+                    </div>
+                    <p id="reminderNote" class="mt-3 text-sm text-gray-600 dark:text-gray-400"></p>
+                </section>
+                <!-- Offline: save the coming week (js/offline-week.js) -->
+                <section id="offline" class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-2 flex items-center">
+                        <i class="fas fa-download mr-2 text-primary"></i>
+                        <span id="offlineTitle">Offline</span>
+                    </h2>
+                    <p id="offlineText" class="text-sm text-gray-600 dark:text-gray-400 mb-3"></p>
+                    <button id="saveWeekBtn" type="button" class="w-full p-3 rounded-lg font-semibold text-white bg-primary hover:opacity-90 transition-opacity disabled:opacity-60"></button>
+                    <div id="saveWeekProgress" class="hidden mt-3">
+                        <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden"><div id="saveWeekBar" class="h-full bg-primary" style="width:0%"></div></div>
+                        <p id="saveWeekStatus" class="mt-2 text-sm text-gray-600 dark:text-gray-400" aria-live="polite"></p>
                     </div>
                 </section>
                 <!-- Accessibility -->
@@ -296,6 +279,9 @@
 </nav>
     </div>
 
+    <script src="../js/liturgical-calendar.js"></script>
+    <script src="../js/universalis-office.js"></script>
+    <script src="../js/offline-week.js"></script>
     <script src="../js/settings.js"></script>
     <script src="../js/prayers-nav.js" defer></script>
     <script src="../js/prevent-zoom.js" defer></script>
