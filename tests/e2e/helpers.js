@@ -22,9 +22,11 @@ function universalisTarget(proxiedUrl) {
  *   'fail'    - a network error
  *   'junk'    - a 200 response that holds no office
  */
-async function isolate(page, { universalis = 'fixture' } = {}) {
+async function isolate(target, { universalis = 'fixture' } = {}) {
+    // `target` is a page, or a browser context when requests made by the
+    // service worker have to be caught too.
     const calls = [];
-    await page.route(/^https?:\/\/(?!localhost[:/])/, (route) => {
+    await target.route(/^https?:\/\/(?!localhost[:/])/, (route) => {
         const url = route.request().url();
         const target = PROXY_HOST.test(url) ? universalisTarget(url) : null;
         if (!target) return route.abort();

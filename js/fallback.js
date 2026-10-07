@@ -880,7 +880,7 @@ function togglePrayerReminders() {
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/i-pray/js/service-worker.js', { 
+            navigator.serviceWorker.register('/i-pray/service-worker.js', { 
                 scope: '/i-pray/',
                 updateViaCache: 'none' // Always check the network for updates
             })

@@ -679,7 +679,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+      navigator.serviceWorker.register('/i-pray/service-worker.js')
         .then(function(registration) {
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
         })

@@ -1072,7 +1072,7 @@ function togglePrayerReminders() {
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/i-pray/js/service-worker.js', { 
+            navigator.serviceWorker.register('/i-pray/service-worker.js', { 
                 scope: '/i-pray/',
                 updateViaCache: 'none' // Always check the network for updates
             })
@@ -1089,13 +1089,11 @@ function registerServiceWorker() {
                 registration.addEventListener('updatefound', () => {
                     const newWorker = registration.installing;
                     
+                    // The worker activates itself straight away and pages
+                    // are always fetched from the network first, so there
+                    // is nothing to reload for.
                     newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // New service worker is installed but waiting to activate
-                            if (confirm('New version available! Reload to update?')) {
-                                window.location.reload();
-                            }
-                        }
+                        if (newWorker.state === 'activated') console.log('Offline copy updated');
                     });
                 });
             })

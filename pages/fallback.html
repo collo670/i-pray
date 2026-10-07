@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#7c2133">
+    <title>Nje ya mtandao - ipray</title>
+    <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
+    <script src="../js/theme.js"></script>
+    <style>
+        :root { --bg: #faf6f2; --card: #ffffff; --text: #1f2937; --muted: #6b7280; --accent: #7c2133; --accent-soft: rgba(124, 33, 51, 0.10); }
+        html.dark { --bg: #111827; --card: #1f2937; --text: #f3f4f6; --muted: #9ca3af; --accent: #c4b5fd; --accent-soft: rgba(196, 181, 253, 0.14); }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            padding: calc(env(safe-area-inset-top, 0px) + 2rem) 1rem 2rem;
+        }
+        main { max-width: 32rem; margin: 0 auto; }
+        .card { background: var(--card); border-radius: 1rem; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08); padding: 1.5rem; }
+        .logo { display: block; width: 4.5rem; height: 4.5rem; border-radius: 50%; margin: 0 auto 1rem; border: 3px solid var(--accent); object-fit: cover; }
+        h1 { margin: 0 0 0.5rem; text-align: center; font-size: 1.6rem; color: var(--accent); }
+        p { margin: 0 0 1rem; line-height: 1.6; text-align: center; color: var(--muted); font-size: 1.05rem; }
+        button {
+            display: block; width: 100%; margin: 0 0 1.5rem; padding: 0.8rem; border: 0; border-radius: 0.75rem;
+            background: var(--accent); color: #fff; font: inherit; font-size: 1.05rem; font-weight: 700; cursor: pointer;
+        }
+        html.dark button { color: #1f2937; }
+        h2 { margin: 0 0 0.6rem; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+        ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+        a { display: block; padding: 0.7rem 0.9rem; border-radius: 0.6rem; background: var(--accent-soft); color: var(--text); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="card">
+            <img class="logo" src="../assets/images/logo-small.jpg" alt="">
+            <h1 data-sw="Uko nje ya mtandao" data-en="You're offline">Uko nje ya mtandao</h1>
+            <p data-sw="Ukurasa huu haujahifadhiwa kwenye simu yako bado. Sala ulizokwisha kufungua, na zile zilizo hapa chini, zinapatikana bila mtandao."
+               data-en="This page hasn't been saved on your phone yet. Prayers you have opened before, and the ones below, work without a connection.">
+                Ukurasa huu haujahifadhiwa kwenye simu yako bado. Sala ulizokwisha kufungua, na zile zilizo hapa chini, zinapatikana bila mtandao.
+            </p>
+            <button id="retry" type="button" data-sw="Jaribu tena" data-en="Try again">Jaribu tena</button>
+            <h2 data-sw="Zinapatikana bila mtandao" data-en="Available offline">Zinapatikana bila mtandao</h2>
+            <ul>
+                <li><a href="../index.html" data-sw="Nyumbani" data-en="Home">Nyumbani</a></li>
+                <li><a href="masifu-asubuhi.html" data-sw="Masifu ya Asubuhi" data-en="Morning Prayer">Masifu ya Asubuhi</a></li>
+                <li><a href="office-of-readings.html" data-sw="Ofisi ya Masomo" data-en="Office of Readings">Ofisi ya Masomo</a></li>
+                <li><a href="compline.html" data-sw="Sala ya Usiku" data-en="Night Prayer">Sala ya Usiku</a></li>
+                <li><a href="holy-rosary.html" data-sw="Rozari Takatifu" data-en="Holy Rosary">Rozari Takatifu</a></li>
+                <li><a href="via-cruce.html" data-sw="Njia ya Msalaba" data-en="Way of the Cross">Njia ya Msalaba</a></li>
+            </ul>
+        </div>
+    </main>
+    <script>
+        (function () {
+            var lang = 'sw';
+            try { if (localStorage.getItem('preferredLanguage') === 'en') lang = 'en'; } catch (e) {}
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-' + lang + ']').forEach(function (el) {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            if (lang === 'en') document.title = "You're offline - ipray";
+            document.getElementById('retry').addEventListener('click', function () {
+                window.location.reload();
+            });
+        })();
+    </script>
+</body>
+</html>

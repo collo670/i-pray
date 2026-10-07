@@ -301,7 +301,7 @@
         // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/i-pray/js/service-worker.js', { scope: '/i-pray/' })
+                navigator.serviceWorker.register('/i-pray/service-worker.js', { scope: '/i-pray/' })
                     .then(registration => {
                         console.log('ServiceWorker registration successful');
                     })

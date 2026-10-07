@@ -241,7 +241,7 @@ FOOT = '''
     <script>
       if ('serviceWorker' in navigator) {{
         window.addEventListener('load', function () {{
-          navigator.serviceWorker.register('/i-pray/js/service-worker.js').catch(function () {{}});
+          navigator.serviceWorker.register('/i-pray/service-worker.js').catch(function () {{}});
         }});
       }}
     </script>
