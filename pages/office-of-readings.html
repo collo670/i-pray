@@ -450,12 +450,39 @@
                 });
             }
 
-            function fetchSwWeek(weekNum) {
-                if (swWeekCache[weekNum]) return Promise.resolve(swWeekCache[weekNum]);
-                return fetch('../data/office-readings-sw/week-' + weekNum + '.json')
+            // data/office-readings-sw/<name>.json, fetched once per page.
+            function fetchSwFile(name) {
+                if (swWeekCache[name]) return Promise.resolve(swWeekCache[name]);
+                return fetch('../data/office-readings-sw/' + name + '.json')
                     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-                    .then(function (data) { swWeekCache[weekNum] = data; return data; })
+                    .then(function (data) { swWeekCache[name] = data; return data; })
                     .catch(function () { return null; });
+            }
+
+            function fetchSwWeek(weekNum) {
+                return fetchSwFile('week-' + weekNum);
+            }
+
+            function pad2(n) { return String(n).padStart(2, '0'); }
+
+            // Advent and Christmas (data/office-readings-sw/advent-christmas.json,
+            // from MajilioNaNoeli.pdf): Advent weeks 1-3 by weekday, then the
+            // dated days from 17 December, the Christmas season by date,
+            // the Holy Family and the Baptism of the Lord. The book has no
+            // Fourth Sunday of Advent and no Second Sunday after Christmas.
+            function adventChristmasDay(date, info, celebration, data) {
+                if (!data) return null;
+                var key = pad2(date.getMonth() + 1) + '-' + pad2(date.getDate());
+                var sunday = date.getDay() === 0;
+                if (info.season === 'Advent') {
+                    if (sunday) return (data.advent[info.weekNum] || {}).dominika || null;
+                    if (date.getMonth() === 11 && date.getDate() >= 17) return data.dated[key] || null;
+                    return (data.advent[info.weekNum] || {})[SW_DAY_KEYS[date.getDay()]] || null;
+                }
+                if (celebration && celebration.id === 'holy-family') return data.holyFamily || null;
+                if (celebration && celebration.id === 'baptism') return data.baptism || null;
+                if (sunday && !(celebration && celebration.type === 'Solemnity')) return null;
+                return data.dated[key] || null;
             }
 
             function findNearestSwDay(days, targetKey) {
@@ -501,7 +528,14 @@
             }
 
             function swSeasonNote() {
-                return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani kwa kipindi hiki cha liturujia (nje ya Kipindi cha Mwaka). Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+                return '<div class="sw-fallback-note">Ofisi ya Masomo kwa Kiswahili haipo bado kwa siku hii (vitabu vilivyopo ni vya Kipindi cha Mwaka, Majilio na Noeli). Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+            }
+
+            // Solemnities and feasts have readings of their own; rather than
+            // show the ordinary weekday's, the English office is shown.
+            function swProperNote(celebration) {
+                return '<div class="sw-fallback-note">Leo ni ' + esc(celebration.rankLabel) + ': ' + esc(celebration.name)
+                    + '. Masomo yake kwa Kiswahili hayapo bado; inaonyesha maandishi ya Kiingereza.</div>';
             }
 
             function swFetchFailNote() {
@@ -512,28 +546,62 @@
                 return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani. Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
             }
 
+            function showSwDay(dayData, usedFallbackDay) {
+                showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
+                if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
+                    window.SomoLaKwanzaBible.init();
+                }
+            }
+
             function loadSwahiliReadings(date, token) {
                 var info = getLiturgicalToday(date, 'sw');
-                if (info.season === 'Ordinary Time' && info.weekNum >= 1 && info.weekNum <= 34) {
-                    fetchSwWeek(info.weekNum).then(function (weekData) {
+                var celebration = getCelebrationForDate(date, 'sw');
+                var id = celebration && celebration.id;
+
+                if (info.season === 'Advent' || info.season === 'Christmas') {
+                    fetchSwFile('advent-christmas').then(function (data) {
                         if (token !== loadToken) return;
-                        if (!weekData || !weekData.days) { loadUniversalisContent(token, swFetchFailNote()); return; }
-                        var dayKey = SW_DAY_KEYS[date.getDay()];
-                        var dayData = weekData.days[dayKey];
-                        var usedFallbackDay = null;
-                        if (!dayData) {
-                            var alt = findNearestSwDay(weekData.days, dayKey);
-                            if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
-                        }
-                        if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
-                        showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
-                        if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
-                            window.SomoLaKwanzaBible.init();
-                        }
+                        var day = adventChristmasDay(date, info, celebration, data);
+                        if (day) showSwDay(day);
+                        else loadUniversalisContent(token, data ? swSeasonNote() : swFetchFailNote());
                     });
-                } else {
-                    loadUniversalisContent(token, swSeasonNote());
+                    return;
                 }
+
+                if (id === 'trinity' || id === 'corpus-christi') {
+                    fetchSwFile('solemnities').then(function (data) {
+                        if (token !== loadToken) return;
+                        if (data && data[id]) showSwDay(data[id]);
+                        else loadUniversalisContent(token, swFetchFailNote());
+                    });
+                    return;
+                }
+
+                if (info.season !== 'Ordinary Time' || !(info.weekNum >= 1 && info.weekNum <= 34)) {
+                    loadUniversalisContent(token, swSeasonNote());
+                    return;
+                }
+
+                // Christ the King is printed as the Sunday of week 34; any
+                // other solemnity or feast has readings the books don't have.
+                if (celebration && (celebration.type === 'Solemnity' || celebration.type === 'Feast') && id !== 'christ-the-king') {
+                    loadUniversalisContent(token, swProperNote(celebration));
+                    return;
+                }
+
+                fetchSwWeek(info.weekNum).then(function (weekData) {
+                    if (token !== loadToken) return;
+                    if (!weekData || !weekData.days) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                    var dayKey = SW_DAY_KEYS[date.getDay()];
+                    var dayData = weekData.days[dayKey];
+                    var usedFallbackDay = null;
+                    if (!dayData) {
+                        var alt = findNearestSwDay(weekData.days, dayKey);
+                        if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
+                    }
+                    if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                    showSwDay(dayData, usedFallbackDay);
+                });
             }
 
             function loadUniversalisContent(token, noteHtml) {

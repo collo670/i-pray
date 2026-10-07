@@ -441,31 +441,31 @@ function getMovableCelebrations(year) {
 
     const m = (date, type, color, name, sw, extra) => Object.assign({ date: litDay(date), type, color, name, sw }, extra || {});
     const list = [
-        m(getBaptismOfLord(year), 'Feast', 'white', 'Baptism of the Lord', 'Ubatizo wa Bwana', { lord: true }),
-        m(at(easter, -46), 'Special', 'purple', 'Ash Wednesday', 'Jumatano ya Majivu', { level: 2 }),
-        m(at(easter, -21), 'Special', 'rose', 'Fourth Sunday of Lent (Laetare)', 'Dominika ya Nne ya Kwaresima (Laetare)', { level: 2 }),
-        m(at(easter, -7), 'Special', 'red', 'Palm Sunday of the Passion of the Lord', 'Dominika ya Matawi', { level: 2 }),
-        m(at(easter, -3), 'Triduum', 'white', 'Holy Thursday', 'Alhamisi Kuu', { level: 1 }),
-        m(at(easter, -2), 'Triduum', 'red', 'Good Friday of the Passion of the Lord', 'Ijumaa Kuu', { level: 1 }),
-        m(at(easter, -1), 'Triduum', 'white', 'Holy Saturday', 'Jumamosi Kuu', { level: 1 }),
-        m(easter, 'Solemnity', 'white', 'Easter Sunday of the Resurrection of the Lord', 'Dominika ya Pasaka, Ufufuko wa Bwana', { level: 1 }),
-        m(at(easter, 7), 'Special', 'white', 'Second Sunday of Easter (Divine Mercy)', 'Dominika ya Pili ya Pasaka (Huruma ya Mungu)', { level: 2 }),
-        m(at(easter, 39), 'Solemnity', 'white', 'Ascension of the Lord', 'Kupaa kwa Bwana', { level: 2 }),
-        m(at(easter, 49), 'Solemnity', 'red', 'Pentecost Sunday', 'Dominika ya Pentekoste', { level: 2 }),
-        m(at(easter, 50), 'Memorial', 'white', 'Mary, Mother of the Church', 'Bikira Maria, Mama wa Kanisa'),
-        m(at(easter, 56), 'Solemnity', 'white', 'The Most Holy Trinity', 'Utatu Mtakatifu'),
-        m(at(easter, 63), 'Solemnity', 'white', 'The Most Holy Body and Blood of Christ', 'Mwili na Damu Takatifu Kabisa ya Kristo'),
-        m(at(easter, 68), 'Solemnity', 'white', 'The Most Sacred Heart of Jesus', 'Moyo Mtakatifu Kabisa wa Yesu'),
-        m(at(easter, 69), 'Memorial', 'white', 'The Immaculate Heart of Mary', 'Moyo Safi wa Bikira Maria'),
-        m(at(advent1, -7), 'Solemnity', 'white', 'Our Lord Jesus Christ, King of the Universe', 'Yesu Kristo Mfalme wa Ulimwengu'),
-        m(at(advent1, 14), 'Special', 'rose', 'Third Sunday of Advent (Gaudete)', 'Dominika ya Tatu ya Majilio (Gaudete)', { level: 2 }),
-        m(holyFamily, 'Feast', 'white', 'The Holy Family of Jesus, Mary and Joseph', 'Familia Takatifu ya Yesu, Maria na Yosefu', { lord: true })
+        m(getBaptismOfLord(year), 'Feast', 'white', 'Baptism of the Lord', 'Ubatizo wa Bwana', { lord: true, id: 'baptism' }),
+        m(at(easter, -46), 'Special', 'purple', 'Ash Wednesday', 'Jumatano ya Majivu', { level: 2, id: 'ash-wednesday' }),
+        m(at(easter, -21), 'Special', 'rose', 'Fourth Sunday of Lent (Laetare)', 'Dominika ya Nne ya Kwaresima (Laetare)', { level: 2, id: 'laetare' }),
+        m(at(easter, -7), 'Special', 'red', 'Palm Sunday of the Passion of the Lord', 'Dominika ya Matawi', { level: 2, id: 'palm-sunday' }),
+        m(at(easter, -3), 'Triduum', 'white', 'Holy Thursday', 'Alhamisi Kuu', { level: 1, id: 'holy-thursday' }),
+        m(at(easter, -2), 'Triduum', 'red', 'Good Friday of the Passion of the Lord', 'Ijumaa Kuu', { level: 1, id: 'good-friday' }),
+        m(at(easter, -1), 'Triduum', 'white', 'Holy Saturday', 'Jumamosi Kuu', { level: 1, id: 'holy-saturday' }),
+        m(easter, 'Solemnity', 'white', 'Easter Sunday of the Resurrection of the Lord', 'Dominika ya Pasaka, Ufufuko wa Bwana', { level: 1, id: 'easter' }),
+        m(at(easter, 7), 'Special', 'white', 'Second Sunday of Easter (Divine Mercy)', 'Dominika ya Pili ya Pasaka (Huruma ya Mungu)', { level: 2, id: 'divine-mercy' }),
+        m(at(easter, 39), 'Solemnity', 'white', 'Ascension of the Lord', 'Kupaa kwa Bwana', { level: 2, id: 'ascension' }),
+        m(at(easter, 49), 'Solemnity', 'red', 'Pentecost Sunday', 'Dominika ya Pentekoste', { level: 2, id: 'pentecost' }),
+        m(at(easter, 50), 'Memorial', 'white', 'Mary, Mother of the Church', 'Bikira Maria, Mama wa Kanisa', { id: 'mary-mother-of-the-church' }),
+        m(at(easter, 56), 'Solemnity', 'white', 'The Most Holy Trinity', 'Utatu Mtakatifu', { id: 'trinity' }),
+        m(at(easter, 63), 'Solemnity', 'white', 'The Most Holy Body and Blood of Christ', 'Mwili na Damu Takatifu Kabisa ya Kristo', { id: 'corpus-christi' }),
+        m(at(easter, 68), 'Solemnity', 'white', 'The Most Sacred Heart of Jesus', 'Moyo Mtakatifu Kabisa wa Yesu', { id: 'sacred-heart' }),
+        m(at(easter, 69), 'Memorial', 'white', 'The Immaculate Heart of Mary', 'Moyo Safi wa Bikira Maria', { id: 'immaculate-heart' }),
+        m(at(advent1, -7), 'Solemnity', 'white', 'Our Lord Jesus Christ, King of the Universe', 'Yesu Kristo Mfalme wa Ulimwengu', { id: 'christ-the-king' }),
+        m(at(advent1, 14), 'Special', 'rose', 'Third Sunday of Advent (Gaudete)', 'Dominika ya Tatu ya Majilio (Gaudete)', { level: 2, id: 'gaudete' }),
+        m(holyFamily, 'Feast', 'white', 'The Holy Family of Jesus, Mary and Joseph', 'Familia Takatifu ya Yesu, Maria na Yosefu', { lord: true, id: 'holy-family' })
     ];
     for (let i = 1; i <= 6; i++) {
         const d = at(easter, i);
         list.push(m(d, 'Solemnity', 'white',
             EN_WEEKDAYS[d.getDay()] + ' within the Octave of Easter',
-            SW_WEEKDAYS[d.getDay()] + ' katika Oktava ya Pasaka', { level: 2 }));
+            SW_WEEKDAYS[d.getDay()] + ' katika Oktava ya Pasaka', { level: 2, id: 'easter-octave' }));
     }
     return list;
 }
@@ -533,7 +533,8 @@ function fixedOn(d) {
         .filter((f) => f.date === d.getDate())
         .map((f) => {
             const row = FIXED_CELEBRATIONS.find((r) => r[0] === d.getMonth() + 1 && r[1] === d.getDate());
-            return Object.assign({ date: litDay(d), type: f.type, color: f.color, name: f.name, sw: f.sw }, row[6] || {});
+            const id = String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            return Object.assign({ id: id, date: litDay(d), type: f.type, color: f.color, name: f.name, sw: f.sw }, row[6] || {});
         });
 }
 
