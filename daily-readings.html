@@ -17,12 +17,13 @@
     <link rel="stylesheet" href="../css/index.css">
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="js/theme.js"></script>
+    <script src="js/text-size.js"></script>
     <style>
         /* Universalis reading text arrives as HTML with its own indentation styles */
         .reading-text { line-height: 1.75; color: #000; font-weight: 600; }
         .dark .reading-text { color: #eee; }
         .reading-text div { margin-bottom: 0.15rem; }
-        /* --prayer-text-scale is set by js/text-size-control.js (default 1).
+        /* --prayer-text-scale is set by js/text-size.js (default 1).
            Scoping it to .reading-text — rather than the root <html>
            font-size — keeps #appBar and the bottom nav, which sit outside
            it, a fixed size when the reading text is enlarged or shrunk. */
