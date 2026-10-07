@@ -119,7 +119,7 @@
     transparent calc(calc(env(safe-area-inset-top, 0px) * 0.6) + (100% - calc(env(safe-area-inset-top, 0px) * 0.6)) * 1));
 }
 
-/* -- .navbar (pages/amefufuka.html, assets/office day pages, and the
+/* -- .navbar (assets/office day pages and the
    legacy rules in css/index.css): a full-width maroon bar from the very
    top of the screen instead of a floating pill, with its content pushed
    below the status bar. Each page keeps its own position (fixed pages

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sw" class="light">
+<html lang="sw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -8,790 +8,346 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ipray">
     <link rel="stylesheet" href="../css/prevent-zoom.css">
-    <title>Amefufuka</title>
-    <style>
-         select, input[type="number"], button {
-            font-size: 1rem;
-            padding: 6px 10px;
-            margin: 0 5px 10px;
-            }
-
-            #page-info {
-            margin: 15px 0;
-            font-weight: bold;
-            font-size: 1rem;
-            }
-
-            #pdf-container {
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 900px;
-            overflow-x: auto;
-            }
-
-            #pdf-canvas {
-            width: 100%;
-            height: auto;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            }
-
-            .overlay-zone {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 50%;
-            z-index: 10;
-            }
-
-            .left-zone {
-            left: 0;
-            }
-
-            .right-zone {
-            right: 0;
-            }
-
-            @media (max-width: 300px) {
-            select, input[type="number"], button {
-                display: block;
-                margin: 10px auto;
-                width: 50%;
-            }
-            }
-
-            .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-            }
-            .control-group {
-            flex: 1 1 300px;
-            display: flex;
-            flex-direction: column;
-            }
-            label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            }
-            input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            border: 1px solid var(--canvas-border);
-            border-radius: 6px;
-            }
-            button {
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            }
-            button:hover {
-            background-color: var(--button-hover);
-            }
-            .pdf-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            }
-
-         canvas {
-            margin-top: 30px;
-            border: 1px solid var(--canvas-border);
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            display: block;
-            margin: auto;
-            }
-            #pageInfo {
-            margin-top: 10px;
-            font-weight: bold;
-            }
-
-        /* Custom font Inter */
-        body {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            background-color: #f3f4f6; /* bg-gray-100 */
-            color: #1f2937; /* text-gray-900 */
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Dark mode styles */
-        html.dark body {
-            background-color: #111827; /* dark:bg-gray-900 */
-            color: #f9fafb; /* dark:text-gray-100 */
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            background-color: #202847; /* Custom dark blue for navbar */
-            color: #ffffff; /* text-white */
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            border-radius: 10px;
-            z-index: 50;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-        }
-
-        html.dark .navbar {
-            background-color: #1f2937; /* dark:bg-gray-800 */
-        }
-
-        .navbar-container {
-            max-width: 80rem; /* max-w-7xl */
-            margin-left: auto;
-            margin-right: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-            color: #ffffff;
-            margin-right: 1.5rem; /* mr-6 */
-        }
-
-        .navbar-brand-text {
-            font-weight: 700; /* font-bold */
-            font-size: 1.25rem; /* text-xl */
-            letter-spacing: -0.025em; /* tracking-tight */
-        }
-        @media (min-width: 640px) { /* sm */
-            .navbar-brand-text {
-                font-size: 1.5rem; /* sm:text-2xl */
-            }
-        }
-
-        /* Hamburger button for mobile */
-        .hamburger-button-wrapper {
-            display: block;
-        }
-        @media (min-width: 768px) { /* md */
-            .hamburger-button-wrapper {
-                display: none; /* md:hidden */
-            }
-        }
-
-        .hamburger-button {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 0.75rem; /* px-3 py-2 */
-            border-width: 1px; /* border */
-            border-radius: 0.25rem; /* rounded */
-            color: #bfdbfe; /* text-blue-200 */
-            border-color: #60a5fa; /* border-blue-400 */
-            cursor: pointer;
-            background: none; /* Ensure no default button background */
-        }
-        .hamburger-button:hover {
-            color: #ffffff; /* hover:text-white */
-            border-color: #ffffff; /* hover:border-white */
-        }
-        .hamburger-button svg {
-            fill: currentColor;
-            height: 0.75rem; /* h-3 */
-            width: 0.75rem; /* w-3 */
-        }
-
-        /* Navigation links container */
-        .nav-links {
-            width: 100%; /* w-full */
-            display: none; /* hidden by default, controlled by JS */
-            flex-grow: 1;
-            margin-top: 1rem; /* mt-4 */
-            flex-direction: column; /* flex-col */
-            row-gap: 0.5rem; /* space-y-2 */
-        }
-        @media (min-width: 768px) { /* md */
-            .nav-links {
-                display: flex !important; /* md:flex, important to override JS hidden */
-                align-items: center; /* md:items-center */
-                width: auto; /* md:w-auto */
-                flex-direction: row; /* md:flex-row */
-                margin-top: 0; /* md:mt-0 */
-                column-gap: 1rem; /* md:space-x-4 */
-                row-gap: 0; /* md:space-y-0 */
-            }
-        }
-
-        .nav-links-group {
-            font-size: 0.875rem; /* text-sm */
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column; /* flex-col */
-            row-gap: 0.5rem; /* space-y-2 */
-        }
-        @media (min-width: 768px) { /* md */
-            .nav-links-group {
-                flex-direction: row; /* md:flex-row */
-                column-gap: 1rem; /* md:space-x-4 */
-                row-gap: 0; /* md:space-y-0 */
-            }
-        }
-
-        .navbar-link {
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem; /* rounded-md */
-            transition: background-color 0.2s ease, color 0.2s ease;
-            display: block; /* Ensure links take full width on mobile */
-            color: #ffffff; /* Default link color */
-            text-decoration: none; /* Remove underline */
-        }
-        .navbar-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        html.dark .navbar-link:hover {
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .navbar-link.active-day {
-            background-color: #ffffff; /* White background for active link */
-            color: #1e40af; /* Dark blue text for active link */
-            font-weight: 600; /* Semi-bold */
-        }
-        html.dark .navbar-link.active-day {
-            background-color: #374151; /* Gray-700 for dark mode active */
-            color: #f9fafb; /* Light text for dark mode active */
-        }
-
-        /* Toggles container */
-        .toggles-container {
-            max-width: 80rem; /* max-w-7xl */
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-            display: flex;
-            justify-content: flex-end; /* justify-end */
-            padding: 1rem; /* p-4 */
-            padding-top: 1.5rem; /* pt-6 */
-            padding-bottom: 0; /* pb-0 */
-        }
-        @media (min-width: 640px) { /* sm */
-            .toggles-container {
-                padding-left: 1.5rem; /* sm:px-6 */
-                padding-right: 1.5rem; /* sm:px-6 */
-            }
-        }
-        @media (min-width: 768px) { /* md */
-            .toggles-container {
-                padding-left: 2rem; /* md:px-8 */
-                padding-right: 2rem; /* md:px-8 */
-            }
-        }
-
-        .toggles-group {
-            display: flex;
-            align-items: center;
-            column-gap: 1rem; /* space-x-4 */
-        }
-
-        /* Toggle buttons */
-        .toggle-button {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px; /* Full rounded */
-            font-weight: 500;
-            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .toggle-button:hover {
-            transform: translateY(-1px);
-        }
-        /* Light mode button colors */
-        html.light .toggle-button {
-            background-color: #e5e7eb; /* Gray-200 */
-            color: #374151; /* Gray-700 */
-        }
-        /* Dark mode button colors */
-        html.dark .toggle-button {
-            background-color: #1f2937; /* Gray-800 */
-            color: #d1d5db; /* Gray-300 */
-        }
-
-        .toggle-button svg {
-            width: 1.25rem; /* w-5 */
-            height: 1.25rem; /* h-5 */
-            fill: currentColor; /* fill-current */
-        }
-
-        .toggle-button span {
-            display: none; /* hidden */
-        }
-        @media (min-width: 640px) { /* sm */
-            .toggle-button span {
-                display: inline; /* sm:inline */
-            }
-        }
-
-        /* Main Content Area */
-        .main-content-area {
-            flex-grow: 1;
-            padding: 1rem; /* p-4 */
-        }
-        @media (min-width: 640px) { /* sm */
-            .main-content-area {
-                padding: 1.5rem; /* sm:p-6 */
-            }
-        }
-
-        .content-wrapper {
-            max-width: 56rem; /* max-w-4xl */
-            margin-left: auto;
-            margin-right: auto;
-            background-color: #ffffff; /* bg-white */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-            border-radius: 0.5rem; /* rounded-lg */
-            padding: 1.5rem; /* p-6 */
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        html.dark .content-wrapper {
-            background-color: #1f2937; /* dark:bg-gray-800 */
-        }
-
-        @media (min-width: 640px) { /* sm */
-            .content-wrapper {
-                padding: 2rem; /* sm:p-8 */
-            }
-        }
-        @media (min-width: 768px) { /* md */
-            .content-wrapper {
-                padding: 2.5rem; /* md:p-10 */
-            }
-        }
-
-        /* Main Title */
-        .main-title {
-            font-size: 1.875rem; /* text-3xl */
-            font-weight: 800; /* font-extrabold */
-            text-align: center;
-            color: #1f2937; /* text-gray-800 */
-            margin-bottom: 2rem; /* mb-8 */
-            line-height: 1.25; /* leading-tight */
-        }
-        html.dark .main-title {
-            color: #e5e7eb; /* dark:text-gray-200 */
-        }
-        @media (min-width: 640px) { /* sm */
-            .main-title {
-                font-size: 2.25rem; /* sm:text-4xl */
-            }
-        }
-
-        /* Section styles */
-        .liturgical-section {
-            margin-bottom: 2.5rem; /* mb-10 */
-            padding-top: 4rem; /* pt-16 */
-            margin-top: -4rem; /* -mt-16 (for anchor offset) */
-        }
-        .liturgical-section:first-of-type {
-            margin-top: 0; /* Remove negative margin for the first section */
-            padding-top: 0; /* Remove padding for the first section */
-        }
-        html.dark .liturgical-section {
-            border-color: #374151; /* dark:border-gray-700 */
-        }
-
-        .section-heading {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700; /* font-bold */
-            color: #2563eb; /* text-blue-700 */
-            margin-bottom: 1.5rem; /* mb-6 */
-            border-bottom: 2px solid #bfdbfe; /* border-b-2 border-blue-200 */
-            padding-bottom: 0.5rem; /* pb-2 */
-        }
-        html.dark .section-heading {
-            color: #60a5fa; /* dark:text-blue-400 */
-            border-color: #374151; /* dark:border-gray-700 */
-        }
-        @media (min-width: 640px) { /* sm */
-            .section-heading {
-                font-size: 1.875rem; /* sm:text-3xl */
-            }
-        }
-
-        .subsection-heading {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600; /* font-semibold */
-            color: #1f2937; /* text-gray-800 */
-            margin-bottom: 0.75rem; /* mb-3 */
-        }
-        html.dark .subsection-heading {
-            color: #e5e7eb; /* dark:text-gray-200 */
-        }
-        @media (min-width: 640px) { /* sm */
-            .subsection-heading {
-                font-size: 1.5rem; /* sm:text-2xl */
-            }
-        }
-
-        .paragraph-text {
-            font-size: 0.875rem; /* text-sm */
-            color: #374151; /* text-gray-700 */
-            line-height: 1.625; /* leading-relaxed */
-            margin-bottom: 1rem; /* mb-4 */
-        }
-        html.dark .paragraph-text {
-            color: #d1d5db; /* dark:text-gray-300 */
-        }
-        @media (min-width: 640px) { /* sm */
-            .paragraph-text {
-                font-size: 1rem; /* sm:text-base */
-            }
-        }
-
-        /* Kiitikizano (Responsory) sections */
-        .kiitikizano-section {
-            background-color: #e0f2fe; /* Light blue */
-            border-left: 4px solid #3b82f6; /* Blue border */
-            padding: 1rem;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0.375rem; /* rounded-md */
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        html.dark .kiitikizano-section {
-            background-color: #374151; /* Gray-700 */
-            border-left-color: #6b7280; /* Gray-500 */
-        }
-        .kiitikizano-response {
-            font-weight: 600; /* font-semibold */
-        }
-        .kiitikizano-verse {
-            font-weight: 500; /* font-medium */
-            margin-top: 0.5rem;
-        }
-
-        /* Text follows the app-wide text size (--prayer-text-scale, set on
-           <html> by js/text-size.js; default 1 = the sizes above). */
-        .content-wrapper .paragraph-text { font-size: calc(0.875rem * var(--prayer-text-scale, 1)); }
-        .content-wrapper .subsection-heading { font-size: calc(1.25rem * var(--prayer-text-scale, 1)); }
-        .content-wrapper .section-heading { font-size: calc(1.5rem * var(--prayer-text-scale, 1)); }
-        .content-wrapper .main-title { font-size: calc(1.875rem * var(--prayer-text-scale, 1)); }
-
-        @media (min-width: 640px) {
-            .content-wrapper .paragraph-text { font-size: calc(1rem * var(--prayer-text-scale, 1)); }
-            .content-wrapper .subsection-heading { font-size: calc(1.5rem * var(--prayer-text-scale, 1)); }
-            .content-wrapper .section-heading { font-size: calc(1.875rem * var(--prayer-text-scale, 1)); }
-            .content-wrapper .main-title { font-size: calc(2.25rem * var(--prayer-text-scale, 1)); }
-        }
-    </style>
-    <!-- Custom CSS -->
+    <title>Amefufuka - Nyimbo</title>
+    <link rel="icon" href="/i-pray/assets/images/favicon.ico.jpg" type="image/x-icon">
+    <!-- Masifu ya Asubuhi styles (light & dark) + the songbook layer -->
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/masifu.css">
+    <link rel="stylesheet" href="../css/amefufuka.css">
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
 </head>
-<body>
-
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-brand">
-                <span class="navbar-brand-text">AMEFUFUKA</span>
+<body class="masifu-topbar masifu-modern amefufuka amef-index">
+    <header id="appBar" class="app-bar" role="banner">
+        <div class="header-content">
+            <div class="app-bar-brand">
+                <h2 class="brand-title">ipray</h2>
+                <p class="brand-subtitle">Amefufuka</p>
             </div>
-
-            <div class="hamburger-button-wrapper">
-                <button id="hamburger-button" class="hamburger-button">
-                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+            <div class="app-bar-actions">
+                <div class="toggle-container">
+                    <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark</button>
+                </div>
+                <button class="app-bar-btn hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
-
-            <div id="nav-links" class="nav-links">
-                <div class="nav-links-group">
-                    <a href="../index.html" class="navbar-link">Home</a>
-                    <a href="rozari.html" class="navbar-link">Rozari Takatifu</a>
-                    
-                </div>
-            </div>
         </div>
-    </nav>
+        <nav class="app-bar-menu" aria-label="Amefufuka navigation">
+            <ul id="nav-links" class="nav-links">
+                <li><a href="../index.html">Nyumbani</a></li>
+                <li><a href="daily-readings.html">Masomo ya Siku / Daily Readings</a></li>
+                <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
+                <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="toggles-container">
-        <div class="toggles-group">
-            <button id="dark-mode-toggle" class="toggle-button">
-                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                </svg>
-                <span>Dark Mode</span>
-            </button>
-
-            <!-- Steps through the app-wide text sizes (js/text-size.js) -->
-            <button id="text-size-toggle" class="toggle-button" data-text-size="cycle" aria-label="Change text size">
-                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.3-.83-2.82-.2-2.82 1.43 0 1.74 1.83 2.5 2.82 1.43a1.532 1.532 0 012.286.948c.38 1.56 2.6 1.56 2.98 0a1.532 1.532 0 012.286-.948c1.3.83 2.82.2 2.82-1.43 0-1.74-1.83-2.5-2.82-1.43a1.532 1.532 0 01-2.286-.948zM10 17a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
-                </svg>
-                <span>Text Size</span>
-            </button>
+    <div class="container">
+        <h1>AMEFUFUKA</h1>
+        <p class="amef-intro">Nyimbo za Njia ya Neokatekumenato · Kenya – Tanzania</p>
+        <div class="amef-search">
+            <label for="amefSearch" class="sr-only" style="position:absolute;left:-9999px">Tafuta wimbo</label>
+            <input id="amefSearch" type="search" placeholder="Tafuta wimbo au namba ya ukurasa…" autocomplete="off" enterkeyhint="search">
         </div>
+        <p id="amefCount" class="amef-count">230 nyimbo</p>
+        <p id="amefEmpty" class="amef-empty" hidden>Hakuna wimbo unaolingana na utafutaji wako.</p>
+        <section class="amef-section" aria-labelledby="sec-liturjia">
+            <h2 id="sec-liturjia"><i class="amef-dot yellow"></i>Maadhimisho ya Kiliturjia <small>uk. 1–30</small></h2>
+            <ul class="amef-list">
+                <li data-page="1"><a href="amefufuka/001-litania-fupi-ya-penitensia.html"><span class="pg">1</span><span class="ttl">LITANIA FUPI YA PENITENSIA</span></a></li>
+                <li data-page="2"><a href="amefufuka/002-litania-ya-penitensia.html"><span class="pg">2</span><span class="ttl">LITANIA YA PENITENSIA</span></a></li>
+                <li data-page="3"><a href="amefufuka/003-baraka-kwa-adhimisho-la-penitensia.html"><span class="pg">3</span><span class="ttl">BARAKA KWA ADHIMISHO LA PENITENSIA</span></a></li>
+                <li data-page="4"><a href="amefufuka/004-utukufu-kwa-mungu-juu-mbinguni.html"><span class="pg">4</span><span class="ttl">UTUKUFU KWA MUNGU JUU MBINGUNI</span></a></li>
+                <li data-page="5"><a href="amefufuka/005-yu-mtakatifu.html"><span class="pg">5</span><span class="ttl">YU MTAKATIFU (Wakati wa Kwaresima)</span></a></li>
+                <li data-page="5"><a href="amefufuka/005-mtakatifu.html"><span class="pg">5</span><span class="ttl">MTAKATIFU (Mwakani)</span></a></li>
+                <li data-page="6"><a href="amefufuka/006-mtakatifu-ndiye-bwana-mtakatifu-wa-vibanda.html"><span class="pg">6</span><span class="ttl">MTAKATIFU NDIYE BWANA – MTAKATIFU WA VIBANDA (Wakati wa Majilio)</span></a></li>
+                <li data-page="6"><a href="amefufuka/006-mtakatifu-mtakatifu-hosanna-ya-matawi.html"><span class="pg">6</span><span class="ttl">MTAKATIFU, MTAKATIFU – HOSANNA YA MATAWI (na Wakati wa Pasaka)</span></a></li>
+                <li data-page="7"><a href="amefufuka/007-mtakatifu.html"><span class="pg">7</span><span class="ttl">MTAKATIFU (1983)</span></a></li>
+                <li data-page="7"><a href="amefufuka/007-mtakatifu-mtakatifu.html"><span class="pg">7</span><span class="ttl">MTAKATIFU, MTAKATIFU (1988)</span></a></li>
+                <li data-page="8"><a href="amefufuka/008-sala-kuu-ya-ekaristi-ii.html"><span class="pg">8</span><span class="ttl">SALA KUU YA EKARISTI II (1)</span></a></li>
+                <li data-page="10"><a href="amefufuka/010-baraka-ya-maji-ya-chemchemi-ya-ubatizo.html"><span class="pg">10</span><span class="ttl">BARAKA YA MAJI YA CHEMCHEMI YA UBATIZO</span></a></li>
+                <li data-page="12"><a href="amefufuka/012-mbiu-ya-pasaka.html"><span class="pg">12</span><span class="ttl">MBIU YA PASAKA</span></a></li>
+                <li data-page="14"><a href="amefufuka/014-utangulizi-wa-pasaka.html"><span class="pg">14</span><span class="ttl">UTANGULIZI WA PASAKA</span></a></li>
+                <li data-page="15"><a href="amefufuka/015-tenzi-ya-masifu-ya-asubuhi-ya-majilio.html"><span class="pg">15</span><span class="ttl">TENZI YA MASIFU YA ASUBUHI YA MAJILIO MPAKA 16 DISEMBA</span></a></li>
+                <li data-page="15"><a href="amefufuka/015-tenzi-ya-masifu-ya-asubuhi-ya-majilio-2.html"><span class="pg">15</span><span class="ttl">TENZI YA MASIFU YA ASUBUHI YA MAJILIO BAADA YA 16 DISEMBA</span></a></li>
+                <li data-page="16"><a href="amefufuka/016-tenzi-ya-masifu-ya-asubuhi-toka-pasaka.html"><span class="pg">16</span><span class="ttl">TENZI YA MASIFU YA ASUBUHI TOKA PASAKA HADI KUPAA</span></a></li>
+                <li data-page="16"><a href="amefufuka/016-tenzi-ya-masifu-ya-jioni-toka-pasaka.html"><span class="pg">16</span><span class="ttl">TENZI YA MASIFU YA JIONI TOKA PASAKA HADI KUPAA</span></a></li>
+                <li data-page="17"><a href="amefufuka/017-tenzi-ya-masifu-ya-jioni-ya-siku.html"><span class="pg">17</span><span class="ttl">TENZI YA MASIFU YA JIONI YA SIKU YA KUPAA<small>NA TENZI YA MASIFU YA ASUBUHI TOKA KUPAA HADI PENTEKOSTE</small></span></a></li>
+                <li data-page="18"><a href="amefufuka/018-tenzi-ya-masifu-ya-jioni-toka-kupaa.html"><span class="pg">18</span><span class="ttl">TENZI YA MASIFU YA JIONI TOKA KUPAA HADI PENTEKOSTE</span></a></li>
+                <li data-page="19"><a href="amefufuka/019-tenzi-ya-masifu-ya-asubuhi-ya-pentekoste.html"><span class="pg">19</span><span class="ttl">TENZI YA MASIFU YA ASUBUHI YA PENTEKOSTE</span></a></li>
+                <li data-page="20"><a href="amefufuka/020-sekwensia-ya-pentekoste.html"><span class="pg">20</span><span class="ttl">SEKWENSIA YA PENTEKOSTE (NJOO, ROHO MTAKATIFU)</span></a></li>
+                <li data-page="21"><a href="amefufuka/021-sala-kuu-ya-ekaristi-ii-utangulizi.html"><span class="pg">21</span><span class="ttl">SALA KUU YA EKARISTI II (2): UTANGULIZI</span></a></li>
+                <li data-page="22"><a href="amefufuka/022-yafuata-sala-kuu-ya-ekaristi-ii-konsekrasiyo.html"><span class="pg">22</span><span class="ttl">yafuata SALA KUU YA EKARISTI II (2): KONSEKRASIYO na SHANGILIO</span></a></li>
+                <li data-page="23"><a href="amefufuka/023-yafuata-sala-ya-ekaristi-ii-anamnesis.html"><span class="pg">23</span><span class="ttl">yafuata SALA YA EKARISTI II (2): ANAMNESIS</span></a></li>
+                <li data-page="24"><a href="amefufuka/024-wimbo-wa-katikati.html"><span class="pg">24</span><span class="ttl">WIMBO WA KATIKATI</span></a></li>
+                <li data-page="24"><a href="amefufuka/024-shangilio-kwa-mshumaa-wa-usiku-wa-pasaka.html"><span class="pg">24</span><span class="ttl">SHANGILIO KWA MSHUMAA WA USIKU WA PASAKA</span></a></li>
+                <li data-page="25"><a href="amefufuka/025-tenzi-kwa-kristo-mwanga.html"><span class="pg">25</span><span class="ttl">TENZI KWA KRISTO MWANGA</span></a></li>
+                <li data-page="26"><a href="amefufuka/026-aleluya-ya-pasaka.html"><span class="pg">26</span><span class="ttl">ALELUYA YA PASAKA</span></a></li>
+                <li data-page="26"><a href="amefufuka/026-aleluya-kwa-shangilio-la-injili.html"><span class="pg">26</span><span class="ttl">ALELUYA KWA SHANGILIO LA INJILI</span></a></li>
+                <li data-page="27"><a href="amefufuka/027-shangilio-kwa-injili-wakati-wa-kwaresima.html"><span class="pg">27</span><span class="ttl">SHANGILIO KWA INJILI WAKATI WA KWARESIMA</span></a></li>
+                <li data-page="27"><a href="amefufuka/027-sala-ya-waumini.html"><span class="pg">27</span><span class="ttl">SALA YA WAUMINI</span></a></li>
+                <li data-page="28"><a href="amefufuka/028-te-deum.html"><span class="pg">28</span><span class="ttl">TE DEUM</span></a></li>
+                <li data-page="29"><a href="amefufuka/029-salve.html"><span class="pg">29</span><span class="ttl">SALVE (Salaam Malkia)</span></a></li>
+                <li data-page="30"><a href="amefufuka/030-credo.html"><span class="pg">30</span><span class="ttl">CREDO (KANUNI YA MITUME)</span></a></li>
+            </ul>
+        </section>
+        <section class="amef-section" aria-labelledby="sec-prekatekumenato">
+            <h2 id="sec-prekatekumenato"><i class="amef-dot white"></i>Nyimbo za Prekatekumenato <small>uk. 31–200</small></h2>
+            <ul class="amef-list">
+                <li data-page="31"><a href="amefufuka/031-amefufuka.html"><span class="pg">31</span><span class="ttl">AMEFUFUKA (rej. 1 Kor 15)</span></a></li>
+                <li data-page="32"><a href="amefufuka/032-kwako-we-mji-wa-mungu.html"><span class="pg">32</span><span class="ttl">KWAKO WE, MJI WA MUNGU (*)</span></a></li>
+                <li data-page="32"><a href="amefufuka/032-safari-i-ngumu.html"><span class="pg">32</span><span class="ttl">SAFARI I NGUMU (*)</span></a></li>
+                <li data-page="33"><a href="amefufuka/033-zab-129-toka-chini-nakulilia-ee-bwana.html"><span class="pg">33</span><span class="ttl">ZAB 129 (130) – TOKA CHINI NAKULILIA, EE BWANA</span></a></li>
+                <li data-page="34"><a href="amefufuka/034-furahini-ndugu.html"><span class="pg">34</span><span class="ttl">FURAHINI NDUGU (Flp 4: 4 nk)</span></a></li>
+                <li data-page="34"><a href="amefufuka/034-zab-102-nafsi-yangu-umbariki-yahweh.html"><span class="pg">34</span><span class="ttl">ZAB 102 (103) – NAFSI YANGU UMBARIKI YAHWEH</span></a></li>
+                <li data-page="35"><a href="amefufuka/035-zab-12-mpaka-lini.html"><span class="pg">35</span><span class="ttl">ZAB 12 (13) – MPAKA LINI</span></a></li>
+                <li data-page="35"><a href="amefufuka/035-yahweh-u-mungu-wangu.html"><span class="pg">35</span><span class="ttl">YAHWEH U MUNGU WANGU (Isa 25: 1-8)</span></a></li>
+                <li data-page="36"><a href="amefufuka/036-zab-118-njoo-umtafute-mtumishi-wako.html"><span class="pg">36</span><span class="ttl">ZAB 118 (119) – NJOO, UMTAFUTE MTUMISHI WAKO</span></a></li>
+                <li data-page="37"><a href="amefufuka/037-zab-132-tazama-ilivyo-vema.html"><span class="pg">37</span><span class="ttl">ZAB 132 (133) – TAZAMA ILIVYO VEMA</span></a></li>
+                <li data-page="37"><a href="amefufuka/037-zab-132-jinsi-ilivyo-vema-na-kupendeza.html"><span class="pg">37</span><span class="ttl">ZAB 132 (133) – JINSI ILIVYO VEMA NA KUPENDEZA</span></a></li>
+                <li data-page="38"><a href="amefufuka/038-zab-132-tazameni-ilivyo-vema-onjeni-ulivyo.html"><span class="pg">38</span><span class="ttl">ZAB 132 (133) – TAZAMENI ILIVYO VEMA, ONJENI ULIVYO MTAMU</span></a></li>
+                <li data-page="39"><a href="amefufuka/039-zab-136-asante-yahweh.html"><span class="pg">39</span><span class="ttl">ZAB 136 – ASANTE YAHWEH</span></a></li>
+                <li data-page="40"><a href="amefufuka/040-wimbo-wa-vijana-watatu-katika-tanuru.html"><span class="pg">40</span><span class="ttl">WIMBO WA VIJANA WATATU KATIKA TANURU (Dan 3: 52-57)<small>(Sehemu ya kwanza)</small></span></a></li>
+                <li data-page="41"><a href="amefufuka/041-wimbo-wa-vijana-watatu-katika-tanuru.html"><span class="pg">41</span><span class="ttl">WIMBO WA VIJANA WATATU KATIKA TANURU (Dan 3: 57-88)<small>(Sehemu ya pili)</small></span></a></li>
+                <li data-page="42"><a href="amefufuka/042-zab-148-msifuni-bwana-kutoka-mbinguni.html"><span class="pg">42</span><span class="ttl">ZAB 148 – MSIFUNI BWANA KUTOKA MBINGUNI (*)</span></a></li>
+                <li data-page="43"><a href="amefufuka/043-zab-150-aleluya-msifuni-mungu.html"><span class="pg">43</span><span class="ttl">ZAB 150 – ALELUYA, MSIFUNI MUNGU</span></a></li>
+                <li data-page="44"><a href="amefufuka/044-evenu-shalom-alehem.html"><span class="pg">44</span><span class="ttl">EVENU SHALOM ALEHEM (Wimbo wa kiebrania)</span></a></li>
+                <li data-page="45"><a href="amefufuka/045-aleluya-umekuja-ufalme.html"><span class="pg">45</span><span class="ttl">ALELUYA, UMEKUJA UFALME (Ufu 19: 6-9) (*)</span></a></li>
+                <li data-page="45"><a href="amefufuka/045-abba-baba.html"><span class="pg">45</span><span class="ttl">ABBA BABA (Rum 8: 15-17)</span></a></li>
+                <li data-page="46"><a href="amefufuka/046-nani-atatutenga.html"><span class="pg">46</span><span class="ttl">NANI ATATUTENGA (Rum 8: 33-39)</span></a></li>
+                <li data-page="47"><a href="amefufuka/047-wimbo-wa-bikira-maria.html"><span class="pg">47</span><span class="ttl">WIMBO WA BIKIRA MARIA (Lk 1: 46-55)</span></a></li>
+                <li data-page="48"><a href="amefufuka/048-nitatwaa-na-kuinua-kikombe-cha-wokovu.html"><span class="pg">48</span><span class="ttl">NITATWAA NA KUINUA KIKOMBE CHA WOKOVU (Zab 114-115)</span></a></li>
+                <li data-page="49"><a href="amefufuka/049-zab-125-wakati-bwana-alirejeza.html"><span class="pg">49</span><span class="ttl">ZAB 125 (126) – WAKATI BWANA ALIREJEZA</span></a></li>
+                <li data-page="50"><a href="amefufuka/050-wimbo-wa-zakaria.html"><span class="pg">50</span><span class="ttl">WIMBO WA ZAKARIA (Lk 1: 67-80)</span></a></li>
+                <li data-page="51"><a href="amefufuka/051-ee-mauti-u-wapi-ushindi-wako.html"><span class="pg">51</span><span class="ttl">EE MAUTI, U WAPI USHINDI WAKO? (1 Kor 15)</span></a></li>
+                <li data-page="52"><a href="amefufuka/052-enyi-mbingu-dondokeni-toka-juu.html"><span class="pg">52</span><span class="ttl">ENYI MBINGU, DONDOKENI TOKA JUU (Isa 45: 8)</span></a></li>
+                <li data-page="53"><a href="amefufuka/053-pentekoste.html"><span class="pg">53</span><span class="ttl">PENTEKOSTE</span></a></li>
+                <li data-page="54"><a href="amefufuka/054-tazama-naja-upesi.html"><span class="pg">54</span><span class="ttl">TAZAMA, NAJA UPESI (Ufu 22: 12-16)</span></a></li>
+                <li data-page="54"><a href="amefufuka/054-njoo-mwana-wa-mtu.html"><span class="pg">54</span><span class="ttl">NJOO, MWANA WA MTU (Ufu 22: 17 nk)</span></a></li>
+                <li data-page="55"><a href="amefufuka/055-abrahamu.html"><span class="pg">55</span><span class="ttl">ABRAHAMU (Mwa 18: 1-5)</span></a></li>
+                <li data-page="56"><a href="amefufuka/056-wimbo-wa-musa.html"><span class="pg">56</span><span class="ttl">WIMBO WA MUSA (Kut 15: 1-18)</span></a></li>
+                <li data-page="57"><a href="amefufuka/057-mwaliko-wa-pasaka.html"><span class="pg">57</span><span class="ttl">MWALIKO WA PASAKA</span></a></li>
+                <li data-page="57"><a href="amefufuka/057-zab-116-msifuni-bwana-watu-wote-wa.html"><span class="pg">57</span><span class="ttl">ZAB 116 (117) – MSIFUNI BWANA WATU WOTE WA DUNIA</span></a></li>
+                <li data-page="58"><a href="amefufuka/058-zab-113a-israeli-alipotoka-huko-misri.html"><span class="pg">58</span><span class="ttl">ZAB 113A (114) – ISRAELI ALIPOTOKA HUKO MISRI</span></a></li>
+                <li data-page="59"><a href="amefufuka/059-zab-23-enyi-malango-inueni-vichwa-vyenu.html"><span class="pg">59</span><span class="ttl">ZAB 23 (24) – ENYI MALANGO INUENI VICHWA VYENU</span></a></li>
+                <li data-page="60"><a href="amefufuka/060-zab-22-bwana-ni-mchungaji-wangu.html"><span class="pg">60</span><span class="ttl">ZAB 22 (23) – BWANA NI MCHUNGAJI WANGU</span></a></li>
+                <li data-page="61"><a href="amefufuka/061-zab-136-kando-ya-mito-ya-babilonia.html"><span class="pg">61</span><span class="ttl">ZAB 136 (137) – KANDO YA MITO YA BABILONIA</span></a></li>
+                <li data-page="62"><a href="amefufuka/062-zab-50-nihurumie-ee-mungu.html"><span class="pg">62</span><span class="ttl">ZAB 50 (51) – NIHURUMIE, EE MUNGU</span></a></li>
+                <li data-page="63"><a href="amefufuka/063-zab-50-nihurumie-bwana-nihurumie.html"><span class="pg">63</span><span class="ttl">ZAB 50 (51) – NIHURUMIE, BWANA, NIHURUMIE</span></a></li>
+                <li data-page="64"><a href="amefufuka/064-wimbo-wa-kujishusha-kwake-yesu-tenzi-ya.html"><span class="pg">64</span><span class="ttl">WIMBO WA KUJISHUSHA KWAKE YESU – TENZI YA KENOSIS (Flp 2: 1-11)</span></a></li>
+                <li data-page="65"><a href="amefufuka/065-salamu-maria.html"><span class="pg">65</span><span class="ttl">SALAMU MARIA</span></a></li>
+                <li data-page="65"><a href="amefufuka/065-salamu-maria-2.html"><span class="pg">65</span><span class="ttl">SALAMU MARIA (1984)</span></a></li>
+                <li data-page="66"><a href="amefufuka/066-maria-mdogo-maria.html"><span class="pg">66</span><span class="ttl">MARIA, MDOGO MARIA<small>Utenzi kwa Bikira Maria</small></span></a></li>
+                <li data-page="67"><a href="amefufuka/067-zab-120-nainua-macho-kwa-milima.html"><span class="pg">67</span><span class="ttl">ZAB 120 (121) – NAINUA MACHO KWA MILIMA</span></a></li>
+                <li data-page="68"><a href="amefufuka/068-zab-94-ikiwa-leo-mwasikia-sauti-yake.html"><span class="pg">68</span><span class="ttl">ZAB 94 (95) – IKIWA LEO MWASIKIA SAUTI YAKE</span></a></li>
+                <li data-page="69"><a href="amefufuka/069-zab-94-njoni-tumwimbie-bwana.html"><span class="pg">69</span><span class="ttl">ZAB 94 (95) – NJONI, TUMWIMBIE BWANA</span></a></li>
+                <li data-page="70"><a href="amefufuka/070-dayenu.html"><span class="pg">70</span><span class="ttl">DAYENU</span></a></li>
+                <li data-page="71"><a href="amefufuka/071-kwa-kafara-ya-pasaka.html"><span class="pg">71</span><span class="ttl">KWA KAFARA YA PASAKA</span></a></li>
+                <li data-page="71"><a href="amefufuka/071-tenzi-ya-pasaka.html"><span class="pg">71</span><span class="ttl">TENZI YA PASAKA</span></a></li>
+                <li data-page="72"><a href="amefufuka/072-tenzi-ya-majilio.html"><span class="pg">72</span><span class="ttl">TENZI YA MAJILIO<small>“SAUTI DHAHIRI YAFUTA GIZA”</small></span></a></li>
+                <li data-page="73"><a href="amefufuka/073-uri-uri-ura.html"><span class="pg">73</span><span class="ttl">URI, URI, URA</span></a></li>
+                <li data-page="73"><a href="amefufuka/073-yuaja-mungu-wangu.html"><span class="pg">73</span><span class="ttl">YUAJA MUNGU WANGU</span></a></li>
+                <li data-page="74"><a href="amefufuka/074-amen-amen-amen.html"><span class="pg">74</span><span class="ttl">AMEN, AMEN, AMEN (Ufu 7: 12-14) (*)</span></a></li>
+                <li data-page="75"><a href="amefufuka/075-zab-126-bwana-asipoijenga-nyumba.html"><span class="pg">75</span><span class="ttl">ZAB 126 (127) – BWANA ASIPOIJENGA NYUMBA</span></a></li>
+                <li data-page="75"><a href="amefufuka/075-zab-33-onjeni-mkaone.html"><span class="pg">75</span><span class="ttl">ZAB 33 (34) – ONJENI MKAONE</span></a></li>
+                <li data-page="76"><a href="amefufuka/076-zab-121-kwa-upendo-wa-ndugu-zangu.html"><span class="pg">76</span><span class="ttl">ZAB 121 (122) – KWA UPENDO WA NDUGU ZANGU</span></a></li>
+                <li data-page="77"><a href="amefufuka/077-zab-39-nilingojea-nilingojea-bwana.html"><span class="pg">77</span><span class="ttl">ZAB 39 (40) – NILINGOJEA, NILINGOJEA BWANA</span></a></li>
+                <li data-page="78"><a href="amefufuka/078-zab-56-nataka-kuimba.html"><span class="pg">78</span><span class="ttl">ZAB 56 (57) – NATAKA KUIMBA</span></a></li>
+                <li data-page="79"><a href="amefufuka/079-zab-2-mbona-mataifa-wafanya-ghasia.html"><span class="pg">79</span><span class="ttl">ZAB 2 – MBONA MATAIFA WAFANYA GHASIA?</span></a></li>
+                <li data-page="80"><a href="amefufuka/080-zab-41-42-kama-ayala-aioneavyo-shauku.html"><span class="pg">80</span><span class="ttl">ZAB 41-42 (42-43) – KAMA AYALA AIONEAVYO SHAUKU</span></a></li>
+                <li data-page="81"><a href="amefufuka/081-zab-99-shangilieni-bwana.html"><span class="pg">81</span><span class="ttl">ZAB 99 (100) – SHANGILIENI BWANA</span></a></li>
+                <li data-page="81"><a href="amefufuka/081-imbeni-kwa-furaha.html"><span class="pg">81</span><span class="ttl">IMBENI KWA FURAHA (Isa 12: 1 nk)</span></a></li>
+                <li data-page="82"><a href="amefufuka/082-zab-16-niamkapo-nishibishwe-kwa-sura-yako.html"><span class="pg">82</span><span class="ttl">ZAB 16 (17) – NIAMKAPO, NISHIBISHWE KWA SURA YAKO, EE BWANA</span></a></li>
+                <li data-page="83"><a href="amefufuka/083-wimbo-wa-watoto-kwa-usiku-wa-pasaka.html"><span class="pg">83</span><span class="ttl">WIMBO WA WATOTO KWA USIKU WA PASAKA (Musiki ya kiebrania)</span></a></li>
+                <li data-page="84"><a href="amefufuka/084-zab-117-sitakufa.html"><span class="pg">84</span><span class="ttl">ZAB 117 (118) – SITAKUFA</span></a></li>
+                <li data-page="85"><a href="amefufuka/085-zab-103-ee-bwana-tuma-roho-wako.html"><span class="pg">85</span><span class="ttl">ZAB 103 (104) – EE BWANA, TUMA ROHO WAKO</span></a></li>
+                <li data-page="86"><a href="amefufuka/086-waambieni-waliovunjika-moyo.html"><span class="pg">86</span><span class="ttl">WAAMBIENI WALIOVUNJIKA MOYO (Isa 35: 4 nk)</span></a></li>
+                <li data-page="87"><a href="amefufuka/087-zab-62-ee-mungu-u-mungu-wangu.html"><span class="pg">87</span><span class="ttl">ZAB 62 (63) – EE MUNGU, U MUNGU WANGU</span></a></li>
+                <li data-page="88"><a href="amefufuka/088-watu-waliokwenda-kwenye-giza.html"><span class="pg">88</span><span class="ttl">WATU WALIOKWENDA KWENYE GIZA (Isa 9: 1-5)</span></a></li>
+                <li data-page="89"><a href="amefufuka/089-wimbo-wa-balaamu.html"><span class="pg">89</span><span class="ttl">WIMBO WA BALAAMU (Hes 23: 7-24)</span></a></li>
+                <li data-page="90"><a href="amefufuka/090-zab-137-mbele-ya-malaika.html"><span class="pg">90</span><span class="ttl">ZAB 137 (138) – MBELE YA MALAIKA</span></a></li>
+                <li data-page="91"><a href="amefufuka/091-israeli-angali-mtoto-nilimpenda.html"><span class="pg">91</span><span class="ttl">ISRAELI, ANGALI MTOTO, NILIMPENDA (Os 11: 1-11)</span></a></li>
+                <li data-page="92"><a href="amefufuka/092-zab-146-mwimbie-yahweh-yerusalemu.html"><span class="pg">92</span><span class="ttl">ZAB 146 (147) – MWIMBIE YAHWEH, YERUSALEMU</span></a></li>
+                <li data-page="93"><a href="amefufuka/093-nafsi-yangu-imbariki-bwana.html"><span class="pg">93</span><span class="ttl">NAFSI YANGU IMBARIKI BWANA (Wimbo wa Tobiti) (Tob 13: 10-18) (*)</span></a></li>
+                <li data-page="94"><a href="amefufuka/094-zab-83-maskani-yako-yapendeza-kama-nini.html"><span class="pg">94</span><span class="ttl">ZAB 83 (84) – MASKANI YAKO YAPENDEZA KAMA NINI</span></a></li>
+                <li data-page="95"><a href="amefufuka/095-zab-92-yuaja-bwana-amejivika-adhama.html"><span class="pg">95</span><span class="ttl">ZAB 92 (93) – YUAJA BWANA AMEJIVIKA ADHAMA</span></a></li>
+                <li data-page="95"><a href="amefufuka/095-siku-ya-pumziko.html"><span class="pg">95</span><span class="ttl">SIKU YA PUMZIKO</span></a></li>
+                <li data-page="96"><a href="amefufuka/096-farijini-watu-wangu.html"><span class="pg">96</span><span class="ttl">FARIJINI WATU WANGU (Isa 40: 1-11)</span></a></li>
+                <li data-page="97"><a href="amefufuka/097-palikuwa-malaika-wawili.html"><span class="pg">97</span><span class="ttl">PALIKUWA MALAIKA WAWILI</span></a></li>
+                <li data-page="98"><a href="amefufuka/098-zab-114-115-nampenda-bwana.html"><span class="pg">98</span><span class="ttl">ZAB 114-115 (116) – NAMPENDA BWANA</span></a></li>
+                <li data-page="99"><a href="amefufuka/099-njoni-kwangu-ninyi-nyote.html"><span class="pg">99</span><span class="ttl">NJONI KWANGU NINYI NYOTE (Mt 11: 28-30)</span></a></li>
+                <li data-page="99"><a href="amefufuka/099-zab-46-anapaa-bwana-mungu.html"><span class="pg">99</span><span class="ttl">ZAB 46 (47) – ANAPAA BWANA MUNGU</span></a></li>
+                <li data-page="100"><a href="amefufuka/100-zab-64-kwako-bwana-sifa-zakulaiki-katika.html"><span class="pg">100</span><span class="ttl">ZAB 64 (65) – KWAKO, BWANA, SIFA ZAKULAIKI KATIKA SION</span></a></li>
+                <li data-page="101"><a href="amefufuka/101-zab-10-bwana-ndiye-niliyemkimbilia.html"><span class="pg">101</span><span class="ttl">ZAB 10 (11) – BWANA NDIYE NILIYEMKIMBILIA</span></a></li>
+                <li data-page="102"><a href="amefufuka/102-zab-67-bwana-atangaza-habari.html"><span class="pg">102</span><span class="ttl">ZAB 67 (68) – BWANA ATANGAZA HABARI (ms 12-16.33.34)</span></a></li>
+                <li data-page="103"><a href="amefufuka/103-zab-133-mbarikini-bwana.html"><span class="pg">103</span><span class="ttl">ZAB 133 (134) – MBARIKINI BWANA</span></a></li>
+                <li data-page="104"><a href="amefufuka/104-binti-za-yerusalemu.html"><span class="pg">104</span><span class="ttl">BINTI ZA YERUSALEMU (Lk 23: 28.31.34.43.46)<small>(Utenzi wa mazishi)</small></span></a></li>
+                <li data-page="105"><a href="amefufuka/105-zab-31-nalikujulisha-dhambi-yangu.html"><span class="pg">105</span><span class="ttl">ZAB 31 (32) – NALIKUJULISHA DHAMBI YANGU</span></a></li>
+                <li data-page="106"><a href="amefufuka/106-maria-mama-wa-kanisa.html"><span class="pg">106</span><span class="ttl">MARIA, MAMA WA KANISA (Yn 19: 26-34) (1983)</span></a></li>
+                <li data-page="107"><a href="amefufuka/107-stabat-mater.html"><span class="pg">107</span><span class="ttl">STABAT MATER</span></a></li>
+                <li data-page="108"><a href="amefufuka/108-maombolezo-ya-bwana.html"><span class="pg">108</span><span class="ttl">MAOMBOLEZO YA BWANA<small>(IJUMAA KUU – KUABUDU MSALABA)</small></span></a></li>
+                <li data-page="109"><a href="amefufuka/109-zab-8-ee-bwana-mungu-wetu.html"><span class="pg">109</span><span class="ttl">ZAB 8 – EE BWANA MUNGU WETU</span></a></li>
+                <li data-page="110"><a href="amefufuka/110-mbarikiwa-maria.html"><span class="pg">110</span><span class="ttl">MBARIKIWA MARIA (Lk 1: 42- 45)</span></a></li>
+                <li data-page="110"><a href="amefufuka/110-salaam-malkia-wa-mbingu.html"><span class="pg">110</span><span class="ttl">SALAAM, MALKIA WA MBINGU</span></a></li>
+                <li data-page="111"><a href="amefufuka/111-bikira-wa-maajabu.html"><span class="pg">111</span><span class="ttl">BIKIRA WA MAAJABU</span></a></li>
+                <li data-page="112"><a href="amefufuka/112-maria-nyumba-ya-baraka.html"><span class="pg">112</span><span class="ttl">MARIA, NYUMBA YA BARAKA</span></a></li>
+                <li data-page="113"><a href="amefufuka/113-zab-33-nitamhimidi-bwana-kila-wakati.html"><span class="pg">113</span><span class="ttl">ZAB 33 (34) – NITAMHIMIDI BWANA KILA WAKATI</span></a></li>
+                <li data-page="114"><a href="amefufuka/114-mavuno-ya-mataifa.html"><span class="pg">114</span><span class="ttl">MAVUNO YA MATAIFA (Yn 4: 31-38)</span></a></li>
+                <li data-page="115"><a href="amefufuka/115-zab-109-neno-la-bwana-kwa-bwana.html"><span class="pg">115</span><span class="ttl">ZAB 109 (110) – NENO LA BWANA KWA BWANA WANGU</span></a></li>
+                <li data-page="116"><a href="amefufuka/116-zab-1-heri-mtu.html"><span class="pg">116</span><span class="ttl">ZAB 1 – HERI MTU</span></a></li>
+                <li data-page="117"><a href="amefufuka/117-zab-44-wewe-u-mzuri.html"><span class="pg">117</span><span class="ttl">ZAB 44 (45) – WEWE U MZURI</span></a></li>
+                <li data-page="118"><a href="amefufuka/118-zab-127-heri-kwa-mtu.html"><span class="pg">118</span><span class="ttl">ZAB 127 (128) – HERI KWA MTU (1990)</span></a></li>
+                <li data-page="119"><a href="amefufuka/119-zab-67-aondoke-mungu.html"><span class="pg">119</span><span class="ttl">ZAB 67 (68) – AONDOKE MUNGU (beti 2.4-7)</span></a></li>
+                <li data-page="120"><a href="amefufuka/120-tuendeni-wachungaji.html"><span class="pg">120</span><span class="ttl">TUENDENI WACHUNGAJI</span></a></li>
+                <li data-page="121"><a href="amefufuka/121-maria-wa-jasna-gora.html"><span class="pg">121</span><span class="ttl">MARIA WA JASNA GÓRA<small>(Utenzi kwa Bikira Maria wa Czestochowa)</small></span></a></li>
+                <li data-page="122"><a href="amefufuka/122-zab-141-kwako-bwana-kwa-sauti-yangu.html"><span class="pg">122</span><span class="ttl">ZAB 141 (142) – KWAKO, BWANA, KWA SAUTI YANGU</span></a></li>
+                <li data-page="123"><a href="amefufuka/123-chipukizi-latoka-shinani-mwa-yese.html"><span class="pg">123</span><span class="ttl">CHIPUKIZI LATOKA SHINANI MWA YESE (Isa 11: 1 nk)</span></a></li>
+                <li data-page="124"><a href="amefufuka/124-zab-24-kwako-bwana-nakuinulia-nafsi-yangu.html"><span class="pg">124</span><span class="ttl">ZAB 24 (25) – KWAKO, BWANA, NAKUINULIA NAFSI YANGU</span></a></li>
+                <li data-page="125"><a href="amefufuka/125-zab-140-ninakuita.html"><span class="pg">125</span><span class="ttl">ZAB 140 (141) – NINAKUITA<small>(Dhidi ya madanganyifu ya dhambi)</small></span></a></li>
+                <li data-page="126"><a href="amefufuka/126-zaburi-122-nimekuinulia-macho-yangu.html"><span class="pg">126</span><span class="ttl">ZABURI 122 (123) – NIMEKUINULIA MACHO YANGU</span></a></li>
+                <li data-page="127"><a href="amefufuka/127-zab-6-bwana-usinikemee-kwa-hasira-yako.html"><span class="pg">127</span><span class="ttl">ZAB 6 – BWANA, USINIKEMEE KWA HASIRA YAKO</span></a></li>
+                <li data-page="128"><a href="amefufuka/128-utukufu.html"><span class="pg">128</span><span class="ttl">UTUKUFU (Isa 66: 18 nk)</span></a></li>
+                <li data-page="129"><a href="amefufuka/129-zab-32-furahini-wenye-haki-katika-bwana.html"><span class="pg">129</span><span class="ttl">ZAB 32 (33) – FURAHINI WENYE HAKI KATIKA BWANA</span></a></li>
+                <li data-page="130"><a href="amefufuka/130-zab-128-mara-nyingi-wamenitesa.html"><span class="pg">130</span><span class="ttl">ZAB 128 (129) – MARA NYINGI WAMENITESA</span></a></li>
+                <li data-page="131"><a href="amefufuka/131-zab-17-nakupenda-ee-bwana.html"><span class="pg">131</span><span class="ttl">ZAB 17 (18) – NAKUPENDA, EE BWANA</span></a></li>
+                <li data-page="132"><a href="amefufuka/132-maria-mama-wa-njia-iwakayo.html"><span class="pg">132</span><span class="ttl">MARIA, MAMA WA NJIA IWAKAYO</span></a></li>
+                <li data-page="133"><a href="amefufuka/133-shlom-lekh-mariam.html"><span class="pg">133</span><span class="ttl">SHLOM LEKH MARIAM</span></a></li>
+                <li data-page="134"><a href="amefufuka/134-zab-15-utanijulisha-njia-ya-uzima.html"><span class="pg">134</span><span class="ttl">ZAB 15 (16) – UTANIJULISHA NJIA YA UZIMA</span></a></li>
+                <li data-page="135"><a href="amefufuka/135-nendeni-kutangazia-ndugu-zangu.html"><span class="pg">135</span><span class="ttl">NENDENI KUTANGAZIA NDUGU ZANGU (Mt 28: 7-10.16-20)</span></a></li>
+                <li data-page="136"><a href="amefufuka/136-zab-53-ee-mungu-kwa-jina-lako.html"><span class="pg">136</span><span class="ttl">ZAB 53 (54) EE MUNGU, KWA JINA LAKO NIOKOE</span></a></li>
+                <li data-page="137"><a href="amefufuka/137-zab-142-ee-bwana-sikiliza-sala-yangu.html"><span class="pg">137</span><span class="ttl">ZAB 142 (143) – EE BWANA, SIKILIZA SALA YANGU</span></a></li>
+                <li data-page="138"><a href="amefufuka/138-zab-13-mpumbavu-awaza-hakuna-mungu.html"><span class="pg">138</span><span class="ttl">ZAB 13 (14) – MPUMBAVU AWAZA, “HAKUNA MUNGU”</span></a></li>
+            </ul>
+        </section>
+        <section class="amef-section" aria-labelledby="sec-katekumenato">
+            <h2 id="sec-katekumenato"><i class="amef-dot green"></i>Nyimbo za Katekumenato <small>uk. 201–260</small></h2>
+            <ul class="amef-list">
+                <li data-page="201"><a href="amefufuka/201-kaa-kimya-na-peke-yako.html"><span class="pg">201</span><span class="ttl">KAA KIMYA NA PEKE YAKO (Ma 3: 1-33)</span></a></li>
+                <li data-page="202"><a href="amefufuka/202-hivyo-anena-aliye-amen.html"><span class="pg">202</span><span class="ttl">HIVYO ANENA ALIYE AMEN (Ufu 3: 14-22)</span></a></li>
+                <li data-page="203"><a href="amefufuka/203-watakuona-wafalme-wimbo-wa-2-wa-mtumishi.html"><span class="pg">203</span><span class="ttl">WATAKUONA WAFALME: WIMBO WA 2 WA MTUMISHI WA YAHWEH (Isa 49: 1-16)</span></a></li>
+                <li data-page="204"><a href="amefufuka/204-yakobo.html"><span class="pg">204</span><span class="ttl">YAKOBO (Mwa 32: 22-30)</span></a></li>
+                <li data-page="205"><a href="amefufuka/205-debora.html"><span class="pg">205</span><span class="ttl">DEBORA (Amu 5: 1 nk)</span></a></li>
+                <li data-page="206"><a href="amefufuka/206-naona-mbingu-wazi.html"><span class="pg">206</span><span class="ttl">NAONA MBINGU WAZI (Ufu 19: 11-20)</span></a></li>
+                <li data-page="207"><a href="amefufuka/207-bwana-amenipa-wimbo-wa-3-wa-mtumishi.html"><span class="pg">207</span><span class="ttl">BWANA AMENIPA: WIMBO WA 3 WA MTUMISHI WA YAHWEH (Isa 50: 4-10)</span></a></li>
+                <li data-page="208"><a href="amefufuka/208-nani-huyu-atokaye-edomu.html"><span class="pg">208</span><span class="ttl">NANI HUYU ATOKAYE EDOMU (Isa 63: 1-6)</span></a></li>
+                <li data-page="209"><a href="amefufuka/209-wimbo-wa-mpanzi.html"><span class="pg">209</span><span class="ttl">WIMBO WA MPANZI (Mk 4: 3 nk)</span></a></li>
+                <li data-page="210"><a href="amefufuka/210-roho-wa-bwana-yu-juu-yangu.html"><span class="pg">210</span><span class="ttl">ROHO WA BWANA YU JUU YANGU (Lk 4: 18-19; Isa 61: 1-3)</span></a></li>
+                <li data-page="210"><a href="amefufuka/210-tazama-kioo-chetu-ndiye-bwana.html"><span class="pg">210</span><span class="ttl">TAZAMA KIOO CHETU NDIYE BWANA (Tenzi ya 13 ya Salomoni)</span></a></li>
+                <li data-page="211"><a href="amefufuka/211-kama-msukumo-wa-hasira.html"><span class="pg">211</span><span class="ttl">KAMA MSUKUMO WA HASIRA (Tenzi ya 7 ya Salomoni)</span></a></li>
+                <li data-page="212"><a href="amefufuka/212-mbarikiwa-awe-mungu.html"><span class="pg">212</span><span class="ttl">MBARIKIWA AWE MUNGU (Efe 1: 3-13)</span></a></li>
+                <li data-page="213"><a href="amefufuka/213-zab-138-ee-bwana-wanichunguza-na-kunijua.html"><span class="pg">213</span><span class="ttl">ZAB 138 (139) – EE BWANA WANICHUNGUZA NA KUNIJUA</span></a></li>
+                <li data-page="214"><a href="amefufuka/214-zab-21-eli-eli-lamma-sabaktani.html"><span class="pg">214</span><span class="ttl">ZAB 21 (22) – ELI, ELI, LAMMA SABAKTANI?</span></a></li>
+                <li data-page="216"><a href="amefufuka/216-hakuna-mtu-awezaye-kutumikia-mabwana-wawili.html"><span class="pg">216</span><span class="ttl">HAKUNA MTU AWEZAYE KUTUMIKIA MABWANA WAWILI (Mt 6: 24-33) (*)</span></a></li>
+                <li data-page="217"><a href="amefufuka/217-zab-130-ee-bwana-moyo-wangu-hauna.html"><span class="pg">217</span><span class="ttl">ZAB 130 (131) – EE BWANA, MOYO WANGU HAUNA KIBURI</span></a></li>
+                <li data-page="217"><a href="amefufuka/217-nataka-kuenda-yerusalemu.html"><span class="pg">217</span><span class="ttl">NATAKA KUENDA YERUSALEMU (Wimbo wa kisefaradi)</span></a></li>
+                <li data-page="218"><a href="amefufuka/218-shema-israeli.html"><span class="pg">218</span><span class="ttl">SHEMA ISRAELI (Kum 6: 4-9)</span></a></li>
+                <li data-page="219"><a href="amefufuka/219-utenzi-wa-msalaba-mtukufu.html"><span class="pg">219</span><span class="ttl">UTENZI WA MSALABA MTUKUFU</span></a></li>
+                <li data-page="220"><a href="amefufuka/220-vaeni-silaha-zote-za-mungu.html"><span class="pg">220</span><span class="ttl">VAENI SILAHA ZOTE ZA MUNGU (Efe 6: 11 nk)</span></a></li>
+                <li data-page="221"><a href="amefufuka/221-zab-86-kwenye-milima-mitakatifu.html"><span class="pg">221</span><span class="ttl">ZAB 86 (87) – KWENYE MILIMA MITAKATIFU</span></a></li>
+                <li data-page="222"><a href="amefufuka/222-akeda.html"><span class="pg">222</span><span class="ttl">AKEDA</span></a></li>
+            </ul>
+        </section>
+        <section class="amef-section" aria-labelledby="sec-uteuzi">
+            <h2 id="sec-uteuzi"><i class="amef-dot blue"></i>Nyimbo za Uteuzi <small>uk. 261–300</small></h2>
+            <ul class="amef-list">
+                <li data-page="261"><a href="amefufuka/261-zab-36-usikasirike-na-wabaya.html"><span class="pg">261</span><span class="ttl">ZAB 36 (37) – USIKASIRIKE NA WABAYA</span></a></li>
+                <li data-page="262"><a href="amefufuka/262-tenzi-ya-upendo.html"><span class="pg">262</span><span class="ttl">TENZI YA UPENDO (1 Kor 13: 1-13) (*)</span></a></li>
+                <li data-page="263"><a href="amefufuka/263-kwa-kuwa-mungu.html"><span class="pg">263</span><span class="ttl">KWA KUWA MUNGU (2 Kor 4: 6-12)</span></a></li>
+                <li data-page="264"><a href="amefufuka/264-kama-wahukumiwa-kifo.html"><span class="pg">264</span><span class="ttl">KAMA WAHUKUMIWA KIFO (1 Kor 4: 9-13)</span></a></li>
+                <li data-page="265"><a href="amefufuka/265-yesu-alizunguka-miji-yote.html"><span class="pg">265</span><span class="ttl">YESU ALIZUNGUKA MIJI YOTE (Mt 9: 35 nk; 10)</span></a></li>
+                <li data-page="266"><a href="amefufuka/266-msishindane-na-uovu.html"><span class="pg">266</span><span class="ttl">MSISHINDANE NA UOVU (Mt 5: 38 nk)</span></a></li>
+                <li data-page="267"><a href="amefufuka/267-anibusu-kwa-busu-za-kinywa-chake.html"><span class="pg">267</span><span class="ttl">ANIBUSU KWA BUSU ZA KINYWA CHAKE (Wim 1: 2-8)</span></a></li>
+                <li data-page="268"><a href="amefufuka/268-mpenzi-wangu-ni-kwangu.html"><span class="pg">268</span><span class="ttl">MPENZI WANGU NI KWANGU (Wim 1: 13 nk)</span></a></li>
+                <li data-page="269"><a href="amefufuka/269-njoo-toka-lebanoni.html"><span class="pg">269</span><span class="ttl">NJOO TOKA LEBANONI (Wim 4: 8 nk)</span></a></li>
+                <li data-page="270"><a href="amefufuka/270-nilipolala.html"><span class="pg">270</span><span class="ttl">NILIPOLALA (Wim 5: 2 nk)</span></a></li>
+                <li data-page="271"><a href="amefufuka/271-wewe-ukaaye-bustanini.html"><span class="pg">271</span><span class="ttl">WEWE UKAAYE BUSTANINI (Wim 8)</span></a></li>
+                <li data-page="272"><a href="amefufuka/272-kondoo-jike-wa-mungu.html"><span class="pg">272</span><span class="ttl">KONDOO JIKE WA MUNGU</span></a></li>
+                <li data-page="273"><a href="amefufuka/273-mbele-yake-wote-huficha-uso-wimbo-wa.html"><span class="pg">273</span><span class="ttl">MBELE YAKE WOTE HUFICHA USO: WIMBO WA 4 WA MTUMISHI WA YAHWEH (Isa 53: 2 nk)</span></a></li>
+                <li data-page="274"><a href="amefufuka/274-wimbo-wa-mwana-kondoo.html"><span class="pg">274</span><span class="ttl">WIMBO WA MWANA KONDOO (Ufu 5: 9 nk)</span></a></li>
+                <li data-page="275"><a href="amefufuka/275-nani-huyu-apandaye-toka-jangwa.html"><span class="pg">275</span><span class="ttl">NANI HUYU APANDAYE TOKA JANGWA (Wim 8: 5-7)</span></a></li>
+                <li data-page="276"><a href="amefufuka/276-sauti-ya-mpendwa-wangu.html"><span class="pg">276</span><span class="ttl">SAUTI YA MPENDWA WANGU (Wim 2: 8-17)</span></a></li>
+                <li data-page="277"><a href="amefufuka/277-hua-aliruka.html"><span class="pg">277</span><span class="ttl">HUA ALIRUKA (Tenzi 24 ya Salomoni)</span></a></li>
+                <li data-page="278"><a href="amefufuka/278-kama-asali-inavyotona.html"><span class="pg">278</span><span class="ttl">KAMA ASALI INAVYOTONA (Tenzi ya 40 ya Salomoni)</span></a></li>
+                <li data-page="279"><a href="amefufuka/279-ee-yesu-mpendwa-wangu.html"><span class="pg">279</span><span class="ttl">EE YESU, MPENDWA WANGU</span></a></li>
+                <li data-page="280"><a href="amefufuka/280-nitwae-mbinguni.html"><span class="pg">280</span><span class="ttl">NITWAE MBINGUNI</span></a></li>
+                <li data-page="281"><a href="amefufuka/281-wewe-ndiwe-tumaini-langu-ee-bwana.html"><span class="pg">281</span><span class="ttl">WEWE NDIWE TUMAINI LANGU, EE BWANA (Tenzi ya 29 ya Salomoni)</span></a></li>
+                <li data-page="282"><a href="amefufuka/282-ishara-kuu.html"><span class="pg">282</span><span class="ttl">ISHARA KUU (Ufu 12)</span></a></li>
+                <li data-page="283"><a href="amefufuka/283-nanyosha-mikono.html"><span class="pg">283</span><span class="ttl">NANYOSHA MIKONO</span></a></li>
+                <li data-page="284"><a href="amefufuka/284-homilia-ya-pasaka-ya-melitoni-wa-sardi.html"><span class="pg">284</span><span class="ttl">HOMILIA YA PASAKA YA MELITONI WA SARDI</span></a></li>
+                <li data-page="285"><a href="amefufuka/285-carmen-63.html"><span class="pg">285</span><span class="ttl">CARMEN ‘63<small>(R. Tagore)</small></span></a></li>
+                <li data-page="286"><a href="amefufuka/286-caritas-christi.html"><span class="pg">286</span><span class="ttl">CARITAS CHRISTI (2 Kor 5: 14-17.21; 1 Kor 9: 16b) (*)</span></a></li>
+                <li data-page="287"><a href="amefufuka/287-noli-me-tangere.html"><span class="pg">287</span><span class="ttl">NOLI ME TANGERE (Yn 20: 13-17)</span></a></li>
+                <li data-page="288"><a href="amefufuka/288-ee-bwana-nisaidie-kutosita-juu-yako.html"><span class="pg">288</span><span class="ttl">EE BWANA, NISAIDIE KUTOSITA JUU YAKO</span></a></li>
+                <li data-page="289"><a href="amefufuka/289-ee-bwana-umenihadhaa.html"><span class="pg">289</span><span class="ttl">EE BWANA, UMENIHADHAA (Yer 20: 7-18) (*)</span></a></li>
+                <li data-page="290"><a href="amefufuka/290-hotuba-mlimani.html"><span class="pg">290</span><span class="ttl">HOTUBA MLIMANI (Lk 6, 20-30.37)</span></a></li>
+                <li data-page="292"><a href="amefufuka/292-kwenye-usiku-wa-vivuli.html"><span class="pg">292</span><span class="ttl">KWENYE USIKU WA VIVULI (Mt. Yohana wa Msalaba)</span></a></li>
+            </ul>
+        </section>
+        <section class="amef-section" aria-labelledby="sec-nyongeza">
+            <h2 id="sec-nyongeza"><i class="amef-dot extra"></i>Nyimbo za Nyongeza <small>bila namba ya ukurasa</small></h2>
+            <ul class="amef-list">
+                <li data-page=""><a href="amefufuka/nyongeza-01-hii-hdiyo-amri-yangu.html"><span class="pg">—</span><span class="ttl">HII HDIYO AMRI YANGU (Rej. Yn 15, 12.13.16.18; 17,21)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-02-ikiwa-mmefufuka-na-kristo.html"><span class="pg">—</span><span class="ttl">IKIWA MMEFUFUKA NA KRISTO<small>(Col 3, 1-4)</small></span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-03-ishara-kuu.html"><span class="pg">—</span><span class="ttl">ISHARA KUU - (UFU 12)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-04-katikati-ya-umati-mkubwa.html"><span class="pg">—</span><span class="ttl">KATIKATI YA UMATI MKUBWA (Lk 8, 42-48)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-05-masiya-simba-kwa-kushinda.html"><span class="pg">—</span><span class="ttl">MASIYA SIMBA KWA KUSHINDA<small>(Kutoka maandishi ya Mt. Vittorino wa Pettau, +304)</small></span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-06-mwana-kondoo-wa-mungu.html"><span class="pg">—</span><span class="ttl">MWANA KONDOO WA MUNGU<small>Tenzi Agnus Dei</small></span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-07-ndugu.html"><span class="pg">—</span><span class="ttl">NDUGU (Rej. 2Kor 6, 3-16)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-08-nitawatwaa-kati-ya-mataifa.html"><span class="pg">—</span><span class="ttl">NITAWATWAA KATI YA MATAIFA<small>Wimbo Eze 36, 24-28</small></span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-09-peke-yako-kwa-peke-yake.html"><span class="pg">—</span><span class="ttl">PEKE YAKO KWA PEKE YAKE</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-10-resurrexit.html"><span class="pg">—</span><span class="ttl">RESURREXIT<small>Yohana 11: 25-27</small></span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-11-salamu-maria-njiwa-asiyeoza.html"><span class="pg">—</span><span class="ttl">SALAMU MARIA, NJIWA ASIYEOZA<small>(Tenzi inayofuata kontàkia</small></span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-12-ya-mt-romano-il-melode.html"><span class="pg">—</span><span class="ttl">ya Mt. Romano il Melode)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-13-salve.html"><span class="pg">—</span><span class="ttl">SALVE (Salaam Malkia)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-14-umeniibia-moyo.html"><span class="pg">—</span><span class="ttl">UMENIIBIA MOYO (Wim 4:9 – 5:1)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-15-watoto-wa-bethlehemu.html"><span class="pg">—</span><span class="ttl">WATOTO WA BETHLEHEMU</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-16-wewe-ni-mzuri-mpenzi-wangu.html"><span class="pg">—</span><span class="ttl">WEWE NI MZURI, MPENZI WANGU (Wim 6-7)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-17-zakayo.html"><span class="pg">—</span><span class="ttl">ZAKAYO (Lk 19,1-10)</span></a></li>
+                <li data-page=""><a href="amefufuka/nyongeza-18-kama-kondoo-aonaye-jinsi-wapelekavyo-kikondoo-wake.html"><span class="pg">—</span><span class="ttl">KAMA KONDOO AONAYE JINSI WAPELEKAVYO KIKONDOO WAKE MACHINJONI<small>Kontakion ya Ijumaa Kuu (Romano il Melode)</small></span></a></li>
+            </ul>
+        </section>
+        <details class="amef-about">
+            <summary>Utangulizi na maelezo kwa waimbaji</summary>
+            <h3>UTANGULIZI</h3>
+            <p><em>Ikiwa zaburi yasali, salini; ikilia, lieni; ikishukuru, furahini; ikitumaini, tumainieni; ikiogopa, ogopeni.</em><br>(Mt. Agustino – Maelezo juu ya zaburi)</p>
+            <p>Katika njia ya neokatekumenato, twaona leo kutokea huduma nyenyekevu na ya msingi kama ilivyo ile ya mwimbaji.</p>
+            <p>Kwenye safari hii ya malezi ya Imani, mwimbaji anao utume wa kusaidia kuunda jumuiya ya kiliturjia, au, vizuri zaidi, wa kuitunga upya; wa kubadili mara nyingi uwingi uwe umoja wa ibada: kwa sauti moja, kwa moyo mmoja, na kwa roho moja. Ibada ya kiroho inayodhihirishwa katika tendo la kiliturjia la jumuiya. Ibada ya kiroho iliyo chemchemi isiyokauka, katika safari yetu ya kihistoria, ya yale yaliyo safi zaidi: ono la dhambi yetu iliyoangaziwa na upendo usiosemeka wa Mmoja atupendaye hivyo, atupendaye ingawa tu adui zake; chemchemi ya uongofu, chemchemi ya Imani.</p>
+            <p>Lengo la karatasi hizi silo tu kueneza nyimbo, bali kuwatolea waimbaji wa Jumuiya za neokatekumenato maneno ya asili na manota ya musiki, ili waimbaji wafuate vizuri zaidi mapokeo ya midomo waliyopokea. Kwa hiyo, tulifikiri vema kuzitolea kwenye mtiririko wote wa Njia inavyoendelea, iwe kama zilivyozaliwa kwenye miaka, iwe kama zinavyosindikiza Njia hii yetu, kuanzia katekesi na kuendelea kwenye hatua mbalimbali.</p>
+            <p>Tuligawa pia nyimbo kwa rangi tofauti, ili kutoa mwelekeo wa maendeleo haya yenye hatua, yanayoonyeshwa kwenye nyakati tofauti za uchunguzi, ambamo nyimbo kadhaa zinakabidhiwa:</p>
+            <ol>
+                <li>rangi ya brown, kwa maadhimisho ya kiliturjia; (uk 1-30)</li>
+                <li>rangi ya grey kwa nyimbo za kufanya wakati wa kumega mkate; (kurasa kadhaa)</li>
+                <li>rangi nyeupe kwa nyimbo za Prekatekumenato (uk 31-200)</li>
+                <li>rangi ya kijani kwa nyimbo za Katekumenato; (uk. 201-260)</li>
+                <li>rangi ya blu angani kwa nyimbo za Uteuzi. (Uk. 261-300)</li>
+            </ol>
+            <h3>MAELEZO KWA WAIMBAJI WOTE</h3>
+            <p>Toleo hili PASAKA 1992 limeangaliwa upya na makosa kadhaa yamesahihishwa; mambo kadhaa yameangaliwa upya na Kiko aliyetaka kusahihisha manota na maneno fulani yaliyoandikwa tofauti kabla; yawezekana kwamba lipo kosa fulani la uchapaji, lakini angalia kwamba lisiwe jambo linalotakiwa hasa na Kiko: manota fulani yaleta sauti ya pekee kwa masikio ya wale wanaojua musiki kidogo yaweza kuwafadhaisha, lakini yatakiwa makusudi ili kusababisha sauti maalum.</p>
+            <p>Kwa hiyo, Waimbaji wanaoitwa kufanya huduma kwa Liturgia ya Jumuiya zetu, hata wakiwa na kanda za tafsiri tofauti za wimbo ule ule, zote zilizoimbwa na kusindikizwa na gita kwenye nafasi mbalimbali, waalikwa kufuata kwa unyenyekevu maneno yaliyochapwa hapa, kwani ndiyo maneno yaliyochaguliwa na kikundi cha Makatekista Wawajibikaji wa Kenya na Tanzania: hivi kwamba pia jumuiya mbalimbali zinazounganishwa pengine kwa Liturgia, ziweze kuhifadhi umoja katika kuimba.</p>
+            <p>Waimbaji ambao wana la kusema juu ya nyimbo au juu ya maneno, waalikwa kuwasiliana mara na kikundi cha Makatekista Wawajibikaji, ili kuhakikisha ikiwa yapo makosa katika uchapaji au utafsiri, kitu kinachowezekana daima.</p>
+            <p>Asante kwa msaada – Amani.</p>
+            <h3>Watu wamefanya nyimbo</h3>
+            <p>K = Kiko Argüello · AS = Andrea Selloni · GA = Guglielmo Amadei · GB = Giuliano Bonomi · GC = Giacomo Calabrese · GDL = Gigi De Lazzaro · GF = Giorgio Filippucci · GG = Giuseppe Gennarini · NC = Nazzareno Cometto · PM = Paolo Marciani · PMz = Pino Manzari · RR = Roberto Rende</p>
+            <p><em>Chords: herufi “d” baada ya noti (k.m. F<i>d</i>) = ♯ (diesis); “-” = mdogo (minor), k.m. A- = Am.</em></p>
+        </details>
+
     </div>
 
-
-   <div class="main-content-area">
-     <div id="main-content-wrapper" class="content-wrapper">
-            <h2 class="section-heading">UTANGULIZI</h2>
-                <p class="paragraph-text">
-                Katika njia ya neokatekumenato, twaona leo kutokea huduma nyenyekevu na ya msingi kama ilivyo ile ya mwimbaji.
-            </p>
-            <p class="paragraph-text">
-              Kwenye safari hii ya malezi ya imani, mwimbaji anao utume wa kusaidia na kuunda jumuiya ya kilitrujia, au, vizuri zaidi,
-              wa kuitunga upya; wa kubadili mara nyingi uwingi uwe umoja wa ibada: kwa sauti moja, kwa moyo mmoja,
-              na kwa roho moja. Ibada ya kiroho inayodhihirishwa katika tendo la kilitrujia la jumuiya.
-              Ibada ya kiraho iliyo chemchemi isiyokauka. Mmoja atupendaye hivyo, atupendaye ingawa tu adui zake; chemchemi ya uongofu,
-              chemchemi ya imani.
-            </p>
-            <p class="paragraph-text">
-              Lengo la karatasi hizi sio tu kueneza nyimbo, bali kuwatolea waimbaji wa jumuiya za neokatekumenato
-              maneno ya asili na manota ya muziki ili waimbaji wafuate vizuri zaidi mapokeo ya midomo waliyoipokea.
-              Kwa hio tulifikiri vema kuzitolea kwenye mtiririko wote wa njia inavyoendelea, iwe kama
-              zilivyozaliwa kwenye miaka, iwe kama inavyosindikiza njia hii yetu, kuanzia katekesi na kuendelea kwenye 
-              hatua mbalimbali.
-            </p>
-            <p class="paragraph-text">
-              Tuligawa nyimbo kwa rangi tofauti, ili kutoa mwelekeo na maendeleo haya yenye hatua, yanayoonyeshwa
-              kwenye nyakati tofauti za uchunguzi, ambamo nyimbo kadhaa zinakabidhiwa.
-            </p>
-                <h2 class="section-heading">UTARATIBU WA NYIMBO</h2>
-                <ol class="song-list">
-                    <li>rangi ya njano, kwa maadhimisho ya kilitrujia; (UK 1-30)</li>
-                    <li>rangi ya kijivu kwa nyimbo za kumega mkate; (kurasa kadhaa)</li>
-                    <li>rangi nyeupe kwa nyimbo za prekatekumenato; (UK 31-200)</li>
-                    <li>rangi ya kijani kwa nyimbo za katekumenato; (UK 201-260)</li>
-                <li>rangi ya blu angani kwa nyimbo za Uteuzi. (UK 261-300)</li>
-            </ol>
-          
-             <div class="kiitikizano-section">
-            <p class="paragraph-text">
-              Ili kupata kwa urahisi zaidi nyimbo, ipo orodha ya jumla (ambayo tuliweka zaidi ya kichwa kimoja
-              kwa kila wimbo, kulingana na matokeo ya mapokeo kadhaa), orodha ya kibibilia (kwa sababu nyimbo zetu zote
-              hua zimechukuliwa toka bibilia) na ipo ya kusaidia, kulingana na majira na nyakati za maadhimisho, hasa za ekaristi.
-            </p>
-            </div>
-        
-             <h2 class="section-heading">MAELEZO KWA WAIMBAJI WOTE</h3>
-            <p class="paragraph-text">
-              Toleo hili PASAKA 1992 imeangaliwa upya na makosa kadhaa yameangaliwa upya na KIKO aliyetaka kusahihisha 
-              manota na maneno fulani yalioandikwa tofauti kabla; yawezekana kwamba ipo kosa fulani la uchapishaji, lakini angalia
-              kwamba isiwe linalotakiwa hasa na kiko: manota fulani yaleta sauti za pekee kwa masikio ya wale wanaojua muziki kidogo
-              yaweza kuwafadhaisha, lakini yatakiwa makusudi ili kusababisha sauti maalum.
-            </p>
-            <p class="paragraph-text">
-              Kwa hiyo, waimbaji wanaoitwa kufanya huduma kwa Liturjia ya jumuiya zetu, hata wakiwa na kanda za tafsiri
-              tofauti za wimbo ule ule, zote zilizoimbwa na kusindikizwa na guitar kwa nafasi mbalimbali, waalikwa kufuata 
-              kwa unyenyekevu maneno yaliyochapwa hapa, kwani ndiyo maneno yaliyochaguliwa na kikundi cha makatekista wajibikaji wa
-              Tanzania na Kenya: hivi kwamba pia jumuiya mbalimbali zinazounganishwa pengine kwa Liturjia, ziweze kuhifadhi
-              umoja katika kuimba.
-            </p>
-            <p class="paragraph-text">
-              Waimbaji ambao wana la kusema juu ya nyimbo au juu ya maneno, waalikwa kuwasiliana mara na kikundi
-              cha makatekista wajibikaji, ili kuhakikisha ikiwa yapo makosa katika uchapishaji au utafsiri, kitu kinachowezekana daima.
-            </p>
-        </div>
-          
-           
-<h2 class="section-heading">AMEFUFUKA</h2>
-<br>
-
-<div class="pdf-controls">
-    <label for="pdf-select"></label>
-    <select id="pdf-select">
-        <option value="assets/pdfs/amefufuka.pdf">amefufuka</option>
-    </select>
-    
-    <span id="page-info">Page 1 of ?</span>
-    <br>
-    <label for="page-number"></label>
-    <input type="number" id="page-number" min="1" style="width: 70px;">
-    <button id="go-button">Go to page</button>
-
-
-
-<div id="pdf-container">
-    <canvas id="pdf-canvas"></canvas>
-    <div class="overlay-zone left-zone"></div>
-    <div class="overlay-zone right-zone"></div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const htmlElement = document.documentElement;
-        const hamburgerButton = document.getElementById('hamburger-button');
-        const navLinks = document.getElementById('nav-links');
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-        // --- Hamburger Menu Toggle ---
-        hamburgerButton.addEventListener('click', () => {
-            navLinks.classList.toggle('hidden');
-            if (!navLinks.classList.contains('hidden')) {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-            } else {
-                navLinks.style.display = 'none';
-            }
-        });
-
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
-                    navLinks.style.display = 'none';
-                }
-            });
-        });
-
-        // --- Dark Mode Toggle (shared app-wide by js/theme.js) ---
-        darkModeToggle.addEventListener('click', () => {
-            window.IPrayTheme.toggle();
-        });
-
-        // --- PDF Viewer ---
-        const pdfjsLib = window['pdfjs-dist/build/pdf'];
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-        const canvas = document.getElementById('pdf-canvas');
-        const ctx = canvas.getContext('2d');
-        const select = document.getElementById('pdf-select');
-        const leftZone = document.querySelector('.left-zone');
-        const rightZone = document.querySelector('.right-zone');
-        const pageInfo = document.getElementById('page-info');
-        const pageNumberInput = document.getElementById('page-number');
-        const goButton = document.getElementById('go-button');
-
-        let pdfDoc = null;
-        let currentPage = 1;
-        let totalPages = 0;
-        const baseScale = 1.0;
-
-        function getStorageKey(filename) {
-            return `pdf-viewer-last-page:${filename}`;
-        }
-
-        function saveCurrentPage(filename) {
-            localStorage.setItem(getStorageKey(filename), currentPage);
-        }
-
-        function loadLastPage(filename) {
-            return parseInt(localStorage.getItem(getStorageKey(filename))) || 1;
-        }
-
-        async function renderPage(pageNum) {
-            const page = await pdfDoc.getPage(pageNum);
-            const containerWidth = document.getElementById('pdf-container').offsetWidth;
-            const baseViewport = page.getViewport({ scale: baseScale });
-            const responsiveScale = containerWidth / baseViewport.width;
-            const finalScale = baseScale * responsiveScale;
-            const viewport = page.getViewport({ scale: finalScale });
-
-            const outputScale = window.devicePixelRatio || 1;
-            canvas.width = Math.floor(viewport.width * outputScale);
-            canvas.height = Math.floor(viewport.height * outputScale);
-            canvas.style.width = Math.floor(viewport.width) + 'px';
-            canvas.style.height = Math.floor(viewport.height) + 'px';
-
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const renderContext = {
-                canvasContext: ctx,
-                viewport: viewport,
-                transform: outputScale !== 1
-                    ? [outputScale, 0, 0, outputScale, 0, 0]
-                    : undefined
-            };
-
-            await page.render(renderContext).promise;
-            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-            pageNumberInput.value = currentPage;
-
-            const filename = select.value;
-            saveCurrentPage(filename);
-        }
-
-        async function loadPDF(url) {
-            const loadingTask = pdfjsLib.getDocument(url);
-            pdfDoc = await loadingTask.promise;
-            totalPages = pdfDoc.numPages;
-            currentPage = Math.min(loadLastPage(url), totalPages);
-            renderPage(currentPage);
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderPage(currentPage);
-            }
-        }
-
-        function prevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderPage(currentPage);
-            }
-        }
-
-        function goToPage() {
-            const requestedPage = parseInt(pageNumberInput.value);
-            if (requestedPage >= 1 && requestedPage <= totalPages) {
-                currentPage = requestedPage;
-                renderPage(currentPage);
-            } else {
-                alert(`Please enter a page number between 1 and ${totalPages}`);
-            }
-        }
-
-        select.addEventListener('change', () => loadPDF(select.value));
-        rightZone.addEventListener('click', nextPage);
-        leftZone.addEventListener('click', prevPage);
-        goButton.addEventListener('click', goToPage);
-        pageNumberInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') goToPage();
-        });
-
-        window.addEventListener('resize', () => renderPage(currentPage));
-
-        // Load initial PDF
-        loadPDF(select.value);
-    });
-</script>
-<!-- ...rest of the file... -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
-        .then(function(registration) {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        })
-        .catch(function(error) {
-          console.log('ServiceWorker registration failed: ', error);
-        });
-    });
-  }
-</script>
+    <script src="../js/amefufuka.js" defer></script>
     <script src="../js/prevent-zoom.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/i-pray/js/service-worker.js').catch(function () {});
+        });
+      }
+    </script>
 </body>
 </html>
-

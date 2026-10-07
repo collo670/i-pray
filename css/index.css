@@ -2063,6 +2063,17 @@ nav.fixed.bottom-0.left-0.right-0 {
     background: linear-gradient(135deg, #FFA07A 0%, #FFB385 100%);
 }
 
+/* Amefufuka songbook card: maroon & gold like the songbook pages' top bar */
+.amefufuka-card-icon {
+    color: #f0c96a;
+    background: linear-gradient(135deg, #581523 0%, #7c2133 100%);
+}
+
+:root.dark .amefufuka-card-icon {
+    color: #581523;
+    background: linear-gradient(135deg, #f0c96a 0%, #f6dc9a 100%);
+}
+
 .testament-group {
     border: 1px solid rgba(139, 0, 0, 0.15);
     border-radius: 14px;
