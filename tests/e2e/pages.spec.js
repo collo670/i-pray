@@ -45,3 +45,10 @@ test('calendar page uses the shared calendar rules', async ({ page }) => {
     await expect(page.locator('#todayFeast')).toHaveText('Hakuna sherehe leo');
     await expect(page.locator('#upcomingEvents')).toContainText('Mt. Faustina Kowalska');
 });
+
+test('calendar weekdays are short English names in every language', async ({ page }) => {
+    await isolate(page, { universalis: 'fail' });
+    await setLanguage(page, 'sw');
+    await page.goto('pages/calendar.html');
+    await expect(page.locator('#calendarGrid .cal-weekday')).toHaveText(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+});

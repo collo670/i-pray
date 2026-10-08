@@ -44,6 +44,8 @@ change the layout, styles or scripts of all 28 pages, edit the template.
 - `js/reminders.js`: prayer reminders (phone calendar file and
   notifications), set up in Settings.
 - `js/offline-week.js`: Settings' "Save this week" for offline use.
+- `js/prayer-day.js`: the saved week (kept one week, then deleted) and the
+  day of it chosen in Settings, which the prayer pages show instead of today.
 - `js/universalis-office.js`: fetches Midday Prayer, Vespers and the English
   Office of Readings from Universalis and keeps only the prayer text.
 - `service-worker.js`: offline support.

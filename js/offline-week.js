@@ -7,7 +7,11 @@
 //  - Midday Prayer, Vespers and the English Office of Readings for each day,
 //    fetched from Universalis and kept where the office pages look for them
 //    (localStorage, via UniversalisOffice.saveOffice).
-// Needs js/liturgical-calendar.js and js/universalis-office.js on the page.
+// They are kept, in a cache of their own that the service worker leaves
+// alone, for one week; js/prayer-day.js deletes them after that and lets the
+// user pick which of the seven days the app shows.
+// Needs js/liturgical-calendar.js, js/universalis-office.js and
+// js/prayer-day.js on the page.
 (function () {
     'use strict';
 
@@ -73,7 +77,9 @@
         var done = 0, failed = 0, savedPages = 0, savedOffices = 0;
         var tick = function () { done++; if (onProgress) onProgress(done, total); };
 
-        var cacheReady = 'caches' in window ? caches.open('ipray-runtime') : Promise.resolve(null);
+        // Ask the browser not to clear what is saved when space runs low
+        if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {});
+        var cacheReady = 'caches' in window ? caches.open(IPrayDay.CACHE) : Promise.resolve(null);
         return cacheReady.then(function (cache) {
             return pages.reduce(function (chain, page) {
                 return chain.then(function () {
@@ -96,6 +102,7 @@
                 });
             }, Promise.resolve());
         }).then(function () {
+            if (savedPages || savedOffices) IPrayDay.saveWeek(start);
             return { pages: savedPages, offices: savedOffices, failed: failed };
         });
     }

@@ -21,6 +21,7 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script src="../js/library.js" defer></script>
     <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
@@ -134,6 +135,13 @@
                     <div id="saveWeekProgress" class="hidden mt-3">
                         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden"><div id="saveWeekBar" class="h-full bg-primary" style="width:0%"></div></div>
                         <p id="saveWeekStatus" class="mt-2 text-sm text-gray-600 dark:text-gray-400" aria-live="polite"></p>
+                    </div>
+                    <!-- The seven saved days: pick one and the prayer pages show it (js/prayer-day.js) -->
+                    <div id="savedWeek" class="hidden mt-5">
+                        <h3 id="savedWeekTitle" class="font-semibold mb-1"></h3>
+                        <p id="savedWeekNote" class="text-sm text-gray-600 dark:text-gray-400 mb-3"></p>
+                        <div id="savedDays" class="grid gap-2"></div>
+                        <p id="savedDayStatus" class="mt-3 text-sm text-gray-600 dark:text-gray-400" aria-live="polite"></p>
                     </div>
                 </section>
                 <!-- Accessibility -->

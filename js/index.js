@@ -258,7 +258,7 @@ const translations = {
 // transferred...). Optional memorials are left out of this short list.
 function getUpcomingFeasts(nextCount = 5, lang = 'en') {
     const locale = lang === 'sw' ? 'sw' : 'en-US';
-    return getUpcomingCelebrations(new Date(), nextCount, lang, { minType: 'Memorial' }).map(c => ({
+    return getUpcomingCelebrations(window.IPrayDay ? IPrayDay.today() : new Date(), nextCount, lang, { minType: 'Memorial' }).map(c => ({
         date: c.date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
         name: c.name,
         type: c.rankLabel,
@@ -456,7 +456,8 @@ function getPrayerFileName(dayPrefix, week, suffix = '') {
 // Weeks start on Sunday and end on Saturday
 // If today is Saturday of week 4, tomorrow (Sunday) will be week 1
 function getCurrentWeekAndDay() {
-    const now = new Date();
+    // Today, or the day of the saved week chosen in Settings (js/prayer-day.js)
+    const now = window.IPrayDay ? IPrayDay.today() : new Date();
     const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
     const dayPrefix = dayToPrefix[now.getDay()];
 
@@ -490,7 +491,7 @@ function updateLiturgicalQuote(season, lang) {
 
 // Liturgical Calendar Logic: fills the liturgical date card dynamically
 function calculateLiturgicalDay(lang = 'sw') {
-    const today = new Date();
+    const today = window.IPrayDay ? IPrayDay.today() : new Date();
     const info = getLiturgicalToday(today, lang === 'sw' ? 'sw' : 'en');
     const celebration = getCelebrationForDate(today, lang === 'sw' ? 'sw' : 'en');
 

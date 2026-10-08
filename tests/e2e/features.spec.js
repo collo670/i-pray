@@ -108,10 +108,77 @@ test('save this week for offline use', async ({ page }) => {
     await expect(page.locator('#saveWeekStatus')).toContainText('Imehifadhiwa', { timeout: 30000 });
     const saved = await page.evaluate(async () => ({
         offices: Object.keys(localStorage).filter((k) => k.indexOf(UniversalisOffice.CACHE_PREFIX) === 0).length,
-        pages: (await (await caches.open('ipray-runtime')).keys()).map((r) => new URL(r.url).pathname)
+        pages: (await (await caches.open('ipray-offline-week')).keys()).map((r) => new URL(r.url).pathname)
     }));
     expect(saved.offices).toBe(21);
     expect(saved.pages).toContain('/i-pray/pages/prayer-hour.html');
     expect(saved.pages.filter((p) => /\/(jumapili|jumatatu|jumanne|jumatano|alhamisi|ijumaa|jumamosi)[1-4]\.html$/.test(p)).length).toBeGreaterThanOrEqual(7);
+    expect(errors).toEqual([]);
+});
+
+test('the saved days are listed and picking one changes the day the prayer pages show', async ({ page }) => {
+    const errors = collectErrors(page);
+    // Wednesday 7 October 2026
+    await page.clock.install({ time: new Date(2026, 9, 7, 10, 0, 0) });
+    await page.goto('pages/settings.html');
+    await page.click('#saveWeekBtn');
+    await expect(page.locator('#saveWeekStatus')).toContainText('Imehifadhiwa', { timeout: 30000 });
+
+    const days = page.locator('#savedDays .saved-day');
+    await expect(days).toHaveCount(7);
+    await expect(days.first()).toHaveAttribute('data-day', '20261007');
+    await expect(days.first()).toContainText('Leo');
+    await expect(days.first()).toHaveAttribute('aria-pressed', 'true');
+    await expect(days.last()).toHaveAttribute('data-day', '20261013');
+    await expect(page.locator('#iprayDayBar')).toHaveCount(0);
+
+    // Friday 9 October
+    await days.nth(2).click();
+    await expect(days.nth(2)).toHaveAttribute('aria-pressed', 'true');
+    await expect(days.first()).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('#iprayDayBar')).toBeVisible();
+
+    await page.goto('pages/masifu-asubuhi.html');
+    await expect(page).toHaveURL(/\/ijumaa[1-4]\.html$/);
+    await expect(page.locator('#iprayDayBar')).toContainText('Rudi leo');
+
+    await page.goto('pages/prayer-hour.html?hour=vespers');
+    await expect(page.locator('#datePicker')).toHaveValue('2026-10-09');
+
+    // Still listed after leaving Settings, with the choice kept
+    await page.goto('pages/settings.html');
+    await expect(days).toHaveCount(7);
+    await expect(days.nth(2)).toHaveAttribute('aria-pressed', 'true');
+
+    // Back to today from the bar
+    await page.goto('pages/masifu-asubuhi.html');
+    await page.locator('#iprayDayBar button').click();
+    await expect(page.locator('#iprayDayBar')).toHaveCount(0);
+    await page.goto('pages/masifu-asubuhi.html');
+    await expect(page).toHaveURL(/\/jumatano[1-4]\.html$/);
+    expect(errors).toEqual([]);
+});
+
+test('the saved week is deleted a week after it was saved', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.clock.install({ time: new Date(2026, 9, 14, 0, 0, 1) });
+    await page.addInitScript(() => {
+        if (sessionStorage.getItem('seeded')) return;
+        sessionStorage.setItem('seeded', '1');
+        localStorage.setItem('ipray:offlineWeek', JSON.stringify({ start: '2026-10-07' }));
+        localStorage.setItem('ipray:prayerDay', JSON.stringify({ day: '2026-10-09', on: '2026-10-14' }));
+        localStorage.setItem('officeHtml-v1-vespers-20261009', '<p>office</p>');
+        localStorage.setItem('officeHtml-v1-vespers-20261020', '<p>not saved</p>');
+    });
+    await page.goto('pages/settings.html');
+    const left = await page.evaluate(() => ({
+        week: localStorage.getItem('ipray:offlineWeek'),
+        choice: localStorage.getItem('ipray:prayerDay'),
+        saved: localStorage.getItem('officeHtml-v1-vespers-20261009'),
+        other: localStorage.getItem('officeHtml-v1-vespers-20261020')
+    }));
+    expect(left).toEqual({ week: null, choice: null, saved: null, other: '<p>not saved</p>' });
+    await expect(page.locator('#savedWeek')).toBeHidden();
+    await expect(page.locator('#iprayDayBar')).toHaveCount(0);
     expect(errors).toEqual([]);
 });

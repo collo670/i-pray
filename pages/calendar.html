@@ -24,6 +24,7 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script src="../js/library.js" defer></script>
     <script src="../js/reminders.js" defer></script>
 
@@ -714,10 +715,12 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
+            // Always English abbreviations, whatever the app's language
+            const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             for (let idx = 0; idx < 7; idx++) {
                 const th = document.createElement('div');
                 th.className = 'cal-weekday' + (idx === 0 ? ' is-sunday' : '');
-                th.textContent = new Date(2023, 0, idx + 1).toLocaleDateString(locale, { weekday: 'short' });
+                th.textContent = WEEKDAYS[idx];
                 grid.appendChild(th);
             }
 
