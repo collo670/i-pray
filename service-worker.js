@@ -16,7 +16,7 @@
 // files on disk (`npm run build:generated`); don't edit them by hand.
 
 // BEGIN GENERATED
-const VERSION = '24150757d0';
+const VERSION = 'da93fdd9e4';
 const PRECACHE = [
     '/i-pray/',
     '/i-pray/assets/images/carmen.jpg',
@@ -88,6 +88,7 @@ const PRECACHE = [
     '/i-pray/js/nav-theme.js',
     '/i-pray/js/offline-week.js',
     '/i-pray/js/ofisi-readings-dropdown.js',
+    '/i-pray/js/prayer-day.js',
     '/i-pray/js/prayers-nav.js',
     '/i-pray/js/prevent-zoom.js',
     '/i-pray/js/reminders.js',
@@ -151,6 +152,9 @@ const SHELL_CACHE = 'ipray-shell-' + VERSION;
 // Pages and files picked up while browsing, and what "Save for offline"
 // stores. Not versioned, so a new release doesn't throw it away.
 const RUNTIME_CACHE = 'ipray-runtime';
+// The week saved in Settings > Offline (js/offline-week.js). The page that
+// saved it deletes it after a week (js/prayer-day.js), never a new release.
+const OFFLINE_WEEK_CACHE = 'ipray-offline-week';
 const OFFLINE_PAGE = BASE + 'pages/fallback.html';
 const CDN_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com', 'cdn.jsdelivr.net', 'unpkg.com'];
 
@@ -166,7 +170,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
     event.waitUntil((async () => {
-        const keep = [SHELL_CACHE, RUNTIME_CACHE];
+        const keep = [SHELL_CACHE, RUNTIME_CACHE, OFFLINE_WEEK_CACHE];
         const names = await caches.keys();
         await Promise.all(names
             .filter((name) => name.indexOf('ipray-') === 0 && keep.indexOf(name) === -1)

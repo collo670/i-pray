@@ -109,6 +109,7 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script src="../js/library.js" defer></script>
     <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
@@ -368,7 +369,8 @@
             var langEnBtn = document.getElementById('langEn');
             var langSwBtn = document.getElementById('langSw');
 
-            var today = startOfDay(new Date());
+            // Today, or the day of the saved week chosen in Settings
+            var today = startOfDay((window.IPrayDay ? IPrayDay.today() : new Date()));
             var minDate = addDays(today, -WINDOW_BACK_DAYS);
             var maxDate = addDays(today, WINDOW_AHEAD_DAYS);
             var currentDate = today;
@@ -568,7 +570,10 @@
                 for (var i = localStorage.length - 1; i >= 0; i--) {
                     var k = localStorage.key(i);
                     if (!k || k.indexOf('officeHtml-v') !== 0) continue;
-                    if (k.indexOf(CACHE_PREFIX) !== 0 || k.slice(k.lastIndexOf('-') + 1) < oldest) {
+                    var stamp = k.slice(k.lastIndexOf('-') + 1);
+                    // Days saved in Settings > Offline stay their week
+                    if (k.indexOf(CACHE_PREFIX) === 0 && window.IPrayDay && IPrayDay.isSaved(stamp)) continue;
+                    if (k.indexOf(CACHE_PREFIX) !== 0 || stamp < oldest) {
                         localStorage.removeItem(k);
                     }
                 }

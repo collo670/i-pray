@@ -101,6 +101,7 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script src="../js/library.js" defer></script>
     <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
@@ -305,7 +306,8 @@
             var SW_DAY_KEYS = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
             var swWeekCache = {};
 
-            var today = startOfDay(new Date());
+            // Today, or the day of the saved week chosen in Settings
+            var today = startOfDay((window.IPrayDay ? IPrayDay.today() : new Date()));
             var minDate = addDays(today, -WINDOW_BACK_DAYS);
             var maxDate = addDays(today, WINDOW_AHEAD_DAYS);
             var currentDate = today;
@@ -474,7 +476,10 @@
                 var oldest = stampOf(minDate);
                 for (var i = localStorage.length - 1; i >= 0; i--) {
                     var k = localStorage.key(i);
-                    if (k && k.indexOf(CACHE_PREFIX) === 0 && k.slice(k.lastIndexOf('-') + 1) < oldest) {
+                    var stamp = k ? k.slice(k.lastIndexOf('-') + 1) : '';
+                    // Days saved in Settings > Offline stay their week
+                    if (window.IPrayDay && IPrayDay.isSaved(stamp)) continue;
+                    if (k && k.indexOf(CACHE_PREFIX) === 0 && stamp < oldest) {
                         localStorage.removeItem(k);
                     }
                 }

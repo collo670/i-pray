@@ -204,6 +204,8 @@ function clearCache() {
             const key = localStorage.key(i);
             if (key && key.indexOf('officeHtml-') === 0) localStorage.removeItem(key);
         }
+        // ...and the record of the saved week, whose days are now gone
+        if (window.IPrayDay) IPrayDay.purge();
 
         showToast('Cache cleared successfully. Reloading...');
         setTimeout(() => window.location.reload(), 1000);
@@ -273,7 +275,13 @@ const SETTINGS_WORDS = {
         save: 'Hifadhi juma hili',
         saving: 'Inahifadhi… {done} kati ya {total}',
         saved: 'Imehifadhiwa: kurasa {pages} na sala {offices} za Universalis.',
-        partly: ' Baadhi ({failed}) hazikupatikana; jaribu tena ukiwa na mtandao.'
+        partly: ' Baadhi ({failed}) hazikupatikana; jaribu tena ukiwa na mtandao.',
+        savedWeek: 'Siku zilizohifadhiwa',
+        keptUntil: 'Zitakaa kwenye simu hadi {date}, kisha zitafutwa zenyewe. Chagua siku ili kurasa za sala zionyeshe sala za siku hiyo.',
+        today: 'Leo',
+        chosen: 'Kurasa za sala sasa zinaonyesha {day}. Fungua sala yoyote.',
+        backToday: 'Kurasa za sala zinaonyesha leo.',
+        locale: 'sw'
     },
     en: {
         calendar: 'Add to phone calendar',
@@ -289,7 +297,13 @@ const SETTINGS_WORDS = {
         save: 'Save this week',
         saving: 'Saving… {done} of {total}',
         saved: 'Saved: {pages} pages and {offices} offices from Universalis.',
-        partly: ' Some ({failed}) could not be fetched; try again when online.'
+        partly: ' Some ({failed}) could not be fetched; try again when online.',
+        savedWeek: 'Saved days',
+        keptUntil: 'Kept on this phone until {date}, then deleted automatically. Pick a day and the prayer pages show that day\'s prayers.',
+        today: 'Today',
+        chosen: 'The prayer pages now show {day}. Open any prayer.',
+        backToday: 'The prayer pages show today.',
+        locale: 'en-GB'
     }
 };
 
@@ -380,6 +394,64 @@ function setupOfflineWeek() {
                 + (result.failed ? words.partly.replace('{failed}', result.failed) : '');
             btn.disabled = false;
             btn.textContent = words.save;
+            renderSavedWeek();
         });
     };
+    renderSavedWeek();
+}
+
+// The seven saved days, below the save button. Picking one makes the prayer
+// pages show that day (js/prayer-day.js); picking today goes back to today.
+function renderSavedWeek(message) {
+    const box = document.getElementById('savedWeek');
+    const week = window.IPrayDay ? IPrayDay.week() : null;
+    if (!box) return;
+    if (!week) { box.classList.add('hidden'); return; }
+    const w = settingsWords();
+    const lang = w.locale === 'sw' ? 'sw' : 'en';
+    const todayStamp = IPrayDay.stampOf(new Date());
+    const chosen = IPrayDay.chosen();
+    const shown = IPrayDay.stampOf(chosen || new Date());
+    const fmt = (d, opts) => { try { return d.toLocaleDateString(w.locale, opts); } catch (e) { return d.toDateString(); } };
+
+    box.classList.remove('hidden');
+    document.getElementById('savedWeekTitle').textContent = w.savedWeek;
+    // The week is deleted at the start of `expires`: kept through the day before
+    const lastDay = new Date(week.expires);
+    lastDay.setDate(lastDay.getDate() - 1);
+    document.getElementById('savedWeekNote').textContent =
+        w.keptUntil.replace('{date}', fmt(lastDay, { weekday: 'long', day: 'numeric', month: 'long' }));
+
+    const list = document.getElementById('savedDays');
+    list.innerHTML = '';
+    week.days.forEach((day) => {
+        const stamp = IPrayDay.stampOf(day);
+        const selected = stamp === shown;
+        let detail = '';
+        try {
+            const celebration = getCelebrationForDate(day, lang);
+            detail = celebration ? celebration.name : getLiturgicalToday(day, lang).dayLabel;
+        } catch (e) {}
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'saved-day w-full text-left p-3 rounded-lg border transition-colors '
+            + (selected
+                ? 'border-primary ring-2 ring-primary bg-red-50 dark:bg-gray-700'
+                : 'border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700');
+        b.dataset.day = stamp;
+        b.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        b.innerHTML = '<span class="flex items-center justify-between gap-2"><span class="font-semibold"></span>'
+            + '<span class="saved-day-today text-xs font-semibold text-primary"></span></span>'
+            + '<span class="block text-sm text-gray-600 dark:text-gray-400"></span>';
+        b.querySelector('.font-semibold').textContent = fmt(day, { weekday: 'long', day: 'numeric', month: 'long' });
+        b.querySelector('.saved-day-today').textContent = stamp === todayStamp ? w.today : '';
+        b.querySelector('.block').textContent = detail;
+        b.onclick = () => {
+            IPrayDay.choose(day);
+            renderSavedWeek(stamp === todayStamp ? w.backToday
+                : w.chosen.replace('{day}', fmt(day, { weekday: 'long', day: 'numeric', month: 'long' })));
+        };
+        list.appendChild(b);
+    });
+    document.getElementById('savedDayStatus').textContent = message || '';
 }

@@ -7,11 +7,14 @@
     <title>Masifu ya Asubuhi - ipray</title>
     <link rel="icon" href="../assets/images/favicon.ico.jpg" type="image/x-icon">
     <!-- Opens today's Masifu ya Asubuhi (jumapili1.html ... jumamosi4.html),
+         or that of the day chosen in Settings (js/prayer-day.js),
          using the same day / psalter-week rule as the home page (js/index.js). -->
     <script src="../js/liturgical-calendar.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script>
         (function () {
-            var now = new Date();
+            // Today, or the day of the saved week chosen in Settings
+            var now = IPrayDay.today();
             var dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
             var week;
             try {

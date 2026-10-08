@@ -19,6 +19,7 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script src="../js/library.js" defer></script>
     <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
@@ -536,7 +537,7 @@
 
         // Auto-expand today's mystery
         function autoExpandTodaysMystery() {
-            const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+            const today = (window.IPrayDay ? IPrayDay.today() : new Date()).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
             let mysteryId = '';
 
             if (today === 0 || today === 3) { // Sunday & Wednesday → Glorious

@@ -592,6 +592,7 @@
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../js/prayer-day.js"></script>
     <script src="../js/library.js" defer></script>
     <script src="../js/reminders.js" defer></script>
 </head>
@@ -1366,10 +1367,10 @@
                 friday: 'Friday'
             };
 
-            let currentDayIndex = (new Date().getDay() + 1) % DAY_ORDER.length;
+            let currentDayIndex = ((window.IPrayDay ? IPrayDay.today() : new Date()).getDay() + 1) % DAY_ORDER.length;
 
             function buildTodayMorningPrayerLink() {
-                const now = new Date();
+                const now = window.IPrayDay ? IPrayDay.today() : new Date();
                 const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
                 const dayPrefix = dayToPrefix[now.getDay()];
                 const weekSequence = [2, 3, 4, 1];

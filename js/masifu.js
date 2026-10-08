@@ -51,7 +51,7 @@
     // Returns { key, name, color, isPalmSunday, isHolyWeek, decDay }
     // key: 'kawaida' | 'majilio' | 'noeli' | 'kwaresima' | 'pasaka'
     function seasonInfo(today) {
-        const now = today ? new Date(today) : new Date();
+        const now = today ? new Date(today) : (window.IPrayDay ? IPrayDay.today() : new Date());
         const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const year = d.getFullYear();
         const easter = easterDate(year);
@@ -264,7 +264,7 @@
     // ---- Navigation -------------------------------------------------------------
 
     function buildTodayMorningPrayerLink() {
-        const now = new Date();
+        const now = window.IPrayDay ? IPrayDay.today() : new Date();
         const dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
         const dayPrefix = dayToPrefix[now.getDay()];
         const weekSequence = [2, 3, 4, 1];

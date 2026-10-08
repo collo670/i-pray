@@ -73,7 +73,7 @@
 
     function resolvePrayerLink(item, basePath) {
         if (item.type === 'hours') {
-            var now = new Date();
+            var now = window.IPrayDay ? IPrayDay.today() : new Date();
             var dayToPrefix = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
             var dayPrefix = dayToPrefix[now.getDay()];
             var weekSequence = [2, 3, 4, 1];
