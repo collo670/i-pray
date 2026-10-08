@@ -25,6 +25,13 @@
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
+    <style>
+        /* Easier to read: heavier text everywhere, and black in light mode.
+           The "Tap to view" buttons keep their colour. */
+        main p, main li { font-weight: 600; }
+        main h3, main h4, main h5 { font-weight: 800; }
+        html:not(.dark) main :is(h3, h4, h5, p, li, ol, div, strong, em) { color: #000; }
+    </style>
 </head>
 <body class="page-index min-h-screen bg-gradient-vintage dark:bg-gray-900 transition-colors duration-300">
     <div id="app" class="relative z-10 page-content">
