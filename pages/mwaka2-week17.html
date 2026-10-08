@@ -244,6 +244,9 @@
     <script src="../js/status-bar.js" defer></script>
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/library.js" defer></script>
+    <script src="../js/reminders.js" defer></script>
 </head>
 <body class="prayer-topbar">
         <header id="appBar" class="app-bar" role="banner">
@@ -397,7 +400,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/i-pray/js/../js/service-worker.js')
+      navigator.serviceWorker.register('/i-pray/service-worker.js')
         .then(function(registration) {
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
         })

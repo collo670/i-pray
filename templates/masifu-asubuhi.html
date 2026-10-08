@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#7c2133">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ipray">
+    <link rel="stylesheet" href="../css/prevent-zoom.css">
+    <title>{{title}}</title>
+    <style>
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-top: calc(70px + env(safe-area-inset-top, 0px)); /* Space for fixed nav + status bar */
+            background-color: #fff;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #111827;
+            color: #eee;
+        }
+        
+        /* Navigation Bar Styles - Responsive */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding-top: env(safe-area-inset-top, 0px);
+            background: linear-gradient(135deg, #581523 0%, #7c2133 100%); box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
+            z-index: 1000;
+        }
+
+        
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            position: relative;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-logo {
+            color: #f0c96a; font-weight: 700; text-decoration: none; font-size: 1.2em; white-space: nowrap; text-shadow: 0 1px 2px rgba(35, 6, 12, 0.38);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: #f0c96a; text-decoration: none; font-size: 0.9em; transition: all 0.3s; padding: 8px 12px; border-radius: 8px; display: block; font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(240, 201, 106, 0.18); color: #fff3cf;
+        }
+
+        
+
+        /* Hamburger Menu - Responsive */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: transparent;
+            border: none;
+            transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hamburger:hover {
+            background-color: rgba(240, 201, 106, 0.16);
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #f0c96a;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Hamburger Animation to X */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Tablet & Mobile Menu (max-width: 768px) */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                width: 100%;
+                background: linear-gradient(180deg, #581523 0%, #7c2133 100%); flex-direction: column; align-items: center;
+                padding: 10px 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+                transform: translateY(-10px);
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            
+
+            .nav-links.active {
+                max-height: 500px;
+                opacity: 1;
+                transform: translateY(0);
+                padding: 16px 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                border-bottom: 1px solid rgba(240, 201, 106, 0.18);
+                opacity: 0;
+                transform: translateX(-20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.08s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.12s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.16s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.24s; }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                padding: 14px 20px;
+                border-radius: 0;
+                width: 100%;
+                font-size: 0.9em;
+                transition: all 0.2s ease;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(240, 201, 106, 0.14); transform: translateX(4px); color: #fff3cf;
+            }
+
+            
+        }
+
+        /* Small Devices (max-width: 640px) */
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 10px 12px;
+            }
+
+            .nav-logo {
+                font-size: 1.1em;
+            }
+
+            .hamburger {
+                min-width: 42px;
+                min-height: 42px;
+                padding: 8px;
+            }
+
+            .hamburger div {
+                width: 23px;
+                height: 2.5px;
+                margin: 4px 0;
+            }
+
+            .nav-links a {
+                font-size: 0.85em;
+                padding: 12px 18px;
+            }
+        }
+
+        /* Extra Small Devices (max-width: 480px) */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 8px 10px;
+            }
+
+            .nav-logo {
+                font-size: 0.95em;
+            }
+
+            .hamburger {
+                min-width: 40px;
+                min-height: 40px;
+                padding: 6px;
+            }
+
+            .hamburger div {
+                width: 22px;
+                height: 2px;
+                margin: 3px 0;
+            }
+
+            .nav-links {
+                max-height: 400px;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+                padding: 12px 16px;
+            }
+        }
+
+        /* Touch-Friendly Mobile Enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            .hamburger {
+                min-height: 48px;
+                min-width: 48px;
+            }
+
+            .nav-links a {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links a:active {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+
+        /* Container and Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #8B0000;
+            text-align: center;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+            color: #FFA07A;
+        }
+        
+        .antiphon {
+            font-weight: bold;
+            color: #8B0000;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .antiphon {
+            color: #FFA07A;
+        }
+        
+        .verse {
+            margin-left: 20px;
+        }
+        
+        .response {
+            font-style: italic;
+            margin-left: 20px;
+        }
+        
+        .leader {
+            font-weight: bold;
+        }
+        
+        .psalm-title {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-container {
+            display: contents;
+        }
+        
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: #f0c96a;
+            border: 1px solid rgba(240, 201, 106, 0.35);
+            border-radius: 9999px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .toggle-btn:active { transform: scale(0.94); }
+        
+        .dark-mode .toggle-btn {
+            background: rgba(240, 201, 106, 0.16);
+            color: #f0c96a;
+        }
+        
+        .prayer-section {
+            margin: 30px 0;
+        }
+        
+        .intercession {
+            margin-left: 20px;
+        }
+        
+        .intercession-response {
+            margin-left: 40px;
+            font-style: italic;
+        }
+        
+        .reading {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #8B0000;
+        }
+        
+        .dark-mode .reading {
+            background-color: #333;
+            border-left-color: #FFA07A;
+        }
+
+        /* Plain prayer text (verses, readings, intercession lines) rendered
+           black at ~90% boldness; existing bold (.antiphon/.leader) and
+           italic (.response/.psalm-title) elements are left untouched. */
+        .verse,
+        .reading,
+        .intercession {
+            color: #000;
+            font-weight: 600;
+        }
+
+        .dark-mode .verse,
+        .dark-mode .reading,
+        .dark-mode .intercession {
+            color: #eee;
+        }
+        /* Sunday pages: the canticle choice buttons and option headings */
+        .option-heading {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .btk{
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/masifu.css">
+    <script src="../js/logo-loader.js"></script>
+    <link rel="stylesheet" href="../css/status-bar-safe-area.css">
+    <script src="../js/status-bar.js" defer></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/library.js" defer></script>
+    <script src="../js/reminders.js" defer></script>
+</head>
+<body class="masifu-topbar">
+        <header id="appBar" class="app-bar" role="banner">
+        <div class="header-content">
+            <div class="app-bar-brand">
+                <h2 class="brand-title">ipray</h2>
+                <p class="brand-subtitle">Masifu ya Asubuhi</p>
+            </div>
+            <div class="app-bar-actions">
+                <div class="toggle-container">
+                    <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark</button>
+                </div>
+                <button class="app-bar-btn hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        <nav class="app-bar-menu" aria-label="Morning prayer navigation">
+            <ul id="nav-links" class="nav-links">
+                <li><a href="../index.html">Nyumbani</a></li>
+                <li><a href="daily-readings.html">Masomo ya Siku / Daily Readings</a></li>
+                <li><a href="office-of-readings.html">Ofisi ya Masomo</a></li>
+                <li><a href="prayer-hour.html?hour=sext">Sala za Mchana</a></li>
+                <li><a href="prayer-hour.html?hour=vespers">Masifu ya Jioni</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    {{content}}
+    
+        <script>
+        function syncDarkModeButton() {
+            const btn = document.querySelector('.toggle-btn');
+            if (!btn) return;
+            btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
+        }
+
+        function toggleMenu(forceClose) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            if (!navLinks || !hamburger) return;
+
+            const shouldOpen = typeof forceClose === 'boolean'
+                ? !forceClose
+                : !navLinks.classList.contains('active');
+
+            navLinks.classList.toggle('active', shouldOpen);
+            hamburger.classList.toggle('active', shouldOpen);
+            hamburger.setAttribute('aria-expanded', String(shouldOpen));
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleMenu(true);
+                }
+            });
+        });
+
+        function toggleDarkMode() {
+            window.IPrayTheme.toggle();
+        }
+
+        syncDarkModeButton();
+    </script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/i-pray/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+</script>
+
+    <script src="../js/liturgical-calendar.js" defer></script>
+    <script src="../js/somo-la-kwanza-bible.js" defer></script>
+    <script src="../js/ofisi-readings-dropdown.js" defer></script>
+    <script src="../js/sikukuu.js" defer></script>
+    <script src="../js/masifu.js" defer></script>
+    <script src="../js/prevent-zoom.js" defer></script>
+</body>
+</html>
+
+
+
+

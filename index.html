@@ -34,6 +34,9 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="js/theme.js"></script>
     <script src="js/text-size.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/library.js" defer></script>
+    <script src="js/reminders.js" defer></script>
     <script src="js/logo-loader.js"></script>
     <link rel="stylesheet" href="css/status-bar-safe-area.css">
     <script src="js/status-bar.js" defer></script>
@@ -105,6 +108,10 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Continue where you left off: the prayer last read part-way
+                     (js/library.js fills it; hidden when there is none) -->
+                <div id="continueCard" class="hidden"></div>
 
                 <!-- Daily Prayers Card: opens a menu of the Liturgy of the Hours prayers -->
                 <button type="button" id="dailyPrayersCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="dailyPrayersSheet" aria-label="Daily Prayers">
@@ -182,6 +189,10 @@
                         </svg>
                     </div>
                 </a>
+
+                <!-- My prayers: favourites (the star on every prayer page) and
+                     recently opened prayers, filled by js/library.js -->
+                <section id="myPrayersCard" class="hidden" aria-live="polite"></section>
             </div>
         </main>
 
@@ -371,17 +382,6 @@
                         <nav id="optionsPrayerList" class="prayer-menu-grid" aria-label="All prayers">
                             <!-- Prayer menu items populated by JavaScript, rendered as circular icons -->
                         </nav>
-                    </div>
-
-                    <!-- Favorites Section -->
-                    <div id="favoritesSection" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 hidden">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">⭐ Favorites</h2>
-                            <button id="clearFavorites" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Clear All</button>
-                        </div>
-                        <div id="favoritesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Favorites will be populated here -->
-                        </div>
                     </div>
 
                     <div class="pt-4 border-t border-gray-200 dark:border-gray-700 text-center">

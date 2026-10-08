@@ -20,11 +20,7 @@
 (function () {
     'use strict';
 
-    var PROXIES = [
-        function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
-        function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
-        function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
-    ];
+    var PROXIES = (window.UniversalisOffice && window.UniversalisOffice.PROXIES) || [];
 
     var HOUR_PAGES = { readings: 'readings', sext: 'sext', vespers: 'vespers' };
 

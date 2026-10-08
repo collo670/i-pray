@@ -28,6 +28,20 @@
 
     var ORIGIN = 'https://universalis.com';
 
+    // Where Universalis pages are fetched from, tried in this order.
+    // Universalis sends no CORS headers, so the browser can't read its pages
+    // directly. First the app's own Cloudflare Worker
+    // (cloudflare-worker/ipray-worker.js), which also caches each day's
+    // page; then public CORS proxies, which come and go and limit how much
+    // they serve, as a fallback.
+    var WORKER_BASE = 'https://ancient-rice-28a1.otienocollo95.workers.dev';
+    var PROXIES = [
+        function (u) { return WORKER_BASE + '/universalis' + new URL(u).pathname; },
+        function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+        function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+        function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+    ];
+
     // Bumped whenever extraction changes shape, so offices cached by an
     // older version of this file are re-fetched instead of re-rendered.
     var EXTRACT_VERSION = 6;
@@ -647,12 +661,48 @@
             .test(String(htmlStr || ''));
     }
 
+    var CACHE_PREFIX = 'officeHtml-v' + EXTRACT_VERSION + '-';
+
+    /**
+     * Fetches one hour for one day through PROXIES (in order), extracts the
+     * office and keeps it in localStorage under the key the office pages
+     * read ('officeHtml-v<VERSION>-<hour>-<YYYYMMDD>'). Resolves to true if
+     * the office is (now) saved, false if no route could provide it.
+     * Used by "Save this week for offline use" (js/offline-week.js).
+     */
+    function saveOffice(stamp, hourKey, timeoutMs) {
+        var key = CACHE_PREFIX + hourKey + '-' + stamp;
+        try { if (global.localStorage.getItem(key)) return Promise.resolve(true); } catch (e) {}
+        var url = ORIGIN + '/' + stamp + '/' + hourKey + '.htm';
+        var i = 0;
+        return new Promise(function (resolve) {
+            (function next() {
+                if (i >= PROXIES.length) { resolve(false); return; }
+                var ctrl = global.AbortController ? new global.AbortController() : null;
+                var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, timeoutMs || 12000);
+                global.fetch(PROXIES[i++](url), ctrl ? { signal: ctrl.signal } : {})
+                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                    .then(function (text) {
+                        clearTimeout(timer);
+                        var cleaned = extract(text, hourKey);
+                        if (!cleaned) throw new Error('no office');
+                        try { global.localStorage.setItem(key, cleaned); } catch (e) {}
+                        resolve(true);
+                    })
+                    .catch(function () { clearTimeout(timer); next(); });
+            })();
+        });
+    }
+
     global.UniversalisOffice = {
         VERSION: EXTRACT_VERSION,
         extract: extract,
         diagnose: diagnose,
         postProcessHtml: postProcessHtml,
         looksLikeFullPage: looksLikeFullPage,
+        PROXIES: PROXIES,
+        CACHE_PREFIX: CACHE_PREFIX,
+        saveOffice: saveOffice,
         ORIGIN: ORIGIN
     };
 })(typeof window !== 'undefined' ? window : this);

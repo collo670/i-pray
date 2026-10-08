@@ -108,6 +108,9 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/library.js" defer></script>
+    <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
@@ -274,15 +277,12 @@
             var WINDOW_AHEAD_DAYS = 9;
 
             // Universalis sends no CORS headers, so the page is fetched through
-            // a public CORS proxy (trying each in turn); js/universalis-office.js
+            // the app's Cloudflare Worker or, failing that, a public CORS proxy
+            // (UniversalisOffice.PROXIES, tried in turn); js/universalis-office.js
             // then extracts the liturgy and it is rendered natively in the app
-            // layout. If every proxy fails the card says so - the whole page is
-            // never embedded.
-            var PROXIES = [
-                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
-            ];
+            // layout. If every route fails the card says so - the whole page
+            // is never embedded.
+            var PROXIES = UniversalisOffice.PROXIES;
             var FETCH_TIMEOUT_MS = 12000;
             // Versioned so offices cached by an earlier build (which stored
             // far more of the Universalis page) are re-fetched, not replayed.
@@ -334,10 +334,6 @@
                     nav: { home: 'Nyumbani', prayers: 'Sala', calendar: 'Kalenda', settings: 'Mipangilio' }
                 }
             };
-            var RANK_LABELS = {
-                en: { 'Triduum': 'Sacred Triduum', 'Solemnity': 'Solemnity', 'Feast': 'Feast', 'Special': 'Liturgical Day', 'Memorial': 'Memorial', 'Optional Memorial': 'Optional Memorial' },
-                sw: { 'Triduum': 'Siku Kuu Tatu Takatifu', 'Solemnity': 'Sherehe', 'Feast': 'Sikukuu', 'Special': 'Siku Maalum', 'Memorial': 'Kumbukumbu', 'Optional Memorial': 'Kumbukumbu ya Hiari' }
-            };
             var COLOR_MAP = { white: 'white', red: 'red', green: 'green', purple: 'purple', rose: 'purple', gold: 'gold' };
             var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
 
@@ -366,11 +362,9 @@
             var externalLink = document.getElementById('externalLink');
             var loadToken = 0;
 
-            var LANG_KEY = 'preferredLanguage';
-            var lang = 'en';
-            try {
-                if (localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
-            } catch (e) {}
+            // The app's language (js/i18n.js); the office itself exists in
+            // Kiswahili and English only.
+            var lang = IPrayI18n.prayerLang();
             var langEnBtn = document.getElementById('langEn');
             var langSwBtn = document.getElementById('langSw');
 
@@ -461,23 +455,33 @@
 
             function setLang(newLang) {
                 if (newLang === lang) return;
+                // Saved and passed to every open page by js/i18n.js, which
+                // calls showLang below.
+                IPrayI18n.set(newLang);
+            }
+
+            function showLang(newLang) {
+                if (newLang === lang) return;
                 lang = newLang;
-                try {
-                    localStorage.setItem(LANG_KEY, lang);
-                    localStorage.setItem('langUpdatedAt', String(Date.now()));
-                } catch (e) {}
                 applyLangSwitchUI();
                 applyHourChrome();
                 load(currentDate);
             }
 
+            // At Vespers on the eve of a Sunday or a solemnity the office is
+            // First Vespers of the next day (Universalis serves it on that
+            // evening's page too), so the banner shows the next day.
             function renderBanner(date) {
-                var info = getLiturgicalToday(date, lang);
-                var celebration = getCelebrationForDate(date);
-                bannerDayLabel.textContent = info.dayLabel;
+                var vespers = hourKey === 'vespers' ? getVespersDay(date, lang) : null;
+                var day = vespers ? vespers.date : date;
+                var info = getLiturgicalToday(day, lang);
+                var celebration = getCelebrationForDate(day, lang);
+                bannerDayLabel.textContent = (vespers && vespers.first
+                    ? (lang === 'sw' ? 'Masifu ya Jioni I · ' : 'First Vespers · ')
+                    : '') + info.dayLabel;
                 banner.setAttribute('data-color', COLOR_MAP[(celebration && celebration.color) || info.color] || 'green');
                 if (celebration) {
-                    celebrationTag.textContent = (RANK_LABELS[lang][celebration.type] || celebration.type) + ': ' + celebration.name;
+                    celebrationTag.textContent = celebration.rankLabel + ': ' + celebration.name;
                     celebrationTag.classList.remove('hidden');
                 } else {
                     celebrationTag.classList.add('hidden');
@@ -693,16 +697,7 @@
             langSwBtn.addEventListener('click', function () { setLang('sw'); });
             // Stay in sync if the language is changed from another open tab/page
             // (e.g. Settings), matching the rest of the app's convention.
-            window.addEventListener('storage', function (e) {
-                if (e.key !== 'langUpdatedAt') return;
-                var newLang = 'en';
-                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
-                if (newLang === lang) return;
-                lang = newLang;
-                applyLangSwitchUI();
-                applyHourChrome();
-                load(currentDate);
-            });
+            IPrayI18n.onChange(function () { showLang(IPrayI18n.prayerLang()); });
             prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
             nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
             todayBtn.addEventListener('click', function () { load(today); });

@@ -285,11 +285,7 @@
     }
 
     function getPreferredLanguage() {
-        try {
-            return localStorage.getItem('preferredLanguage') === 'en' ? 'en' : 'sw';
-        } catch (e) {
-            return 'sw';
-        }
+        return window.IPrayI18n ? window.IPrayI18n.prayerLang() : 'sw';
     }
 
     function buildDailyReadingsLabel() {

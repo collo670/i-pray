@@ -2187,3 +2187,114 @@ nav.fixed.bottom-0.left-0.right-0 {
     background: rgba(255, 160, 122, 0.14);
     color: #FFA07A;
 }
+
+/* ---------------------------------------------------------------------------
+   Home: "Continue where you left off" and "My prayers" (js/library.js)
+   --------------------------------------------------------------------------- */
+.ipray-continue {
+    display: block;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #581523 0%, #7c2133 100%);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
+}
+.ipray-continue-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f0c96a;
+}
+.ipray-continue-title {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.ipray-continue-meta {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+.ipray-continue-bar {
+    display: block;
+    height: 4px;
+    margin-top: 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+}
+.ipray-continue-bar > span {
+    display: block;
+    height: 100%;
+    background: #f0c96a;
+}
+/* Scoped by id: the home page's own heading and link rules
+   (body.page-index h3 ...) are more specific than a class. */
+#myPrayersCard {
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.dark #myPrayersCard { background: #1f2937; color: #f3f4f6; }
+#myPrayersCard .ipray-mine-title { margin: 0 0 0.25rem; font-size: 1.2rem; font-weight: 700; }
+#myPrayersCard .ipray-mine-sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0.85rem 0 0.4rem;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7c2133;
+}
+.dark #myPrayersCard .ipray-mine-sub { color: #c4b5fd; }
+#myPrayersCard .ipray-mine-clear {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #6b7280;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+#myPrayersCard .ipray-mine-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+#myPrayersCard .ipray-mine-list li { display: flex; align-items: center; gap: 0.25rem; min-width: 0; }
+#myPrayersCard .ipray-mine-list a {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.6rem;
+    background: rgba(124, 33, 51, 0.07);
+    color: inherit;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dark #myPrayersCard .ipray-mine-list a { background: rgba(196, 181, 253, 0.1); }
+#myPrayersCard .ipray-mine-remove {
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    color: #9ca3af;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+}

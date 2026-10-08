@@ -19,6 +19,9 @@
     <script src="../../js/status-bar.js" defer></script>
     <script src="../../js/theme.js"></script>
     <script src="../../js/text-size.js"></script>
+    <script src="../../js/i18n.js"></script>
+    <script src="../../js/library.js" defer></script>
+    <script src="../../js/reminders.js" defer></script>
 </head>
 <body class="masifu-topbar masifu-modern amefufuka amef-song">
     <header id="appBar" class="app-bar" role="banner">
@@ -63,7 +66,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/i-pray/js/service-worker.js').catch(function () {});
+          navigator.serviceWorker.register('/i-pray/service-worker.js').catch(function () {});
         });
       }
     </script>

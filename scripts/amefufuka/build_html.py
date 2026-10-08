@@ -208,6 +208,9 @@ HEAD = '''<!DOCTYPE html>
     <script src="{r}js/status-bar.js" defer></script>
     <script src="{r}js/theme.js"></script>
     <script src="{r}js/text-size.js"></script>
+    <script src="{r}js/i18n.js"></script>
+    <script src="{r}js/library.js" defer></script>
+    <script src="{r}js/reminders.js" defer></script>
 </head>
 <body class="masifu-topbar masifu-modern amefufuka{extra}">
     <header id="appBar" class="app-bar" role="banner">
@@ -241,7 +244,7 @@ FOOT = '''
     <script>
       if ('serviceWorker' in navigator) {{
         window.addEventListener('load', function () {{
-          navigator.serviceWorker.register('/i-pray/js/service-worker.js').catch(function () {{}});
+          navigator.serviceWorker.register('/i-pray/service-worker.js').catch(function () {{}});
         }});
       }}
     </script>

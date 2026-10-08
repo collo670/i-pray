@@ -100,6 +100,9 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="../js/theme.js"></script>
     <script src="../js/text-size.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/library.js" defer></script>
+    <script src="../js/reminders.js" defer></script>
     <script src="../js/logo-loader.js"></script>
     <link rel="stylesheet" href="../css/status-bar-safe-area.css">
     <script src="../js/status-bar.js" defer></script>
@@ -109,7 +112,7 @@
         <header id="appBar" class="app-bar" role="banner">
             <div class="header-content">
                 <div class="flex items-center gap-2">
-                    <a href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
+                    <a id="backHome" href="../index.html" class="app-bar-btn" aria-label="Back to home" title="Back to home">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
@@ -176,7 +179,7 @@
             <div class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden" style="border: 2px solid #7c2133;">
                 <div id="hourLoading" class="text-center py-12">
                     <div class="inline-block w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
+                    <p id="loadingMsg" class="mt-4 text-gray-600 dark:text-gray-400">Loading the office…</p>
                 </div>
                 <div id="hourUnavailable" class="p-6 text-center hidden">
                     <p id="unavailableMsg" class="text-gray-700 dark:text-gray-300 mb-2">The office for this date is not available yet.</p>
@@ -186,7 +189,7 @@
             </div>
 
             <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                Texts served by <a id="externalLink" class="underline" target="_blank" rel="noopener" href="https://universalis.com">Universalis</a> — open there for the full-page version.
+                <span id="footerBefore">Texts served by </span><a id="externalLink" class="underline" target="_blank" rel="noopener" href="https://universalis.com">Universalis</a><span id="footerAfter"> — open there for the full-page version.</span>
             </p>
         </main>
 
@@ -240,11 +243,7 @@
             var WINDOW_BACK_DAYS = 3;
             var WINDOW_AHEAD_DAYS = 9;
 
-            var PROXIES = [
-                function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
-                function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
-            ];
+            var PROXIES = UniversalisOffice.PROXIES;
             var FETCH_TIMEOUT_MS = 12000;
             // Versioned so offices cached by an earlier build (which stored
             // far more of the Universalis page) are re-fetched, not replayed.
@@ -255,12 +254,23 @@
                     page: 'readings',
                     title: 'Office of Readings',
                     titleSw: 'Ofisi ya Masomo',
-                    subtitle: 'Matins · The Office of Readings'
+                    subtitle: 'Matins · The Office of Readings',
+                    subtitleSw: 'Sala ya Kanisa · Ofisi ya Masomo'
                 }
             };
-            var RANK_LABELS = {
-                en: { 'Triduum': 'Sacred Triduum', 'Solemnity': 'Solemnity', 'Feast': 'Feast', 'Special': 'Liturgical Day', 'Memorial': 'Memorial', 'Optional Memorial': 'Optional Memorial' },
-                sw: { 'Triduum': 'Siku Kuu Tatu Takatifu', 'Solemnity': 'Sherehe', 'Feast': 'Sikukuu', 'Special': 'Siku Maalum', 'Memorial': 'Kumbukumbu', 'Optional Memorial': 'Kumbukumbu ya Hiari' }
+            // The page's own wording (everything but the office text), so
+            // that with Kiswahili chosen the whole page reads in Kiswahili.
+            var UI = {
+                en: {
+                    loading: 'Loading the office…', today: 'Back to today', prevDay: 'Previous day', nextDay: 'Next day',
+                    datePicker: 'Choose a date', backHome: 'Back to home',
+                    footerBefore: 'Texts served by ', footerAfter: ' — open there for the full-page version.'
+                },
+                sw: {
+                    loading: 'Inapakia sala…', today: 'Rudi leo', prevDay: 'Siku iliyopita', nextDay: 'Siku inayofuata',
+                    datePicker: 'Chagua tarehe', backHome: 'Rudi nyumbani',
+                    footerBefore: 'Maandishi ya Kiingereza yanatoka ', footerAfter: ' — fungua huko kuona ukurasa mzima.'
+                }
             };
             var COLOR_MAP = { white: 'white', red: 'red', green: 'green', purple: 'purple', rose: 'purple', gold: 'gold' };
             var ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
@@ -284,14 +294,12 @@
             var externalLink = document.getElementById('externalLink');
             var loadToken = 0;
 
-            var LANG_KEY = 'preferredLanguage';
             var urlParams = new URLSearchParams(window.location.search);
             var startAtFirstReading = urlParams.get('start') === 'first-reading';
             var requestedLang = urlParams.get('lang');
-            var lang = requestedLang === 'sw' ? 'sw' : 'en';
-            try {
-                if (!requestedLang && localStorage.getItem(LANG_KEY) === 'sw') lang = 'sw';
-            } catch (e) {}
+            // ?lang=sw|en opens the office in that language without changing
+            // the app's setting; otherwise the app's language (js/i18n.js).
+            var lang = requestedLang === 'sw' || requestedLang === 'en' ? requestedLang : IPrayI18n.prayerLang();
             var langEnBtn = document.getElementById('langEn');
             var langSwBtn = document.getElementById('langSw');
             var SW_DAY_KEYS = ['dominika', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
@@ -315,11 +323,29 @@
                 return d.toLocaleDateString(lang === 'sw' ? 'sw' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             }
 
+            function setLabel(id, label) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                el.setAttribute('aria-label', label);
+                if (el.hasAttribute('title')) el.setAttribute('title', label);
+            }
+
             function applyHourChrome() {
                 var h = HOURS[hourKey];
-                titleEl.textContent = lang === 'sw' ? h.titleSw : h.title;
-                subtitleEl.textContent = h.subtitle;
-                document.title = h.title + ' - ipray';
+                var ui = UI[lang];
+                var sw = lang === 'sw';
+                document.documentElement.lang = lang;
+                titleEl.textContent = sw ? h.titleSw : h.title;
+                subtitleEl.textContent = sw ? h.subtitleSw : h.subtitle;
+                document.title = (sw ? h.titleSw : h.title) + ' - ipray';
+                document.getElementById('loadingMsg').textContent = ui.loading;
+                todayBtn.textContent = ui.today;
+                document.getElementById('footerBefore').textContent = ui.footerBefore;
+                document.getElementById('footerAfter').textContent = ui.footerAfter;
+                setLabel('prevDay', ui.prevDay);
+                setLabel('nextDay', ui.nextDay);
+                setLabel('datePicker', ui.datePicker);
+                setLabel('backHome', ui.backHome);
                 updateTextCtlVisibility();
             }
 
@@ -341,12 +367,14 @@
 
             function setLang(newLang) {
                 if (newLang === lang) return;
+                // Saved and passed to every open page by js/i18n.js, which
+                // calls showLang below.
+                IPrayI18n.set(newLang);
+            }
+
+            function showLang(newLang) {
+                if (newLang === lang) return;
                 lang = newLang;
-                try {
-                    localStorage.setItem(LANG_KEY, lang);
-                    localStorage.setItem('langUpdatedAt', String(Date.now()));
-                } catch (e) {}
-                document.documentElement.lang = lang === 'sw' ? 'sw' : 'en';
                 applyLangSwitchUI();
                 applyHourChrome();
                 load(currentDate);
@@ -354,11 +382,11 @@
 
             function renderBanner(date) {
                 var info = getLiturgicalToday(date, lang);
-                var celebration = getCelebrationForDate(date);
+                var celebration = getCelebrationForDate(date, lang);
                 bannerDayLabel.textContent = info.dayLabel;
                 banner.setAttribute('data-color', COLOR_MAP[(celebration && celebration.color) || info.color] || 'green');
                 if (celebration) {
-                    celebrationTag.textContent = (RANK_LABELS[lang][celebration.type] || celebration.type) + ': ' + celebration.name;
+                    celebrationTag.textContent = celebration.rankLabel + ': ' + celebration.name;
                     celebrationTag.classList.remove('hidden');
                 } else {
                     celebrationTag.classList.add('hidden');
@@ -458,12 +486,39 @@
                 });
             }
 
-            function fetchSwWeek(weekNum) {
-                if (swWeekCache[weekNum]) return Promise.resolve(swWeekCache[weekNum]);
-                return fetch('../data/office-readings-sw/week-' + weekNum + '.json')
+            // data/office-readings-sw/<name>.json, fetched once per page.
+            function fetchSwFile(name) {
+                if (swWeekCache[name]) return Promise.resolve(swWeekCache[name]);
+                return fetch('../data/office-readings-sw/' + name + '.json')
                     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-                    .then(function (data) { swWeekCache[weekNum] = data; return data; })
+                    .then(function (data) { swWeekCache[name] = data; return data; })
                     .catch(function () { return null; });
+            }
+
+            function fetchSwWeek(weekNum) {
+                return fetchSwFile('week-' + weekNum);
+            }
+
+            function pad2(n) { return String(n).padStart(2, '0'); }
+
+            // Advent and Christmas (data/office-readings-sw/advent-christmas.json,
+            // from MajilioNaNoeli.pdf): Advent weeks 1-3 by weekday, then the
+            // dated days from 17 December, the Christmas season by date,
+            // the Holy Family and the Baptism of the Lord. The book has no
+            // Fourth Sunday of Advent and no Second Sunday after Christmas.
+            function adventChristmasDay(date, info, celebration, data) {
+                if (!data) return null;
+                var key = pad2(date.getMonth() + 1) + '-' + pad2(date.getDate());
+                var sunday = date.getDay() === 0;
+                if (info.season === 'Advent') {
+                    if (sunday) return (data.advent[info.weekNum] || {}).dominika || null;
+                    if (date.getMonth() === 11 && date.getDate() >= 17) return data.dated[key] || null;
+                    return (data.advent[info.weekNum] || {})[SW_DAY_KEYS[date.getDay()]] || null;
+                }
+                if (celebration && celebration.id === 'holy-family') return data.holyFamily || null;
+                if (celebration && celebration.id === 'baptism') return data.baptism || null;
+                if (sunday && !(celebration && celebration.type === 'Solemnity')) return null;
+                return data.dated[key] || null;
             }
 
             function findNearestSwDay(days, targetKey) {
@@ -509,7 +564,14 @@
             }
 
             function swSeasonNote() {
-                return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani kwa kipindi hiki cha liturujia (nje ya Kipindi cha Mwaka). Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+                return '<div class="sw-fallback-note">Ofisi ya Masomo kwa Kiswahili haipo bado kwa siku hii (vitabu vilivyopo ni vya Kipindi cha Mwaka, Majilio na Noeli). Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
+            }
+
+            // Solemnities and feasts have readings of their own; rather than
+            // show the ordinary weekday's, the English office is shown.
+            function swProperNote(celebration) {
+                return '<div class="sw-fallback-note">Leo ni ' + esc(celebration.rankLabel) + ': ' + esc(celebration.name)
+                    + '. Masomo yake kwa Kiswahili hayapo bado; inaonyesha maandishi ya Kiingereza.</div>';
             }
 
             function swFetchFailNote() {
@@ -520,28 +582,62 @@
                 return '<div class="sw-fallback-note">Kiswahili cha Ofisi ya Masomo bado hakipatikani. Inaonyesha maandishi ya Kiingereza kwa sasa.</div>';
             }
 
+            function showSwDay(dayData, usedFallbackDay) {
+                showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
+                if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
+                    window.SomoLaKwanzaBible.init();
+                }
+            }
+
             function loadSwahiliReadings(date, token) {
                 var info = getLiturgicalToday(date, 'sw');
-                if (info.season === 'Ordinary Time' && info.weekNum >= 1 && info.weekNum <= 34) {
-                    fetchSwWeek(info.weekNum).then(function (weekData) {
+                var celebration = getCelebrationForDate(date, 'sw');
+                var id = celebration && celebration.id;
+
+                if (info.season === 'Advent' || info.season === 'Christmas') {
+                    fetchSwFile('advent-christmas').then(function (data) {
                         if (token !== loadToken) return;
-                        if (!weekData || !weekData.days) { loadUniversalisContent(token, swFetchFailNote()); return; }
-                        var dayKey = SW_DAY_KEYS[date.getDay()];
-                        var dayData = weekData.days[dayKey];
-                        var usedFallbackDay = null;
-                        if (!dayData) {
-                            var alt = findNearestSwDay(weekData.days, dayKey);
-                            if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
-                        }
-                        if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
-                        showOffice(renderSwReading(dayData, usedFallbackDay), 'sw');
-                        if (window.SomoLaKwanzaBible && window.SomoLaKwanzaBible.init) {
-                            window.SomoLaKwanzaBible.init();
-                        }
+                        var day = adventChristmasDay(date, info, celebration, data);
+                        if (day) showSwDay(day);
+                        else loadUniversalisContent(token, data ? swSeasonNote() : swFetchFailNote());
                     });
-                } else {
-                    loadUniversalisContent(token, swSeasonNote());
+                    return;
                 }
+
+                if (id === 'trinity' || id === 'corpus-christi') {
+                    fetchSwFile('solemnities').then(function (data) {
+                        if (token !== loadToken) return;
+                        if (data && data[id]) showSwDay(data[id]);
+                        else loadUniversalisContent(token, swFetchFailNote());
+                    });
+                    return;
+                }
+
+                if (info.season !== 'Ordinary Time' || !(info.weekNum >= 1 && info.weekNum <= 34)) {
+                    loadUniversalisContent(token, swSeasonNote());
+                    return;
+                }
+
+                // Christ the King is printed as the Sunday of week 34; any
+                // other solemnity or feast has readings the books don't have.
+                if (celebration && (celebration.type === 'Solemnity' || celebration.type === 'Feast') && id !== 'christ-the-king') {
+                    loadUniversalisContent(token, swProperNote(celebration));
+                    return;
+                }
+
+                fetchSwWeek(info.weekNum).then(function (weekData) {
+                    if (token !== loadToken) return;
+                    if (!weekData || !weekData.days) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                    var dayKey = SW_DAY_KEYS[date.getDay()];
+                    var dayData = weekData.days[dayKey];
+                    var usedFallbackDay = null;
+                    if (!dayData) {
+                        var alt = findNearestSwDay(weekData.days, dayKey);
+                        if (alt) { dayData = alt.data; usedFallbackDay = alt.key; }
+                    }
+                    if (!dayData) { loadUniversalisContent(token, swFetchFailNote()); return; }
+                    showSwDay(dayData, usedFallbackDay);
+                });
             }
 
             function loadUniversalisContent(token, noteHtml) {
@@ -632,16 +728,7 @@
 
             langEnBtn.addEventListener('click', function () { setLang('en'); });
             langSwBtn.addEventListener('click', function () { setLang('sw'); });
-            window.addEventListener('storage', function (e) {
-                if (e.key !== 'langUpdatedAt') return;
-                var newLang = 'en';
-                try { if (localStorage.getItem(LANG_KEY) === 'sw') newLang = 'sw'; } catch (err) {}
-                if (newLang === lang) return;
-                lang = newLang;
-                applyLangSwitchUI();
-                applyHourChrome();
-                load(currentDate);
-            });
+            IPrayI18n.onChange(function () { showLang(IPrayI18n.prayerLang()); });
             prevBtn.addEventListener('click', function () { load(addDays(currentDate, -1)); });
             nextBtn.addEventListener('click', function () { load(addDays(currentDate, 1)); });
             todayBtn.addEventListener('click', function () { load(today); });

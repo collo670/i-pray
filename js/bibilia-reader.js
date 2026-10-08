@@ -3,7 +3,7 @@
 // Wires into the "Bibilia Takatifu" card on index.html: each book button
 // (data-book="ot-NN" / "nt-NN") opens this reader with ?book=<bolls id>, rendering
 // real Swahili (SUV) verse text from the Bolls Bible API, proxied through the
-// free Cloudflare Worker in cloudflare-worker/bolls-proxy.js so the static site
+// free Cloudflare Worker in cloudflare-worker/ipray-worker.js so the static site
 // can call an API that otherwise has no ACAO header.
 //
 // Data flow:
@@ -23,8 +23,8 @@
     var TRANSLATION = 'SUV'; // Swahili Union Version, 1997 (bolls.life)
 
     // Deployed Cloudflare Worker that mirrors bolls.life with permissive CORS.
-    // If you deploy your own copy of cloudflare-worker/bolls-proxy.js, drop its
-    // URL here (e.g. 'https://bolls-proxy.<you>.workers.dev'). Leave blank to
+    // If you deploy your own copy of cloudflare-worker/ipray-worker.js, drop its
+    // URL here (e.g. 'https://ipray-worker.<you>.workers.dev'). Leave blank to
     // rely on the public CORS-relay fallbacks only.
     var WORKER_PROXY = 'https://ancient-rice-28a1.otienocollo95.workers.dev';
 
