@@ -154,10 +154,10 @@
                     </div>
                 </a>
 
-                <!-- Bibilia Takatifu Card: tapping it reveals two buttons, Agano la Kale
-                     and Agano Jipya; each opens a pop-up with that testament's books -->
-                <div id="bibliaTakatifuCard" class="rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
-                    <button type="button" id="bibliaTakatifuToggle" class="biblia-card-toggle flex items-center gap-4" aria-expanded="false" aria-controls="bibliaTestamentChoices">
+                <!-- Bibilia Takatifu Card: opens a pop-up to choose Agano la Kale or
+                     Agano Jipya, then that testament's books -->
+                <button type="button" id="bibliaTakatifuCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet" aria-label="Bibilia Takatifu">
+                    <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl biblia-card-icon flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -168,21 +168,11 @@
                             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0 biblia-card-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
-                    </button>
-                    <div id="bibliaTestamentChoices" class="biblia-testament-choices hidden">
-                        <button type="button" class="biblia-testament-btn" data-testament="ot" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
-                            <span class="biblia-testament-btn-label">Agano la Kale</span>
-                            <span class="biblia-testament-btn-count">Vitabu 39</span>
-                        </button>
-                        <button type="button" class="biblia-testament-btn" data-testament="nt" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
-                            <span class="biblia-testament-btn-label">Agano Jipya</span>
-                            <span class="biblia-testament-btn-count">Vitabu 27</span>
-                        </button>
                     </div>
-                </div>
+                </button>
 
                 <!-- Amefufuka Card: the songbook, listed by page with words and chords -->
                 <a id="amefufukaCard" href="pages/amefufuka.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-label="Amefufuka">
@@ -245,16 +235,21 @@
             </div>
         </div>
 
-        <!-- Bibilia Takatifu Sheet: pop-up opened from the Agano la Kale or Agano
-             Jipya button on the Bibilia Takatifu card. It shows only the chosen
-             testament's books; the title is set when it opens. -->
+        <!-- Bibilia Takatifu Sheet: opened from the Bibilia Takatifu card. It first
+             offers Agano la Kale and Agano Jipya; choosing one swaps the pop-up to
+             that testament's books, with a back button to return to the choice. -->
         <div id="bibliaTakatifuSheet" class="sheet-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bibliaTakatifuSheetTitle">
             <div class="sheet-panel">
                 <div class="sheet-handle" aria-hidden="true"></div>
-                <div class="flex items-center justify-between px-5 pb-2">
-                    <div>
-                        <h2 id="bibliaTakatifuSheetTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100">Agano la Kale</h2>
-                        <p id="bibliaTakatifuSheetSubtitle" class="text-sm text-gray-600 dark:text-gray-400">Vitabu 39 · Chagua kitabu</p>
+                <div class="flex items-center justify-between gap-3 px-5 pb-2">
+                    <button id="bibliaTakatifuBack" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hidden" aria-label="Rudi kwenye Agano la Kale na Agano Jipya">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 min-w-0">
+                        <h2 id="bibliaTakatifuSheetTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100">Bibilia Takatifu</h2>
+                        <p id="bibliaTakatifuSheetSubtitle" class="text-sm text-gray-600 dark:text-gray-400">Chagua agano</p>
                     </div>
                     <button id="closeBibliaTakatifuSheet" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close Bibilia Takatifu menu">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -263,8 +258,21 @@
                     </button>
                 </div>
                 <div class="px-5 pb-6">
+                    <!-- Step 1: choose a testament -->
+                    <div id="bibliaTestamentChoices" class="biblia-testament-choices">
+                        <button type="button" class="biblia-testament-btn" data-testament="ot">
+                            <span class="biblia-testament-btn-label">Agano la Kale</span>
+                            <span class="biblia-testament-btn-count">Vitabu 39</span>
+                        </button>
+                        <button type="button" class="biblia-testament-btn" data-testament="nt">
+                            <span class="biblia-testament-btn-label">Agano Jipya</span>
+                            <span class="biblia-testament-btn-count">Vitabu 27</span>
+                        </button>
+                    </div>
+
+                    <!-- Step 2: that testament's books -->
                     <!-- Agano la Kale (Old Testament) -->
-                    <div class="testament-group" data-testament="ot">
+                    <div class="testament-group hidden" data-testament="ot">
                         <ul id="aganoLaKaleList" class="testament-book-list" aria-label="Vitabu vya Agano la Kale">
                             <li><button type="button" class="testament-book-item" data-book="ot-01">Mwanzo</button></li>
                             <li><button type="button" class="testament-book-item" data-book="ot-02">Kutoka</button></li>
@@ -309,7 +317,7 @@
                     </div>
 
                     <!-- Agano Jipya (New Testament) -->
-                    <div class="testament-group" data-testament="nt">
+                    <div class="testament-group hidden" data-testament="nt">
                         <ul id="aganoJipyaList" class="testament-book-list" aria-label="Vitabu vya Agano Jipya">
                             <li><button type="button" class="testament-book-item" data-book="nt-01">Mathayo</button></li>
                             <li><button type="button" class="testament-book-item" data-book="nt-02">Marko</button></li>
@@ -589,63 +597,71 @@
             });
         })();
     </script>
-    <!-- Bibilia Takatifu card: the card reveals Agano la Kale / Agano Jipya,
-         and each of those opens a pop-up listing that testament's books -->
+    <!-- Bibilia Takatifu pop-up: choose Agano la Kale / Agano Jipya, then a book -->
     <script>
         (function () {
             var sheet = document.getElementById('bibliaTakatifuSheet');
-            var cardToggle = document.getElementById('bibliaTakatifuToggle');
-            var choices = document.getElementById('bibliaTestamentChoices');
+            var openBtn = document.getElementById('bibliaTakatifuCard');
             var closeBtn = document.getElementById('closeBibliaTakatifuSheet');
+            var backBtn = document.getElementById('bibliaTakatifuBack');
+            var choices = document.getElementById('bibliaTestamentChoices');
             var title = document.getElementById('bibliaTakatifuSheetTitle');
             var subtitle = document.getElementById('bibliaTakatifuSheetSubtitle');
             if (!sheet) return;
 
+            var panel = sheet.querySelector('.sheet-panel');
             var TESTAMENTS = {
                 ot: { title: 'Agano la Kale', count: 39 },
                 nt: { title: 'Agano Jipya', count: 27 }
             };
-            var lastTrigger = null;
 
-            // Tapping the card shows (or hides) the two testament buttons
-            if (cardToggle && choices) {
-                cardToggle.addEventListener('click', function () {
-                    var willOpen = choices.classList.contains('hidden');
-                    choices.classList.toggle('hidden', !willOpen);
-                    cardToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+            // Step 1: the two testament buttons
+            function showTestaments() {
+                sheet.querySelectorAll('.testament-group').forEach(function (group) {
+                    group.classList.add('hidden');
                 });
+                if (choices) choices.classList.remove('hidden');
+                if (backBtn) backBtn.classList.add('hidden');
+                if (title) title.textContent = 'Bibilia Takatifu';
+                if (subtitle) subtitle.textContent = 'Chagua agano';
+                if (panel) panel.scrollTop = 0;
             }
 
-            function openSheet(testament, trigger) {
+            // Step 2: the chosen testament's books
+            function showBooks(testament) {
                 var info = TESTAMENTS[testament];
                 if (!info) return;
                 sheet.querySelectorAll('.testament-group').forEach(function (group) {
                     group.classList.toggle('hidden', group.getAttribute('data-testament') !== testament);
                 });
+                if (choices) choices.classList.add('hidden');
+                if (backBtn) backBtn.classList.remove('hidden');
                 if (title) title.textContent = info.title;
                 if (subtitle) subtitle.textContent = 'Vitabu ' + info.count + ' \u00b7 Chagua kitabu';
-                lastTrigger = trigger || null;
+                if (panel) panel.scrollTop = 0;
+            }
 
+            function openSheet() {
+                showTestaments();
                 sheet.classList.remove('hidden');
-                sheet.querySelector('.sheet-panel').scrollTop = 0;
                 requestAnimationFrame(function () { sheet.classList.add('open'); });
                 document.body.classList.add('overflow-hidden');
-                if (closeBtn) closeBtn.focus();
             }
 
             function closeSheet() {
                 sheet.classList.remove('open');
                 document.body.classList.remove('overflow-hidden');
                 setTimeout(function () { sheet.classList.add('hidden'); }, 250);
-                if (lastTrigger) lastTrigger.focus();
             }
 
-            document.querySelectorAll('.biblia-testament-btn').forEach(function (btn) {
+            if (openBtn) openBtn.addEventListener('click', openSheet);
+            if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+            if (backBtn) backBtn.addEventListener('click', showTestaments);
+            sheet.querySelectorAll('.biblia-testament-btn').forEach(function (btn) {
                 btn.addEventListener('click', function () {
-                    openSheet(btn.getAttribute('data-testament'), btn);
+                    showBooks(btn.getAttribute('data-testament'));
                 });
             });
-            if (closeBtn) closeBtn.addEventListener('click', closeSheet);
             sheet.addEventListener('click', function (e) {
                 if (e.target === sheet) closeSheet();
             });
