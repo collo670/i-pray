@@ -2049,7 +2049,7 @@ nav.fixed.bottom-0.left-0.right-0 {
 }
 
 /* ---------------------------------------------------------------------------
-   Bibilia Takatifu card + sheet accordion
+   Bibilia Takatifu card + testament book pop-up
    Uses the same light/dark accent palette as Masifu ya Asubuhi
    (css/masifu.css): light accent #8B0000, dark accent #FFA07A.
    --------------------------------------------------------------------------- */
@@ -2074,70 +2074,103 @@ nav.fixed.bottom-0.left-0.right-0 {
     background: linear-gradient(135deg, #f0c96a 0%, #f6dc9a 100%);
 }
 
-.testament-group {
-    border: 1px solid rgba(139, 0, 0, 0.15);
-    border-radius: 14px;
-    overflow: hidden;
-    background: var(--surface-0);
-}
-
-:root.dark .testament-group {
-    border-color: rgba(255, 160, 122, 0.22);
-}
-
-.testament-toggle {
+/* Card header: the whole top row is one button that reveals the two
+   testament buttons below it */
+.biblia-card-toggle {
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: rgba(139, 0, 0, 0.06);
+    background: none;
     border: none;
+    padding: 0;
     cursor: pointer;
     font-family: inherit;
-    padding: 0.9rem 1rem;
     text-align: left;
+    color: inherit;
 }
 
-:root.dark .testament-toggle {
-    background: rgba(255, 160, 122, 0.09);
+/* The card already has a border; keep the ring for keyboard focus only */
+.biblia-card-toggle:focus:not(:focus-visible) {
+    outline: none;
 }
 
-.testament-toggle-label {
-    flex: 1;
-    font-weight: 700;
-    font-size: 1.02em;
-    color: #8B0000;
-}
-
-:root.dark .testament-toggle-label {
-    color: #FFA07A;
-}
-
-.testament-toggle-count {
-    font-size: 0.78em;
-    font-weight: 500;
-    color: var(--text-primary);
-    opacity: 0.6;
-}
-
-.testament-chevron {
-    color: #8B0000;
-    flex-shrink: 0;
+.biblia-card-chevron {
     transition: transform 0.2s ease;
 }
 
-:root.dark .testament-chevron {
+.biblia-card-toggle[aria-expanded="true"] .biblia-card-chevron {
+    transform: rotate(90deg);
+}
+
+.biblia-testament-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.biblia-testament-choices.hidden {
+    display: none;
+}
+
+.biblia-testament-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    min-height: 3.5rem;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid rgba(139, 0, 0, 0.25);
+    border-radius: 14px;
+    background: rgba(139, 0, 0, 0.06);
+    cursor: pointer;
+    font-family: inherit;
+    text-align: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.biblia-testament-btn:hover,
+.biblia-testament-btn:focus-visible {
+    background: rgba(139, 0, 0, 0.12);
+    border-color: #8B0000;
+    outline: none;
+}
+
+:root.dark .biblia-testament-btn {
+    border-color: rgba(255, 160, 122, 0.3);
+    background: rgba(255, 160, 122, 0.09);
+}
+
+:root.dark .biblia-testament-btn:hover,
+:root.dark .biblia-testament-btn:focus-visible {
+    background: rgba(255, 160, 122, 0.16);
+    border-color: #FFA07A;
+}
+
+.biblia-testament-btn-label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #8B0000;
+}
+
+:root.dark .biblia-testament-btn-label {
     color: #FFA07A;
 }
 
-.testament-toggle-open .testament-chevron {
-    transform: rotate(180deg);
+.biblia-testament-btn-count {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    opacity: 0.65;
+}
+
+/* Book pop-up: only the chosen testament's group is shown */
+.testament-group.hidden {
+    display: none;
 }
 
 .testament-book-list {
     list-style: none;
     margin: 0;
-    padding: 0.4rem 0.5rem 0.6rem;
+    padding: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.15rem 0.5rem;
