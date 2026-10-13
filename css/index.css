@@ -2074,37 +2074,12 @@ nav.fixed.bottom-0.left-0.right-0 {
     background: linear-gradient(135deg, #f0c96a 0%, #f6dc9a 100%);
 }
 
-/* Card header: the whole top row is one button that reveals the two
-   testament buttons below it */
-.biblia-card-toggle {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    font-family: inherit;
-    text-align: left;
-    color: inherit;
-}
-
-/* The card already has a border; keep the ring for keyboard focus only */
-.biblia-card-toggle:focus:not(:focus-visible) {
-    outline: none;
-}
-
-.biblia-card-chevron {
-    transition: transform 0.2s ease;
-}
-
-.biblia-card-toggle[aria-expanded="true"] .biblia-card-chevron {
-    transform: rotate(90deg);
-}
-
+/* Pop-up step 1: Agano la Kale / Agano Jipya */
 .biblia-testament-choices {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
-    margin-top: 1rem;
+    padding-top: 0.5rem;
 }
 
 .biblia-testament-choices.hidden {
@@ -2116,9 +2091,9 @@ nav.fixed.bottom-0.left-0.right-0 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.15rem;
-    min-height: 3.5rem;
-    padding: 0.75rem 0.5rem;
+    gap: 0.25rem;
+    min-height: 6rem;
+    padding: 1rem 0.5rem;
     border: 1px solid rgba(139, 0, 0, 0.25);
     border-radius: 14px;
     background: rgba(139, 0, 0, 0.06);
@@ -2148,7 +2123,7 @@ nav.fixed.bottom-0.left-0.right-0 {
 
 .biblia-testament-btn-label {
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #8B0000;
 }
 
@@ -2162,7 +2137,7 @@ nav.fixed.bottom-0.left-0.right-0 {
     opacity: 0.65;
 }
 
-/* Book pop-up: only the chosen testament's group is shown */
+/* Pop-up step 2: only the chosen testament's books are shown */
 .testament-group.hidden {
     display: none;
 }
