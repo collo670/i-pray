@@ -154,9 +154,10 @@
                     </div>
                 </a>
 
-                <!-- Bibilia Takatifu Card: opens the Old & New Testament book lists -->
-                <button type="button" id="bibliaTakatifuCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet" aria-label="Bibilia Takatifu">
-                    <div class="flex items-center gap-4">
+                <!-- Bibilia Takatifu Card: tapping it reveals two buttons, Agano la Kale
+                     and Agano Jipya; each opens a pop-up with that testament's books -->
+                <div id="bibliaTakatifuCard" class="rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
+                    <button type="button" id="bibliaTakatifuToggle" class="biblia-card-toggle flex items-center gap-4" aria-expanded="false" aria-controls="bibliaTestamentChoices">
                         <div class="w-12 h-12 rounded-xl biblia-card-icon flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -167,11 +168,21 @@
                             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0 biblia-card-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
+                    </button>
+                    <div id="bibliaTestamentChoices" class="biblia-testament-choices hidden">
+                        <button type="button" class="biblia-testament-btn" data-testament="ot" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
+                            <span class="biblia-testament-btn-label">Agano la Kale</span>
+                            <span class="biblia-testament-btn-count">Vitabu 39</span>
+                        </button>
+                        <button type="button" class="biblia-testament-btn" data-testament="nt" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
+                            <span class="biblia-testament-btn-label">Agano Jipya</span>
+                            <span class="biblia-testament-btn-count">Vitabu 27</span>
+                        </button>
                     </div>
-                </button>
+                </div>
 
                 <!-- Amefufuka Card: the songbook, listed by page with words and chords -->
                 <a id="amefufukaCard" href="pages/amefufuka.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-label="Amefufuka">
@@ -234,31 +245,27 @@
             </div>
         </div>
 
-        <!-- Bibilia Takatifu Sheet: opened from the Bibilia Takatifu card. Two
-             accordion sections -- Agano la Kale (Old Testament) and Agano Jipya
-             (New Testament) -- each revealing the full list of books in Swahili. -->
+        <!-- Bibilia Takatifu Sheet: pop-up opened from the Agano la Kale or Agano
+             Jipya button on the Bibilia Takatifu card. It shows only the chosen
+             testament's books; the title is set when it opens. -->
         <div id="bibliaTakatifuSheet" class="sheet-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bibliaTakatifuSheetTitle">
             <div class="sheet-panel">
                 <div class="sheet-handle" aria-hidden="true"></div>
                 <div class="flex items-center justify-between px-5 pb-2">
-                    <h2 id="bibliaTakatifuSheetTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h2>
+                    <div>
+                        <h2 id="bibliaTakatifuSheetTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100">Agano la Kale</h2>
+                        <p id="bibliaTakatifuSheetSubtitle" class="text-sm text-gray-600 dark:text-gray-400">Vitabu 39 · Chagua kitabu</p>
+                    </div>
                     <button id="closeBibliaTakatifuSheet" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700" aria-label="Close Bibilia Takatifu menu">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
-                <div class="px-5 pb-6 space-y-3">
+                <div class="px-5 pb-6">
                     <!-- Agano la Kale (Old Testament) -->
-                    <div class="testament-group">
-                        <button type="button" class="testament-toggle" id="aganoLaKaleToggle" aria-expanded="false" aria-controls="aganoLaKaleList">
-                            <span class="testament-toggle-label">Agano la Kale</span>
-                            <span class="testament-toggle-count">Vitabu 39</span>
-                            <svg class="w-4 h-4 testament-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <ul id="aganoLaKaleList" class="testament-book-list hidden" aria-label="Vitabu vya Agano la Kale">
+                    <div class="testament-group" data-testament="ot">
+                        <ul id="aganoLaKaleList" class="testament-book-list" aria-label="Vitabu vya Agano la Kale">
                             <li><button type="button" class="testament-book-item" data-book="ot-01">Mwanzo</button></li>
                             <li><button type="button" class="testament-book-item" data-book="ot-02">Kutoka</button></li>
                             <li><button type="button" class="testament-book-item" data-book="ot-03">Mambo ya Walawi</button></li>
@@ -302,15 +309,8 @@
                     </div>
 
                     <!-- Agano Jipya (New Testament) -->
-                    <div class="testament-group">
-                        <button type="button" class="testament-toggle" id="aganoJipyaToggle" aria-expanded="false" aria-controls="aganoJipyaList">
-                            <span class="testament-toggle-label">Agano Jipya</span>
-                            <span class="testament-toggle-count">Vitabu 27</span>
-                            <svg class="w-4 h-4 testament-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <ul id="aganoJipyaList" class="testament-book-list hidden" aria-label="Vitabu vya Agano Jipya">
+                    <div class="testament-group" data-testament="nt">
+                        <ul id="aganoJipyaList" class="testament-book-list" aria-label="Vitabu vya Agano Jipya">
                             <li><button type="button" class="testament-book-item" data-book="nt-01">Mathayo</button></li>
                             <li><button type="button" class="testament-book-item" data-book="nt-02">Marko</button></li>
                             <li><button type="button" class="testament-book-item" data-book="nt-03">Luka</button></li>
@@ -589,59 +589,68 @@
             });
         })();
     </script>
-    <!-- Bibilia Takatifu sheet toggle + Agano la Kale / Agano Jipya accordion -->
+    <!-- Bibilia Takatifu card: the card reveals Agano la Kale / Agano Jipya,
+         and each of those opens a pop-up listing that testament's books -->
     <script>
         (function () {
             var sheet = document.getElementById('bibliaTakatifuSheet');
-            var openBtn = document.getElementById('bibliaTakatifuCard');
+            var cardToggle = document.getElementById('bibliaTakatifuToggle');
+            var choices = document.getElementById('bibliaTestamentChoices');
             var closeBtn = document.getElementById('closeBibliaTakatifuSheet');
+            var title = document.getElementById('bibliaTakatifuSheetTitle');
+            var subtitle = document.getElementById('bibliaTakatifuSheetSubtitle');
             if (!sheet) return;
 
-            function openSheet() {
+            var TESTAMENTS = {
+                ot: { title: 'Agano la Kale', count: 39 },
+                nt: { title: 'Agano Jipya', count: 27 }
+            };
+            var lastTrigger = null;
+
+            // Tapping the card shows (or hides) the two testament buttons
+            if (cardToggle && choices) {
+                cardToggle.addEventListener('click', function () {
+                    var willOpen = choices.classList.contains('hidden');
+                    choices.classList.toggle('hidden', !willOpen);
+                    cardToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+                });
+            }
+
+            function openSheet(testament, trigger) {
+                var info = TESTAMENTS[testament];
+                if (!info) return;
+                sheet.querySelectorAll('.testament-group').forEach(function (group) {
+                    group.classList.toggle('hidden', group.getAttribute('data-testament') !== testament);
+                });
+                if (title) title.textContent = info.title;
+                if (subtitle) subtitle.textContent = 'Vitabu ' + info.count + ' \u00b7 Chagua kitabu';
+                lastTrigger = trigger || null;
+
                 sheet.classList.remove('hidden');
+                sheet.querySelector('.sheet-panel').scrollTop = 0;
                 requestAnimationFrame(function () { sheet.classList.add('open'); });
                 document.body.classList.add('overflow-hidden');
+                if (closeBtn) closeBtn.focus();
             }
 
             function closeSheet() {
                 sheet.classList.remove('open');
                 document.body.classList.remove('overflow-hidden');
                 setTimeout(function () { sheet.classList.add('hidden'); }, 250);
+                if (lastTrigger) lastTrigger.focus();
             }
 
-            if (openBtn) openBtn.addEventListener('click', openSheet);
+            document.querySelectorAll('.biblia-testament-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    openSheet(btn.getAttribute('data-testament'), btn);
+                });
+            });
             if (closeBtn) closeBtn.addEventListener('click', closeSheet);
             sheet.addEventListener('click', function (e) {
                 if (e.target === sheet) closeSheet();
             });
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && !sheet.classList.contains('hidden')) closeSheet();
-            });
-
-            // Agano la Kale / Agano Jipya accordion: clicking a testament reveals its
-            // list of books; clicking it again (or the other testament) hides it.
-            var testaments = [
-                { toggle: 'aganoLaKaleToggle', list: 'aganoLaKaleList' },
-                { toggle: 'aganoJipyaToggle', list: 'aganoJipyaList' }
-            ];
-
-            testaments.forEach(function (t) {
-                var toggleBtn = document.getElementById(t.toggle);
-                var list = document.getElementById(t.list);
-                if (!toggleBtn || !list) return;
-
-                toggleBtn.addEventListener('click', function () {
-                    var isOpen = !list.classList.contains('hidden');
-                    if (isOpen) {
-                        list.classList.add('hidden');
-                        toggleBtn.setAttribute('aria-expanded', 'false');
-                        toggleBtn.classList.remove('testament-toggle-open');
-                    } else {
-                        list.classList.remove('hidden');
-                        toggleBtn.setAttribute('aria-expanded', 'true');
-                        toggleBtn.classList.add('testament-toggle-open');
-                    }
-                });
             });
 
             // Each book item opens the full Bible reader (pages/bibilia-reader.html)
