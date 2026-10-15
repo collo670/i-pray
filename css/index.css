@@ -93,7 +93,7 @@ body.page-index h3 {
 }
 
 /* --ipray-text-scale is the app-wide text size, set on <main> by
-   js/text-size.js; outside <main> (app bar, bottom nav) and on the home
+   js/text-size.js; outside <main> (app bar, Home button) and on the home
    page it is unset, so these fall back to 1 and keep a fixed size. */
 body.page-index h1 { font-size: calc(1.9rem * var(--ipray-text-scale, 1)); }
 body.page-index h2 { font-size: calc(1.5rem * var(--ipray-text-scale, 1)); }
@@ -192,9 +192,6 @@ body.page-index::before {
 :root:not(.dark) .text-red-800 { color: #991b1b; }
 :root:not(.dark) .text-green-800 { color: #166534; }
 :root:not(.dark) .text-gold-800 { color: #854d0e; }
-/* Bottom nav responsive layout lives in the shared block further down
-   ("Bottom navigation height and shared layout") — keep a single source of
-   truth so mobile and desktop don't fight over !important rules. */
 .season-img {
     width: 100px;
     height: 100px;
@@ -203,92 +200,6 @@ body.page-index::before {
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
-}
-.bottom-nav {
-    padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.bottom-nav a,
-.bottom-nav button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2rem;
-    padding: 0.3rem 0.2rem;
-    min-height: 3rem;
-    border-radius: 0.75rem;
-    flex: 1 1 0;
-}
-
-.bottom-nav a svg,
-.bottom-nav button svg {
-    width: 1.15rem;
-    height: 1.15rem;
-    flex-shrink: 0;
-}
-
-.bottom-nav a span,
-.bottom-nav button span {
-    font-size: clamp(0.9rem, 2.6vw, 1.1rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-}
-
-/* Mobile Navigation Enhancements */
-@media (max-width: 768px) {
-    .bottom-nav a,
-    .bottom-nav button {
-        min-height: 3.2rem;
-        padding: 0.35rem 0.15rem;
-    }
-
-    .bottom-nav a span,
-    .bottom-nav button span {
-        font-size: clamp(0.82rem, 3.4vw, 0.98rem);
-        font-weight: 800;
-    }
-    .bottom-nav a,
-    nav[role="navigation"] a,
-    nav.fixed.bottom-0.left-0.right-0 a {
-        min-height: 44px;
-        min-width: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        transition: transform 0.2s ease;
-    }
-    
-    .bottom-nav a:active,
-    nav[role="navigation"] a:active,
-    nav.fixed.bottom-0.left-0.right-0 a:active {
-        transform: scale(0.95);
-    }
-    
-    /* Swipe indicator */
-    .swipe-indicator {
-        position: fixed;
-        bottom: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 12px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-        z-index: 1000;
-    }
-    
-    .swipe-indicator.show {
-        opacity: 1;
-    }
 }
 /* Loading Spinner for Prayer Wall */
 .spinner {
@@ -461,7 +372,7 @@ body.page-index::before {
 }
 
 /* Fade only (no transform): a retained transform would turn this wrapper into
-   the containing block for position:fixed children (bottom nav, sheets),
+   the containing block for position:fixed children (Home button, sheets),
    detaching them from the viewport. */
 @keyframes fadeInContent {
     from { opacity: 0; }
@@ -595,14 +506,14 @@ html {
 .container {
     max-width: 760px;
     margin: 0 auto;
-    /* Bottom padding must clear the fixed bottom nav (~4.25rem) + safe area */
+    /* Bottom padding must clear the floating Home button + safe area */
     padding: 32px 24px calc(96px + env(safe-area-inset-bottom, 0px));
     text-align: left;
     line-height: 1.75;
     /* --prayer-text-scale is the app-wide text size set by js/text-size.js
        (default 1, so the page renders unchanged until it's changed). Scoping
        the scale to .container instead of the root <html> font-size means
-       the .navbar / .bottom-nav that sit outside it as siblings never
+       the .navbar and other app chrome that sit outside it as siblings never
        resize when the user adjusts prayer text size. */
     font-size: calc(1.05rem * var(--prayer-text-scale, 1));
 }
@@ -1228,117 +1139,6 @@ body.prayer-topbar .nav-links a:focus-visible {
     background-color: rgba(240, 201, 106, 0.14);
 }
 
-/* Bottom navigation height and shared layout */
-nav[role="navigation"][aria-label="Main Navigation"],
-.bottom-nav,
-nav.fixed.bottom-0.left-0.right-0 {
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    top: auto !important;
-    /* Floating pill: width comes from left/right 0 minus the side margins
-       (width: 100% would overflow past the right edge). Margins absorb the
-       safe areas — home-indicator clearance at the bottom, notch clearance
-       left/right in landscape — so the padding must not re-add them. */
-    width: auto !important;
-    box-sizing: border-box !important;
-    min-height: 4.25rem !important;
-    height: auto !important;
-    margin: 0
-            max(1rem, env(safe-area-inset-right, 0px))
-            calc(0.5rem + env(safe-area-inset-bottom, 0px))
-            max(1rem, env(safe-area-inset-left, 0px)) !important;
-    padding: 0.5rem 0.65rem !important;
-    border-radius: 1rem !important;
-    z-index: 40 !important;
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    border-top: 1px solid var(--border-subtle) !important;
-    box-shadow: 0 -1px 8px rgba(27, 36, 34, 0.06) !important;
-    overflow-x: hidden !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transform: translateY(0) !important;
-    opacity: 1 !important;
-}
-
-nav[role="navigation"][aria-label="Main Navigation"] > div,
-.bottom-nav > div,
-nav.fixed.bottom-0.left-0.right-0 > div {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    align-items: stretch !important;
-    justify-content: space-around !important;
-    gap: 0.2rem !important;
-    width: 100% !important;
-    max-width: 30rem !important; /* keep items grouped on tablets/desktop */
-    margin: 0 auto !important;
-    height: 100% !important;
-    flex: 1 !important;
-}
-
-nav[role="navigation"][aria-label="Main Navigation"] a,
-nav[role="navigation"][aria-label="Main Navigation"] button,
-.bottom-nav a,
-.bottom-nav button,
-nav.fixed.bottom-0.left-0.right-0 a,
-nav.fixed.bottom-0.left-0.right-0 button {
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
-    max-width: 6rem !important;
-    min-height: 44px !important; /* WCAG/iOS minimum touch target */
-    padding: 0.3rem 0.2rem !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 0.75rem !important;
-    text-align: center !important;
-    line-height: 1.1 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    text-decoration: none !important;
-    color: #7c2133 !important;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-/* Colour fallbacks for the nav's Tailwind utility classes on pages that don't
-   load Tailwind (the self-contained mwaka liturgy pages). Values mirror the
-   themed gray ramp above so both kinds of pages look identical. */
-.bottom-nav .text-purple-600,
-.bottom-nav .text-gray-500,
-.bottom-nav .text-gray-600,
-.bottom-nav a,
-.bottom-nav button,
-.bottom-nav a span,
-.bottom-nav button span,
-.bottom-nav svg {
-    color: #7c2133 !important;
-}
-.dark-mode .bottom-nav .text-gray-500,
-.dark-mode .bottom-nav .text-gray-600,
-:root.dark .bottom-nav .text-gray-500,
-:root.dark .bottom-nav .text-gray-600,
-.dark-mode .bottom-nav .text-purple-600,
-:root.dark .bottom-nav .text-purple-600,
-.dark-mode .bottom-nav a,
-.dark-mode .bottom-nav button,
-:root.dark .bottom-nav a,
-:root.dark .bottom-nav button,
-.dark-mode .bottom-nav a span,
-.dark-mode .bottom-nav button span,
-.dark-mode .bottom-nav svg,
-:root.dark .bottom-nav a span,
-:root.dark .bottom-nav button span,
-:root.dark .bottom-nav svg {
-    color: #f0c96a !important;
-}
-
 /* App-wide text size controls (wired by js/text-size.js). Fixed rem sizes
    so a control doesn't grow with the text it resizes. */
 .textsize-stepper {
@@ -1444,84 +1244,6 @@ nav.fixed.bottom-0.left-0.right-0 button {
 #dailyPrayersCard > div > svg:last-of-type {
     color: #7c2133 !important;
     stroke: #7c2133 !important;
-}
-
-nav[role="navigation"][aria-label="Main Navigation"] svg,
-.bottom-nav svg,
-nav.fixed.bottom-0.left-0.right-0 svg {
-    width: 1.35rem !important;
-    height: 1.35rem !important;
-    flex-shrink: 0 !important;
-}
-
-nav[role="navigation"][aria-label="Main Navigation"] span,
-.bottom-nav span,
-nav.fixed.bottom-0.left-0.right-0 span {
-    font-size: clamp(0.9rem, 2.6vw, 1.1rem) !important;
-    font-weight: 800 !important;
-    line-height: 1.1 !important;
-    letter-spacing: 0.01em !important;
-    margin-top: 0.2rem !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-@media (max-width: 480px) {
-    nav[role="navigation"][aria-label="Main Navigation"],
-    .bottom-nav,
-    nav.fixed.bottom-0.left-0.right-0 {
-        margin: 0
-                max(0.5rem, env(safe-area-inset-right, 0px))
-                calc(0.375rem + env(safe-area-inset-bottom, 0px))
-                max(0.5rem, env(safe-area-inset-left, 0px)) !important;
-        padding: 0.4rem 0.35rem !important;
-    }
-
-    nav[role="navigation"][aria-label="Main Navigation"] a,
-    nav[role="navigation"][aria-label="Main Navigation"] button,
-    .bottom-nav a,
-    .bottom-nav button,
-    nav.fixed.bottom-0.left-0.right-0 a,
-    nav.fixed.bottom-0.left-0.right-0 button {
-        max-width: 4.6rem !important;
-        padding: 0.25rem 0.1rem !important;
-    }
-
-    nav[role="navigation"][aria-label="Main Navigation"] svg,
-    .bottom-nav svg,
-    nav.fixed.bottom-0.left-0.right-0 svg {
-        width: 1.25rem !important;
-        height: 1.25rem !important;
-    }
-
-    nav[role="navigation"][aria-label="Main Navigation"] span,
-    .bottom-nav span,
-    nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: clamp(0.82rem, 3.4vw, 0.98rem) !important;
-        font-weight: 800 !important;
-    }
-}
-
-/* Very narrow screens (Galaxy Fold cover display, ~280px): tighten further
-   so four items still fit without wrapping or clipping. */
-@media (max-width: 320px) {
-    nav[role="navigation"][aria-label="Main Navigation"] a,
-    nav[role="navigation"][aria-label="Main Navigation"] button,
-    .bottom-nav a,
-    .bottom-nav button,
-    nav.fixed.bottom-0.left-0.right-0 a,
-    nav.fixed.bottom-0.left-0.right-0 button {
-        max-width: none !important;
-        padding: 0.2rem 0.05rem !important;
-    }
-
-    nav[role="navigation"][aria-label="Main Navigation"] span,
-    .bottom-nav span,
-    nav.fixed.bottom-0.left-0.right-0 span {
-        font-size: clamp(0.76rem, 3.9vw, 0.88rem) !important;
-        font-weight: 800 !important;
-    }
 }
 
 /* Enhanced Mobile Navigation with Tailwind */
@@ -1676,29 +1398,6 @@ nav.fixed.bottom-0.left-0.right-0 span {
         align-items: center;
         justify-content: center;
     }
-}
-
-/* Floating Bottom Navigation Effect — visual skin only. Geometry (position,
-   margins, safe areas, sizing) lives in the shared block above; keep it there
-   so the two never disagree. */
-nav[role="navigation"][aria-label="Main Navigation"],
-.bottom-nav,
-nav.fixed.bottom-0.left-0.right-0 {
-    background: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
-
-:root.dark nav[role="navigation"][aria-label="Main Navigation"],
-:root.dark .bottom-nav,
-:root.dark nav.fixed.bottom-0.left-0.right-0,
-.dark-mode nav[role="navigation"][aria-label="Main Navigation"],
-.dark-mode .bottom-nav,
-.dark-mode nav.fixed.bottom-0.left-0.right-0 {
-    background: rgba(30, 27, 46, 0.85) !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Enhanced Card States */
@@ -1903,21 +1602,29 @@ nav.fixed.bottom-0.left-0.right-0 {
 }
 
 /* ---------------------------------------------------------------------------
-   Options panel quick links: Calendar, Accessibility, Translate and every
-   prayer rendered as circular icons that wrap horizontally and vertically
-   in a single grid, instead of stacked list rows.
+   Options panel: grouped sections (Go to, Prayers, Display & language), each
+   a tidy four-column grid of circular icons with their labels underneath.
    --------------------------------------------------------------------------- */
-.options-quicklinks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.1rem 0.9rem;
+.options-section + .options-section {
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle, #e5e7eb);
 }
 
-/* The prayer items are injected into this nav; display:contents lets them
-   flow directly into the .options-quicklinks flex-wrap grid alongside the
-   Calendar/Accessibility/Translate buttons. */
-.prayer-menu-grid {
-    display: contents;
+/* Scoped by id: body.page-index h3 is more specific than a class */
+#optionsPanel .options-section-title {
+    margin: 0 0 0.8rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.options-quicklinks {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.1rem 0.5rem;
 }
 
 .options-quicklink {
@@ -1925,7 +1632,7 @@ nav.fixed.bottom-0.left-0.right-0 {
     flex-direction: column;
     align-items: center;
     gap: 0.35rem;
-    width: 4.25rem;
+    min-width: 0;
     text-align: center;
     color: var(--text-primary);
 }
@@ -1944,13 +1651,25 @@ nav.fixed.bottom-0.left-0.right-0 {
 }
 
 .options-quicklink-label {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 500;
     line-height: 1.15;
 }
 
+/* The "Go to" items (the former bottom-nav items) in the app's maroon/gold */
+.options-nav-icon {
+    color: var(--nav-maroon, #7c2133);
+    background: #f3e8eb;
+}
+
+.dark .options-nav-icon,
+.dark-mode .options-nav-icon {
+    color: #f0c96a;
+    background: var(--surface-2);
+}
+
 /* ---------------------------------------------------------------------------
-   Prayers Bottom Sheet (opened from the bottom navigation)
+   Prayers Bottom Sheet (opened from the Prayers item in the Options sheet)
    --------------------------------------------------------------------------- */
 .sheet-overlay {
     position: fixed;

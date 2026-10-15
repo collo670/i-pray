@@ -154,7 +154,6 @@
             + 'background:rgba(34,34,34,0.92);color:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.3);cursor:pointer;'
             + 'backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}'
             + '.ipray-fav[aria-pressed="true"]{color:#f0c96a;}'
-            + 'body:has(.bottom-nav) .ipray-fav{bottom:calc(5.5rem + env(safe-area-inset-bottom,0px));}'
             + '.ipray-toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(5rem + env(safe-area-inset-bottom,0px));'
             + 'z-index:1300;background:#1f2937;color:#fff;padding:0.55rem 1rem;border-radius:0.6rem;font-size:0.9rem;'
             + 'box-shadow:0 4px 14px rgba(0,0,0,0.25);transition:opacity .3s;}';

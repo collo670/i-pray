@@ -6,7 +6,8 @@ test('with nothing saved the app opens in Kiswahili', async ({ page }) => {
     await isolate(page, { universalis: 'fail' });
     await page.goto('pages/via-cruce.html');
     expect(await page.evaluate(() => IPrayI18n.lang())).toBe('sw');
-    await expect(page.locator('.bottom-nav [data-translate="home"]')).toHaveText('Nyumbani');
+    await expect(page.locator('#ipoOptionsSheet [data-translate="home"]')).toHaveText('Nyumbani');
+    await expect(page.locator('.ipray-home-btn')).toHaveAttribute('aria-label', 'Nyumbani');
 });
 
 test('the old Settings key is still honoured', async ({ page }) => {
@@ -16,16 +17,16 @@ test('the old Settings key is still honoured', async ({ page }) => {
     expect(await page.evaluate(() => IPrayI18n.lang())).toBe('en');
 });
 
-test('bottom navigation and the Prayers sheet follow the language on any page', async ({ page }) => {
+test('the Options menu and the Prayers sheet follow the language on any page', async ({ page }) => {
     const errors = collectErrors(page);
     await isolate(page, { universalis: 'fail' });
     await setLanguage(page, 'sw');
     await page.goto('pages/via-cruce.html');
-    await expect(page.locator('.bottom-nav [data-translate="calendar"]')).toHaveText('Kalenda');
+    await expect(page.locator('#ipoOptionsSheet [data-translate="calendar"]')).toHaveText('Kalenda');
     await expect(page.locator('#ipnPrayersTitle')).toHaveText('Sala');
     await expect(page.locator('.ipn-item-label[data-translate="nightPrayer"]')).toHaveText('Sala ya Usiku');
     await page.evaluate(() => IPrayI18n.set('en'));
-    await expect(page.locator('.bottom-nav [data-translate="calendar"]')).toHaveText('Calendar');
+    await expect(page.locator('#ipoOptionsSheet [data-translate="calendar"]')).toHaveText('Calendar');
     await expect(page.locator('.ipn-item-label[data-translate="nightPrayer"]')).toHaveText('Night Prayer');
     // The icon beside each label survives the change.
     await expect(page.locator('.ipn-item .ipn-item-icon i').first()).toBeAttached();

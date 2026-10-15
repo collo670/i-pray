@@ -57,7 +57,7 @@ for (const [hour, title, subtitle] of [
         await expect(page.locator('#tabCompline')).toHaveText('Usiku');
         await expect(page.locator('.office-hour-heading')).toHaveText(title + ' — Kiingereza');
         await expect(page.locator('.sw-fallback-note')).toContainText('bado hakipatikani');
-        await expect(page.locator('.bottom-nav [data-translate="home"]')).toHaveText('Nyumbani');
+        await expect(page.locator('#ipoOptionsSheet [data-translate="home"]')).toHaveText('Nyumbani');
         expect(errors).toEqual([]);
     });
 }

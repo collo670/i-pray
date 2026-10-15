@@ -351,7 +351,7 @@ function resolvePrayerLink(item) {
 }
 
 // The four Liturgy of the Hours prayers shown in the Daily Prayers card,
-// same ids/links as the bottom nav's Prayers sheet.
+// same ids/links as the Prayers sheet.
 const DAILY_PRAYERS_MENU = PRAYER_MENU.filter(item => ['lauds', 'scripture', 'midday', 'vespers'].includes(item.id));
 
 function renderPrayerMenus() {
