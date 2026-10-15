@@ -102,3 +102,17 @@ test('the Options button holds Home, Prayers, Calendar and Settings', async ({ p
     await expect(page.locator('#ipnPrayersSheet .ipn-item')).toHaveCount(8);
     expect(errors).toEqual([]);
 });
+
+test('the home page ends with the Amefufuka card just above the Home button', async ({ page }) => {
+    await isolate(page, { universalis: 'fail' });
+    await page.goto('index.html');
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(async () => page.evaluate(() => {
+        const card = document.getElementById('amefufukaCard').getBoundingClientRect();
+        const home = document.querySelector('.ipray-home-btn').getBoundingClientRect();
+        return Math.round(home.top - card.bottom);
+    })).toBeGreaterThan(4);
+    const gap = await page.evaluate(() => document.querySelector('.ipray-home-btn').getBoundingClientRect().top
+        - document.getElementById('amefufukaCard').getBoundingClientRect().bottom);
+    expect(gap).toBeLessThan(32);
+});
