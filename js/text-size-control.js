@@ -34,14 +34,6 @@
             buttonClass: { dec: 'ptc-dec', reset: 'ptc-reset', inc: 'ptc-inc' }
         });
         document.body.appendChild(ctl);
-
-        // Pages with a fixed bottom nav (mwaka*.html, daily-readings.html)
-        // would otherwise have this floating control overlap it.
-        const bottomNav = document.querySelector('.bottom-nav, nav[role="navigation"][aria-label="Main Navigation"]');
-        if (bottomNav) {
-            const navHeight = bottomNav.getBoundingClientRect().height;
-            ctl.style.bottom = 'calc(' + navHeight + 'px + env(safe-area-inset-bottom, 0px) + 0.75rem)';
-        }
     }
 
     if (document.readyState === 'loading') {

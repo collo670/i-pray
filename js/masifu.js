@@ -338,9 +338,8 @@
     // The size is the app-wide setting kept by js/text-size.js: it sets
     // --prayer-text-scale on <html>, which css/index.css's .container rule
     // multiplies its font-size by, instead of scaling the root <html>
-    // font-size: the navbar sits outside .container as a sibling, so it (and
-    // the bottom nav, on pages that have one) stays a fixed size while only
-    // the prayer text grows and shrinks.
+    // font-size: the navbar sits outside .container as a sibling, so it stays
+    // a fixed size while only the prayer text grows and shrinks.
     function setupTextControls() {
         if (!window.IPrayTextSize) return;
         const ctl = window.IPrayTextSize.createControl({
@@ -348,14 +347,6 @@
             buttonClass: { dec: 'tc-dec', reset: 'tc-reset', inc: 'tc-inc' }
         });
         document.body.appendChild(ctl);
-
-        // A few asubuhi pages also carry a fixed bottom nav; without this
-        // the floating control would sit on top of it.
-        const bottomNav = document.querySelector('.bottom-nav, nav[role="navigation"][aria-label="Main Navigation"]');
-        if (bottomNav) {
-            const navHeight = bottomNav.getBoundingClientRect().height;
-            ctl.style.bottom = 'calc(' + navHeight + 'px + env(safe-area-inset-bottom, 0px) + 0.75rem)';
-        }
     }
 
     // ---- Init -------------------------------------------------------------------

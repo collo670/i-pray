@@ -1497,13 +1497,6 @@
       }
     }
   }
-  .hover\:text-gray-700 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-gray-700);
-      }
-    }
-  }
   .hover\:text-gray-800 {
     &:hover {
       @media (hover: hover) {
@@ -1941,11 +1934,6 @@
       color: var(--color-pink-400);
     }
   }
-  .dark\:text-primary {
-    &:where(.dark, .dark *) {
-      color: var(--color-primary);
-    }
-  }
   .dark\:text-purple-300 {
     &:where(.dark, .dark *) {
       color: var(--color-purple-300);
@@ -1998,15 +1986,6 @@
       &:hover {
         @media (hover: hover) {
           color: var(--color-gray-100);
-        }
-      }
-    }
-  }
-  .dark\:hover\:text-gray-200 {
-    &:where(.dark, .dark *) {
-      &:hover {
-        @media (hover: hover) {
-          color: var(--color-gray-200);
         }
       }
     }

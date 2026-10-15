@@ -3,8 +3,8 @@
 // Loaded in <head> of every page, next to js/theme.js and js/text-size.js.
 // It owns the saved language (localStorage 'preferredLanguage'), so every
 // page reads it the same way and agrees on the default, and it translates
-// the labels every page shares - the bottom navigation and the Prayers
-// sheet - wherever they are marked with data-translate.
+// the labels every page shares - the Options menu, the Prayers sheet and
+// the Home button - wherever they are marked with data-translate.
 //
 //   IPrayI18n.lang()        'sw' | 'en' | 'es' | 'it' | 'fr' | 'pt'
 //   IPrayI18n.prayerLang()  'sw' or 'en': the prayer texts exist only in
@@ -28,12 +28,12 @@
     var DEFAULT = 'sw';
 
     var LABELS = {
-        en: { home: 'Home', prayers: 'Prayers', calendar: 'Calendar', settings: 'Settings', morningPrayer: 'Morning Prayer', officeOfReadings: 'Office of Readings', middayPrayer: 'Midday Prayer', eveningPrayer: 'Evening Prayer', nightPrayer: 'Night Prayer', holyRosary: 'Holy Rosary', stationsOfCross: 'Stations of the Cross', carmenPrayer: 'Prayer to Carmen Hernández' },
-        sw: { home: 'Nyumbani', prayers: 'Sala', calendar: 'Kalenda', settings: 'Mipangilio', morningPrayer: 'Masifu ya Asubuhi', officeOfReadings: 'Ofisi ya Masomo', middayPrayer: 'Sala ya Mchana', eveningPrayer: 'Masifu ya Jioni', nightPrayer: 'Sala ya Usiku', holyRosary: 'Rozari Takatifu', stationsOfCross: 'Njia ya Msalaba', carmenPrayer: 'Sala kwa Carmen Hernández' },
-        es: { home: 'Inicio', prayers: 'Oraciones', calendar: 'Calendario', settings: 'Ajustes', morningPrayer: 'Oración de la Mañana', officeOfReadings: 'Oficio de Lectura', middayPrayer: 'Oración del Mediodía', eveningPrayer: 'Vísperas', nightPrayer: 'Completas', holyRosary: 'Santo Rosario', stationsOfCross: 'Vía Crucis', carmenPrayer: 'Oración a Carmen Hernández' },
-        it: { home: 'Home', prayers: 'Preghiere', calendar: 'Calendario', settings: 'Impostazioni', morningPrayer: 'Lodi Mattutine', officeOfReadings: 'Ufficio delle Letture', middayPrayer: 'Ora Media', eveningPrayer: 'Vespri', nightPrayer: 'Compieta', holyRosary: 'Santo Rosario', stationsOfCross: 'Via Crucis', carmenPrayer: 'Preghiera a Carmen Hernández' },
-        fr: { home: 'Accueil', prayers: 'Prières', calendar: 'Calendrier', settings: 'Paramètres', morningPrayer: 'Laudes', officeOfReadings: 'Office des Lectures', middayPrayer: 'Prière de Midi', eveningPrayer: 'Vêpres', nightPrayer: 'Complies', holyRosary: 'Saint Rosaire', stationsOfCross: 'Chemin de Croix', carmenPrayer: 'Prière à Carmen Hernández' },
-        pt: { home: 'Início', prayers: 'Orações', calendar: 'Calendário', settings: 'Configurações', morningPrayer: 'Oração da Manhã', officeOfReadings: 'Ofício das Leituras', middayPrayer: 'Oração do Meio-Dia', eveningPrayer: 'Vésperas', nightPrayer: 'Completas', holyRosary: 'Santo Rosário', stationsOfCross: 'Via-Sacra', carmenPrayer: 'Oração a Carmen Hernández' }
+        en: { home: 'Home', prayers: 'Prayers', calendar: 'Calendar', settings: 'Settings', options: 'Options', menuGoTo: 'Go to', menuDisplay: 'Display & language', accessibility: 'Accessibility', translate: 'Translate', morningPrayer: 'Morning Prayer', officeOfReadings: 'Office of Readings', middayPrayer: 'Midday Prayer', eveningPrayer: 'Evening Prayer', nightPrayer: 'Night Prayer', holyRosary: 'Holy Rosary', stationsOfCross: 'Stations of the Cross', carmenPrayer: 'Prayer to Carmen Hernández' },
+        sw: { home: 'Nyumbani', prayers: 'Sala', calendar: 'Kalenda', settings: 'Mipangilio', options: 'Chaguo', menuGoTo: 'Nenda', menuDisplay: 'Mwonekano na lugha', accessibility: 'Ufikivu', translate: 'Tafsiri', morningPrayer: 'Masifu ya Asubuhi', officeOfReadings: 'Ofisi ya Masomo', middayPrayer: 'Sala ya Mchana', eveningPrayer: 'Masifu ya Jioni', nightPrayer: 'Sala ya Usiku', holyRosary: 'Rozari Takatifu', stationsOfCross: 'Njia ya Msalaba', carmenPrayer: 'Sala kwa Carmen Hernández' },
+        es: { home: 'Inicio', prayers: 'Oraciones', calendar: 'Calendario', settings: 'Ajustes', options: 'Opciones', menuGoTo: 'Ir a', menuDisplay: 'Pantalla e idioma', accessibility: 'Accesibilidad', translate: 'Traducir', morningPrayer: 'Oración de la Mañana', officeOfReadings: 'Oficio de Lectura', middayPrayer: 'Oración del Mediodía', eveningPrayer: 'Vísperas', nightPrayer: 'Completas', holyRosary: 'Santo Rosario', stationsOfCross: 'Vía Crucis', carmenPrayer: 'Oración a Carmen Hernández' },
+        it: { home: 'Home', prayers: 'Preghiere', calendar: 'Calendario', settings: 'Impostazioni', options: 'Opzioni', menuGoTo: 'Vai a', menuDisplay: 'Schermo e lingua', accessibility: 'Accessibilità', translate: 'Traduci', morningPrayer: 'Lodi Mattutine', officeOfReadings: 'Ufficio delle Letture', middayPrayer: 'Ora Media', eveningPrayer: 'Vespri', nightPrayer: 'Compieta', holyRosary: 'Santo Rosario', stationsOfCross: 'Via Crucis', carmenPrayer: 'Preghiera a Carmen Hernández' },
+        fr: { home: 'Accueil', prayers: 'Prières', calendar: 'Calendrier', settings: 'Paramètres', options: 'Options', menuGoTo: 'Aller à', menuDisplay: 'Affichage et langue', accessibility: 'Accessibilité', translate: 'Traduire', morningPrayer: 'Laudes', officeOfReadings: 'Office des Lectures', middayPrayer: 'Prière de Midi', eveningPrayer: 'Vêpres', nightPrayer: 'Complies', holyRosary: 'Saint Rosaire', stationsOfCross: 'Chemin de Croix', carmenPrayer: 'Prière à Carmen Hernández' },
+        pt: { home: 'Início', prayers: 'Orações', calendar: 'Calendário', settings: 'Configurações', options: 'Opções', menuGoTo: 'Ir para', menuDisplay: 'Ecrã e idioma', accessibility: 'Acessibilidade', translate: 'Traduzir', morningPrayer: 'Oração da Manhã', officeOfReadings: 'Ofício das Leituras', middayPrayer: 'Oração do Meio-Dia', eveningPrayer: 'Vésperas', nightPrayer: 'Completas', holyRosary: 'Santo Rosário', stationsOfCross: 'Via-Sacra', carmenPrayer: 'Oração a Carmen Hernández' }
     };
 
     function read() {

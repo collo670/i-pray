@@ -13,7 +13,7 @@
 // their reading text by it in their own CSS (.container, .office-content,
 // .reading-text, ...); on every page the rules injected below also scale the
 // text inside <main>, unless it has data-fixed-text-size (the home page).
-// The top app bar, the bottom nav and the size controls themselves sit
+// The top app bar, the Home button and the size controls themselves sit
 // outside <main>, so they keep a fixed size.
 //
 // Controls need no script of their own - clicks are handled here:
