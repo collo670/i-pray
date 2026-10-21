@@ -207,9 +207,9 @@
             // full text of each day's Mass readings as a dated article; it has
             // no CORS headers either, so it's fetched through the same proxy
             // chain used for Universalis in prayer-hour.html. If a date isn't
-            // published there yet (it only covers today and the recent past,
-            // never the future) the English Universalis feed is shown instead,
-            // with a note explaining why.
+            // published there yet (it posts each day only a few days ahead)
+            // the English Universalis feed is shown instead, with a note
+            // explaining why.
             var SW_SITE = 'https://mkatolikileo.com';
             var SW_LIST_URL = SW_SITE + '/masomo-ya-misa';
             // v3: days cached by v2 hold raw Markdown (**, _, 1\.) and
@@ -219,13 +219,22 @@
             var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
             var SW_WEEKDAYS = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
             var SW_MONTH_SLUGS = ['januari', 'februari', 'machi', 'aprili', 'mei', 'juni', 'julai', 'agosti', 'septemba', 'oktoba', 'novemba', 'desemba'];
+            // The app's Cloudflare Worker (cloudflare-worker/ipray-worker.js)
+            // serves the site's pages with CORS, cached at the edge: asked
+            // first. Until its mkatolikileo route is deployed it answers
+            // these paths with a 404, and the others are asked at once.
+            var SW_WORKER = 'https://ancient-rice-28a1.otienocollo95.workers.dev/mkatolikileo';
             // r.jina.ai ("Reader") fetches a page server-side and returns
-            // clean Markdown with CORS already open - no proxy needed, and
-            // it isn't tied to mkatolikileo.com's current HTML/class names,
-            // so a site redesign can't silently break it the way the old
-            // DOM-scraping path could. Tried first; the raw-HTML proxy
-            // chain below is kept as a fallback only.
+            // clean Markdown with CORS already open - no proxy needed. Asked
+            // next; the raw-HTML proxy chain below is kept as a fallback
+            // only. Both parsers follow the site's layout, so a redesign
+            // (as in October 2026) needs them both updated: the saved pages
+            // in tests/fixtures/mkatolikileo/ show the current one.
             var SW_READER_PREFIX = 'https://r.jina.ai/';
+            // The Reader renders a page it hasn't seen lately in a browser
+            // first: the list of days took 9 s, so js/fetch-first.js's
+            // default 10 s per request would often cut it off.
+            var SW_FETCH_TIMEOUT_MS = 15000;
             var SW_PROXIES = [
                 function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
                 function (u) { return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); },
@@ -374,32 +383,38 @@
                 if (gospelOnly) sendEmbeddedGospel('ready', renderedGospel);
             }
 
-            // Reject a parsed article whose embedded date label does not
-            // match the day we asked for (guards against a wrong projected id).
+            // Reject a parsed article whose date does not match the day we
+            // asked for (guards against a wrong projected id).
             function swParsedMatchesStamp(parsed, stamp) {
-                if (!parsed || !parsed.dateLabel) return false;
-                var m = String(parsed.dateLabel).match(/([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})/);
-                if (!m) return true; // unparseable label — trust the URL slug
-                var monthIdx = SW_MONTHS[m[1].toLowerCase()];
-                if (monthIdx === undefined) return true;
-                var d = new Date(Number(m[3]), monthIdx, Number(m[2]));
-                return stampOf(d) === stamp;
+                if (!parsed) return false;
+                var found = parsed.date || swLabelStamp(parsed.dateLabel);
+                return !found || found === stamp; // no date on the page — trust the URL slug
+            }
+
+            // "Jumanne, 20 Oktoba 2026" to "20261020", or '' if it holds no
+            // date.
+            function swLabelStamp(label) {
+                var m = String(label || '').match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+                var monthIdx = m ? SW_MONTHS[m[2].toLowerCase()] : undefined;
+                return monthIdx === undefined ? '' : stampOf(new Date(Number(m[3]), monthIdx, Number(m[1])));
             }
 
             function showSwUnavailable(offline) {
                 readingsSwNote.textContent = offline
                     ? 'Uko nje ya mtandao, na masomo ya Kiswahili ya siku hii hayajahifadhiwa kwenye simu hii. Yanaonyeshwa kwa Kiingereza.'
-                    : 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyeshwa kwa Kiingereza.';
+                    : 'Masomo ya Kiswahili ya siku hii hayapatikani kwa sasa. Yanaonyeshwa kwa Kiingereza.';
                 readingsSwNote.classList.remove('hidden');
             }
 
-            // Fetches a mkatolikileo.com page through the Reader (Markdown)
-            // first and, if it doesn't answer, the raw-HTML proxies all
-            // together (js/fetch-first.js). parse(text, viaReader) turns an
-            // answer into a result, or null if it doesn't hold one.
+            // Fetches a mkatolikileo.com page through the Worker (HTML) first
+            // and, if it doesn't answer, the Reader (Markdown) and the
+            // raw-HTML proxies all together (js/fetch-first.js).
+            // parse(text, viaReader) turns an answer into a result, or null
+            // if it doesn't hold one.
             function fetchSwPage(url, parse) {
-                var routes = [SW_READER_PREFIX + url].concat(SW_PROXIES.map(function (build) { return build(url); }));
-                return IPrayFetch.first(routes, function (text, i) { return parse(text, i === 0); });
+                var routes = [SW_WORKER + url.slice(SW_SITE.length), SW_READER_PREFIX + url]
+                    .concat(SW_PROXIES.map(function (build) { return build(url); }));
+                return IPrayFetch.first(routes, function (text, i) { return parse(text, i === 1); }, { timeout: SW_FETCH_TIMEOUT_MS });
             }
 
             // Fetches one day's article. onOk receives an already-parsed
@@ -510,50 +525,46 @@
             }
 
             // Pulls the day title and each reading (label + citation + text)
-            // out of a fetched mkatolikileo.com article and sanitizes it -
-            // same approach as cleanOffice() in pages/prayer-hour.html.
+            // out of a fetched mkatolikileo.com article page. Its <article>
+            // holds an <h1> (the day), a <time datetime="yyyy-mm-dd"> and a
+            // <section> per reading, headed by an <h2> (the label) beside
+            // the citation; the comments are a <section> too, after the
+            // Gospel.
             function parseSwArticle(html) {
                 var doc = new DOMParser().parseFromString(html, 'text/html');
-                var titleEl = doc.querySelector('.pretty_date_title');
-                var blocks = doc.querySelectorAll('.readings');
-                if (!titleEl || !blocks.length) return null;
-
-                var rawTitle = titleEl.textContent.replace(/\s+/g, ' ').trim();
-                var dayTitle = rawTitle, dateLabel = '';
-                var titleMatch = rawTitle.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
-                if (titleMatch) { dayTitle = titleMatch[1].trim(); dateLabel = titleMatch[2].trim(); }
+                var titleEl = doc.querySelector('article h1');
+                if (!titleEl) return null;
+                var article = titleEl.closest('article');
+                var timeEl = article.querySelector('time');
+                var date = timeEl ? String(timeEl.getAttribute('datetime') || '').replace(/-/g, '').slice(0, 8) : '';
 
                 var sections = [];
+                var blocks = article.querySelectorAll('section');
                 for (var b = 0; b < blocks.length; b++) {
-                    var block = blocks[b];
-                    var labelEl = block.querySelector('.reading_title');
-                    var citeEl = block.querySelector('.reading');
+                    var labelEl = blocks[b].querySelector('h2');
                     if (!labelEl) continue;
-                    // A reading runs over several <p>s (paragraphs, psalm
-                    // stanzas, "Neno la Bwana"): keep them all, not just
-                    // the first.
-                    var paras = block.querySelectorAll('p');
-                    var parts = paras.length ? Array.prototype.slice.call(paras) : [block];
-                    var html = parts.map(function (p) {
-                        if (p === block) {
-                            if (labelEl.parentNode) labelEl.parentNode.removeChild(labelEl);
-                            if (citeEl && citeEl.parentNode) citeEl.parentNode.removeChild(citeEl);
-                        }
-                        if (isSwFooterLine(p.textContent)) return '';
-                        var inner = swCleanNode(p).replace(/^(\s|<br>)+|(\s|<br>)+$/g, '');
-                        return inner ? '<div class="sw-para">' + inner + '</div>' : '';
-                    }).join('');
-                    if (!html) continue;
-                    var label = labelEl.textContent.replace(/\s+/g, ' ').trim();
-                    sections.push({
-                        label: label,
-                        citation: citeEl ? citeEl.textContent.replace(/\s+/g, ' ').trim() : '',
-                        textHtml: html
-                    });
+                    var citeEl = labelEl.nextElementSibling;
+                    // The section's child holding the label and citation;
+                    // the reading is everything after it.
+                    var head = labelEl;
+                    while (head.parentNode !== blocks[b]) head = head.parentNode;
+                    var paras = [];
+                    for (var c = blocks[b].firstElementChild; c; c = c.nextElementSibling) {
+                        if (c !== head && c !== citeEl) paras = paras.concat(swParagraphs(c));
+                    }
+                    var textHtml = swParasToHtml(paras);
+                    if (!textHtml) continue;
+                    var label = swNodeText(labelEl);
+                    sections.push({ label: label, citation: citeEl ? swNodeText(citeEl) : '', textHtml: textHtml });
                     if (isSwGospelLabel(label)) break;
                 }
                 if (!sections.length) return null;
-                return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+                return {
+                    dayTitle: swNodeText(titleEl),
+                    dateLabel: timeEl ? swNodeText(timeEl) : '',
+                    date: /^\d{8}$/.test(date) ? date : '',
+                    sections: sections
+                };
             }
 
             function isSwGospelLabel(label) {
@@ -574,63 +585,55 @@
                 return false;
             }
 
-            // Parses the Markdown that r.jina.ai's Reader returns for an
-            // mkatolikileo.com article. The Reader ignores the site's HTML
-            // classes/layout entirely, so this only depends on the visible
-            // content shape, which has been stable: a "### Day Title
-            // (Date)" heading, then repeating [plain label line] / [###
-            // citation] / [body text] triples ("Somo la 1", "Wimbo wa
-            // Katikati" / "Zaburi ya Katikati", "Shangilio", "Injili", plus
-            // "Somo la 2" on Sundays and solemnities).
-            // Parsing stops at Injili so site nav/footer links never render.
+            // Parses the Markdown that r.jina.ai's Reader returns for a
+            // mkatolikileo.com article. It drops the page's <h1>, so the
+            // day comes from the "Title: Masomo ya Misa: <day>, <weekday>,
+            // <date>" line; the date line ("Jumanne, 20 Oktoba 2026 · Mwaka
+            // A · ...") comes before the readings. Each reading is a "##
+            // <label>" heading ("Somo la Kwanza", "Wimbo wa Katikati", "Somo
+            // la Pili" on Sundays and solemnities, "Shangilio la Injili",
+            // "Injili"), the citation on the next line, then the text up to
+            // the next heading. Parsing stops at Injili, so the reflection
+            // link and the comments after it never render.
             function parseSwArticleText(md) {
                 if (!md) return null;
-                var lines = md.replace(/\r\n/g, '\n').split('\n');
-                var dayTitle = '', dateLabel = '', startIdx = -1;
+                var lines = String(md).replace(/\r\n/g, '\n').split('\n');
+                var dayTitle = '', dateLabel = '', titleDate = '', start = 0;
+                var weekdaySplit = new RegExp('^(.*?),\\s*((?:' + SW_WEEKDAYS.join('|') + '),?\\s+\\d{1,2}\\s+[A-Za-z]+\\s+\\d{4})$', 'i');
                 for (var i = 0; i < lines.length; i++) {
-                    var head = lines[i].match(/^#{2,3}\s+(.+?)\s*\(([^()]+)\)\s*$/);
-                    if (head) { dayTitle = swPlain(head[1]); dateLabel = swPlain(head[2]); startIdx = i + 1; break; }
+                    var title = lines[i].match(/^Title:\s*(?:Masomo ya Misa\s*:\s*)?(.+?)\s*$/i);
+                    if (title) {
+                        var day = title[1].match(weekdaySplit);
+                        dayTitle = swPlain(day ? day[1] : title[1]);
+                        titleDate = day ? swPlain(day[2]) : '';
+                    }
+                    if (/^Markdown Content:/.test(lines[i])) { start = i + 1; break; }
                 }
-                if (startIdx === -1) return null;
 
                 var sections = [];
-                var i2 = startIdx;
-                while (i2 < lines.length) {
-                    var line = lines[i2].trim();
-                    i2++;
-                    if (!line || isSwFooterLine(line) || line.charAt(0) === '#') continue;
-
-                    var j = i2;
-                    while (j < lines.length && !lines[j].trim()) j++;
-                    var citeMatch = j < lines.length ? lines[j].match(/^###\s+(.+)$/) : null;
-                    if (!citeMatch) continue;
-
-                    var label = swPlain(line);
-                    var citation = swPlain(citeMatch[1]);
-                    i2 = j + 1;
-
-                    var bodyLines = [];
-                    while (i2 < lines.length) {
-                        var peekTrim = lines[i2].trim();
-                        if (isSwFooterLine(peekTrim)) break;
-                        if (peekTrim && lines[i2].charAt(0) !== '#') {
-                            var k = i2 + 1;
-                            while (k < lines.length && !lines[k].trim()) k++;
-                            if (k < lines.length && /^###\s+/.test(lines[k])) break;
-                        } else if (peekTrim.charAt(0) === '#') {
-                            break;
-                        }
-                        bodyLines.push(lines[i2]);
-                        i2++;
+                for (i = start; i < lines.length; i++) {
+                    var heading = lines[i].match(/^#{1,3}\s+(.+?)\s*$/);
+                    if (!heading) {
+                        if (!sections.length && !dateLabel && swLabelStamp(lines[i])) dateLabel = swPlain(lines[i].split('·')[0]);
+                        continue;
                     }
-                    var text = bodyLines.join('\n').trim();
-                    if (!text) continue;
-                    sections.push({ label: label, citation: citation, textHtml: swTextToHtml(text) });
-                    // Mass readings end at the Gospel — ignore everything after.
+                    var body = [];
+                    for (var j = i + 1; j < lines.length && !/^#{1,6}\s/.test(lines[j]); j++) body.push(lines[j]);
+                    i = j - 1;
+                    // A heading that is a link is a list entry, not a reading
+                    if (/^\[.*\]\(.*\)$/.test(heading[1])) continue;
+                    var label = swPlain(heading[1]);
+                    if (/^Maoni\b/i.test(label)) break;
+                    while (body.length && !body[0].trim()) body.shift();
+                    var citation = '';
+                    if (body.length && /\d/.test(body[0]) && body[0].trim().length <= 80) citation = swPlain(body.shift());
+                    var textHtml = swTextToHtml(body.join('\n'));
+                    if (!textHtml) continue;
+                    sections.push({ label: label, citation: citation, textHtml: textHtml });
                     if (isSwGospelLabel(label)) break;
                 }
                 if (!sections.length) return null;
-                return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
+                return { dayTitle: dayTitle, dateLabel: dateLabel || titleDate, sections: sections };
             }
 
             function swEscape(s) {
@@ -655,6 +658,50 @@
                 }
                 return out;
             }
+            // One part of a reading on the site, as paragraphs: a block that
+            // holds two or more blocks (the psalm's stanzas and refrains) is
+            // split into them; any other block (a reading, the refrain with
+            // its "K.", "Neno la Bwana") is one paragraph.
+            var SW_BLOCK_TAG = /^(p|div|blockquote|ul|ol|li|h[1-6])$/i;
+            function swParagraphs(node) {
+                var blocks = 0;
+                for (var c = node.firstElementChild; c; c = c.nextElementSibling) {
+                    if (SW_BLOCK_TAG.test(c.tagName)) blocks++;
+                }
+                if (blocks < 2) {
+                    var html = swCleanNode(node).replace(/\s*<br>\s*/g, '<br>').replace(/^(\s|<br>)+|(\s|<br>)+$/g, '');
+                    return html && !isSwFooterLine(node.textContent) ? [html] : [];
+                }
+                var out = [], run = null;
+                for (var k = node.firstChild; k; k = k.nextSibling) {
+                    if (k.nodeType === 1 && SW_BLOCK_TAG.test(k.tagName)) {
+                        if (run) out = out.concat(swParagraphs(run));
+                        run = null;
+                        out = out.concat(swParagraphs(k));
+                    } else {
+                        run = run || node.ownerDocument.createElement('div');
+                        run.appendChild(k.cloneNode(true));
+                    }
+                }
+                if (run) out = out.concat(swParagraphs(run));
+                return out;
+            }
+            // A reading's paragraphs (inner HTML) to the page's HTML. The
+            // psalm's refrain ("K. ...") is in bold, as on the site; the
+            // Reader puts the first one's "K." on a line of its own.
+            function swParasToHtml(paras) {
+                var out = '';
+                for (var i = 0; i < paras.length; i++) {
+                    var p = paras[i];
+                    if (p === 'K.' && i + 1 < paras.length) p = 'K. ' + paras[++i];
+                    if (/^K\.\s/.test(p)) p = '<strong>' + p + '</strong>';
+                    out += '<div class="sw-para">' + p + '</div>';
+                }
+                return out;
+            }
+            function swNodeText(el) {
+                return el.textContent.replace(/\s+/g, ' ').replace(/ ,/g, ',').trim();
+            }
             // Inline Markdown from the Reader (Turndown output) to HTML:
             // images dropped, links unwrapped, **bold**/_italic_ rendered and
             // Turndown's backslash escapes ("1\.", "\*", "\[") undone, so
@@ -678,22 +725,22 @@
             function swPlain(md) {
                 var div = document.createElement('div');
                 div.innerHTML = swInlineToHtml(md);
-                return div.textContent.replace(/\s+/g, ' ').trim();
+                return div.textContent.replace(/\s+/g, ' ').replace(/ ,/g, ',').trim();
             }
             function swTextToHtml(text) {
-                // Drop leftover nav/footer link and image lines that may
-                // trail a section.
+                // Drop leftover nav/footer lines and lines of nothing but
+                // links or images (the reflection and next/previous day
+                // links after the Gospel are one such line).
                 var cleaned = String(text || '').split('\n').filter(function (ln) {
                     var t = ln.trim();
-                    return !isSwFooterLine(t) && !/^\[[^\]]+\]\([^)]+\)$/.test(t) && !/^!\[[^\]]*\]\([^)]*\)$/.test(t);
+                    return !isSwFooterLine(t) && !/^(!?\[[^\]]*\]\([^)]*\)\s*)+$/.test(t);
                 }).join('\n');
-                return cleaned.split(/\n\s*\n/).map(function (p) {
+                return swParasToHtml(cleaned.split(/\n\s*\n/).map(function (p) {
                     // Turndown writes <br> as two trailing spaces (or a
                     // backslash) before the newline.
-                    var html = swInlineToHtml(p.trim()).split(/ *\\?\n/)
+                    return swInlineToHtml(p.trim()).split(/ *\\?\n/)
                         .map(function (l) { return l.trim(); }).filter(Boolean).join('<br>');
-                    return html ? '<div class="sw-para">' + html + '</div>' : '';
-                }).join('');
+                }).filter(Boolean));
             }
 
             function fetchErrorText() {

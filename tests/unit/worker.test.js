@@ -58,6 +58,51 @@ test('only the app hours and nearby dates are proxied', async () => {
     }
 });
 
+test('fetches the Kiswahili readings and their list of days, adds CORS and caches them', async () => {
+    const calls = [];
+    const { worker, store } = loadWorker(async (url) => {
+        calls.push(url);
+        return new Response('<article><h1>Jumanne ya 29 ya Mwaka</h1></article>', { status: 200 });
+    });
+    const paths = ['/masomo-ya-misa', '/masomo-ya-misa/3944/jumanne-oktoba-20-2026'];
+    for (const p of paths) {
+        const c = ctx();
+        const res = await worker.fetch(new Request('https://w.example/mkatolikileo' + p), {}, c);
+        await c.done();
+        assert.equal(res.status, 200, p);
+        assert.equal(res.headers.get('access-control-allow-origin'), '*');
+        assert.match(res.headers.get('cache-control'), /public, max-age=\d+/);
+        assert.match(await res.text(), /Jumanne ya 29/);
+    }
+    assert.deepEqual(calls, paths.map((p) => 'https://mkatolikileo.com' + p));
+    assert.equal(store.size, 2);
+
+    const again = await worker.fetch(new Request('https://w.example/mkatolikileo' + paths[1]), {}, ctx());
+    assert.equal(again.status, 200);
+    assert.equal(calls.length, 2, 'second request answered from the cache');
+});
+
+test('a day mkatolikileo.com does not have is passed on, not cached', async () => {
+    const { worker, store } = loadWorker(async () => new Response('Not found', { status: 404 }));
+    const c = ctx();
+    const res = await worker.fetch(new Request('https://w.example/mkatolikileo/masomo-ya-misa/9999/jumamosi-oktoba-31-2026'), {}, c);
+    await c.done();
+    assert.equal(res.status, 404);
+    assert.equal(res.headers.get('access-control-allow-origin'), '*');
+    assert.equal(res.headers.get('cache-control'), 'no-store');
+    assert.equal(store.size, 0);
+});
+
+test('only the readings and their list are proxied from mkatolikileo.com', async () => {
+    const { worker } = loadWorker(async () => { throw new Error('must not fetch'); });
+    for (const p of ['/mkatolikileo', '/mkatolikileo/', '/mkatolikileo/habari', '/mkatolikileo/masomo-ya-misa/',
+        '/mkatolikileo/masomo-ya-misa/3944', '/mkatolikileo/masomo-ya-misa/3944/ingia',
+        '/mkatolikileo/masomo-ya-misa/x/jumanne-oktoba-20-2026', '/mkatolikileo/masomo-ya-misa/3944/jumanne-oktoba-20-2026/maoni']) {
+        const res = await worker.fetch(new Request('https://w.example' + p), {}, ctx());
+        assert.equal(res.status, 404, p);
+    }
+});
+
 test('everything else is passed to bolls.life as before', async () => {
     const calls = [];
     const { worker } = loadWorker(async (url) => { calls.push(url); return new Response('[{"verse":1}]', { status: 200, headers: { 'Content-Type': 'application/json' } }); });
