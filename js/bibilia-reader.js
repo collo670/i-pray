@@ -9,11 +9,14 @@
 // Data flow:
 //   index.html book button  ->  pages/bibilia-reader.html?book=ot-01&chapter=1
 //   bibilia-reader.js        ->  Worker (bolls.life) via get-text/SUV/<id>/<ch>/
-//                                (+ CORS-relay fallbacks if the Worker is down)
+//                                (+ CORS-relay fallbacks if the Worker is down,
+//                                asked together by js/fetch-first.js)
 //   Renders: chapter nav (prev • chapter select • next) + verses with numbers
+//   Keeps every chapter read on the phone (Cache API), and fetches the next
+//   one in the background, so chapters already read open offline.
 //
-// Self-contained: no build step, no framework, plain ES5 IIFE like
-// js/somo-la-kwanza-bible.js.
+// No build step, no framework, plain ES5 IIFE like js/somo-la-kwanza-bible.js;
+// needs js/fetch-first.js on the page.
 (function () {
     'use strict';
 
@@ -154,65 +157,101 @@
 
     // -----------------------------------------------------------------
     // Fetching — Bolls chapter text via Worker (ACA0) with relay fallbacks.
-    // Returns a Promise of the JSON array: [{ verse, text }, ...]
+    // The Worker is asked first and, if it doesn't answer, bolls.life and the
+    // relays all together (js/fetch-first.js). Returns a Promise of the
+    // verses: [{ verse, text }, ...]
     // -----------------------------------------------------------------
-    function tryFetch(url) {
-        return fetch(url, { headers: { 'Accept': 'application/json' } }).then(function (r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
-            return r.json();
-        });
+    function bollsChapterUrl(bookId, chapter, translation) {
+        return BOLLS_ORIGIN + '/get-text/' + translation + '/' + bookId + '/' + chapter + '/';
     }
 
     function fetchChapterJson(bookId, chapter, translation) {
-        var bollsUrl = BOLLS_ORIGIN + '/get-text/' + translation + '/' + bookId + '/' + chapter + '/';
-        var attempt;
-
+        var bollsUrl = bollsChapterUrl(bookId, chapter, translation);
+        var routes = [bollsUrl].concat(CORS_RELAYS.map(function (build) { return build(bollsUrl); }));
         if (WORKER_PROXY) {
             // Worker mirrors bolls.life's path/query exactly; swap the origin.
-            var workerUrl = WORKER_PROXY.replace(/\/$/, '') + '/get-text/' + translation + '/' + bookId + '/' + chapter + '/';
-            attempt = tryFetch(workerUrl).catch(function () { return tryFetch(bollsUrl); });
-        } else {
-            attempt = tryFetch(bollsUrl);
+            routes.unshift(WORKER_PROXY.replace(/\/$/, '') + '/get-text/' + translation + '/' + bookId + '/' + chapter + '/');
         }
-
-        CORS_RELAYS.forEach(function (build) {
-            attempt = attempt.catch(function () { return tryFetch(build(bollsUrl)); });
-        });
-        return attempt;
+        return IPrayFetch.first(routes, function (text) {
+            var verses = toVerses(JSON.parse(text));
+            // An empty chapter is a relay's error answer, not the Bible.
+            return verses.length ? verses : null;
+        }, { headers: { 'Accept': 'application/json' } });
     }
 
-    // Session cache: "id:chapter" -> array of {verse,text}. Makes prev/next
-    // instantaneous and is kinder to bolls.life / the Worker.
-    var CHAPTER_CACHE = (function () {
-        try { return JSON.parse(sessionStorage.getItem('bibiliaReaderCache') || '{}'); } catch (e) { return {}; }
-    })();
-    function cacheKey(id, ch) { return id + ':' + ch; }
-    function cacheSet(id, ch, data) {
-        CHAPTER_CACHE[cacheKey(id, ch)] = data;
-        try { sessionStorage.setItem('bibiliaReaderCache', JSON.stringify(CHAPTER_CACHE)); } catch (e) { /* ignore */ }
+    // Normalise + sanity check the payload (some chapters may come back
+    // as a single object instead of an array on odd edge cases).
+    function toVerses(arr) {
+        var verses = [];
+        if (Array.isArray(arr)) {
+            verses = arr.map(function (v) {
+                return { verse: v.verse, text: stripHtml(v.text || '') };
+            }).filter(function (v) { return v.text.length > 0; });
+        } else if (arr && arr.chapters) {
+            // Alternate payload shape — flatten the first chapter's verses.
+            (arr.chapters[0] || []).forEach(function (v) {
+                verses.push({ verse: v.verse, text: stripHtml(v.text || '') });
+            });
+        }
+        return verses;
     }
-    function cacheGet(id, ch) { return CHAPTER_CACHE[cacheKey(id, ch)] || null; }
+
+    // Chapters already read stay on the phone for good - the text never
+    // changes - so they open at once, and without a connection. They are
+    // kept in the Cache API under their bolls.life URL (service-worker.js
+    // keeps this cache across releases); where it isn't available, only
+    // for as long as the page is open.
+    var CHAPTER_STORE = 'ipray-bible';
+    var MEMORY = {};
+    var IN_FLIGHT = {};
+
+    function storedChapter(key) {
+        if (MEMORY[key]) return Promise.resolve(MEMORY[key]);
+        if (!window.caches) return Promise.resolve(null);
+        return caches.open(CHAPTER_STORE)
+            .then(function (cache) { return cache.match(key); })
+            .then(function (r) { return r ? r.json() : null; })
+            .then(function (verses) {
+                if (verses) MEMORY[key] = verses;
+                return verses;
+            })
+            .catch(function () { return null; });
+    }
+
+    function storeChapter(key, verses) {
+        MEMORY[key] = verses;
+        if (!window.caches) return;
+        caches.open(CHAPTER_STORE).then(function (cache) {
+            return cache.put(key, new Response(JSON.stringify(verses), {
+                headers: { 'Content-Type': 'application/json' }
+            }));
+        }).catch(function () { /* ignore: it's fetched again next time */ });
+    }
 
     function fetchChapter(id, chapter, translation) {
-        var cached = cacheGet(id, chapter);
-        if (cached) return Promise.resolve(cached);
-        return fetchChapterJson(id, chapter, translation).then(function (arr) {
-            // Normalise + sanity check the payload (some chapters may come back
-            // as a single object instead of an array on odd edge cases).
-            var verses = [];
-            if (Array.isArray(arr)) {
-                verses = arr.map(function (v) {
-                    return { verse: v.verse, text: stripHtml(v.text || '') };
-                }).filter(function (v) { return v.text.length > 0; });
-            } else if (arr && arr.chapters) {
-                // Alternate payload shape — flatten the first chapter's verses.
-                (arr.chapters[0] || []).forEach(function (v) {
-                    verses.push({ verse: v.verse, text: stripHtml(v.text || '') });
-                });
-            }
-            cacheSet(id, chapter, verses);
-            return verses;
+        var key = bollsChapterUrl(id, chapter, translation);
+        // The chapter "next" asks for may already be on its way
+        // (prefetchNext).
+        if (IN_FLIGHT[key]) return IN_FLIGHT[key];
+        var p = storedChapter(key).then(function (stored) {
+            if (stored) return stored;
+            return fetchChapterJson(id, chapter, translation).then(function (verses) {
+                storeChapter(key, verses);
+                return verses;
+            });
         });
+        IN_FLIGHT[key] = p;
+        var done = function () { delete IN_FLIGHT[key]; };
+        p.then(done, done);
+        return p;
+    }
+
+    // Once a chapter shows, the next one is fetched in the background, so
+    // "next" opens at once and the chapter after the one read last is
+    // there offline too.
+    function prefetchNext(book, chapter, translation) {
+        if (chapter >= book.chapters) return;
+        fetchChapter(book.id, chapter + 1, translation).catch(function () { /* fetched again when opened */ });
     }
 
     function stripHtml(html) {
@@ -337,6 +376,9 @@
     // Main load + navigation
     // -----------------------------------------------------------------
     var STATE = { book: null, chapter: 1, translation: TRANSLATION, loading: false };
+    // Bumped by every loadChapter, so a slow answer for a chapter the
+    // reader has already moved on from is dropped.
+    var loadToken = 0;
 
     function loadChapter(id, chapter, translation) {
         var book = BY_ID[id];
@@ -354,20 +396,31 @@
 
         renderLoading('Inapakia ' + book.sw + ' sura ' + chapter + '...');
         STATE.loading = true;
+        var token = ++loadToken;
 
-        fetchChapter(id, chapter, translation || TRANSLATION)
+        fetchChapter(id, chapter, STATE.translation)
             .then(function (verses) {
+                if (token !== loadToken) return;
                 renderVerses(book, chapter, verses);
+                prefetchNext(book, chapter, STATE.translation);
             })
             .catch(function (err) {
-                renderError(
-                    'Imeshindwa kupata ' + book.sw + ' ' + chapter + '. ' +
-                    'Hakikisha umeconnect kwenye mtandao, kisha ubonye tena. ' +
-                    '(Data inapatikana kutoka Bolls Bible API kupitia Cloudflare Worker.)'
-                );
+                if (token !== loadToken) return;
+                if (err && err.offline) {
+                    renderError(
+                        'Uko nje ya mtandao, na ' + book.sw + ' ' + chapter + ' bado haijahifadhiwa kwenye simu hii. ' +
+                        'Sura ulizokwisha kusoma zinapatikana bila mtandao. Unganisha mtandao kisha ujaribu tena.'
+                    );
+                } else {
+                    renderError(
+                        'Imeshindwa kupata ' + book.sw + ' ' + chapter + '. ' +
+                        'Hakikisha umeconnect kwenye mtandao, kisha ubonye tena. ' +
+                        '(Data inapatikana kutoka Bolls Bible API kupitia Cloudflare Worker.)'
+                    );
+                }
                 if (window.console && console.error) console.error('bibilia-reader fetch failed', err);
             })
-            .then(function () { STATE.loading = false; });
+            .then(function () { if (token === loadToken) STATE.loading = false; });
     }
 
     function navigateTo(id, chapter, translation) {

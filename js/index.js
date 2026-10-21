@@ -41,7 +41,11 @@ const translations = {
         otherPrayers: "Other Prayers",
         carmenPrayer: "Prayer to Carmen Hernández",
         psalterWeek: "Psalter Week",
-        subtitle: "Your Prayer Companion"
+        subtitle: "Your Prayer Companion",
+        dailyPrayersDesc: "Morning Prayer, Office of Readings, Midday Prayer and Evening Prayer",
+        dailyReadingsDesc: "Mass readings for every day, in the order of the Mass",
+        bibiliaTakatifuDesc: "Old and New Testaments, every book in Kiswahili",
+        amefufukaDesc: "Songs of the Neocatechumenal Way, words and chords by page"
     },
     sw: {
         home: "Nyumbani",
@@ -83,7 +87,11 @@ const translations = {
         otherPrayers: "Sala Nyingine",
         carmenPrayer: "Sala kwa Carmen Hernández",
         psalterWeek: "Juma la Zaburi",
-        subtitle: "Msaidizi wako Wa Sala"
+        subtitle: "Msaidizi wako Wa Sala",
+        dailyPrayersDesc: "Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni",
+        dailyReadingsDesc: "Masomo ya Misa ya kila siku, kwa mpangilio wa Misa",
+        bibiliaTakatifuDesc: "Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili",
+        amefufukaDesc: "Nyimbo za Njia ya Neokatekumenato, maneno na chords kwa kurasa"
     },
     es: {
         home: "Inicio",
@@ -124,7 +132,11 @@ const translations = {
         otherPrayers: "Otras Oraciones",
         carmenPrayer: "Oración a Carmen Hernández",
         psalterWeek: "Semana del Salterio",
-        subtitle: "Tu Compañero de Oración"
+        subtitle: "Tu Compañero de Oración",
+        dailyPrayersDesc: "Oración de la Mañana, Oficio de Lectura, Oración del Mediodía y Vísperas",
+        dailyReadingsDesc: "Las lecturas de la Misa de cada día, en el orden de la Misa",
+        bibiliaTakatifuDesc: "Antiguo y Nuevo Testamento, todos los libros en suajili",
+        amefufukaDesc: "Cantos del Camino Neocatecumenal, letra y acordes por página"
     },
     it: {
         home: "Home",
@@ -165,7 +177,11 @@ const translations = {
         otherPrayers: "Altre Preghiere",
         carmenPrayer: "Preghiera a Carmen Hernández",
         psalterWeek: "Settimana del Salterio",
-        subtitle: "Il Tuo Compagno di Preghiera"
+        subtitle: "Il Tuo Compagno di Preghiera",
+        dailyPrayersDesc: "Lodi Mattutine, Ufficio delle Letture, Ora Media e Vespri",
+        dailyReadingsDesc: "Le letture della Messa di ogni giorno, nell'ordine della Messa",
+        bibiliaTakatifuDesc: "Antico e Nuovo Testamento, tutti i libri in swahili",
+        amefufukaDesc: "Canti del Cammino Neocatecumenale, testi e accordi per pagina"
     },
     fr: {
         home: "Accueil",
@@ -206,7 +222,11 @@ const translations = {
         otherPrayers: "Autres Prières",
         carmenPrayer: "Prière à Carmen Hernández",
         psalterWeek: "Semaine du Psautier",
-        subtitle: "Votre Compagnon de Prière"
+        subtitle: "Votre Compagnon de Prière",
+        dailyPrayersDesc: "Laudes, Office des Lectures, Prière de Midi et Vêpres",
+        dailyReadingsDesc: "Les lectures de la messe de chaque jour, dans l’ordre de la messe",
+        bibiliaTakatifuDesc: "Ancien et Nouveau Testament, tous les livres en swahili",
+        amefufukaDesc: "Chants du Chemin néocatéchuménal, paroles et accords par page"
     },
     pt: {
         home: "Início",
@@ -247,7 +267,11 @@ const translations = {
         otherPrayers: "Outras Orações",
         carmenPrayer: "Oração a Carmen Hernández",
         psalterWeek: "Semana do Saltério",
-        subtitle: "Seu Companheiro de Oração"
+        subtitle: "Seu Companheiro de Oração",
+        dailyPrayersDesc: "Oração da Manhã, Ofício das Leituras, Oração do Meio-Dia e Vésperas",
+        dailyReadingsDesc: "As leituras da Missa de cada dia, na ordem da Missa",
+        bibiliaTakatifuDesc: "Antigo e Novo Testamento, todos os livros em suaíli",
+        amefufukaDesc: "Cânticos do Caminho Neocatecumenal, letra e acordes por página"
     }
 };
 
@@ -822,8 +846,6 @@ document.addEventListener('DOMContentLoaded', function() {
             filterNavItems(e.target.value);
         });
     }
-    // Enhance accessibility for small text
-    enhanceSmallTextAccessibility();
 });
 
 // Function to open Office of the Readings for Mwaka 2
@@ -902,81 +924,4 @@ window.sharePrayer = function(title, text, url = window.location.href) {
             if (window.plausible) window.plausible('Prayer Shared');
         });
     }
-}
-
-// Accessibility enhancement for small text elements
-function enhanceSmallTextAccessibility() {
-    const elements = document.querySelectorAll('*');
-    elements.forEach(el => {
-        if (el.children.length > 0 || !el.textContent.trim()) return; // skip if has children or no text
-        const style = window.getComputedStyle(el);
-        const fontSize = parseFloat(style.fontSize);
-        if (fontSize < 14) { // small text threshold
-            const color = style.color;
-            const bgColor = getBackgroundColor(el);
-            const contrast = calculateContrast(color, bgColor);
-            // contrast is null when a colour can't be evaluated reliably
-            // (oklch/oklab from Tailwind 4, or semi-transparent backgrounds)
-            if (contrast !== null && contrast < 4.5) {
-                const isDark = document.body.classList.contains('dark-mode') ||
-                               document.documentElement.classList.contains('dark') ||
-                               document.body.classList.contains('dark');
-                if (isDark) {
-                    el.style.color = '#ffffff';
-                    el.style.backgroundColor = '#111827';
-                } else {
-                    el.style.color = '#000000';
-                    el.style.backgroundColor = '#ffffff';
-                }
-                // Add ARIA label for screen readers
-                if (!el.getAttribute('aria-label')) {
-                    el.setAttribute('aria-label', el.textContent.trim());
-                }
-            }
-            // Ensure screen reader accessibility
-            if (!el.getAttribute('aria-hidden') && !el.getAttribute('role')) {
-                el.setAttribute('role', 'text');
-            }
-        }
-    });
-}
-
-function getBackgroundColor(el) {
-    let bg = window.getComputedStyle(el).backgroundColor;
-    if (bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
-        let parent = el.parentElement;
-        while (parent) {
-            bg = window.getComputedStyle(parent).backgroundColor;
-            if (bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') break;
-            parent = parent.parentElement;
-        }
-    }
-    return bg || '#ffffff'; // default to white
-}
-
-// Parse an rgb()/rgba() colour into [r, g, b]; returns null for other colour
-// formats (oklch, named colours) or semi-transparent colours, where the real
-// rendered contrast cannot be computed here.
-function parseRgbColor(color) {
-    const m = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)$/.exec(color);
-    if (!m) return null;
-    if (m[4] !== undefined && parseFloat(m[4]) < 1) return null;
-    return [+m[1], +m[2], +m[3]];
-}
-
-function calculateContrast(color1, color2) {
-    const l1 = getLuminance(color1);
-    const l2 = getLuminance(color2);
-    if (l1 === null || l2 === null) return null;
-    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-}
-
-function getLuminance(color) {
-    const rgb = parseRgbColor(color);
-    if (!rgb) return null;
-    const r = rgb[0] / 255;
-    const g = rgb[1] / 255;
-    const b = rgb[2] / 255;
-    const toLinear = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-    return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
 }

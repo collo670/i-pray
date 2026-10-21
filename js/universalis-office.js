@@ -28,12 +28,12 @@
 
     var ORIGIN = 'https://universalis.com';
 
-    // Where Universalis pages are fetched from, tried in this order.
-    // Universalis sends no CORS headers, so the browser can't read its pages
-    // directly. First the app's own Cloudflare Worker
-    // (cloudflare-worker/ipray-worker.js), which also caches each day's
-    // page; then public CORS proxies, which come and go and limit how much
-    // they serve, as a fallback.
+    // Where Universalis pages are fetched from. Universalis sends no CORS
+    // headers, so the browser can't read its pages directly. First the
+    // app's own Cloudflare Worker (cloudflare-worker/ipray-worker.js), which
+    // also caches each day's page; then public CORS proxies, which come and
+    // go and limit how much they serve, as a fallback - asked together by
+    // the office pages (js/fetch-first.js), in turn by saveOffice() below.
     var WORKER_BASE = 'https://ancient-rice-28a1.otienocollo95.workers.dev';
     var PROXIES = [
         function (u) { return WORKER_BASE + '/universalis' + new URL(u).pathname; },

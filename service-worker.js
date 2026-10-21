@@ -16,7 +16,7 @@
 // files on disk (`npm run build:generated`); don't edit them by hand.
 
 // BEGIN GENERATED
-const VERSION = '4762a1a39f';
+const VERSION = '1aa296251e';
 const PRECACHE = [
     '/i-pray/',
     '/i-pray/assets/images/carmen.jpg',
@@ -76,17 +76,15 @@ const PRECACHE = [
     '/i-pray/js/bibilia-reader.js',
     '/i-pray/js/daily-readings-module.js',
     '/i-pray/js/daily-readings.js',
+    '/i-pray/js/fetch-first.js',
     '/i-pray/js/home-button.js',
     '/i-pray/js/i18n.js',
     '/i-pray/js/image-optimizer.js',
     '/i-pray/js/index.js',
     '/i-pray/js/library.js',
     '/i-pray/js/liturgical-calendar.js',
-    '/i-pray/js/loading-states.js',
     '/i-pray/js/logo-loader.js',
     '/i-pray/js/masifu.js',
-    '/i-pray/js/micro-interactions.js',
-    '/i-pray/js/mobile-navigation.js',
     '/i-pray/js/nav-theme.js',
     '/i-pray/js/offline-week.js',
     '/i-pray/js/ofisi-readings-dropdown.js',
@@ -156,6 +154,9 @@ const RUNTIME_CACHE = 'ipray-runtime';
 // The week saved in Settings > Offline (js/offline-week.js). The page that
 // saved it deletes it after a week (js/prayer-day.js), never a new release.
 const OFFLINE_WEEK_CACHE = 'ipray-offline-week';
+// Bible chapters already read (js/bibilia-reader.js). The text never
+// changes, so a new release keeps them.
+const BIBLE_CACHE = 'ipray-bible';
 const OFFLINE_PAGE = BASE + 'pages/fallback.html';
 const CDN_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com', 'cdn.jsdelivr.net', 'unpkg.com'];
 
@@ -171,7 +172,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
     event.waitUntil((async () => {
-        const keep = [SHELL_CACHE, RUNTIME_CACHE, OFFLINE_WEEK_CACHE];
+        const keep = [SHELL_CACHE, RUNTIME_CACHE, OFFLINE_WEEK_CACHE, BIBLE_CACHE];
         const names = await caches.keys();
         await Promise.all(names
             .filter((name) => name.indexOf('ipray-') === 0 && keep.indexOf(name) === -1)

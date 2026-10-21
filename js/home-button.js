@@ -4,8 +4,14 @@
 // js/app-options.js and the Options sheet on index.html).
 // ---------------------------------------------------------------------------
 // Loaded (deferred) on every page. The link to index.html is worked out from
-// this script's own address, so it is right at any folder depth. On the home
-// page itself the button scrolls back to the top instead.
+// this script's own address, so it is right at any folder depth. The home
+// page has no Home button.
+//
+// While the page scrolls down, the Home button and the other round controls
+// along the bottom (the favourite star, js/library.js; text size,
+// js/text-size-control.js and js/masifu.js) slide out of the way so they
+// don't cover the text being read; they come back as soon as it scrolls up,
+// and at the top and the end of the page.
 (function () {
     'use strict';
 
@@ -14,6 +20,15 @@
 
     var script = document.currentScript;
     var homeUrl = script && script.src ? new URL('../index.html', script.src).href : '/i-pray/index.html';
+
+    // The floating controls along the bottom of a page, and the class on
+    // <html> that moves them out of the way.
+    var CONTROLS = ['.ipray-home-btn', '.ipray-fav', '.prayer-textctl', '.masifu-textctl'];
+    var AWAY = 'ipray-controls-away';
+    // Scrolled this far (px) in one direction before they move, and this
+    // close to the top or the end of the page they always show.
+    var STEP = 8;
+    var EDGE = 80;
 
     var HOME_ICON = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
 
@@ -45,15 +60,38 @@
             + 'html.dark .ipray-home-btn,body.dark-mode .ipray-home-btn,body.dark .ipray-home-btn,[data-theme="dark"] .ipray-home-btn'
             + '{background:#f0c96a;color:#1f2937;box-shadow:0 6px 18px rgba(0,0,0,0.45);}'
             + '.ipray-home-spacer{height:calc(5.5rem + env(safe-area-inset-bottom,0px));}'
-            + '@media print{.ipray-home-btn,.ipray-home-spacer{display:none;}}';
+            + '@media print{.ipray-home-btn,.ipray-home-spacer{display:none;}}'
+            + CONTROLS.join(',') + '{transition:transform .15s ease,box-shadow .15s ease,opacity .2s ease,translate .25s ease;}'
+            + CONTROLS.map(function (c) { return 'html.' + AWAY + ' ' + c; }).join(',')
+            + '{opacity:0;translate:0 1.5rem;pointer-events:none;visibility:hidden;'
+            + 'transition:transform .15s ease,box-shadow .15s ease,opacity .2s ease,translate .25s ease,visibility 0s linear .25s;}'
+            + '@media (prefers-reduced-motion:reduce){'
+            + CONTROLS.map(function (c) { return 'html.' + AWAY + ' ' + c; }).join(',') + '{translate:none;}}';
         document.head.appendChild(style);
+    }
+
+    function hideWhileScrollingDown() {
+        var root = document.documentElement;
+        var lastY = window.pageYOffset;
+        window.addEventListener('scroll', function () {
+            var y = window.pageYOffset;
+            var dy = y - lastY;
+            if (Math.abs(dy) < STEP) return;
+            lastY = y;
+            var end = Math.max(root.scrollHeight, document.body.scrollHeight) - window.innerHeight;
+            // Not while one of them has the keyboard focus.
+            var focused = document.activeElement && document.activeElement.closest && document.activeElement.closest(CONTROLS.join(','));
+            root.classList.toggle(AWAY, dy > 0 && y > EDGE && y < end - EDGE && !focused);
+        }, { passive: true });
     }
 
     function init() {
         // Not inside another page (the gospel card embeds daily-readings.html).
         if (window.self !== window.top) return;
         if (!document.body || document.querySelector('.ipray-home-btn')) return;
+        if (isHomePage()) return;
         injectStyles();
+        hideWhileScrollingDown();
 
         var btn = document.createElement('a');
         btn.className = 'ipray-home-btn';
@@ -64,13 +102,6 @@
         }
         btn.innerHTML = HOME_ICON;
         paint();
-        if (isHomePage()) {
-            btn.setAttribute('aria-current', 'page');
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
 
         // Room at the end of the page so the button never hides the last line.
         var spacer = document.createElement('div');

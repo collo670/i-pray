@@ -147,6 +147,7 @@
         })();
     </script>
 
+    <script src="../js/fetch-first.js"></script>
     <script>
         (function () {
             // Readings come from Universalis' embeddable JSONP feed
@@ -159,7 +160,7 @@
                 { key: 'Mass_GA', label: 'Gospel Acclamation' },
                 { key: 'Mass_G',  label: 'Gospel' }
             ];
-            var FETCH_TIMEOUT_MS = 15000;
+            var FETCH_TIMEOUT_MS = 10000;
             var CACHE_PREFIX = 'massReadings-';
             // Universalis' free feed covers a sliding window around today;
             // outside it the request redirects, so navigation is clamped.
@@ -385,50 +386,29 @@
                 return stampOf(d) === stamp;
             }
 
-            function showSwUnavailable() {
-                readingsSwNote.textContent = 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyeshwa kwa Kiingereza.';
+            function showSwUnavailable(offline) {
+                readingsSwNote.textContent = offline
+                    ? 'Uko nje ya mtandao, na masomo ya Kiswahili ya siku hii hayajahifadhiwa kwenye simu hii. Yanaonyeshwa kwa Kiingereza.'
+                    : 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyeshwa kwa Kiingereza.';
                 readingsSwNote.classList.remove('hidden');
             }
 
-            function fetchTextThroughProxies(url, onOk, onFail) {
-                var i = 0;
-                (function tryNext() {
-                    if (i >= SW_PROXIES.length) { onFail(); return; }
-                    var proxied = SW_PROXIES[i++](url);
-                    var ctrl = window.AbortController ? new AbortController() : null;
-                    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
-                    fetch(proxied, ctrl ? { signal: ctrl.signal } : {})
-                        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-                        .then(function (text) { clearTimeout(timer); onOk(text); })
-                        .catch(function () { clearTimeout(timer); tryNext(); });
-                })();
+            // Fetches a mkatolikileo.com page through the Reader (Markdown)
+            // first and, if it doesn't answer, the raw-HTML proxies all
+            // together (js/fetch-first.js). parse(text, viaReader) turns an
+            // answer into a result, or null if it doesn't hold one.
+            function fetchSwPage(url, parse) {
+                var routes = [SW_READER_PREFIX + url].concat(SW_PROXIES.map(function (build) { return build(url); }));
+                return IPrayFetch.first(routes, function (text, i) { return parse(text, i === 0); });
             }
 
-            function fetchViaReader(url, onOk, onFail) {
-                var ctrl = window.AbortController ? new AbortController() : null;
-                var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
-                fetch(SW_READER_PREFIX + url, ctrl ? { signal: ctrl.signal } : {})
-                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-                    .then(function (text) { clearTimeout(timer); onOk(text); })
-                    .catch(function () { clearTimeout(timer); onFail(); });
-            }
-
-            // Fetches one day's article, trying the Reader first and only
-            // falling back to the raw-HTML proxy chain (+ DOM parse) if the
-            // Reader is unreachable or its Markdown doesn't match the
-            // expected shape. onOk receives an already-parsed
-            // {dayTitle, dateLabel, sections} object either way.
+            // Fetches one day's article. onOk receives an already-parsed
+            // {dayTitle, dateLabel, sections} object, from the Reader's
+            // Markdown or from the site's HTML.
             function fetchSwArticle(url, onOk, onFail) {
-                function viaProxies() {
-                    fetchTextThroughProxies(url, function (html) {
-                        var parsed = parseSwArticle(html);
-                        if (parsed) onOk(parsed); else onFail();
-                    }, onFail);
-                }
-                fetchViaReader(url, function (md) {
-                    var parsed = parseSwArticleText(md);
-                    if (parsed) onOk(parsed); else viaProxies();
-                }, viaProxies);
+                fetchSwPage(url, function (text, viaReader) {
+                    return viaReader ? parseSwArticleText(text) : parseSwArticle(text);
+                }).then(onOk, function () { onFail(); });
             }
 
             // The listing page (reverse-chronological, ~10 most recent days)
@@ -508,38 +488,25 @@
                     return;
                 }
 
-                function useText(text) {
-                    var map = parseSwListHtml(text);
-                    if (Object.keys(map).length) {
-                        // Keep any previously remembered (guessed) URLs that
-                        // the listing still doesn't show.
-                        if (cached && cached.map) {
-                            Object.keys(cached.map).forEach(function (k) {
-                                if (!map[k]) map[k] = cached.map[k];
-                            });
-                        }
-                        try { localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), map: map })); } catch (e) {}
-                        cb(map);
-                        return true;
-                    }
-                    return false;
-                }
-
                 // parseSwListHtml just regex-scans for article URLs, so it
                 // works equally well on the Reader's Markdown or on raw
-                // HTML from the proxy chain - only the fetch step differs.
-                fetchViaReader(SW_LIST_URL, function (md) {
-                    if (useText(md)) return;
-                    viaProxies();
-                }, viaProxies);
-
-                function viaProxies() {
-                    fetchTextThroughProxies(SW_LIST_URL, function (html) {
-                        if (!useText(html)) cb(cached ? cached.map : null);
-                    }, function () {
-                        cb(cached ? cached.map : null);
-                    });
-                }
+                // HTML from the proxies.
+                fetchSwPage(SW_LIST_URL, function (text) {
+                    var found = parseSwListHtml(text);
+                    return Object.keys(found).length ? found : null;
+                }).then(function (map) {
+                    // Keep any previously remembered (guessed) URLs that
+                    // the listing still doesn't show.
+                    if (cached && cached.map) {
+                        Object.keys(cached.map).forEach(function (k) {
+                            if (!map[k]) map[k] = cached.map[k];
+                        });
+                    }
+                    try { localStorage.setItem(SW_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), map: map })); } catch (e) {}
+                    cb(map);
+                }, function () {
+                    cb(cached ? cached.map : null);
+                });
             }
 
             // Pulls the day title and each reading (label + citation + text)
@@ -730,6 +697,11 @@
             }
 
             function fetchErrorText() {
+                if (IPrayFetch.isOffline()) {
+                    return lang === 'sw'
+                        ? 'Uko nje ya mtandao. Unganisha mtandao kisha ujaribu tena.'
+                        : "You're offline. Connect and try again.";
+                }
                 return lang === 'sw'
                     ? 'Imeshindikana kupakia masomo ya siku hii. Tafadhali angalia mtandao wako na ujaribu tena.'
                     : 'Unable to load the readings for this day. Please check your connection and try again.';
@@ -810,6 +782,10 @@
                 }
 
                 errorText.textContent = fetchErrorText();
+                if (IPrayFetch.isOffline()) {
+                    setState('error');
+                    return;
+                }
                 setState('loading');
                 pendingScript = document.createElement('script');
                 pendingScript.src = 'https://universalis.com/' + stamp + '/jsonpmass.js';
@@ -840,14 +816,22 @@
 
                 function onSwFail() {
                     if (stamp !== currentStamp) return;
+                    var offline = IPrayFetch.isOffline();
                     if (gospelOnly) {
-                        var unavailable = 'Injili ya Kiswahili ya siku hii haipatikani kwa sasa. Tafadhali jaribu tena.';
+                        var unavailable = offline
+                            ? 'Uko nje ya mtandao. Unganisha mtandao kisha ujaribu tena.'
+                            : 'Injili ya Kiswahili ya siku hii haipatikani kwa sasa. Tafadhali jaribu tena.';
                         errorText.textContent = unavailable;
                         setState('error');
                         sendEmbeddedGospel('error', null, unavailable);
                         return;
                     }
-                    showSwUnavailable();
+                    // Offline, the English readings show only if they were
+                    // saved on an earlier visit; otherwise loadEnglish says
+                    // the phone is offline and no note is needed.
+                    var englishSaved = false;
+                    try { englishSaved = !!localStorage.getItem(CACHE_PREFIX + stamp); } catch (e) {}
+                    if (!offline || englishSaved) showSwUnavailable(offline);
                     loadEnglish(date);
                 }
 

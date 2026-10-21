@@ -57,3 +57,16 @@ test('the Rosary language switch is the app language', async ({ page }) => {
     await expect(page.locator('#rosaryTitle')).toHaveText('Rozari Takatifu');
     expect(await page.evaluate(() => localStorage.getItem('preferredLanguage'))).toBe('sw');
 });
+
+test('the home page cards are all in the chosen language', async ({ page }) => {
+    await isolate(page, { universalis: 'fail' });
+    await setLanguage(page, 'sw');
+    await page.goto('index.html');
+    await expect(page.locator('#dailyReadingsCard h3')).toHaveText('Masomo ya Siku');
+    await expect(page.locator('[data-translate="dailyReadingsDesc"]')).toHaveText('Masomo ya Misa ya kila siku, kwa mpangilio wa Misa');
+    await page.evaluate(() => IPrayI18n.set('en'));
+    await expect(page.locator('#dailyReadingsCard h3')).toHaveText('Daily Readings');
+    await expect(page.locator('[data-translate="dailyPrayersDesc"]')).toHaveText('Morning Prayer, Office of Readings, Midday Prayer and Evening Prayer');
+    await expect(page.locator('[data-translate="bibiliaTakatifuDesc"]')).toHaveText('Old and New Testaments, every book in Kiswahili');
+    await expect(page.locator('[data-translate="amefufukaDesc"]')).toHaveText('Songs of the Neocatechumenal Way, words and chords by page');
+});

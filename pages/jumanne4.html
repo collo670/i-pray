@@ -425,7 +425,7 @@
             </div>
             <div class="app-bar-actions">
                 <div class="toggle-container">
-                    <button class="app-bar-btn toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark</button>
+                    <button class="app-bar-btn toggle-btn toggle-btn-icon" onclick="toggleDarkMode()" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
                 </div>
                 <button class="app-bar-btn hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false" type="button">
                     <span></span>
@@ -669,12 +669,6 @@
     </div>
     
         <script>
-        function syncDarkModeButton() {
-            const btn = document.querySelector('.toggle-btn');
-            if (!btn) return;
-            btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
-        }
-
         function toggleMenu(forceClose) {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
@@ -701,7 +695,6 @@
             window.IPrayTheme.toggle();
         }
 
-        syncDarkModeButton();
     </script>
 
 <script>
