@@ -29,6 +29,10 @@
         .reading-text { line-height: 1.75; color: #000; font-weight: 600; }
         .dark .reading-text { color: #eee; }
         .reading-text div { margin-bottom: 0.15rem; }
+        /* Kiswahili readings come as whole paragraphs and psalm stanzas,
+           not Universalis' one div per line, so they need a real gap. */
+        .reading-text .sw-para { margin-bottom: 0.85rem; }
+        .reading-text .sw-para:last-child { margin-bottom: 0; }
         /* --prayer-text-scale is set by js/text-size.js (default 1).
            Scoping it to .reading-text — rather than the root <html>
            font-size — keeps #appBar and the Home button, which sit outside
@@ -207,7 +211,9 @@
             // with a note explaining why.
             var SW_SITE = 'https://mkatolikileo.com';
             var SW_LIST_URL = SW_SITE + '/masomo-ya-misa';
-            var SW_CACHE_PREFIX = 'swReadings-v2-';
+            // v3: days cached by v2 hold raw Markdown (**, _, 1\.) and
+            // first-paragraph-only readings.
+            var SW_CACHE_PREFIX = 'swReadings-v3-';
             var SW_LIST_CACHE_KEY = 'swReadingsListMap';
             var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
             var SW_WEEKDAYS = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
@@ -235,6 +241,10 @@
             var windowMin = addDays(startOfDay(new Date()), -WINDOW_BACK_DAYS);
             var windowMax = addDays(startOfDay(new Date()), WINDOW_AHEAD_DAYS);
             function fmtDay(d) {
+                if (lang === 'sw') {
+                    var cap = function (w) { return w.charAt(0).toUpperCase() + w.slice(1); };
+                    return cap(SW_WEEKDAYS[d.getDay()]) + ', ' + cap(SW_MONTH_SLUGS[d.getMonth()]) + ' ' + d.getDate();
+                }
                 return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
             }
 
@@ -335,7 +345,7 @@
                 for (var i = 0; i < sections.length; i++) {
                     var s = sections[i];
                     if (gospelOnly && !isSwGospelLabel(s.label)) continue;
-                    container.appendChild(sectionCard(s.label, { source: s.citation, text: s.textHtml }));
+                    container.appendChild(sectionCard(s.label, { source: swEscape(s.citation || ''), text: s.textHtml }));
                     if (gospelOnly && isSwGospelLabel(s.label)) {
                         renderedGospel = {
                             label: s.label,
@@ -376,7 +386,7 @@
             }
 
             function showSwUnavailable() {
-                readingsSwNote.textContent = 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyesha kwa Kiingereza.';
+                readingsSwNote.textContent = 'Masomo ya Kiswahili ya siku hii bado hayapatikani (huchapishwa siku hiyo hiyo pekee, si mapema). Yanaonyeshwa kwa Kiingereza.';
                 readingsSwNote.classList.remove('hidden');
             }
 
@@ -551,27 +561,27 @@
                     var block = blocks[b];
                     var labelEl = block.querySelector('.reading_title');
                     var citeEl = block.querySelector('.reading');
-                    var textEl = block.querySelector('p');
-                    if (!labelEl || !textEl) continue;
-                    textEl.querySelectorAll('script, style, form, iframe, object, embed, nav, ul, ol').forEach(function (n) {
-                        n.parentNode.removeChild(n);
-                    });
-                    // Drop site chrome links; keep plain reading text only.
-                    textEl.querySelectorAll('a[href]').forEach(function (a) {
-                        var parent = a.parentNode;
-                        while (a.firstChild) parent.insertBefore(a.firstChild, a);
-                        parent.removeChild(a);
-                    });
-                    textEl.querySelectorAll('*').forEach(function (n) {
-                        for (var i = n.attributes.length - 1; i >= 0; i--) {
-                            if (/^on/i.test(n.attributes[i].name)) n.removeAttribute(n.attributes[i].name);
+                    if (!labelEl) continue;
+                    // A reading runs over several <p>s (paragraphs, psalm
+                    // stanzas, "Neno la Bwana"): keep them all, not just
+                    // the first.
+                    var paras = block.querySelectorAll('p');
+                    var parts = paras.length ? Array.prototype.slice.call(paras) : [block];
+                    var html = parts.map(function (p) {
+                        if (p === block) {
+                            if (labelEl.parentNode) labelEl.parentNode.removeChild(labelEl);
+                            if (citeEl && citeEl.parentNode) citeEl.parentNode.removeChild(citeEl);
                         }
-                    });
-                    var label = labelEl.textContent.trim();
+                        if (isSwFooterLine(p.textContent)) return '';
+                        var inner = swCleanNode(p).replace(/^(\s|<br>)+|(\s|<br>)+$/g, '');
+                        return inner ? '<div class="sw-para">' + inner + '</div>' : '';
+                    }).join('');
+                    if (!html) continue;
+                    var label = labelEl.textContent.replace(/\s+/g, ' ').trim();
                     sections.push({
                         label: label,
-                        citation: citeEl ? citeEl.textContent.trim() : '',
-                        textHtml: textEl.innerHTML
+                        citation: citeEl ? citeEl.textContent.replace(/\s+/g, ' ').trim() : '',
+                        textHtml: html
                     });
                     if (isSwGospelLabel(label)) break;
                 }
@@ -612,7 +622,7 @@
                 var dayTitle = '', dateLabel = '', startIdx = -1;
                 for (var i = 0; i < lines.length; i++) {
                     var head = lines[i].match(/^#{2,3}\s+(.+?)\s*\(([^()]+)\)\s*$/);
-                    if (head) { dayTitle = head[1].trim(); dateLabel = head[2].trim(); startIdx = i + 1; break; }
+                    if (head) { dayTitle = swPlain(head[1]); dateLabel = swPlain(head[2]); startIdx = i + 1; break; }
                 }
                 if (startIdx === -1) return null;
 
@@ -628,8 +638,8 @@
                     var citeMatch = j < lines.length ? lines[j].match(/^###\s+(.+)$/) : null;
                     if (!citeMatch) continue;
 
-                    var label = line.replace(/\*\*/g, '').trim();
-                    var citation = citeMatch[1].trim();
+                    var label = swPlain(line);
+                    var citation = swPlain(citeMatch[1]);
                     i2 = j + 1;
 
                     var bodyLines = [];
@@ -656,17 +666,67 @@
                 return { dayTitle: dayTitle, dateLabel: dateLabel, sections: sections };
             }
 
+            function swEscape(s) {
+                return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+            // Rebuilds a node of the site's HTML keeping only the text, line
+            // breaks and bold/italic (the "K." refrains, "Neno la Bwana"):
+            // no links, images, attributes or site widgets.
+            function swCleanNode(node) {
+                var out = '';
+                for (var c = node.firstChild; c; c = c.nextSibling) {
+                    if (c.nodeType === 3) { out += swEscape(c.nodeValue.replace(/\s+/g, ' ')); continue; }
+                    if (c.nodeType !== 1) continue;
+                    var tag = c.tagName.toLowerCase();
+                    if (/^(script|style|form|iframe|object|embed|nav|button|img|svg|video|audio|select|input|textarea)$/.test(tag)) continue;
+                    if (tag === 'br') { out += '<br>'; continue; }
+                    var inner = swCleanNode(c);
+                    if (tag === 'b' || tag === 'strong') out += '<strong>' + inner + '</strong>';
+                    else if (tag === 'i' || tag === 'em') out += '<em>' + inner + '</em>';
+                    else if (/^(p|div|li|h\d)$/.test(tag)) out += inner + '<br>';
+                    else out += inner;
+                }
+                return out;
+            }
+            // Inline Markdown from the Reader (Turndown output) to HTML:
+            // images dropped, links unwrapped, **bold**/_italic_ rendered and
+            // Turndown's backslash escapes ("1\.", "\*", "\[") undone, so
+            // none of the syntax shows up in the reading.
+            function swInlineToHtml(md) {
+                var kept = [];
+                var s = String(md || '')
+                    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+                    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+                    .replace(/\\([\\`*_{}\[\]()#+\-.!<>|~=])/g, function (m, ch) {
+                        kept.push(ch);
+                        return '\u0000' + (kept.length - 1) + '\u0000';
+                    });
+                s = swEscape(s)
+                    .replace(/(\*\*|__)(?=\S)([\s\S]*?\S)\1/g, '<strong>$2</strong>')
+                    .replace(/\*(?=\S)([^*]*?\S)\*/g, '<em>$1</em>')
+                    .replace(/(^|[^\w])_(?=\S)([^_]*?\S)_(?!\w)/g, '$1<em>$2</em>');
+                return s.replace(/\u0000(\d+)\u0000/g, function (m, i) { return swEscape(kept[Number(i)]); });
+            }
+            // Label, citation and day title: plain text, no Markdown.
+            function swPlain(md) {
+                var div = document.createElement('div');
+                div.innerHTML = swInlineToHtml(md);
+                return div.textContent.replace(/\s+/g, ' ').trim();
+            }
             function swTextToHtml(text) {
-                // Drop leftover nav/footer link lines that may trail a section.
+                // Drop leftover nav/footer link and image lines that may
+                // trail a section.
                 var cleaned = String(text || '').split('\n').filter(function (ln) {
-                    return !isSwFooterLine(ln) && !/^\[[^\]]+\]\([^)]+\)\s*$/.test(ln.trim());
+                    var t = ln.trim();
+                    return !isSwFooterLine(t) && !/^\[[^\]]+\]\([^)]+\)$/.test(t) && !/^!\[[^\]]*\]\([^)]*\)$/.test(t);
                 }).join('\n');
-                // Unwrap any remaining markdown links to plain text.
-                cleaned = cleaned.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-                var esc = cleaned.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                return esc.split(/\n{2,}/).map(function (p) {
-                    return '<div>' + p.trim().replace(/ {2,}\n|\n/g, '<br>') + '</div>';
-                }).filter(function (p) { return p !== '<div></div>'; }).join('');
+                return cleaned.split(/\n\s*\n/).map(function (p) {
+                    // Turndown writes <br> as two trailing spaces (or a
+                    // backslash) before the newline.
+                    var html = swInlineToHtml(p.trim()).split(/ *\\?\n/)
+                        .map(function (l) { return l.trim(); }).filter(Boolean).join('<br>');
+                    return html ? '<div class="sw-para">' + html + '</div>' : '';
+                }).join('');
             }
 
             function fetchErrorText() {

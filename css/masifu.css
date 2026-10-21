@@ -465,6 +465,15 @@ body.masifu-topbar .gospel-reading-panel .reading-text div {
     margin-bottom: 0.15rem;
 }
 
+/* The Kiswahili Gospel (pages/daily-readings.html) comes in paragraphs */
+body.masifu-topbar .gospel-reading-panel .reading-text .sw-para {
+    margin-bottom: 0.85rem;
+}
+
+body.masifu-topbar .gospel-reading-panel .reading-text .sw-para:last-child {
+    margin-bottom: 0;
+}
+
 body.masifu-topbar .masifu-prayer-timer {
     display: flex;
     align-items: center;
