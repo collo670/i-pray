@@ -1,63 +1,69 @@
-Title: Jumanne ya Juma la 29 la Mwaka | Mkatoliki Leo
+Title: Masomo ya Misa: Jumanne ya 29 ya Mwaka, Jumanne, 20 Oktoba 2026
 
-URL Source: https://mkatolikileo.com/masomo-ya-misa/1250/jumanne-oktoba-21-2026
+URL Source: https://mkatolikileo.com/masomo-ya-misa/3944/jumanne-oktoba-20-2026
+
+Published Time: 2026-10-20T00:00:00+03:00
 
 Markdown Content:
-[![Image 1: Mkatoliki Leo](https://mkatolikileo.com/images/logo.png)](https://mkatolikileo.com/)
+[← Masomo yote](https://mkatolikileo.com/masomo-ya-misa) Kipindi cha Kawaida · Rangi ya Kijani 
+Jumanne, 20 Oktoba 2026 · Mwaka A · Juma la 1 la Zaburi
 
-*   [Nyumbani](https://mkatolikileo.com/)
-*   [Masomo ya Misa](https://mkatolikileo.com/masomo-ya-misa)
+## Somo la Kwanza
 
-### Jumanne ya Juma la 29 la Mwaka (Oktoba 21, 2026)
+Efe 2:12–22
 
-**Somo la 1**
+Msisahau kwamba zamani zile mlikuwa hamna Kristo, mmefarakana na jamii ya Israeli, wageni wasio wa maagano ya ahadi ile. Mlikuwa hamna tumaini, hamna Mungu duniani.
 
-### Rum 5:12, 15b, 17-19, 20b-21
+Neno la Bwana. — **Tumshukuru Mungu.**
 
-Ndugu zangu, kama vile kwa mtu mmoja dhambi iliingia ulimwenguni, na kwa dhambi hiyo mauti; na hivyo mauti ikawafikia watu wote, kwa sababu wote wamefanya dhambi.  
-Lakini karama ile haikuwa kama lile kosa. Maana ikiwa kwa kosa la mmoja wengi walikufa, zaidi sana neema ya Mungu, na kipawa katika neema yake mtu mmoja, Yesu Kristo, imewazidia wengi.
+## Wimbo wa Katikati
 
-Maana ikiwa kwa kosa la mmoja mauti ilitawala kwa sababu ya yule mmoja, zaidi sana wale wanaopokea wingi wa neema watatawala katika uzima kwa yule mmoja, Yesu Kristo.
+Zab 85:9–14
 
-_Neno la Bwana._ **Tumshukuru Mungu.**
+K.
 
-Wimbo wa Katikati
+Bwana anawaambia watu wake amani.
 
-### Zab 40:7-10, 17 (K) 8a, 9a
+Nisikie atakavyosema Bwana,  
+Maana atawaambia watu wake amani.  
+Hakika wokovu wake u karibu na wamchao,  
+Utukufu ukae katika nchi yetu.
 
-**K.** _Mimi hapa, Bwana, nimekuja kufanya mapenzi yako._
+K. Bwana anawaambia watu wake amani.
 
-1\. Dhabihu na matoleo hukupendezi,  
-Masikio yangu umeyazibua.  
-Kafara na sadaka ya dhambi hukuzitaka;  
-Ndipo niliposema, Tazama nimekuja. **(K)**
+Fadhili na kweli zimekutana,  
+Haki na amani zimebusiana.  
+Kweli imechipuka katika nchi,  
+Haki imechungulia kutoka mbinguni.
 
-2\. Katika gombo la chuo nimeandikiwa,  
-Kuyafanya mapenzi yako, Ee Mungu wangu, ndiyo furaha yangu;  
-Naam, sheria yako imo moyoni mwangu. **(K)**
+K. Bwana anawaambia watu wake amani.
 
-Shangilio
+Bwana atatoa kilicho chema,  
+Na nchi yetu itatoa mazao yake.  
+Haki itakwenda mbele zake,  
+Nayo itazifanya hatua zake kuwa njia.
 
-### Lk 21:36
+K. Bwana anawaambia watu wake amani.
 
-Aleluya, aleluya!  
-Kesheni ninyi kila wakati, mkiomba, mpate kuokoka na kusimama mbele ya Mwana wa Adamu.  
-Aleluya!
+## Shangilio la Injili
 
-Injili
+Yn 10:27
 
-### Lk 12:35-38
+Aleluya, aleluya,  
+ Kondoo wangu waisikia sauti yangu, nami nawajua, nao wanifuata.  
+ Aleluya.
 
-Yesu aliwaambia wanafunzi wake: "Viuno vyenu na viwe vimefungwa, na taa zenu ziwe zinawaka; nanyi iweni kama watu wanaomngojea bwana wao, atakaporudi kutoka arusini; ili atakapokuja na kubisha, mara wamfungulie."
+## Injili
 
-Heri watumwa wale ambao bwana wao ajapo atawakuta wakikesha. Amin, nawaambia, atajifunga, na kuwaketisha chakulani, naye atakuja na kuwahudumia.
+Lk 12:35-38
 
-_Injili ya Bwana._ **Sifa kwako Ee Kristo.**
+Yesu aliwaambia wanafunzi wake: Viuno vyenu na viwe vimefungwa, na taa zenu ziwe zinawaka; nanyi iweni kama watu wanaomngojea bwana wao, atakaporudi kutoka arusini, ili atakapokuja na kubisha, wamfungulie mara. Heri watumwa wale, ambao bwana wao ajapo atawakuta wanakesha.
 
-![Image 2: share](https://mkatolikileo.com/images/share.png)
+Injili ya Bwana. — **Sifa kwako, Ee Kristo.**
 
-12 Imependwa
+[Tafakari ya masomo haya Kuwa Mwepesi Kumkaribisha Yesu →](https://mkatolikileo.com/tafakari/3016/jumanne-oktoba-20-2026)[← Jumatatu, 19 Oktoba 2026 Jumatatu ya 29 ya Mwaka](https://mkatolikileo.com/masomo-ya-misa/3943/jumatatu-oktoba-19-2026)[Jumatano, 21 Oktoba 2026 →Jumatano ya 29 ya Mwaka](https://mkatolikileo.com/masomo-ya-misa/3945/jumatano-oktoba-21-2026)
+## Maoni (0)
 
-### Maoni
+Bado hakuna maoni. Kuwa wa kwanza kutoa maoni.
 
-*   [Masomo ya Jana](https://mkatolikileo.com/masomo-ya-misa/1249/jumatatu-oktoba-20-2026)
+[Ingia utoe maoni](https://mkatolikileo.com/ingia?url=https%3A%2F%2Fmkatolikileo.com%2Fmasomo-ya-misa%2F3944%2Fjumanne-oktoba-20-2026)

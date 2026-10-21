@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Saved copies of other sites' pages (tests/fixtures) carry their own
+   Tailwind classes, which the app doesn't use. */
+@source not "../tests/fixtures/**/*";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
