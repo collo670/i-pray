@@ -60,8 +60,10 @@ change the layout, styles or scripts of all 28 pages, edit the template.
 ## The Cloudflare Worker
 
 `cloudflare-worker/ipray-worker.js` lets the browser read bolls.life (Bible
-verses) and Universalis (the English hours), which send no CORS headers.
+verses), Universalis (the English hours) and mkatolikileo.com (the daily
+readings in Kiswahili), which send no CORS headers.
 Deploy it by pasting the file into the Worker the app uses
 (`ancient-rice-28a1`) in the Cloudflare dashboard; the steps are at the top
 of the file. Until it is deployed, the app falls back to public CORS
-proxies for Universalis.
+proxies for Universalis, and to the r.jina.ai Reader and public proxies for
+the Kiswahili readings.

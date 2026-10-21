@@ -1,6 +1,7 @@
 // The Kiswahili daily readings (pages/daily-readings.html), from
-// mkatolikileo.com: through the Reader (r.jina.ai, Markdown) or, when it is
-// down, the site's own HTML through a CORS proxy. The pages in
+// mkatolikileo.com: the site's HTML through the app's Cloudflare Worker,
+// or, when it doesn't answer, through the Reader (r.jina.ai, Markdown) or a
+// CORS proxy (HTML). The pages in
 // tests/fixtures/mkatolikileo/ are the real ones as they were on 21 October
 // 2026, with the long readings cut short and the site's scripts taken out.
 const { test, expect } = require('@playwright/test');
@@ -13,18 +14,28 @@ const fixture = (name) => fs.readFileSync(path.join(FIXTURES, name), 'utf8');
 const CORS = { 'access-control-allow-origin': '*' };
 // Article id on the site -> saved page
 const ARTICLES = { 3942: 'sunday', 3944: 'article' };
+const WORKER = 'https://ancient-rice-28a1.otienocollo95.workers.dev/mkatolikileo';
 const TUESDAY = new Date(2026, 9, 20, 9, 0, 0);
 const SUNDAY = new Date(2026, 9, 18, 9, 0, 0);
 
+// worker: 'up' answers the app's Worker with the saved HTML; 'down' answers
+// it 404, as it does until its mkatolikileo route is deployed.
 // reader: 'up' answers r.jina.ai with the saved Markdown; 'down' fails it,
 // so the page falls back to the HTML through corsproxy.io.
 // list: edits the list of days before it is served.
-async function serveSite(page, { reader = 'up', day = TUESDAY, list = (text) => text } = {}) {
+// Returns the hosts asked, in order.
+async function serveSite(page, { worker = 'down', reader = 'up', day = TUESDAY, list = (text) => text } = {}) {
+    const hosts = [];
     await page.clock.setFixedTime(day);
     await page.route(/^https?:\/\/(?!localhost[:/])/, (route) => {
         const url = route.request().url();
+        hosts.push(new URL(url).hostname);
         let target = null, ext = null;
-        if (url.startsWith('https://r.jina.ai/')) {
+        if (url.startsWith(WORKER)) {
+            if (worker !== 'up') return route.fulfill({ status: 404, headers: CORS, body: 'Not Found' });
+            target = 'https://mkatolikileo.com' + url.slice(WORKER.length);
+            ext = 'html';
+        } else if (url.startsWith('https://r.jina.ai/')) {
             if (reader !== 'up') return route.abort();
             target = url.slice('https://r.jina.ai/'.length);
             ext = 'md';
@@ -44,18 +55,26 @@ async function serveSite(page, { reader = 'up', day = TUESDAY, list = (text) => 
             body: name === 'list' ? list(body) : body
         });
     });
+    return hosts;
 }
 
 const cards = (page) => page.locator('#readingsContainer article');
 
-for (const reader of ['up', 'down']) {
-    test(`Kiswahili readings render from the site's pages (Reader ${reader})`, async ({ page }) => {
+const ROUTES = {
+    'the Worker': { worker: 'up' },
+    'the Reader': { worker: 'down', reader: 'up' },
+    'a proxy': { worker: 'down', reader: 'down' }
+};
+for (const [via, routes] of Object.entries(ROUTES)) {
+    test(`Kiswahili readings render from the site's pages (through ${via})`, async ({ page }) => {
         const errors = collectErrors(page);
-        await serveSite(page, { reader });
+        const hosts = await serveSite(page, routes);
         await setLanguage(page, 'sw');
         await page.goto('pages/daily-readings.html');
 
         await expect(cards(page)).toHaveCount(4);
+        // An answer from the Worker leaves the Reader and proxies alone
+        if (routes.worker === 'up') expect(hosts.filter((h) => h === 'r.jina.ai' || h === 'corsproxy.io')).toEqual([]);
         await expect(page.locator('#liturgicalDayTitle')).toHaveText('Jumanne ya 29 ya Mwaka');
         await expect(page.locator('#readingsDate')).toHaveText('Jumanne, 20 Oktoba 2026');
         await expect(cards(page).locator('span')).toHaveText(['Somo la Kwanza', 'Wimbo wa Katikati', 'Shangilio la Injili', 'Injili']);

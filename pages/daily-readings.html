@@ -219,9 +219,14 @@
             var SW_LIST_TTL_MS = 6 * 60 * 60 * 1000;
             var SW_WEEKDAYS = ['jumapili', 'jumatatu', 'jumanne', 'jumatano', 'alhamisi', 'ijumaa', 'jumamosi'];
             var SW_MONTH_SLUGS = ['januari', 'februari', 'machi', 'aprili', 'mei', 'juni', 'julai', 'agosti', 'septemba', 'oktoba', 'novemba', 'desemba'];
+            // The app's Cloudflare Worker (cloudflare-worker/ipray-worker.js)
+            // serves the site's pages with CORS, cached at the edge: asked
+            // first. Until its mkatolikileo route is deployed it answers
+            // these paths with a 404, and the others are asked at once.
+            var SW_WORKER = 'https://ancient-rice-28a1.otienocollo95.workers.dev/mkatolikileo';
             // r.jina.ai ("Reader") fetches a page server-side and returns
-            // clean Markdown with CORS already open - no proxy needed. Tried
-            // first; the raw-HTML proxy chain below is kept as a fallback
+            // clean Markdown with CORS already open - no proxy needed. Asked
+            // next; the raw-HTML proxy chain below is kept as a fallback
             // only. Both parsers follow the site's layout, so a redesign
             // (as in October 2026) needs them both updated: the saved pages
             // in tests/fixtures/mkatolikileo/ show the current one.
@@ -401,13 +406,15 @@
                 readingsSwNote.classList.remove('hidden');
             }
 
-            // Fetches a mkatolikileo.com page through the Reader (Markdown)
-            // first and, if it doesn't answer, the raw-HTML proxies all
-            // together (js/fetch-first.js). parse(text, viaReader) turns an
-            // answer into a result, or null if it doesn't hold one.
+            // Fetches a mkatolikileo.com page through the Worker (HTML) first
+            // and, if it doesn't answer, the Reader (Markdown) and the
+            // raw-HTML proxies all together (js/fetch-first.js).
+            // parse(text, viaReader) turns an answer into a result, or null
+            // if it doesn't hold one.
             function fetchSwPage(url, parse) {
-                var routes = [SW_READER_PREFIX + url].concat(SW_PROXIES.map(function (build) { return build(url); }));
-                return IPrayFetch.first(routes, function (text, i) { return parse(text, i === 0); }, { timeout: SW_FETCH_TIMEOUT_MS });
+                var routes = [SW_WORKER + url.slice(SW_SITE.length), SW_READER_PREFIX + url]
+                    .concat(SW_PROXIES.map(function (build) { return build(url); }));
+                return IPrayFetch.first(routes, function (text, i) { return parse(text, i === 1); }, { timeout: SW_FETCH_TIMEOUT_MS });
             }
 
             // Fetches one day's article. onOk receives an already-parsed

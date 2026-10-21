@@ -1,33 +1,43 @@
-// ipray Cloudflare Worker - Bible verses and Universalis hours
+// ipray Cloudflare Worker - Bible verses, Universalis hours, Kiswahili readings
 // -----------------------------------------------------------------
-// Neither bolls.life (Bible verses) nor universalis.com (Midday Prayer,
-// Vespers, Office of Readings) sends Access-Control-Allow-Origin, so a
-// static site on GitHub Pages can't read them from the browser. This
-// Worker sits in front of both and adds the CORS header.
+// bolls.life (Bible verses), universalis.com (Midday Prayer, Vespers,
+// Office of Readings) and mkatolikileo.com (the daily readings in
+// Kiswahili) send no Access-Control-Allow-Origin, so a static site on
+// GitHub Pages can't read them from the browser. This Worker sits in front
+// of them and adds the CORS header.
 //
 //   /universalis/YYYYMMDD/<hour>.htm  ->  https://universalis.com/YYYYMMDD/<hour>.htm
+//   /mkatolikileo/masomo-ya-misa      ->  https://mkatolikileo.com/masomo-ya-misa
+//   /mkatolikileo/masomo-ya-misa/<id>/<weekday>-<month>-<dd>-<yyyy>
+//                                     ->  that day's readings on mkatolikileo.com
 //   anything else                     ->  https://bolls.life/<same path>
 //
 // The Universalis route only accepts a date within a few weeks of today
-// and the hours the app uses, so it can't be used as a general proxy.
-// Each day's page is cached at Cloudflare's edge for 12 hours: everyone
-// praying the same hour on the same day shares one fetch.
+// and the hours the app uses, and the mkatolikileo route only the list of
+// days and a day's readings, so neither can be used as a general proxy.
+// Pages are cached at Cloudflare's edge (a day's office or readings for
+// 12 hours, the list of days for an hour): everyone praying the same day
+// shares one fetch.
 //
 // DEPLOY (free, ~5 minutes, no credit card required):
 //   1. https://dash.cloudflare.com -> Workers & Pages -> open the existing
 //      worker the app uses (ancient-rice-28a1), or create a new one.
 //   2. "Edit code", replace everything with this file, click "Deploy".
 //   3. If you created a new worker, put its URL in WORKER_BASE in
-//      js/universalis-office.js and in js/bibilia-reader.js /
-//      js/somo-la-kwanza-bible.js.
-// The app keeps working before this is deployed: it falls back to public
-// CORS proxies when the Worker doesn't answer with an office.
+//      js/universalis-office.js, SW_WORKER in pages/daily-readings.html
+//      and in js/bibilia-reader.js / js/somo-la-kwanza-bible.js.
+// The app keeps working before this is deployed: it falls back to the
+// r.jina.ai Reader and public CORS proxies when the Worker doesn't answer
+// with an office or the readings.
 
 const BOLLS = 'https://bolls.life';
 const UNIVERSALIS = 'https://universalis.com';
+const MKATOLIKILEO = 'https://mkatolikileo.com';
 const HOURS = new Set(['readings', 'lauds', 'terce', 'sext', 'none', 'vespers', 'compline']);
 const MAX_DAYS_AWAY = 40;
-const UNIVERSALIS_TTL = 12 * 60 * 60;
+const DAY_TTL = 12 * 60 * 60;
+// New days are added to the list ahead of time; an hour keeps it current.
+const LIST_TTL = 60 * 60;
 
 function corsHeaders() {
     return {
@@ -49,15 +59,15 @@ function validDate(stamp) {
     return Math.abs(date - Date.now()) <= MAX_DAYS_AWAY * 86400000;
 }
 
-async function universalis(request, stamp, hour, ctx) {
-    if (!validDate(stamp) || !HOURS.has(hour)) return reply('Not found', 404);
-
+// Answers path (this Worker's) with the page at upstreamUrl, plus CORS,
+// keeping it at the edge for ttl seconds.
+async function cachedPage(request, path, upstreamUrl, ttl, ctx) {
     const cache = caches.default;
-    const cacheKey = new Request(new URL(request.url).origin + '/universalis/' + stamp + '/' + hour + '.htm');
+    const cacheKey = new Request(new URL(request.url).origin + path);
     const cached = await cache.match(cacheKey);
     if (cached) return cached;
 
-    const upstream = await fetch(UNIVERSALIS + '/' + stamp + '/' + hour + '.htm', {
+    const upstream = await fetch(upstreamUrl, {
         headers: { 'Accept': 'text/html', 'User-Agent': 'Mozilla/5.0 (compatible; ipray-app)' },
         redirect: 'follow'
     });
@@ -67,13 +77,25 @@ async function universalis(request, stamp, hour, ctx) {
         headers: {
             ...corsHeaders(),
             'Content-Type': 'text/html; charset=utf-8',
-            'Cache-Control': upstream.ok ? 'public, max-age=' + UNIVERSALIS_TTL : 'no-store'
+            'Cache-Control': upstream.ok ? 'public, max-age=' + ttl : 'no-store'
         }
     });
-    // Only keep real pages: an error or a redirect to another date isn't
-    // worth sharing.
+    // Only keep real pages: an error or a redirect to another page (such
+    // as another date) isn't worth sharing.
     if (upstream.ok && !upstream.redirected) ctx.waitUntil(cache.put(cacheKey, response.clone()));
     return response;
+}
+
+function universalis(request, stamp, hour, ctx) {
+    if (!validDate(stamp) || !HOURS.has(hour)) return reply('Not found', 404);
+    const page = '/' + stamp + '/' + hour + '.htm';
+    return cachedPage(request, '/universalis' + page, UNIVERSALIS + page, DAY_TTL, ctx);
+}
+
+// day: "/<id>/<weekday>-<month>-<dd>-<yyyy>", or '' for the list of days
+function mkatolikileo(request, day, ctx) {
+    const page = '/masomo-ya-misa' + day;
+    return cachedPage(request, '/mkatolikileo' + page, MKATOLIKILEO + page, day ? DAY_TTL : LIST_TTL, ctx);
 }
 
 async function bolls(request) {
@@ -101,6 +123,9 @@ export default {
         const match = path.match(/^\/universalis\/(\d{8})\/([a-z]+)\.htm$/);
         if (match) return universalis(request, match[1], match[2], ctx);
         if (path.indexOf('/universalis') === 0) return reply('Not found', 404);
+        const readings = path.match(/^\/mkatolikileo\/masomo-ya-misa((?:\/\d{1,7}\/[a-z]+-[a-z]+-\d{1,2}-\d{4})?)$/);
+        if (readings) return mkatolikileo(request, readings[1], ctx);
+        if (path.indexOf('/mkatolikileo') === 0) return reply('Not found', 404);
         return bolls(request);
     }
 };
