@@ -122,6 +122,23 @@ test('public proxies take over while the Worker has no Universalis route', async
     await setLanguage(page, 'en');
     await page.goto('pages/prayer-hour.html?hour=vespers');
     await expect(page.locator('#officeContent .office-hour-heading')).toHaveText('Vespers — English');
-    expect(calls.map((c) => c.via)).toEqual(['ancient-rice-28a1.otienocollo95.workers.dev', 'corsproxy.io']);
+    // The Worker first; when it fails, the proxies all at once
+    const via = calls.map((c) => c.via);
+    expect(via[0]).toBe('ancient-rice-28a1.otienocollo95.workers.dev');
+    expect(via.slice(1).sort()).toEqual(['api.allorigins.win', 'api.cors.lol', 'corsproxy.io']);
+    expect(errors).toEqual([]);
+});
+
+test('offline, the page says so at once instead of waiting on the proxies', async ({ page, context }) => {
+    const errors = collectErrors(page);
+    const calls = await isolate(page);
+    await setLanguage(page, 'en');
+    await page.goto('pages/prayer-hour.html?hour=vespers');
+    await expect(page.locator('#officeContent .office-hour-heading')).toHaveText('Vespers — English');
+    calls.length = 0;
+    await context.setOffline(true);
+    await page.click('#nextDay');
+    await expect(page.locator('#unavailableMsg')).toHaveText("You're offline.", { timeout: 1000 });
+    expect(calls).toEqual([]);
     expect(errors).toEqual([]);
 });

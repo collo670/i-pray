@@ -53,10 +53,13 @@ test('calendar weekdays are short English names in every language', async ({ pag
     await expect(page.locator('#calendarGrid .cal-weekday')).toHaveText(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
 });
 
-test('no page has a bottom navigation bar; every page has the round Home button', async ({ page }) => {
+test('no page has a bottom navigation bar; every page but home has the round Home button', async ({ page }) => {
     const errors = collectErrors(page);
     await isolate(page, { universalis: 'fail' });
-    for (const url of ['index.html', 'pages/via-cruce.html', 'pages/mwaka1.html', 'pages/jumatano2.html', 'pages/amefufuka/031-amefufuka.html']) {
+    await page.goto('index.html');
+    await expect(page.locator('nav[aria-label="Main Navigation"], .bottom-nav')).toHaveCount(0);
+    await expect(page.locator('.ipray-home-btn')).toHaveCount(0);
+    for (const url of ['pages/via-cruce.html', 'pages/mwaka1.html', 'pages/jumatano2.html', 'pages/amefufuka/031-amefufuka.html']) {
         await page.goto(url);
         await expect(page.locator('nav[aria-label="Main Navigation"], .bottom-nav')).toHaveCount(0);
         const home = page.locator('.ipray-home-btn');
@@ -72,6 +75,54 @@ test('no page has a bottom navigation bar; every page has the round Home button'
     await page.goto('pages/sacraments.html');
     await page.locator('.ipray-home-btn').click();
     await expect(page).toHaveURL(/\/i-pray\/index\.html$/);
+    expect(errors).toEqual([]);
+});
+
+test('the splash shows briefly, and only when the app opens on its home page', async ({ page }) => {
+    await isolate(page, { universalis: 'fail' });
+    await page.goto('pages/jumatano2.html');
+    await expect(page.locator('#logoLoader')).toHaveCount(0);
+
+    await page.evaluate(() => sessionStorage.clear());
+    await page.goto('index.html');
+    await expect(page.locator('#logoLoader')).toHaveCount(1);
+    await expect(page.locator('#logoLoader')).toBeHidden({ timeout: 1000 });
+});
+
+test('the dark-mode button is a moon on the prayer pages, as on the home page', async ({ page }) => {
+    const errors = collectErrors(page);
+    await isolate(page, { universalis: 'fail' });
+    for (const url of ['pages/jumatano2.html', 'pages/antifona.html', 'pages/mwaka1.html', 'pages/amefufuka/031-amefufuka.html']) {
+        await page.goto(url);
+        const btn = page.locator('.toggle-btn');
+        await expect(btn.locator('svg')).toBeVisible();
+        await expect(btn).toHaveText('');
+        await expect(btn).toHaveAttribute('aria-label', 'Toggle dark mode');
+    }
+    const btn = page.locator('.toggle-btn');
+    const moon = await btn.innerHTML();
+    await btn.click();
+    await expect(btn).toHaveAttribute('aria-pressed', 'true');
+    expect(await btn.innerHTML()).not.toBe(moon);
+    expect(errors).toEqual([]);
+});
+
+test('the buttons along the bottom make way while the page scrolls down', async ({ page }) => {
+    const errors = collectErrors(page);
+    await isolate(page, { universalis: 'fail' });
+    await page.goto('pages/jumatano2.html');
+    const controls = page.locator('.ipray-home-btn, .ipray-fav, .masifu-textctl');
+    await expect(controls).toHaveCount(3);
+    for (const c of await controls.all()) await expect(c).toBeVisible();
+
+    await page.mouse.wheel(0, 600);
+    for (const c of await controls.all()) await expect(c).toBeHidden();
+    await page.mouse.wheel(0, -200);
+    for (const c of await controls.all()) await expect(c).toBeVisible();
+    // Always there at the end of the page
+    await page.mouse.wheel(0, 600);
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    for (const c of await controls.all()) await expect(c).toBeVisible();
     expect(errors).toEqual([]);
 });
 

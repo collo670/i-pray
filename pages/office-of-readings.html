@@ -200,6 +200,7 @@
     <script src="../js/liturgical-calendar.js"></script>
     <!-- Extracts and sanitises the liturgy out of a fetched Universalis hour
          page so only the prayer itself is rendered inside the app -->
+    <script src="../js/fetch-first.js"></script>
     <script src="../js/universalis-office.js"></script>
 
     <script>
@@ -218,7 +219,6 @@
             var WINDOW_AHEAD_DAYS = 9;
 
             var PROXIES = UniversalisOffice.PROXIES;
-            var FETCH_TIMEOUT_MS = 12000;
             // Versioned so offices cached by an earlier build (which stored
             // far more of the Universalis page) are re-fetched, not replayed.
             var CACHE_PREFIX = 'officeHtml-v' + UniversalisOffice.VERSION + '-';
@@ -413,36 +413,27 @@
             // a network error made an extraction bug look like a connection
             // one. The step log from the last readable response is kept so
             // it can be printed to the console.
+            // The Worker is asked first and the public proxies, if it doesn't
+            // answer, all together (js/fetch-first.js); offline, onFail is
+            // called at once with `offline` set.
             function fetchThroughProxies(url, token, onOk, onFail) {
-                var i = 0;
                 var gotBody = false;
                 var lastLog = null;
+                var routes = PROXIES.map(function (build) { return build(url); });
 
-                (function tryNext() {
-                    if (token !== loadToken) return;
-                    if (i >= PROXIES.length) { onFail(gotBody, lastLog); return; }
-                    var proxied = PROXIES[i++](url);
-                    var ctrl = window.AbortController ? new AbortController() : null;
-                    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_TIMEOUT_MS);
-                    fetch(proxied, ctrl ? { signal: ctrl.signal } : {})
-                        .then(function (r) {
-                            if (!r.ok) throw new Error('HTTP ' + r.status);
-                            return r.text();
-                        })
-                        .then(function (text) {
-                            clearTimeout(timer);
-                            if (token !== loadToken) return;
-                            if (text && text.length > 500) gotBody = true;
-                            var log = [];
-                            var cleaned = UniversalisOffice.extract(text, hourKey, log);
-                            if (!cleaned) { lastLog = log; throw new Error('no office content'); }
-                            onOk(cleaned);
-                        })
-                        .catch(function () {
-                            clearTimeout(timer);
-                            tryNext();
-                        });
-                })();
+                IPrayFetch.first(routes, function (text) {
+                    // Superseded by another day or hour: stop asking.
+                    if (token !== loadToken) return true;
+                    if (text && text.length > 500) gotBody = true;
+                    var log = [];
+                    var cleaned = UniversalisOffice.extract(text, hourKey, log);
+                    if (!cleaned) { lastLog = log; return null; }
+                    return cleaned;
+                }).then(function (cleaned) {
+                    if (token === loadToken) onOk(cleaned);
+                }, function (err) {
+                    if (token === loadToken) onFail(gotBody, lastLog, err.offline);
+                });
             }
 
             function pruneCache() {
@@ -641,14 +632,20 @@
                         localStorage.setItem(cacheKey, cleaned);
                     } catch (e) {}
                     showOffice((noteHtml || '') + cleaned, 'en');
-                }, function (gotBody, log) {
+                }, function (gotBody, log, offline) {
                     if (token !== loadToken || stamp !== currentStamp) return;
                     if (log && window.console && console.warn) {
                         console.warn('[iPray] ' + hourKey + ' ' + stamp +
                             ': page fetched but no office could be extracted.\n  ' +
                             log.join('\n  ') + '\n  source: ' + url);
                     }
-                    if (gotBody) {
+                    if (offline) {
+                        showUnavailable(
+                            lang === 'sw' ? 'Uko nje ya mtandao.' : "You're offline.",
+                            lang === 'sw'
+                                ? 'Unganisha mtandao kisha ujaribu tena. Ili kusali bila mtandao, chagua \u201cHifadhi juma hili\u201d kwenye Mipangilio.'
+                                : 'Connect and try again. To pray without a connection, use \u201cSave this week\u201d in Settings.');
+                    } else if (gotBody) {
                         showUnavailable(
                             lang === 'sw'
                                 ? 'Ukurasa umepakuliwa lakini maandishi ya sala hayakupatikana ndani yake.'

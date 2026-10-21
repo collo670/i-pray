@@ -159,6 +159,10 @@ body.page-index::before {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
+/* Tap feedback on touch screens, where :hover doesn't apply */
+.card-hover:active {
+    transform: scale(0.98);
+}
 .season-border {
     border-style: dashed;
     border-width: 1px;

@@ -116,7 +116,7 @@
                 <div id="continueCard" class="hidden"></div>
 
                 <!-- Daily Prayers Card: opens a menu of the Liturgy of the Hours prayers -->
-                <button type="button" id="dailyPrayersCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="dailyPrayersSheet" aria-label="Daily Prayers">
+                <button type="button" id="dailyPrayersCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="dailyPrayersSheet">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white flex-shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -129,7 +129,7 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="dailyPrayersDesc">Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -138,7 +138,7 @@
                 </button>
 
                 <!-- Daily Readings Card: opens the Mass readings viewer for any day -->
-                <a id="dailyReadingsCard" href="pages/daily-readings.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-label="Daily Mass Readings">
+                <a id="dailyReadingsCard" href="pages/daily-readings.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white flex-shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -146,8 +146,8 @@
                             </svg>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Daily Readings</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Mass readings for every day, in the order of the Mass</p>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Masomo ya Siku</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="dailyReadingsDesc">Masomo ya Misa ya kila siku, kwa mpangilio wa Misa</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -157,7 +157,7 @@
 
                 <!-- Bibilia Takatifu Card: opens a pop-up to choose Agano la Kale or
                      Agano Jipya, then that testament's books -->
-                <button type="button" id="bibliaTakatifuCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet" aria-label="Bibilia Takatifu">
+                <button type="button" id="bibliaTakatifuCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl biblia-card-icon flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -167,7 +167,7 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="bibiliaTakatifuDesc">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -176,7 +176,7 @@
                 </button>
 
                 <!-- Amefufuka Card: the songbook, listed by page with words and chords -->
-                <a id="amefufukaCard" href="pages/amefufuka.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-label="Amefufuka">
+                <a id="amefufukaCard" href="pages/amefufuka.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl amefufuka-card-icon flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -185,7 +185,7 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Amefufuka</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Nyimbo za Njia ya Neokatekumenato, maneno na chords kwa kurasa</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="amefufukaDesc">Nyimbo za Njia ya Neokatekumenato, maneno na chords kwa kurasa</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -494,12 +494,6 @@
     <script src="js/daily-readings-module.js" defer></script>
     <!-- Image Optimization -->
     <script src="js/image-optimizer.js" defer></script>
-    <!-- Loading States -->
-    <script src="js/loading-states.js" defer></script>
-    <!-- Micro-interactions -->
-    <script src="js/micro-interactions.js" defer></script>
-    <!-- Mobile Navigation -->
-    <script src="js/mobile-navigation.js" defer></script>
     <!-- Main JavaScript -->
     <script src="js/liturgical-calendar.js" defer></script>
     <script src="js/index.js" defer></script>

@@ -1,16 +1,19 @@
 // ipray logo loading animation
 // Self-contained: injects its own styles and overlay markup.
-// Shows the app logo with 3 expanding rings and the "ipray" wordmark
-// on the first page load in a tab session.
+// Shows the app logo with 3 expanding rings and the "ipray" wordmark for a
+// moment when the app is opened on its home page. Every page loads this
+// script so that only the first page of a tab session counts: a prayer
+// opened straight from a reminder, or the home page reached from a prayer,
+// shows no splash.
 (function () {
     'use strict';
 
-    // Show the loader only on the first page opened in this tab session.
-    var INITIAL_DURATION = 2000;
-    var hasShownInitialLoader = false;
+    // At most this long, so the page behind it is never held back.
+    var INITIAL_DURATION = 300;
+    var firstPageOfSession = false;
     try {
-        hasShownInitialLoader = sessionStorage.getItem('ipray-initial-loader-shown') === '1';
-        if (!hasShownInitialLoader) {
+        firstPageOfSession = sessionStorage.getItem('ipray-initial-loader-shown') !== '1';
+        if (firstPageOfSession) {
             sessionStorage.setItem('ipray-initial-loader-shown', '1');
         }
     } catch (e) {}
@@ -24,6 +27,10 @@
         appRoot = script.src.replace(/js\/logo-loader\.js.*$/, '');
     }
     var logoSrc = appRoot + LOGO_FILE;
+
+    var page = location.href.split(/[?#]/)[0];
+    var isHome = appRoot !== '' && (page === appRoot || page === appRoot + 'index.html');
+    if (!firstPageOfSession || !isHome) return;
 
     var css = '' +
         '.logo-loader {' +
@@ -39,7 +46,7 @@
         '    -webkit-backdrop-filter: blur(6px);' +
         '    backdrop-filter: blur(6px);' +
         '    opacity: 1;' +
-        '    transition: opacity 0.4s ease;' +
+        '    transition: opacity 0.2s ease;' +
         '}' +
         'html.dark .logo-loader {' +
         '    background: rgba(17, 24, 39, 0.95);' +
@@ -48,7 +55,7 @@
         '    opacity: 0;' +
         '    pointer-events: none;' +
         '    visibility: hidden;' +
-        '    transition: opacity 0.4s ease, visibility 0s linear 0.4s;' +
+        '    transition: opacity 0.2s ease, visibility 0s linear 0.2s;' +
         '}' +
         '.logo-loader-stage {' +
         '    position: relative;' +
@@ -144,9 +151,7 @@
     }
 
     // Show immediately when the app is first opened in this tab.
-    if (!hasShownInitialLoader) {
-        show();
-    }
+    show();
 
     // Re-mount into <body> once it exists so the overlay isn't a direct
     // child of <html> (harmless, but keeps the DOM tidy)

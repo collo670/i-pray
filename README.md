@@ -48,6 +48,10 @@ change the layout, styles or scripts of all 28 pages, edit the template.
   day of it chosen in Settings, which the prayer pages show instead of today.
 - `js/universalis-office.js`: fetches Midday Prayer, Vespers and the English
   Office of Readings from Universalis and keeps only the prayer text.
+- `js/fetch-first.js`: asks the app's own route (the Worker, or the Reader)
+  first and the public proxies together if it doesn't answer; says at once
+  when the phone is offline. Used by the office, daily readings and Bible
+  pages.
 - `service-worker.js`: offline support.
 - `data/office-readings-sw/`: the Swahili Office of Readings (Ordinary
   Time, Advent, Christmas, Trinity, Corpus Christi), extracted from the
