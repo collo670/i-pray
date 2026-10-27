@@ -115,83 +115,60 @@
                      (js/library.js fills it; hidden when there is none) -->
                 <div id="continueCard" class="hidden"></div>
 
-                <!-- Daily Prayers Card: opens a menu of the Liturgy of the Hours prayers -->
-                <button type="button" id="dailyPrayersCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="dailyPrayersSheet">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <!-- The four main cards as square tiles, two by two. Each card's
+                     description is kept for screen readers but not shown, so the
+                     tiles stay square. -->
+                <div id="homeTiles" class="home-tiles">
+                    <!-- Daily Prayers Card: opens a menu of the Liturgy of the Hours prayers -->
+                    <button type="button" id="dailyPrayersCard" class="home-tile rounded-2xl bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="dailyPrayersSheet">
+                        <span class="home-tile-icon bg-gradient-to-br from-indigo-600 to-blue-600 text-white" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v4M10 4h4" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10l8-6 8 6" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10v11h14V10" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21v-6h4v6" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14h.01M16 14h.01" />
                             </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="dailyPrayersDesc">Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni</p>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                </button>
+                        </span>
+                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h3>
+                        <p class="home-tile-desc" data-translate="dailyPrayersDesc">Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni</p>
+                    </button>
 
-                <!-- Daily Readings Card: opens the Mass readings viewer for any day -->
-                <a id="dailyReadingsCard" href="pages/daily-readings.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <!-- Daily Readings Card: opens the Mass readings viewer for any day -->
+                    <a id="dailyReadingsCard" href="pages/daily-readings.html" class="home-tile rounded-2xl bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
+                        <span class="home-tile-icon bg-gradient-to-br from-purple-600 to-pink-600 text-white" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Masomo ya Siku</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="dailyReadingsDesc">Masomo ya Misa ya kila siku, kwa mpangilio wa Misa</p>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                </a>
+                        </span>
+                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Masomo ya Siku</h3>
+                        <p class="home-tile-desc" data-translate="dailyReadingsDesc">Masomo ya Misa ya kila siku, kwa mpangilio wa Misa</p>
+                    </a>
 
-                <!-- Bibilia Takatifu Card: opens a pop-up to choose Agano la Kale or
-                     Agano Jipya, then that testament's books -->
-                <button type="button" id="bibliaTakatifuCard" class="block w-full text-left rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl biblia-card-icon flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <!-- Bibilia Takatifu Card: opens a pop-up to choose Agano la Kale or
+                         Agano Jipya, then that testament's books -->
+                    <button type="button" id="bibliaTakatifuCard" class="home-tile rounded-2xl bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300" aria-haspopup="dialog" aria-controls="bibliaTakatifuSheet">
+                        <span class="home-tile-icon biblia-card-icon" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.5v9" />
                             </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="bibiliaTakatifuDesc">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                </button>
+                        </span>
+                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
+                        <p class="home-tile-desc" data-translate="bibiliaTakatifuDesc">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
+                    </button>
 
-                <!-- Amefufuka Card: the songbook, listed by page with words and chords -->
-                <a id="amefufukaCard" href="pages/amefufuka.html" class="block rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl amefufuka-card-icon flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <!-- Amefufuka Card: the songbook, listed by page with words and chords -->
+                    <a id="amefufukaCard" href="pages/amefufuka.html" class="home-tile rounded-2xl bg-white dark:bg-gray-800 shadow-lg card-hover transition-all duration-300">
+                        <span class="home-tile-icon amefufuka-card-icon" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                             </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Amefufuka</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="amefufukaDesc">Nyimbo za Njia ya Neokatekumenato, maneno na chords kwa kurasa</p>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                </a>
+                        </span>
+                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100">Amefufuka</h3>
+                        <p class="home-tile-desc" data-translate="amefufukaDesc">Nyimbo za Njia ya Neokatekumenato, maneno na chords kwa kurasa</p>
+                    </a>
+                </div>
 
                 <!-- My prayers: favourites (the star on every prayer page) and
                      recently opened prayers, filled by js/library.js -->
