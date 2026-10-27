@@ -1467,18 +1467,21 @@ body.prayer-topbar .nav-links a:focus-visible {
 :root.dark .liturgical-card[data-color="gold"]   { --lit-text: #fbbf24; }
 
 /* Maroon lining for the home screen's main cards: the liturgical date
-   card, Daily Readings ("Masomo ya Siku"), Sala za Kanisa, and Bibilia
-   Takatifu. Kept as one shared rule so they stay visually consistent. */
+   card, Daily Readings ("Masomo ya Siku"), Sala za Kanisa, Bibilia
+   Takatifu and Amefufuka. Kept as one shared rule so they stay visually
+   consistent. */
 #liturgicalCard,
 #dailyReadingsCard,
 #dailyPrayersCard,
-#bibliaTakatifuCard {
+#bibliaTakatifuCard,
+#amefufukaCard {
     border: 2px solid #7c2133;
 }
 :root.dark #liturgicalCard,
 :root.dark #dailyReadingsCard,
 :root.dark #dailyPrayersCard,
-:root.dark #bibliaTakatifuCard {
+:root.dark #bibliaTakatifuCard,
+:root.dark #amefufukaCard {
     border-color: #f0c96a;
 }
 
