@@ -153,3 +153,43 @@ test('the Options button holds Home, Prayers, Calendar and Settings', async ({ p
     await expect(page.locator('#ipnPrayersSheet .ipn-item')).toHaveCount(8);
     expect(errors).toEqual([]);
 });
+
+test('the Masifu ya Asubuhi menu drops down as a sheet, like the Options button, with its own links', async ({ page }) => {
+    const errors = collectErrors(page);
+    await isolate(page, { universalis: 'fail' });
+    await setLanguage(page, 'sw');
+    const LINKS = ['Nyumbani', 'Ofisi ya Masomo', 'Masomo ya Siku', 'Sala za Mchana', 'Masifu ya Jioni'];
+
+    for (const url of ['pages/jumatano2.html', 'pages/antifona.html']) {
+        await page.goto(url);
+        const button = page.locator('#appBar .hamburger');
+        const sheet = page.locator('#masifuMenuSheet');
+        await expect(page.locator('#appBar .nav-links')).toHaveCount(0);
+        await expect(sheet).toBeHidden();
+
+        await button.click();
+        await expect(sheet).toBeVisible();
+        await expect(button).toHaveAttribute('aria-expanded', 'true');
+        await expect(sheet.locator('.masifu-sheet-title')).toHaveText('Chaguo');
+        await expect(sheet.locator('.masifu-sheet-label')).toHaveText(LINKS);
+        await expect(sheet.locator('a[href="prayer-hour.html?hour=vespers"]')).toBeInViewport();
+
+        // Closed by its X, by Escape and by a tap outside the panel
+        await sheet.locator('.masifu-sheet-close').click();
+        await expect(sheet).toBeHidden();
+        await expect(button).toHaveAttribute('aria-expanded', 'false');
+        await button.click();
+        await page.keyboard.press('Escape');
+        await expect(sheet).toBeHidden();
+        await button.click();
+        await page.mouse.click(page.viewportSize().width / 2, page.viewportSize().height * 0.75);
+        await expect(sheet).toBeHidden();
+    }
+
+    // The Amefufuka songs share the top bar and keep the dropdown
+    await page.goto('pages/amefufuka/031-amefufuka.html');
+    await expect(page.locator('#masifuMenuSheet')).toHaveCount(0);
+    await page.click('#appBar .hamburger');
+    await expect(page.locator('#appBar .nav-links')).toHaveClass(/active/);
+    expect(errors).toEqual([]);
+});

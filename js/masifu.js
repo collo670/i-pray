@@ -302,35 +302,137 @@
         }
     }
 
-    function wireMobileMenuClose(nav) {
-        if (!nav) return;
-        nav.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                if (window.innerWidth <= 768 && typeof window.toggleMenu === 'function') {
-                    window.toggleMenu(true);
-                }
-            });
-        });
+    // ---- Menu ---------------------------------------------------------------
+
+    // The top bar's menu button drops the menu down from the top bar as a
+    // sheet, like the Options button on the other prayer pages
+    // (js/app-options.js). It replaces the dropdown list in the page's
+    // <nav class="app-bar-menu">, keeping its links. The Amefufuka pages
+    // share the markup and css/masifu.css but keep the dropdown, so the
+    // pages that use the sheet say so with body.masifu-menu-sheet.
+
+    const MENU_ICONS = {
+        home: '<path fill="currentColor" stroke="none" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>',
+        office: '<path d="M12 6.25C10.5 5 8.25 4.5 4 4.5v13c4.25 0 6.5.5 8 1.75 1.5-1.25 3.75-1.75 8-1.75v-13c-4.25 0-6.5.5-8 1.75zm0 0v13"/>',
+        readings: '<path d="M6 4h10a2 2 0 012 2v14H8a2 2 0 01-2-2V4zm0 14a2 2 0 012-2h10M12 7v6m-2.5-3.5h5"/>',
+        midday: '<path d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66l1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14l-1.41-1.41M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>',
+        evening: '<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>',
+        close: '<path d="M6 18L18 6M6 6l12 12"/>',
+        chevron: '<path d="M9 5l7 7-7 7"/>'
+    };
+
+    function menuIcon(name, size) {
+        return '<svg width="' + size + '" height="' + size + '" fill="none" stroke="currentColor" stroke-width="2"'
+            + ' stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">'
+            + MENU_ICONS[name] + '</svg>';
     }
 
-    function normalizeTopNavigation() {
-        const nav = document.querySelector('#nav-links.nav-links');
-        if (!nav) return;
-
-        const items = [
-            { href: '../index.html', label: 'Nyumbani' },
-            { href: 'office-of-readings.html', label: 'Ofisi ya Masomo' },
-            { href: 'daily-readings.html', label: buildDailyReadingsLabel() },
-            { href: 'prayer-hour.html?hour=sext', label: 'Sala za Mchana' },
-            { href: 'prayer-hour.html?hour=vespers', label: 'Masifu ya Jioni' }
+    function menuItems() {
+        return [
+            { href: '../index.html', label: 'Nyumbani', icon: 'home' },
+            { href: 'office-of-readings.html', label: 'Ofisi ya Masomo', icon: 'office' },
+            { href: 'daily-readings.html', label: buildDailyReadingsLabel(), icon: 'readings', dailyReadings: true },
+            { href: 'prayer-hour.html?hour=sext', label: 'Sala za Mchana', icon: 'midday' },
+            { href: 'prayer-hour.html?hour=vespers', label: 'Masifu ya Jioni', icon: 'evening' }
         ];
+    }
 
-        nav.innerHTML = items.map(function (item) {
-            const currentAttrs = samePage(item.href) ? ' aria-current="page" class="is-current"' : '';
-            return '<li><a href="' + item.href + '"' + currentAttrs + '>' + item.label + '</a></li>';
+    function buildMenuSheet() {
+        const sheet = document.createElement('div');
+        sheet.id = 'masifuMenuSheet';
+        sheet.className = 'masifu-sheet';
+        sheet.hidden = true;
+        sheet.setAttribute('role', 'dialog');
+        sheet.setAttribute('aria-modal', 'true');
+        sheet.setAttribute('aria-labelledby', 'masifuMenuTitle');
+
+        const links = menuItems().map(function (item) {
+            const current = samePage(item.href) ? ' aria-current="page"' : '';
+            return '<a class="masifu-sheet-link" href="' + item.href + '"' + current + '>'
+                + '<span class="masifu-sheet-icon">' + menuIcon(item.icon, 20) + '</span>'
+                + '<span class="masifu-sheet-label"' + (item.dailyReadings ? ' data-daily-readings' : '') + '>' + item.label + '</span>'
+                + '<span class="masifu-sheet-chevron">' + menuIcon('chevron', 16) + '</span>'
+                + '</a>';
         }).join('');
 
-        wireMobileMenuClose(nav);
+        sheet.innerHTML = '<div class="masifu-sheet-panel">'
+            + '<div class="masifu-sheet-header">'
+            + '<h2 id="masifuMenuTitle" class="masifu-sheet-title" data-translate="options">Chaguo</h2>'
+            + '<button type="button" class="masifu-sheet-close">' + menuIcon('close', 18) + '</button>'
+            + '</div>'
+            + '<section class="masifu-sheet-section" aria-labelledby="masifuMenuGoTo">'
+            + '<h3 id="masifuMenuGoTo" class="masifu-sheet-section-title" data-translate="menuGoTo">Nenda</h3>'
+            + '<nav class="masifu-sheet-list" aria-label="Morning prayer navigation">' + links + '</nav>'
+            + '</section>'
+            + '<div class="masifu-sheet-handle" aria-hidden="true"></div>'
+            + '</div>';
+        return sheet;
+    }
+
+    function setupMenuSheet() {
+        const button = document.querySelector('body.masifu-menu-sheet .hamburger');
+        if (!button || document.getElementById('masifuMenuSheet')) return;
+
+        const oldMenu = document.querySelector('.app-bar-menu');
+        if (oldMenu) oldMenu.remove();
+
+        const sheet = buildMenuSheet();
+        document.body.appendChild(sheet);
+        const closeButton = sheet.querySelector('.masifu-sheet-close');
+
+        // isOpen, not the classes, says whether the sheet is open: it can be
+        // closed again before the frame that slides it in.
+        let isOpen = false;
+        function open() {
+            isOpen = true;
+            sheet.hidden = false;
+            requestAnimationFrame(function () {
+                if (isOpen) sheet.classList.add('is-open');
+            });
+            document.body.classList.add('masifu-sheet-open');
+            button.setAttribute('aria-expanded', 'true');
+        }
+        function close() {
+            if (!isOpen) return;
+            isOpen = false;
+            sheet.classList.remove('is-open');
+            document.body.classList.remove('masifu-sheet-open');
+            button.setAttribute('aria-expanded', 'false');
+            setTimeout(function () {
+                if (!isOpen) sheet.hidden = true;
+            }, 250);
+        }
+
+        // The button's inline onclick="toggleMenu()" opened the dropdown.
+        button.removeAttribute('onclick');
+        button.setAttribute('aria-controls', sheet.id);
+        button.setAttribute('aria-haspopup', 'dialog');
+        button.addEventListener('click', open);
+        window.toggleMenu = function (forceClose) {
+            if (forceClose === true || (forceClose === undefined && isOpen)) close();
+            else open();
+        };
+
+        closeButton.addEventListener('click', close);
+        sheet.addEventListener('click', function (e) {
+            if (e.target === sheet) close();
+        });
+        sheet.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', close);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') close();
+        });
+
+        function paint() {
+            const sw = getPreferredLanguage() === 'sw';
+            closeButton.setAttribute('aria-label', sw ? 'Funga' : 'Close');
+            button.setAttribute('aria-label', sw ? 'Fungua menyu' : 'Open menu');
+            sheet.querySelector('[data-daily-readings]').textContent = buildDailyReadingsLabel();
+            if (window.IPrayI18n) window.IPrayI18n.apply(sheet);
+        }
+        paint();
+        if (window.IPrayI18n) window.IPrayI18n.onChange(paint);
     }
 
     // ---- Text size controls ----------------------------------------------------
@@ -355,13 +457,14 @@
         document.body.classList.add('masifu-modern');
         const ctx = seasonInfo();
         classifyPlainSections();
-        normalizeTopNavigation();
         setupSeasonalAntiphons(ctx);
         insertSeasonBadge(ctx);
         setupTextControls();
     }
 
     function initAfterSikukuu() {
+        // The menu does not wait for the feast days to load
+        setupMenuSheet();
         const ready = window.sikukuuReady;
         if (ready && typeof ready.then === 'function') ready.then(init);
         else init();

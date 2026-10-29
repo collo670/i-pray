@@ -909,3 +909,210 @@ body.masifu-topbar .nav-links a:focus-visible {
         border-radius: 0;
     }
 }
+
+/* ---- Menu sheet ---------------------------------------------------------
+   On the Masifu ya Asubuhi pages (body.masifu-menu-sheet) the menu button
+   drops the menu down from the top bar as a sheet, built by js/masifu.js
+   and styled like the Options sheet of js/app-options.js. The Amefufuka
+   pages keep the dropdown above. */
+
+body.masifu-menu-sheet .hamburger {
+    display: flex;
+}
+
+body.masifu-menu-sheet .app-bar-menu {
+    display: none;
+}
+
+body.masifu-sheet-open {
+    overflow: hidden;
+}
+
+.masifu-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.masifu-sheet[hidden] {
+    display: none;
+}
+
+.masifu-sheet.is-open {
+    opacity: 1;
+}
+
+/* The part behind the status bar stays maroon */
+.masifu-sheet-panel {
+    width: 100%;
+    max-width: 32rem;
+    max-height: 80vh;
+    max-height: 80dvh;
+    overflow-y: auto;
+    color: #1f2937;
+    background: linear-gradient(to bottom, #7c2133 env(safe-area-inset-top, 0px), #fff env(safe-area-inset-top, 0px));
+    border-radius: 0 0 1.5rem 1.5rem;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
+    padding-bottom: 0.25rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(-100%);
+    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0.24, 1);
+}
+
+.masifu-sheet.is-open .masifu-sheet-panel {
+    transform: translateY(0);
+}
+
+.masifu-sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem 0.5rem;
+}
+
+.masifu-sheet .masifu-sheet-title {
+    margin: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.masifu-sheet-close {
+    display: flex;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 9999px;
+    background: #e5e7eb;
+    color: #374151;
+    cursor: pointer;
+}
+
+.masifu-sheet-section {
+    padding: 0.75rem 1.25rem 0.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.masifu-sheet .masifu-sheet-section-title {
+    margin: 0 0 0.25rem;
+    color: #6b7280;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.masifu-sheet-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.masifu-sheet-link {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-height: 48px;
+    padding: 0.7rem 0.25rem;
+    border-bottom: 1px solid #e5e7eb;
+    color: inherit;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.masifu-sheet-link:last-child {
+    border-bottom: none;
+}
+
+.masifu-sheet-link:hover,
+.masifu-sheet-link:active,
+.masifu-sheet-link:focus-visible {
+    background-color: #f3f4f6;
+    outline: none;
+}
+
+.masifu-sheet-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: #f3e8eb;
+    color: #7c2133;
+}
+
+.masifu-sheet-label {
+    flex: 1;
+}
+
+.masifu-sheet-link[aria-current="page"] .masifu-sheet-label {
+    color: #7c2133;
+}
+
+.masifu-sheet-chevron {
+    display: flex;
+    flex-shrink: 0;
+    color: #6b7280;
+}
+
+.masifu-sheet-handle {
+    width: 2.5rem;
+    height: 0.3rem;
+    margin: 0.5rem auto 0.6rem;
+    border-radius: 9999px;
+    background: #c7d2d0;
+}
+
+@media (min-width: 768px) {
+    .masifu-sheet {
+        padding: 0 1rem 1rem;
+    }
+}
+
+html.dark .masifu-sheet-panel {
+    color: #f3f4f6;
+    background: linear-gradient(to bottom, #7c2133 env(safe-area-inset-top, 0px), #1f2937 env(safe-area-inset-top, 0px));
+}
+
+html.dark .masifu-sheet-close {
+    background: #374151;
+    color: #e5e7eb;
+}
+
+html.dark .masifu-sheet-section,
+html.dark .masifu-sheet-link {
+    border-color: #374151;
+}
+
+html.dark .masifu-sheet .masifu-sheet-section-title,
+html.dark .masifu-sheet-chevron {
+    color: #9ca3af;
+}
+
+html.dark .masifu-sheet-icon {
+    background: #374151;
+    color: #f0c96a;
+}
+
+html.dark .masifu-sheet-link:hover,
+html.dark .masifu-sheet-link:active,
+html.dark .masifu-sheet-link:focus-visible {
+    background-color: #374151;
+}
+
+html.dark .masifu-sheet-link[aria-current="page"] .masifu-sheet-label {
+    color: #f0c96a;
+}
