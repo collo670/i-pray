@@ -19,6 +19,10 @@
     // Bolls uses the standard 66-book ordering (Mwanzo=1 ... Ufunuo=66).
     // Keys are matched with whitespace stripped and lower-cased, so
     // "I Tim", "1 Tim" and "1tim" all resolve the same way.
+    // The abbreviations are the Ofisi ya Masomo books' own, which are not
+    // always the usual ones: "Ma" is Maombolezo (Mark is "Mk"), "Hek" is
+    // Hekima (Hebrews is "Ebr"), "Yda" is Yuda and "Yud" is Yuditi
+    // ("Yud 6,19" — Jude has one chapter).
     // ---------------------------------------------------------------
     var BOOK_MAP = {
         // Torati
@@ -49,7 +53,7 @@
         // Manabii wakuu
         'isa': 23, 'isaya': 23,
         'yer': 24, 'yeremia': 24,
-        'omb': 25, 'maombolezo': 25,
+        'ma': 25, 'omb': 25, 'maombolezo': 25,
         'eze': 26, 'ezekieli': 26,
         'dan': 27, 'danieli': 27,
         // Manabii wadogo
@@ -67,7 +71,7 @@
         'mal': 39, 'malaki': 39,
         // Agano Jipya
         'mt': 40, 'mathayo': 40,
-        'mk': 41, 'ma': 41, 'marko': 41,
+        'mk': 41, 'marko': 41,
         'lk': 42, 'luka': 42,
         'yoh': 43, 'yohana': 43,
         'mdo': 44, 'matendo': 44,
@@ -84,14 +88,14 @@
         '2tim': 55, 'iitim': 55, 'iitimotheo': 55,
         'tit': 56, 'tito': 56,
         'flm': 57, 'filemoni': 57,
-        'ebr': 58, 'hek': 58, 'waebrania': 58,
+        'ebr': 58, 'waebrania': 58,
         'yak': 59, 'yakobo': 59,
         '1pet': 60, 'ipet': 60, 'ipetro': 60, '1petro': 60,
         '2pet': 61, 'iipet': 61, 'iipetro': 61, '2petro': 61,
         '1yoh': 62, 'iyoh': 62, 'iyohana': 62,
         '2yoh': 63, 'iiyoh': 63, 'iiyohana': 63,
         '3yoh': 64, 'iiiyoh': 64, 'iiiyohana': 64,
-        'yud': 65, 'yuda': 65,
+        'yda': 65, 'yuda': 65,
         'ufu': 66, 'ufunuo': 66
     };
 
@@ -104,10 +108,76 @@
         'ybs': 'Yesu bin Sira (Sirach)',
         'imak': '1 Wamakabayo', '1mak': '1 Wamakabayo',
         'iimak': '2 Wamakabayo', '2mak': '2 Wamakabayo',
-        'yda': '1 Wamakabayo',
         'tob': 'Tobiti', 'tobiti': 'Tobiti',
-        'yud t': 'Yuditi', 'yuditi': 'Yuditi',
-        'hekima': 'Kitabu cha Hekima'
+        'yud': 'Yuditi', 'yudt': 'Yuditi', 'yuditi': 'Yuditi',
+        'hek': 'Hekima', 'hekima': 'Hekima'
+    };
+
+    // Books of one chapter, whose citations give verses only ("Yda 17-25").
+    var SINGLE_CHAPTER = { 31: true, 57: true, 63: true, 64: true, 65: true };
+
+    // Where the books number verses differently from SUV. The books number
+    // the Old Testament as the Hebrew Bible does (and Daniel and Esther with
+    // their Greek parts), SUV as the English Bibles do: the books' "Yoe 4,1"
+    // is SUV's Yoeli 3:1. Each chapter listed is given whole, in order, as
+    // runs of [firstVerse, lastVerse, suvChapter, suvFirstVerse]; a run with
+    // no SUV chapter is a passage SUV does not have. Chapters not listed are
+    // numbered alike. Only the chapters the first readings reach are listed.
+    var SUV_NUMBERING = {
+        5: { // Kumbukumbu la Torati
+            28: [[1, 68, 28, 1], [69, 69, 29, 1]],
+            29: [[1, 28, 29, 2]]
+        },
+        9: { // 1 Samweli
+            21: [[1, 1, 20, 42], [2, 16, 21, 1]]
+        },
+        10: { // 2 Samweli
+            18: [[1, 32, 18, 1]],
+            19: [[1, 1, 18, 33], [2, 44, 19, 1]]
+        },
+        17: { // Esta: the Greek parts, 10,4 to the end
+            10: [[1, 3, 10, 1], [4, 13]],
+            11: [[1, 12]], 12: [[1, 6]], 13: [[1, 18]], 14: [[1, 19]], 15: [[1, 19]], 16: [[1, 24]]
+        },
+        21: { // Mhubiri
+            4: [[1, 16, 4, 1], [17, 17, 5, 1]],
+            5: [[1, 19, 5, 2]]
+        },
+        23: { // Isaya (63,19b is SUV's 64:1)
+            8: [[1, 22, 8, 1], [23, 23, 9, 1]],
+            9: [[1, 20, 9, 2]],
+            63: [[1, 19, 63, 1], [19, 19, 64, 1]],
+            64: [[1, 11, 64, 2]]
+        },
+        27: { // Danieli: the Song of the Three Young Men, Susanna, Bel
+            3: [[1, 23, 3, 1], [24, 90], [91, 97, 3, 24], [98, 100, 4, 1]],
+            4: [[1, 34, 4, 4]],
+            13: [[1, 64]], 14: [[1, 42]]
+        },
+        28: { // Hosea
+            1: [[1, 9, 1, 1]],
+            2: [[1, 2, 1, 10], [3, 25, 2, 1]],
+            11: [[1, 11, 11, 1]],
+            12: [[1, 1, 11, 12], [2, 15, 12, 1]],
+            13: [[1, 15, 13, 1]],
+            14: [[1, 1, 13, 16], [2, 10, 14, 1]]
+        },
+        29: { // Yoeli
+            2: [[1, 27, 2, 1]],
+            3: [[1, 5, 2, 28]],
+            4: [[1, 21, 3, 1]]
+        },
+        33: { // Mika
+            4: [[1, 13, 4, 1], [14, 14, 5, 1]],
+            5: [[1, 14, 5, 2]]
+        },
+        38: { // Zekaria
+            1: [[1, 17, 1, 1]],
+            2: [[1, 4, 1, 18], [5, 17, 2, 1]]
+        },
+        39: { // Malaki
+            3: [[1, 18, 3, 1], [19, 24, 4, 1]]
+        }
     };
 
     function normKey(s) {
@@ -169,9 +239,15 @@
         return null;
     }
 
-    function parseCitation(rest) {
-        var segments = rest.split(/[.;]/).map(function (s) { return s.trim(); }).filter(Boolean);
-        var currentChapter = null;
+    function parseCitation(rest, singleChapter) {
+        // After a semicolon a new chapter starts, even when the books write
+        // it with a full stop ("Hos 1,1-9; 3.1-5").
+        rest = rest.replace(/;\s*(\d+)\.(\d+)/g, '; $1,$2');
+        // With a colon between chapter and verse ("Yoeli 4:1-3,9-21"), a
+        // comma separates verses as a full stop does in "Yoe 4,1-3.9-21".
+        var separators = rest.indexOf(':') === -1 ? /[.;]/ : /[.;,]/;
+        var segments = rest.split(separators).map(function (s) { return s.trim(); }).filter(Boolean);
+        var currentChapter = singleChapter ? 1 : null;
         var spans = [];
 
         segments.forEach(function (seg) {
@@ -205,6 +281,40 @@
         });
 
         return spans;
+    }
+
+    // The spans of a citation, in the books' numbering, as SUV numbers
+    // them. Each SUV span keeps the books' chapter and the difference
+    // between the two counts, so verses are labelled as the citation
+    // counts them. `missing` is set when part of the citation is a passage
+    // SUV does not have.
+    function toSuvSpans(bookId, spans) {
+        var book = SUV_NUMBERING[bookId] || {};
+        var suvSpans = [];
+        var missing = false;
+        spans.forEach(function (span) {
+            var runs = book[span.chapter];
+            var last = runs ? runs[runs.length - 1][1] : 0;
+            // A verse past the chapter's end in the books' count means the
+            // citation already counts as SUV does ("Yoeli 2:21-32").
+            if (!runs || (span.vEnd !== null && span.vEnd > last)) {
+                suvSpans.push({ chapter: span.chapter, vStart: span.vStart, vEnd: span.vEnd, bookChapter: span.chapter, offset: 0 });
+                return;
+            }
+            var vEnd = span.vEnd === null ? last : span.vEnd;
+            runs.forEach(function (run) {
+                var from = Math.max(span.vStart, run[0]);
+                var to = Math.min(vEnd, run[1]);
+                if (from > to) return;
+                if (run.length < 4) {
+                    missing = true;
+                    return;
+                }
+                var offset = run[0] - run[3];
+                suvSpans.push({ chapter: run[2], vStart: from - offset, vEnd: to - offset, bookChapter: span.chapter, offset: offset });
+            });
+        });
+        return { spans: suvSpans, missing: missing };
     }
 
     // -----------------------------------------------------------------
@@ -282,7 +392,12 @@
                     verseList.forEach(function (v) {
                         var inRange = v.verse >= span.vStart && (span.vEnd === null || v.verse <= span.vEnd);
                         if (inRange) {
-                            verses.push({ chapter: span.chapter, verse: v.verse, text: stripHtml(v.text) });
+                            verses.push({
+                                chapter: span.chapter,
+                                verse: v.verse,
+                                label: span.bookChapter + ':' + (v.verse + span.offset),
+                                text: stripHtml(v.text)
+                            });
                         }
                     });
                 });
@@ -372,7 +487,7 @@
         return cite;
     }
 
-    function renderVerses(citeEl, verses) {
+    function renderVerses(citeEl, verses, note) {
         if (!verses.length) {
             renderError(citeEl, 'Aya hazikupatikana kwa rejea hii.');
             return;
@@ -386,12 +501,13 @@
         verses.forEach(function (v) {
             var p = document.createElement('p');
             var sup = document.createElement('sup');
-            sup.textContent = (v.chapter + ':' + v.verse);
+            sup.textContent = v.label;
             p.appendChild(sup);
             p.appendChild(document.createTextNode(v.text.trim()));
             insertAfter.insertAdjacentElement('afterend', p);
             insertAfter = p;
         });
+        if (note) renderError(insertAfter, note);
     }
 
     function renderError(citeEl, message, helpUrl) {
@@ -471,16 +587,24 @@
             return;
         }
 
-        var spans = parseCitation(split.rest);
+        var spans = parseCitation(split.rest, SINGLE_CHAPTER[bookId]);
         if (!spans.length) {
             renderError(built, 'Imeshindikana kusoma rejea "' + citation + '".');
             return;
         }
 
-        fetchVerses(bookId, spans)
-            .then(function (verses) { renderVerses(built, verses); })
+        var greekParts = 'Aya za somo hili zilizo katika nyongeza za Kigiriki za kitabu hazipo kwenye tafsiri ya ' +
+            TRANSLATION + ' ya Bolls Bible API — zinapatikana katika Biblia ya Kikatoliki pekee.';
+        var suv = toSuvSpans(bookId, spans);
+        if (!suv.spans.length) {
+            renderError(built, greekParts);
+            return;
+        }
+
+        fetchVerses(bookId, suv.spans)
+            .then(function (verses) { renderVerses(built, verses, suv.missing ? greekParts : ''); })
             .catch(function () {
-                var firstChapter = spans[0].chapter;
+                var firstChapter = suv.spans[0].chapter;
                 renderError(
                     built,
                     'Imeshindwa kupata andiko kutoka Bolls Bible API kwa sasa.',
@@ -498,7 +622,10 @@
     // Exposed for debugging / reuse elsewhere.
     window.SomoLaKwanzaBible = {
         BOOK_MAP: BOOK_MAP,
+        DEUTEROCANONICAL: DEUTEROCANONICAL,
+        SINGLE_CHAPTER: SINGLE_CHAPTER,
         parseCitation: parseCitation,
+        toSuvSpans: toSuvSpans,
         splitBookAndRest: splitBookAndRest,
         normalizeRef: normalizeRef,
         findSomoLaKwanzaHeadings: findSomoLaKwanzaHeadings,
