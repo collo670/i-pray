@@ -153,3 +153,47 @@ test('the Options button holds Home, Prayers, Calendar and Settings', async ({ p
     await expect(page.locator('#ipnPrayersSheet .ipn-item')).toHaveCount(8);
     expect(errors).toEqual([]);
 });
+
+test('the Masifu ya Asubuhi and Amefufuka menus drop down as a sheet, like the Options button, with their own links', async ({ page }) => {
+    const errors = collectErrors(page);
+    await isolate(page, { universalis: 'fail' });
+    await setLanguage(page, 'sw');
+    const MASIFU = ['Nyumbani', 'Ofisi ya Masomo', 'Masomo ya Siku', 'Sala za Mchana', 'Masifu ya Jioni'];
+
+    for (const [url, links] of [
+        ['pages/jumatano2.html', MASIFU],
+        ['pages/antifona.html', MASIFU],
+        ['pages/amefufuka.html', ['Nyumbani', 'Masomo ya Siku / Daily Readings', 'Ofisi ya Masomo', 'Sala za Mchana', 'Masifu ya Jioni']],
+        ['pages/amefufuka/031-amefufuka.html', ['Nyumbani', 'Amefufuka — Orodha ya Nyimbo']]
+    ]) {
+        await page.goto(url);
+        const button = page.locator('#appBar .hamburger');
+        const sheet = page.locator('#masifuMenuSheet');
+        await expect(page.locator('#appBar .nav-links')).toHaveCount(0);
+        await expect(sheet).toBeHidden();
+
+        await button.click();
+        await expect(sheet).toBeVisible();
+        await expect(button).toHaveAttribute('aria-expanded', 'true');
+        await expect(sheet.locator('.masifu-sheet-title')).toHaveText('Chaguo');
+        await expect(sheet.locator('.masifu-sheet-label')).toHaveText(links);
+        await expect(sheet.locator('.masifu-sheet-link').last()).toBeInViewport();
+
+        // Closed by its X, by Escape and by a tap outside the panel
+        await sheet.locator('.masifu-sheet-close').click();
+        await expect(sheet).toBeHidden();
+        await expect(button).toHaveAttribute('aria-expanded', 'false');
+        await button.click();
+        await page.keyboard.press('Escape');
+        await expect(sheet).toBeHidden();
+        await button.click();
+        await page.mouse.click(page.viewportSize().width / 2, page.viewportSize().height * 0.75);
+        await expect(sheet).toBeHidden();
+    }
+
+    // A song's link back to the list of songs opens it
+    await page.click('#appBar .hamburger');
+    await page.click('#masifuMenuSheet a[href="../amefufuka.html"]');
+    await expect(page).toHaveURL(/\/pages\/amefufuka\.html$/);
+    expect(errors).toEqual([]);
+});

@@ -210,6 +210,7 @@ HEAD = '''<!DOCTYPE html>
     <script src="{r}js/text-size.js"></script>
     <script src="{r}js/i18n.js"></script>
     <script src="{r}js/library.js" defer></script>
+    <script src="{r}js/home-button.js" defer></script>
     <script src="{r}js/reminders.js" defer></script>
 </head>
 <body class="masifu-topbar masifu-modern amefufuka{extra}">
@@ -239,6 +240,7 @@ HEAD = '''<!DOCTYPE html>
 '''
 
 FOOT = '''
+    <script src="{r}js/menu-sheet.js" defer></script>
     <script src="{r}js/amefufuka.js" defer></script>
     <script src="{r}js/prevent-zoom.js" defer></script>
     <script>

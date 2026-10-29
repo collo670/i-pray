@@ -292,45 +292,26 @@
         return getPreferredLanguage() === 'en' ? 'Daily Readings' : 'Masomo ya Siku';
     }
 
-    function samePage(href) {
-        try {
-            const linkUrl = new URL(href, window.location.href);
-            const pageUrl = new URL(window.location.href);
-            return linkUrl.pathname === pageUrl.pathname && linkUrl.search === pageUrl.search;
-        } catch (e) {
-            return false;
-        }
-    }
+    // ---- Menu -----------------------------------------------------------------
 
-    function wireMobileMenuClose(nav) {
-        if (!nav) return;
-        nav.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                if (window.innerWidth <= 768 && typeof window.toggleMenu === 'function') {
-                    window.toggleMenu(true);
-                }
-            });
-        });
-    }
-
-    function normalizeTopNavigation() {
-        const nav = document.querySelector('#nav-links.nav-links');
-        if (!nav) return;
-
-        const items = [
+    // The top bar's menu (js/menu-sheet.js): these links, in this order, on
+    // every Masifu page, whatever its own markup lists.
+    function menuItems() {
+        return [
             { href: '../index.html', label: 'Nyumbani' },
             { href: 'office-of-readings.html', label: 'Ofisi ya Masomo' },
             { href: 'daily-readings.html', label: buildDailyReadingsLabel() },
             { href: 'prayer-hour.html?hour=sext', label: 'Sala za Mchana' },
             { href: 'prayer-hour.html?hour=vespers', label: 'Masifu ya Jioni' }
         ];
+    }
 
-        nav.innerHTML = items.map(function (item) {
-            const currentAttrs = samePage(item.href) ? ' aria-current="page" class="is-current"' : '';
-            return '<li><a href="' + item.href + '"' + currentAttrs + '>' + item.label + '</a></li>';
-        }).join('');
-
-        wireMobileMenuClose(nav);
+    function setupMenu() {
+        if (!window.IPrayMenuSheet) return;
+        const menu = window.IPrayMenuSheet.setup(menuItems());
+        if (menu && window.IPrayI18n) {
+            window.IPrayI18n.onChange(function () { menu.setItems(menuItems()); });
+        }
     }
 
     // ---- Text size controls ----------------------------------------------------
@@ -355,13 +336,14 @@
         document.body.classList.add('masifu-modern');
         const ctx = seasonInfo();
         classifyPlainSections();
-        normalizeTopNavigation();
         setupSeasonalAntiphons(ctx);
         insertSeasonBadge(ctx);
         setupTextControls();
     }
 
     function initAfterSikukuu() {
+        // The menu does not wait for the feast days to load
+        setupMenu();
         const ready = window.sikukuuReady;
         if (ready && typeof ready.then === 'function') ready.then(init);
         else init();
