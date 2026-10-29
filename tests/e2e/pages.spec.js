@@ -154,13 +154,18 @@ test('the Options button holds Home, Prayers, Calendar and Settings', async ({ p
     expect(errors).toEqual([]);
 });
 
-test('the Masifu ya Asubuhi menu drops down as a sheet, like the Options button, with its own links', async ({ page }) => {
+test('the Masifu ya Asubuhi and Amefufuka menus drop down as a sheet, like the Options button, with their own links', async ({ page }) => {
     const errors = collectErrors(page);
     await isolate(page, { universalis: 'fail' });
     await setLanguage(page, 'sw');
-    const LINKS = ['Nyumbani', 'Ofisi ya Masomo', 'Masomo ya Siku', 'Sala za Mchana', 'Masifu ya Jioni'];
+    const MASIFU = ['Nyumbani', 'Ofisi ya Masomo', 'Masomo ya Siku', 'Sala za Mchana', 'Masifu ya Jioni'];
 
-    for (const url of ['pages/jumatano2.html', 'pages/antifona.html']) {
+    for (const [url, links] of [
+        ['pages/jumatano2.html', MASIFU],
+        ['pages/antifona.html', MASIFU],
+        ['pages/amefufuka.html', ['Nyumbani', 'Masomo ya Siku / Daily Readings', 'Ofisi ya Masomo', 'Sala za Mchana', 'Masifu ya Jioni']],
+        ['pages/amefufuka/031-amefufuka.html', ['Nyumbani', 'Amefufuka — Orodha ya Nyimbo']]
+    ]) {
         await page.goto(url);
         const button = page.locator('#appBar .hamburger');
         const sheet = page.locator('#masifuMenuSheet');
@@ -171,8 +176,8 @@ test('the Masifu ya Asubuhi menu drops down as a sheet, like the Options button,
         await expect(sheet).toBeVisible();
         await expect(button).toHaveAttribute('aria-expanded', 'true');
         await expect(sheet.locator('.masifu-sheet-title')).toHaveText('Chaguo');
-        await expect(sheet.locator('.masifu-sheet-label')).toHaveText(LINKS);
-        await expect(sheet.locator('a[href="prayer-hour.html?hour=vespers"]')).toBeInViewport();
+        await expect(sheet.locator('.masifu-sheet-label')).toHaveText(links);
+        await expect(sheet.locator('.masifu-sheet-link').last()).toBeInViewport();
 
         // Closed by its X, by Escape and by a tap outside the panel
         await sheet.locator('.masifu-sheet-close').click();
@@ -186,10 +191,9 @@ test('the Masifu ya Asubuhi menu drops down as a sheet, like the Options button,
         await expect(sheet).toBeHidden();
     }
 
-    // The Amefufuka songs share the top bar and keep the dropdown
-    await page.goto('pages/amefufuka/031-amefufuka.html');
-    await expect(page.locator('#masifuMenuSheet')).toHaveCount(0);
+    // A song's link back to the list of songs opens it
     await page.click('#appBar .hamburger');
-    await expect(page.locator('#appBar .nav-links')).toHaveClass(/active/);
+    await page.click('#masifuMenuSheet a[href="../amefufuka.html"]');
+    await expect(page).toHaveURL(/\/pages\/amefufuka\.html$/);
     expect(errors).toEqual([]);
 });

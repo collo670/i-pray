@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Amefufuka songbook — shared behaviour for the index and the song pages.
-//   - top bar hamburger menu (same markup as the Masifu ya Asubuhi pages)
+//   - top bar menu: its links drop down as a sheet (js/menu-sheet.js)
 //   - index: live search over the song titles
 //   - song page: the app-wide text size control
 // Light/dark mode comes from js/theme.js, text size from js/text-size.js.
@@ -8,22 +8,8 @@
 (function () {
     'use strict';
 
-    window.toggleMenu = function (forceClose) {
-        var navLinks = document.querySelector('.nav-links');
-        var hamburger = document.querySelector('.hamburger');
-        if (!navLinks || !hamburger) return;
-        var open = typeof forceClose === 'boolean' ? !forceClose : !navLinks.classList.contains('active');
-        navLinks.classList.toggle('active', open);
-        hamburger.classList.toggle('active', open);
-        hamburger.setAttribute('aria-expanded', String(open));
-    };
-
     function setupMenu() {
-        document.querySelectorAll('.nav-links a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                if (window.innerWidth <= 768) window.toggleMenu(true);
-            });
-        });
+        if (window.IPrayMenuSheet) window.IPrayMenuSheet.setup();
     }
 
     // ---- Index: filter titles ----------------------------------------------
