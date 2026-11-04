@@ -226,8 +226,10 @@
         normalizeAntiphons();
 
         collectGroups().forEach(function (group) {
+            // A feast's own antiphon (js/sikukuu.js) is the day's, whatever
+            // words its label holds.
             const entries = group.map(function (p) {
-                return { el: p, cls: classifyAntiphon(p.textContent) };
+                return { el: p, cls: p.classList.contains('ant-proper') ? { kind: 'always' } : classifyAntiphon(p.textContent) };
             });
 
             entries.forEach(function (e) {

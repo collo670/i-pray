@@ -123,6 +123,37 @@ test('on a feast every page prays the psalms of Jumapili I, and none of its own'
     expect(errors).toEqual([]);
 });
 
+// js/sikukuu-antiphons.js: on a Solemnity the Sunday psalms carry the day's
+// own antiphons, before and after each psalm, and nothing of the Sunday's.
+for (const [what, date, rank, first] of [
+    ['Trinity Sunday', new Date(2027, 4, 23, 8), 'Sherehe (Utatu Mtakatifu)', ['Enzi', 'Viumbe', 'Vitu']],
+    ['the Sacred Heart, a Friday', new Date(2027, 5, 4, 8), 'Sherehe (Moyo Mtakatifu Kabisa wa Yesu)', ['Yesu', 'Njooni', 'Mwanangu']]
+]) {
+    test('on ' + what + ' every page shows its own psalm antiphons, and only that day', async ({ page }) => {
+        test.setTimeout(120000);
+        const errors = collectErrors(page);
+        for (const name of ['jumapili1', 'jumapili3', 'jumatatu2', 'ijumaa4']) {
+            const shown = await open(page, name, date);
+            const proper = shown.filter((l) => l.startsWith('Ant. ya ' + rank + ':'));
+            expect(proper.map((l) => l.split(': ')[1].split(/[\s,]/)[0]), name)
+                .toEqual([first[0], first[0], first[1], first[1], first[2], first[2]]);
+            expect(shown.filter((l) => /^ANT\. [IV]+$/.test(l)), name).toEqual(['ANT. I', 'ANT. I', 'ANT. II', 'ANT. II', 'ANT. III', 'ANT. III']);
+            // No Sunday or seasonal psalm antiphon is left, shown or hidden.
+            const psalmAntiphons = await page.locator('.prayer-section p.antiphon')
+                .evaluateAll((els) => els.map((e) => e.textContent).filter((t) => /^Ant\. ya (Kawaida|Majilio|Kwaresima|Kipindi cha Pasaka):/.test(t) && !/Mwaliko/.test(t)));
+            expect(psalmAntiphons, name).toEqual([]);
+            await expect(page.locator('.ant-proper').first()).toBeVisible();
+        }
+        // The next day the page is back to its own antiphons.
+        const next = new Date(date);
+        next.setDate(next.getDate() + 1);
+        const after = await open(page, 'jumatatu2', next);
+        expect(after.filter((l) => l.startsWith('Ant. ya ' + rank))).toEqual([]);
+        expect(await page.locator('.ant-proper').count()).toBe(0);
+        expect(errors).toEqual([]);
+    });
+}
+
 test('in Ordinary Time only the ordinary antiphons show, and the others open on request', async ({ page }) => {
     test.setTimeout(120000);
     for (const name of PAGES) {

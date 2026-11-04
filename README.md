@@ -46,6 +46,11 @@ change the layout, styles or scripts of all 28 pages, edit the template.
 - `js/offline-week.js`: Settings' "Save this week" for offline use.
 - `js/prayer-day.js`: the saved week (kept one week, then deleted) and the
   day of it chosen in Settings, which the prayer pages show instead of today.
+- `js/sikukuu-antiphons.js`: the proper psalm antiphons of Feasts and
+  Solemnities for Masifu ya Asubuhi, keyed by the calendar's celebration
+  id. On those days `js/sikukuu.js` gives every Morning Prayer page the
+  psalms of Jumapili I with these antiphons; on other days nothing changes.
+  A celebration whose entry is `null` keeps the Sunday antiphons.
 - `js/universalis-office.js`: fetches Midday Prayer, Vespers and the English
   Office of Readings from Universalis and keeps only the prayer text.
 - `js/fetch-first.js`: asks the app's own route (the Worker, or the Reader)
