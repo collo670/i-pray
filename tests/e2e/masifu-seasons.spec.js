@@ -124,11 +124,44 @@ test('on a feast every page prays the psalms of Jumapili I, and none of its own'
         expect(psalms.map((h) => h.text), name).toEqual(['Zaburi 63:1-8', 'WIMBO: Dan. 3:57-88,56', 'Zaburi 149']);
         expect(await page.locator('.container h2', { hasText: /^\s*Zaburi 95\b/ }).count(), name).toBe(1);
         expect(shown.filter((l) => /^ANT\. [IV]+$/.test(l)), name).toEqual(['ANT. I', 'ANT. I', 'ANT. II', 'ANT. II', 'ANT. III', 'ANT. III']);
-        expect(shown.filter((l) => /^Ant\. ya Kawaida:/.test(l)).map((l) => l.split(' ')[3]), name)
-            .toEqual(['Nitakutafuta', 'Nitakutafuta', 'Katikati', 'Katikati', 'Wana', 'Wana']);
+        // ... with the feast's own antiphons, not the Sunday's.
+        expect(shown.filter((l) => /^Ant\. ya Kawaida:/.test(l)), name).toEqual([]);
+        expect(shown.filter((l) => l.startsWith('Ant. ya Sikukuu (Kutukuzwa kwa Msalaba Mtakatifu): ')).map((l) => l.split(': ')[1].split(' ')[0]), name)
+            .toEqual(['Yeye', 'Yeye', 'Msalaba', 'Msalaba', 'Msalaba', 'Msalaba']);
     }
     expect(errors).toEqual([]);
 });
+
+// js/sikukuu-antiphons.js: on a Solemnity the Sunday psalms carry the day's
+// own antiphons, before and after each psalm, and nothing of the Sunday's.
+for (const [what, date, rank, first] of [
+    ['Trinity Sunday', new Date(2027, 4, 23, 8), 'Sherehe (Utatu Mtakatifu)', ['Enzi', 'Viumbe', 'Vitu']],
+    ['the Sacred Heart, a Friday', new Date(2027, 5, 4, 8), 'Sherehe (Moyo Mtakatifu Kabisa wa Yesu)', ['Yesu', 'Njooni', 'Mwanangu']]
+]) {
+    test('on ' + what + ' every page shows its own psalm antiphons, and only that day', async ({ page }) => {
+        test.setTimeout(120000);
+        const errors = collectErrors(page);
+        for (const name of ['jumapili1', 'jumapili3', 'jumatatu2', 'ijumaa4']) {
+            const shown = await open(page, name, date);
+            const proper = shown.filter((l) => l.startsWith('Ant. ya ' + rank + ':'));
+            expect(proper.map((l) => l.split(': ')[1].split(/[\s,]/)[0]), name)
+                .toEqual([first[0], first[0], first[1], first[1], first[2], first[2]]);
+            expect(shown.filter((l) => /^ANT\. [IV]+$/.test(l)), name).toEqual(['ANT. I', 'ANT. I', 'ANT. II', 'ANT. II', 'ANT. III', 'ANT. III']);
+            // No Sunday or seasonal psalm antiphon is left, shown or hidden.
+            const psalmAntiphons = await page.locator('.prayer-section p.antiphon')
+                .evaluateAll((els) => els.map((e) => e.textContent).filter((t) => /^Ant\. ya (Kawaida|Majilio|Kwaresima|Kipindi cha Pasaka):/.test(t) && !/Mwaliko/.test(t)));
+            expect(psalmAntiphons, name).toEqual([]);
+            await expect(page.locator('.ant-proper').first()).toBeVisible();
+        }
+        // The next day the page is back to its own antiphons.
+        const next = new Date(date);
+        next.setDate(next.getDate() + 1);
+        const after = await open(page, 'jumatatu2', next);
+        expect(after.filter((l) => l.startsWith('Ant. ya ' + rank))).toEqual([]);
+        expect(await page.locator('.ant-proper').count()).toBe(0);
+        expect(errors).toEqual([]);
+    });
+}
 
 test('in Ordinary Time only the ordinary antiphons show, and the others open on request', async ({ page }) => {
     test.setTimeout(120000);
@@ -163,11 +196,30 @@ test('a page left open into Advent switches to the Advent antiphons at midnight'
     expect(labels).not.toContain('Kawaida');
 });
 
+test('a page left open through a solemnity gets its antiphons at midnight, and loses them the next midnight', async ({ page }) => {
+    await page.clock.install({ time: new Date(2027, 4, 22, 23, 59, 0) }); // Saturday before Trinity Sunday
+    await page.goto('pages/jumatatu2.html');
+    await expect(page.locator('.masifu-season-badge')).toBeVisible();
+    await expect(page.locator('.ant-proper')).toHaveCount(0);
+    await page.clock.runFor(2 * 60 * 1000); // past midnight: Trinity Sunday
+    await expect(page.locator('.ant-proper')).toHaveCount(6);
+    await expect(page.locator('.ant-proper').first()).toContainText('Ant. ya Sherehe (Utatu Mtakatifu): Enzi yote');
+    await page.clock.runFor(24 * 60 * 60 * 1000); // past the next midnight: Monday
+    await expect(page.locator('.masifu-season-badge')).toBeVisible();
+    await expect(page.locator('.ant-proper')).toHaveCount(0);
+});
+
 test('a page shown again on the Ascension switches the invitatory', async ({ page }) => {
     await page.clock.install({ time: new Date(2027, 4, 5, 8) }); // Wednesday before the Ascension
     await page.goto('pages/jumatano4.html');
     await expectInvitatory(page, 'jumatano4', 'Kipindi cha Pasaka I (hadi Kupaa)');
     await page.clock.setSystemTime(new Date(2027, 4, 6, 8)); // the phone wakes up the next day
-    await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+    // The Ascension is a Solemnity: the page loads again, with the psalms of Jumapili I.
+    await Promise.all([
+        page.waitForEvent('load'),
+        page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')))
+    ]);
+    await expect(page.locator('.masifu-season-badge')).toBeVisible();
     await expectInvitatory(page, 'jumatano4', 'Kipindi cha Pasaka II (Kupaa hadi Pentekoste)');
+    expect((await psalmody(page)).map((h) => h.text)).toEqual(['Zaburi 63:1-8', 'WIMBO: Dan. 3:57-88,56', 'Zaburi 149']);
 });
