@@ -19,6 +19,18 @@ async function open(page, name, date) {
 
 const label = (line) => (line.match(/^Ant\. ya ([^:]+):/) || [])[1];
 
+// The psalmody's headings (not Psalm 95, not the Benedictus), each with
+// whether it sits in a .prayer-section together with its antiphons, which
+// is what js/sikukuu.js and js/masifu.js work on.
+function psalmody(page) {
+    return page.locator('.container h2').evaluateAll((hs) => hs
+        .map((h) => ({
+            text: h.textContent.replace(/\s+/g, ' ').trim(),
+            inSection: h.parentElement.matches('.container > .prayer-section') && !!h.parentElement.querySelector('p.antiphon')
+        }))
+        .filter((h) => /^(Zab|WIMBO)/.test(h.text) && !/^Zaburi 95\b|ZAKARIA/.test(h.text)));
+}
+
 test.beforeEach(async ({ page }) => {
     await isolate(page);
 });
@@ -96,12 +108,31 @@ test('Easter: the seasonal antiphons show on every page, and the invitatory chan
     expect(ascension).not.toContain('Kipindi cha Pasaka I (hadi Kupaa)');
 });
 
+test('on a feast every page prays the psalms of Jumapili I, and none of its own', async ({ page }) => {
+    test.setTimeout(120000);
+    const errors = collectErrors(page);
+    for (const name of PAGES.filter((n) => n !== 'jumapili1')) {
+        const shown = await open(page, name, new Date(2027, 8, 14, 8)); // Exaltation of the Holy Cross, a Feast
+        const psalms = await psalmody(page);
+        expect(psalms.map((h) => h.text), name).toEqual(['Zaburi 63:1-8', 'WIMBO: Dan. 3:57-88,56', 'Zaburi 149']);
+        expect(await page.locator('.container h2', { hasText: /^\s*Zaburi 95\b/ }).count(), name).toBe(1);
+        expect(shown.filter((l) => /^ANT\. [IV]+$/.test(l)), name).toEqual(['ANT. I', 'ANT. I', 'ANT. II', 'ANT. II', 'ANT. III', 'ANT. III']);
+        expect(shown.filter((l) => /^Ant\. ya Kawaida:/.test(l)).map((l) => l.split(' ')[3]), name)
+            .toEqual(['Nitakutafuta', 'Nitakutafuta', 'Katikati', 'Katikati', 'Wana', 'Wana']);
+    }
+    expect(errors).toEqual([]);
+});
+
 test('in Ordinary Time only the ordinary antiphons show, and the others open on request', async ({ page }) => {
     test.setTimeout(120000);
     for (const name of PAGES) {
         const labels = (await open(page, name, new Date(2026, 10, 4, 8))).map(label).filter(Boolean);
         expect(labels.filter((l) => /Pasaka|Kwaresima|Majilio|Desemba|Noeli|Juma Kuu|Matawi/.test(l)), name).toEqual([]);
         expect(labels[0], name).toBe('Kawaida ya Mwaliko');
+        // Two psalms and a canticle, each in one section with its antiphons.
+        const psalms = await psalmody(page);
+        expect(psalms, name).toHaveLength(3);
+        expect(psalms.filter((h) => !h.inSection).map((h) => h.text), name).toEqual([]);
     }
     await page.locator('.ant-toggle').first().click();
     await expect(page.locator('.ant-group').first().locator('p.antiphon')).toHaveCount(9);

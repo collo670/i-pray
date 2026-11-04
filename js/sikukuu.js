@@ -1,9 +1,16 @@
 (function () {
     'use strict';
 
+    // The psalmody: the three psalms and canticles after the hymn ("Zab. 43",
+    // "Zaburi 63:1-8", "WIMBO: Isa.38:10-14", "WIMBO Isa. 61:10 - 62:5"...).
+    // Not Psalm 95, the invitatory, which is the same on every page, and not
+    // the Benedictus (WIMBO WA ZAKARIA).
     function isPsalmSection(section) {
         const heading = section.querySelector(':scope > h2');
-        return heading && /^(?:Zab(?:uri)?\b|WIMBO:\s*Dan\b)/i.test(heading.textContent.trim());
+        if (!heading) return false;
+        const text = heading.textContent.replace(/\s+/g, ' ').trim();
+        if (/^Zab(?:uri)?\.?\s*95\b/i.test(text) || /^WIMBO WA ZAKARIA\b/i.test(text)) return false;
+        return /^(?:Zab(?:uri)?\b|WIMBO\b)/i.test(text);
     }
 
     function psalmEndIndex(section) {
