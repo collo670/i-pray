@@ -421,14 +421,31 @@
 
     // ---- Init -------------------------------------------------------------------
 
+    // The Feast or Solemnity kept on the page's day ('' when none). On one,
+    // js/sikukuu.js gave the page the psalms of Jumapili I and the day's own
+    // antiphons when it loaded.
+    function feastOfDay() {
+        const cal = window.LiturgicalCalendar;
+        if (!cal || typeof cal.celebrationFor !== 'function') return '';
+        const c = cal.celebrationFor(window.IPrayDay ? IPrayDay.today() : new Date());
+        return c && (c.type === 'Feast' || c.type === 'Solemnity') ? c.id : '';
+    }
+
     function init() {
         document.body.classList.add('masifu-modern');
         const ctx = seasonInfo();
+        const feast = feastOfDay();
         classifyPlainSections();
         setupSeasonalAntiphons();
         showSeason(ctx);
         showSeasonBadge(ctx);
         followDay(function (newCtx) {
+            // Into, out of, or between feasts: the psalms and antiphons
+            // change, so load the page again for the new day.
+            if (feastOfDay() !== feast) {
+                window.location.reload();
+                return;
+            }
             showSeason(newCtx);
             showSeasonBadge(newCtx);
         });

@@ -194,11 +194,30 @@ test('a page left open into Advent switches to the Advent antiphons at midnight'
     expect(labels).not.toContain('Kawaida');
 });
 
+test('a page left open through a solemnity gets its antiphons at midnight, and loses them the next midnight', async ({ page }) => {
+    await page.clock.install({ time: new Date(2027, 4, 22, 23, 59, 0) }); // Saturday before Trinity Sunday
+    await page.goto('pages/jumatatu2.html');
+    await expect(page.locator('.masifu-season-badge')).toBeVisible();
+    await expect(page.locator('.ant-proper')).toHaveCount(0);
+    await page.clock.runFor(2 * 60 * 1000); // past midnight: Trinity Sunday
+    await expect(page.locator('.ant-proper')).toHaveCount(6);
+    await expect(page.locator('.ant-proper').first()).toContainText('Ant. ya Sherehe (Utatu Mtakatifu): Enzi yote');
+    await page.clock.runFor(24 * 60 * 60 * 1000); // past the next midnight: Monday
+    await expect(page.locator('.masifu-season-badge')).toBeVisible();
+    await expect(page.locator('.ant-proper')).toHaveCount(0);
+});
+
 test('a page shown again on the Ascension switches the invitatory', async ({ page }) => {
     await page.clock.install({ time: new Date(2027, 4, 5, 8) }); // Wednesday before the Ascension
     await page.goto('pages/jumatano4.html');
     await expectInvitatory(page, 'jumatano4', 'Kipindi cha Pasaka I (hadi Kupaa)');
     await page.clock.setSystemTime(new Date(2027, 4, 6, 8)); // the phone wakes up the next day
-    await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+    // The Ascension is a Solemnity: the page loads again, with the psalms of Jumapili I.
+    await Promise.all([
+        page.waitForEvent('load'),
+        page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')))
+    ]);
+    await expect(page.locator('.masifu-season-badge')).toBeVisible();
     await expectInvitatory(page, 'jumatano4', 'Kipindi cha Pasaka II (Kupaa hadi Pentekoste)');
+    expect((await psalmody(page)).map((h) => h.text)).toEqual(['Zaburi 63:1-8', 'WIMBO: Dan. 3:57-88,56', 'Zaburi 149']);
 });
