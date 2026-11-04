@@ -48,8 +48,12 @@
         return addDays(epiphany, (7 - epiphany.getDay()) % 7 || 7);
     }
 
-    // Returns { key, name, color, isPalmSunday, isHolyWeek, decDay }
+    // Returns { key, name, color, isPalmSunday, isHolyWeek, decDay,
+    //           lentSunday, beforeEpiphany, beforeAscension }
     // key: 'kawaida' | 'majilio' | 'noeli' | 'kwaresima' | 'pasaka'
+    // lentSunday: 1-5 on the Sundays of Lent (Palm Sunday is not counted),
+    // otherwise null. Epiphany is January 6 and the Ascension is Easter + 39,
+    // as in js/liturgical-calendar.js.
     function seasonInfo(today) {
         const now = today ? new Date(today) : (window.IPrayDay ? IPrayDay.today() : new Date());
         const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -66,7 +70,10 @@
             color: 'green',
             isPalmSunday: false,
             isHolyWeek: false,
-            decDay: null
+            decDay: null,
+            lentSunday: null,
+            beforeEpiphany: false,
+            beforeAscension: false
         };
 
         if (d >= adventStart(year) && d < christmas) {
@@ -78,6 +85,7 @@
             info.key = 'noeli';
             info.name = 'Kipindi cha Noeli';
             info.color = 'white';
+            info.beforeEpiphany = d.getMonth() === 11 || d.getDate() < 6;
         } else if (d >= ashWednesday && d < easter) {
             info.key = 'kwaresima';
             info.name = 'Kipindi cha Kwaresima';
@@ -85,10 +93,14 @@
             info.isPalmSunday = +d === +palmSunday;
             info.isHolyWeek = d >= palmSunday;
             if (info.isHolyWeek) info.name = 'Juma Kuu';
+            if (d.getDay() === 0 && !info.isHolyWeek) {
+                info.lentSunday = Math.round((d - addDays(ashWednesday, 4)) / (7 * 864e5)) + 1;
+            }
         } else if (d >= easter && d <= pentecost) {
             info.key = 'pasaka';
             info.name = 'Kipindi cha Pasaka';
             info.color = 'white';
+            info.beforeAscension = d < addDays(easter, 39);
         }
         return info;
     }
@@ -97,7 +109,14 @@
 
     // Classifies one antiphon line by its printed label.
     // kind: 'heading' (ANT. I/II/III), 'always' (Benedictus/unlabelled),
-    //       or 'season' with season key + optional December day range.
+    //       or 'season' with season key and, where the label says so, the
+    //       part of the season it belongs to:
+    //   "Kwaresima I (pamoja na Juma Kuu)" / "Kwaresima II (isipokuwa kwa
+    //   Juma Kuu)": with or without Holy Week; "Kwaresima (Jumapili 5)": that
+    //   Sunday of Lent only; "Majilio II (Desemba 17-23)": those days of
+    //   December; "Noeli I (kabla ya Tokeo la Bwana)" / "Noeli II (baada
+    //   ...)": before / after Epiphany; "Pasaka I (hadi Kupaa)" / "Pasaka II
+    //   (Kupaa hadi Pentekoste)": before / from the Ascension.
     function classifyAntiphon(text) {
         const t = text.replace(/\s+/g, ' ').trim();
         if (/^ANT\.?\s*[IVX]+\.?$/i.test(t)) return { kind: 'heading' };
@@ -106,9 +125,17 @@
         const label = m[1].toLowerCase();
         if (label.indexOf('zakaria') !== -1) return { kind: 'always' };
         if (label.indexOf('matawi') !== -1) return { kind: 'season', season: 'matawi' };
+        // Before "juma kuu": a Lent label may say whether it covers Holy Week.
+        if (label.indexOf('kwaresima') !== -1) {
+            const sunday = label.match(/jumapili\s*(\d)/);
+            return {
+                kind: 'season', season: 'kwaresima',
+                holyWeek: label.indexOf('isipokuwa') === -1,
+                lentSunday: sunday ? parseInt(sunday[1], 10) : null
+            };
+        }
         if (label.indexOf('juma kuu') !== -1) return { kind: 'season', season: 'jumakuu' };
-        if (label.indexOf('kwaresima') !== -1) return { kind: 'season', season: 'kwaresima' };
-        if (label.indexOf('majilio') !== -1) return { kind: 'season', season: 'majilio' };
+        // Before "majilio": "Majilio II (Desemba 17-23)" is the December one.
         const dec = label.match(/desemba\s*(\d{1,2})\s*(?:-\s*(\d{1,2}))?/);
         if (dec) {
             return {
@@ -117,7 +144,13 @@
                 to: parseInt(dec[2] || dec[1], 10)
             };
         }
-        if (label.indexOf('pasaka') !== -1) return { kind: 'season', season: 'pasaka' };
+        if (label.indexOf('majilio') !== -1) return { kind: 'season', season: 'majilio' };
+        if (label.indexOf('noeli') !== -1) {
+            return { kind: 'season', season: 'noeli', part: /kabla/.test(label) ? 1 : /baada/.test(label) ? 2 : null };
+        }
+        if (label.indexOf('pasaka') !== -1) {
+            return { kind: 'season', season: 'pasaka', part: /hadi\s+kupaa/.test(label) ? 1 : /kupaa\s+hadi/.test(label) ? 2 : null };
+        }
         if (label.indexOf('kawaida') !== -1) return { kind: 'season', season: 'kawaida' };
         return { kind: 'always' };
     }
@@ -131,15 +164,21 @@
                 return ctx.key === 'majilio' && ctx.decDay !== null &&
                     ctx.decDay >= cls.from && ctx.decDay <= cls.to;
             case 'majilio': return ctx.key === 'majilio';
-            case 'kwaresima': return ctx.key === 'kwaresima';
-            case 'pasaka': return ctx.key === 'pasaka';
+            case 'kwaresima':
+                if (ctx.key !== 'kwaresima') return false;
+                if (cls.lentSunday) return ctx.lentSunday === cls.lentSunday;
+                return cls.holyWeek || !ctx.isHolyWeek;
+            case 'noeli':
+                return ctx.key === 'noeli' && (!cls.part || (cls.part === 1) === ctx.beforeEpiphany);
+            case 'pasaka':
+                return ctx.key === 'pasaka' && (!cls.part || (cls.part === 1) === ctx.beforeAscension);
             default: return false;
         }
     }
 
     // More specific variants win when several apply (e.g. Palm Sunday is also
     // Holy Week and Lent; Desemba 17-23 is also Advent).
-    const SEASON_PRIORITY = ['matawi', 'jumakuu', 'desemba', 'kwaresima', 'majilio', 'pasaka'];
+    const SEASON_PRIORITY = ['matawi', 'jumakuu', 'desemba', 'kwaresima', 'majilio', 'noeli', 'pasaka'];
 
     // Expose the pure logic for tests / other pages.
     if (typeof window !== 'undefined') {
