@@ -82,10 +82,36 @@ test('the same antiphons come back for that solemnity in another year', () => {
     assert.equal(forDate(day('2028-11-26'), calendar).id, 'christ-the-king');
 });
 
-test('nothing on an ordinary day, a memorial, or a feast with no Swahili text yet', () => {
+test('nothing on an ordinary day, a memorial, or All Souls (which has psalms of its own)', () => {
     assert.equal(forDate(day('2026-11-04'), calendar), null); // Charles Borromeo, a memorial
     assert.equal(forDate(day('2026-11-05'), calendar), null); // a weekday
-    assert.equal(forDate(day('2027-09-14'), calendar), null); // Holy Cross: not in the table yet
+    assert.equal(forDate(day('2026-11-02'), calendar), null); // All Souls
+});
+
+test('every other Feast and Solemnity has its antiphons on its day, every year', () => {
+    const missing = new Set();
+    for (let y = 2025; y <= 2040; y++) {
+        for (let d = new Date(y, 0, 1, 8); d.getFullYear() === y; d.setDate(d.getDate() + 1)) {
+            const c = calendar.celebrationFor(new Date(d));
+            if (!c || (c.type !== 'Feast' && c.type !== 'Solemnity') || c.id === '11-02') continue;
+            const proper = forDate(new Date(d), calendar);
+            if (!proper || proper.id !== c.id) missing.add(c.id + ' ' + d.toDateString());
+        }
+    }
+    assert.deepEqual([...missing], []);
+});
+
+test('the Easter octave has the antiphons of Easter Sunday', () => {
+    assert.deepEqual([...forDate(day('2027-03-29'), calendar).antiphons], [...forDate(day('2027-03-28'), calendar).antiphons]);
+});
+
+test('St Matthias has "aleluya" in Eastertide only', () => {
+    const easter = forDate(day('2027-05-14'), calendar); // before Pentecost (16 May)
+    const after = forDate(day('2035-05-14'), calendar); // after Pentecost (13 May)
+    assert.equal(easter.id, '05-14');
+    assert.equal(after.id, '05-14');
+    easter.antiphons.forEach((a) => assert.match(a, /, aleluya\.$/));
+    after.antiphons.forEach((a) => assert.doesNotMatch(a, /aleluya/));
 });
 
 test('in Eastertide "aleluya" ends every antiphon', () => {

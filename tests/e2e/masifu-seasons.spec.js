@@ -124,8 +124,10 @@ test('on a feast every page prays the psalms of Jumapili I, and none of its own'
         expect(psalms.map((h) => h.text), name).toEqual(['Zaburi 63:1-8', 'WIMBO: Dan. 3:57-88,56', 'Zaburi 149']);
         expect(await page.locator('.container h2', { hasText: /^\s*Zaburi 95\b/ }).count(), name).toBe(1);
         expect(shown.filter((l) => /^ANT\. [IV]+$/.test(l)), name).toEqual(['ANT. I', 'ANT. I', 'ANT. II', 'ANT. II', 'ANT. III', 'ANT. III']);
-        expect(shown.filter((l) => /^Ant\. ya Kawaida:/.test(l)).map((l) => l.split(' ')[3]), name)
-            .toEqual(['Nitakutafuta', 'Nitakutafuta', 'Katikati', 'Katikati', 'Wana', 'Wana']);
+        // ... with the feast's own antiphons, not the Sunday's.
+        expect(shown.filter((l) => /^Ant\. ya Kawaida:/.test(l)), name).toEqual([]);
+        expect(shown.filter((l) => l.startsWith('Ant. ya Sikukuu (Kutukuzwa kwa Msalaba Mtakatifu): ')).map((l) => l.split(': ')[1].split(' ')[0]), name)
+            .toEqual(['Yeye', 'Yeye', 'Msalaba', 'Msalaba', 'Msalaba', 'Msalaba']);
     }
     expect(errors).toEqual([]);
 });

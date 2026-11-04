@@ -50,7 +50,9 @@ change the layout, styles or scripts of all 28 pages, edit the template.
   Solemnities for Masifu ya Asubuhi, keyed by the calendar's celebration
   id. On those days `js/sikukuu.js` gives every Morning Prayer page the
   psalms of Jumapili I with these antiphons; on other days nothing changes.
-  A celebration whose entry is `null` keeps the Sunday antiphons.
+  Texts come from the Swahili breviary (`docs/pdfs/MasifuYaAsubuhi.pdf`)
+  where it has the day, otherwise from universalis.com's English, translated.
+  A celebration whose entry is `null` (All Souls) keeps the Sunday antiphons.
 - `js/universalis-office.js`: fetches Midday Prayer, Vespers and the English
   Office of Readings from Universalis and keeps only the prayer text.
 - `js/fetch-first.js`: asks the app's own route (the Worker, or the Reader)
