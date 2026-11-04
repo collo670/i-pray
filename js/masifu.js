@@ -4,7 +4,9 @@
 // 1. Liturgical season detection (self-contained, no other script needed).
 // 2. Seasonal antiphons: only the variant for the current season is shown;
 //    the rest stay in the page, hidden behind a per-group "Misimu mingine"
-//    toggle so nothing is ever lost.
+//    toggle so nothing is ever lost. The invitatory (Ant. ya Mwaliko) has
+//    no toggle: it shows today's antiphon only. The choice is made again
+//    when the page is still open, or shown again, on a later day.
 // 3. Text size controls: A− / A / A+ with persistence, replacing the old
 //    3-step cycle button.
 //
@@ -222,7 +224,29 @@
         return groups;
     }
 
-    function setupSeasonalAntiphons(ctx) {
+    // Today's antiphon in a group: the most specific seasonal variant that
+    // applies, otherwise the ordinary ("ya Kawaida") one, otherwise the first.
+    function pickActive(seasonal, ctx) {
+        for (let i = 0; i < SEASON_PRIORITY.length; i++) {
+            const found = seasonal.find(function (e) {
+                return e.cls.season === SEASON_PRIORITY[i] && appliesToday(e.cls, ctx);
+            });
+            if (found) return found;
+        }
+        return seasonal.find(function (e) { return e.cls.season === 'kawaida'; }) || seasonal[0];
+    }
+
+    // The invitatory (Ant. ya Mwaliko, above Zaburi 95) shows today's
+    // antiphon only, with no "Misimu mingine" button.
+    function isInvitatory(seasonal) {
+        return seasonal.some(function (e) { return /mwaliko/i.test(e.el.textContent.split(':')[0]); });
+    }
+
+    // Groups of seasonal variants, set up once by setupSeasonalAntiphons();
+    // showSeason() picks today's antiphon in each, again when the day changes.
+    const seasonGroups = [];
+
+    function setupSeasonalAntiphons() {
         normalizeAntiphons();
 
         collectGroups().forEach(function (group) {
@@ -239,34 +263,20 @@
             const seasonal = entries.filter(function (e) { return e.cls.kind === 'season'; });
             if (seasonal.length < 2) return; // nothing to choose between
 
-            // Pick today's antiphon: most specific applicable seasonal variant,
-            // otherwise the ordinary ("ya Kawaida") one, otherwise the first.
-            let active = null;
-            for (let i = 0; i < SEASON_PRIORITY.length && !active; i++) {
-                active = seasonal.find(function (e) {
-                    return e.cls.season === SEASON_PRIORITY[i] && appliesToday(e.cls, ctx);
-                }) || null;
-            }
-            if (!active) {
-                active = seasonal.find(function (e) { return e.cls.season === 'kawaida'; }) || seasonal[0];
-            }
-
-            const hidden = seasonal.filter(function (e) { return e !== active; });
-            if (!hidden.length) return;
-
-            // Wrap the group so the toggle only affects these antiphons.
+            // Wrap the group: hiding (and the toggle) apply to these antiphons only.
             const wrapper = document.createElement('div');
             wrapper.className = 'ant-group';
             group[0].parentNode.insertBefore(wrapper, group[0]);
             group.forEach(function (p) { wrapper.appendChild(p); });
+            seasonGroups.push(seasonal);
 
-            hidden.forEach(function (e) { e.el.classList.add('ant-alt'); });
+            if (isInvitatory(seasonal)) return;
 
             const toggle = document.createElement('button');
             toggle.type = 'button';
             toggle.className = 'ant-toggle';
             toggle.setAttribute('aria-expanded', 'false');
-            const label = 'Misimu mingine (' + hidden.length + ')';
+            const label = 'Misimu mingine (' + (seasonal.length - 1) + ')';
             toggle.innerHTML = '<span class="chev">▾</span><span class="txt"></span>';
             toggle.querySelector('.txt').textContent = label;
             toggle.addEventListener('click', function () {
@@ -278,20 +288,58 @@
         });
     }
 
+    function showSeason(ctx) {
+        seasonGroups.forEach(function (seasonal) {
+            const active = pickActive(seasonal, ctx);
+            seasonal.forEach(function (e) { e.el.classList.toggle('ant-alt', e !== active); });
+        });
+    }
+
     // ---- DOM: season badge ---------------------------------------------------
 
-    function insertSeasonBadge(ctx) {
+    function showSeasonBadge(ctx) {
         const h1 = document.querySelector('.container h1');
         if (!h1) return;
-        const badge = document.createElement('div');
-        badge.className = 'masifu-season-badge';
+        let badge = document.querySelector('.masifu-season-badge');
+        if (!badge) {
+            badge = document.createElement('div');
+            badge.className = 'masifu-season-badge';
+            h1.insertAdjacentElement('afterend', badge);
+        }
         const pill = document.createElement('span');
         const dot = document.createElement('i');
         dot.className = 'dot ' + ctx.color;
         pill.appendChild(dot);
         pill.appendChild(document.createTextNode('Leo: ' + ctx.name));
-        badge.appendChild(pill);
-        h1.insertAdjacentElement('afterend', badge);
+        badge.replaceChildren(pill);
+    }
+
+    // ---- Day change -------------------------------------------------------------
+
+    // A page left open, or brought back from the back/forward cache, may be
+    // shown on a later day: then show that day's season. Checked at each
+    // midnight and whenever the page is shown again.
+    function followDay(onNewDay) {
+        function dayOf() {
+            const now = window.IPrayDay ? IPrayDay.today() : new Date();
+            return new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        }
+        let shown = dayOf();
+        function check() {
+            const day = dayOf();
+            if (day === shown) return;
+            shown = day;
+            onNewDay(seasonInfo());
+        }
+        (function atMidnight() {
+            const now = new Date();
+            const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            setTimeout(function () { check(); atMidnight(); }, next - now + 1000);
+        })();
+        window.addEventListener('pageshow', check);
+        document.addEventListener('visibilitychange', function () {
+            if (!document.hidden) check();
+        });
     }
 
     // ---- DOM: card layout for unclassed sections ------------------------------
@@ -377,8 +425,13 @@
         document.body.classList.add('masifu-modern');
         const ctx = seasonInfo();
         classifyPlainSections();
-        setupSeasonalAntiphons(ctx);
-        insertSeasonBadge(ctx);
+        setupSeasonalAntiphons();
+        showSeason(ctx);
+        showSeasonBadge(ctx);
+        followDay(function (newCtx) {
+            showSeason(newCtx);
+            showSeasonBadge(newCtx);
+        });
         setupTextControls();
     }
 
