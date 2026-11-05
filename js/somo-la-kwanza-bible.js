@@ -6,6 +6,11 @@
 // 1997) translation, and injects the actual verse text between the
 // SOMO LA KWANZA heading and the Kiitikizano heading that follows it.
 //
+// When SUV cannot give a reading (the deuterocanonical books, the Greek
+// parts of Esta and Danieli, or Bolls not answering), the secondary
+// source in js/somo-la-kwanza-fallback.js is asked for it - see
+// "Secondary source" below.
+//
 // No build step, no dependency — a plain self-contained script, in
 // the same style as js/logo-loader.js.
 (function () {
@@ -530,6 +535,55 @@
         citeEl.insertAdjacentElement('afterend', p);
     }
 
+    // -----------------------------------------------------------------
+    // Secondary source
+    // -----------------------------------------------------------------
+    // When SUV on bolls.life cannot give a reading - a deuterocanonical
+    // book, a Greek part of Esta or Danieli, or no answer at all -
+    // js/somo-la-kwanza-fallback.js is loaded (only then, once per page)
+    // and asked for the whole passage from a Bible with all the Catholic
+    // books. Its verses are shown with renderVerses, as SUV's are; if it
+    // cannot give the reading either, `otherwise` - the handling this
+    // file had before, unchanged - runs.
+    var FALLBACK_FILE = 'somo-la-kwanza-fallback.js';
+    var SCRIPT_SRC = (document.currentScript && document.currentScript.src) || '';
+    var fallbackLoad = null;
+
+    function loadFallback() {
+        if (window.SomoLaKwanzaFallback) return Promise.resolve(window.SomoLaKwanzaFallback);
+        if (fallbackLoad) return fallbackLoad;
+        fallbackLoad = new Promise(function (resolve, reject) {
+            if (!SCRIPT_SRC) {
+                reject(new Error('fallback location unknown'));
+                return;
+            }
+            var script = document.createElement('script');
+            script.src = SCRIPT_SRC.split(/[?#]/)[0].replace(/[^\/]*$/, FALLBACK_FILE);
+            script.async = true;
+            script.onload = function () {
+                if (window.SomoLaKwanzaFallback) resolve(window.SomoLaKwanzaFallback);
+                else reject(new Error('fallback not loaded'));
+            };
+            script.onerror = function () { reject(new Error('fallback not loaded')); };
+            (document.head || document.documentElement).appendChild(script);
+        });
+        // A load that failed (offline) can be tried again by a later reading.
+        fallbackLoad.catch(function () { fallbackLoad = null; });
+        return fallbackLoad;
+    }
+
+    function withFallback(built, request, otherwise) {
+        request.toSuvSpans = toSuvSpans;
+        request.parseCitation = parseCitation;
+        loadFallback()
+            .then(function (fallback) { return fallback.fetchReading(request); })
+            .then(function (reading) {
+                renderVerses(built, reading.verses, reading.credit);
+            }, function () {
+                otherwise();
+            });
+    }
+
     function init() {
         var headings = findSomoLaKwanzaHeadings();
         headings.forEach(processHeading);
@@ -567,7 +621,10 @@
         }
 
         if (!split) {
-            renderError(built, 'Imeshindikana kusoma rejea "' + citation + '".');
+            // A book name the primary cannot split ("Yoshua bin Sira 24,1-22").
+            withFallback(built, { citation: citation }, function () {
+                renderError(built, 'Imeshindikana kusoma rejea "' + citation + '".');
+            });
             return;
         }
 
@@ -575,15 +632,19 @@
         var bookId = BOOK_MAP[key];
 
         if (!bookId) {
-            if (DEUTEROCANONICAL[key]) {
-                renderError(
-                    built,
-                    'Kitabu cha ' + DEUTEROCANONICAL[key] + ' (' + split.book + ') hakipatikani kwenye tafsiri ya ' +
-                    TRANSLATION + ' ya Bolls Bible API — kinapatikana katika Biblia ya Kikatoliki pekee.'
-                );
-            } else {
-                renderError(built, 'Kitabu "' + split.book + '" hakikutambuliwa.');
-            }
+            // A book SUV does not have: straight to the secondary source.
+            var deuteroRequest = { citation: citation, book: split.book, spans: parseCitation(split.rest, false) };
+            withFallback(built, deuteroRequest, function () {
+                if (DEUTEROCANONICAL[key]) {
+                    renderError(
+                        built,
+                        'Kitabu cha ' + DEUTEROCANONICAL[key] + ' (' + split.book + ') hakipatikani kwenye tafsiri ya ' +
+                        TRANSLATION + ' ya Bolls Bible API — kinapatikana katika Biblia ya Kikatoliki pekee.'
+                    );
+                } else {
+                    renderError(built, 'Kitabu "' + split.book + '" hakikutambuliwa.');
+                }
+            });
             return;
         }
 
@@ -596,14 +657,27 @@
         var greekParts = 'Aya za somo hili zilizo katika nyongeza za Kigiriki za kitabu hazipo kwenye tafsiri ya ' +
             TRANSLATION + ' ya Bolls Bible API — zinapatikana katika Biblia ya Kikatoliki pekee.';
         var suv = toSuvSpans(bookId, spans);
+        var request = { citation: citation, book: split.book, bookId: bookId, spans: spans };
         if (!suv.spans.length) {
-            renderError(built, greekParts);
+            // Only Greek parts, which SUV lacks: nothing to ask SUV for.
+            withFallback(built, request, function () { renderError(built, greekParts); });
             return;
         }
 
-        fetchVerses(bookId, suv.spans)
-            .then(function (verses) { renderVerses(built, verses, suv.missing ? greekParts : ''); })
-            .catch(function () {
+        // SUV first. The secondary source is asked only when SUV's answer
+        // lacks part of the passage (its Greek parts) or no verses at all,
+        // or SUV did not answer; it then gives the whole passage, so one
+        // reading is never pieced together from two translations.
+        fetchVerses(bookId, suv.spans).then(function (verses) {
+            if (verses.length && !suv.missing) {
+                renderVerses(built, verses, '');
+                return;
+            }
+            withFallback(built, request, function () {
+                renderVerses(built, verses, suv.missing ? greekParts : '');
+            });
+        }, function () {
+            withFallback(built, request, function () {
                 var firstChapter = suv.spans[0].chapter;
                 renderError(
                     built,
@@ -611,6 +685,7 @@
                     API_BASE + '/get-text/' + TRANSLATION + '/' + bookId + '/' + firstChapter + '/'
                 );
             });
+        });
     }
 
     if (document.readyState === 'loading') {
