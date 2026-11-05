@@ -230,6 +230,28 @@ body.dark-mode .ant-toggle:focus-visible {
     transform: rotate(180deg);
 }
 
+/* ---- MAOMBI: the people's responses in the page's maroon ------------- */
+
+.maombi .response,
+.maombi .intercession-response {
+    color: #8B0000;
+}
+
+body.dark-mode .maombi .response,
+body.dark-mode .maombi .intercession-response {
+    color: #FFA07A;
+}
+
+/* ---- Prayer to Carmen Hernández (end of every page) ------------------- */
+
+.carmen-prayer p {
+    font-weight: 700;
+}
+
+.carmen-prayer .carmen-opening {
+    font-size: 1.3em;
+}
+
 /* ---- Readings --------------------------------------------------------- */
 
 body.masifu-modern .reading {
