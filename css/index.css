@@ -1696,6 +1696,14 @@ body.prayer-topbar .nav-links a:focus-visible {
 
 .prayer-menu-label {
     flex: 1;
+    color: #000;
+    font-weight: 700;
+}
+
+/* Black would vanish on the dark sheet: keep the light text there */
+.dark .prayer-menu-label,
+.dark-mode .prayer-menu-label {
+    color: var(--text-primary);
 }
 
 .prayer-menu-chevron {
@@ -1754,8 +1762,14 @@ body.prayer-topbar .nav-links a:focus-visible {
 
 .options-quicklink-label {
     font-size: 0.72rem;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.15;
+    color: #000;
+}
+
+.dark .options-quicklink-label,
+.dark-mode .options-quicklink-label {
+    color: var(--text-primary);
 }
 
 /* The "Go to" items (the former bottom-nav items) in the app's maroon/gold */
