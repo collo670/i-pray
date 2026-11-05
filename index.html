@@ -34,6 +34,7 @@
     <!-- Shared light/dark theme: applies the saved choice before paint -->
     <script src="js/theme.js"></script>
     <script src="js/text-size.js"></script>
+    <script src="js/card-size.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/prayer-day.js"></script>
     <script src="js/library.js" defer></script>
@@ -130,7 +131,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14h.01M16 14h.01" />
                             </svg>
                         </span>
-                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h3>
+                        <h3 class="home-tile-title font-bold text-gray-800 dark:text-gray-100" data-translate="dailyPrayers">Sala za Kanisa</h3>
                         <p class="home-tile-desc" data-translate="dailyPrayersDesc">Masifu ya Asubuhi, Ofisi ya Masomo, Sala ya Mchana na Masifu ya Jioni</p>
                     </button>
 
@@ -141,7 +142,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
                         </span>
-                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Masomo ya Siku</h3>
+                        <h3 class="home-tile-title font-bold text-gray-800 dark:text-gray-100" data-translate="dailyReadings">Masomo ya Siku</h3>
                         <p class="home-tile-desc" data-translate="dailyReadingsDesc">Masomo ya Misa ya kila siku, kwa mpangilio wa Misa</p>
                     </a>
 
@@ -154,7 +155,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.5v9" />
                             </svg>
                         </span>
-                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
+                        <h3 class="home-tile-title font-bold text-gray-800 dark:text-gray-100" data-translate="bibiliaTakatifu">Bibilia Takatifu</h3>
                         <p class="home-tile-desc" data-translate="bibiliaTakatifuDesc">Agano la Kale na Agano Jipya, vitabu vyote kwa Kiswahili</p>
                     </button>
 
@@ -165,7 +166,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                             </svg>
                         </span>
-                        <h3 class="home-tile-title text-lg font-bold text-gray-800 dark:text-gray-100">Amefufuka</h3>
+                        <h3 class="home-tile-title font-bold text-gray-800 dark:text-gray-100">Amefufuka</h3>
                         <p class="home-tile-desc" data-translate="amefufukaDesc">Nyimbo za Njia ya Neokatekumenato, maneno na chords kwa kurasa</p>
                     </a>
                 </div>
@@ -408,6 +409,15 @@
                                 </span>
                                 <span class="options-quicklink-label" data-translate="accessibility">Accessibility</span>
                             </button>
+                        </div>
+                        <!-- Size of the home page's cards (js/card-size.js) -->
+                        <div class="options-card-size" role="group" aria-labelledby="optionsCardSizeLabel">
+                            <span id="optionsCardSizeLabel" class="options-card-size-label" data-translate="cardSize">Card size</span>
+                            <div class="options-segmented">
+                                <button type="button" data-card-size-option="small" aria-pressed="false" data-translate="cardSizeSmall">Small</button>
+                                <button type="button" data-card-size-option="medium" aria-pressed="true" data-translate="cardSizeMedium">Medium</button>
+                                <button type="button" data-card-size-option="large" aria-pressed="false" data-translate="cardSizeLarge">Large</button>
+                            </div>
                         </div>
                     </section>
 
