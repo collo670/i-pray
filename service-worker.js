@@ -16,7 +16,7 @@
 // files on disk (`npm run build:generated`); don't edit them by hand.
 
 // BEGIN GENERATED
-const VERSION = '443bb8ad61';
+const VERSION = '916e3cebe9';
 const PRECACHE = [
     '/i-pray/',
     '/i-pray/assets/images/carmen.jpg',
@@ -74,6 +74,7 @@ const PRECACHE = [
     '/i-pray/js/amefufuka.js',
     '/i-pray/js/app-options.js',
     '/i-pray/js/bibilia-reader.js',
+    '/i-pray/js/card-size.js',
     '/i-pray/js/daily-readings-module.js',
     '/i-pray/js/daily-readings.js',
     '/i-pray/js/fetch-first.js',

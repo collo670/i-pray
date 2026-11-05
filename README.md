@@ -39,6 +39,8 @@ change the layout, styles or scripts of all 28 pages, edit the template.
   Kiswahili.
 - `js/i18n.js`: the app's one language setting (`IPrayI18n`), loaded on
   every page.
+- `js/card-size.js`: the size of the home page's date card and four tiles
+  (Small, Medium or Large; Medium by default), chosen in the Options sheet.
 - `js/library.js`: favourites, recently opened prayers, and "continue
   where you left off".
 - `js/reminders.js`: prayer reminders (phone calendar file and

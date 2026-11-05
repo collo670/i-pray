@@ -154,6 +154,56 @@ test('the Options button holds Home, Prayers, Calendar and Settings', async ({ p
     expect(errors).toEqual([]);
 });
 
+test('the Options sheet sets the size of the home cards, and the size is kept', async ({ page }) => {
+    const errors = collectErrors(page);
+    await isolate(page, { universalis: 'fail' });
+    await setLanguage(page, 'sw');
+    await page.goto('index.html');
+    await expect(page.locator('#liturgicalDay')).not.toContainText('Loading');
+
+    const html = page.locator('html');
+    const tile = page.locator('#dailyPrayersCard');
+    const dateCard = page.locator('#liturgicalCard');
+    const heights = async () => ({
+        tile: (await tile.boundingBox()).height,
+        date: (await dateCard.boundingBox()).height
+    });
+
+    // Medium by default
+    await expect(html).toHaveAttribute('data-card-size', 'medium');
+    const medium = await heights();
+
+    await page.click('#optionsToggle');
+    const group = page.locator('#optionsPanel .options-card-size');
+    await expect(group.locator('#optionsCardSizeLabel')).toHaveText('Ukubwa wa kadi');
+    await expect(group.locator('button')).toHaveText(['Ndogo', 'Wastani', 'Kubwa']);
+    await expect(group.locator('[aria-pressed="true"]')).toHaveText('Wastani');
+
+    // Large: the cards' earlier size, square tiles
+    await group.getByRole('button', { name: 'Kubwa' }).click();
+    await expect(html).toHaveAttribute('data-card-size', 'large');
+    await expect(group.locator('[aria-pressed="true"]')).toHaveText('Kubwa');
+    const large = await heights();
+    const box = await tile.boundingBox();
+    expect(Math.abs(box.width - box.height)).toBeLessThan(2);
+    expect(large.tile).toBeGreaterThan(medium.tile);
+    expect(large.date).toBeGreaterThan(medium.date);
+
+    // Small: smaller than Medium
+    await group.getByRole('button', { name: 'Ndogo' }).click();
+    await expect(html).toHaveAttribute('data-card-size', 'small');
+    const small = await heights();
+    expect(small.tile).toBeLessThan(medium.tile);
+    expect(small.date).toBeLessThan(medium.date);
+
+    // Kept on the next visit
+    await page.reload();
+    await expect(html).toHaveAttribute('data-card-size', 'small');
+    await expect(page.locator('#liturgicalDay')).not.toContainText('Loading');
+    expect(Math.abs((await tile.boundingBox()).height - small.tile)).toBeLessThan(2);
+    expect(errors).toEqual([]);
+});
+
 test('the Masifu ya Asubuhi and Amefufuka menus drop down as a sheet, like the Options button, with their own links', async ({ page }) => {
     const errors = collectErrors(page);
     await isolate(page, { universalis: 'fail' });
