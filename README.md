@@ -61,6 +61,16 @@ change the layout, styles or scripts of all 28 pages, edit the template.
   first and the public proxies together if it doesn't answer; says at once
   when the phone is offline. Used by the office, daily readings and Bible
   pages.
+- `js/somo-la-kwanza-bible.js`: the Office of Readings' first reading (Somo
+  la Kwanza): the citation's text from the Swahili Union Version (SUV) on
+  bolls.life.
+- `js/somo-la-kwanza-fallback.js`: loaded only when SUV cannot give a first
+  reading (Tobiti, Yudithi, Hekima, Yoshua bin Sira, Baruku, 1-2 Wamakabayo,
+  the Greek parts of Esta and Danieli, or bolls.life not answering): the
+  whole passage from the Swahili Revised Union Version with the
+  deuterocanonical books (SRUVDC, YouVersion 1817) on Bible.com, shown as
+  SUV's text is, with a line naming the source. A passage it cannot map
+  exactly is left to the page's usual message.
 - `service-worker.js`: offline support.
 - `data/office-readings-sw/`: the Swahili Office of Readings (Ordinary
   Time, Advent, Christmas, Trinity, Corpus Christi), extracted from the
