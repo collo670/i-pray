@@ -824,11 +824,20 @@ header[role="banner"]::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: var(--nav-maroon, #7c2133);
+    background: var(--nav-maroon, #7c2133) url("../assets/images/maria/maria 1.jpg") top center/cover no-repeat;
     border-bottom: 1px solid rgba(243, 205, 137, 0.16);
     border-radius: 0 0 1.4rem 1.4rem;
     box-shadow: 0 8px 24px rgba(56, 15, 22, 0.24);
     z-index: -1;
+}
+.app-bar::after,
+header[role="banner"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(124, 33, 51, 0.55);
+    border-radius: 0 0 1.4rem 1.4rem;
+    z-index: 0;
 }
 
 .app-bar-brand {
